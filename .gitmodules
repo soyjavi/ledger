@@ -1,0 +1,4 @@
+[submodule "src/reactor"]
+  path = src/reactor
+  url = https://github.com/minube/reactor
+  branch = canary

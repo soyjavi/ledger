@@ -1,0 +1,5 @@
+**/*.html
+**/*.test.js
+**/*.mock.js
+**/reactor/
+node_modules/

@@ -1,0 +1,58 @@
+{
+  "name": "voltvault-app",
+  "description": "Cross-Device client for voltvault",
+  "version": "0.0.1",
+  "keywords": [
+    "finance",
+    "personal",
+    "fintech",
+    "nomad",
+    "digital"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/soyjavi/voltvault-app.git"
+  },
+  "main": "node_modules/expo/AppEntry.js",
+  "homepage": "https://github.com/soyjavi/voltvault-app",
+  "bugs": "https://github.com/soyjavi/voltvault-app/issues",
+  "dependencies": {
+    "expo": "30.0.0",
+    "prop-types": "15.6.2",
+    "react": "16.4.2",
+    "react-art": "16.4.2",
+    "react-dom": "16.4.2",
+    "react-native": "0.55.4",
+    "react-native-web": "0.8.11"
+  },
+  "devDependencies": {
+    "babel-plugin-file-loader": "1.0.0",
+    "babel-plugin-module-resolver": "3.1.1",
+    "babel-plugin-react-native-web": "0.9.6",
+    "eslint-config-airbnb": "latest",
+    "eslint-import-resolver-babel-module": "4.0.0",
+    "eslint-plugin-import": "2.14.0",
+    "eslint-plugin-jsx-a11y": "6.1.1",
+    "eslint-plugin-react": "7.11.0",
+    "jest": "23.6.0",
+    "react-scripts": "latest",
+    "react-test-renderer": "16.4.2"
+  },
+  "scripts": {
+    "start": "NODE_PATH=src/ react-scripts start",
+    "start:native": "expo start",
+    "start:android": "expo start --android",
+    "start:ios": "expo start --ios",
+    "test": "jest",
+    "lint": "eslint src"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
