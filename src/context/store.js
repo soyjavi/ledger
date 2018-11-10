@@ -5,7 +5,7 @@ import { C, fetch } from 'common';
 import { Fingerprint } from 'reactor/context/Amplitude/modules';
 import AsyncStore from './modules/AsyncStore';
 
-const { NAME } = C;
+const { COLORS, NAME } = C;
 const KEY = `${NAME}:context:store`;
 const { Provider, Consumer: ConsumerStore } = createContext(KEY);
 
@@ -64,9 +64,14 @@ class ProviderStore extends Component {
     const response = await fetch({ service: 'profile', headers: { authorization } }).catch(onError);
     if (response) {
       const { vaults, latestTransaction } = response;
-      this.setState({ vaults, latestTransaction });
+      this.setState({
+        vaults: vaults.map((vault, index) => ({ ...vault, color: COLORS[index] })),
+        latestTransaction,
+      });
       console.log('@TODO: We should compare latestTransaction', latestTransaction);
     }
+
+    return response;
   }
 
   getTransactions = async () => {

@@ -33,7 +33,7 @@ class ProviderNavigation extends PureComponent {
 
     stack.pop();
     if (stack.length === 0) stack.push(SESSION);
-    this.setState({ stack, parameters: undefined });
+    this.setState({ stack });
     this.forceUpdate();
   }
 

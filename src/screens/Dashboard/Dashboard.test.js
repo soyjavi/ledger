@@ -2,11 +2,11 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 
 import { C } from 'common';
-import Transaction from './Transaction';
+import Dashboard from './Dashboard';
 
-describe('<Transaction>', () => {
+describe('<Dashboard>', () => {
   it('renders', () => {
-    const tree = renderer.create(<Transaction />).toJSON();
+    const tree = renderer.create(<Dashboard />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 

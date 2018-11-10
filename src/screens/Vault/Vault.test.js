@@ -2,11 +2,11 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 
 import { C } from 'common';
-import Transaction from './Transaction';
+import Vault from './Vault';
 
-describe('<Transaction>', () => {
+describe('<Vault>', () => {
   it('renders', () => {
-    const tree = renderer.create(<Transaction />).toJSON();
+    const tree = renderer.create(<Vault />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 

@@ -1,11 +1,13 @@
 import Profile from './Profile';
 import Session from './Session';
-import Summary from './Summary';
+import Dashboard from './Dashboard';
 import Transaction from './Transaction';
+import Vault from './Vault';
 
 export {
   Profile,
   Session,
-  Summary,
+  Dashboard,
   Transaction,
+  Vault,
 };

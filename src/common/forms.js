@@ -11,15 +11,8 @@ export default {
     },
     category: {
       type: 'select',
-      dataSource: L10N['en-EN'].CATEGORIES,
+      dataSource: L10N['en-EN'].CATEGORIES[TYPE.EXPENSE],
       label: 'l10n.category',
-      style: 'inline2',
-    },
-    type: {
-      type: 'select',
-      defaultValue: TYPE[1],
-      dataSource: Object.values(TYPE),
-      label: 'l10n.type',
       style: 'inline2',
     },
     value: {
@@ -31,16 +24,13 @@ export default {
     currency: {
       disabled: true,
       label: 'l10n.currency',
-      required: true,
       style: 'inline3',
     },
-    title: { label: 'l10n.title', required: true },
-    tags: { type: 'list' },
+    title: { label: 'l10n.title' },
   },
 
   VAULT: {
     title: { label: 'l10n.title', required: true },
-    caption: { label: 'l10n.caption' },
     currency: {
       type: 'select',
       defaultValue: CURRENCIES[0],

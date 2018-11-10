@@ -4,7 +4,7 @@ import { C } from 'common';
 import { LAYOUT, THEME } from 'reactor/common';
 
 const { STYLE: { HEADER_HEIGHT } } = C;
-const { OFFSET } = THEME;
+const { COLOR, OFFSET } = THEME;
 
 export default StyleSheet.create({
   scroll: {
@@ -17,6 +17,7 @@ export default StyleSheet.create({
 
   dialog: {
     justifyContent: 'flex-end',
+    backgroundColor: COLOR.BACKGROUND_OPACITY,
   },
 
   form: {

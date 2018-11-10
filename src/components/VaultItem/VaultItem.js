@@ -3,34 +3,33 @@ import React from 'react';
 import { View } from 'react-native';
 
 import { Consumer } from 'context';
-import { Price, Text, Touchable } from 'reactor/components';
 import { THEME } from 'reactor/common';
+import { Price, Text, Touchable } from 'reactor/components';
+import Chart from '../Chart';
 import styles from './VaultItem.style';
 
 const { COLOR } = THEME;
 
 const VaultItem = (props) => {
   const {
-    balance, caption, currency, title,
+    balance, color, currency, title,
   } = props;
 
   return (
     <Consumer>
-      { ({ navigation }) => (
-        <Touchable
-          rippleColor={COLOR.PRIMARY}
-          style={styles.container}
-          onPress={navigation.goBack}
-        >
-          <View style={styles.texts}>
-            <Text headline level={6} numberOfLines={1}>{title}</Text>
-            <Text level={3} numberOfLines={1}>{caption}</Text>
+      { ({ navigation: { navigate }, l10n }) => (
+        <Touchable rippleColor={COLOR.BASE} style={styles.container} onPress={() => navigate('vault', props)}>
+          <View style={[styles.bullet, color && { backgroundColor: color }]} />
+          <View style={styles.content}>
+            <Text headline level={5} numberOfLines={1}>{title}</Text>
+            <View style={styles.summary}>
+              <View style={styles.texts}>
+                <Text level={2} lighten numberOfLines={1}>{l10n.BALANCE}</Text>
+                <Price headline={false} subtitle level={2} lighten value={balance} symbol={currency} />
+              </View>
+              <Chart color={color} />
+            </View>
           </View>
-          <Price
-            value={parseFloat(balance, 10)}
-            fixed={2}
-            symbol={currency}
-          />
         </Touchable>
       )}
     </Consumer>
@@ -39,14 +38,14 @@ const VaultItem = (props) => {
 
 VaultItem.propTypes = {
   balance: number,
-  caption: string,
+  color: string,
   currency: string,
   title: string,
 };
 
 VaultItem.defaultProps = {
   balance: undefined,
-  caption: undefined,
+  color: undefined,
   currency: undefined,
   title: undefined,
 };

@@ -6,39 +6,47 @@ import { C } from 'common';
 import { Consumer } from 'context';
 import { Price, Text, Touchable } from 'reactor/components';
 import { THEME } from 'reactor/common';
+import { verboseDate } from './modules';
 import styles from './TransactionItem.style';
 
-const { SCREEN, TX: { TYPE: { EXPENSE } } } = C;
+const { COLORS, SCREEN, TX: { TYPE: { EXPENSE } } } = C;
 const { COLOR } = THEME;
 
 const TransactionItem = (props) => {
   const {
-    hash, timestamp, value, title, type, tags, vault,
+    category, hash, timestamp, value, title, type, vault, ...inherit
   } = props;
+  const isHeading = !hash;
+  const isBottom = inherit.last;
 
   return (
     <Consumer>
       { ({
-        store: { vaults = [] },
+        l10n,
         navigation: { navigate },
+        store: { vaults = [] },
       }) => (
         <Touchable
-          rippleColor={COLOR.PRIMARY}
-          style={styles.container}
-          onPress={() => navigate(SCREEN.TRANSACTION, props)}
+          rippleColor={COLOR.BASE}
+          style={[styles.container, isHeading && styles.heading]}
+          onPress={hash ? () => navigate(SCREEN.TRANSACTION, props) : undefined}
         >
+          <View style={[styles.line, isHeading && styles.lineHeading, isBottom && styles.lineBottom]} />
+          <View style={[styles.bullet, hash && { backgroundColor: COLORS[category] }]} />
           <View style={styles.texts}>
-            <Text level={2} lighten numberOfLines={1}>{vaults.find(item => item.hash === vault).title}</Text>
-            <Text headline level={6} numberOfLines={1}>{title}</Text>
-            <Text level={2} lighten numberOfLines={1}>{timestamp}</Text>
-            <Text level={2} numberOfLines={1}>{tags}</Text>
+            { hash
+              ? <Text headline level={6} numberOfLines={1}>{l10n.CATEGORIES[type][category]}</Text>
+              : <Text subtitle level={3} lighten>{verboseDate(timestamp, l10n)}</Text>}
+            <Text level={2} lighten numberOfLines={1}>{title}</Text>
+
           </View>
-          <Price
-            caption={type === EXPENSE ? '-' : '+'}
-            value={parseFloat(value, 10)}
-            fixed={2}
-            symbol={vaults.find(item => item.hash === vault).currency}
-          />
+          { value && (
+            <Price
+              caption={type === EXPENSE ? undefined : '+'}
+              value={parseFloat(value, 10)}
+              fixed={2}
+              symbol={vaults.find(item => item.hash === vault).currency}
+            />)}
         </Touchable>
       )}
     </Consumer>
@@ -46,22 +54,21 @@ const TransactionItem = (props) => {
 };
 
 TransactionItem.propTypes = {
+  category: number,
   hash: string,
-  timestamp: string,
-  value: number,
+  timestamp: string.isRequired,
   title: string,
-  type: string,
-  tags: string,
+  type: number,
+  value: number,
   vault: string,
 };
 
 TransactionItem.defaultProps = {
+  category: undefined,
   hash: undefined,
-  timestamp: undefined,
-  value: undefined,
   title: undefined,
   type: undefined,
-  tags: undefined,
+  value: undefined,
   vault: undefined,
 };
 
