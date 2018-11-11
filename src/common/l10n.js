@@ -27,16 +27,22 @@ export default {
         'Food & Drinks',
         'Hobby & Toys',
         'Travel',
+        'Debt',
         'Investment',
         'Entertainment',
         'Shopping',
-        'Loan',
+        'Utilities',
+        'Health & Insurances',
+        'Personal',
+        'Services',
       ],
       [ // Income
         'Salary',
         'Investment',
       ],
     ],
+
+    CANCEL: 'Cancel',
 
     DASHBOARD: 'Dashboard',
 
@@ -49,11 +55,15 @@ export default {
       'July', 'August', 'September', 'October', 'November', 'December',
     ],
 
+    NEW: 'New',
+
     OVERALL_BALANCE: 'Overall Balance',
 
+    SAVE: 'Save',
     SEARCH: 'Search',
 
     TRANSACTION: 'transaction',
+    TYPE_TRANSACTION: ['Expense', 'Income'],
 
     VAULT: 'Vault',
   },

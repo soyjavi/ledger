@@ -1,4 +1,6 @@
-import { number, string } from 'prop-types';
+import {
+  arrayOf, number, shape, string,
+} from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 
@@ -12,7 +14,7 @@ const { COLOR } = THEME;
 
 const VaultItem = (props) => {
   const {
-    balance, color, currency, title,
+    balance, cashflow: { income, expenses }, chart, color, currency, title,
   } = props;
 
   return (
@@ -25,9 +27,16 @@ const VaultItem = (props) => {
             <View style={styles.summary}>
               <View style={styles.texts}>
                 <Text level={2} lighten numberOfLines={1}>{l10n.BALANCE}</Text>
-                <Price headline={false} subtitle level={2} lighten value={balance} symbol={currency} />
+                <Price
+                  headline={false}
+                  subtitle
+                  level={2}
+                  lighten
+                  value={balance + income - expenses}
+                  symbol={currency}
+                />
               </View>
-              <Chart color={color} />
+              <Chart color={color} values={chart} />
             </View>
           </View>
         </Touchable>
@@ -37,17 +46,18 @@ const VaultItem = (props) => {
 };
 
 VaultItem.propTypes = {
-  balance: number,
+  balance: number.isRequired,
+  cashflow: shape({}),
+  chart: arrayOf(number),
   color: string,
-  currency: string,
-  title: string,
+  currency: string.isRequired,
+  title: string.isRequired,
 };
 
 VaultItem.defaultProps = {
-  balance: undefined,
+  cashflow: undefined,
+  chart: undefined,
   color: undefined,
-  currency: undefined,
-  title: undefined,
 };
 
 export default VaultItem;

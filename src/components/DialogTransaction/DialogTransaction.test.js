@@ -2,11 +2,11 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 
 import { C } from 'common';
-import Profile from './Profile';
+import DialogTransaction from './DialogTransaction';
 
-describe('<Profile>', () => {
+describe('<DialogTransaction>', () => {
   it('renders', () => {
-    const tree = renderer.create(<Profile />).toJSON();
+    const tree = renderer.create(<DialogTransaction />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 

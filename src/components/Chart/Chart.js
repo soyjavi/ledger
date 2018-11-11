@@ -5,24 +5,29 @@ import { View } from 'react-native';
 import { Motion } from 'reactor/components';
 import styles from './Chart.style';
 
-const Chart = ({ color, dataSource }) => (
-  <View style={styles.container}>
-    { dataSource.map((value, index) => (
-      <Motion
-        key={index} // @eslint-disable-line
-        style={[styles.bar, { height: `${value}%` }, color && { backgroundColor: color }]}
-      />))}
-  </View>
-);
+const Chart = ({ color, values }) => {
+  const max = values.length > 0 ? Math.max.apply(Math, values) : 0;
+  const style = [styles.bar, values.length > 12 && styles.barTiny, color && { backgroundColor: color }];
+
+  return (
+    <View style={styles.container}>
+      { values.map((value, index) => (
+        <Motion
+          key={`${index}-${value}`} // @eslint-disable-line
+          style={[...style, { height: `${parseInt((value * 100) / max, 10)}%` }]}
+        />))}
+    </View>
+  );
+};
 
 Chart.propTypes = {
   color: string,
-  dataSource: arrayOf(number),
+  values: arrayOf(number),
 };
 
 Chart.defaultProps = {
   color: undefined,
-  dataSource: [10, 40, 50, 30, 80, 90, 50, 20, 20, 40, 50, 80],
+  values: [],
 };
 
 export default Chart;

@@ -1,47 +1,54 @@
 import React, { PureComponent } from 'react';
 
 import { C, L10N } from 'common';
-import { DialogVault, FloatingButton, Snackbar } from 'components';
+import { FloatingButton, Snackbar } from 'components';
 import { Provider, ConsumerNavigation, ConsumerStore } from 'context';
 import { LayoutView } from 'reactor/components';
 import {
-  Profile, Session, Dashboard, Vault, Transaction,
+  Session, Dashboard, Vault, Transaction,
 } from 'screens';
 
 const { SCREEN, LANGUAGE } = C;
 const {
-  PROFILE, SESSION, DASHBOARD, VAULT, TRANSACTION,
+  SESSION, DASHBOARD, VAULT, TRANSACTION,
 } = SCREEN;
 
 class App extends PureComponent {
   state = {
+    dashboard: false,
     vault: false,
   };
 
-  _onFloatingButton = ({ current, navigate }) => {
-    const { _onToggleVault } = this;
-
-    if (current === DASHBOARD) _onToggleVault();
-    else navigate(SCREEN.TRANSACTION);
-  }
-
-  _onToggleVault = () => this.setState({ vault: !this.state.vault })
-
+  _onDialog = key => this.setState({ [key]: !this.state[key] })
 
   render() {
-    const { _onFloatingButton, _onToggleVault, state: { vault } } = this;
+    const { _onDialog, state } = this;
 
     return (
       <Provider dictionary={L10N} language={LANGUAGE}>
         <ConsumerNavigation>
           { ({
-            navigate, current, stack, parameters,
+            current, stack, parameters,
           }) => (
             <LayoutView>
               <Session backward={current !== SESSION} visible={stack.includes(SESSION)} />
-              <Dashboard backward={current !== DASHBOARD} visible={stack.includes(DASHBOARD)} />
-              <Profile backward={current !== PROFILE} visible={stack.includes(PROFILE)} />
-              <Vault backward={current !== VAULT} visible={stack.includes(VAULT)} dataSource={parameters} />
+              <Dashboard
+                backward={current !== DASHBOARD}
+                dialog={state[current]}
+                onDialog={() => _onDialog(current)}
+                visible={stack.includes(DASHBOARD)}
+              />
+              <ConsumerStore>
+                { ({ txs }) => (
+                  <Vault
+                    backward={current !== VAULT}
+                    dataSource={{ ...parameters, txs }}
+                    dialog={state[current]}
+                    onDialog={() => _onDialog(current)}
+                    visible={stack.includes(VAULT)}
+                  />
+                )}
+              </ConsumerStore>
               <Transaction
                 backward={current !== TRANSACTION}
                 visible={stack.includes(TRANSACTION)}
@@ -54,16 +61,13 @@ class App extends PureComponent {
               </ConsumerStore>
 
               <FloatingButton
-                onPress={() => _onFloatingButton({ current, navigate })}
+                onPress={() => _onDialog(current)}
                 visible={current === DASHBOARD || current === VAULT}
               />
-
-              { current === DASHBOARD && (<DialogVault visible={vault} onClose={_onToggleVault} />) }
             </LayoutView>
           )}
         </ConsumerNavigation>
       </Provider>
-
     );
   }
 }

@@ -13,7 +13,6 @@ export default {
 
   SCREEN: {
     SESSION: 'session',
-    PROFILE: 'profile',
     DASHBOARD: 'dashboard',
     VAULT: 'vault',
     TRANSACTION: 'transaction',

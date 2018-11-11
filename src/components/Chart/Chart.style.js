@@ -7,17 +7,23 @@ const { COLOR, UNIT } = THEME;
 export default StyleSheet.create({
   container: {
     ...LAYOUT.STYLE.ROW,
-    height: UNIT * 4,
-    width: UNIT * 12.8,
-    justifyContent: 'space-between',
     alignItems: 'flex-end',
+    height: UNIT * 4,
+    justifyContent: 'space-between',
   },
 
   bar: {
     backgroundColor: COLOR.BASE,
-    flex: 1,
-    marginHorizontal: UNIT * 0.1,
+    borderRadius: UNIT * 0.2,
     height: '100%',
-    borderRadius: UNIT / 4,
+    marginHorizontal: UNIT * 0.2,
+    minHeight: UNIT * 0.4,
+    width: UNIT * 0.5,
+  },
+
+  barTiny: {
+    marginHorizontal: UNIT * 0.1,
+    minHeight: UNIT * 0.2,
+    width: UNIT * 0.2,
   },
 });

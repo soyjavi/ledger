@@ -1,85 +1,104 @@
-import { bool, shape } from 'prop-types';
-import React, { Fragment, Component } from 'react';
+import { bool, func, shape } from 'prop-types';
+import React, { Fragment, PureComponent } from 'react';
 import { ScrollView, View } from 'react-native';
 
-import { Chart, TransactionItem } from 'components';
+import { C, cashflow } from 'common';
+import { Chart, DialogTransaction, TransactionItem } from 'components';
 import { Header } from 'containers';
 import { Consumer } from 'context';
 import {
   Price, Text, Viewport,
 } from 'reactor/components';
-import { groupByDay } from './modules';
+import { chartCashflow, groupByDay } from './modules';
 import styles from './Vault.style';
 
-class Vault extends Component {
+const { TX: { TYPE: { INCOME, EXPENSE } } } = C;
+
+class Vault extends PureComponent {
   static propTypes = {
     dataSource: shape({}),
+    dialog: bool,
+    onDialog: func,
     visible: bool,
   };
 
   static defaultProps = {
-    dataSource: undefined,
+    dataSource: {},
+    dialog: false,
+    onDialog() {},
     visible: false,
   };
 
   state = {
-    busy: false,
+    cashflow: {},
     date: '2018-11',
+    txs: [],
   };
 
-  // shouldComponentUpdate() {
-  //   const { props: { ...inherit } } = this;
+  componentWillReceiveProps({ visible, dataSource }) {
+    const { _onDate, props, state } = this;
 
-  //   return !inherit.backward;
-  // }
+    if (visible && props.visible === false) _onDate(state.date, dataSource);
+  }
+
+  _onDate = (date = this.state.date, dataSource = this.props.dataSource) => {
+    const txs = groupByDay(dataSource.txs, dataSource.hash, date);
+    this.setState({
+      cashflow: cashflow(txs),
+      chart: chartCashflow(txs),
+      date,
+      txs,
+    });
+  }
 
   render() {
     const {
-      props: { dataSource, visible, ...inherit },
-      state: { busy, date },
+      props: {
+        dataSource: {
+          balance, cashflow: { income, expenses } = {}, color, currency, hash, title,
+        },
+        dialog,
+        onDialog,
+        visible,
+        ...inherit
+      },
+      state,
     } = this;
 
     return (
       <Viewport {...inherit} scroll={false} visible={visible}>
+        { }
         <Consumer>
-          { ({
-            navigation: {
-              goBack,
-              parameters: {
-                color, hash: vault, title, balance, currency,
-              } = {},
-            },
-            l10n,
-            store,
-          }) => (
+          { ({ navigation, l10n }) => (
             <Fragment>
               <Header
-                busy={busy}
-                left={{ title: l10n.BACK, onPress: () => goBack() }}
+                left={{ title: l10n.BACK, onPress: () => navigation.goBack() }}
                 title={title}
                 right={{ title: l10n.SEARCH }}
-                visible
+                visible={visible}
               />
               <ScrollView style={styles.scroll}>
                 <View style={styles.summary}>
                   <Text lighten subtitle level={3}>{l10n.OVERALL_BALANCE}</Text>
-                  <Price level={5} value={balance} symbol={currency} />
+                  <Price level={5} value={balance + income - expenses} symbol={currency} />
                   <View style={styles.row}>
                     <View style={[styles.cashflow, styles.row]}>
                       <Text style={styles.bullet}>
                         ▲
                       </Text>
-                      <Price caption="+" headline={false} subtitle level={3} lighten value={123} />
+                      <Price caption="+" headline={false} subtitle level={3} lighten value={state.cashflow.income} />
                       <Text style={[styles.bullet, styles.marginRight]}>
                         ▲
                       </Text>
-                      <Price headline={false} subtitle level={3} lighten value={12223} />
+                      <Price headline={false} subtitle level={3} lighten value={state.cashflow.expenses} />
                     </View>
-                    <Chart color={color} />
+                    <Chart color={color} values={state.chart} />
                   </View>
                 </View>
-                { groupByDay(store, vault, date).map(tx => <TransactionItem key={tx.hash} {...tx} />)}
+                { state.txs.map(tx => <TransactionItem key={tx.hash || tx.timestamp} {...tx} />)}
               </ScrollView>
+
+              { visible && <DialogTransaction type={EXPENSE} vault={hash} onClose={onDialog} visible={dialog} /> }
             </Fragment>
           )}
         </Consumer>

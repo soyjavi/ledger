@@ -1,9 +1,9 @@
 import { node } from 'prop-types';
 import React, { Component, createContext } from 'react';
 
-import { C, fetch } from 'common';
+import { C, cashflow, fetch } from 'common';
 import { Fingerprint } from 'reactor/context/Amplitude/modules';
-import AsyncStore from './modules/AsyncStore';
+import { AsyncStore } from './modules';
 
 const { COLORS, NAME } = C;
 const KEY = `${NAME}:context:store`;
@@ -59,26 +59,36 @@ class ProviderStore extends Component {
   }
 
   getProfile = async () => {
-    const { onError, state: { hash: authorization } } = this;
+    const { onError, state: { hash: authorization, txs } } = this;
 
     const response = await fetch({ service: 'profile', headers: { authorization } }).catch(onError);
     if (response) {
       const { vaults, latestTransaction } = response;
+
+      console.log('@TODO: We should compare latestTransaction', latestTransaction);
+
       this.setState({
-        vaults: vaults.map((vault, index) => ({ ...vault, color: COLORS[index] })),
+        vaults: vaults.map((vault, index) => ({
+          ...vault,
+          cashflow: cashflow(txs.filter(tx => tx.vault === vault.hash)),
+          chart: [10, 40, 50, 30, 80, 90, 50, 20, 20, 40, 50, 80],
+          color: COLORS[index],
+        })),
         latestTransaction,
       });
-      console.log('@TODO: We should compare latestTransaction', latestTransaction);
     }
 
     return response;
   }
 
-  getTransactions = async () => {
-    const { onError, state: { hash: authorization } } = this;
+  getTransactions = async (year, month) => {
+    const { onError, state: { fingerprint, pin, hash: authorization } } = this;
 
-    const response = await fetch({ service: 'transactions', headers: { authorization } }).catch(onError);
-    if (response) this.setState({ txs: response.txs });
+    const { txs } = await fetch({ service: 'transactions', headers: { authorization } }).catch(onError);
+    if (txs) {
+      await AsyncStore.setItem(KEY, { fingerprint, pin, txs });
+      this.setState({ txs });
+    }
   }
 
   onTransaction = async (props) => {
@@ -116,10 +126,7 @@ class ProviderStore extends Component {
     return vault;
   }
 
-  onError = (error) => {
-    console.log('!', error);
-    this.setState({ error: error ? error.message : undefined });
-  }
+  onError = error => this.setState({ error: error ? error.message : undefined });
 
   wipe = () => this.setState({});
 

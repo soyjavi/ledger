@@ -1,4 +1,5 @@
 import Chart from './Chart';
+import DialogTransaction from './DialogTransaction';
 import DialogVault from './DialogVault';
 import FloatingButton from './FloatingButton';
 import OverallBalance from './OverallBalance';
@@ -8,6 +9,7 @@ import VaultItem from './VaultItem';
 
 export {
   Chart,
+  DialogTransaction,
   DialogVault,
   FloatingButton,
   OverallBalance,

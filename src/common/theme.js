@@ -9,7 +9,7 @@ export default {
     BACKGROUND: '#fff',
     BACKGROUND_OPACITY: 'rgba(255,255,255,0.9)',
     // DARK-MODE
-    // BACKGROUND: '#222',
+    // BACKGROUND: '#000',
     // BACKGROUND_OPACITY: 'rgba(0,0,0,0.9)',
     // BASE: '#333',
 

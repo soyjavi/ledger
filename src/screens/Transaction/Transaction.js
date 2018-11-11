@@ -2,18 +2,10 @@ import { bool, shape } from 'prop-types';
 import React, { PureComponent } from 'react';
 import { ScrollView } from 'react-native';
 
-import { FORM } from 'common';
 import { Header } from 'containers';
-import { Consumer, ConsumerStore } from 'context';
-import {
-  Form, Text, Viewport,
-} from 'reactor/components';
-import hydrateForm from './modules/hydrateForm';
+import { Consumer } from 'context';
+import { Text, Viewport } from 'reactor/components';
 import styles from './Transaction.style';
-
-const DEFAULT_FORM = {
-  // value: '0',
-};
 
 class Transaction extends PureComponent {
   static propTypes = {
@@ -26,77 +18,28 @@ class Transaction extends PureComponent {
     visible: false,
   };
 
-  state = {
-    busy: false,
-    form: DEFAULT_FORM,
-    valid: false,
-  };
-
-  _onChange = (form) => {
-    this.setState({ form });
-  }
-
-  _onSubmit = async ({
-    navigation,
-    store: { latestTransaction: { hash: previousHash }, onTransaction, vaults },
-  }) => {
-    const { state: { form: { category, value, vault, ...props } } } = this;
-
-    this.setState({ busy: true });
-    const response = await onTransaction({
-      ...props,
-      previousHash,
-      category: 0,
-      value: parseFloat(value, 10),
-      vault: vault
-        ? vaults.find(item => item.title === vault).hash
-        : vaults[0].hash,
-    });
-    this.setState({ busy: false });
-
-    if (response) navigation.goBack();
-  }
-
-  _onValid = valid => this.setState({ valid })
+  // @TODO: Handle ShouldComponentUpdate()
 
   render() {
     const {
-      _onChange, _onSubmit, _onValid,
       props: { dataSource: { hash } = {}, visible, ...inherit },
-      state: { busy, form, valid },
     } = this;
 
     return (
       <Viewport {...inherit} scroll={false} visible={visible}>
         <Consumer>
-          { ({ navigation, store, l10n }) => (
+          { ({ navigation, l10n }) => (
             <Header
-              busy={busy}
               left={{ title: '$back', onPress: () => navigation.goBack() }}
               title={l10n.TRANSACTION}
-              right={!hash && valid
-                ? { title: '$save', onPress: () => _onSubmit({ navigation, store }) }
-                : undefined}
-              visible
+              right={{ title: '$clone' }}
+              visible={visible}
             />
           )}
         </Consumer>
 
         <ScrollView style={styles.scroll}>
-          <ConsumerStore>
-            { ({ vaults }) => (
-              !hash
-                ? (
-                  <Form
-                    attributes={hydrateForm(FORM.TRANSACTION, 'vault', vaults)}
-                    onValid={_onValid}
-                    onChange={_onChange}
-                    style={styles.form}
-                    value={form}
-                  />)
-                : <Text>{hash}</Text>
-            )}
-          </ConsumerStore>
+          <Text>{hash}</Text>
         </ScrollView>
       </Viewport>
     );
