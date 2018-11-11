@@ -38,7 +38,7 @@ export default StyleSheet.create({
   row: LAYOUT.STYLE.ROW,
 
   scroll: {
-    paddingTop: HEADER_HEIGHT,
+    paddingVertical: HEADER_HEIGHT,
   },
 
   summary: {

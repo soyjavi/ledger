@@ -71,6 +71,10 @@ class Vault extends PureComponent {
       state: { dialog, type, ...state },
     } = this;
 
+    const cashflowProps = {
+      headline: false, subtitle: true, level: 3, lighten: true, symbol: currency,
+    };
+
     return (
       <Viewport {...inherit} scroll={false} visible={visible}>
         { }
@@ -92,11 +96,11 @@ class Vault extends PureComponent {
                       <Text style={styles.bullet}>
                         ▲
                       </Text>
-                      <Price caption="+" headline={false} subtitle level={3} lighten value={state.cashflow.income} />
+                      <Price caption="+" {...cashflowProps} value={state.cashflow.income} />
                       <Text style={[styles.bullet, styles.marginRight]}>
                         ▲
                       </Text>
-                      <Price headline={false} subtitle level={3} lighten value={state.cashflow.expenses} />
+                      <Price {...cashflowProps} value={state.cashflow.expenses} />
                     </View>
                     <Chart color={color} values={state.chart} />
                   </View>

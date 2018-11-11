@@ -58,7 +58,7 @@ class FloatingButton extends PureComponent {
         { options && (
           <View style={styles.options}>
             { options.map((option, index) => (
-              <Motion delay={index * (DURATION / 2)} preset="fade" visible={opened}>
+              <Motion key={option} delay={index * (DURATION / 2)} preset="fade" visible={opened}>
                 <Touchable style={styles.option} onPress={() => _onOption(index)}>
                   <Text subtitle level={3}>{option}</Text>
                   <View style={[styles.bullet, { backgroundColor: COLORS[index] }]} />

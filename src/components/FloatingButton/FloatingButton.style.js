@@ -9,29 +9,29 @@ const CONTAINER_SIZE = UNIT * 5.6;
 
 export default StyleSheet.create({
   container: {
-    position: 'absolute',
     bottom: OFFSET,
+    height: CONTAINER_SIZE,
+    position: 'absolute',
     right: OFFSET,
     width: CONTAINER_SIZE,
-    height: CONTAINER_SIZE,
     zIndex: 1,
   },
 
   bullet: {
-    width: UNIT,
-    height: UNIT,
-    borderRadius: UNIT / 2,
     backgroundColor: COLOR.BASE,
+    borderRadius: UNIT / 2,
+    height: UNIT,
     marginLeft: UNIT,
+    width: UNIT,
   },
 
   button: {
     ...LAYOUT.STYLE.SHADOW,
-    width: CONTAINER_SIZE,
-    height: CONTAINER_SIZE,
-    borderRadius: CONTAINER_SIZE / 2,
-    backgroundColor: COLOR.TEXT,
     alignItems: 'center',
+    backgroundColor: COLOR.TEXT,
+    borderRadius: CONTAINER_SIZE / 2,
+    height: CONTAINER_SIZE,
+    width: CONTAINER_SIZE,
   },
 
   motionButton: {
@@ -43,20 +43,20 @@ export default StyleSheet.create({
   },
 
   options: {
-    position: 'absolute',
-    top: -(CONTAINER_SIZE + (OFFSET * 1.5)),
-    right: (CONTAINER_SIZE / 4),
     alignItems: 'flex-end',
+    position: 'absolute',
+    right: (CONTAINER_SIZE / 4),
+    top: -(CONTAINER_SIZE + (OFFSET * 1.5)),
   },
 
   option: {
     ...LAYOUT.STYLE.SHADOW,
     ...LAYOUT.STYLE.ROW,
-    backgroundColor: COLOR.BACKGROUND_OPACITY,
-    paddingVertical: UNIT / 2,
-    paddingHorizontal: UNIT,
+    backgroundColor: COLOR.BACKGROUND,
     borderRadius: UNIT * 2,
     marginVertical: OFFSET / 2,
+    paddingHorizontal: UNIT,
+    paddingVertical: UNIT / 2,
   },
 
   text: {

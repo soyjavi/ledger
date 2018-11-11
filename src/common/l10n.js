@@ -35,10 +35,12 @@ export default {
         'Health & Insurances',
         'Personal',
         'Services',
+        'Transfer',
       ],
       [ // Income
         'Salary',
         'Investment',
+        'Transfer',
       ],
     ],
 
@@ -61,9 +63,12 @@ export default {
     SEARCH: 'Search',
 
     TRANSACTION: 'transaction',
+    TODAY: 'Today',
     TYPE_TRANSACTION: ['Expense', 'Income'],
 
     VAULT: 'Vault',
+
+    YESTERDAY: 'Yesterday',
   },
 
   'es-ES': {
