@@ -18,6 +18,7 @@ export default {
     TRANSACTION: 'transaction',
   },
   STYLE: {
+    DASHBOARD_HEIGHT: UNIT * 16,
     HEADER_HEIGHT: UNIT * 5.8,
   },
   SYMBOL: {

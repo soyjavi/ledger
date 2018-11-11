@@ -44,8 +44,6 @@ export default {
 
     CANCEL: 'Cancel',
 
-    DASHBOARD: 'Dashboard',
-
     EXPENSES: 'Expenses',
 
     INCOMES: 'Incomes',

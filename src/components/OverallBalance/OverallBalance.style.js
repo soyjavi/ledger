@@ -18,7 +18,11 @@ export default StyleSheet.create({
 
   container: {
     alignItems: 'center',
+    backgroundColor: COLOR.BACKGROUND_OPACITY,
     paddingVertical: OFFSET,
+    position: 'absolute',
+    width: '100%',
+    zIndex: 1,
   },
 
   title: {
