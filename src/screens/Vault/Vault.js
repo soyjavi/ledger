@@ -1,9 +1,11 @@
-import { bool, func, shape } from 'prop-types';
+import { bool, shape } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
 import { ScrollView, View } from 'react-native';
 
 import { C, cashflow } from 'common';
-import { Chart, DialogTransaction, TransactionItem } from 'components';
+import {
+  Chart, DialogTransaction, FloatingButton, TransactionItem,
+} from 'components';
 import { Header } from 'containers';
 import { Consumer } from 'context';
 import {
@@ -12,26 +14,24 @@ import {
 import { chartCashflow, groupByDay } from './modules';
 import styles from './Vault.style';
 
-const { TX: { TYPE: { INCOME, EXPENSE } } } = C;
+const { TX: { TYPE: { EXPENSE } } } = C;
 
 class Vault extends PureComponent {
   static propTypes = {
     dataSource: shape({}),
-    dialog: bool,
-    onDialog: func,
     visible: bool,
   };
 
   static defaultProps = {
     dataSource: {},
-    dialog: false,
-    onDialog() {},
     visible: false,
   };
 
   state = {
     cashflow: {},
     date: '2018-11',
+    dialog: false,
+    type: EXPENSE,
     txs: [],
   };
 
@@ -51,18 +51,24 @@ class Vault extends PureComponent {
     });
   }
 
+  _onToggleDialog = () => {
+    const { state: { dialog } } = this;
+    this.setState({ dialog: !dialog });
+  }
+
+  _onType = type => this.setState({ dialog: type !== undefined, type });
+
   render() {
     const {
+      _onToggleDialog, _onType,
       props: {
         dataSource: {
           balance, cashflow: { income, expenses } = {}, color, currency, hash, title,
         },
-        dialog,
-        onDialog,
         visible,
         ...inherit
       },
-      state,
+      state: { dialog, type, ...state },
     } = this;
 
     return (
@@ -98,7 +104,12 @@ class Vault extends PureComponent {
                 { state.txs.map(tx => <TransactionItem key={tx.hash || tx.timestamp} {...tx} />)}
               </ScrollView>
 
-              { visible && <DialogTransaction type={EXPENSE} vault={hash} onClose={onDialog} visible={dialog} /> }
+              <FloatingButton
+                onPress={dialog ? _onToggleDialog : _onType}
+                options={l10n.TYPE_TRANSACTION}
+                visible={!dialog && !inherit.backward}
+              />
+              { visible && <DialogTransaction type={type} vault={hash} onClose={_onToggleDialog} visible={dialog} /> }
             </Fragment>
           )}
         </Consumer>
