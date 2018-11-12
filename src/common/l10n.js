@@ -46,9 +46,12 @@ export default {
 
     CANCEL: 'Cancel',
 
+    ENTER_PIN: 'Enter your pin',
     EXPENSES: 'Expenses',
 
     INCOMES: 'Incomes',
+
+    LOADING_PROFILE: 'Wait a moment, syncing your blockchain.',
 
     MONTHS: [
       'January', 'February', 'March', 'April', 'May', 'June',
@@ -67,6 +70,11 @@ export default {
     TYPE_TRANSACTION: ['Expense', 'Income'],
 
     VAULT: 'Vault',
+
+    WELCOME: 'Welcome to Voltvault',
+    WELCOME_CAPTION: '$This is your first...',
+    WELCOME_BACK: 'Welcome Back',
+    WELCOME_BACK_CAPTION: 'Still remember that knock-knock combination we agreed on?',
 
     YESTERDAY: 'Yesterday',
   },

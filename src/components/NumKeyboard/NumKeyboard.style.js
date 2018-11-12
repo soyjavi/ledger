@@ -2,16 +2,10 @@ import { StyleSheet } from 'react-native';
 
 import { THEME } from 'reactor/common';
 
-const {
-  COLOR, OFFSET, UNIT,
-} = THEME;
+const { UNIT } = THEME;
 
 export default StyleSheet.create({
   container: {
-    position: 'absolute',
-    bottom: OFFSET,
-    left: 0,
-    right: 0,
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -19,15 +13,16 @@ export default StyleSheet.create({
     alignSelf: 'flex-end',
   },
 
-  key: {
+  touchable: {
     alignItems: 'center',
     alignContent: 'center',
-    justifyContent: 'center',
-    width: UNIT * 10.6,
     height: UNIT * 5.6,
+    justifyContent: 'center',
+    minWidth: UNIT * 5.6,
+    width: '33%',
   },
 
-  number: {
-    color: COLOR.WHITE,
+  key: {
+    fontSize: UNIT * 2.4,
   },
 });
