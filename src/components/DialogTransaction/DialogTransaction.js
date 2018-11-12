@@ -50,7 +50,7 @@ class DialogTransaction extends PureComponent {
 
     this.setState({ busy: true });
     const response = await onTransaction({
-      category: l10n.CATEGORIES[type].indexOf(category),
+      category: category ? l10n.CATEGORIES[type].indexOf(category) : 0,
       previousHash,
       title,
       type,
@@ -71,7 +71,12 @@ class DialogTransaction extends PureComponent {
     return (
       <Consumer>
         { ({ l10n, store }) => (
-          <Dialog title={`${l10n.NEW} ${l10n.TYPE_TRANSACTION[type]}`} visible={visible} styleContainer={styles.dialog}>
+          <Dialog
+            title={`${l10n.NEW} ${l10n.TYPE_TRANSACTION[type]}`}
+            visible={visible}
+            style={styles.frame}
+            styleContainer={styles.dialog}
+          >
             <Text lighten level={2}>
               $Lorem Ipsum is simply dummy text of the printing and typesetting industry.
             </Text>

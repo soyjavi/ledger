@@ -1,10 +1,11 @@
 import { StyleSheet } from 'react-native';
 
 import { C } from 'common';
-import { LAYOUT, THEME } from 'reactor/common';
+import { ENV, LAYOUT, THEME } from 'reactor/common';
 
 const { STYLE: { HEADER_HEIGHT } } = C;
-const { COLOR, OFFSET } = THEME;
+const { IS_NATIVE } = ENV;
+const { COLOR, OFFSET, UNIT } = THEME;
 
 export default StyleSheet.create({
   scroll: {
@@ -18,6 +19,12 @@ export default StyleSheet.create({
   dialog: {
     justifyContent: 'flex-end',
     backgroundColor: COLOR.BACKGROUND_OPACITY,
+  },
+
+  frame: {
+    shadowColor: IS_NATIVE ? 'transparent' : undefined,
+    maxHeight: UNIT * 40,
+    alignSelf: 'flex-end',
   },
 
   form: {

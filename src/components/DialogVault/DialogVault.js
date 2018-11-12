@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
 import { FORM } from 'common';
-import { ConsumerStore } from 'context';
+import { Consumer } from 'context';
 import {
   Button, Dialog, Form, Text,
 } from 'reactor/components';
@@ -51,9 +51,14 @@ class DialogVault extends PureComponent {
     } = this;
 
     return (
-      <ConsumerStore>
-        { store => (
-          <Dialog title="$New Vault" visible={visible} styleContainer={styles.dialog}>
+      <Consumer>
+        { ({ l10n, store }) => (
+          <Dialog
+            style={styles.frame}
+            styleContainer={styles.dialog}
+            title={`${l10n.NEW} ${l10n.VAULT}`}
+            visible={visible}
+          >
             <Text lighten level={2}>
               $Lorem Ipsum is simply dummy text of the printing and typesetting industry.
             </Text>
@@ -64,7 +69,7 @@ class DialogVault extends PureComponent {
             </View>
           </Dialog>
         )}
-      </ConsumerStore>
+      </Consumer>
     );
   }
 }
