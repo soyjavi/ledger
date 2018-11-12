@@ -1,5 +1,5 @@
 import {
-  arrayOf, number, shape, string,
+  arrayOf, func, number, shape, string,
 } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
@@ -14,13 +14,13 @@ const { COLOR } = THEME;
 
 const VaultItem = (props) => {
   const {
-    balance, cashflow: { income, expenses }, chart, color, currency, title,
+    balance, cashflow: { income, expenses }, chart, color, currency, onPress, title,
   } = props;
 
   return (
     <Consumer>
-      { ({ navigation: { navigate }, l10n }) => (
-        <Touchable rippleColor={COLOR.BASE} style={styles.container} onPress={() => navigate('vault', props)}>
+      { ({ l10n }) => (
+        <Touchable rippleColor={COLOR.BASE} style={styles.container} onPress={onPress}>
           <View style={[styles.bullet, color && { backgroundColor: color }]} />
           <View style={styles.content}>
             <Text headline level={5} numberOfLines={1}>{title}</Text>
@@ -51,6 +51,7 @@ VaultItem.propTypes = {
   chart: arrayOf(number),
   color: string,
   currency: string.isRequired,
+  onPress: func.isRequired,
   title: string.isRequired,
 };
 

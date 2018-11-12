@@ -3,7 +3,7 @@ import React, { Component, createContext } from 'react';
 
 import { C, cashflow, fetch } from 'common';
 import { Fingerprint } from 'reactor/context/Amplitude/modules';
-import { AsyncStore } from './modules';
+import { AsyncStore, groupByDay } from './modules';
 
 const { COLORS, NAME } = C;
 const KEY = `${NAME}:context:store`;
@@ -22,6 +22,8 @@ class ProviderStore extends Component {
     error: undefined,
     hash: undefined,
     latestTransaction: undefined,
+    queryProps: {},
+    queryTxs: [],
     // -- STORAGE --------------------------------------------------------------
     fingerprint: undefined,
     pin: undefined,
@@ -40,6 +42,15 @@ class ProviderStore extends Component {
 
     await AsyncStore.setItem(KEY, store);
     this.setState(store);
+  }
+
+  query = (queryProps) => {
+    const { state: { txs } } = this;
+    let queryTxs = [];
+
+    if (queryProps.vault) queryTxs = groupByDay(txs, queryProps);
+
+    this.setState({ queryProps, queryTxs });
   }
 
   getHash = async (pin) => {
@@ -81,7 +92,7 @@ class ProviderStore extends Component {
     return response;
   }
 
-  getTransactions = async (year, month) => {
+  getTransactions = async () => {
     const { onError, state: { fingerprint, pin, hash: authorization } } = this;
 
     const { txs } = await fetch({ service: 'transactions', headers: { authorization } }).catch(onError);
@@ -92,13 +103,10 @@ class ProviderStore extends Component {
   }
 
   onTransaction = async (props) => {
-    const { onError, state: { hash: authorization, txs } } = this;
+    const { onError, state: { hash: authorization, queryProps, txs } } = this;
 
     const tx = await fetch({
-      method: 'POST',
-      service: 'transaction',
-      headers: { authorization },
-      ...props,
+      method: 'POST', service: 'transaction', headers: { authorization }, ...props,
     }).catch(onError);
 
     if (tx) {
@@ -106,6 +114,7 @@ class ProviderStore extends Component {
         txs: [...txs, tx],
         latestTransaction: tx,
       });
+      this.query(queryProps);
     }
 
     return tx;
@@ -115,10 +124,7 @@ class ProviderStore extends Component {
     const { onError, state: { hash: authorization, vaults } } = this;
 
     const vault = await fetch({
-      method: 'POST',
-      service: 'vault',
-      headers: { authorization },
-      ...props,
+      method: 'POST', service: 'vault', headers: { authorization }, ...props,
     }).catch(onError);
 
     if (vault) this.setState({ vaults: [...vaults, vault] });
@@ -132,7 +138,7 @@ class ProviderStore extends Component {
 
   render() {
     const {
-      getHash, getProfile, getTransactions, onError, onTransaction, onVault, wipe,
+      getHash, getProfile, getTransactions, onError, onTransaction, onVault, query, wipe,
       props: { children },
       state,
     } = this;
@@ -140,7 +146,7 @@ class ProviderStore extends Component {
     return (
       <Provider
         value={{
-          getHash, getProfile, getTransactions, onError, onTransaction, onVault, wipe, ...state,
+          getHash, getProfile, getTransactions, onError, onTransaction, onVault, query, wipe, ...state,
         }}
       >
         { children }

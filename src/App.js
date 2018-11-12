@@ -22,15 +22,7 @@ export default () => (
         <LayoutView>
           <Session backward={current !== SESSION} visible={stack.includes(SESSION)} />
           <Dashboard backward={current !== DASHBOARD} visible={stack.includes(DASHBOARD)} />
-          <ConsumerStore>
-            { ({ txs }) => (
-              <Vault
-                backward={current !== VAULT}
-                dataSource={{ ...parameters, txs }}
-                visible={stack.includes(VAULT)}
-              />
-            )}
-          </ConsumerStore>
+          <Vault backward={current !== VAULT} dataSource={parameters} visible={stack.includes(VAULT)} />
           <Transaction
             backward={current !== TRANSACTION}
             visible={stack.includes(TRANSACTION)}

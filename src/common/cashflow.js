@@ -1,8 +1,8 @@
-import { C } from 'common';
+import C from './constants';
 
 const { TX: { TYPE } } = C;
 
-export default (txs) => {
+export default (txs = []) => {
   let income = 0;
   let expenses = 0;
 

@@ -6,6 +6,7 @@ import NumKeyboard from './NumKeyboard';
 import OverallBalance from './OverallBalance';
 import Snackbar from './Snackbar';
 import TransactionItem from './TransactionItem';
+import VaultBalance from './VaultBalance';
 import VaultItem from './VaultItem';
 
 export {
@@ -17,5 +18,6 @@ export {
   OverallBalance,
   Snackbar,
   TransactionItem,
+  VaultBalance,
   VaultItem,
 };

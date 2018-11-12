@@ -17,8 +17,8 @@ export default StyleSheet.create({
     ...LAYOUT.STYLE.ROW,
     alignItems: 'flex-start',
     paddingHorizontal: OFFSET,
-    paddingTop: UNIT,
-    marginBottom: UNIT,
+    paddingTop: OFFSET,
+    // marginBottom: UNIT,
   },
 
   content: {
