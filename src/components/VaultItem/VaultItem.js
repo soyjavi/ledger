@@ -4,12 +4,14 @@ import {
 import React from 'react';
 import { View } from 'react-native';
 
+import { C } from 'common';
 import { Consumer } from 'context';
 import { THEME } from 'reactor/common';
 import { Price, Text, Touchable } from 'reactor/components';
 import Chart from '../Chart';
 import styles from './VaultItem.style';
 
+const { SYMBOL } = C;
 const { COLOR } = THEME;
 
 const VaultItem = (props) => {
@@ -33,7 +35,7 @@ const VaultItem = (props) => {
                   level={2}
                   lighten
                   value={balance + income - expenses}
-                  symbol={currency}
+                  symbol={SYMBOL[currency]}
                 />
               </View>
               <Chart color={color} values={chart} />

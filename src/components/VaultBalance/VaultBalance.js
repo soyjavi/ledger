@@ -1,19 +1,21 @@
 import React from 'react';
 import { View } from 'react-native';
 
-import { cashflow } from 'common';
+import { C, cashflow } from 'common';
 import { Chart } from 'components';
 import { Consumer } from 'context';
 import { Price, Text } from 'reactor/components';
 import { chartCashflow } from './modules';
 import styles from './VaultBalance.style';
 
+const { SYMBOL } = C;
+
 export default ({ dataSource = {}, txs }) => {
   const {
     balance, cashflow: { income, expenses } = {}, color, currency,
   } = dataSource;
   const priceProps = {
-    headline: false, subtitle: true, level: 3, lighten: true, symbol: currency,
+    headline: false, subtitle: true, level: 3, lighten: true, symbol: SYMBOL[currency],
   };
   const vaultCashflow = cashflow(txs);
 
@@ -22,7 +24,7 @@ export default ({ dataSource = {}, txs }) => {
       { ({ l10n }) => (
         <View style={styles.container}>
           <Text lighten subtitle level={3}>{l10n.OVERALL_BALANCE}</Text>
-          <Price level={5} value={balance + income - expenses} symbol={currency} />
+          <Price level={5} value={balance + income - expenses} symbol={SYMBOL[currency]} />
           <View style={styles.row}>
             <View style={[styles.cashflow, styles.row]}>
               <Text style={styles.bullet}>

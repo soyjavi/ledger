@@ -41,7 +41,7 @@ class Vault extends PureComponent {
   render() {
     const {
       _onToggleDialog, _onType,
-      props: { dataSource: { hash, title }, visible, ...inherit },
+      props: { dataSource: { currency, hash, title }, visible, ...inherit },
       state: { dialog, type },
     } = this;
 
@@ -58,7 +58,7 @@ class Vault extends PureComponent {
               />
               <ScrollView style={styles.scroll}>
                 <VaultBalance dataSource={vaults.find(vault => vault.hash === hash)} txs={queryTxs} />
-                { queryTxs.map(tx => <TransactionItem key={tx.hash || tx.timestamp} {...tx} />)}
+                { queryTxs.map(tx => <TransactionItem key={tx.hash || tx.timestamp} currency={currency} {...tx} />)}
               </ScrollView>
 
               <FloatingButton

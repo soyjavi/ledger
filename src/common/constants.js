@@ -1,3 +1,5 @@
+import { Platform } from 'react-native';
+
 import { THEME } from 'reactor/common';
 import PKG from '../../package.json';
 
@@ -5,7 +7,7 @@ const { UNIT } = THEME;
 
 export default {
   COLORS: ['#00C09A', '#8460D0', '#639CEB', '#CA66BD', '#28BC34', '#50CDEA', '#F45D88', '#FF7233'],
-  CURRENCIES: ['USD', 'EUR', 'THB', 'BTC'],
+  CURRENCIES: ['USD', 'EUR', 'GBP', 'JPY', 'THB', 'BTC'],
 
   LANGUAGE: 'en-EN',
 
@@ -23,7 +25,11 @@ export default {
   },
   SYMBOL: {
     USD: '$',
-    EUR: 'E',
+    EUR: '€',
+    GBP: '£',
+    JPY: '¥',
+    THB: '฿',
+    BTC: Platform.OS === 'android' && Platform.Version < 26 ? 'Ƀ' : '₿',
   },
 
   TX: {

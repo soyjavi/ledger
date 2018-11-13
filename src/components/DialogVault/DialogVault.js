@@ -2,17 +2,15 @@ import { bool, func } from 'prop-types';
 import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
-import { FORM } from 'common';
+import { C, FORM } from 'common';
 import { Consumer } from 'context';
 import {
   Button, Dialog, Form, Text,
 } from 'reactor/components';
 import styles from './DialogVault.style';
 
-const DEFAULT_FORM = {
-  currency: 'USD',
-  balance: '0',
-};
+const { CURRENCY } = C;
+const DEFAULT_FORM = { currency: CURRENCY, balance: 0 };
 
 class DialogVault extends PureComponent {
   static propTypes = {

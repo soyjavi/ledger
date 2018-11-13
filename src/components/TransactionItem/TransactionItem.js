@@ -9,23 +9,21 @@ import { THEME } from 'reactor/common';
 import { verboseDate } from './modules';
 import styles from './TransactionItem.style';
 
-const { COLORS, SCREEN, TX: { TYPE: { EXPENSE } } } = C;
+const {
+  COLORS, CURRENCIES, SCREEN, SYMBOL, TX: { TYPE: { EXPENSE } },
+} = C;
 const { COLOR } = THEME;
 
 const TransactionItem = (props) => {
   const {
-    category, hash, timestamp, value, title, type, vault, ...inherit
+    category, currency, hash, timestamp, value, title, type, vault, ...inherit
   } = props;
   const isHeading = !hash;
   const isBottom = inherit.last;
 
   return (
     <Consumer>
-      { ({
-        l10n,
-        navigation: { navigate },
-        store: { vaults = [] },
-      }) => (
+      { ({ l10n, navigation: { navigate } }) => (
         <Touchable
           rippleColor={COLOR.BASE}
           style={[styles.container, isHeading && styles.heading]}
@@ -45,7 +43,7 @@ const TransactionItem = (props) => {
               caption={type === EXPENSE ? undefined : '+'}
               value={parseFloat(value, 10)}
               fixed={2}
-              symbol={vaults.find(item => item.hash === vault).currency}
+              symbol={SYMBOL[currency]}
             />)}
         </Touchable>
       )}
@@ -55,6 +53,7 @@ const TransactionItem = (props) => {
 
 TransactionItem.propTypes = {
   category: number,
+  currency: string,
   hash: string,
   timestamp: string.isRequired,
   title: string,
@@ -65,6 +64,7 @@ TransactionItem.propTypes = {
 
 TransactionItem.defaultProps = {
   category: undefined,
+  currency: undefined,
   hash: undefined,
   title: undefined,
   type: undefined,
