@@ -14,7 +14,7 @@ const { COLOR } = THEME;
 
 const VaultItem = (props) => {
   const {
-    balance, cashflow: { income, expenses }, chart, color, currency, onPress, title,
+    balance, cashflow: { income, expenses } = {}, chart, color, currency, onPress, title,
   } = props;
 
   return (

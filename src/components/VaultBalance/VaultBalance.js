@@ -8,7 +8,7 @@ import { Price, Text } from 'reactor/components';
 import { chartCashflow } from './modules';
 import styles from './VaultBalance.style';
 
-export default ({ dataSource, txs }) => {
+export default ({ dataSource = {}, txs }) => {
   const {
     balance, cashflow: { income, expenses } = {}, color, currency,
   } = dataSource;

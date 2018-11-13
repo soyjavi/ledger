@@ -37,8 +37,8 @@ const TransactionItem = (props) => {
             { hash
               ? <Text headline level={6} numberOfLines={1}>{l10n.CATEGORIES[type][category]}</Text>
               : <Text subtitle level={3} lighten>{verboseDate(timestamp, l10n)}</Text>}
-            <Text level={2} lighten numberOfLines={1}>{title}</Text>
 
+            { title && <Text level={2} lighten numberOfLines={1}>{title}</Text> }
           </View>
           { value && (
             <Price

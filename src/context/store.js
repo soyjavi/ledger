@@ -1,11 +1,11 @@
 import { node } from 'prop-types';
 import React, { Component, createContext } from 'react';
 
-import { C, cashflow, fetch } from 'common';
+import { C, fetch } from 'common';
 import { Fingerprint } from 'reactor/context/Amplitude/modules';
-import { AsyncStore, groupByDay } from './modules';
+import { AsyncStore, calcVault, groupByDay } from './modules';
 
-const { COLORS, NAME } = C;
+const { NAME } = C;
 const KEY = `${NAME}:context:store`;
 const { Provider, Consumer: ConsumerStore } = createContext(KEY);
 
@@ -20,12 +20,12 @@ class ProviderStore extends Component {
 
   state = {
     error: undefined,
+    fingerprint: undefined,
     hash: undefined,
     latestTransaction: undefined,
     queryProps: {},
     queryTxs: [],
     // -- STORAGE --------------------------------------------------------------
-    fingerprint: undefined,
     pin: undefined,
     txs: [],
     vaults: [],
@@ -39,22 +39,11 @@ class ProviderStore extends Component {
       ...store,
       fingerprint: store.fingerprint || (await Fingerprint()).uuid,
     };
-
-    await AsyncStore.setItem(KEY, store);
     this.setState(store);
   }
 
-  query = (queryProps) => {
-    const { state: { txs } } = this;
-    let queryTxs = [];
-
-    if (queryProps.vault) queryTxs = groupByDay(txs, queryProps);
-
-    this.setState({ queryProps, queryTxs });
-  }
-
   getHash = async (pin) => {
-    const { onError, state: { fingerprint, pin: storedPin } } = this;
+    const { onError, _store, state: { fingerprint, pin: storedPin } } = this;
 
     const { hash } = await fetch({
       method: 'POST',
@@ -63,82 +52,98 @@ class ProviderStore extends Component {
       pin,
     }).catch(onError);
 
-    await AsyncStore.setItem(KEY, { fingerprint, pin });
-    this.setState({ fingerprint, pin, hash });
+    await _store({ pin });
+    this.setState({ pin, hash });
 
     return hash;
   }
 
   getProfile = async () => {
-    const { onError, state: { hash: authorization, txs } } = this;
+    const { onError, _store, state: { hash: authorization, txs } } = this;
 
     const response = await fetch({ service: 'profile', headers: { authorization } }).catch(onError);
     if (response) {
-      const { vaults, latestTransaction } = response;
+      const { latestTransaction } = response;
+      const vaults = response.vaults.map((vault, index) => calcVault(vault, txs, index));
 
-      console.log('@TODO: We should compare latestTransaction', latestTransaction);
-
-      this.setState({
-        vaults: vaults.map((vault, index) => ({
-          ...vault,
-          cashflow: cashflow(txs.filter(tx => tx.vault === vault.hash)),
-          chart: [10, 40, 50, 30, 80, 90, 50, 20, 20, 40, 50, 80],
-          color: COLORS[index],
-        })),
-        latestTransaction,
-      });
+      await _store({ vaults });
+      this.setState({ latestTransaction, vaults });
     }
 
     return response;
   }
 
   getTransactions = async () => {
-    const { onError, state: { fingerprint, pin, hash: authorization } } = this;
+    const { onError, _store, state: { hash: authorization } } = this;
 
     const { txs } = await fetch({ service: 'transactions', headers: { authorization } }).catch(onError);
     if (txs) {
-      await AsyncStore.setItem(KEY, { fingerprint, pin, txs });
+      await _store({ txs });
       this.setState({ txs });
     }
   }
 
-  onTransaction = async (props) => {
-    const { onError, state: { hash: authorization, queryProps, txs } } = this;
+  onError = error => this.setState({ error: error ? error.message : undefined });
 
-    const tx = await fetch({
+  onTransaction = async (props) => {
+    const { onError, _store, state: { hash: authorization, queryProps, ...state } } = this;
+
+    const latestTransaction = await fetch({
       method: 'POST', service: 'transaction', headers: { authorization }, ...props,
     }).catch(onError);
 
-    if (tx) {
+    if (latestTransaction) {
+      const txs = [...state.txs, latestTransaction];
+      const vaults = state.vaults.map((vault, index) => (
+        vault.hash !== props.vault ? vault : calcVault(vault, txs, index)
+      ));
+
+      console.log('updatedVault:cashflow', vaults[0].cashflow);
+
+      await _store({ txs, vaults });
+      // this.forceUpdate();
       this.setState({
-        txs: [...txs, tx],
-        latestTransaction: tx,
+        latestTransaction,
+        txs,
+        vaults,
+        queryTxs: groupByDay(txs, queryProps),
       });
-      this.query(queryProps);
     }
 
-    return tx;
+    return latestTransaction;
   }
 
   onVault = async (props) => {
-    const { onError, state: { hash: authorization, vaults } } = this;
+    const { onError, _store, state: { hash: authorization, ...state } } = this;
 
     const vault = await fetch({
       method: 'POST', service: 'vault', headers: { authorization }, ...props,
     }).catch(onError);
 
-    if (vault) this.setState({ vaults: [...vaults, vault] });
+    if (vault) {
+      const vaults = [...state.vaults, calcVault(vault, state.txs, state.vaults.length)];
+      await _store({ vaults });
+      this.setState({ vaults });
+    }
 
     return vault;
   }
 
-  onError = error => this.setState({ error: error ? error.message : undefined });
+  query = (queryProps) => {
+    const { state: { txs } } = this;
+    this.setState({ queryProps, queryTxs: groupByDay(txs, queryProps) });
+  }
 
-  wipe = () => this.setState({});
+  _store = async (value) => {
+    const { state: { pin, txs = [], vaults = [] } } = this;
+    await AsyncStore.setItem(KEY, {
+      pin, txs, vaults, ...value,
+    });
+  }
 
   render() {
     const {
-      getHash, getProfile, getTransactions, onError, onTransaction, onVault, query, wipe,
+      getHash, getProfile, getTransactions, onError, onTransaction, onVault, query,
       props: { children },
       state,
     } = this;
@@ -146,7 +151,7 @@ class ProviderStore extends Component {
     return (
       <Provider
         value={{
-          getHash, getProfile, getTransactions, onError, onTransaction, onVault, query, wipe, ...state,
+          getHash, getProfile, getTransactions, onError, onTransaction, onVault, query, ...state,
         }}
       >
         { children }

@@ -1,6 +1,6 @@
 export default (txs, { vault, year, month }) => {
   const dataSource = [];
-  let timestamp;
+  let group;
 
   txs
     .sort((a, b) => {
@@ -15,9 +15,9 @@ export default (txs, { vault, year, month }) => {
         if (tsDate.getMonth() === month && tsDate.getFullYear() === year) {
           const txDate = tx.timestamp.substr(0, 10);
 
-          if (timestamp !== txDate) {
+          if (group !== txDate) {
             if (dataSource.length > 0) dataSource[dataSource.length - 1].last = true;
-            timestamp = txDate;
+            group = txDate;
             dataSource.push({ timestamp: tx.timestamp });
           }
           dataSource.push(tx);

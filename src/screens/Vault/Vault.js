@@ -1,6 +1,6 @@
 import { bool, shape } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
-import { ScrollView, View } from 'react-native';
+import { ScrollView } from 'react-native';
 
 import { C } from 'common';
 import {
@@ -41,25 +41,23 @@ class Vault extends PureComponent {
   render() {
     const {
       _onToggleDialog, _onType,
-      props: { dataSource, visible, ...inherit },
+      props: { dataSource: { hash, title }, visible, ...inherit },
       state: { dialog, type },
     } = this;
 
     return (
       <Viewport {...inherit} scroll={false} visible={visible}>
-        { }
         <Consumer>
-          { ({ navigation, l10n, store: { queryTxs } }) => (
+          { ({ navigation, l10n, store: { queryTxs, vaults } }) => (
             <Fragment>
               <Header
                 left={{ title: l10n.BACK, onPress: () => navigation.goBack() }}
-                title={dataSource.title}
+                title={title}
                 right={{ title: l10n.SEARCH }}
                 visible={visible}
               />
               <ScrollView style={styles.scroll}>
-                <View />
-                <VaultBalance dataSource={dataSource} txs={queryTxs} />
+                <VaultBalance dataSource={vaults.find(vault => vault.hash === hash)} txs={queryTxs} />
                 { queryTxs.map(tx => <TransactionItem key={tx.hash || tx.timestamp} {...tx} />)}
               </ScrollView>
 
@@ -68,12 +66,10 @@ class Vault extends PureComponent {
                 options={l10n.TYPE_TRANSACTION}
                 visible={!dialog && !inherit.backward}
               />
-              { visible && (
-                <DialogTransaction type={type} vault={dataSource.hash} onClose={_onToggleDialog} visible={dialog} /> )}
+              { visible && <DialogTransaction type={type} vault={hash} onClose={_onToggleDialog} visible={dialog} />}
             </Fragment>
           )}
         </Consumer>
-
       </Viewport>
     );
   }
