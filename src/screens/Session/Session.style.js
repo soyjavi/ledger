@@ -15,13 +15,14 @@ export default StyleSheet.create({
     alignSelf: 'center',
     height: '100%',
     padding: OFFSET,
-    maxWidth: UNIT * 400,
+    maxWidth: UNIT * 40,
     minWidth: UNIT * 32,
   },
 
   content: {
     flex: 1,
     justifyContent: 'center',
+    paddingHorizontal: OFFSET,
   },
 
   text: {

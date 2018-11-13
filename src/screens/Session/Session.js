@@ -3,13 +3,15 @@ import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
 import { Consumer } from 'context';
-import { ENV } from 'reactor/common';
+import { THEME } from 'reactor/common';
 import {
   Activity, Motion, Text, Viewport,
 } from 'reactor/components';
 import { NumKeyboard } from 'components';
-import generateSession from './modules/generateSession';
+import handshake from './modules/handshake';
 import styles from './Session.style';
+
+const { MOTION: { DURATION } } = THEME;
 
 class Session extends PureComponent {
   static propTypes = {
@@ -32,8 +34,10 @@ class Session extends PureComponent {
     this.setState({ pin });
 
     if (pin.length === 4) {
-      if (store.pin === undefined || store.pin === pin) generateSession(this, { pin, store, navigation });
-      else this.setState({ pin: '' });
+      setTimeout(() => {
+        if (store.pin === undefined || store.pin === pin) handshake(this, { pin, store, navigation });
+        else this.setState({ pin: '' });
+      }, DURATION);
     }
   }
 
@@ -49,9 +53,6 @@ class Session extends PureComponent {
         <Consumer>
           { ({ l10n, store, navigation }) => (
             <View style={styles.container}>
-              { ENV.IS_DEVELOPMENT && visible && store.pin && !busy && !store.hash &&
-                _onNumber({ number: store.pin, store, navigation }) }
-
               <View style={styles.content}>
                 <Text headline level={4} style={[styles.title, styles.text]}>
                   { store.pin ? l10n.WELCOME_BACK : l10n.WELCOME }
@@ -60,7 +61,7 @@ class Session extends PureComponent {
                   { store.pin ? l10n.WELCOME_BACK_CAPTION : l10n.WELCOME_CAPTION }
                 </Text>
                 <View style={styles.pin}>
-                  { busy
+                  { busy || store.hash
                     ? <Activity size="large" style={styles.activity} />
                     : [1, 2, 3, 4].map(number => (
                       <Motion
