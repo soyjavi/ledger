@@ -4,7 +4,7 @@ const { COLORS } = C;
 
 export default (vault = {}, storeTXs = [], index) => {
   const txs = storeTXs.filter(tx => tx.vault === vault.hash);
-  const expensesByMonth = [];
+  let expensesByMonth = [];
   let group;
   let groupIndex = -1;
 
@@ -18,6 +18,7 @@ export default (vault = {}, storeTXs = [], index) => {
     }
     expensesByMonth[groupIndex] += tx.value;
   });
+  expensesByMonth = [...Array.from({ length: 12 - expensesByMonth.length }, () => 0), ...expensesByMonth];
 
   return Object.assign({}, vault, {
     cashflow: cashflow(txs),
