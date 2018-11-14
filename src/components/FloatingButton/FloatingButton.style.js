@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { LAYOUT, THEME } from 'reactor/common';
+import { LAYOUT, THEME } from '../../reactor/common';
 
 const {
   COLOR, FONT, UNIT, OFFSET,
@@ -46,12 +46,14 @@ export default StyleSheet.create({
     alignItems: 'flex-end',
     position: 'absolute',
     right: (CONTAINER_SIZE / 4),
-    top: -(CONTAINER_SIZE + (OFFSET * 1.5)),
+    top: -(CONTAINER_SIZE + (UNIT * 3)),
   },
 
   option: {
     ...LAYOUT.STYLE.SHADOW,
     ...LAYOUT.STYLE.ROW,
+
+    height: UNIT * 3,
     backgroundColor: COLOR.BACKGROUND,
     borderRadius: UNIT * 2,
     marginVertical: OFFSET / 2,

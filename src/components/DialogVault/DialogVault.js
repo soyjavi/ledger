@@ -2,11 +2,11 @@ import { bool, func } from 'prop-types';
 import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
-import { C, FORM } from 'common';
-import { Consumer } from 'context';
+import { C, FORM } from '../../common';
+import { Consumer } from '../../context';
 import {
   Button, Dialog, Form, Text,
-} from 'reactor/components';
+} from '../../reactor/components';
 import styles from './DialogVault.style';
 
 const { CURRENCY } = C;

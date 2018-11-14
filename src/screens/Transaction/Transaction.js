@@ -2,9 +2,9 @@ import { bool, shape } from 'prop-types';
 import React, { PureComponent } from 'react';
 import { ScrollView } from 'react-native';
 
-import { Header } from 'containers';
-import { Consumer } from 'context';
-import { Text, Viewport } from 'reactor/components';
+import { Header } from '../../containers';
+import { Consumer } from '../../context';
+import { Text, Viewport } from '../../reactor/components';
 import styles from './Transaction.style';
 
 class Transaction extends PureComponent {

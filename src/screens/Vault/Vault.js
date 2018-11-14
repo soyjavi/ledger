@@ -2,15 +2,13 @@ import { bool, shape } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
 import { ScrollView } from 'react-native';
 
-import { C } from 'common';
+import { C } from '../../common';
 import {
   DialogTransaction, FloatingButton, TransactionItem, VaultBalance,
-} from 'components';
-import { Header } from 'containers';
-import { Consumer } from 'context';
-import {
-  Viewport,
-} from 'reactor/components';
+} from '../../components';
+import { Header } from '../../containers';
+import { Consumer } from '../../context';
+import { Motion, Viewport } from '../../reactor/components';
 import styles from './Vault.style';
 
 const { TX: { TYPE: { EXPENSE } } } = C;
@@ -53,13 +51,14 @@ class Vault extends PureComponent {
               <Header
                 left={{ title: l10n.BACK, onPress: () => navigation.goBack() }}
                 title={title}
-                right={{ title: l10n.SEARCH }}
                 visible={visible}
               />
-              <ScrollView style={styles.scroll}>
-                <VaultBalance dataSource={vaults.find(vault => vault.hash === hash)} txs={queryTxs} />
-                { queryTxs.map(tx => <TransactionItem key={tx.hash || tx.timestamp} currency={currency} {...tx} />)}
-              </ScrollView>
+              <Motion preset="fadeleft" delay={500} visible={visible}>
+                <ScrollView style={styles.scroll}>
+                  <VaultBalance dataSource={vaults.find(vault => vault.hash === hash)} txs={queryTxs} />
+                  { queryTxs.map(tx => <TransactionItem key={tx.hash || tx.timestamp} currency={currency} {...tx} />)}
+                </ScrollView>
+              </Motion>
 
               <FloatingButton
                 onPress={dialog ? _onToggleDialog : _onType}

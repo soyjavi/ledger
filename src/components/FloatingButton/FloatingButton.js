@@ -4,9 +4,9 @@ import {
 import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
-import { C } from 'common';
-import { THEME } from 'reactor/common';
-import { Motion, Text, Touchable } from 'reactor/components';
+import { C } from '../../common';
+import { THEME } from '../../reactor/common';
+import { Motion, Text, Touchable } from '../../reactor/components';
 import styles from './FloatingButton.style';
 
 const { COLORS } = C;

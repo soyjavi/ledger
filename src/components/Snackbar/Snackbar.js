@@ -2,7 +2,7 @@ import { func, string } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 
-import { Button, Dialog, Text } from 'reactor/components';
+import { Button, Dialog, Text } from '../../reactor/components';
 import styles from './Snackbar.style';
 
 const Snackbar = ({

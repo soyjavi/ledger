@@ -1,8 +1,8 @@
 import { node } from 'prop-types';
 import React, { Component, createContext } from 'react';
 
-import { C, fetch } from 'common';
-import { Fingerprint } from 'reactor/context/Amplitude/modules';
+import { C, fetch } from '../common';
+import { Fingerprint } from '../reactor/context/Amplitude/modules';
 import { AsyncStore, calcVault, groupByDay } from './modules';
 
 const { NAME } = C;

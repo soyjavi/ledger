@@ -2,12 +2,12 @@ import { bool } from 'prop-types';
 import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
-import { Consumer } from 'context';
-import { THEME } from 'reactor/common';
+import { Consumer } from '../../context';
+import { THEME } from '../../reactor/common';
 import {
   Activity, Motion, Text, Viewport,
-} from 'reactor/components';
-import { NumKeyboard } from 'components';
+} from '../../reactor/components';
+import { NumKeyboard } from '../../components';
 import handshake from './modules/handshake';
 import styles from './Session.style';
 

@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { C, L10N } from 'common';
-import { Snackbar } from 'components';
-import { Provider, ConsumerNavigation, ConsumerStore } from 'context';
-import { LayoutView } from 'reactor/components';
+import { C, L10N } from './common';
+import { Snackbar } from './components';
+import { Provider, ConsumerNavigation, ConsumerStore } from './context';
+import { LayoutView } from './reactor/components';
 import {
   Session, Dashboard, Vault, Transaction,
-} from 'screens';
+} from './screens';
 
 const { SCREEN, LANGUAGE } = C;
 const {

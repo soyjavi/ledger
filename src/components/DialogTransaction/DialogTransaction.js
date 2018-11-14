@@ -4,11 +4,11 @@ import {
 import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
-import { FORM } from 'common';
-import { Consumer } from 'context';
+import { FORM } from '../../common';
+import { Consumer } from '../../context';
 import {
   Button, Dialog, Form, Text,
-} from 'reactor/components';
+} from '../../reactor/components';
 import hydrateForm from './modules/hydrateForm';
 import styles from './DialogTransaction.style';
 
@@ -52,7 +52,7 @@ class DialogTransaction extends PureComponent {
     const response = await onTransaction({
       category: category ? l10n.CATEGORIES[type].indexOf(category) : 0,
       previousHash,
-      title,
+      title: title || '',
       type,
       value: parseFloat(value, 10),
       vault,

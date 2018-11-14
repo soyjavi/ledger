@@ -2,7 +2,7 @@ import { arrayOf, number, string } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 
-import { Motion } from 'reactor/components';
+import { Motion } from '../../reactor/components';
 import styles from './Chart.style';
 
 const Chart = ({ color, values }) => {

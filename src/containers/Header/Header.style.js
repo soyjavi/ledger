@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
-import { C } from 'common';
-import { LAYOUT, ENV, THEME } from 'reactor/common';
+import { C } from '../../common';
+import { LAYOUT, ENV, THEME } from '../../reactor/common';
 
 const { COLOR, OFFSET, UNIT } = THEME;
 const { STYLE: { HEADER_HEIGHT } } = C;

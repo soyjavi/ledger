@@ -4,10 +4,10 @@ import {
 import React from 'react';
 import { View } from 'react-native';
 
-import { C } from 'common';
-import { Consumer } from 'context';
-import { THEME } from 'reactor/common';
-import { Price, Text, Touchable } from 'reactor/components';
+import { C } from '../../common';
+import { Consumer } from '../../context';
+import { THEME } from '../../reactor/common';
+import { Price, Text, Touchable } from '../../reactor/components';
 import Chart from '../Chart';
 import styles from './VaultItem.style';
 

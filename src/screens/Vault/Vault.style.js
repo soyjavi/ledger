@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { C } from 'common';
+import { C } from '../../common';
 
 const { STYLE: { HEADER_HEIGHT } } = C;
 

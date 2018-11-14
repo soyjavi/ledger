@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { THEME } from 'reactor/common';
+import { THEME } from '../../reactor/common';
 
 const { COLOR, OFFSET, UNIT } = THEME;
 

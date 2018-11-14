@@ -1,4 +1,4 @@
-import { C, cashflow } from 'common';
+import { C, cashflow } from '../../common';
 
 const { COLORS } = C;
 

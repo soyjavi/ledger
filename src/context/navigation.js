@@ -1,7 +1,7 @@
 import { node } from 'prop-types';
 import React, { PureComponent, createContext } from 'react';
 
-import { C } from 'common';
+import { C } from '../common';
 
 const KEY = `${C.NAME}:context:navigation`;
 const { Provider, Consumer: ConsumerNavigation } = createContext(KEY);

@@ -1,7 +1,7 @@
 import { func, node } from 'prop-types';
 import React from 'react';
 
-import { ConsumerL10N, ProviderL10N } from 'reactor/context/L10N';
+import { ConsumerL10N, ProviderL10N } from '../reactor/context/L10N';
 import { ConsumerStore, ProviderStore } from './store';
 import { ConsumerNavigation, ProviderNavigation } from './navigation';
 

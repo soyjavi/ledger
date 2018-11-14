@@ -2,15 +2,15 @@ import { number, string } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 
-import { C } from 'common';
-import { Consumer } from 'context';
-import { Price, Text, Touchable } from 'reactor/components';
-import { THEME } from 'reactor/common';
+import { C } from '../../common';
+import { Consumer } from '../../context';
+import { Price, Text, Touchable } from '../../reactor/components';
+import { THEME } from '../../reactor/common';
 import { verboseDate } from './modules';
 import styles from './TransactionItem.style';
 
 const {
-  COLORS, CURRENCIES, SCREEN, SYMBOL, TX: { TYPE: { EXPENSE } },
+  COLORS, SCREEN, SYMBOL, TX: { TYPE: { EXPENSE } },
 } = C;
 const { COLOR } = THEME;
 

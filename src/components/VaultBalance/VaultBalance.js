@@ -1,10 +1,10 @@
 import React from 'react';
 import { View } from 'react-native';
 
-import { C, cashflow } from 'common';
-import { Chart } from 'components';
-import { Consumer } from 'context';
-import { Price, Text } from 'reactor/components';
+import { C, cashflow } from '../../common';
+import { Consumer } from '../../context';
+import { Price, Text } from '../../reactor/components';
+import Chart from '../Chart';
 import { chartCashflow } from './modules';
 import styles from './VaultBalance.style';
 

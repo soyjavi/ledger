@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { C } from 'common';
+import { C } from '../../common';
 
 const { STYLE: { DASHBOARD_HEIGHT, HEADER_HEIGHT } } = C;
 

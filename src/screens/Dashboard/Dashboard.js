@@ -4,9 +4,9 @@ import { ScrollView } from 'react-native';
 
 import {
   DialogVault, FloatingButton, OverallBalance, VaultItem,
-} from 'components';
-import { Consumer } from 'context';
-import { Viewport } from 'reactor/components';
+} from '../../components';
+import { Consumer } from '../../context';
+import { Viewport } from '../../reactor/components';
 import styles from './Dashboard.style';
 
 class Dashboard extends PureComponent {

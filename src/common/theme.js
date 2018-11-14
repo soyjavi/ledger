@@ -1,4 +1,4 @@
-import { ENV } from 'reactor/common';
+import { ENV } from '../reactor/common';
 
 const { IS_WEB } = ENV;
 

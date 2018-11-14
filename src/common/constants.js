@@ -1,6 +1,6 @@
 import { Platform } from 'react-native';
 
-import { THEME } from 'reactor/common';
+import { THEME } from '../reactor/common';
 import PKG from '../../package.json';
 
 const { UNIT } = THEME;

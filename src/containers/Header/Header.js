@@ -4,12 +4,12 @@ import {
 import React from 'react';
 import { View } from 'react-native';
 
-import { C } from 'common';
-import { Consumer } from 'context';
-import { THEME } from 'reactor/common';
+import { C } from '../../common';
+import { Consumer } from '../../context';
+import { THEME } from '../../reactor/common';
 import {
   Motion, ProgressBar, Text, Touchable,
-} from 'reactor/components';
+} from '../../reactor/components';
 import styles from './Header.style';
 
 const { RESPONSE_TIME } = C;
@@ -20,7 +20,7 @@ const Option = ({
   delay, title, onPress, visible, ...inherit
 }) => (
   <Motion preset={PRESET} delay={delay} visible={visible}>
-    <Touchable onPress={onPress} rippleColor="rgba(">
+    <Touchable onPress={onPress} rippleColor={COLOR.BACKGROUND}>
       <Text level={2} lighten {...inherit} style={[styles.option, inherit.style]}>
         {title}
       </Text>

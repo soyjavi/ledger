@@ -1,11 +1,3 @@
 {
-  "presets": ["babel-preset-expo"],
-  "plugins": [
-    [
-      "module-resolver", {
-        "root": ["./src"],
-        "cwd": "babelrc",
-      }
-    ]
-  ]
+  "presets": ["babel-preset-expo"]
 }

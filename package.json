@@ -1,7 +1,7 @@
 {
   "name": "voltvault-app",
   "description": "Cross-Device client for voltvault",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "keywords": [
     "finance",
     "personal",
@@ -27,10 +27,8 @@
   },
   "devDependencies": {
     "babel-plugin-file-loader": "1.0.0",
-    "babel-plugin-module-resolver": "3.1.1",
     "babel-plugin-react-native-web": "0.9.6",
     "eslint-config-airbnb": "latest",
-    "eslint-import-resolver-babel-module": "4.0.0",
     "eslint-plugin-import": "2.14.0",
     "eslint-plugin-jsx-a11y": "6.1.1",
     "eslint-plugin-react": "7.11.0",

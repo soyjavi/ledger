@@ -1,9 +1,9 @@
 import React from 'react';
 import { View } from 'react-native';
 
-import { C } from 'common';
-import { Consumer } from 'context';
-import { Price, Text } from 'reactor/components';
+import { C } from '../../common';
+import { Consumer } from '../../context';
+import { Price, Text } from '../../reactor/components';
 import styles from './OverallBalance.style';
 
 const { SYMBOL } = C;

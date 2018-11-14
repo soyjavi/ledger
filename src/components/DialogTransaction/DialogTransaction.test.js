@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import { C } from 'common';
+import { C } from '../../common';
 import DialogTransaction from './DialogTransaction';
 
 describe('<DialogTransaction>', () => {

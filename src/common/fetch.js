@@ -1,4 +1,4 @@
-import { queryString } from 'reactor/common';
+import { queryString } from '../reactor/common';
 
 const { NODE_ENV } = process.env;
 const DEFAULT_METHOD = 'GET';
