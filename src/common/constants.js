@@ -6,7 +6,10 @@ import PKG from '../../package.json';
 const { UNIT } = THEME;
 
 export default {
-  COLORS: ['#00C09A', '#8460D0', '#639CEB', '#CA66BD', '#28BC34', '#50CDEA', '#F45D88', '#FF7233'],
+  COLORS: [
+    '#7C4DFF', '#00C09A', '#639CEB', '#CA66BD', '#28BC34', '#50CDEA', '#F45D88',
+    '#8460D0', '#FF7233', '#69F0AE', '#FF4081', '#FFD740', '#536DFE', '#FF5252',
+  ],
   CURRENCIES: ['USD', 'EUR', 'GBP', 'JPY', 'THB', 'BTC'],
 
   LANGUAGE: 'en-EN',

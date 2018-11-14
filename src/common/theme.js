@@ -1,5 +1,7 @@
 import { ENV } from '../reactor/common';
+import C from './constants';
 
+const { COLORS } = C;
 const { IS_WEB } = ENV;
 
 export default {
@@ -13,8 +15,8 @@ export default {
     // BACKGROUND_OPACITY: 'rgba(0,0,0,0.9)',
     // BASE: '#333',
 
-    PRIMARY: '#FAAC18',
-    SECONDARY: '#03DAC6',
+    PRIMARY: COLORS[0],
+    SECONDARY: COLORS[1],
   },
 
   FONT: {

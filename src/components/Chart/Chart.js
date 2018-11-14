@@ -2,11 +2,8 @@ import { arrayOf, number, string } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 
-import { THEME } from '../../reactor/common';
 import { Motion } from '../../reactor/components';
 import styles from './Chart.style';
-
-const { COLOR } = THEME;
 
 const Chart = ({ color, values }) => {
   const max = values.length > 0 ? Math.max.apply(Math, values) : 0; // eslint-disable-line
@@ -19,10 +16,8 @@ const Chart = ({ color, values }) => {
           key={`${index}-${value}`} // eslint-disable-line
           style={[
             ...style,
-            {
-              height: `${parseInt((value * 100) / max, 10)}%`,
-              backgroundColor: value > 0 ? color : COLOR.BASE,
-            },
+            { height: `${parseInt((value * 100) / max, 10)}%` },
+            color && value > 0 && { backgroundColor: color },
           ]}
         />))}
     </View>

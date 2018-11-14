@@ -30,7 +30,7 @@ const TransactionItem = (props) => {
           onPress={hash ? () => navigate(SCREEN.TRANSACTION, props) : undefined}
         >
           <View style={[styles.line, isHeading && styles.lineHeading, isBottom && styles.lineBottom]} />
-          <View style={[styles.bullet, hash && { backgroundColor: COLORS[category] }]} />
+          <View style={[styles.bullet, hash && COLORS[category] && { backgroundColor: COLORS[category] }]} />
           <View style={styles.texts}>
             { hash
               ? <Text headline level={6} numberOfLines={1}>{l10n.CATEGORIES[type][category]}</Text>
