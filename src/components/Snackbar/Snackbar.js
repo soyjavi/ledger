@@ -8,7 +8,7 @@ import styles from './Snackbar.style';
 const Snackbar = ({
   button, caption, onPress, ...inherit
 }) => (
-  <Dialog {...inherit} background={false} styleContainer={styles.dialogContainer} style={styles.dialog}>
+  <Dialog {...inherit} background={false} style={styles.dialog}>
     <View style={styles.container}>
       <Text level={2} style={styles.text}>{caption}</Text>
       <Button

@@ -21,6 +21,7 @@ export default () => (
       }) => (
         <LayoutView>
           <Session backward={current !== SESSION} visible={stack.includes(SESSION)} />
+
           <Dashboard backward={current !== DASHBOARD} visible={stack.includes(DASHBOARD)} />
           <Vault backward={current !== VAULT} dataSource={parameters} visible={stack.includes(VAULT)} />
           <Transaction
@@ -30,7 +31,12 @@ export default () => (
           />
           <ConsumerStore>
             { ({ error, onError }) => (
-              <Snackbar caption={error} button="close" visible={error} onPress={() => onError(undefined)} />
+              <Snackbar
+                caption={error}
+                button="close"
+                visible={error !== undefined}
+                onPress={() => onError(undefined)}
+              />
             )}
           </ConsumerStore>
         </LayoutView>

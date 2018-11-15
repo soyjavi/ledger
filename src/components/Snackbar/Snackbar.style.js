@@ -2,21 +2,22 @@ import { StyleSheet } from 'react-native';
 
 import { LAYOUT, THEME } from '../../reactor/common';
 
-const { COLOR, OFFSET, UNIT } = THEME;
+const {
+  BORDER_RADIUS, COLOR, OFFSET, UNIT,
+} = THEME;
 
 export default StyleSheet.create({
   button: {
     paddingHorizontal: UNIT,
   },
 
-  dialogContainer: {
-    justifyContent: 'flex-end',
-    padding: OFFSET,
-  },
-
   dialog: {
-    width: '100%',
     backgroundColor: COLOR.BLACK,
+    borderRadius: BORDER_RADIUS,
+    bottom: OFFSET,
+    left: OFFSET,
+    right: OFFSET,
+    position: 'absolute',
   },
 
   container: {
