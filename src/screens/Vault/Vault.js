@@ -26,9 +26,15 @@ class Vault extends PureComponent {
 
   state = {
     dialog: false,
-    baseCurrency: false,
+    switchCurrency: false,
     type: EXPENSE,
   };
+
+  componentWillReceiveProps({ visible }) {
+    const { props } = this;
+
+    if (visible && !props.visible) this.setState({ switchCurrency: false });
+  }
 
   _onToggleDialog = () => {
     const { state: { dialog } } = this;
@@ -38,15 +44,15 @@ class Vault extends PureComponent {
   _onTransactionType = type => this.setState({ dialog: type !== undefined, type });
 
   _onSwitchCurrency = () => {
-    const { state: { baseCurrency } } = this;
-    this.setState({ baseCurrency: !baseCurrency });
+    const { state: { switchCurrency } } = this;
+    this.setState({ switchCurrency: !switchCurrency });
   }
 
   render() {
     const {
       _onSwitchCurrency, _onToggleDialog, _onTransactionType,
       props: { dataSource: { currency, hash, title }, visible, ...inherit },
-      state: { dialog, baseCurrency, type },
+      state: { dialog, switchCurrency, type },
     } = this;
 
     return (
@@ -55,29 +61,29 @@ class Vault extends PureComponent {
           { ({
             navigation, l10n,
             store: {
-              currency: base, queryTxs, rates, vaults,
+              baseCurrency, queryTxs, rates, vaults,
             },
           }) => (
             <Fragment>
               <Header
                 left={{ title: l10n.BACK, onPress: () => navigation.goBack() }}
                 title={title}
-                right={currency !== base ? { title: '$switch', onPress: _onSwitchCurrency } : undefined}
+                right={currency !== baseCurrency ? { title: '$switch', onPress: _onSwitchCurrency } : undefined}
                 visible={visible}
               />
               <Motion preset="fadeleft" delay={500} visible={visible}>
                 <ScrollView style={styles.scroll}>
                   <VaultBalance
                     dataSource={vaults.find(vault => vault.hash === hash)}
-                    baseCurrency={baseCurrency ? base : undefined}
+                    baseCurrency={switchCurrency ? baseCurrency : undefined}
                     txs={queryTxs}
                   />
                   { queryTxs.map(tx => (
                     <TransactionItem
                       key={tx.hash || tx.timestamp}
                       {...tx}
-                      currency={baseCurrency ? base : currency}
-                      value={baseCurrency && tx.hash ? exchange(tx.value, currency, base, rates) : tx.value}
+                      currency={switchCurrency ? baseCurrency : currency}
+                      value={switchCurrency && tx.hash ? exchange(tx.value, currency, baseCurrency, rates) : tx.value}
                     />))}
                 </ScrollView>
               </Motion>

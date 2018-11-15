@@ -1,7 +1,3 @@
-import C from './constants';
-
-const { CURRENCIES } = C;
-
 export default {
   TRANSACTION: {
     category: {

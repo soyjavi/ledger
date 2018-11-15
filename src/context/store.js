@@ -28,7 +28,7 @@ class ProviderStore extends Component {
     queryProps: {},
     queryTxs: [],
     // -- STORAGE --------------------------------------------------------------
-    currency: undefined,
+    baseCurrency: undefined,
     pin: undefined,
     rates: {},
     txs: [],
@@ -67,12 +67,12 @@ class ProviderStore extends Component {
 
     const response = await fetch({ service: 'profile', headers: { authorization } }).catch(onError);
     if (response) {
-      const { currency, latestTransaction, rates } = response;
+      const { baseCurrency, latestTransaction, rates } = response;
       const vaults = response.vaults.map((vault, index) => calcVault(vault, txs, index));
 
       await _store({ vaults });
       this.setState({
-        currency, latestTransaction, rates, vaults,
+        baseCurrency, latestTransaction, rates, vaults,
       });
     }
 
@@ -144,11 +144,11 @@ class ProviderStore extends Component {
 
   _store = async (value) => {
     const {
-      currency, pin, rates = {}, txs = [], vaults = [],
+      baseCurrency, pin, rates = {}, txs = [], vaults = [],
     } = this.state;
 
     await AsyncStore.setItem(KEY, {
-      currency, pin, rates, txs, vaults, ...value,
+      baseCurrency, pin, rates, txs, vaults, ...value,
     });
   }
 

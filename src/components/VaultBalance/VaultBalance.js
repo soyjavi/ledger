@@ -17,7 +17,7 @@ export default ({ dataSource = {}, baseCurrency, txs }) => {
   const priceProps = {
     headline: false, subtitle: true, level: 3, lighten: true, symbol: SYMBOL[baseCurrency || currency],
   };
-  let vaultBalance = balance + income + expenses;
+  const vaultBalance = balance + income - expenses;
   const { income: monthIncome, expenses: monthExpenses } = cashflow(txs);
 
   return (
