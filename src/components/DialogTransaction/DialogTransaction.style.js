@@ -12,8 +12,14 @@ export default StyleSheet.create({
     paddingTop: HEADER_HEIGHT,
   },
 
+  button: {
+    flex: 1,
+    marginHorizontal: OFFSET,
+  },
+
   buttons: {
     ...LAYOUT.STYLE.ROW,
+    marginHorizontal: -OFFSET,
   },
 
   dialog: {

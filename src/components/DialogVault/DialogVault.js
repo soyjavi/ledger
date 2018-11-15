@@ -71,8 +71,15 @@ class DialogVault extends PureComponent {
               value={form}
             />
             <View style={styles.buttons}>
-              <Button title="$cancel" outlined onPress={onClose} />
-              <Button activity={busy} disabled={busy || !valid} title="$save" onPress={() => _onSubmit(store)} />
+              <Button title={l10n.CANCEL} outlined onPress={onClose} style={styles.button} />
+              <Button
+                title={l10n.SAVE}
+                activity={busy}
+                disabled={busy || !valid}
+                onPress={() => _onSubmit(store)}
+                primary
+                style={styles.button}
+              />
             </View>
           </Dialog>
         )}
