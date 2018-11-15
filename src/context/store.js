@@ -3,7 +3,9 @@ import React, { Component, createContext } from 'react';
 
 import { C, fetch } from '../common';
 import { Fingerprint } from '../reactor/context/Amplitude/modules';
-import { AsyncStore, calcVault, groupByDay } from './modules';
+import {
+  AsyncStore, calcOverall, calcVault, groupByDay,
+} from './modules';
 
 const { NAME } = C;
 const KEY = `${NAME}:context:store`;
@@ -28,6 +30,7 @@ class ProviderStore extends Component {
     // -- STORAGE --------------------------------------------------------------
     currency: undefined,
     pin: undefined,
+    rates: {},
     txs: [],
     vaults: [],
     // -------------------------------------------------------------------------
@@ -64,23 +67,28 @@ class ProviderStore extends Component {
 
     const response = await fetch({ service: 'profile', headers: { authorization } }).catch(onError);
     if (response) {
-      const { currency, latestTransaction } = response;
+      const { currency, latestTransaction, rates } = response;
       const vaults = response.vaults.map((vault, index) => calcVault(vault, txs, index));
 
       await _store({ vaults });
-      this.setState({ currency, latestTransaction, vaults });
+      this.setState({
+        currency, latestTransaction, rates, vaults,
+      });
     }
 
     return response;
   }
 
   getTransactions = async () => {
-    const { onError, _store, state: { hash: authorization } } = this;
+    const { onError, _store, state: { hash: authorization, ...state } } = this;
 
     const { txs } = await fetch({ service: 'transactions', headers: { authorization } }).catch(onError);
+
     if (txs) {
-      await _store({ txs });
-      this.setState({ txs });
+      const overall = calcOverall({ ...state, txs });
+
+      await _store({ overall, txs });
+      this.setState({ overall, txs });
     }
   }
 
@@ -99,10 +107,7 @@ class ProviderStore extends Component {
         vault.hash !== props.vault ? vault : calcVault(vault, txs, index)
       ));
 
-      console.log('updatedVault:cashflow', vaults[0].cashflow);
-
       await _store({ txs, vaults });
-      // this.forceUpdate();
       this.setState({
         latestTransaction,
         txs,
@@ -123,8 +128,10 @@ class ProviderStore extends Component {
 
     if (vault) {
       const vaults = [...state.vaults, calcVault(vault, state.txs, state.vaults.length)];
-      await _store({ vaults });
-      this.setState({ vaults });
+      const overall = calcOverall({ ...state, vaults });
+
+      await _store({ overall, vaults });
+      this.setState({ overall, vaults });
     }
 
     return vault;
@@ -137,10 +144,11 @@ class ProviderStore extends Component {
 
   _store = async (value) => {
     const {
-      currency, pin, txs = [], vaults = [],
+      currency, pin, rates = {}, txs = [], vaults = [],
     } = this.state;
+
     await AsyncStore.setItem(KEY, {
-      currency, pin, txs, vaults, ...value,
+      currency, pin, rates, txs, vaults, ...value,
     });
   }
 

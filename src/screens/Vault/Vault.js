@@ -2,7 +2,7 @@ import { bool, shape } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
 import { ScrollView } from 'react-native';
 
-import { C } from '../../common';
+import { C, exchange } from '../../common';
 import {
   DialogTransaction, FloatingButton, TransactionItem, VaultBalance,
 } from '../../components';
@@ -26,6 +26,7 @@ class Vault extends PureComponent {
 
   state = {
     dialog: false,
+    baseCurrency: false,
     type: EXPENSE,
   };
 
@@ -34,34 +35,55 @@ class Vault extends PureComponent {
     this.setState({ dialog: !dialog });
   }
 
-  _onType = type => this.setState({ dialog: type !== undefined, type });
+  _onTransactionType = type => this.setState({ dialog: type !== undefined, type });
+
+  _onSwitchCurrency = () => {
+    const { state: { baseCurrency } } = this;
+    this.setState({ baseCurrency: !baseCurrency });
+  }
 
   render() {
     const {
-      _onToggleDialog, _onType,
+      _onSwitchCurrency, _onToggleDialog, _onTransactionType,
       props: { dataSource: { currency, hash, title }, visible, ...inherit },
-      state: { dialog, type },
+      state: { dialog, baseCurrency, type },
     } = this;
 
     return (
       <Viewport {...inherit} scroll={false} visible={visible}>
         <Consumer>
-          { ({ navigation, l10n, store: { queryTxs, vaults } }) => (
+          { ({
+            navigation, l10n,
+            store: {
+              currency: base, queryTxs, rates, vaults,
+            },
+          }) => (
             <Fragment>
               <Header
                 left={{ title: l10n.BACK, onPress: () => navigation.goBack() }}
                 title={title}
+                right={currency !== base ? { title: '$switch', onPress: _onSwitchCurrency } : undefined}
                 visible={visible}
               />
               <Motion preset="fadeleft" delay={500} visible={visible}>
                 <ScrollView style={styles.scroll}>
-                  <VaultBalance dataSource={vaults.find(vault => vault.hash === hash)} txs={queryTxs} />
-                  { queryTxs.map(tx => <TransactionItem key={tx.hash || tx.timestamp} currency={currency} {...tx} />)}
+                  <VaultBalance
+                    dataSource={vaults.find(vault => vault.hash === hash)}
+                    baseCurrency={baseCurrency ? base : undefined}
+                    txs={queryTxs}
+                  />
+                  { queryTxs.map(tx => (
+                    <TransactionItem
+                      key={tx.hash || tx.timestamp}
+                      {...tx}
+                      currency={baseCurrency ? base : currency}
+                      value={baseCurrency && tx.hash ? exchange(tx.value, currency, base, rates) : tx.value}
+                    />))}
                 </ScrollView>
               </Motion>
 
               <FloatingButton
-                onPress={dialog ? _onToggleDialog : _onType}
+                onPress={dialog ? _onToggleDialog : _onTransactionType}
                 options={l10n.TYPE_TRANSACTION}
                 visible={!dialog && !inherit.backward}
               />

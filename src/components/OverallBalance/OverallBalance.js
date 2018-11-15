@@ -10,10 +10,10 @@ const { SYMBOL } = C;
 
 export default () => (
   <Consumer>
-    { ({ l10n, store: { currency } }) => (
+    { ({ l10n, store: { currency, overall = {} } }) => (
       <View style={styles.container}>
         <Text lighten subtitle level={2} style={styles.title}>{l10n.OVERALL_BALANCE}</Text>
-        <Price value={120392} symbol={SYMBOL[currency]} level={4} />
+        <Price fixed={2} value={overall.total} symbol={SYMBOL[currency]} level={4} />
         <View style={styles.content}>
           <View style={styles.context}>
             <View style={styles.image}>
@@ -21,7 +21,7 @@ export default () => (
             </View>
             <View>
               <Text level={2} lighten>{l10n.INCOMES}</Text>
-              <Price caption="+" value={4302.05} symbol={SYMBOL[currency]} />
+              <Price caption="+" value={overall.income} symbol={SYMBOL[currency]} />
             </View>
           </View>
           <View style={styles.context}>
@@ -30,7 +30,7 @@ export default () => (
             </View>
             <View>
               <Text level={2} lighten>{l10n.EXPENSES}</Text>
-              <Price value={498.45} symbol={SYMBOL[currency]} />
+              <Price value={overall.expenses} symbol={SYMBOL[currency]} />
             </View>
           </View>
         </View>

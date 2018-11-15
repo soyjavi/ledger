@@ -1,4 +1,5 @@
 import C from './constants';
+import exchange from './exchange';
 import FORM from './forms';
 import L10N from './l10n';
 import cashflow from './cashflow';
@@ -7,6 +8,7 @@ import theme from './theme';
 
 export {
   C,
+  exchange,
   FORM,
   L10N,
   cashflow,
