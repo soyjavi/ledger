@@ -23,8 +23,7 @@ export default {
     title: { label: 'l10n.title', required: true },
     currency: {
       type: 'select',
-      defaultValue: CURRENCIES[0],
-      dataSource: CURRENCIES,
+      // defaultValue: CURRENCIES[0],
       label: 'l10n.currency',
       style: 'inline2',
     },

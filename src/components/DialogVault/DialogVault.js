@@ -60,7 +60,16 @@ class DialogVault extends PureComponent {
             <Text lighten level={2}>
               $Lorem Ipsum is simply dummy text of the printing and typesetting industry.
             </Text>
-            <Form attributes={FORM.VAULT} onValid={_onValid} onChange={_onChange} style={styles.form} value={form} />
+            <Form
+              attributes={{
+                ...FORM.VAULT,
+                currency: { ...FORM.VAULT.currency, dataSource: Object.keys(store.rates) },
+              }}
+              onValid={_onValid}
+              onChange={_onChange}
+              style={styles.form}
+              value={form}
+            />
             <View style={styles.buttons}>
               <Button title="$cancel" outlined onPress={onClose} />
               <Button activity={busy} disabled={busy || !valid} title="$save" onPress={() => _onSubmit(store)} />
