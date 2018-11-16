@@ -121,6 +121,7 @@ class ProviderStore extends Component {
 
   onVault = async (props) => {
     const { onError, _store, state: { hash: authorization, ...state } } = this;
+    let { state: { baseCurrency } } = this;
 
     const vault = await fetch({
       method: 'POST', service: 'vault', headers: { authorization }, ...props,
@@ -128,10 +129,12 @@ class ProviderStore extends Component {
 
     if (vault) {
       const vaults = [...state.vaults, calcVault(vault, state.txs, state.vaults.length)];
-      const overall = calcOverall({ ...state, vaults });
+      if (vaults.length === 1) baseCurrency = vaults.currency;
 
-      await _store({ overall, vaults });
-      this.setState({ overall, vaults });
+      const overall = calcOverall({ ...state, baseCurrency, vaults });
+
+      await _store({ baseCurrency, overall, vaults });
+      this.setState({ baseCurrency, overall, vaults });
     }
 
     return vault;

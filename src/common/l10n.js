@@ -49,6 +49,8 @@ export default {
     ENTER_PIN: 'Enter your pin',
     EXPENSES: 'Expenses',
 
+    FIRST_VAULT_CAPTION: 'This will be your first vault. The currency you choose will be used as the basis for all reports.',
+
     INCOMES: 'Incomes',
 
     LOADING_PROFILE: 'Wait a moment, syncing your blockchain.',
@@ -70,6 +72,7 @@ export default {
     TYPE_TRANSACTION: ['Expense', 'Income'],
 
     VAULT: 'Vault',
+    VAULT_CAPTION: 'You can create as many vaults as you want. You can continue using your base currency or choose any other.',
 
     WELCOME: 'Welcome to Voltvault',
     WELCOME_CAPTION: '$This is your first...',

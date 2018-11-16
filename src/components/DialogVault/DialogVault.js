@@ -2,15 +2,13 @@ import { bool, func } from 'prop-types';
 import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
-import { C, FORM } from '../../common';
+import { FORM } from '../../common';
 import { Consumer } from '../../context';
 import {
   Button, Dialog, Form, Text,
 } from '../../reactor/components';
 import styles from './DialogVault.style';
 
-const { CURRENCY } = C;
-const DEFAULT_FORM = { currency: CURRENCY, balance: 0 };
 
 class DialogVault extends PureComponent {
   static propTypes = {
@@ -24,11 +22,16 @@ class DialogVault extends PureComponent {
 
   state = {
     busy: false,
-    form: DEFAULT_FORM,
+    form: {},
     valid: false,
   };
 
-  _onChange = form => this.setState({ form })
+  componentWillReceiveProps({ visible }) {
+    const { props } = this;
+    if (visible === true && visible !== props.visible) this.setState({ form: { balance: '0' } });
+  }
+
+  _onChange = form => this.setState({ form });
 
   _onValid = valid => this.setState({ valid })
 
@@ -50,7 +53,12 @@ class DialogVault extends PureComponent {
 
     return (
       <Consumer>
-        { ({ l10n, store }) => (
+        { ({
+          l10n,
+          store: {
+            baseCurrency, rates = {}, vaults = [], ...store
+          },
+        }) => (
           <Dialog
             style={styles.frame}
             styleContainer={styles.dialog}
@@ -58,17 +66,22 @@ class DialogVault extends PureComponent {
             visible={visible}
           >
             <Text lighten level={2}>
-              $Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+              { vaults.length === 0
+                ? l10n.FIRST_VAULT_CAPTION
+                : l10n.VAULT_CAPTION }
             </Text>
             <Form
               attributes={{
                 ...FORM.VAULT,
-                currency: { ...FORM.VAULT.currency, dataSource: Object.keys(store.rates) },
+                currency: {
+                  ...FORM.VAULT.currency,
+                  dataSource: vaults.length === 0 ? Object.keys(rates) : [baseCurrency, ...Object.keys(rates)],
+                },
               }}
               onValid={_onValid}
               onChange={_onChange}
               style={styles.form}
-              value={form}
+              value={{ ...form, currency: form.currency || baseCurrency }}
             />
             <View style={styles.buttons}>
               <Button title={l10n.CANCEL} outlined onPress={onClose} style={styles.button} />
