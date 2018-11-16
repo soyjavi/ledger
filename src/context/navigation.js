@@ -17,15 +17,20 @@ class ProviderNavigation extends PureComponent {
   };
 
   state = {
-    error: undefined,
+    params: {},
     stack: [SESSION],
-    parameters: undefined,
   }
 
   get current() {
     const { state: { stack } } = this;
 
     return stack[stack.length - 1];
+  }
+
+  get parameters() {
+    const { current, state: { params } } = this;
+
+    return params[current];
   }
 
   goBack = () => {
@@ -38,24 +43,22 @@ class ProviderNavigation extends PureComponent {
   }
 
   navigate = (screen, parameters) => {
-    const { state: { stack } } = this;
+    const { state: { params, stack } } = this;
 
-    this.setState({ stack: [...stack, screen], parameters });
+    this.setState({ stack: [...stack, screen], params: { ...params, [screen]: parameters } });
   }
-
-  onError = error => this.setState({ error })
 
   render() {
     const {
-      current, goBack, navigate, onError,
+      current, goBack, navigate, parameters,
       props: { children },
-      state,
+      state: { stack },
     } = this;
 
     return (
       <Provider
         value={{
-          current, goBack, navigate, onError, ...state,
+          current, goBack, navigate, parameters, stack,
         }}
       >
         { children }
