@@ -7,11 +7,12 @@ import { FORM } from '../../common';
 import { Consumer } from '../../context';
 import { THEME } from '../../reactor/common';
 import {
-  Button, Dialog, Form, Text,
+  Button, Dialog, Form, Motion, Text,
 } from '../../reactor/components';
 import styles from './DialogVault.style';
 
-const { COLOR } = THEME;
+const { COLOR, MOTION: { DURATION } } = THEME;
+const PRESET = 'fade';
 
 class DialogVault extends PureComponent {
   static propTypes = {
@@ -63,40 +64,54 @@ class DialogVault extends PureComponent {
           },
         }) => (
           <Dialog style={styles.frame} styleContainer={styles.dialog} visible={visible}>
-            <Text color={COLOR.PRIMARY} headline level={5} style={styles.text}>
-              {`${l10n.NEW} ${l10n.VAULT}`}
-            </Text>
-            <Image source={bannerVault} resizeMode="contain" style={styles.banner} />
-            <Text lighten level={2} style={styles.text}>
-              { vaults.length === 0 ? l10n.FIRST_VAULT_CAPTION : l10n.VAULT_CAPTION }
-            </Text>
-            <Form
-              attributes={{
-                ...FORM.VAULT,
-                currency: {
-                  ...FORM.VAULT.currency,
-                  dataSource: vaults.length === 0 ? Object.keys(rates) : [baseCurrency, ...Object.keys(rates)],
-                },
-              }}
-              onValid={_onValid}
-              onChange={_onChange}
-              style={styles.form}
-              value={{
-                currency: currency || baseCurrency,
-                ...form,
-              }}
-            />
-            <View style={styles.buttons}>
-              { vaults.length > 0 && <Button title={l10n.CANCEL} color={COLOR.PRIMARY} outlined onPress={onClose} style={styles.button} /> }
-              <Button
-                title={l10n.SAVE}
-                activity={busy}
-                color={COLOR.PRIMARY}
-                disabled={busy || !valid}
-                onPress={() => _onSubmit(store)}
-                style={styles.button}
+            <Motion preset={PRESET} visible={visible} delay={DURATION * 1.5}>
+              <Text color={COLOR.PRIMARY} headline level={5} style={styles.text}>
+                {`${l10n.NEW} ${l10n.VAULT}`}
+              </Text>
+            </Motion>
+            <Motion preset={PRESET} visible={visible} delay={DURATION * 1.75}>
+              <Image source={bannerVault} resizeMode="contain" style={styles.banner} />
+            </Motion>
+            <Motion preset={PRESET} visible={visible} delay={DURATION * 2}>
+              <Text lighten level={2} style={styles.text}>
+                { vaults.length === 0 ? l10n.FIRST_VAULT_CAPTION : l10n.VAULT_CAPTION }
+              </Text>
+              <Form
+                attributes={{
+                  ...FORM.VAULT,
+                  currency: {
+                    ...FORM.VAULT.currency,
+                    dataSource: vaults.length === 0 ? Object.keys(rates) : [baseCurrency, ...Object.keys(rates)],
+                  },
+                }}
+                onValid={_onValid}
+                onChange={_onChange}
+                style={styles.form}
+                value={{
+                  currency: currency || baseCurrency,
+                  ...form,
+                }}
               />
-            </View>
+              <View style={styles.buttons}>
+                { vaults.length > 0 && (
+                  <Button
+                    title={l10n.CANCEL}
+                    color={COLOR.PRIMARY}
+                    outlined
+                    onPress={onClose}
+                    style={styles.button}
+                  />)}
+                <Button
+                  title={l10n.SAVE}
+                  activity={busy}
+                  color={COLOR.PRIMARY}
+                  disabled={busy || !valid}
+                  onPress={() => _onSubmit(store)}
+                  style={styles.button}
+                />
+              </View>
+            </Motion>
+
           </Dialog>
         )}
       </Consumer>

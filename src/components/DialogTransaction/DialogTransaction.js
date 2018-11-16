@@ -7,14 +7,17 @@ import { Image, View } from 'react-native';
 import { bannerExpense, bannerIncome, bannerTransfer } from '../../assets';
 import { C, FORM } from '../../common';
 import { Consumer } from '../../context';
+import { THEME } from '../../reactor/common';
 import {
-  Button, Dialog, Form, Text,
+  Button, Dialog, Form, Motion, Text,
 } from '../../reactor/components';
 import hydrateForm from './modules/hydrateForm';
 import styles from './DialogTransaction.style';
 
 const { COLORS } = C;
 const BANNERS = [bannerExpense, bannerIncome, bannerTransfer];
+const { MOTION: { DURATION } } = THEME;
+const PRESET = 'fade';
 
 class DialogTransaction extends PureComponent {
   static propTypes = {
@@ -76,32 +79,38 @@ class DialogTransaction extends PureComponent {
       <Consumer>
         { ({ l10n, store }) => (
           <Dialog visible={visible} style={styles.frame} styleContainer={styles.dialog}>
-            <Text color={COLORS[type]} headline level={5} style={styles.text}>
-              {`${l10n.NEW} ${l10n.TYPE_TRANSACTION[type]}`}
-            </Text>
-            <Image source={BANNERS[type]} resizeMode="contain" style={styles.banner} />
-            <Text lighten level={2} style={styles.text}>
-              $Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-            </Text>
-            <Form
-              attributes={hydrateForm(FORM.TRANSACTION, l10n.CATEGORIES[type])}
-              color={COLORS[type]}
-              onValid={_onValid}
-              onChange={_onChange}
-              style={styles.form}
-              value={form}
-            />
-            <View style={styles.buttons}>
-              <Button title={l10n.CANCEL} color={COLORS[type]} outlined onPress={onClose} style={styles.button} />
-              <Button
-                title={l10n.SAVE}
-                activity={busy}
+            <Motion preset={PRESET} visible={visible} delay={DURATION * 1.5}>
+              <Text color={COLORS[type]} headline level={5} style={styles.text}>
+                {`${l10n.NEW} ${l10n.TYPE_TRANSACTION[type]}`}
+              </Text>
+            </Motion>
+            <Motion preset={PRESET} visible={visible} delay={DURATION * 1.75}>
+              <Image source={BANNERS[type]} resizeMode="contain" style={styles.banner} />
+            </Motion>
+            <Motion preset={PRESET} visible={visible} delay={DURATION * 2}>
+              <Text lighten level={2} style={styles.text}>
+                $Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+              </Text>
+              <Form
+                attributes={hydrateForm(FORM.TRANSACTION, l10n.CATEGORIES[type])}
                 color={COLORS[type]}
-                disabled={busy || !valid}
-                onPress={() => _onSubmit({ l10n, store })}
-                style={styles.button}
+                onValid={_onValid}
+                onChange={_onChange}
+                style={styles.form}
+                value={form}
               />
-            </View>
+              <View style={styles.buttons}>
+                <Button title={l10n.CANCEL} color={COLORS[type]} outlined onPress={onClose} style={styles.button} />
+                <Button
+                  title={l10n.SAVE}
+                  activity={busy}
+                  color={COLORS[type]}
+                  disabled={busy || !valid}
+                  onPress={() => _onSubmit({ l10n, store })}
+                  style={styles.button}
+                />
+              </View>
+            </Motion>
           </Dialog>
         )}
       </Consumer>
