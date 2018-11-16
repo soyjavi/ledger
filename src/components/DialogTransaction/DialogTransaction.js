@@ -36,7 +36,7 @@ class DialogTransaction extends PureComponent {
 
   componentWillReceiveProps({ visible }) {
     const { props } = this;
-    if (visible === true && visible !== props.visible) this.setState({ form: { value: '0', title: '' } });
+    if (visible === true && visible !== props.visible) this.setState({ form: { title: '' } });
   }
 
   _onChange = form => this.setState({ form })
@@ -92,7 +92,7 @@ class DialogTransaction extends PureComponent {
               value={form}
             />
             <View style={styles.buttons}>
-              <Button title={l10n.CANCEL} outlined onPress={onClose} style={styles.button} />
+              <Button title={l10n.CANCEL} color={COLORS[type]} outlined onPress={onClose} style={styles.button} />
               <Button
                 title={l10n.SAVE}
                 activity={busy}
