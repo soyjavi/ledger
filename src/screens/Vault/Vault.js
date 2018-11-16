@@ -2,6 +2,7 @@ import { bool, shape } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
 import { ScrollView } from 'react-native';
 
+import { iconBack, iconShuffle } from '../../assets';
 import { C, exchange } from '../../common';
 import {
   DialogTransaction, FloatingButton, TransactionItem, VaultBalance,
@@ -66,9 +67,9 @@ class Vault extends PureComponent {
           }) => (
             <Fragment>
               <Header
-                left={{ title: l10n.BACK, onPress: () => navigation.goBack() }}
+                left={{ icon: iconBack, onPress: () => navigation.goBack() }}
                 title={title}
-                right={currency !== baseCurrency ? { title: '$switch', onPress: _onSwitchCurrency } : undefined}
+                right={currency !== baseCurrency ? { icon: iconShuffle, onPress: _onSwitchCurrency } : undefined}
                 visible={visible}
               />
               <Motion preset="fadeleft" delay={500} visible={visible}>

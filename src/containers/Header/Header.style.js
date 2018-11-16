@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { C } from '../../common';
 import { LAYOUT, ENV, THEME } from '../../reactor/common';
 
-const { COLOR, OFFSET, UNIT } = THEME;
+const { COLOR } = THEME;
 const { STYLE: { HEADER_HEIGHT } } = C;
 
 export default StyleSheet.create({
@@ -17,21 +17,19 @@ export default StyleSheet.create({
     zIndex: 1,
   },
 
+  content: {
+    flex: 1,
+  },
+
+  icon: {
+    opacity: 0.5,
+  },
+
   option: {
-    width: UNIT * 7.2,
-    height: HEADER_HEIGHT * 0.8,
-    lineHeight: HEADER_HEIGHT * 0.8,
-  },
-
-  optionLeft: {
-    marginLeft: OFFSET,
-    marginRight: UNIT,
-  },
-
-  optionRight: {
-    marginLeft: UNIT,
-    marginRight: OFFSET,
-    textAlign: 'right',
+    ...LAYOUT.STYLE.CENTERED,
+    alignItems: 'center',
+    height: HEADER_HEIGHT,
+    width: HEADER_HEIGHT,
   },
 
   progressBar: {
@@ -40,7 +38,7 @@ export default StyleSheet.create({
   },
 
   title: {
-    alignItems: 'center',
     flex: 1,
+    textAlign: 'center',
   },
 });

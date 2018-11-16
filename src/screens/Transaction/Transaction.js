@@ -2,6 +2,7 @@ import { bool, shape } from 'prop-types';
 import React, { PureComponent } from 'react';
 import { ScrollView } from 'react-native';
 
+import { iconBack } from '../../assets';
 import { Header } from '../../containers';
 import { Consumer } from '../../context';
 import { Text, Viewport } from '../../reactor/components';
@@ -18,8 +19,6 @@ class Transaction extends PureComponent {
     visible: false,
   };
 
-  // @TODO: Handle ShouldComponentUpdate()
-
   render() {
     const {
       props: { dataSource: { hash } = {}, visible, ...inherit },
@@ -30,9 +29,8 @@ class Transaction extends PureComponent {
         <Consumer>
           { ({ navigation, l10n }) => (
             <Header
-              left={{ title: '$back', onPress: () => navigation.goBack() }}
+              left={{ icon: iconBack, onPress: () => navigation.goBack() }}
               title={l10n.TRANSACTION}
-              right={{ title: '$clone' }}
               visible={visible}
             />
           )}

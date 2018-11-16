@@ -1,14 +1,11 @@
-import {
-  bool, func, shape, string,
-} from 'prop-types';
+import { bool, shape, string } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 
 import { C } from '../../common';
-import { Consumer } from '../../context';
 import { THEME } from '../../reactor/common';
 import {
-  Motion, ProgressBar, Text, Touchable,
+  Icon, Motion, ProgressBar, Text, Touchable,
 } from '../../reactor/components';
 import styles from './Header.style';
 
@@ -17,13 +14,11 @@ const { COLOR, MOTION: { DURATION } } = THEME;
 const PRESET = 'fadeleft';
 
 const Option = ({
-  delay, title, onPress, visible, ...inherit
+  delay, icon, onPress, visible, ...inherit
 }) => (
   <Motion preset={PRESET} delay={delay} visible={visible}>
-    <Touchable onPress={onPress} rippleColor={COLOR.BACKGROUND}>
-      <Text level={2} lighten {...inherit} style={[styles.option, inherit.style]}>
-        {title}
-      </Text>
+    <Touchable onPress={onPress} rippleColor={COLOR.BASE} style={[styles.option, inherit.style]}>
+      { icon && <Icon value={icon} style={styles.icon} /> }
     </Touchable>
   </Motion>
 );
@@ -34,27 +29,16 @@ const Header = ({
   const color = highlight ? COLOR.WHITE : undefined;
 
   return (
-    <Consumer>
-      { ({ l10n = {} }) => (
-        <View style={[styles.container, inherit.style]}>
-          { busy && <ProgressBar duration={RESPONSE_TIME} progress={busy ? 1 : 0} style={styles.progressBar} /> }
-          <Option
-            title={onBack ? l10n.BACK : left.title}
-            onPress={onBack || left.onPress}
-            style={styles.optionLeft}
-            color={color}
-            delay={DURATION}
-            visible={visible}
-          />
-          <Motion preset={PRESET} delay={DURATION * 1.5} visible={visible} style={styles.title}>
-            <Text headline level={5} color={color} numberOfLines={1}>
-              { title }
-            </Text>
-          </Motion>
-          <Option {...right} style={styles.optionRight} color={color} delay={DURATION * 2} visible={visible} />
-        </View>
-      )}
-    </Consumer>
+    <View style={[styles.container, inherit.style]}>
+      { busy && <ProgressBar duration={RESPONSE_TIME} progress={busy ? 1 : 0} style={styles.progressBar} /> }
+      <Option {...left} color={color} delay={DURATION} visible={visible} />
+      <Motion preset={PRESET} delay={DURATION * 1.5} visible={visible} style={styles.content}>
+        <Text headline level={5} color={color} numberOfLines={1} style={styles.title}>
+          { title }
+        </Text>
+      </Motion>
+      <Option {...right} color={color} delay={DURATION * 2} visible={visible} />
+    </View>
   );
 };
 
@@ -62,7 +46,6 @@ Header.propTypes = {
   busy: bool,
   highlight: bool,
   left: shape({}),
-  onBack: func,
   right: shape({}),
   title: string,
   visible: bool,
@@ -72,7 +55,6 @@ Header.defaultProps = {
   busy: false,
   highlight: false,
   left: undefined,
-  onBack: undefined,
   right: undefined,
   title: undefined,
   visible: false,
