@@ -26,6 +26,8 @@ export default StyleSheet.create({
   },
 
   text: {
+    alignSelf: 'center',
+    maxWidth: '90%',
     textAlign: 'center',
   },
 

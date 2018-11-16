@@ -4,23 +4,27 @@ export default {
       type: 'select',
       dataSource: [],
       label: 'l10n.category',
-      style: 'inline2',
     },
     value: {
       keyboard: 'numeric',
       label: 'l10n.value',
       required: true,
-      style: 'inline3',
+      style: 'inline2',
     },
-    title: { label: 'l10n.title' },
+    title: {
+      label: 'l10n.title',
+      style: 'inline2',
+    },
   },
 
   VAULT: {
-    title: { label: 'l10n.title', required: true },
     currency: {
       type: 'select',
-      // defaultValue: CURRENCIES[0],
       label: 'l10n.currency',
+    },
+    title: {
+      label: 'l10n.title',
+      required: true,
       style: 'inline2',
     },
     balance: {

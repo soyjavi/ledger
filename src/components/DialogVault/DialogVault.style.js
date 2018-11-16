@@ -1,25 +1,23 @@
 import { StyleSheet } from 'react-native';
 
-import { C } from '../../common';
 import { ENV, LAYOUT, THEME } from '../../reactor/common';
+import { C } from '../../common';
 
-const { STYLE: { HEADER_HEIGHT } } = C;
+const { STYLE: { BANNER } } = C;
 const { IS_NATIVE } = ENV;
-const { COLOR, OFFSET, UNIT } = THEME;
+const { COLOR, OFFSET } = THEME;
 
 export default StyleSheet.create({
-  scroll: {
-    paddingTop: HEADER_HEIGHT,
-  },
+  banner: BANNER,
 
   button: {
     flex: 1,
-    marginHorizontal: OFFSET,
+    marginHorizontal: OFFSET / 4,
   },
 
   buttons: {
     ...LAYOUT.STYLE.ROW,
-    marginHorizontal: -OFFSET,
+    marginHorizontal: -OFFSET / 4,
   },
 
   dialog: {
@@ -28,12 +26,19 @@ export default StyleSheet.create({
   },
 
   frame: {
-    shadowColor: IS_NATIVE ? 'transparent' : undefined,
-    maxHeight: UNIT * 40,
     alignSelf: 'flex-end',
+    display: 'flex',
+    paddingVertical: OFFSET,
+    shadowColor: IS_NATIVE ? 'transparent' : undefined,
   },
 
   form: {
     marginVertical: OFFSET,
+  },
+
+  text: {
+    textAlign: 'center',
+    alignSelf: 'center',
+    width: '90%',
   },
 });

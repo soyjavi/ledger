@@ -2,9 +2,12 @@ import {
   bool, func, number, string,
 } from 'prop-types';
 import React, { PureComponent } from 'react';
-import { View } from 'react-native';
+import { Image, View } from 'react-native';
 
-import { FORM } from '../../common';
+import bannerExpense from '../../assets/banner_expense.png';
+import bannerIncome from '../../assets/banner_income.png';
+import bannerTransfer from '../../assets/banner_transfer.png';
+import { C, FORM } from '../../common';
 import { Consumer } from '../../context';
 import {
   Button, Dialog, Form, Text,
@@ -12,10 +15,8 @@ import {
 import hydrateForm from './modules/hydrateForm';
 import styles from './DialogTransaction.style';
 
-const DEFAULT_FORM = {
-  currency: 'USD',
-  balance: '0',
-};
+const { COLORS } = C;
+const BANNERS = [bannerExpense, bannerIncome, bannerTransfer];
 
 class DialogTransaction extends PureComponent {
   static propTypes = {
@@ -31,9 +32,14 @@ class DialogTransaction extends PureComponent {
 
   state = {
     busy: false,
-    form: DEFAULT_FORM,
+    form: {},
     valid: false,
   };
+
+  componentWillReceiveProps({ visible }) {
+    const { props } = this;
+    if (visible === true && visible !== props.visible) this.setState({ form: { value: '0', title: '' } });
+  }
 
   _onChange = form => this.setState({ form })
 
@@ -71,17 +77,17 @@ class DialogTransaction extends PureComponent {
     return (
       <Consumer>
         { ({ l10n, store }) => (
-          <Dialog
-            title={`${l10n.NEW} ${l10n.TYPE_TRANSACTION[type]}`}
-            visible={visible}
-            style={styles.frame}
-            styleContainer={styles.dialog}
-          >
-            <Text lighten level={2}>
+          <Dialog visible={visible} style={styles.frame} styleContainer={styles.dialog}>
+            <Text color={COLORS[type]} headline level={5} style={styles.text}>
+              {`${l10n.NEW} ${l10n.TYPE_TRANSACTION[type]}`}
+            </Text>
+            <Image source={BANNERS[type]} resizeMode="contain" style={styles.banner} />
+            <Text lighten level={2} style={styles.text}>
               $Lorem Ipsum is simply dummy text of the printing and typesetting industry.
             </Text>
             <Form
               attributes={hydrateForm(FORM.TRANSACTION, l10n.CATEGORIES[type])}
+              color={COLORS[type]}
               onValid={_onValid}
               onChange={_onChange}
               style={styles.form}
@@ -92,6 +98,7 @@ class DialogTransaction extends PureComponent {
               <Button
                 title={l10n.SAVE}
                 activity={busy}
+                color={COLORS[type]}
                 disabled={busy || !valid}
                 onPress={() => _onSubmit({ l10n, store })}
                 style={styles.button}

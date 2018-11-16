@@ -42,6 +42,7 @@ export default {
         'Investment',
         'Transfer',
       ],
+      [],
     ],
 
     CANCEL: 'Cancel',
@@ -68,6 +69,7 @@ export default {
     SEARCH: 'Search',
 
     TRANSACTION: 'transaction',
+    TRANSFER: 'transfer',
     TODAY: 'Today',
     TYPE_TRANSACTION: ['Expense', 'Income'],
 

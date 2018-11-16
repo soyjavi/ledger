@@ -1,14 +1,19 @@
 import { bool, func } from 'prop-types';
 import React, { PureComponent } from 'react';
-import { View } from 'react-native';
+import { Image, View } from 'react-native';
 
+import banner from '../../assets/banner_vault.png';
 import { FORM } from '../../common';
 import { Consumer } from '../../context';
+import { THEME } from '../../reactor/common';
 import {
   Button, Dialog, Form, Text,
 } from '../../reactor/components';
 import styles from './DialogVault.style';
 
+const { COLOR } = THEME;
+
+console.log('banner', banner);
 
 class DialogVault extends PureComponent {
   static propTypes = {
@@ -48,7 +53,7 @@ class DialogVault extends PureComponent {
     const {
       _onChange, _onSubmit, _onValid,
       props: { onClose, visible },
-      state: { busy, form, valid },
+      state: { busy, form: { currency, ...form }, valid },
     } = this;
 
     return (
@@ -59,16 +64,13 @@ class DialogVault extends PureComponent {
             baseCurrency, rates = {}, vaults = [], ...store
           },
         }) => (
-          <Dialog
-            style={styles.frame}
-            styleContainer={styles.dialog}
-            title={`${l10n.NEW} ${l10n.VAULT}`}
-            visible={visible}
-          >
-            <Text lighten level={2}>
-              { vaults.length === 0
-                ? l10n.FIRST_VAULT_CAPTION
-                : l10n.VAULT_CAPTION }
+          <Dialog style={styles.frame} styleContainer={styles.dialog} visible={visible}>
+            <Text color={COLOR.PRIMARY} headline level={5} style={styles.text}>
+              {`${l10n.NEW} ${l10n.VAULT}`}
+            </Text>
+            <Image source={banner} resizeMode="contain" style={styles.banner} />
+            <Text lighten level={2} style={styles.text}>
+              { vaults.length === 0 ? l10n.FIRST_VAULT_CAPTION : l10n.VAULT_CAPTION }
             </Text>
             <Form
               attributes={{
@@ -81,16 +83,19 @@ class DialogVault extends PureComponent {
               onValid={_onValid}
               onChange={_onChange}
               style={styles.form}
-              value={{ ...form, currency: form.currency || baseCurrency }}
+              value={{
+                currency: currency || baseCurrency,
+                ...form,
+              }}
             />
             <View style={styles.buttons}>
-              <Button title={l10n.CANCEL} outlined onPress={onClose} style={styles.button} />
+              { vaults.length > 0 && <Button title={l10n.CANCEL} outlined onPress={onClose} style={styles.button} /> }
               <Button
                 title={l10n.SAVE}
                 activity={busy}
+                color={COLOR.PRIMARY}
                 disabled={busy || !valid}
                 onPress={() => _onSubmit(store)}
-                primary
                 style={styles.button}
               />
             </View>

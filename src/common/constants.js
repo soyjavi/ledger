@@ -3,7 +3,7 @@ import { Platform } from 'react-native';
 import { THEME } from '../reactor/common';
 import PKG from '../../package.json';
 
-const { UNIT } = THEME;
+const { OFFSET, UNIT } = THEME;
 
 export default {
   COLORS: [
@@ -24,6 +24,12 @@ export default {
   STYLE: {
     DASHBOARD_HEIGHT: UNIT * 16,
     HEADER_HEIGHT: UNIT * 5.8,
+    BANNER: {
+      alignSelf: 'center',
+      height: UNIT * 20,
+      marginVertical: OFFSET,
+      width: UNIT * 30,
+    },
   },
   SYMBOL: {
     USD: '$',
