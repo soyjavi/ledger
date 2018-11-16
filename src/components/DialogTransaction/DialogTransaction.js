@@ -4,9 +4,7 @@ import {
 import React, { PureComponent } from 'react';
 import { Image, View } from 'react-native';
 
-import bannerExpense from '../../assets/banner_expense.png';
-import bannerIncome from '../../assets/banner_income.png';
-import bannerTransfer from '../../assets/banner_transfer.png';
+import { bannerExpense, bannerIncome, bannerTransfer } from '../../assets';
 import { C, FORM } from '../../common';
 import { Consumer } from '../../context';
 import {

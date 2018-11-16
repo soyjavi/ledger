@@ -2,7 +2,7 @@ import { bool, func } from 'prop-types';
 import React, { PureComponent } from 'react';
 import { Image, View } from 'react-native';
 
-import banner from '../../assets/banner_vault.png';
+import { bannerVault } from '../../assets';
 import { FORM } from '../../common';
 import { Consumer } from '../../context';
 import { THEME } from '../../reactor/common';
@@ -12,8 +12,6 @@ import {
 import styles from './DialogVault.style';
 
 const { COLOR } = THEME;
-
-console.log('banner', banner);
 
 class DialogVault extends PureComponent {
   static propTypes = {
@@ -68,7 +66,7 @@ class DialogVault extends PureComponent {
             <Text color={COLOR.PRIMARY} headline level={5} style={styles.text}>
               {`${l10n.NEW} ${l10n.VAULT}`}
             </Text>
-            <Image source={banner} resizeMode="contain" style={styles.banner} />
+            <Image source={bannerVault} resizeMode="contain" style={styles.banner} />
             <Text lighten level={2} style={styles.text}>
               { vaults.length === 0 ? l10n.FIRST_VAULT_CAPTION : l10n.VAULT_CAPTION }
             </Text>
