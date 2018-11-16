@@ -106,13 +106,15 @@ class ProviderStore extends Component {
       const vaults = state.vaults.map((vault, index) => (
         vault.hash !== props.vault ? vault : calcVault(vault, txs, index)
       ));
+      const overall = calcOverall({ ...state, vaults, txs });
 
-      await _store({ txs, vaults });
+      await _store({ overall, txs, vaults });
       this.setState({
         latestTransaction,
+        overall,
+        queryTxs: groupByDay(txs, queryProps),
         txs,
         vaults,
-        queryTxs: groupByDay(txs, queryProps),
       });
     }
 
