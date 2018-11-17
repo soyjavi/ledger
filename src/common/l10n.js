@@ -43,7 +43,6 @@ export default {
         'Investment',
         'Transfer',
       ],
-      [],
     ],
     CATEGORY: 'Category',
     CLOSE: 'Close',

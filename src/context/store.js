@@ -56,8 +56,10 @@ class ProviderStore extends Component {
       pin,
     }).catch(onError);
 
-    await _store({ pin });
-    this.setState({ pin, hash });
+    if (hash) {
+      await _store({ pin });
+      this.setState({ pin, hash });
+    }
 
     return hash;
   }
@@ -70,7 +72,7 @@ class ProviderStore extends Component {
       const { baseCurrency, latestTransaction, rates } = response;
       const vaults = response.vaults.map((vault, index) => calcVault(vault, txs, index));
 
-      await _store({ vaults });
+      await _store({ baseCurrency, rates, vaults });
       this.setState({
         baseCurrency, latestTransaction, rates, vaults,
       });
@@ -131,12 +133,20 @@ class ProviderStore extends Component {
 
     if (vault) {
       const vaults = [...state.vaults, calcVault(vault, state.txs, state.vaults.length)];
-      if (vaults.length === 1) baseCurrency = vaults.currency;
+      if (vaults.length === 1) {
+        baseCurrency = vault.currency;
+        delete state.rates[vault.currency];
+      }
 
-      const overall = calcOverall({ ...state, baseCurrency, vaults });
+      const nextState = {
+        baseCurrency,
+        overall: calcOverall({ ...state, baseCurrency, vaults }),
+        rates: state.rates,
+        vaults,
+      };
 
-      await _store({ baseCurrency, overall, vaults });
-      this.setState({ baseCurrency, overall, vaults });
+      await _store(nextState);
+      this.setState(nextState);
     }
 
     return vault;

@@ -5,16 +5,19 @@ import React, { PureComponent } from 'react';
 import { Image, View } from 'react-native';
 
 import { bannerExpense, bannerIncome, bannerTransfer } from '../../assets';
-import { C, FORM } from '../../common';
+import { C, translate } from '../../common';
 import { Consumer } from '../../context';
 import { THEME } from '../../reactor/common';
 import {
   Button, Dialog, Form, Motion, Text,
 } from '../../reactor/components';
-import hydrateForm from './modules/hydrateForm';
+import {
+  hydrateTransaction, hydrateTransfer, onTransaction, onTransfer,
+} from './modules';
+
 import styles from './DialogTransaction.style';
 
-const { COLORS } = C;
+const { COLORS, TX: { TYPE: { TRANSFER } } } = C;
 const BANNERS = [bannerExpense, bannerIncome, bannerTransfer];
 const { MOTION: { DURATION } } = THEME;
 const PRESET = 'fade';
@@ -42,36 +45,48 @@ class DialogTransaction extends PureComponent {
     if (visible === true && visible !== props.visible) this.setState({ form: { title: '' } });
   }
 
-  _onChange = form => this.setState({ form })
+  _onChange = (form, { baseCurrency, vaults, rates }) => {
+    const { props, state } = this;
+    const from = vaults.find(({ hash }) => hash === props.vault);
+    const to = vaults.find(({ title }) => title === form.destination) || vaults[0];
+    let { exchange } = form;
+
+    if (exchange === state.form.exchange) {
+      if (from.currency === to.currency) exchange = form.value;
+      else {
+        exchange = (from.currency === baseCurrency)
+          ? form.value * rates[to.currency]
+          : form.value / rates[from.currency];
+      }
+      exchange = parseFloat(exchange, 10).toFixed(2);
+    }
+
+    this.setState({
+      form: {
+        ...form, from, to, exchange,
+      },
+    });
+  }
 
   _onValid = valid => this.setState({ valid })
 
-  _onSubmit = async ({
-    l10n,
-    store: { latestTransaction: { hash: previousHash }, onTransaction },
-  }) => {
-    const {
-      props: { type, vault, onClose },
-      state: { form: { category, value, title } },
-    } = this;
+  _onSubmit = async (context) => {
+    const { props, state } = this;
 
     this.setState({ busy: true });
-    const response = await onTransaction({
-      category: category ? l10n.CATEGORIES[type].indexOf(category) : 0,
-      previousHash,
-      title: title || '',
-      type,
-      value: parseFloat(value, 10),
-      vault,
-    });
+    const { hash } = (props.type !== TRANSFER)
+      ? await onTransaction({ ...context, props, state })
+      : await onTransfer({ ...context, props, state });
     this.setState({ busy: false });
-    if (response) onClose();
+    if (hash) props.onClose();
   }
 
   render() {
     const {
       _onChange, _onSubmit, _onValid,
-      props: { onClose, type, visible },
+      props: {
+        onClose, type, vault, visible,
+      },
       state: { busy, form, valid },
     } = this;
 
@@ -89,13 +104,20 @@ class DialogTransaction extends PureComponent {
             </Motion>
             <Motion preset={PRESET} visible={visible} delay={DURATION * 2}>
               <Text lighten level={2} style={styles.text}>
-                $Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                {l10n.TRANSACTION_CAPTIONS[type]}
               </Text>
               <Form
-                attributes={hydrateForm(FORM.TRANSACTION, l10n.CATEGORIES[type])}
+                attributes={
+                  translate((type === TRANSFER
+                    ? hydrateTransfer({
+                      form, l10n, store, vault,
+                    })
+                    : hydrateTransaction({ l10n, type })
+                  ), l10n)
+                }
                 color={COLORS[type]}
                 onValid={_onValid}
-                onChange={_onChange}
+                onChange={value => _onChange(value, store)}
                 style={styles.form}
                 value={form}
               />
