@@ -1,5 +1,6 @@
 export default {
   'en-EN': {
+    AMOUNT: 'Amount',
     BALANCE: 'Balance',
 
     // CATEGORIES: [
@@ -21,6 +22,7 @@ export default {
     //   'Travel',
     // ],
 
+    CANCEL: 'Cancel',
     CATEGORIES: [
       [ // Expense
         'Food & Drinks',
@@ -43,8 +45,9 @@ export default {
       ],
       [],
     ],
-    CANCEL: 'Cancel',
+    CATEGORY: 'Category',
     CLOSE: 'Close',
+    CURRENCY: 'Currency',
 
     ENTER_PIN: 'Enter your pin',
     EXPENSES: 'Expenses',
@@ -67,12 +70,19 @@ export default {
     SAVE: 'Save',
     SEARCH: 'Search',
 
-    TRANSACTION: 'transaction',
-    TRANSFER: 'transfer',
+    TITLE: 'Title',
     TODAY: 'Today',
-    TYPE_TRANSACTION: ['Expense', 'Income'],
+    TRANSACTION: 'transaction',
+    TRANSACTION_CAPTIONS: [
+      'Register a new expense in this vault.',
+      'Register a new income in this vault.',
+      'Transfer any amount to another of your vaults.',
+    ],
+    TRANSFER: 'transfer',
+    TYPE_TRANSACTION: ['Expense', 'Income', 'Transfer'],
 
     VAULT: 'Vault',
+    VAULTS: 'Vaults',
     VAULT_CAPTION: 'You can create as many vaults as you want. You can continue using your base currency or choose any other.',
 
     WELCOME: 'Welcome',

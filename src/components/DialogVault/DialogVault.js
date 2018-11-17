@@ -3,12 +3,13 @@ import React, { PureComponent } from 'react';
 import { Image, View } from 'react-native';
 
 import { bannerVault } from '../../assets';
-import { FORM } from '../../common';
+import { translate } from '../../common';
 import { Consumer } from '../../context';
 import { THEME } from '../../reactor/common';
 import {
   Button, Dialog, Form, Motion, Text,
 } from '../../reactor/components';
+import hydrate from './modules/hydrate';
 import styles from './DialogVault.style';
 
 const { COLOR, MOTION: { DURATION } } = THEME;
@@ -77,13 +78,7 @@ class DialogVault extends PureComponent {
                 { vaults.length === 0 ? l10n.FIRST_VAULT_CAPTION : l10n.VAULT_CAPTION }
               </Text>
               <Form
-                attributes={{
-                  ...FORM.VAULT,
-                  currency: {
-                    ...FORM.VAULT.currency,
-                    dataSource: vaults.length === 0 ? Object.keys(rates) : [baseCurrency, ...Object.keys(rates)],
-                  },
-                }}
+                attributes={translate(hydrate({ baseCurrency, rates, vaults }), l10n)}
                 onValid={_onValid}
                 onChange={_onChange}
                 style={styles.form}

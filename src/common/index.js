@@ -5,6 +5,7 @@ import L10N from './l10n';
 import cashflow from './cashflow';
 import fetch from './fetch';
 import theme from './theme';
+import translate from './translate';
 
 export {
   C,
@@ -14,4 +15,5 @@ export {
   cashflow,
   fetch,
   theme,
+  translate,
 };
