@@ -3,8 +3,10 @@ import { StyleSheet } from 'react-native';
 import { C } from '../../common';
 import { LAYOUT, ENV, THEME } from '../../reactor/common';
 
-const { COLOR } = THEME;
+const { COLOR, UNIT } = THEME;
 const { STYLE: { HEADER_HEIGHT } } = C;
+
+const ICON_SIZE = UNIT * 2.4;
 
 export default StyleSheet.create({
   container: {
@@ -23,6 +25,8 @@ export default StyleSheet.create({
 
   icon: {
     opacity: 0.5,
+    height: ICON_SIZE,
+    width: ICON_SIZE,
   },
 
   option: {

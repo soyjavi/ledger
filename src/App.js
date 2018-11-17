@@ -2,7 +2,7 @@ import React from 'react';
 
 import { C, L10N } from './common';
 import { Snackbar } from './components';
-import { Provider, ConsumerNavigation, ConsumerStore } from './context';
+import { Provider, Consumer, ConsumerNavigation } from './context';
 import { LayoutView } from './reactor/components';
 import {
   Session, Dashboard, Vault, Transaction,
@@ -29,16 +29,17 @@ export default () => (
             visible={stack.includes(TRANSACTION)}
             dataSource={parameters}
           />
-          <ConsumerStore>
-            { ({ error, onError }) => (
+
+          <Consumer>
+            { ({ l10n, store: { error, onError } }) => (
               <Snackbar
                 caption={error}
-                button="close"
+                button={l10n.CLOSE}
                 visible={error !== undefined}
                 onPress={() => onError(undefined)}
               />
             )}
-          </ConsumerStore>
+          </Consumer>
         </LayoutView>
       )}
     </ConsumerNavigation>

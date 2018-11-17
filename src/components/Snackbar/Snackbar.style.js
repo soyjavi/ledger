@@ -11,13 +11,9 @@ export default StyleSheet.create({
     paddingHorizontal: UNIT,
   },
 
-  dialog: {
-    backgroundColor: COLOR.BLACK,
-    borderRadius: BORDER_RADIUS,
-    bottom: OFFSET,
-    left: OFFSET,
-    right: OFFSET,
-    position: 'absolute',
+  caption: {
+    color: COLOR.WHITE,
+    flex: 1,
   },
 
   container: {
@@ -25,9 +21,12 @@ export default StyleSheet.create({
     marginTop: OFFSET,
   },
 
-  text: {
-    color: COLOR.WHITE,
-    flex: 1,
-    lineHeight: UNIT * 1.4,
+  dialog: {
+    backgroundColor: COLOR.BLACK,
+    borderRadius: BORDER_RADIUS,
+    bottom: OFFSET,
+    left: OFFSET,
+    right: OFFSET,
+    position: 'absolute',
   },
 });

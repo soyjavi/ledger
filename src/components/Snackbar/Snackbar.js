@@ -2,19 +2,22 @@ import { func, string } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 
+import { THEME } from '../../reactor/common';
 import { Button, Dialog, Text } from '../../reactor/components';
 import styles from './Snackbar.style';
+
+const { COLOR } = THEME;
 
 const Snackbar = ({
   button, caption, onPress, ...inherit
 }) => (
   <Dialog {...inherit} background={false} style={styles.dialog}>
     <View style={styles.container}>
-      <Text level={2} style={styles.text}>{caption}</Text>
+      <Text level={2} style={styles.caption}>{caption}</Text>
       <Button
+        color={COLOR.SECONDARY}
         contained={false}
         onPress={onPress}
-        secondary
         small
         style={styles.button}
         title={button.toUpperCase()}

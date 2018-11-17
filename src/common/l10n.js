@@ -1,6 +1,5 @@
 export default {
   'en-EN': {
-    BACK: 'back',
     BALANCE: 'Balance',
 
     // CATEGORIES: [
@@ -44,8 +43,8 @@ export default {
       ],
       [],
     ],
-
     CANCEL: 'Cancel',
+    CLOSE: 'Close',
 
     ENTER_PIN: 'Enter your pin',
     EXPENSES: 'Expenses',
@@ -76,7 +75,7 @@ export default {
     VAULT: 'Vault',
     VAULT_CAPTION: 'You can create as many vaults as you want. You can continue using your base currency or choose any other.',
 
-    WELCOME: 'Welcome to Voltvault',
+    WELCOME: 'Welcome',
     WELCOME_CAPTION: '$This is your first...',
     WELCOME_BACK: 'Welcome Back',
     WELCOME_BACK_CAPTION: 'Still remember that knock-knock combination we agreed on?',
