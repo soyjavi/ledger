@@ -2,9 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import { LAYOUT, THEME } from '../../reactor/common';
 
-const {
-  COLOR, FONT, UNIT, OFFSET,
-} = THEME;
+const { COLOR, UNIT, OFFSET } = THEME;
 const CONTAINER_SIZE = UNIT * 5.6;
 
 export default StyleSheet.create({
@@ -27,11 +25,16 @@ export default StyleSheet.create({
 
   button: {
     ...LAYOUT.STYLE.SHADOW,
-    alignItems: 'center',
+    ...LAYOUT.STYLE.CENTERED,
     backgroundColor: COLOR.TEXT,
     borderRadius: CONTAINER_SIZE / 2,
     height: CONTAINER_SIZE,
     width: CONTAINER_SIZE,
+  },
+
+  icon: {
+    height: CONTAINER_SIZE / 2,
+    width: CONTAINER_SIZE / 2,
   },
 
   motionButton: {
@@ -44,9 +47,10 @@ export default StyleSheet.create({
 
   options: {
     alignItems: 'flex-end',
+    flexDirection: 'column-reverse',
     position: 'absolute',
     right: (CONTAINER_SIZE / 4),
-    top: -(CONTAINER_SIZE + (UNIT * 3)),
+    bottom: CONTAINER_SIZE,
   },
 
   option: {
@@ -59,12 +63,5 @@ export default StyleSheet.create({
     marginVertical: OFFSET / 2,
     paddingHorizontal: UNIT,
     paddingVertical: UNIT / 2,
-  },
-
-  text: {
-    color: COLOR.WHITE,
-    fontSize: UNIT * 2.8,
-    fontWeight: FONT.WEIGHT.BOLD,
-    lineHeight: CONTAINER_SIZE * 0.95,
   },
 });

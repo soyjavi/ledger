@@ -6,16 +6,6 @@ const { COLOR, OFFSET, UNIT } = THEME;
 const BULLET_SIZE = OFFSET * 2 + UNIT;
 
 export default StyleSheet.create({
-  arrow: {
-    alignSelf: 'center',
-    color: COLOR.WHITE,
-    marginTop: BULLET_SIZE / 6,
-  },
-
-  arrowIncomes: {
-    transform: [{ rotate: '180deg' }],
-  },
-
   container: {
     alignItems: 'center',
     backgroundColor: COLOR.BACKGROUND_OPACITY,
@@ -41,6 +31,7 @@ export default StyleSheet.create({
   },
 
   image: {
+    ...LAYOUT.STYLE.CENTERED,
     width: BULLET_SIZE,
     height: BULLET_SIZE,
     backgroundColor: COLOR.BASE,

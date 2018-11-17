@@ -1,9 +1,10 @@
 import React from 'react';
 import { View } from 'react-native';
 
+import { iconTrendingDown, iconTrendingUp } from '../../assets';
 import { C } from '../../common';
 import { Consumer } from '../../context';
-import { Price, Text } from '../../reactor/components';
+import { Icon, Price, Text } from '../../reactor/components';
 import styles from './OverallBalance.style';
 
 const { SYMBOL } = C;
@@ -17,19 +18,19 @@ export default () => (
         <View style={styles.content}>
           <View style={styles.context}>
             <View style={styles.image}>
-              <Text style={[styles.arrow, styles.arrowIncomes]}>▲</Text>
+              <Icon value={iconTrendingUp} />
             </View>
             <View>
-              <Text level={2} lighten>{l10n.INCOMES}</Text>
+              <Text caption lighten>{l10n.INCOMES}</Text>
               <Price caption="+" value={overall.income} symbol={SYMBOL[baseCurrency]} />
             </View>
           </View>
           <View style={styles.context}>
             <View style={styles.image}>
-              <Text style={styles.arrow}>▲</Text>
+              <Icon value={iconTrendingDown} />
             </View>
             <View>
-              <Text level={2} lighten>{l10n.EXPENSES}</Text>
+              <Text caption lighten>{l10n.EXPENSES}</Text>
               <Price value={overall.expenses} symbol={SYMBOL[baseCurrency]} />
             </View>
           </View>

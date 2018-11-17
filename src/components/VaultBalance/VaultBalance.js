@@ -1,9 +1,10 @@
 import React from 'react';
 import { View } from 'react-native';
 
+import { iconTrendingDown, iconTrendingUp } from '../../assets';
 import { C, cashflow, exchange } from '../../common';
 import { Consumer } from '../../context';
-import { Price, Text } from '../../reactor/components';
+import { Icon, Price, Text } from '../../reactor/components';
 import Chart from '../Chart';
 import { chartCashflow } from './modules';
 import styles from './VaultBalance.style';
@@ -32,17 +33,17 @@ export default ({ dataSource = {}, baseCurrency, txs }) => {
           />
           <View style={styles.row}>
             <View style={[styles.cashflow, styles.row]}>
-              <Text style={styles.bullet}>
-                ▲
-              </Text>
+              <View style={styles.bullet}>
+                <Icon value={iconTrendingUp} style={styles.icon} />
+              </View>
               <Price
                 caption="+"
                 {...priceProps}
                 value={baseCurrency ? exchange(monthIncome, currency, baseCurrency, rates) : monthIncome}
               />
-              <Text style={[styles.bullet, styles.marginRight]}>
-                ▲
-              </Text>
+              <View style={[styles.bullet, styles.bulletExpenses]}>
+                <Icon value={iconTrendingDown} style={styles.icon} />
+              </View>
               <Price
                 {...priceProps}
                 value={baseCurrency ? exchange(monthExpenses, currency, baseCurrency, rates) : monthExpenses}

@@ -3,20 +3,20 @@ import { StyleSheet } from 'react-native';
 import { LAYOUT, THEME } from '../../reactor/common';
 
 const { COLOR, OFFSET, UNIT } = THEME;
-const BULLET_SIZE = UNIT * 1.8;
+const BULLET_SIZE = UNIT * 2;
 
 export default StyleSheet.create({
   bullet: {
+    ...LAYOUT.STYLE.CENTERED,
     backgroundColor: COLOR.BASE,
     borderRadius: BULLET_SIZE / 2,
-    color: COLOR.WHITE,
-    fontSize: BULLET_SIZE / 1.8,
     height: BULLET_SIZE,
-    lineHeight: BULLET_SIZE,
     marginRight: UNIT / 2,
-    textAlign: 'center',
-    transform: [{ rotate: '180deg' }],
     width: BULLET_SIZE,
+  },
+
+  bulletExpenses: {
+    marginLeft: OFFSET,
   },
 
   cashflow: {
@@ -33,9 +33,9 @@ export default StyleSheet.create({
     paddingVertical: OFFSET * 2,
   },
 
-  marginRight: {
-    marginLeft: UNIT,
-    transform: [{ rotate: '0deg' }],
+  icon: {
+    height: BULLET_SIZE * 0.6,
+    width: BULLET_SIZE * 0.6,
   },
 
   row: LAYOUT.STYLE.ROW,
