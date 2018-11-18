@@ -42,7 +42,6 @@ export default StyleSheet.create({
   },
 
   title: {
-    flex: 1,
     textAlign: 'center',
   },
 });

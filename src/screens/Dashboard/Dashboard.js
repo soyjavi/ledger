@@ -51,7 +51,7 @@ class Dashboard extends PureComponent {
                   <VaultItem key={vault.hash} {...vault} onPress={() => _onVault({ navigation, store, vault })} />))}
               </ScrollView>
               <FloatingButton onPress={_onToggleDialog} visible={!dialog && !inherit.backward} />
-              { visible && vaults.length === 0 && !dialog && _onToggleDialog() }
+              { visible && vaults.length === 0 && !dialog && this.setState({ dialog: true }) }
               { visible && <DialogVault visible={dialog} onClose={_onToggleDialog} /> }
             </Fragment>
           )}

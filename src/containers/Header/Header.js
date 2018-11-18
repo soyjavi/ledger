@@ -1,5 +1,5 @@
 import { bool, shape, string } from 'prop-types';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { View } from 'react-native';
 
 import { C } from '../../common';
@@ -18,7 +18,7 @@ const Option = ({
 }) => (
   <Motion preset={PRESET} delay={delay} visible={visible}>
     <Touchable onPress={onPress} rippleColor={COLOR.BASE} style={[styles.option, inherit.style]}>
-      { icon && <Icon value={icon} style={styles.icon} /> }
+      { icon ? <Icon value={icon} style={styles.icon} /> : <Fragment /> }
     </Touchable>
   </Motion>
 );

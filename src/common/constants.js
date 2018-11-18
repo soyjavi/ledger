@@ -26,9 +26,9 @@ export default {
     HEADER_HEIGHT: UNIT * 5.8,
     BANNER: {
       alignSelf: 'center',
-      height: UNIT * 20,
-      marginVertical: OFFSET,
-      width: UNIT * 30,
+      height: UNIT * 19.2,
+      marginTop: OFFSET,
+      width: UNIT * 28.8,
     },
   },
   SYMBOL: {

@@ -25,7 +25,7 @@ const TransactionItem = (props) => {
     <Consumer>
       { ({ l10n, navigation: { navigate } }) => (
         <Touchable
-          rippleColor={COLOR.BASE}
+          rippleColor={COLOR.PRIMARY}
           style={[styles.container, isHeading && styles.heading]}
           onPress={hash ? () => navigate(SCREEN.TRANSACTION, props) : undefined}
         >

@@ -14,6 +14,8 @@ export default {
     // BACKGROUND: '#000',
     // BACKGROUND_OPACITY: 'rgba(0,0,0,0.9)',
     // BASE: '#333',
+    // TEXT: '#ccc',
+    // TEXT_LIGHTEN: '#999',
 
     PRIMARY: COLORS[0],
     SECONDARY: COLORS[1],

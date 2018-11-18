@@ -1,15 +1,15 @@
 import { bool, shape } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
-import { ScrollView } from 'react-native';
+import { Image, ScrollView, View } from 'react-native';
 
-import { iconBack, iconShuffle } from '../../assets';
+import { bannerEmpty, iconBack, iconShuffle } from '../../assets';
 import { C, exchange } from '../../common';
 import {
   DialogTransaction, FloatingButton, TransactionItem, VaultBalance,
 } from '../../components';
 import { Header } from '../../containers';
 import { Consumer } from '../../context';
-import { Motion, Viewport } from '../../reactor/components';
+import { Motion, Text, Viewport } from '../../reactor/components';
 import styles from './Vault.style';
 
 const { TX: { TYPE: { EXPENSE } } } = C;
@@ -79,19 +79,25 @@ class Vault extends PureComponent {
                     baseCurrency={switchCurrency ? baseCurrency : undefined}
                     txs={queryTxs}
                   />
-                  { queryTxs.map(tx => (
-                    <TransactionItem
-                      key={tx.hash || tx.timestamp}
-                      {...tx}
-                      currency={switchCurrency ? baseCurrency : currency}
-                      value={switchCurrency && tx.hash ? exchange(tx.value, currency, baseCurrency, rates) : tx.value}
-                    />))}
+                  { queryTxs.length > 0
+                    ? queryTxs.map(tx => (
+                      <TransactionItem
+                        key={tx.hash || tx.timestamp}
+                        {...tx}
+                        currency={switchCurrency ? baseCurrency : currency}
+                        value={switchCurrency && tx.hash ? exchange(tx.value, currency, baseCurrency, rates) : tx.value}
+                      />))
+                    : (
+                      <View style={styles.content}>
+                        <Image source={bannerEmpty} resizeMode="contain" style={styles.banner} />
+                        <Text level={2} lighten>{l10n.VAULT_EMPTY}</Text>
+                      </View>)
+                  }
                 </ScrollView>
               </Motion>
-
               <FloatingButton
                 onPress={dialog ? _onToggleDialog : _onTransactionType}
-                options={l10n.TYPE_TRANSACTION}
+                options={vaults.length === 1 ? [l10n.EXPENSE, l10n.INCOME] : [l10n.EXPENSE, l10n.INCOME, l10n.TRANSFER]}
                 visible={!dialog && !inherit.backward}
               />
               { visible && <DialogTransaction type={type} vault={hash} onClose={_onToggleDialog} visible={dialog} />}

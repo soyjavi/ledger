@@ -31,7 +31,7 @@ export default async ({
 
         if (response.status >= 400) reject({ code: response.status, message: json.message }); // eslint-disable-line
         else resolve(json);
-      }).catch(({ message = 'ERROR_CONNECTION', response } = {}) => {
+      }).catch(({ message = 'Something wrong happened. Try again.', response } = {}) => {
         reject({ // eslint-disable-line
           code: response ? response.status : 500,
           message,

@@ -18,8 +18,7 @@ export default StyleSheet.create({
     alignContent: 'center',
     height: UNIT * 5.6,
     justifyContent: 'center',
-    minWidth: UNIT * 5.6,
-    width: '33%',
+    minWidth: UNIT * 10,
   },
 
   key: {

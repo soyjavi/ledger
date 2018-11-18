@@ -48,16 +48,16 @@ class DialogTransaction extends PureComponent {
   _onChange = (form, { baseCurrency, vaults, rates }) => {
     const { props, state } = this;
     const from = vaults.find(({ hash }) => hash === props.vault);
-    const to = vaults.find(({ title }) => title === form.destination) || vaults[0];
+    const to = form.destination
+      ? vaults.find(({ title }) => title === form.destination)
+      : vaults.find(({ hash }) => hash !== props.vault);
     let { exchange } = form;
 
     if (exchange === state.form.exchange) {
       if (from.currency === to.currency) exchange = form.value;
-      else {
-        exchange = (from.currency === baseCurrency)
-          ? form.value * rates[to.currency]
-          : form.value / rates[from.currency];
-      }
+      else if (from.currency === baseCurrency) exchange = form.value * rates[to.currency];
+      else if (to.currency === baseCurrency) exchange = form.value / rates[from.currency];
+      else exchange = (form.value / rates[from.currency]) * rates[to.currency];
       exchange = parseFloat(exchange, 10).toFixed(2);
     }
 
