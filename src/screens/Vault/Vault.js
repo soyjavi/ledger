@@ -9,10 +9,12 @@ import {
 } from '../../components';
 import { Header } from '../../containers';
 import { Consumer } from '../../context';
+import { THEME } from '../../reactor/common';
 import { Motion, Text, Viewport } from '../../reactor/components';
 import styles from './Vault.style';
 
 const { TX: { TYPE: { EXPENSE } } } = C;
+const { MOTION: { DURATION } } = THEME;
 
 class Vault extends PureComponent {
   static propTypes = {
@@ -72,8 +74,8 @@ class Vault extends PureComponent {
                 right={currency !== baseCurrency ? { icon: iconShuffle, onPress: _onSwitchCurrency } : undefined}
                 visible={visible}
               />
-              <Motion preset="fadeleft" delay={500} visible={visible}>
-                <ScrollView style={styles.scroll}>
+              <ScrollView style={styles.scroll}>
+                <Motion preset="fadeleft" delay={DURATION * 1.5} visible={visible}>
                   <VaultBalance
                     dataSource={vaults.find(vault => vault.hash === hash)}
                     baseCurrency={switchCurrency ? baseCurrency : undefined}
@@ -93,8 +95,8 @@ class Vault extends PureComponent {
                         <Text level={2} lighten>{l10n.VAULT_EMPTY}</Text>
                       </View>)
                   }
-                </ScrollView>
-              </Motion>
+                </Motion>
+              </ScrollView>
               <FloatingButton
                 onPress={dialog ? _onToggleDialog : _onTransactionType}
                 options={vaults.length === 1 ? [l10n.EXPENSE, l10n.INCOME] : [l10n.EXPENSE, l10n.INCOME, l10n.TRANSFER]}

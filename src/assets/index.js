@@ -1,3 +1,4 @@
+import bannerEmpty from './banner_empty.png';
 import bannerExpense from './banner_expense.png';
 import bannerIncome from './banner_income.png';
 import bannerTransfer from './banner_transfer.png';
@@ -10,6 +11,7 @@ import iconTrendingDown from './icon_trending_down.png';
 import iconTrendingUp from './icon_trending_up.png';
 
 export {
+  bannerEmpty,
   bannerExpense,
   bannerIncome,
   bannerTransfer,
