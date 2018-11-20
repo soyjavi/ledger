@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { C } from '../../common';
 import { THEME } from '../../reactor/common';
 
-const { STYLE: { HEADER_HEIGHT } } = C;
+const { STYLE: { HEADER_HEIGHT, NOTCH_HEIGHT } } = C;
 const { OFFSET } = THEME;
 
 export default StyleSheet.create({
@@ -12,6 +12,6 @@ export default StyleSheet.create({
   },
 
   scroll: {
-    paddingTop: HEADER_HEIGHT,
+    paddingTop: HEADER_HEIGHT + NOTCH_HEIGHT,
   },
 });

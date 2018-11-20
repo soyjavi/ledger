@@ -2,11 +2,11 @@ import { StyleSheet } from 'react-native';
 
 import { C } from '../../common';
 
-const { STYLE: { DASHBOARD_HEIGHT, HEADER_HEIGHT } } = C;
+const { STYLE: { DASHBOARD_HEIGHT, HEADER_HEIGHT, NOTCH_HEIGHT } } = C;
 
 export default StyleSheet.create({
   scroll: {
-    paddingTop: DASHBOARD_HEIGHT,
+    paddingTop: DASHBOARD_HEIGHT + NOTCH_HEIGHT,
     paddingBottom: HEADER_HEIGHT,
   },
 });

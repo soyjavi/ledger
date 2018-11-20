@@ -1,8 +1,8 @@
+import C from './constants';
 import { queryString } from '../reactor/common';
 
-const { NODE_ENV } = process.env;
+const { ENDPOINT } = C;
 const DEFAULT_METHOD = 'GET';
-const ENDPOINT = NODE_ENV === 'production' ? 'https://voltvault.glitch.me' : 'http://localhost:8080';
 const FORM_METHODS = ['POST'];
 const HEADER_JSON = {
   'Content-Type': 'application/json',
