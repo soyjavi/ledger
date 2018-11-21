@@ -11,7 +11,7 @@ import { Price, Text, Touchable } from '../../reactor/components';
 import Chart from '../Chart';
 import styles from './VaultItem.style';
 
-const { SYMBOL } = C;
+const { FIXED, SYMBOL } = C;
 const { COLOR } = THEME;
 
 const VaultItem = (props) => {
@@ -31,6 +31,7 @@ const VaultItem = (props) => {
                 <View style={styles.texts}>
                   <Text level={2} lighten numberOfLines={1}>{l10n.BALANCE}</Text>
                   <Price
+                    fixed={FIXED[currency]}
                     headline={false}
                     subtitle
                     level={2}

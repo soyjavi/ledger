@@ -9,14 +9,17 @@ import Chart from '../Chart';
 import { chartCashflow } from './modules';
 import styles from './VaultBalance.style';
 
-const { SYMBOL } = C;
+const { FIXED, SYMBOL } = C;
 
 export default ({ dataSource = {}, baseCurrency, txs }) => {
   const {
     balance, cashflow: { income, expenses } = {}, color, currency,
   } = dataSource;
+
+  const activeCurrency = baseCurrency || currency;
+
   const priceProps = {
-    headline: false, subtitle: true, level: 3, lighten: true, symbol: SYMBOL[baseCurrency || currency],
+    fixed: FIXED[activeCurrency], symbol: SYMBOL[activeCurrency],
   };
   const vaultBalance = balance + income - expenses;
   const { income: monthIncome, expenses: monthExpenses } = cashflow(txs);
@@ -27,9 +30,10 @@ export default ({ dataSource = {}, baseCurrency, txs }) => {
         <View style={styles.container}>
           <Text lighten subtitle level={3}>{l10n.OVERALL_BALANCE}</Text>
           <Price
+            {...priceProps}
+            headline
             level={5}
             value={baseCurrency ? exchange(vaultBalance, currency, baseCurrency, rates) : vaultBalance}
-            symbol={SYMBOL[baseCurrency || currency]}
           />
           <View style={styles.row}>
             <View style={[styles.cashflow, styles.row]}>
@@ -37,8 +41,11 @@ export default ({ dataSource = {}, baseCurrency, txs }) => {
                 <Icon value={iconTrendingUp} style={styles.icon} />
               </View>
               <Price
-                caption="+"
                 {...priceProps}
+                lighten
+                subtitle
+                level={3}
+                title="+"
                 value={baseCurrency ? exchange(monthIncome, currency, baseCurrency, rates) : monthIncome}
               />
               <View style={[styles.bullet, styles.bulletExpenses]}>
@@ -46,6 +53,9 @@ export default ({ dataSource = {}, baseCurrency, txs }) => {
               </View>
               <Price
                 {...priceProps}
+                lighten
+                subtitle
+                level={3}
                 value={baseCurrency ? exchange(monthExpenses, currency, baseCurrency, rates) : monthExpenses}
               />
             </View>

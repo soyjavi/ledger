@@ -18,7 +18,12 @@ export default {
     '#8460D0', '#FF7233', '#69F0AE', '#FF4081', '#FFD740', '#536DFE', '#FF5252',
   ],
 
-  ENDPOINT: IS_PRODUCTION ? 'https://voltvault.glitch.me' : 'http://192.168.1.24:8080',
+  ENDPOINT: IS_PRODUCTION ? 'https://voltvault.glitch.me' : 'http://192.168.1.9:8080',
+
+  FIXED: {
+    USD: 2,
+    EUR: 2,
+  },
 
   LANGUAGE: 'en-EN',
 
