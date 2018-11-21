@@ -11,7 +11,6 @@ const { VIEWPORT: { W, H } } = LAYOUT;
 
 const IS_PRODUCTION = false;
 const IS_ANDROID = Platform.OS === 'android';
-const NOTCH_HEIGHT = (IS_ANDROID && parseInt(H / W, 10) > 2) ? 25 : 0;
 
 export default {
   COLORS: [
@@ -19,7 +18,7 @@ export default {
     '#8460D0', '#FF7233', '#69F0AE', '#FF4081', '#FFD740', '#536DFE', '#FF5252',
   ],
 
-  ENDPOINT: IS_PRODUCTION ? 'https://voltvault.glitch.me' : 'http://localhost:8080',
+  ENDPOINT: IS_PRODUCTION ? 'https://voltvault.glitch.me' : 'http://192.168.1.24:8080',
 
   LANGUAGE: 'en-EN',
 
@@ -40,7 +39,7 @@ export default {
     },
     DASHBOARD_HEIGHT: UNIT * 16,
     HEADER_HEIGHT: UNIT * 5.8,
-    NOTCH_HEIGHT,
+    NOTCH_HEIGHT: IS_ANDROID && (H / W > 1.95) ? 36 : 0,
   },
   SYMBOL: {
     USD: '$',

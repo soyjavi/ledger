@@ -1,11 +1,14 @@
 {
   "expo": {
-    "name": "voltvault",
+    "name": "Voltvault",
     "description": "A new expanded and private finance experience running on the blockchain.",
     "slug": "voltvault",
     "privacy": "public",
     "sdkVersion": "31.0.0",
-    "platforms": ["ios", "android"],
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "version": "0.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,7 +24,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
-    }
+      "supportsTablet": false
+    },
+    "githubUrl": "https://github.com/soyjavi/voltvault"
   }
 }

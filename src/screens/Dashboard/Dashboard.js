@@ -46,7 +46,7 @@ class Dashboard extends PureComponent {
           { ({ navigation, store: { vaults, ...store } }) => (
             <Fragment>
               <OverallBalance />
-              <ScrollView style={styles.scroll}>
+              <ScrollView contentContainerStyle={styles.scroll}>
                 { vaults.map(vault => (
                   <VaultItem key={vault.hash} {...vault} onPress={() => _onVault({ navigation, store, vault })} />))}
               </ScrollView>

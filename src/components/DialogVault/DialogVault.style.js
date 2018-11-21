@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { ENV, LAYOUT, THEME } from '../../reactor/common';
 import { C } from '../../common';
 
-const { STYLE: { BANNER } } = C;
+const { STYLE: { BANNER, NOTCH_HEIGHT } } = C;
 const { IS_NATIVE } = ENV;
 const { COLOR, OFFSET } = THEME;
 
@@ -21,14 +21,15 @@ export default StyleSheet.create({
   },
 
   dialog: {
-    justifyContent: 'flex-end',
     backgroundColor: COLOR.BACKGROUND_OPACITY,
+    justifyContent: 'flex-end',
   },
 
   frame: {
     alignSelf: 'flex-end',
     display: 'flex',
-    paddingVertical: OFFSET,
+    paddingBottom: OFFSET,
+    paddingTop: OFFSET + NOTCH_HEIGHT,
     shadowColor: IS_NATIVE ? 'transparent' : undefined,
   },
 
@@ -37,8 +38,8 @@ export default StyleSheet.create({
   },
 
   text: {
-    textAlign: 'center',
     alignSelf: 'center',
+    textAlign: 'center',
     width: '90%',
   },
 });

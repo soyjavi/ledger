@@ -10,11 +10,10 @@ import {
 import { Header } from '../../containers';
 import { Consumer } from '../../context';
 import { THEME } from '../../reactor/common';
-import { Motion, Text, Viewport } from '../../reactor/components';
+import { Text, Viewport } from '../../reactor/components';
 import styles from './Vault.style';
 
 const { TX: { TYPE: { EXPENSE } } } = C;
-const { MOTION: { DURATION } } = THEME;
 
 class Vault extends PureComponent {
   static propTypes = {
@@ -74,28 +73,26 @@ class Vault extends PureComponent {
                 right={currency !== baseCurrency ? { icon: iconShuffle, onPress: _onSwitchCurrency } : undefined}
                 visible={visible}
               />
-              <ScrollView style={styles.scroll}>
-                <Motion preset="fadeleft" delay={DURATION * 1.5} visible={visible}>
-                  <VaultBalance
-                    dataSource={vaults.find(vault => vault.hash === hash)}
-                    baseCurrency={switchCurrency ? baseCurrency : undefined}
-                    txs={queryTxs}
-                  />
-                  { queryTxs.length > 0
-                    ? queryTxs.map(tx => (
-                      <TransactionItem
-                        key={tx.hash || tx.timestamp}
-                        {...tx}
-                        currency={switchCurrency ? baseCurrency : currency}
-                        value={switchCurrency && tx.hash ? exchange(tx.value, currency, baseCurrency, rates) : tx.value}
-                      />))
-                    : (
-                      <View style={styles.content}>
-                        <Image source={bannerEmpty} resizeMode="contain" style={styles.banner} />
-                        <Text level={2} lighten>{l10n.VAULT_EMPTY}</Text>
-                      </View>)
-                  }
-                </Motion>
+              <ScrollView contentContainerStyle={styles.scroll}>
+                <VaultBalance
+                  dataSource={vaults.find(vault => vault.hash === hash)}
+                  baseCurrency={switchCurrency ? baseCurrency : undefined}
+                  txs={queryTxs}
+                />
+                { queryTxs.length > 0
+                  ? queryTxs.map(tx => (
+                    <TransactionItem
+                      key={tx.hash || tx.timestamp}
+                      {...tx}
+                      currency={switchCurrency ? baseCurrency : currency}
+                      value={switchCurrency && tx.hash ? exchange(tx.value, currency, baseCurrency, rates) : tx.value}
+                    />))
+                  : (
+                    <View style={styles.content}>
+                      <Image source={bannerEmpty} resizeMode="contain" style={styles.banner} />
+                      <Text level={2} lighten>{l10n.VAULT_EMPTY}</Text>
+                    </View>)
+                }
               </ScrollView>
               <FloatingButton
                 onPress={dialog ? _onToggleDialog : _onTransactionType}

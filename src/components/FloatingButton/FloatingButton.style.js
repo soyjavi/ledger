@@ -7,20 +7,11 @@ const CONTAINER_SIZE = UNIT * 5.6;
 
 export default StyleSheet.create({
   container: {
+    alignItems: 'flex-end',
     bottom: OFFSET,
-    height: CONTAINER_SIZE,
     position: 'absolute',
     right: OFFSET,
-    width: CONTAINER_SIZE,
     zIndex: 1,
-  },
-
-  bullet: {
-    backgroundColor: COLOR.BASE,
-    borderRadius: UNIT / 2,
-    height: UNIT,
-    marginLeft: UNIT,
-    width: UNIT,
   },
 
   button: {
@@ -32,26 +23,23 @@ export default StyleSheet.create({
     width: CONTAINER_SIZE,
   },
 
+  buttonOpened: {
+    transform: [{ rotate: '45deg' }],
+  },
+
   icon: {
     height: CONTAINER_SIZE / 2,
     width: CONTAINER_SIZE / 2,
   },
 
-  motionButton: {
-    zIndex: 1,
-  },
-
-  opened: {
-    transform: [{ rotate: '45deg' }],
-  },
-
   options: {
     alignItems: 'flex-end',
     flexDirection: 'column-reverse',
-    position: 'absolute',
-    right: (CONTAINER_SIZE / 4),
-    bottom: CONTAINER_SIZE,
+    marginRight: (CONTAINER_SIZE / 3),
+    backgroundColor: 'rgba(0, 255, 0, 0.25)',
   },
+
+  optionsOpened: {},
 
   option: {
     ...LAYOUT.STYLE.SHADOW,
@@ -63,5 +51,13 @@ export default StyleSheet.create({
     marginVertical: OFFSET / 2,
     paddingHorizontal: UNIT,
     paddingVertical: UNIT / 2,
+  },
+
+  optionBullet: {
+    backgroundColor: COLOR.BASE,
+    borderRadius: UNIT / 2,
+    height: UNIT,
+    marginLeft: UNIT,
+    width: UNIT,
   },
 });

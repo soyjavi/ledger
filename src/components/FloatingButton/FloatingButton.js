@@ -1,7 +1,7 @@
 import {
   arrayOf, bool, func, string,
 } from 'prop-types';
-import React, { Fragment, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
 import { iconAdd } from '../../assets';
@@ -52,26 +52,34 @@ class FloatingButton extends PureComponent {
 
     return (
       <View style={styles.container}>
-        <Motion preset="fade" visible={visible}>
-          <Motion style={styles.motionButton} timeline={[{ property: 'scale', value: opened ? 0.75 : 1 }]}>
-            <Touchable style={[styles.button, opened && styles.opened]} onPress={_onPress}>
-              <Icon value={iconAdd} style={styles.icon} />
+        { options && visible && (
+          <View style={[styles.options, opened && styles.optionsOpened]} pointerEvents={opened ? undefined : 'none'}>
+            { options.map((option, index) => (
+              <Motion
+                delay={(index / 2) * (DURATION / 2)}
+                duration={DURATION / 2}
+                key={option}
+                preset="fade"
+                visible={opened}
+              >
+                <Touchable onPress={opened ? () => _onOption(index) : undefined}>
+                  <View style={styles.option}>
+                    <Text subtitle level={3}>{option}</Text>
+                    <View style={[styles.optionBullet, { backgroundColor: COLORS[index] }]} />
+                  </View>
+                </Touchable>
+              </Motion>
+            ))}
+          </View>)}
+
+        <Motion preset="pop" visible={visible} delay={visible ? DURATION * 2 : 0}>
+          <Motion timeline={[{ property: 'scale', value: opened ? 0.75 : 1 }]}>
+            <Touchable onPress={_onPress}>
+              <View style={[styles.button, opened && styles.buttonOpened]}>
+                <Icon value={iconAdd} style={styles.icon} />
+              </View>
             </Touchable>
           </Motion>
-
-          { options && (
-            <View style={styles.options}>
-              { options.map((option, index) => (
-                <Motion key={option} delay={index * (DURATION / 2)} preset="fade" visible={opened}>
-                  <Touchable style={styles.option} onPress={() => _onOption(index)}>
-                    <Fragment>
-                      <Text subtitle level={3}>{option}</Text>
-                      <View style={[styles.bullet, { backgroundColor: COLORS[index] }]} />
-                    </Fragment>
-                  </Touchable>
-                </Motion>
-              ))}
-            </View>)}
         </Motion>
       </View>
     );

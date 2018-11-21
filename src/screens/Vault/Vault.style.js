@@ -15,6 +15,7 @@ export default StyleSheet.create({
   },
 
   scroll: {
-    paddingVertical: HEADER_HEIGHT + NOTCH_HEIGHT,
+    paddingTop: HEADER_HEIGHT + NOTCH_HEIGHT,
+    paddingBottom: HEADER_HEIGHT,
   },
 });

@@ -3,11 +3,11 @@ import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
 import { Consumer } from '../../context';
-import { THEME } from '../../reactor/common';
+import { NumKeyboard } from '../../components';
+import { ENV, THEME } from '../../reactor/common';
 import {
   Activity, Motion, Text, Viewport,
 } from '../../reactor/components';
-import { NumKeyboard } from '../../components';
 import handshake from './modules/handshake';
 import styles from './Session.style';
 
@@ -19,6 +19,7 @@ class Session extends PureComponent {
   };
 
   static defaultProps = {
+    autoLogin: false,
     visible: false,
   };
 
@@ -41,11 +42,16 @@ class Session extends PureComponent {
     }
   }
 
+  _onAutoLogin = ({ store, navigation }) => {
+    this.setState({ autoLogin: true });
+    handshake(this, { pin: store.pin, store, navigation });
+  }
+
   render() {
     const {
-      _onNumber,
+      _onAutoLogin, _onNumber,
       props: { visible, ...inherit },
-      state: { busy, pin },
+      state: { autoLogin, busy, pin },
     } = this;
 
     return (
@@ -53,6 +59,9 @@ class Session extends PureComponent {
         <Consumer>
           { ({ l10n, store, navigation }) => (
             <View style={styles.container}>
+              { ENV.IS_DEVELOPMENT && visible && store.pin && !autoLogin
+                ? _onAutoLogin({ store, navigation })
+                : undefined}
               <View style={styles.content}>
                 <Text headline level={4} style={[styles.title, styles.text]}>
                   { store.pin ? l10n.WELCOME_BACK : l10n.WELCOME }
