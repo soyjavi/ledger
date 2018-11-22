@@ -32,7 +32,6 @@ const VaultItem = (props) => {
                   <Text level={2} lighten numberOfLines={1}>{l10n.BALANCE}</Text>
                   <Price
                     fixed={FIXED[currency]}
-                    headline={false}
                     subtitle
                     level={2}
                     lighten

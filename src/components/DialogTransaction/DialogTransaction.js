@@ -90,7 +90,7 @@ class DialogTransaction extends PureComponent {
     return (
       <Consumer>
         { ({ l10n, store }) => (
-          <Dialog visible={visible} style={styles.frame} styleContainer={styles.dialog}>
+          <Dialog visible={visible} style={[styles.frame, type === TRANSFER && styles.transfer]} styleContainer={styles.dialog}>
             <Text color={COLORS[type]} headline level={5} style={styles.text}>
               {`${l10n.NEW} ${l10n.TYPE_TRANSACTION[type]}`}
             </Text>

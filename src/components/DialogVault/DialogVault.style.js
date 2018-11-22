@@ -3,9 +3,9 @@ import { StyleSheet } from 'react-native';
 import { ENV, LAYOUT, THEME } from '../../reactor/common';
 import { C } from '../../common';
 
-const { STYLE: { BANNER, NOTCH_HEIGHT } } = C;
+const { STYLE: { BANNER } } = C;
 const { IS_NATIVE } = ENV;
-const { COLOR, OFFSET } = THEME;
+const { UNIT, OFFSET } = THEME;
 
 export default StyleSheet.create({
   banner: BANNER,
@@ -21,16 +21,13 @@ export default StyleSheet.create({
   },
 
   dialog: {
-    backgroundColor: COLOR.BACKGROUND_OPACITY,
     justifyContent: 'flex-end',
   },
 
   frame: {
     alignSelf: 'flex-end',
-    display: 'flex',
-    paddingBottom: OFFSET,
-    paddingTop: OFFSET + NOTCH_HEIGHT,
-    shadowColor: IS_NATIVE ? 'transparent' : undefined,
+    paddingTop: OFFSET,
+    maxHeight: IS_NATIVE ? UNIT * 56.6 : undefined,
   },
 
   form: {
