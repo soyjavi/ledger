@@ -40,7 +40,7 @@ const TransactionItem = (props) => {
             </View>
             { value && (
               <Price
-                caption={type === EXPENSE ? undefined : '+'}
+                title={type === EXPENSE ? undefined : '+'}
                 value={parseFloat(value, 10)}
                 fixed={2}
                 symbol={SYMBOL[currency]}

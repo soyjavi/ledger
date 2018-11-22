@@ -72,7 +72,7 @@ class FloatingButton extends PureComponent {
             ))}
           </View>)}
 
-        <Motion preset="pop" visible={visible} delay={visible ? DURATION * 2 : 0}>
+        <Motion preset="fade" visible={visible} delay={visible ? DURATION * 2 : 0}>
           <Motion timeline={[{ property: 'scale', value: opened ? 0.75 : 1 }]}>
             <Touchable onPress={_onPress}>
               <View style={[styles.button, opened && styles.buttonOpened]}>
