@@ -6,11 +6,12 @@ import { C } from '../../common';
 import { Consumer } from '../../context';
 import { Price, Text, Touchable } from '../../reactor/components';
 import { THEME } from '../../reactor/common';
+import BulletBalance from '../BulletBalance';
 import { verboseDate } from './modules';
 import styles from './TransactionItem.style';
 
 const {
-  COLORS, SCREEN, SYMBOL, TX: { TYPE: { EXPENSE } },
+  COLORS, FIXED, SCREEN, SYMBOL, TX: { TYPE: { EXPENSE } },
 } = C;
 const { COLOR } = THEME;
 
@@ -20,6 +21,10 @@ const TransactionItem = (props) => {
   } = props;
   const isHeading = !hash;
   const isBottom = inherit.last;
+  const { incomes, expenses } = inherit.cashflow || {};
+  const priceProps = {
+    fixed: FIXED[currency], lighten: true, level: 2, subtitle: true, symbol: SYMBOL[currency],
+  };
 
   return (
     <Consumer>
@@ -38,13 +43,13 @@ const TransactionItem = (props) => {
 
               { title && <Text level={2} lighten numberOfLines={1}>{title}</Text> }
             </View>
-            { value && (
-              <Price
-                title={type === EXPENSE ? undefined : '+'}
-                value={parseFloat(value, 10)}
-                fixed={2}
-                symbol={SYMBOL[currency]}
-              />)}
+            { (incomes || expenses) && (
+              <View style={styles.cashflow}>
+                { incomes !== 0 && <BulletBalance income {...priceProps} value={incomes} /> }
+                { expenses !== 0 && <BulletBalance {...priceProps} value={expenses} /> }
+              </View>
+            )}
+            { value && <Price {...priceProps} title={type === EXPENSE ? undefined : '+'} value={value} /> }
           </View>
         </Touchable>
       )}

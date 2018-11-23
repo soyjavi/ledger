@@ -9,7 +9,6 @@ import {
 } from '../../components';
 import { Header } from '../../containers';
 import { Consumer } from '../../context';
-import { THEME } from '../../reactor/common';
 import { Text, Viewport } from '../../reactor/components';
 import styles from './Vault.style';
 

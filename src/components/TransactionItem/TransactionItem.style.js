@@ -7,6 +7,17 @@ const BULLET_SIZE = UNIT * 1.2;
 const LINE_SIZE = UNIT * 0.2;
 
 export default StyleSheet.create({
+  bullet: {
+    width: BULLET_SIZE,
+    height: BULLET_SIZE,
+    borderRadius: BULLET_SIZE / 2,
+    backgroundColor: COLOR.BASE,
+    borderColor: COLOR.BACKGROUND,
+    borderWidth: UNIT * 0.1,
+  },
+
+  cashflow: LAYOUT.STYLE.ROW,
+
   container: {
     ...LAYOUT.STYLE.ROW,
     paddingHorizontal: OFFSET,
@@ -21,15 +32,6 @@ export default StyleSheet.create({
     flex: 1,
     marginLeft: OFFSET,
     marginRight: OFFSET / 2,
-  },
-
-  bullet: {
-    width: BULLET_SIZE,
-    height: BULLET_SIZE,
-    borderRadius: BULLET_SIZE / 2,
-    backgroundColor: COLOR.BASE,
-    borderColor: COLOR.BACKGROUND,
-    borderWidth: UNIT * 0.1,
   },
 
   line: {

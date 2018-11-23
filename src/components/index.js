@@ -1,3 +1,4 @@
+import BulletBalance from './BulletBalance';
 import Chart from './Chart';
 import DialogTransaction from './DialogTransaction';
 import DialogVault from './DialogVault';
@@ -10,6 +11,7 @@ import VaultBalance from './VaultBalance';
 import VaultItem from './VaultItem';
 
 export {
+  BulletBalance,
   Chart,
   DialogTransaction,
   DialogVault,
