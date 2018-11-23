@@ -6,7 +6,7 @@ import { C } from '../../common';
 import { Consumer } from '../../context';
 import { Price, Text, Touchable } from '../../reactor/components';
 import { THEME } from '../../reactor/common';
-import BulletBalance from '../BulletBalance';
+import BulletPrice from '../BulletPrice';
 import { verboseDate } from './modules';
 import styles from './TransactionItem.style';
 
@@ -45,8 +45,8 @@ const TransactionItem = (props) => {
             </View>
             { (incomes || expenses) && (
               <View style={styles.cashflow}>
-                { incomes !== 0 && <BulletBalance income {...priceProps} value={incomes} /> }
-                { expenses !== 0 && <BulletBalance {...priceProps} value={expenses} /> }
+                { incomes !== 0 && <BulletPrice income {...priceProps} value={incomes} /> }
+                { expenses !== 0 && <BulletPrice {...priceProps} value={expenses} /> }
               </View>
             )}
             { value && <Price {...priceProps} title={type === EXPENSE ? undefined : '+'} value={value} /> }

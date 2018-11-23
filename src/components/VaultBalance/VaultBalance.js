@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import { C, cashflow, exchange } from '../../common';
 import { Consumer } from '../../context';
 import { Price, Text } from '../../reactor/components';
-import BulletBalance from '../BulletBalance';
+import BulletPrice from '../BulletPrice';
 import Chart from '../Chart';
 import { chartCashflow } from './modules';
 import styles from './VaultBalance.style';
@@ -37,12 +37,12 @@ export default ({ dataSource = {}, baseCurrency, txs }) => {
           />
           <View style={styles.row}>
             <View style={[styles.cashflow, styles.row]}>
-              <BulletBalance
+              <BulletPrice
                 income
                 {...priceProps}
                 value={baseCurrency ? exchange(monthIncome, currency, baseCurrency, rates) : monthIncome}
               />
-              <BulletBalance
+              <BulletPrice
                 {...priceProps}
                 value={baseCurrency ? exchange(monthExpenses, currency, baseCurrency, rates) : monthExpenses}
               />

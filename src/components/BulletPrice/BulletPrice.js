@@ -4,9 +4,9 @@ import { View } from 'react-native';
 
 import { iconTrendingDown, iconTrendingUp } from '../../assets';
 import { Icon, Price } from '../../reactor/components';
-import styles from './BulletBalance.style';
+import styles from './BulletPrice.style';
 
-const BulletBalance = ({ income, ...inherit }) => (
+const BulletPrice = ({ income, ...inherit }) => (
   <View style={[styles.container, income && styles.income]}>
     <View style={styles.bullet}>
       <Icon value={income ? iconTrendingUp : iconTrendingDown} style={styles.icon} />
@@ -15,12 +15,12 @@ const BulletBalance = ({ income, ...inherit }) => (
   </View>
 );
 
-BulletBalance.propTypes = {
+BulletPrice.propTypes = {
   income: bool,
 };
 
-BulletBalance.defaultProps = {
+BulletPrice.defaultProps = {
   income: false,
 };
 
-export default BulletBalance;
+export default BulletPrice;
