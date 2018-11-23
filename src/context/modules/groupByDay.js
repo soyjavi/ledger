@@ -1,6 +1,11 @@
+import { C } from '../../common';
+
+const { TX: { TYPE: { EXPENSE } } } = C;
+
 export default (txs, { vault, year, month }) => {
   const dataSource = [];
   let group;
+  let groupIndex = 0;
 
   txs
     .sort((a, b) => {
@@ -17,9 +22,18 @@ export default (txs, { vault, year, month }) => {
 
           if (group !== txDate) {
             if (dataSource.length > 0) dataSource[dataSource.length - 1].last = true;
+
             group = txDate;
-            dataSource.push({ timestamp: tx.timestamp });
+            groupIndex = dataSource.length;
+            dataSource.push({
+              cashflow: { expenses: 0, incomes: 0 },
+              timestamp: tx.timestamp,
+            });
           }
+
+          if (tx.type === EXPENSE) dataSource[groupIndex].cashflow.expenses += tx.value;
+          else dataSource[groupIndex].cashflow.incomes += tx.value;
+
           dataSource.push(tx);
         }
       }
