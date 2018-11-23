@@ -91,12 +91,13 @@ class DialogVault extends PureComponent {
                   style={styles.button}
                 />)}
               <Button
-                title={l10n.SAVE}
                 activity={busy}
                 color={COLOR.PRIMARY}
                 disabled={busy || !valid}
                 onPress={() => _onSubmit(store)}
+                shadow
                 style={styles.button}
+                title={l10n.SAVE}
               />
             </View>
           </Dialog>

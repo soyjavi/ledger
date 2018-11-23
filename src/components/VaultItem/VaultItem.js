@@ -6,13 +6,11 @@ import { View } from 'react-native';
 
 import { C } from '../../common';
 import { Consumer } from '../../context';
-import { THEME } from '../../reactor/common';
 import { Price, Text, Touchable } from '../../reactor/components';
 import Chart from '../Chart';
 import styles from './VaultItem.style';
 
 const { FIXED, SYMBOL } = C;
-const { COLOR } = THEME;
 
 const VaultItem = (props) => {
   const {
@@ -22,7 +20,7 @@ const VaultItem = (props) => {
   return (
     <Consumer>
       { ({ l10n }) => (
-        <Touchable rippleColor={COLOR.PRIMARY} onPress={onPress}>
+        <Touchable rippleColor={color} onPress={onPress}>
           <View style={styles.container}>
             <View style={[styles.bullet, color && { backgroundColor: color }]} />
             <View style={styles.content}>

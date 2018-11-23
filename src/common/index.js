@@ -6,6 +6,7 @@ import cashflow from './cashflow';
 import fetch from './fetch';
 import theme from './theme';
 import translate from './translate';
+import verboseDate from './verboseDate';
 
 export {
   C,
@@ -16,4 +17,5 @@ export {
   fetch,
   theme,
   translate,
+  verboseDate,
 };

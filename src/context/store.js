@@ -120,7 +120,7 @@ class ProviderStore extends Component {
       });
     }
 
-    return latestTransaction;
+    return latestTransaction || {};
   }
 
   onVault = async (props) => {

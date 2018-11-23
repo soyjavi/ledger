@@ -16,6 +16,11 @@ export default StyleSheet.create({
     borderWidth: UNIT * 0.1,
   },
 
+  button: {
+    alignSelf: 'flex-start',
+    marginBottom: OFFSET / 2,
+  },
+
   cashflow: LAYOUT.STYLE.ROW,
 
   container: {
@@ -24,8 +29,18 @@ export default StyleSheet.create({
     paddingVertical: OFFSET / 2,
   },
 
+  extended: {
+    paddingVertical: 0,
+  },
+
   heading: {
     marginTop: OFFSET,
+  },
+
+  map: {
+    backgroundColor: COLOR.BASE,
+    height: UNIT * 9.6,
+    width: '100%',
   },
 
   texts: {

@@ -1,5 +1,6 @@
 export default {
   'en-EN': {
+    ACCEPT: 'Accept',
     AMOUNT: 'Amount',
     BALANCE: 'Balance',
 
@@ -45,6 +46,8 @@ export default {
       ],
     ],
     CATEGORY: 'Category',
+    CLONE: 'Clone',
+    CLONE_CAPTION: 'To make your life easier you can clone this transaction with a simple touch of the button.',
     CLOSE: 'Close',
     CURRENCY: 'Currency',
 
@@ -73,7 +76,7 @@ export default {
 
     TITLE: 'Title',
     TODAY: 'Today',
-    TRANSACTION: 'transaction',
+    TRANSACTION: 'Transaction',
     TRANSACTION_CAPTIONS: [
       'Register a new expense in this vault.',
       'Register a new income in this vault.',

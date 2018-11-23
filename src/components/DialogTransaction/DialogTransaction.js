@@ -90,7 +90,11 @@ class DialogTransaction extends PureComponent {
     return (
       <Consumer>
         { ({ l10n, store }) => (
-          <Dialog visible={visible} style={[styles.frame, type === TRANSFER && styles.transfer]} styleContainer={styles.dialog}>
+          <Dialog
+            visible={visible}
+            style={[styles.frame, type === TRANSFER && styles.transfer]}
+            styleContainer={styles.dialog}
+          >
             <Text color={COLORS[type]} headline level={5} style={styles.text}>
               {`${l10n.NEW} ${l10n.TYPE_TRANSACTION[type]}`}
             </Text>
@@ -116,12 +120,13 @@ class DialogTransaction extends PureComponent {
             <View style={styles.buttons}>
               <Button title={l10n.CANCEL} color={COLORS[type]} outlined onPress={onClose} style={styles.button} />
               <Button
-                title={l10n.SAVE}
                 activity={busy}
                 color={COLORS[type]}
                 disabled={busy || !valid}
                 onPress={() => _onSubmit({ l10n, store })}
+                shadow
                 style={styles.button}
+                title={l10n.SAVE}
               />
             </View>
           </Dialog>

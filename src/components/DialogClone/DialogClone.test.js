@@ -2,11 +2,11 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 
 import { C } from '../../common';
-import Transaction from './Transaction';
+import DialogClone from './DialogClone';
 
-describe('<Transaction>', () => {
+describe('<DialogClone>', () => {
   it('renders', () => {
-    const tree = renderer.create(<Transaction />).toJSON();
+    const tree = renderer.create(<DialogClone />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 

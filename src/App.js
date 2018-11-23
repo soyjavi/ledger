@@ -1,16 +1,15 @@
 import React from 'react';
 
 import { C, L10N } from './common';
-import { Snackbar } from './components';
 import { Provider, Consumer, ConsumerNavigation } from './context';
-import { LayoutView } from './reactor/components';
+import { LayoutView, Snackbar } from './reactor/components';
 import {
-  Session, Dashboard, Vault, Transaction,
+  Session, Dashboard, Vault,
 } from './screens';
 
 const { SCREEN, LANGUAGE } = C;
 const {
-  SESSION, DASHBOARD, VAULT, TRANSACTION,
+  SESSION, DASHBOARD, VAULT,
 } = SCREEN;
 
 export default () => (
@@ -24,11 +23,6 @@ export default () => (
 
           <Dashboard backward={current !== DASHBOARD} visible={stack.includes(DASHBOARD)} />
           <Vault backward={current !== VAULT} dataSource={parameters} visible={stack.includes(VAULT)} />
-          <Transaction
-            backward={current !== TRANSACTION}
-            visible={stack.includes(TRANSACTION)}
-            dataSource={parameters}
-          />
 
           <Consumer>
             { ({ l10n, store: { error, onError } }) => (

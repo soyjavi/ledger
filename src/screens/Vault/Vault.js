@@ -5,7 +5,7 @@ import { Image, ScrollView, View } from 'react-native';
 import { bannerEmpty, iconBack, iconShuffle } from '../../assets';
 import { C, exchange } from '../../common';
 import {
-  DialogTransaction, FloatingButton, TransactionItem, VaultBalance,
+  DialogClone, DialogTransaction, FloatingButton, TransactionItem, VaultBalance,
 } from '../../components';
 import { Header } from '../../containers';
 import { Consumer } from '../../context';
@@ -26,6 +26,7 @@ class Vault extends PureComponent {
   };
 
   state = {
+    clone: undefined,
     dialog: false,
     switchCurrency: false,
     type: EXPENSE,
@@ -36,6 +37,8 @@ class Vault extends PureComponent {
 
     if (visible && !props.visible) this.setState({ switchCurrency: false });
   }
+
+  _onToggleClone = clone => this.setState({ clone });
 
   _onToggleDialog = () => {
     const { state: { dialog } } = this;
@@ -51,9 +54,11 @@ class Vault extends PureComponent {
 
   render() {
     const {
-      _onSwitchCurrency, _onToggleDialog, _onTransactionType,
+      _onSwitchCurrency, _onToggleClone, _onToggleDialog, _onTransactionType,
       props: { dataSource: { currency, hash, title }, visible, ...inherit },
-      state: { dialog, switchCurrency, type },
+      state: {
+        clone, dialog, switchCurrency, type,
+      },
     } = this;
 
     return (
@@ -90,6 +95,7 @@ class Vault extends PureComponent {
                           expenses: exchange(tx.cashflow.expenses, currency, baseCurrency, rates),
                         }
                         : tx.cashflow}
+                      onClone={() => _onToggleClone(tx)}
                       value={switchCurrency && tx.hash ? exchange(tx.value, currency, baseCurrency, rates) : tx.value}
                     />))
                   : (
@@ -104,7 +110,11 @@ class Vault extends PureComponent {
                 options={vaults.length === 1 ? [l10n.EXPENSE, l10n.INCOME] : [l10n.EXPENSE, l10n.INCOME, l10n.TRANSFER]}
                 visible={!dialog && !inherit.backward}
               />
-              { visible && <DialogTransaction type={type} vault={hash} onClose={_onToggleDialog} visible={dialog} />}
+              { visible && (
+                <Fragment>
+                  <DialogTransaction type={type} vault={hash} onClose={_onToggleDialog} visible={dialog} />
+                  <DialogClone dataSource={clone} visible={!!clone} onClose={() => _onToggleClone()} />
+                </Fragment>)}
             </Fragment>
           )}
         </Consumer>
