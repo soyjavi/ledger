@@ -108,7 +108,9 @@ class TransactionItem extends PureComponent {
                   <View style={styles.bullet} />
                   <View style={styles.texts}>
                     <Text level={2} lighten>$Location</Text>
-                    <Touchable rippleColor={COLOR.WHITE} onPress={() => {}} style={styles.map} />
+                    <Touchable rippleColor={COLOR.WHITE} onPress={() => {}}>
+                      <View style={styles.map} />
+                    </Touchable>
                   </View>
                 </View>
                 <View style={[styles.container]}>
