@@ -84,6 +84,12 @@ class Vault extends PureComponent {
                       key={tx.hash || tx.timestamp}
                       {...tx}
                       currency={switchCurrency ? baseCurrency : currency}
+                      cashflow={switchCurrency && tx.cashflow
+                        ? {
+                          incomes: exchange(tx.cashflow.incomes, currency, baseCurrency, rates),
+                          expenses: exchange(tx.cashflow.expenses, currency, baseCurrency, rates),
+                        }
+                        : tx.cashflow}
                       value={switchCurrency && tx.hash ? exchange(tx.value, currency, baseCurrency, rates) : tx.value}
                     />))
                   : (
