@@ -14,12 +14,12 @@ const { FIXED, SYMBOL } = C;
 
 const VaultItem = (props) => {
   const {
-    balance, cashflow: { income, expenses } = {}, chart, color, currency, onPress, title,
+    chart, color, currency, onPress, overallBalance, title,
   } = props;
 
   return (
     <Consumer>
-      { ({ l10n }) => (
+      { ({ l10n, store: { max } }) => (
         <Touchable rippleColor={color} onPress={onPress}>
           <View style={styles.container}>
             <View style={[styles.bullet, color && { backgroundColor: color }]} />
@@ -33,11 +33,11 @@ const VaultItem = (props) => {
                     subtitle
                     level={2}
                     lighten
-                    value={balance + income - expenses}
+                    value={overallBalance}
                     symbol={SYMBOL[currency]}
                   />
                 </View>
-                <Chart color={color} values={chart} />
+                <Chart color={color} maxValue={max} values={chart} />
               </View>
             </View>
           </View>
@@ -48,12 +48,11 @@ const VaultItem = (props) => {
 };
 
 VaultItem.propTypes = {
-  balance: number.isRequired,
-  cashflow: shape({}),
   chart: arrayOf(number),
   color: string,
   currency: string.isRequired,
   onPress: func.isRequired,
+  overallBalance: number.isRequired,
   title: string.isRequired,
 };
 

@@ -1,7 +1,7 @@
 import { node } from 'prop-types';
 import React, { Component, createContext } from 'react';
 
-import { C, fetch } from '../common';
+import { C, exchange, fetch } from '../common';
 import { Fingerprint } from '../reactor/context/Amplitude/modules';
 import {
   AsyncStore, calcOverall, calcVault, groupByDay,
@@ -70,11 +70,17 @@ class ProviderStore extends Component {
     const response = await fetch({ service: 'profile', headers: { authorization } }).catch(onError);
     if (response) {
       const { baseCurrency, latestTransaction, rates } = response;
-      const vaults = response.vaults.map((vault, index) => calcVault(vault, txs, index));
+      const vaults = response.vaults.map((vault, index) => calcVault(vault, { txs, baseCurrency, rates }, index));
+
+      // let max = 0;
+      // vaults.forEach(({ chart }) => {
+      //   const value = parseInt(Math.max(...chart), 10);
+      //   if (value > max) max = value;
+      // });
 
       await _store({ baseCurrency, rates, vaults });
       this.setState({
-        baseCurrency, latestTransaction, rates, vaults,
+        baseCurrency, latestTransaction, rates, vaults//, max,
       });
     }
 
@@ -106,7 +112,7 @@ class ProviderStore extends Component {
     if (latestTransaction) {
       const txs = [...state.txs, latestTransaction];
       const vaults = state.vaults.map((vault, index) => (
-        vault.hash !== props.vault ? vault : calcVault(vault, txs, index)
+        vault.hash !== props.vault ? vault : calcVault(vault, { ...state, txs }, index)
       ));
       const overall = calcOverall({ ...state, vaults, txs });
 

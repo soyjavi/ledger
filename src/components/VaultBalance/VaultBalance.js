@@ -12,16 +12,13 @@ import styles from './VaultBalance.style';
 const { FIXED, SYMBOL } = C;
 
 export default ({ dataSource = {}, baseCurrency, txs }) => {
-  const {
-    balance, cashflow: { income, expenses } = {}, color, currency,
-  } = dataSource;
+  const { color, currency, overallBalance } = dataSource;
 
   const activeCurrency = baseCurrency || currency;
 
   const priceProps = {
     fixed: FIXED[activeCurrency], symbol: SYMBOL[activeCurrency],
   };
-  const vaultBalance = balance + income - expenses;
   const { income: monthIncome, expenses: monthExpenses } = cashflow(txs);
 
   return (
@@ -33,7 +30,7 @@ export default ({ dataSource = {}, baseCurrency, txs }) => {
             {...priceProps}
             headline
             level={5}
-            value={baseCurrency ? exchange(vaultBalance, currency, baseCurrency, rates) : vaultBalance}
+            value={baseCurrency ? exchange(overallBalance, currency, baseCurrency, rates) : overallBalance}
           />
           <View style={styles.row}>
             <View style={[styles.cashflow, styles.row]}>

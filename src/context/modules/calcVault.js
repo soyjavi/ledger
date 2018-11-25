@@ -1,28 +1,31 @@
-import { C, cashflow } from '../../common';
+import { C, cashflow, exchange } from '../../common';
 
-const { COLORS } = C;
+const { COLORS, TX: { TYPE } } = C;
 
-export default (vault = {}, storeTXs = [], index) => {
-  const txs = storeTXs.filter(tx => tx.vault === vault.hash);
-  let expensesByMonth = [];
-  let group;
-  let groupIndex = -1;
+export default (vault = {}, { baseCurrency, rates, txs = [] }, index) => {
+  const vaultTXs = txs.filter(tx => tx.vault === vault.hash);
+  const { income, expenses } = cashflow(vaultTXs);
+  let cashflowMonth = {};
+  let { balance } = vault;
 
-  txs.forEach((tx) => {
+  vaultTXs.forEach((tx) => {
     const date = (new Date(tx.timestamp).toISOString()).substr(0, 7);
+    const value = vault.currency === baseCurrency
+      ? tx.value
+      : exchange(tx.value, vault.currency, baseCurrency, rates);
 
-    if (group !== date) {
-      expensesByMonth.push(0);
-      group = date;
-      groupIndex += 1;
-    }
-    expensesByMonth[groupIndex] += tx.value;
+    balance += tx.type === TYPE.EXPENSE ? -(value) : value;
+    cashflowMonth[date] = balance;
   });
-  expensesByMonth = [...Array.from({ length: 12 - expensesByMonth.length }, () => 0), ...expensesByMonth];
+  cashflowMonth = Object.values(cashflowMonth);
+  cashflowMonth = cashflowMonth.slice(Math.max(cashflowMonth.length - 12, 0));
 
   return Object.assign({}, vault, {
-    cashflow: cashflow(txs),
-    chart: expensesByMonth,
+    chart: [
+      ...Array.from({ length: 12 - cashflowMonth.length }, () => 0),
+      ...cashflowMonth,
+    ],
     color: COLORS[index],
+    overallBalance: vault.balance + income - expenses,
   });
 };

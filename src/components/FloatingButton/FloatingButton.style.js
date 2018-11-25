@@ -36,7 +36,7 @@ export default StyleSheet.create({
     alignItems: 'flex-end',
     flexDirection: 'column-reverse',
     marginRight: (CONTAINER_SIZE / 3),
-    backgroundColor: 'rgba(0, 255, 0, 0.25)',
+    // backgroundColor: 'rgba(0, 255, 0, 0.25)', // @TODO
   },
 
   optionsOpened: {},
