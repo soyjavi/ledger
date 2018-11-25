@@ -5,8 +5,9 @@ import { View } from 'react-native';
 import { Motion } from '../../reactor/components';
 import styles from './Chart.style';
 
-const Chart = ({ color, values }) => {
-  const max = values.length > 0 ? Math.max.apply(Math, values) : 0; // eslint-disable-line
+const Chart = ({ color, maxValue, values }) => {
+  let max = maxValue;
+  if (!max) max = values.length > 0 ? Math.max(...values) : 0;
   const style = [styles.bar, values.length > 12 && styles.barTiny];
 
   return (
@@ -26,11 +27,13 @@ const Chart = ({ color, values }) => {
 
 Chart.propTypes = {
   color: string,
+  maxValue: number,
   values: arrayOf(number),
 };
 
 Chart.defaultProps = {
   color: undefined,
+  maxValue: undefined,
   values: [],
 };
 
