@@ -27,7 +27,7 @@ export default () => (
                 level={6}
                 title="+"
                 fixed={FIXED[baseCurrency]}
-                value={overall.income}
+                value={overall.incomes}
                 symbol={SYMBOL[baseCurrency]}
               />
             </View>

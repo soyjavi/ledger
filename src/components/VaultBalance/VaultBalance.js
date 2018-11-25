@@ -19,7 +19,7 @@ export default ({ dataSource = {}, baseCurrency, txs }) => {
   const priceProps = {
     fixed: FIXED[activeCurrency], symbol: SYMBOL[activeCurrency],
   };
-  const { income: monthIncome, expenses: monthExpenses } = cashflow(txs);
+  const { incomes: monthIncomes, expenses: monthExpenses } = cashflow(txs);
 
   return (
     <Consumer>
@@ -37,7 +37,7 @@ export default ({ dataSource = {}, baseCurrency, txs }) => {
               <BulletPrice
                 income
                 {...priceProps}
-                value={baseCurrency ? exchange(monthIncome, currency, baseCurrency, rates) : monthIncome}
+                value={baseCurrency ? exchange(monthIncomes, currency, baseCurrency, rates) : monthIncomes}
               />
               <BulletPrice
                 {...priceProps}

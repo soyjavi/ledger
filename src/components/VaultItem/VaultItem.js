@@ -1,5 +1,5 @@
 import {
-  arrayOf, func, number, shape, string,
+  arrayOf, func, number, string,
 } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
@@ -19,7 +19,7 @@ const VaultItem = (props) => {
 
   return (
     <Consumer>
-      { ({ l10n, store: { max } }) => (
+      { ({ l10n }) => (
         <Touchable rippleColor={color} onPress={onPress}>
           <View style={styles.container}>
             <View style={[styles.bullet, color && { backgroundColor: color }]} />
@@ -37,7 +37,7 @@ const VaultItem = (props) => {
                     symbol={SYMBOL[currency]}
                   />
                 </View>
-                <Chart color={color} maxValue={max} values={chart} />
+                <Chart color={color} values={chart} />
               </View>
             </View>
           </View>
@@ -48,7 +48,7 @@ const VaultItem = (props) => {
 };
 
 VaultItem.propTypes = {
-  chart: arrayOf(number),
+  chart: arrayOf(number).isRequired,
   color: string,
   currency: string.isRequired,
   onPress: func.isRequired,
@@ -57,8 +57,6 @@ VaultItem.propTypes = {
 };
 
 VaultItem.defaultProps = {
-  cashflow: undefined,
-  chart: undefined,
   color: undefined,
 };
 

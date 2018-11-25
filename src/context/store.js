@@ -1,7 +1,7 @@
 import { node } from 'prop-types';
 import React, { Component, createContext } from 'react';
 
-import { C, exchange, fetch } from '../common';
+import { C, fetch } from '../common';
 import { Fingerprint } from '../reactor/context/Amplitude/modules';
 import {
   AsyncStore, calcOverall, calcVault, groupByDay,
@@ -21,10 +21,12 @@ class ProviderStore extends Component {
   };
 
   state = {
+    chartMaxBalance: undefined,
     error: undefined,
     fingerprint: undefined,
     hash: undefined,
     latestTransaction: undefined,
+    overall: {},
     queryProps: {},
     queryTxs: [],
     // -- STORAGE --------------------------------------------------------------
@@ -70,17 +72,11 @@ class ProviderStore extends Component {
     const response = await fetch({ service: 'profile', headers: { authorization } }).catch(onError);
     if (response) {
       const { baseCurrency, latestTransaction, rates } = response;
-      const vaults = response.vaults.map((vault, index) => calcVault(vault, { txs, baseCurrency, rates }, index));
-
-      // let max = 0;
-      // vaults.forEach(({ chart }) => {
-      //   const value = parseInt(Math.max(...chart), 10);
-      //   if (value > max) max = value;
-      // });
+      const vaults = response.vaults.map((vault, index) => calcVault(vault, txs, index));
 
       await _store({ baseCurrency, rates, vaults });
       this.setState({
-        baseCurrency, latestTransaction, rates, vaults//, max,
+        baseCurrency, latestTransaction, rates, vaults,
       });
     }
 
@@ -93,7 +89,7 @@ class ProviderStore extends Component {
     const { txs } = await fetch({ service: 'transactions', headers: { authorization } }).catch(onError);
 
     if (txs) {
-      const overall = calcOverall({ ...state, txs });
+      const overall = calcOverall(state);
 
       await _store({ overall, txs });
       this.setState({ overall, txs });
@@ -112,9 +108,9 @@ class ProviderStore extends Component {
     if (latestTransaction) {
       const txs = [...state.txs, latestTransaction];
       const vaults = state.vaults.map((vault, index) => (
-        vault.hash !== props.vault ? vault : calcVault(vault, { ...state, txs }, index)
+        vault.hash !== props.vault ? vault : calcVault(vault, txs, index)
       ));
-      const overall = calcOverall({ ...state, vaults, txs });
+      const overall = calcOverall({ ...state, vaults });
 
       await _store({ overall, txs, vaults });
       this.setState({

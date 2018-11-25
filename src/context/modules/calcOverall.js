@@ -1,34 +1,31 @@
-import { C, exchange } from '../../common';
+import { exchange } from '../../common';
 
-const { TX: { TYPE: { EXPENSE, INCOME } } } = C;
-
-export default ({
-  baseCurrency, txs = [], vaults = [], rates,
-}) => {
+export default ({ baseCurrency, vaults = [], rates }) => {
+  const currentMonth = new Date().toISOString().substr(0, 7);
   let total = 0;
-  let income = 0;
+  let incomes = 0;
   let expenses = 0;
+  const exchangeProps = [baseCurrency, rates];
 
-  const currencies = {};
-  vaults.forEach(({
-    balance, cashflow = {}, hash, currency,
-  }) => {
-    currencies[hash] = currency;
+  vaults.forEach(({ balance, byMonth, currency }) => {
+    const lastMonth = Object.keys(byMonth)[Object.keys(byMonth).length - 1];
+    const month = byMonth[lastMonth];
+    const sameCurrency = currency === baseCurrency;
 
-    total += exchange(balance, currency, baseCurrency, rates);
-    expenses += exchange(cashflow.expenses, currency, baseCurrency, rates);
-    income += exchange(cashflow.income, currency, baseCurrency, rates);
-  });
-
-  txs.forEach(({ type, value, vault }) => {
-    const amount = exchange(value, currencies[vault], baseCurrency, rates);
-    if (type === EXPENSE) total -= amount;
-    else if (type === INCOME) total += amount;
+    if (month) {
+      total += sameCurrency ? month.balance : exchange(month.balance, currency, ...exchangeProps);
+      if (lastMonth === currentMonth) {
+        expenses += sameCurrency ? month.expenses : exchange(month.expenses, currency, ...exchangeProps);
+        incomes += sameCurrency ? month.incomes : exchange(month.expenses, currency, ...exchangeProps);
+      }
+    } else {
+      total += sameCurrency ? balance : exchange(balance, currency, ...exchangeProps);
+    }
   });
 
   return {
     total,
-    income,
+    incomes,
     expenses,
   };
 };
