@@ -18,7 +18,6 @@ export default StyleSheet.create({
 
   button: {
     alignSelf: 'flex-start',
-    marginBottom: OFFSET / 2,
   },
 
   cashflow: LAYOUT.STYLE.ROW,
@@ -30,7 +29,7 @@ export default StyleSheet.create({
   },
 
   extended: {
-    paddingVertical: 0,
+    paddingVertical: OFFSET / 4,
   },
 
   heading: {
@@ -55,7 +54,7 @@ export default StyleSheet.create({
     width: LINE_SIZE,
     height: '100%',
     backgroundColor: COLOR.BASE,
-    opacity: 0.25,
+    opacity: 0.5,
   },
 
   lineBottom: {

@@ -66,7 +66,7 @@ class TransactionItem extends PureComponent {
     const isBottom = inherit.last;
     const { incomes, expenses } = inherit.cashflow || {};
     const priceProps = {
-      fixed: FIXED[currency], lighten: true, level: 2, subtitle: true, symbol: SYMBOL[currency],
+      fixed: FIXED[currency], symbol: SYMBOL[currency],
     };
     const color = COLORS[category];
 
@@ -93,16 +93,21 @@ class TransactionItem extends PureComponent {
                 </View>
                 { (incomes || expenses) && (
                   <View style={styles.cashflow}>
-                    { incomes !== 0 && <BulletPrice income {...priceProps} value={incomes} /> }
-                    { expenses !== 0 && <BulletPrice {...priceProps} value={expenses} /> }
+                    { incomes !== 0 && <BulletPrice lighten level={3} subtitle income {...priceProps} value={incomes} /> }
+                    { expenses !== 0 && <BulletPrice lighten level={3} subtitle {...priceProps} value={expenses} /> }
                   </View>
                 )}
-                { value && <Price {...priceProps} title={type === EXPENSE ? undefined : '+'} value={value} /> }
+                { value && <Price {...priceProps} headline level={6} title={type === EXPENSE ? undefined : '+'} value={value} /> }
               </View>
             </Touchable>
 
             { hash && extended && (
               <Fragment>
+                <View style={[styles.container, styles.extended]}>
+                  <View style={styles.line} />
+                  <View style={styles.bullet} />
+                  <Text level={2} lighten style={styles.texts}>{timestamp}</Text>
+                </View>
                 <View style={[styles.container, styles.extended]}>
                   <View style={styles.line} />
                   <View style={styles.bullet} />
@@ -113,7 +118,7 @@ class TransactionItem extends PureComponent {
                     </Touchable>
                   </View>
                 </View>
-                <View style={[styles.container]}>
+                <View style={[styles.container, styles.extended]}>
                   <View style={[styles.line, isBottom && styles.lineBottom]} />
                   <View style={styles.bullet} />
                   <View style={styles.texts}>
