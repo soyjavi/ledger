@@ -44,6 +44,9 @@ class DialogTransaction extends PureComponent {
 
   _onChange = (form, { baseCurrency, vaults, rates }) => {
     const { props, state } = this;
+
+    if (props.type !== TRANSFER) return this.setState({ form });
+
     const from = vaults.find(({ hash }) => hash === props.vault);
     const to = form.destination
       ? vaults.find(({ title }) => title === form.destination)
