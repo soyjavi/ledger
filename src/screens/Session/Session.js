@@ -59,7 +59,7 @@ class Session extends PureComponent {
         <Consumer>
           { ({ l10n, store, navigation }) => (
             <View style={styles.container}>
-              { ENV.IS_DEVELOPMENT && visible && store.pin && !autoLogin
+              { !ENV.IS_PRODUCTION && visible && store.pin && !autoLogin
                 ? _onAutoLogin({ store, navigation })
                 : undefined}
               <View style={styles.content}>

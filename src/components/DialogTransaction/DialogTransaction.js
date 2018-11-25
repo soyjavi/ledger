@@ -61,7 +61,7 @@ class DialogTransaction extends PureComponent {
       exchange = parseFloat(exchange, 10).toFixed(2);
     }
 
-    this.setState({
+    return this.setState({
       form: {
         ...form, from, to, exchange,
       },

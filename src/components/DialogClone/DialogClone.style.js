@@ -17,8 +17,9 @@ export default StyleSheet.create({
 
   buttons: {
     ...LAYOUT.STYLE.ROW,
-    marginTop: OFFSET,
+    marginTop: OFFSET / 2,
     marginHorizontal: -OFFSET / 4,
+    paddingVertical: OFFSET / 4,
   },
 
   caption: {

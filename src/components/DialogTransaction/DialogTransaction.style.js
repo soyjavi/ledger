@@ -18,6 +18,7 @@ export default StyleSheet.create({
   buttons: {
     ...LAYOUT.STYLE.ROW,
     marginHorizontal: -OFFSET / 4,
+    paddingVertical: OFFSET / 4,
   },
 
   dialog: {
