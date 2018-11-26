@@ -20,10 +20,9 @@ export default StyleSheet.create({
     alignSelf: 'flex-start',
   },
 
-  cashflow: LAYOUT.STYLE.ROW,
+  row: LAYOUT.STYLE.ROW,
 
   container: {
-    ...LAYOUT.STYLE.ROW,
     paddingHorizontal: OFFSET,
     paddingVertical: OFFSET / 2,
   },
@@ -34,6 +33,13 @@ export default StyleSheet.create({
 
   heading: {
     marginTop: OFFSET,
+  },
+
+  icon: {
+    height: OFFSET,
+    marginRight: UNIT / 4,
+    opacity: 0.5,
+    width: OFFSET,
   },
 
   map: {

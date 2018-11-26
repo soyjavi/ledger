@@ -22,8 +22,6 @@ export default (vault = {}, txs = [], index) => {
     byMonth[date].balance = balance;
   });
 
-  console.log(vault.title, byMonth);
-
   const chart = Object.values(byMonth)
     .map(item => item.balance)
     .slice(Math.max(Object.keys(byMonth).length - 12, 0));

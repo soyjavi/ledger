@@ -2,10 +2,11 @@ import { func, number, string } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
 import { View } from 'react-native';
 
+import { iconPlace, iconTime } from '../../assets';
 import { C, verboseDate } from '../../common';
 import { Consumer } from '../../context';
 import {
-  Button, Price, Text, Touchable,
+  Button, Icon, Price, Text, Touchable,
 } from '../../reactor/components';
 import { THEME } from '../../reactor/common';
 import BulletPrice from '../BulletPrice';
@@ -69,13 +70,14 @@ class TransactionItem extends PureComponent {
       fixed: FIXED[currency], symbol: SYMBOL[currency],
     };
     const color = COLORS[category];
+    const time = new Date(timestamp);
 
     return (
       <Consumer>
         { ({ l10n }) => (
           <Fragment>
             <Touchable rippleColor={color} onPress={hash ? _onToggleExtended : undefined}>
-              <View style={[styles.container, isHeading && styles.heading]}>
+              <View style={[styles.row, styles.container, isHeading && styles.heading]}>
                 <View
                   style={[
                     styles.line,
@@ -92,7 +94,7 @@ class TransactionItem extends PureComponent {
                   { title && <Text level={2} lighten numberOfLines={1}>{title}</Text> }
                 </View>
                 { (incomes || expenses) && (
-                  <View style={styles.cashflow}>
+                  <View style={styles.row}>
                     { incomes !== 0 && <BulletPrice lighten level={3} subtitle income {...priceProps} value={incomes} /> }
                     { expenses !== 0 && <BulletPrice lighten level={3} subtitle {...priceProps} value={expenses} /> }
                   </View>
@@ -103,22 +105,28 @@ class TransactionItem extends PureComponent {
 
             { hash && extended && (
               <Fragment>
-                <View style={[styles.container, styles.extended]}>
+                <View style={[styles.row, styles.container, styles.extended]}>
                   <View style={styles.line} />
                   <View style={styles.bullet} />
-                  <Text level={2} lighten style={styles.texts}>{timestamp}</Text>
+                  <View style={[styles.row, styles.texts]}>
+                    <Icon value={iconTime} style={styles.icon} />
+                    <Text level={2} lighten>{`${time.getHours()}:${time.getMinutes()}`}</Text>
+                  </View>
                 </View>
-                <View style={[styles.container, styles.extended]}>
+                <View style={[styles.row, styles.container, styles.extended]}>
                   <View style={styles.line} />
                   <View style={styles.bullet} />
                   <View style={styles.texts}>
-                    <Text level={2} lighten>$Location</Text>
                     <Touchable rippleColor={COLOR.WHITE} onPress={() => {}}>
                       <View style={styles.map} />
                     </Touchable>
+                    <View style={styles.row}>
+                      <Icon value={iconPlace} style={styles.icon} />
+                      <Text level={2} lighten>$Location</Text>
+                    </View>
                   </View>
                 </View>
-                <View style={[styles.container, styles.extended]}>
+                <View style={[styles.row, styles.container, styles.extended]}>
                   <View style={[styles.line, isBottom && styles.lineBottom]} />
                   <View style={styles.bullet} />
                   <View style={styles.texts}>

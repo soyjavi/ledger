@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 
-import { iconTrendingDown, iconTrendingUp } from '../../assets';
+import { iconExpenses, iconIncomes } from '../../assets';
 import { C } from '../../common';
 import { Consumer } from '../../context';
 import { Icon, Price, Text } from '../../reactor/components';
@@ -18,7 +18,7 @@ export default () => (
         <View style={styles.content}>
           <View style={styles.context}>
             <View style={styles.image}>
-              <Icon value={iconTrendingUp} />
+              <Icon value={iconIncomes} />
             </View>
             <View>
               <Text caption lighten>{l10n.INCOMES}</Text>
@@ -34,7 +34,7 @@ export default () => (
           </View>
           <View style={styles.context}>
             <View style={styles.image}>
-              <Icon value={iconTrendingDown} />
+              <Icon value={iconExpenses} />
             </View>
             <View>
               <Text caption lighten>{l10n.EXPENSES}</Text>

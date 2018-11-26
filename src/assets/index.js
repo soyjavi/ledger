@@ -7,9 +7,11 @@ import bannerVault from './banner_vault.png';
 
 import iconAdd from './icon_add.png';
 import iconBack from './icon_back.png';
+import iconExpenses from './icon_expenses.png';
+import iconIncomes from './icon_incomes.png';
+import iconPlace from './icon_place.png';
 import iconShuffle from './icon_shuffle.png';
-import iconTrendingDown from './icon_trending_down.png';
-import iconTrendingUp from './icon_trending_up.png';
+import iconTime from './icon_time.png';
 
 export {
   bannerClone,
@@ -21,7 +23,9 @@ export {
 
   iconAdd,
   iconBack,
+  iconExpenses,
+  iconIncomes,
+  iconPlace,
   iconShuffle,
-  iconTrendingDown,
-  iconTrendingUp,
+  iconTime,
 };

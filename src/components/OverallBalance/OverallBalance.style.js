@@ -29,7 +29,6 @@ export default StyleSheet.create({
 
   context: {
     ...LAYOUT.STYLE.ROW,
-    flex: 1,
     marginHorizontal: UNIT,
   },
 
