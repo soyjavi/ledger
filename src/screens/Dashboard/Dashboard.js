@@ -2,12 +2,16 @@ import { bool } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
 import { ScrollView } from 'react-native';
 
+import { iconChart } from '../../assets';
 import {
   DialogVault, FloatingButton, OverallBalance, VaultItem,
 } from '../../components';
 import { Consumer } from '../../context';
-import { Viewport } from '../../reactor/components';
+import { THEME } from '../../reactor/common';
+import { Button, Viewport } from '../../reactor/components';
 import styles from './Dashboard.style';
+
+const { COLOR } = THEME;
 
 class Dashboard extends PureComponent {
   static propTypes = {
@@ -28,14 +32,18 @@ class Dashboard extends PureComponent {
   }
 
   _onVault = ({ navigation, store, vault }) => {
-    const today = new Date();
-    store.query({ vault: vault.hash, year: today.getFullYear(), month: today.getMonth() });
+    store.query({ vault: vault.hash, date: new Date().toISOString().substr(0, 7) });
     navigation.navigate('vault', vault);
+  }
+
+  _onStats = ({ navigation, store }) => {
+    store.query({ method: 'groupByCategory', date: '2018-11' });
+    navigation.navigate('stats');
   }
 
   render() {
     const {
-      _onToggleDialog, _onVault,
+      _onStats, _onToggleDialog, _onVault,
       props: { visible, ...inherit },
       state: { dialog },
     } = this;
@@ -45,6 +53,13 @@ class Dashboard extends PureComponent {
         <Consumer>
           { ({ navigation, store: { vaults, ...store } }) => (
             <Fragment>
+              <Button
+                color={COLOR.TRANSPARENT}
+                rippleColor={COLOR.PRIMARY}
+                icon={iconChart}
+                onPress={() => _onStats({ navigation, store })}
+                style={[styles.button, styles.right]}
+              />
               <OverallBalance />
               <ScrollView contentContainerStyle={styles.scroll}>
                 { vaults.map(vault => (

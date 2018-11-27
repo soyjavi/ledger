@@ -7,7 +7,7 @@ export default (vault = {}, txs = [], index) => {
   const byMonth = {};
   let { balance } = vault;
 
-  vaultTXs.forEach(({ value, timestamp, type }) => {
+  vaultTXs.forEach(({ timestamp, type, value }) => {
     const date = (new Date(timestamp).toISOString()).substr(0, 7);
 
     if (!byMonth[date]) byMonth[date] = { balance: 0, expenses: 0, incomes: 0 };

@@ -73,6 +73,7 @@ export default {
 
     SAVE: 'Save',
     SEARCH: 'Search',
+    STATS: 'Stats',
 
     TITLE: 'Title',
     TODAY: 'Today',

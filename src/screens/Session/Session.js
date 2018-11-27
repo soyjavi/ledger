@@ -4,7 +4,7 @@ import { View } from 'react-native';
 
 import { Consumer } from '../../context';
 import { NumKeyboard } from '../../components';
-import { ENV, THEME } from '../../reactor/common';
+import { THEME } from '../../reactor/common';
 import {
   Activity, Motion, Text, Viewport,
 } from '../../reactor/components';
@@ -19,7 +19,6 @@ class Session extends PureComponent {
   };
 
   static defaultProps = {
-    autoLogin: false,
     visible: false,
   };
 
@@ -42,16 +41,11 @@ class Session extends PureComponent {
     }
   }
 
-  _onAutoLogin = ({ store, navigation }) => {
-    this.setState({ autoLogin: true });
-    handshake(this, { pin: store.pin, store, navigation });
-  }
-
   render() {
     const {
-      _onAutoLogin, _onNumber,
+      _onNumber,
       props: { visible, ...inherit },
-      state: { autoLogin, busy, pin },
+      state: { busy, pin },
     } = this;
 
     return (
@@ -59,9 +53,6 @@ class Session extends PureComponent {
         <Consumer>
           { ({ l10n, store, navigation }) => (
             <View style={styles.container}>
-              { !ENV.IS_PRODUCTION && visible && store.pin && !autoLogin
-                ? _onAutoLogin({ store, navigation })
-                : undefined}
               <View style={styles.content}>
                 <Text headline level={4} style={[styles.title, styles.text]}>
                   { store.pin ? l10n.WELCOME_BACK : l10n.WELCOME }

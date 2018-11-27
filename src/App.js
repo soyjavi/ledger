@@ -4,12 +4,12 @@ import { C, L10N } from './common';
 import { Provider, Consumer, ConsumerNavigation } from './context';
 import { LayoutView, Snackbar } from './reactor/components';
 import {
-  Session, Dashboard, Vault,
+  Session, Dashboard, Stats, Vault,
 } from './screens';
 
 const { SCREEN, LANGUAGE } = C;
 const {
-  SESSION, DASHBOARD, VAULT,
+  SESSION, DASHBOARD, STATS, VAULT,
 } = SCREEN;
 
 export default () => (
@@ -23,6 +23,7 @@ export default () => (
 
           <Dashboard backward={current !== DASHBOARD} visible={stack.includes(DASHBOARD)} />
           <Vault backward={current !== VAULT} dataSource={parameters} visible={stack.includes(VAULT)} />
+          <Stats backward={current !== STATS} visible={stack.includes(STATS)} />
 
           <Consumer>
             { ({ l10n, store: { error, onError } }) => (

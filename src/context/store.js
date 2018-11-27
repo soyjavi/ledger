@@ -4,7 +4,7 @@ import React, { Component, createContext } from 'react';
 import { C, fetch } from '../common';
 import { Fingerprint } from '../reactor/context/Amplitude/modules';
 import {
-  AsyncStore, calcOverall, calcVault, groupByDay,
+  AsyncStore, calcOverall, calcVault, groupByCategory, groupByDay,
 } from './modules';
 
 const { NAME } = C;
@@ -79,8 +79,6 @@ class ProviderStore extends Component {
         baseCurrency, latestTransaction, rates, vaults,
       });
     }
-
-    return response;
   }
 
   getTransactions = async () => {
@@ -155,8 +153,13 @@ class ProviderStore extends Component {
   }
 
   query = (queryProps) => {
-    const { state: { txs } } = this;
-    this.setState({ queryProps, queryTxs: groupByDay(txs, queryProps) });
+    const { state } = this;
+    const { method = 'groupByDay' } = queryProps;
+    const queryTxs = method === 'groupByDay'
+      ? groupByDay(state, queryProps)
+      : groupByCategory(state, queryProps);
+
+    this.setState({ queryProps, queryTxs });
   }
 
   _store = async (value) => {
