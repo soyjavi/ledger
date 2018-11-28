@@ -45,10 +45,6 @@ class TransactionItem extends PureComponent {
     extended: false,
   };
 
-  componentWillReceiveProps() {
-    this.setState({ extended: false });
-  }
-
   _onToggleExtended = () => {
     const { state: { extended } } = this;
     this.setState({ extended: !extended });
@@ -66,9 +62,6 @@ class TransactionItem extends PureComponent {
     const isHeading = !hash;
     const isBottom = inherit.last;
     const { incomes, expenses } = inherit.cashflow || {};
-    const priceProps = {
-      fixed: FIXED[currency], symbol: SYMBOL[currency],
-    };
     const color = COLORS[category];
     const time = new Date(timestamp);
 
@@ -95,11 +88,21 @@ class TransactionItem extends PureComponent {
                 </View>
                 { (incomes || expenses) && (
                   <View style={styles.row}>
-                    { incomes !== 0 && <BulletPrice lighten level={3} subtitle income {...priceProps} value={incomes} /> }
-                    { expenses !== 0 && <BulletPrice lighten level={3} subtitle {...priceProps} value={expenses} /> }
+                    { incomes !== 0 && (
+                      <BulletPrice currency={currency} incomes value={incomes} style={styles.bulletPrice} />)}
+                    { expenses !== 0 && (
+                      <BulletPrice currency={currency} value={expenses} style={styles.bulletPrice} />)}
                   </View>
                 )}
-                { value && <Price {...priceProps} headline level={6} title={type === EXPENSE ? undefined : '+'} value={value} /> }
+                { value && (
+                  <Price
+                    fixed={FIXED[currency]}
+                    headline
+                    level={6}
+                    symbol={SYMBOL[currency]}
+                    title={type === EXPENSE ? undefined : '+'}
+                    value={value}
+                  />)}
               </View>
             </Touchable>
 
@@ -130,7 +133,15 @@ class TransactionItem extends PureComponent {
                   <View style={[styles.line, isBottom && styles.lineBottom]} />
                   <View style={styles.bullet} />
                   <View style={styles.texts}>
-                    <Button color={color} title={l10n.CLONE} small shadow style={styles.button} onPress={onClone} />
+                    <Button
+                      color={color}
+                      rounded
+                      title={l10n.CLONE}
+                      shadow
+                      small
+                      style={styles.button}
+                      onPress={onClone}
+                    />
                   </View>
                 </View>
               </Fragment>

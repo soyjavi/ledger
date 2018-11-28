@@ -88,6 +88,7 @@ class DialogVault extends PureComponent {
                   color={COLOR.PRIMARY}
                   outlined
                   onPress={onClose}
+                  rounded
                   style={styles.button}
                 />)}
               <Button
@@ -95,6 +96,7 @@ class DialogVault extends PureComponent {
                 color={COLOR.PRIMARY}
                 disabled={busy || !valid}
                 onPress={() => _onSubmit(store)}
+                rounded
                 shadow
                 style={styles.button}
                 title={l10n.SAVE}

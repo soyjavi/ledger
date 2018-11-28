@@ -67,12 +67,13 @@ class DialogClone extends PureComponent {
               {l10n.CLONE_CAPTION}
             </Text>
             <View style={styles.buttons}>
-              <Button color={color} outlined title={l10n.CANCEL} onPress={onClose} style={styles.button} />
+              <Button color={color} outlined onPress={onClose} rounded style={styles.button} title={l10n.CANCEL} />
               <Button
                 activity={busy}
                 color={color}
                 disabled={busy}
                 onPress={() => _onSubmit(store)}
+                rounded
                 shadow
                 style={styles.button}
                 title={l10n.ACCEPT}

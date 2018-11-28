@@ -17,10 +17,6 @@ export default StyleSheet.create({
 
   container: LAYOUT.STYLE.ROW,
 
-  income: {
-    marginRight: UNIT,
-  },
-
   icon: {
     height: BULLET_SIZE * 0.6,
     width: BULLET_SIZE * 0.6,

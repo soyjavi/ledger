@@ -16,6 +16,10 @@ export default StyleSheet.create({
     borderWidth: UNIT * 0.1,
   },
 
+  bulletPrice: {
+    marginLeft: OFFSET / 2,
+  },
+
   button: {
     alignSelf: 'flex-start',
   },

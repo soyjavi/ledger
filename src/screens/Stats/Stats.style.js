@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 import { C } from '../../common';
-import { THEME } from '../../reactor/common';
+import { LAYOUT, THEME } from '../../reactor/common';
 
 const { STYLE: { HEADER_HEIGHT, NOTCH_HEIGHT } } = C;
 const { OFFSET } = THEME;
@@ -11,18 +11,17 @@ export default StyleSheet.create({
     marginBottom: OFFSET,
   },
 
+  row: LAYOUT.STYLE.ROW,
+
   scroll: {
-    paddingTop: HEADER_HEIGHT + NOTCH_HEIGHT,
     paddingBottom: HEADER_HEIGHT,
     paddingHorizontal: OFFSET,
-  },
-
-  title: {
-    // marginBottom: OFFSET / 2,
+    paddingTop: HEADER_HEIGHT + NOTCH_HEIGHT,
   },
 
   subtitle: {
-    marginTop: OFFSET / 2,
+    flex: 1,
     marginBottom: OFFSET / 3,
+    marginTop: OFFSET / 2,
   },
 });

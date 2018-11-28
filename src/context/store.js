@@ -97,7 +97,10 @@ class ProviderStore extends Component {
   onError = error => this.setState({ error: error ? error.message : undefined });
 
   onTransaction = async (props) => {
-    const { onError, _store, state: { hash: authorization, queryProps, ...state } } = this;
+    const {
+      _store, onError,
+      state: { hash: authorization, queryProps, ...state },
+    } = this;
 
     const latestTransaction = await fetch({
       method: 'POST', service: 'transaction', headers: { authorization }, ...props,
@@ -114,7 +117,7 @@ class ProviderStore extends Component {
       this.setState({
         latestTransaction,
         overall,
-        queryTxs: groupByDay(txs, queryProps),
+        queryTxs: groupByDay({ ...state, txs }, queryProps),
         txs,
         vaults,
       });

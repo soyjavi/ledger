@@ -1,5 +1,5 @@
 import { bool, shape } from 'prop-types';
-import React, { Fragment, PureComponent } from 'react';
+import React, { Fragment, Component } from 'react';
 import { Image, ScrollView, View } from 'react-native';
 
 import { bannerEmpty, iconBack, iconShuffle } from '../../assets';
@@ -14,7 +14,7 @@ import styles from './Vault.style';
 
 const { TX: { TYPE: { EXPENSE } } } = C;
 
-class Vault extends PureComponent {
+class Vault extends Component {
   static propTypes = {
     dataSource: shape({}),
     visible: bool,
@@ -36,6 +36,15 @@ class Vault extends PureComponent {
     const { props } = this;
 
     if (visible && !props.visible) this.setState({ switchCurrency: false });
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    const { props: { visible }, state: { clone, dialog, switchCurrency } } = this;
+
+    return (nextProps.visible !== visible)
+      || (nextState.clone !== clone)
+      || (nextState.dialog !== dialog)
+      || (nextState.switchCurrency !== switchCurrency);
   }
 
   _onToggleClone = clone => this.setState({ clone });
@@ -81,7 +90,7 @@ class Vault extends PureComponent {
                 <VaultBalance
                   dataSource={vaults.find(vault => vault.hash === hash)}
                   baseCurrency={switchCurrency ? baseCurrency : undefined}
-                  txs={queryTxs}
+                  txs={visible ? queryTxs : []}
                 />
                 { queryTxs.length > 0
                   ? queryTxs.map(tx => (

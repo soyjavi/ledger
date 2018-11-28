@@ -10,8 +10,13 @@ const { STYLE: { DASHBOARD_HEIGHT, HEADER_HEIGHT, NOTCH_HEIGHT } } = C;
 export default StyleSheet.create({
   button: {
     position: 'absolute',
-    top: OFFSET / 2,
+    top: NOTCH_HEIGHT + OFFSET / 2,
     zIndex: 2,
+  },
+
+  buttonIcon: {
+    width: 40,
+    height: 40,
   },
 
   left: {

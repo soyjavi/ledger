@@ -1,26 +1,42 @@
-import { bool } from 'prop-types';
+import { bool, number, string } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 
 import { iconExpenses, iconIncomes } from '../../assets';
+import { C } from '../../common';
 import { Icon, Price } from '../../reactor/components';
 import styles from './BulletPrice.style';
 
-const BulletPrice = ({ income, ...inherit }) => (
-  <View style={[styles.container, income && styles.income]}>
+const { FIXED, SYMBOL } = C;
+
+const BulletPrice = ({
+  currency, incomes, value, ...inherit
+}) => (
+  <View style={[styles.container, inherit.style]}>
     <View style={styles.bullet}>
-      <Icon value={income ? iconIncomes : iconExpenses} style={styles.icon} />
+      <Icon value={incomes ? iconIncomes : iconExpenses} style={styles.icon} />
     </View>
-    <Price title={income ? '+' : undefined} lighten subtitle level={3} {...inherit} />
+    <Price
+      fixed={FIXED[currency]}
+      level={3}
+      lighten
+      subtitle
+      symbol={SYMBOL[currency]}
+      title={incomes ? '+' : undefined}
+      value={value}
+    />
   </View>
 );
 
 BulletPrice.propTypes = {
-  income: bool,
+  currency: string,
+  incomes: bool,
+  value: number.isRequired,
 };
 
 BulletPrice.defaultProps = {
-  income: false,
+  currency: undefined,
+  incomes: false,
 };
 
 export default BulletPrice;

@@ -3,6 +3,7 @@ import React, { Fragment, PureComponent } from 'react';
 import { ScrollView } from 'react-native';
 
 import { iconChart } from '../../assets';
+import { C } from '../../common';
 import {
   DialogVault, FloatingButton, OverallBalance, VaultItem,
 } from '../../components';
@@ -11,6 +12,7 @@ import { THEME } from '../../reactor/common';
 import { Button, Viewport } from '../../reactor/components';
 import styles from './Dashboard.style';
 
+const { SCREEN } = C;
 const { COLOR } = THEME;
 
 class Dashboard extends PureComponent {
@@ -38,7 +40,7 @@ class Dashboard extends PureComponent {
 
   _onStats = ({ navigation, store }) => {
     store.query({ method: 'groupByCategory', date: '2018-11' });
-    navigation.navigate('stats');
+    navigation.navigate(SCREEN.STATS);
   }
 
   render() {
@@ -57,6 +59,7 @@ class Dashboard extends PureComponent {
                 color={COLOR.TRANSPARENT}
                 rippleColor={COLOR.PRIMARY}
                 icon={iconChart}
+                iconSize={24}
                 onPress={() => _onStats({ navigation, store })}
                 style={[styles.button, styles.right]}
               />

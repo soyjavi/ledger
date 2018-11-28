@@ -15,8 +15,8 @@ export default StyleSheet.create({
     width: BULLET_SIZE,
   },
 
-  bulletExpenses: {
-    marginLeft: OFFSET,
+  bulletPrice: {
+    marginRight: OFFSET / 2,
   },
 
   cashflow: {

@@ -1,3 +1,4 @@
+import { arrayOf, shape, string } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 
@@ -11,14 +12,9 @@ import styles from './VaultBalance.style';
 
 const { FIXED, SYMBOL } = C;
 
-export default ({ dataSource = {}, baseCurrency, txs }) => {
+const VaultBalance = ({ dataSource = {}, baseCurrency, txs }) => {
   const { color, currency, overallBalance } = dataSource;
-
   const activeCurrency = baseCurrency || currency;
-
-  const priceProps = {
-    fixed: FIXED[activeCurrency], symbol: SYMBOL[activeCurrency],
-  };
   const { incomes: monthIncomes, expenses: monthExpenses } = cashflow(txs);
 
   return (
@@ -27,21 +23,24 @@ export default ({ dataSource = {}, baseCurrency, txs }) => {
         <View style={styles.container}>
           <Text lighten subtitle level={3}>{l10n.OVERALL_BALANCE}</Text>
           <Price
-            {...priceProps}
+            fixed={FIXED[activeCurrency]}
             headline
             level={5}
+            symbol={SYMBOL[activeCurrency]}
             value={baseCurrency ? exchange(overallBalance, currency, baseCurrency, rates) : overallBalance}
           />
           <View style={styles.row}>
             <View style={[styles.cashflow, styles.row]}>
               <BulletPrice
-                income
-                {...priceProps}
+                currency={activeCurrency}
+                incomes
                 value={baseCurrency ? exchange(monthIncomes, currency, baseCurrency, rates) : monthIncomes}
+                style={styles.bulletPrice}
               />
               <BulletPrice
-                {...priceProps}
+                currency={activeCurrency}
                 value={baseCurrency ? exchange(monthExpenses, currency, baseCurrency, rates) : monthExpenses}
+                style={styles.bulletPrice}
               />
             </View>
             <Chart color={color} values={chartCashflow(txs)} />
@@ -51,3 +50,17 @@ export default ({ dataSource = {}, baseCurrency, txs }) => {
     </Consumer>
   );
 };
+
+VaultBalance.propTypes = {
+  baseCurrency: string,
+  dataSource: shape({}),
+  txs: arrayOf(shape({})),
+};
+
+VaultBalance.defaultProps = {
+  baseCurrency: undefined,
+  dataSource: undefined,
+  txs: undefined,
+};
+
+export default VaultBalance;

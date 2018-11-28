@@ -5,7 +5,7 @@ const { COLORS } = C;
 const { IS_WEB } = ENV;
 
 export default {
-  BORDER_RADIUS: 3,
+  BORDER_RADIUS: 0,
 
   COLOR: {
     BACKGROUND: '#fff',
