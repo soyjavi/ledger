@@ -3,7 +3,7 @@ import React, { Fragment, Component } from 'react';
 import { View, ScrollView } from 'react-native';
 
 import { iconBack } from '../../assets';
-import { BulletPrice, ChartCategories } from '../../components';
+import { BulletPrice, ChartCategories, SliderMonths } from '../../components';
 import { Header } from '../../containers';
 import { Consumer } from '../../context';
 import { Text, Viewport } from '../../reactor/components';
@@ -19,7 +19,7 @@ class Stats extends Component {
   };
 
   state = {
-    date: '2018-11', // @TODO
+    date: undefined,
   };
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -27,20 +27,35 @@ class Stats extends Component {
     return (visible !== nextProps.visible) || (date !== nextState.date);
   }
 
+  _onChangeMonth = (date, store) => {
+    store.query({ method: 'groupByCategory', date });
+    this.setState({ date });
+  }
+
   render() {
     const {
+      _onChangeMonth,
       props: { visible, ...inherit },
     } = this;
 
     return (
       <Viewport {...inherit} scroll={false} visible={visible}>
         <Consumer>
-          { ({ navigation, l10n, store: { baseCurrency, queryTxs, vaults } }) => (
+          { ({
+            navigation, l10n,
+            store: {
+              baseCurrency, overall, queryTxs, vaults, ...store
+            },
+          }) => (
             <Fragment>
               <Header
                 left={{ icon: iconBack, onPress: () => navigation.goBack() }}
                 title={l10n.STATS}
                 visible={visible}
+              />
+              <SliderMonths
+                dataSource={overall.months}
+                onChange={visible ? month => _onChangeMonth(month, store) : undefined}
               />
               <ScrollView contentContainerStyle={styles.scroll}>
                 <View>
