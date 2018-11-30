@@ -13,6 +13,15 @@ const IS_PRODUCTION = false;
 const IS_ANDROID = Platform.OS === 'android';
 
 export default {
+  CATEGORIES: {
+    EXPENSE: {
+
+    },
+    INCOME: {
+
+    },
+  },
+
   COLORS: [
     '#7C4DFF', '#00C09A', '#639CEB', '#CA66BD', '#28BC34', '#50CDEA', '#F45D88',
     '#8460D0', '#FF7233', '#69F0AE', '#FF4081', '#FFD740', '#536DFE', '#FF5252',
@@ -35,8 +44,8 @@ export default {
   SCREEN: {
     SESSION: 'session',
     DASHBOARD: 'dashboard',
+    STATS: 'stats',
     VAULT: 'vault',
-    TRANSACTION: 'transaction',
   },
   STYLE: {
     BANNER: {
@@ -48,6 +57,7 @@ export default {
     DASHBOARD_HEIGHT: UNIT * 16,
     HEADER_HEIGHT: UNIT * 5.8,
     NOTCH_HEIGHT: IS_ANDROID && (H / W > 1.95) ? 36 : 0,
+    SLIDER_MONTHS_HEIGHT: UNIT * 3,
   },
   SYMBOL: {
     AUD: 'AU$',

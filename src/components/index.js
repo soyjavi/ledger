@@ -7,6 +7,7 @@ import DialogVault from './DialogVault';
 import FloatingButton from './FloatingButton';
 import NumKeyboard from './NumKeyboard';
 import OverallBalance from './OverallBalance';
+import SliderMonths from './SliderMonths';
 import TransactionItem from './TransactionItem';
 import VaultBalance from './VaultBalance';
 import VaultItem from './VaultItem';
@@ -21,6 +22,7 @@ export {
   FloatingButton,
   NumKeyboard,
   OverallBalance,
+  SliderMonths,
   TransactionItem,
   VaultBalance,
   VaultItem,
