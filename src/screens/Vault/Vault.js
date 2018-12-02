@@ -5,14 +5,14 @@ import { Image, ScrollView, View } from 'react-native';
 import { bannerEmpty, iconBack, iconShuffle } from '../../assets';
 import { C, exchange } from '../../common';
 import {
-  DialogClone, DialogTransaction, FloatingButton, TransactionItem, VaultBalance,
+  DialogClone, DialogTransaction, DialogTransfer, FloatingButton, TransactionItem, VaultBalance,
 } from '../../components';
 import { Header } from '../../containers';
 import { Consumer } from '../../context';
 import { Text, Viewport } from '../../reactor/components';
 import styles from './Vault.style';
 
-const { TX: { TYPE: { EXPENSE } } } = C;
+const { TX: { TYPE: { EXPENSE, TRANSFER } } } = C;
 
 class Vault extends Component {
   static propTypes = {
@@ -39,7 +39,10 @@ class Vault extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    const { props: { visible }, state: { clone, dialog, switchCurrency } } = this;
+    const {
+      props: { visible },
+      state: { clone, dialog, switchCurrency },
+    } = this;
 
     return (nextProps.visible !== visible)
       || (nextState.clone !== clone)
@@ -64,7 +67,11 @@ class Vault extends Component {
   render() {
     const {
       _onSwitchCurrency, _onToggleClone, _onToggleDialog, _onTransactionType,
-      props: { dataSource: { currency, hash, title }, visible, ...inherit },
+      props: {
+        dataSource: { currency, hash, title },
+        visible,
+        ...inherit
+      },
       state: {
         clone, dialog, switchCurrency, type,
       },
@@ -76,7 +83,7 @@ class Vault extends Component {
           { ({
             navigation, l10n,
             store: {
-              baseCurrency, queryTxs, rates, vaults,
+              baseCurrency, overall, queryTxs, rates, vaults,
             },
           }) => (
             <Fragment>
@@ -121,7 +128,13 @@ class Vault extends Component {
               />
               { visible && (
                 <Fragment>
-                  <DialogTransaction type={type} vault={hash} onClose={_onToggleDialog} visible={dialog} />
+                  <DialogTransaction
+                    type={type}
+                    vault={hash}
+                    onClose={_onToggleDialog}
+                    visible={dialog && type !== TRANSFER}
+                  />
+                  <DialogTransfer vault={hash} onClose={_onToggleDialog} visible={dialog && type === TRANSFER} />
                   <DialogClone dataSource={clone} visible={!!clone} onClose={() => _onToggleClone()} />
                 </Fragment>)}
             </Fragment>

@@ -1,26 +1,22 @@
-import {
-  bool, func, number, string,
-} from 'prop-types';
+import { bool, func, string } from 'prop-types';
 import React, { PureComponent } from 'react';
 import { Image, View } from 'react-native';
 
-import { bannerExpense, bannerIncome } from '../../assets';
+import { bannerTransfer } from '../../assets';
 import { C, translate } from '../../common';
 import { Consumer } from '../../context';
 import {
   Button, Dialog, Form, Text,
 } from '../../reactor/components';
-import { hydrateTransaction, onTransaction } from './modules';
+import { hydrateTransfer, onTransfer } from './modules';
 
-import styles from './DialogTransaction.style';
+import styles from './DialogTransfer.style';
 
-const { COLORS, TX: { TYPE: { TRANSFER } } } = C;
-const BANNERS = [bannerExpense, bannerIncome];
+const COLOR_TX = C.COLORS[2];
 
-class DialogTransaction extends PureComponent {
+class DialogTransfer extends PureComponent {
   static propTypes = {
     onClose: func.isRequired,
-    type: number.isRequired,
     vault: string.isRequired,
     visible: bool,
   };
@@ -40,7 +36,29 @@ class DialogTransaction extends PureComponent {
     if (visible === true && visible !== props.visible) this.setState({ form: { title: '' } });
   }
 
-  _onChange = form => this.setState({ form });
+  _onChange = (form, { baseCurrency, vaults, rates }) => {
+    const { props, state } = this;
+
+    const from = vaults.find(({ hash }) => hash === props.vault);
+    const to = form.destination
+      ? vaults.find(({ title }) => title === form.destination)
+      : vaults.find(({ hash }) => hash !== props.vault);
+    let { exchange } = form;
+
+    if (exchange === state.form.exchange) {
+      if (from.currency === to.currency) exchange = form.value;
+      else if (from.currency === baseCurrency) exchange = form.value * rates[to.currency];
+      else if (to.currency === baseCurrency) exchange = form.value / rates[from.currency];
+      else exchange = (form.value / rates[from.currency]) * rates[to.currency];
+      exchange = parseFloat(exchange, 10).toFixed(2);
+    }
+
+    return this.setState({
+      form: {
+        ...form, from, to, exchange,
+      },
+    });
+  }
 
   _onValid = valid => this.setState({ valid })
 
@@ -48,7 +66,7 @@ class DialogTransaction extends PureComponent {
     const { props, state } = this;
 
     this.setState({ busy: true });
-    const { hash } = await onTransaction({ ...context, props, state });
+    const { hash } = await onTransfer({ ...context, props, state });
     this.setState({ busy: false });
     if (hash) props.onClose();
   }
@@ -56,7 +74,9 @@ class DialogTransaction extends PureComponent {
   render() {
     const {
       _onChange, _onSubmit, _onValid,
-      props: { onClose, type, visible },
+      props: {
+        onClose, vault, visible,
+      },
       state: { busy, form, valid },
     } = this;
 
@@ -65,27 +85,29 @@ class DialogTransaction extends PureComponent {
         { ({ l10n, store }) => (
           <Dialog
             visible={visible}
-            style={[styles.frame, type === TRANSFER && styles.transfer]}
+            style={[styles.frame, styles.transfer]}
             styleContainer={styles.dialog}
           >
-            <Text color={COLORS[type]} headline level={5} style={styles.text}>
-              {`${l10n.NEW} ${l10n.TYPE_TRANSACTION[type]}`}
+            <Text color={COLOR_TX} headline level={5} style={styles.text}>
+              {`${l10n.NEW} ${l10n.TYPE_TRANSACTION[2]}`}
             </Text>
-            <Image source={BANNERS[type]} resizeMode="contain" style={styles.banner} />
+            <Image source={bannerTransfer} resizeMode="contain" style={styles.banner} />
             <Text lighten level={2} style={styles.text}>
-              {l10n.TRANSACTION_CAPTIONS[type]}
+              {l10n.TRANSACTION_CAPTIONS[2]}
             </Text>
             <Form
-              attributes={translate(hydrateTransaction({ l10n, type }), l10n)}
-              color={COLORS[type]}
+              attributes={translate(hydrateTransfer({
+                form, l10n, store, vault,
+              }), l10n)}
+              color={COLOR_TX}
               onValid={_onValid}
-              onChange={_onChange}
+              onChange={value => _onChange(value, store)}
               style={styles.form}
               value={form}
             />
             <View style={styles.buttons}>
               <Button
-                color={COLORS[type]}
+                color={COLOR_TX}
                 outlined
                 onPress={onClose}
                 rounded
@@ -94,7 +116,7 @@ class DialogTransaction extends PureComponent {
               />
               <Button
                 activity={busy}
-                color={COLORS[type]}
+                color={COLOR_TX}
                 disabled={busy || !valid}
                 onPress={() => _onSubmit({ l10n, store })}
                 rounded
@@ -110,4 +132,4 @@ class DialogTransaction extends PureComponent {
   }
 }
 
-export default DialogTransaction;
+export default DialogTransfer;

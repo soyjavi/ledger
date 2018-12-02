@@ -1,12 +1,13 @@
 import { C } from '../../common';
 import sortByTimestamp from './sortByTimestamp';
 
-const { TX: { TYPE: { EXPENSE } } } = C;
+const { TX: { TYPE: { EXPENSE, INCOME } } } = C;
 
 export default ({ txs }, { vault, date }) => {
   const dataSource = [];
   let group;
   let groupIndex = 0;
+
   sortByTimestamp(txs, date).forEach((tx) => {
     if (vault === tx.vault) {
       const txDate = tx.timestamp.substr(0, 10);
@@ -23,7 +24,7 @@ export default ({ txs }, { vault, date }) => {
       }
 
       if (tx.type === EXPENSE) dataSource[groupIndex].cashflow.expenses += tx.value;
-      else dataSource[groupIndex].cashflow.incomes += tx.value;
+      else if (tx.type === INCOME) dataSource[groupIndex].cashflow.incomes += tx.value;
 
       dataSource.push(tx);
     }

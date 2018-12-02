@@ -38,10 +38,12 @@ export default {
         'Personal',
         'Services',
         'Transfer',
+        'Uncategorized',
       ],
       [ // Income
         'Salary',
         'Investment',
+        'Pasives',
         'Transfer',
       ],
     ],
@@ -56,6 +58,7 @@ export default {
     EXPENSES: 'Expenses',
 
     FIRST_VAULT_CAPTION: 'This will be your first vault. The currency you choose will be used as the basis for all reports.', // eslint-disable-line
+    FROM: 'from',
 
     INCOME: 'Income',
     INCOMES: 'Incomes',
@@ -76,6 +79,7 @@ export default {
     STATS: 'Stats',
 
     TITLE: 'Title',
+    TO: 'to',
     TODAY: 'Today',
     TRANSACTION: 'Transaction',
     TRANSACTION_CAPTIONS: [
@@ -88,6 +92,7 @@ export default {
 
     VAULT: 'Vault',
     VAULT_EMPTY: "You don't have any transaction.",
+
     VAULTS: 'Vaults',
     VAULT_CAPTION: 'You can create as many vaults as you want. You can continue using your base currency or choose any other.', // eslint-disable-line
 

@@ -13,7 +13,7 @@ import BulletPrice from '../BulletPrice';
 import styles from './TransactionItem.style';
 
 const {
-  COLORS, FIXED, SYMBOL, TX: { TYPE: { EXPENSE } },
+  COLORS, FIXED, SYMBOL, TX: { TYPE: { EXPENSE, INCOME, TRANSFER_EXPENSE } },
 } = C;
 const { COLOR } = THEME;
 
@@ -80,27 +80,29 @@ class TransactionItem extends PureComponent {
                 />
                 <View style={[styles.bullet, hash && color && { backgroundColor: color }]} />
                 <View style={styles.texts}>
-                  { hash
-                    ? <Text headline level={6} numberOfLines={1}>{l10n.CATEGORIES[type][category]}</Text>
-                    : <Text subtitle level={3} lighten>{verboseDate(timestamp, l10n)}</Text>}
-
-                  { title && <Text level={2} lighten numberOfLines={1}>{title}</Text> }
+                  { hash && (type === EXPENSE || type === INCOME) && (
+                    <Text headline level={6} numberOfLines={1}>{l10n.CATEGORIES[type][category]}</Text>)}
+                  { hash && type !== EXPENSE && type !== INCOME && (
+                    <Text headline level={6} numberOfLines={1}>
+                      {`${l10n.TRANSFER} ${type === TRANSFER_EXPENSE ? l10n.TO : l10n.FROM} ${title}`}
+                    </Text>)}
+                  { !hash && <Text subtitle level={3} lighten>{verboseDate(timestamp, l10n)}</Text> }
+                  { (type === EXPENSE || type === INCOME) && title && (
+                    <Text level={2} lighten numberOfLines={1}>{title}</Text>)}
                 </View>
-                { (incomes || expenses) && (
-                  <View style={styles.row}>
-                    { incomes !== 0 && (
-                      <BulletPrice currency={currency} incomes value={incomes} style={styles.bulletPrice} />)}
-                    { expenses !== 0 && (
-                      <BulletPrice currency={currency} value={expenses} style={styles.bulletPrice} />)}
-                  </View>
-                )}
+                <View style={styles.row}>
+                  { incomes > 0 && (
+                    <BulletPrice currency={currency} incomes value={incomes} style={styles.bulletPrice} />)}
+                  { expenses > 0 && (
+                    <BulletPrice currency={currency} value={expenses} style={styles.bulletPrice} />)}
+                </View>
                 { value && (
                   <Price
                     fixed={FIXED[currency]}
                     headline
                     level={6}
                     symbol={SYMBOL[currency]}
-                    title={type === EXPENSE ? undefined : '+'}
+                    title={type === EXPENSE || type === TRANSFER_EXPENSE ? undefined : '+'}
                     value={value}
                   />)}
               </View>

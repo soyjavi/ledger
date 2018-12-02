@@ -4,22 +4,30 @@ import { C } from '../../common';
 import { LAYOUT, THEME } from '../../reactor/common';
 
 const { STYLE: { HEADER_HEIGHT, NOTCH_HEIGHT, SLIDER_MONTHS_HEIGHT } } = C;
-const { COLOR, UNIT } = THEME;
+const { COLOR, UNIT, OFFSET } = THEME;
+const ITEM_WIDTH = (LAYOUT.VIEWPORT.W - (OFFSET * 2)) / 3;
+
+export {
+  ITEM_WIDTH,
+};
 
 export default StyleSheet.create({
   container: {
     backgroundColor: COLOR.BACKGROUND_OPACITY,
+    borderBottomColor: COLOR.BASE,
+    borderBottomWidth: 1,
     height: SLIDER_MONTHS_HEIGHT,
     position: 'absolute',
     top: HEADER_HEIGHT + NOTCH_HEIGHT - UNIT,
-    width: '100%',
+    left: OFFSET,
+    right: OFFSET,
+    // width: '100%',
     zIndex: 1,
-    backgroundColor: 'yellow',
   },
 
   item: {
     lineHeight: SLIDER_MONTHS_HEIGHT,
     textAlign: 'center',
-    width: LAYOUT.VIEWPORT.W / 3,
+    width: ITEM_WIDTH,
   },
 });

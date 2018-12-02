@@ -3,6 +3,7 @@ import Chart from './Chart';
 import ChartCategories from './ChartCategories';
 import DialogClone from './DialogClone';
 import DialogTransaction from './DialogTransaction';
+import DialogTransfer from './DialogTransfer';
 import DialogVault from './DialogVault';
 import FloatingButton from './FloatingButton';
 import NumKeyboard from './NumKeyboard';
@@ -18,6 +19,7 @@ export {
   ChartCategories,
   DialogClone,
   DialogTransaction,
+  DialogTransfer,
   DialogVault,
   FloatingButton,
   NumKeyboard,

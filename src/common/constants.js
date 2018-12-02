@@ -30,11 +30,11 @@ export default {
   ENDPOINT: IS_PRODUCTION ? 'https://voltvault.glitch.me' : 'http://localhost:8080',
 
   FIXED: {
+    BTC: 8,
     IDR: 0,
     JPY: 0,
     PLN: 0,
     THB: 0,
-    BTC: 4,
   },
 
   LANGUAGE: 'en-EN',
@@ -63,6 +63,7 @@ export default {
     AUD: 'AU$',
     // BGN: '',
     BRL: 'AU$',
+    BTC: IS_ANDROID && Platform.Version < 26 ? 'Ƀ' : '₿',
     CAD: 'CA$',
     CHF: 'SFr',
     // CNY: '',
@@ -93,7 +94,6 @@ export default {
     // TRY: '',
     USD: '$',
     ZAR: 'R',
-    BTC: IS_ANDROID && Platform.Version < 26 ? 'Ƀ' : '₿',
   },
 
   TX: {
@@ -101,6 +101,8 @@ export default {
       EXPENSE: 0,
       INCOME: 1,
       TRANSFER: 2,
+      TRANSFER_EXPENSE: 3,
+      TRANSFER_INCOME: 4,
     },
   },
 

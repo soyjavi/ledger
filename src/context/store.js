@@ -87,7 +87,7 @@ class ProviderStore extends Component {
     const { txs } = await fetch({ service: 'transactions', headers: { authorization } }).catch(onError);
 
     if (txs) {
-      const overall = calcOverall(state);
+      const overall = calcOverall({ ...state, txs });
 
       await _store({ overall, txs });
       this.setState({ overall, txs });
@@ -155,12 +155,13 @@ class ProviderStore extends Component {
     return vault;
   }
 
-  query = (queryProps) => {
+  query = (queryProps = {}) => {
     const { state } = this;
-    const { method = 'groupByDay' } = queryProps;
-    const queryTxs = method === 'groupByDay'
-      ? groupByDay(state, queryProps)
-      : groupByCategory(state, queryProps);
+    const { method } = queryProps;
+    let queryTxs = [];
+
+    if (method === 'groupByDay') queryTxs = groupByDay(state, queryProps);
+    else if (method === 'groupByCategory') queryTxs = groupByCategory(state, queryProps);
 
     this.setState({ queryProps, queryTxs });
   }

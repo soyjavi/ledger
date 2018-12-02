@@ -6,6 +6,6 @@ export default ({ l10n: { CATEGORIES }, type }) => Object.assign({}, TRANSACTION
   category: {
     ...TRANSACTION.category,
     dataSource: CATEGORIES[type],
-    defaultValue: CATEGORIES[type][0],
+    defaultValue: CATEGORIES[type] ? CATEGORIES[type][0] : undefined,
   },
 });

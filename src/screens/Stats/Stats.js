@@ -63,7 +63,7 @@ class Stats extends Component {
                     queryTxs[hash]
                       ? (
                         <View key={hash} style={styles.content}>
-                          <Text headline level={6}>{title}</Text>
+                          <Text headline level={5}>{title}</Text>
                           { Object.keys(queryTxs[hash].incomes).length > 0 && (
                             <View>
                               <View style={styles.row}>

@@ -5,7 +5,8 @@ import { View } from 'react-native';
 import { LAYOUT } from '../../reactor/common';
 import { Consumer } from '../../context';
 import { Slider, Text } from '../../reactor/components';
-import styles from './SliderMonth.style';
+import parseDate from './modules/parseDate';
+import styles, { ITEM_WIDTH } from './SliderMonth.style';
 
 class SliderMonth extends Component {
   static propTypes = {
@@ -33,19 +34,16 @@ class SliderMonth extends Component {
   }
 
   _onScroll = ({ index }) => {
-    const { props: { onChange, dataSource }, state } = this;
-
-    if (state.index !== index) onChange(dataSource[index]);
+    const { props: { onChange, dataSource } } = this;
+    onChange(dataSource[index]);
   }
 
   render() {
     const {
-      _onScroll,
-      props: { dataSource },
+      // _onScroll,
+      props: { dataSource, onChange },
       state: { scrollToItem },
     } = this;
-
-    if (scrollToItem) console.log('<SliderMonth>:scrollToItem', scrollToItem, dataSource);
 
     return (
       <Consumer>
@@ -54,13 +52,13 @@ class SliderMonth extends Component {
             <Slider
               dataSource={[undefined, ...dataSource, undefined]}
               item={({ data }) => (
-                <Text level={2} lighten={data !== date} subtitle={data === date} style={styles.item}>
-                  {data}
+                <Text level={data === date ? 2 : 3} lighten subtitle={data === date} style={styles.item}>
+                  {parseDate(data, l10n)}
                 </Text>
               )}
               itemMargin={0}
-              itemWidth={LAYOUT.VIEWPORT.W / 3}
-              onScroll={_onScroll}
+              itemWidth={ITEM_WIDTH}
+              onScroll={({ index }) => onChange(dataSource[index])}
               scrollToItem={scrollToItem}
               momentum
               navigation={false}
