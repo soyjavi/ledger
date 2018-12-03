@@ -25,27 +25,28 @@ export default {
 
     CANCEL: 'Cancel',
     CATEGORIES: [
-      [ // Expense
-        'Food & Drinks',
-        'Hobby & Toys',
-        'Travel',
-        'Debt',
-        'Investment',
-        'Entertainment',
-        'Shopping',
-        'Utilities',
-        'Health & Insurances',
-        'Personal',
-        'Services',
-        'Transfer',
-        'Uncategorized',
-      ],
-      [ // Income
-        'Salary',
-        'Investment',
-        'Pasives',
-        'Transfer',
-      ],
+      { // Expenses
+        1: 'Food & Drinks',
+        2: 'Hobby & Toys',
+        3: 'Travel',
+        4: 'Debt',
+        5: 'Investment',
+        6: 'Entertainment',
+        7: 'Shopping',
+        8: 'Utilities',
+        9: 'Health & Insurances',
+        10: 'Personal',
+        11: 'Services',
+        12: 'Transfer',
+        99: 'Vault Transfer',
+      },
+      { // Incomes
+        1: 'Salary',
+        2: 'Investment',
+        3: 'Pasives',
+        4: 'Transfer',
+        99: 'Vault Transfer',
+      },
     ],
     CATEGORY: 'Category',
     CLONE: 'Clone',
@@ -55,12 +56,14 @@ export default {
 
     ENTER_PIN: 'Enter your pin',
     EXPENSE: 'Expense',
+    EXPENSE_CAPTION: 'Register a new expense in this vault.',
     EXPENSES: 'Expenses',
 
     FIRST_VAULT_CAPTION: 'This will be your first vault. The currency you choose will be used as the basis for all reports.', // eslint-disable-line
     FROM: 'from',
 
     INCOME: 'Income',
+    INCOME_CAPTION: 'Register a new income in this vault.',
     INCOMES: 'Incomes',
 
     LOADING_PROFILE: 'Wait a moment, syncing your blockchain.',
@@ -82,13 +85,8 @@ export default {
     TO: 'to',
     TODAY: 'Today',
     TRANSACTION: 'Transaction',
-    TRANSACTION_CAPTIONS: [
-      'Register a new expense in this vault.',
-      'Register a new income in this vault.',
-      'Transfer any amount to another of your vaults.',
-    ],
     TRANSFER: 'Transfer',
-    TYPE_TRANSACTION: ['Expense', 'Income', 'Transfer'],
+    TRANSFER_CAPTION: 'Transfer any amount to another of your vaults.',
 
     VAULT: 'Vault',
     VAULT_EMPTY: "You don't have any transaction.",

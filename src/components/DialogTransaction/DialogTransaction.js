@@ -1,6 +1,4 @@
-import {
-  bool, func, number, string,
-} from 'prop-types';
+import { bool, func, number } from 'prop-types';
 import React, { PureComponent } from 'react';
 import { Image, View } from 'react-native';
 
@@ -10,18 +8,17 @@ import { Consumer } from '../../context';
 import {
   Button, Dialog, Form, Text,
 } from '../../reactor/components';
-import { hydrateTransaction, onTransaction } from './modules';
+import { hydrateTransaction } from './modules';
 
 import styles from './DialogTransaction.style';
 
-const { COLORS, TX: { TYPE: { TRANSFER } } } = C;
+const { COLORS, TX: { TYPE: { EXPENSE } } } = C;
 const BANNERS = [bannerExpense, bannerIncome];
 
 class DialogTransaction extends PureComponent {
   static propTypes = {
     onClose: func.isRequired,
     type: number.isRequired,
-    vault: string.isRequired,
     visible: bool,
   };
 
@@ -44,13 +41,29 @@ class DialogTransaction extends PureComponent {
 
   _onValid = valid => this.setState({ valid })
 
-  _onSubmit = async (context) => {
-    const { props, state } = this;
+  _onSubmit = async ({
+    l10n: { CATEGORIES },
+    store: { onTransaction, latestTransaction: { hash: previousHash } },
+  }) => {
+    const {
+      props: { onClose, type, vault },
+      state: { form: { category, value, title = '' } },
+    } = this;
 
     this.setState({ busy: true });
-    const { hash } = await onTransaction({ ...context, props, state });
+    const { hash } = await onTransaction({
+      category: category
+        ? parseInt(Object.keys(CATEGORIES[type]).find(key => CATEGORIES[type][key] === category), 10)
+        : 1,
+      previousHash,
+      title,
+      type,
+      value: parseFloat(value, 10),
+      vault,
+    });
+
     this.setState({ busy: false });
-    if (hash) props.onClose();
+    if (hash) onClose();
   }
 
   render() {
@@ -63,17 +76,13 @@ class DialogTransaction extends PureComponent {
     return (
       <Consumer>
         { ({ l10n, store }) => (
-          <Dialog
-            visible={visible}
-            style={[styles.frame, type === TRANSFER && styles.transfer]}
-            styleContainer={styles.dialog}
-          >
+          <Dialog visible={visible} style={styles.frame} styleContainer={styles.dialog}>
             <Text color={COLORS[type]} headline level={5} style={styles.text}>
-              {`${l10n.NEW} ${l10n.TYPE_TRANSACTION[type]}`}
+              {`${l10n.NEW} ${type === EXPENSE ? l10n.EXPENSE : l10n.INCOME}`}
             </Text>
             <Image source={BANNERS[type]} resizeMode="contain" style={styles.banner} />
             <Text lighten level={2} style={styles.text}>
-              {l10n.TRANSACTION_CAPTIONS[type]}
+              {type === EXPENSE ? l10n.EXPENSE_CAPTION : l10n.INCOME_CAPTION}
             </Text>
             <Form
               attributes={translate(hydrateTransaction({ l10n, type }), l10n)}

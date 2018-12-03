@@ -50,7 +50,7 @@ const ChartCategories = ({
 );
 
 ChartCategories.propTypes = {
-  categories: arrayOf(string).isRequired,
+  categories: shape({}).isRequired,
   color: string.isRequired,
   currency: string.isRequired,
   total: number.isRequired,

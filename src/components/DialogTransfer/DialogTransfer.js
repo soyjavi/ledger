@@ -89,11 +89,11 @@ class DialogTransfer extends PureComponent {
             styleContainer={styles.dialog}
           >
             <Text color={COLOR_TX} headline level={5} style={styles.text}>
-              {`${l10n.NEW} ${l10n.TYPE_TRANSACTION[2]}`}
+              {`${l10n.NEW} ${l10n.TRANSFER}`}
             </Text>
             <Image source={bannerTransfer} resizeMode="contain" style={styles.banner} />
             <Text lighten level={2} style={styles.text}>
-              {l10n.TRANSACTION_CAPTIONS[2]}
+              {l10n.TRANSFER_CAPTION}
             </Text>
             <Form
               attributes={translate(hydrateTransfer({

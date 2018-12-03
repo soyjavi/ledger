@@ -13,15 +13,7 @@ const IS_PRODUCTION = false;
 const IS_ANDROID = Platform.OS === 'android';
 
 export default {
-  CATEGORIES: {
-    EXPENSE: {
-
-    },
-    INCOME: {
-
-    },
-  },
-
+  CATEGORY_INTERNAL_TRANSFER: 99,
   COLORS: [
     '#7C4DFF', '#00C09A', '#639CEB', '#CA66BD', '#28BC34', '#50CDEA', '#F45D88',
     '#8460D0', '#FF7233', '#69F0AE', '#FF4081', '#FFD740', '#536DFE', '#FF5252',
@@ -30,7 +22,7 @@ export default {
   ENDPOINT: IS_PRODUCTION ? 'https://voltvault.glitch.me' : 'http://localhost:8080',
 
   FIXED: {
-    BTC: 8,
+    BTC: 6,
     IDR: 0,
     JPY: 0,
     PLN: 0,
