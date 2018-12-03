@@ -1,6 +1,6 @@
 import { C } from '../../../common';
 
-const { TX: { TYPE: { TRANSFER_EXPENSE, TRANSFER_INCOME } } } = C;
+const { VAULT_TRANSFER, TX: { TYPE: { EXPENSE, INCOME } } } = C;
 
 export default async ({
   props: { vault },
@@ -14,18 +14,20 @@ export default async ({
   let response = {};
 
   const { hash } = await onTransaction({
+    category: VAULT_TRANSFER,
     previousHash,
     title: to.title,
-    type: TRANSFER_EXPENSE,
+    type: EXPENSE,
     value: parseFloat(value, 10),
     vault,
   });
 
   if (hash) {
     response = await onTransaction({
+      category: VAULT_TRANSFER,
       previousHash: hash,
       title: from.title,
-      type: TRANSFER_INCOME,
+      type: INCOME,
       value: parseFloat(exchange, 10),
       vault: to.hash,
     });

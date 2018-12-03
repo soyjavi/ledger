@@ -13,7 +13,7 @@ const IS_PRODUCTION = false;
 const IS_ANDROID = Platform.OS === 'android';
 
 export default {
-  CATEGORY_INTERNAL_TRANSFER: 99,
+  VAULT_TRANSFER: 99,
   COLORS: [
     '#7C4DFF', '#00C09A', '#639CEB', '#CA66BD', '#28BC34', '#50CDEA', '#F45D88',
     '#8460D0', '#FF7233', '#69F0AE', '#FF4081', '#FFD740', '#536DFE', '#FF5252',
@@ -93,8 +93,6 @@ export default {
       EXPENSE: 0,
       INCOME: 1,
       TRANSFER: 2,
-      TRANSFER_EXPENSE: 3,
-      TRANSFER_INCOME: 4,
     },
   },
 

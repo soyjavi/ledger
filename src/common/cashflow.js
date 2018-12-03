@@ -1,14 +1,16 @@
 import C from './constants';
 
-const { TX: { TYPE } } = C;
+const { VAULT_TRANSFER, TX: { TYPE } } = C;
 
 export default (txs = []) => {
   let incomes = 0;
   let expenses = 0;
 
-  txs.forEach(({ type, value }) => {
-    if (type === TYPE.EXPENSE) expenses += value;
-    else if (type === TYPE.INCOME) incomes += value;
+  txs.forEach(({ category, type, value }) => {
+    if (category !== VAULT_TRANSFER) {
+      if (type === TYPE.EXPENSE) expenses += value;
+      else if (type === TYPE.INCOME) incomes += value;
+    }
   });
 
   return { incomes, expenses };

@@ -13,7 +13,7 @@ import BulletPrice from '../BulletPrice';
 import styles from './TransactionItem.style';
 
 const {
-  COLORS, FIXED, SYMBOL, TX: { TYPE: { EXPENSE, INCOME, TRANSFER_EXPENSE } },
+  VAULT_TRANSFER, COLORS, FIXED, SYMBOL, TX: { TYPE: { EXPENSE } },
 } = C;
 const { COLOR } = THEME;
 
@@ -64,6 +64,7 @@ class TransactionItem extends PureComponent {
     const { incomes, expenses } = inherit.cashflow || {};
     const color = COLORS[category];
     const time = new Date(timestamp);
+    const isRegularTx = category !== VAULT_TRANSFER;
 
     return (
       <Consumer>
@@ -80,15 +81,14 @@ class TransactionItem extends PureComponent {
                 />
                 <View style={[styles.bullet, hash && color && { backgroundColor: color }]} />
                 <View style={styles.texts}>
-                  { hash && (type === EXPENSE || type === INCOME) && (
+                  { hash && isRegularTx && (
                     <Text headline level={6} numberOfLines={1}>{l10n.CATEGORIES[type][category]}</Text>)}
-                  { hash && type !== EXPENSE && type !== INCOME && (
+                  { hash && !isRegularTx && (
                     <Text headline level={6} numberOfLines={1}>
-                      {`${l10n.TRANSFER} ${type === TRANSFER_EXPENSE ? l10n.TO : l10n.FROM} ${title}`}
+                      {`${l10n.TRANSFER} ${type === EXPENSE ? l10n.TO : l10n.FROM} ${title}`}
                     </Text>)}
                   { !hash && <Text subtitle level={3} lighten>{verboseDate(timestamp, l10n)}</Text> }
-                  { (type === EXPENSE || type === INCOME) && title && (
-                    <Text level={2} lighten numberOfLines={1}>{title}</Text>)}
+                  { title && isRegularTx && <Text level={2} lighten numberOfLines={1}>{title}</Text> }
                 </View>
                 <View style={styles.row}>
                   { incomes > 0 && (
@@ -102,7 +102,7 @@ class TransactionItem extends PureComponent {
                     headline
                     level={6}
                     symbol={SYMBOL[currency]}
-                    title={type === EXPENSE || type === TRANSFER_EXPENSE ? undefined : '+'}
+                    title={type === EXPENSE ? undefined : '+'}
                     value={value}
                   />)}
               </View>

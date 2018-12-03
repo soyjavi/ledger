@@ -85,7 +85,7 @@ class DialogTransfer extends PureComponent {
         { ({ l10n, store }) => (
           <Dialog
             visible={visible}
-            style={[styles.frame, styles.transfer]}
+            style={styles.frame}
             styleContainer={styles.dialog}
           >
             <Text color={COLOR_TX} headline level={5} style={styles.text}>

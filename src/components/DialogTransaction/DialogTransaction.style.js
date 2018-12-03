@@ -31,10 +31,6 @@ export default StyleSheet.create({
     maxHeight: IS_NATIVE ? UNIT * 53.6 : undefined,
   },
 
-  transfer: {
-    maxHeight: IS_NATIVE ? UNIT * 61.6 : undefined,
-  },
-
   form: {
     marginVertical: OFFSET,
   },

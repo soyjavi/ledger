@@ -1,7 +1,7 @@
 {
   "name": "voltvault-app",
   "description": "Cross-Device client for voltvault",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "keywords": [
     "finance",
     "personal",
@@ -42,6 +42,7 @@
     "start:native": "expo start",
     "start:android": "expo start --android",
     "start:ios": "expo start --ios",
+    "build:android": "NODE_ENV=production expo build:android",
     "test": "jest",
     "lint": "eslint src"
   },

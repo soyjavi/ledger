@@ -1,7 +1,7 @@
 import { C, exchange } from '../../common';
 import sortByTimestamp from './sortByTimestamp';
 
-const { TX: { TYPE: { EXPENSE, INCOME } } } = C;
+const { VAULT_TRANSFER, TX: { TYPE: { EXPENSE, INCOME } } } = C;
 
 export default (state, { date }) => {
   const {
@@ -12,14 +12,14 @@ export default (state, { date }) => {
   sortByTimestamp(txs, date).forEach(({
     category, type, value, vault,
   }) => {
-    const { currency } = vaults.find(({ hash }) => vault === hash);
-    const amount = baseCurrency === currency ? value : exchange(value, currency, baseCurrency, rates);
-    let context;
+    if (category !== VAULT_TRANSFER) {
+      const { currency } = vaults.find(({ hash }) => vault === hash);
+      const amount = baseCurrency === currency ? value : exchange(value, currency, baseCurrency, rates);
+      let context;
 
-    if (type === EXPENSE) context = 'expenses';
-    if (type === INCOME) context = 'incomes';
+      if (type === EXPENSE) context = 'expenses';
+      if (type === INCOME) context = 'incomes';
 
-    if (context) {
       if (!dataSource[vault]) dataSource[vault] = { expenses: {}, incomes: {} };
       dataSource[vault][context][category] = (dataSource[vault][context][category] || 0) + amount;
       dataSource.cashflow[context] += amount;
