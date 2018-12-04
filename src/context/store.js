@@ -4,7 +4,7 @@ import React, { Component, createContext } from 'react';
 import { C, fetch } from '../common';
 import { Fingerprint } from '../reactor/context/Amplitude/modules';
 import {
-  AsyncStore, calcOverall, calcVault, groupByCategory, groupByDay,
+  AsyncStore, calcOverall, calcVault, groupByCategory, groupByDay, sortByTransactions,
 } from './modules';
 
 const { NAME } = C;
@@ -72,7 +72,7 @@ class ProviderStore extends Component {
     const response = await fetch({ service: 'profile', headers: { authorization } }).catch(onError);
     if (response) {
       const { baseCurrency, latestTransaction, rates } = response;
-      const vaults = response.vaults.map((vault, index) => calcVault(vault, txs, index));
+      const vaults = sortByTransactions(response.vaults.map((vault, index) => calcVault(vault, txs, index)));
 
       await _store({ baseCurrency, rates, vaults });
       this.setState({
@@ -108,9 +108,9 @@ class ProviderStore extends Component {
 
     if (latestTransaction) {
       const txs = [...state.txs, latestTransaction];
-      const vaults = state.vaults.map((vault, index) => (
+      const vaults = sortByTransactions(state.vaults.map((vault, index) => (
         vault.hash !== props.vault ? vault : calcVault(vault, txs, index)
-      ));
+      )));
       const overall = calcOverall({ ...state, vaults });
 
       await _store({ overall, txs, vaults });
