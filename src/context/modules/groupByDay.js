@@ -8,7 +8,7 @@ export default ({ txs }, { date, vault }) => {
   let group;
   let groupIndex = 0;
 
-  sortByTimestamp(txs, date).forEach((tx) => {
+  sortByTimestamp(txs).forEach((tx) => {
     if (vault === tx.vault) {
       const txDate = tx.timestamp.substr(0, 10);
 

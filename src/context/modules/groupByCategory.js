@@ -9,7 +9,8 @@ export default (state, { date }) => {
   } = state;
   const dataSource = { cashflow: { expenses: 0, incomes: 0 } };
 
-  sortByTimestamp(txs, date).forEach(({
+  sortByTimestamp(txs, date)
+  .forEach(({
     category, type, value, vault,
   }) => {
     if (category !== VAULT_TRANSFER) {

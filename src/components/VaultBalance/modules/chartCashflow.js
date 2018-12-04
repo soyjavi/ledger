@@ -1,13 +1,12 @@
-import { C } from '../../../common';
-
-const { TX: { TYPE } } = C;
-
 export default(txs, date, method = 'getDate') => {
-  const days = Array(30).fill(0); // @TODO: Determine days
-
-  txs.forEach(({ timestamp, type, value }) => {
-    if (type === TYPE.EXPENSE) days[new Date(timestamp)[method]() + 1] += value;
+  const days = [];
+  txs.forEach(({ cashflow: { expenses } = {} }) => {
+    if (expenses) days.splice(expenses.length, 0, expenses)
   });
 
-  return days;
+  
+  return [
+  	...Array.from({ length: 30 - days.length }, () => 0),
+  	...days
+  ];
 };

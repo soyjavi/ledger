@@ -18,7 +18,7 @@ const Chart = ({ color, maxValue, values }) => {
           style={[
             ...style,
             { height: `${parseInt((value * 100) / max, 10)}%` },
-            color && value > 0 && { backgroundColor: color },
+            color && { backgroundColor: color },
           ]}
         />))}
     </View>
