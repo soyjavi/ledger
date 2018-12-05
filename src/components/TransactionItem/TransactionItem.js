@@ -10,6 +10,7 @@ import {
 } from '../../reactor/components';
 import { THEME } from '../../reactor/common';
 import BulletPrice from '../BulletPrice';
+import formatTime from './modules/formatTime';
 import styles from './TransactionItem.style';
 
 const {
@@ -115,7 +116,7 @@ class TransactionItem extends PureComponent {
                   <View style={styles.bullet} />
                   <View style={[styles.row, styles.texts]}>
                     <Icon value={iconTime} style={styles.icon} />
-                    <Text level={2} lighten>{`${time.getHours()}:${time.getMinutes()}`}</Text>
+                    <Text level={2} lighten>{formatTime(time)}</Text>
                   </View>
                 </View>
                 <View style={[styles.row, styles.container, styles.extended]}>
