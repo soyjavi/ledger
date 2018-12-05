@@ -1,9 +1,7 @@
 import { StyleSheet } from 'react-native';
 
-import { C } from '../../common';
 import { LAYOUT, THEME } from '../../reactor/common';
 
-const { STYLE: { NOTCH_HEIGHT } } = C;
 const { COLOR, OFFSET, UNIT } = THEME;
 const BULLET_SIZE = OFFSET * 2 + UNIT;
 
@@ -13,13 +11,9 @@ export default StyleSheet.create({
     backgroundColor: COLOR.BACKGROUND_OPACITY,
     paddingVertical: OFFSET,
     position: 'absolute',
-    top: NOTCH_HEIGHT,
+    top: UNIT / 2,
     width: '100%',
     zIndex: 1,
-  },
-
-  title: {
-    marginBottom: OFFSET / 2,
   },
 
   content: {

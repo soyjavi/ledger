@@ -5,12 +5,12 @@ import { THEME } from '../../reactor/common';
 
 const { OFFSET } = THEME;
 
-const { STYLE: { DASHBOARD_HEIGHT, HEADER_HEIGHT, NOTCH_HEIGHT } } = C;
+const { STYLE: { DASHBOARD_HEIGHT, HEADER_HEIGHT } } = C;
 
 export default StyleSheet.create({
   button: {
     position: 'absolute',
-    top: NOTCH_HEIGHT + OFFSET / 2,
+    top: OFFSET / 2,
     zIndex: 2,
   },
 
@@ -28,7 +28,7 @@ export default StyleSheet.create({
   },
 
   scroll: {
-    paddingTop: DASHBOARD_HEIGHT + NOTCH_HEIGHT,
+    paddingTop: DASHBOARD_HEIGHT,
     paddingBottom: HEADER_HEIGHT,
   },
 });

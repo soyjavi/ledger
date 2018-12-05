@@ -9,7 +9,7 @@
       "ios",
       "android"
     ],
-    "version": "0.3.1",
+    "version": "0.3.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -28,6 +28,10 @@
     },
     "android": {
       "package": "com.soyjavi.voltvault"
+    },
+    "androidStatusBar": {
+      "backgroundColor": "#ffffff",
+      "barStyle": "dark-content"
     },
     "githubUrl": "https://github.com/soyjavi/voltvault"
   }

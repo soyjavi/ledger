@@ -1,6 +1,4 @@
-import {
-  arrayOf, number, shape, string,
-} from 'prop-types';
+import { number, shape, string } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 

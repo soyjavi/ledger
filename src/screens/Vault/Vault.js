@@ -83,7 +83,7 @@ class Vault extends Component {
           { ({
             navigation, l10n,
             store: {
-              baseCurrency, overall, queryTxs, rates, vaults,
+              baseCurrency, queryTxs, rates, vaults,
             },
           }) => (
             <Fragment>
@@ -93,12 +93,12 @@ class Vault extends Component {
                 right={currency !== baseCurrency ? { icon: iconShuffle, onPress: _onSwitchCurrency } : undefined}
                 visible={visible}
               />
+              <VaultBalance
+                dataSource={vaults.find(vault => vault.hash === hash)}
+                baseCurrency={switchCurrency ? baseCurrency : undefined}
+                txs={visible ? queryTxs : []}
+              />
               <ScrollView contentContainerStyle={styles.scroll}>
-                <VaultBalance
-                  dataSource={vaults.find(vault => vault.hash === hash)}
-                  baseCurrency={switchCurrency ? baseCurrency : undefined}
-                  txs={visible ? queryTxs : []}
-                />
                 { queryTxs.length > 0
                   ? queryTxs.map(tx => (
                     <TransactionItem
@@ -134,7 +134,8 @@ class Vault extends Component {
                     onClose={_onToggleDialog}
                     visible={dialog && type !== TRANSFER}
                   />
-                  <DialogTransfer vault={hash} onClose={_onToggleDialog} visible={dialog && type === TRANSFER} />
+                  { vaults.length > 1 && (
+                    <DialogTransfer vault={hash} onClose={_onToggleDialog} visible={dialog && type === TRANSFER} />)}
                   <DialogClone dataSource={clone} visible={!!clone} onClose={() => _onToggleClone()} />
                 </Fragment>)}
             </Fragment>

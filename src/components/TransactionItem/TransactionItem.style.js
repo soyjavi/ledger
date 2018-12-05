@@ -2,7 +2,9 @@ import { StyleSheet } from 'react-native';
 
 import { LAYOUT, THEME } from '../../reactor/common';
 
-const { COLOR, OFFSET, UNIT } = THEME;
+const {
+  COLOR, FONT, OFFSET, UNIT,
+} = THEME;
 const BULLET_SIZE = UNIT * 1.2;
 const LINE_SIZE = UNIT * 0.2;
 
@@ -56,6 +58,10 @@ export default StyleSheet.create({
     flex: 1,
     marginLeft: OFFSET,
     marginRight: OFFSET / 2,
+  },
+
+  bold: {
+    fontWeight: FONT.WEIGHT.BOLD,
   },
 
   line: {

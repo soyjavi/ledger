@@ -2,7 +2,6 @@ import { arrayOf, string, func } from 'prop-types';
 import React, { Component } from 'react';
 import { View } from 'react-native';
 
-import { LAYOUT } from '../../reactor/common';
 import { Consumer } from '../../context';
 import { Slider, Text } from '../../reactor/components';
 import parseDate from './modules/parseDate';

@@ -25,11 +25,11 @@ const VaultBalance = ({ dataSource = {}, baseCurrency, txs }) => {
           <Price
             fixed={FIXED[activeCurrency]}
             headline
-            level={5}
+            level={6}
             symbol={SYMBOL[activeCurrency]}
             value={baseCurrency ? exchange(overallBalance, currency, baseCurrency, rates) : overallBalance}
           />
-          <View style={styles.row}>
+          <View style={[styles.row, styles.content]}>
             <View style={[styles.cashflow, styles.row]}>
               <BulletPrice
                 currency={activeCurrency}

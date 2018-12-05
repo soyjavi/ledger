@@ -5,7 +5,7 @@ import { LAYOUT, THEME } from '../../reactor/common';
 
 const {
   STYLE: {
-    BANNER, HEADER_HEIGHT, NOTCH_HEIGHT,
+    BANNER, HEADER_HEIGHT, VAULT_HEIGHT,
   },
 } = C;
 const { OFFSET } = THEME;
@@ -20,6 +20,6 @@ export default StyleSheet.create({
 
   scroll: {
     paddingBottom: HEADER_HEIGHT,
-    paddingTop: HEADER_HEIGHT + NOTCH_HEIGHT,
+    paddingTop: HEADER_HEIGHT + VAULT_HEIGHT,
   },
 });

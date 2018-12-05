@@ -4,7 +4,7 @@ import { C } from '../../common';
 import { LAYOUT, ENV, THEME } from '../../reactor/common';
 
 const { COLOR } = THEME;
-const { STYLE: { HEADER_HEIGHT, NOTCH_HEIGHT } } = C;
+const { STYLE: { HEADER_HEIGHT } } = C;
 
 export default StyleSheet.create({
   container: {
@@ -12,7 +12,7 @@ export default StyleSheet.create({
     backgroundColor: COLOR.BACKGROUND_OPACITY,
     height: HEADER_HEIGHT,
     position: ENV.IS_WEB ? 'fixed' : 'absolute',
-    top: NOTCH_HEIGHT,
+    top: 0,
     width: '100%',
     zIndex: 1,
   },

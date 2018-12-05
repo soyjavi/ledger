@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { C } from '../../common';
 import { LAYOUT, THEME } from '../../reactor/common';
 
-const { STYLE: { HEADER_HEIGHT, NOTCH_HEIGHT, SLIDER_MONTHS_HEIGHT } } = C;
+const { STYLE: { HEADER_HEIGHT, SLIDER_MONTHS_HEIGHT } } = C;
 const { COLOR, UNIT, OFFSET } = THEME;
 const ITEM_WIDTH = (LAYOUT.VIEWPORT.W - (OFFSET * 2)) / 3;
 
@@ -18,7 +18,7 @@ export default StyleSheet.create({
     borderBottomWidth: 1,
     height: SLIDER_MONTHS_HEIGHT,
     position: 'absolute',
-    top: HEADER_HEIGHT + NOTCH_HEIGHT - UNIT,
+    top: HEADER_HEIGHT - UNIT,
     left: OFFSET,
     right: OFFSET,
     // width: '100%',

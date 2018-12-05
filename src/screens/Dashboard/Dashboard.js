@@ -39,7 +39,7 @@ class Dashboard extends PureComponent {
   }
 
   _onStats = ({ navigation, store: { overall: { months }, query } }) => {
-    if (months.length === 1) query({ method: 'groupByCategory', date: months[months.length - 1] });
+    query({ method: 'groupByCategory', date: months[months.length - 1] });
     navigation.navigate(SCREEN.STATS);
   }
 
