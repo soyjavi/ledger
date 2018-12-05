@@ -60,10 +60,6 @@ export default StyleSheet.create({
     marginRight: OFFSET / 2,
   },
 
-  bold: {
-    fontWeight: FONT.WEIGHT.BOLD,
-  },
-
   line: {
     position: 'absolute',
     left: OFFSET + (BULLET_SIZE / 2) - (LINE_SIZE / 2),

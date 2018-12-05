@@ -4,6 +4,10 @@ import C from './constants';
 const { COLORS } = C;
 const { IS_WEB } = ENV;
 
+const FAMILY = IS_WEB ? 'Google Sans' : 'google-sans';
+const FAMILY_BOLD = IS_WEB ? 'Google Sans' : 'google-sans-bold';
+const WEIGHT = { REGULAR: '400', BOLD: '700' };
+
 export default {
   BORDER_RADIUS: 0,
 
@@ -22,7 +26,26 @@ export default {
   },
 
   FONT: {
-    FAMILY: IS_WEB ? 'Product Sans' : undefined,
-    FAMILY_SECONDARY: IS_WEB ? 'Product Sans' : undefined,
+    DEFAULT: {
+      fontFamily: FAMILY,
+      fontWeight: WEIGHT.REGULAR,
+    },
+    HEADLINE: {
+      fontFamily: FAMILY_BOLD,
+      fontWeight: IS_WEB ? WEIGHT.BOLD : WEIGHT.REGULAR,
+    },
+    SUBTITLE: {
+      fontFamily: FAMILY_BOLD,
+      fontWeight: IS_WEB ? WEIGHT.BOLD : WEIGHT.REGULAR,
+    },
+    CAPTION: {},
+    BUTTON: {
+      fontFamily: FAMILY_BOLD,
+      fontWeight: IS_WEB ? WEIGHT.BOLD : WEIGHT.REGULAR,
+    },
+    INPUT: {
+      fontFamily: FAMILY,
+      fontWeight: WEIGHT.REGULAR,
+    },
   },
 };

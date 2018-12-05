@@ -83,9 +83,9 @@ class TransactionItem extends PureComponent {
                 <View style={[styles.bullet, hash && color && { backgroundColor: color }]} />
                 <View style={styles.texts}>
                   { hash && isRegularTx && (
-                    <Text numberOfLines={1} style={styles.bold}>{l10n.CATEGORIES[type][category]}</Text>)}
+                    <Text subtitle level={2} numberOfLines={1}>{l10n.CATEGORIES[type][category]}</Text>)}
                   { hash && !isRegularTx && (
-                    <Text numberOfLines={1} style={styles.bold}>
+                    <Text subtitle level={2} numberOfLines={1}>
                       {`${l10n.TRANSFER} ${type === EXPENSE ? l10n.TO : l10n.FROM} ${title}`}
                     </Text>)}
                   { !hash && <Text subtitle level={3} lighten>{verboseDate(timestamp, l10n)}</Text> }
@@ -99,8 +99,9 @@ class TransactionItem extends PureComponent {
                 </View>
                 { value && (
                   <Price
+                    subtitle
+                    level={2}
                     fixed={FIXED[currency]}
-                    style={styles.bold}
                     symbol={SYMBOL[currency]}
                     title={type === EXPENSE ? undefined : '+'}
                     value={value}
