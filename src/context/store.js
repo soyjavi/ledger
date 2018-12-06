@@ -25,12 +25,12 @@ class ProviderStore extends Component {
     error: undefined,
     fingerprint: undefined,
     hash: undefined,
-    latestTransaction: undefined,
     overall: {},
     queryProps: {},
     queryTxs: [],
     // -- STORAGE --------------------------------------------------------------
     baseCurrency: undefined,
+    latestTransaction: undefined,
     pin: undefined,
     rates: {},
     txs: [],
@@ -66,31 +66,26 @@ class ProviderStore extends Component {
     return hash;
   }
 
-  getProfile = async () => {
-    const { onError, _store, state: { hash: authorization, txs } } = this;
+  handshake = async () => {
+    const { onError, _store, state: { hash: authorization, latestTransaction, ...state } } = this;
+    const headers = { authorization };
+    let { state: { txs } } = this;
 
-    const response = await fetch({ service: 'profile', headers: { authorization } }).catch(onError);
+    const response = await fetch({ service: 'profile', headers }).catch(onError);
     if (response) {
-      const { baseCurrency, latestTransaction, rates } = response;
+      const { latestTransaction: { hash } } = response;
+
+      if (hash !== latestTransaction.hash) {
+        const service = `transactions?latestTransaction=${latestTransaction.hash ? latestTransaction.hash : ''}`;
+        const { txs: newTxs } = await fetch({ service, headers }).catch(onError);
+        txs = [...txs, ...newTxs];
+      }
+
       const vaults = sortByTransactions(response.vaults.map((vault, index) => calcVault(vault, txs, index)));
-
-      await _store({ baseCurrency, rates, vaults });
+      await _store({ ...response, txs, vaults });
       this.setState({
-        baseCurrency, latestTransaction, rates, vaults,
+        ...response, overall: calcOverall({ ...state, vaults }), txs, vaults,
       });
-    }
-  }
-
-  getTransactions = async () => {
-    const { onError, _store, state: { hash: authorization, ...state } } = this;
-
-    const { txs } = await fetch({ service: 'transactions', headers: { authorization } }).catch(onError);
-
-    if (txs) {
-      const overall = calcOverall({ ...state, txs });
-
-      await _store({ overall, txs });
-      this.setState({ overall, txs });
     }
   }
 
@@ -168,17 +163,17 @@ class ProviderStore extends Component {
 
   _store = async (value) => {
     const {
-      baseCurrency, pin, rates = {}, txs = [], vaults = [],
+      baseCurrency, latestTransaction, pin, rates = {}, txs = [], vaults = [],
     } = this.state;
 
     await AsyncStore.setItem(KEY, {
-      baseCurrency, pin, rates, txs, vaults, ...value,
+      baseCurrency, latestTransaction, pin, rates, txs, vaults, ...value,
     });
   }
 
   render() {
     const {
-      getHash, getProfile, getTransactions, onError, onTransaction, onVault, query,
+      getHash, handshake, onError, onTransaction, onVault, query,
       props: { children },
       state,
     } = this;
@@ -186,7 +181,7 @@ class ProviderStore extends Component {
     return (
       <Provider
         value={{
-          getHash, getProfile, getTransactions, onError, onTransaction, onVault, query, ...state,
+          getHash, handshake, onError, onTransaction, onVault, query, ...state,
         }}
       >
         { children }
