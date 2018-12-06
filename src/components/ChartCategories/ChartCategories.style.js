@@ -23,10 +23,12 @@ export default StyleSheet.create({
     marginVertical: BAR_HEIGHT / 2,
   },
 
-  row: LAYOUT.STYLE.ROW,
+  row: {
+    ...LAYOUT.STYLE.ROW,
+    marginBottom: UNIT / 2,
+  },
 
   text: {
     flex: 1,
-    marginBottom: UNIT / 4,
   },
 });

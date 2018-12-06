@@ -19,7 +19,6 @@ const Chart = ({
         level={3}
         lighten
         fixed={FIXED[currency]}
-        style={styles.text}
         symbol={SYMBOL[currency]}
         value={value}
       />
