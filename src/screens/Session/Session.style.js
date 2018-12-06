@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import { THEME } from '../../reactor/common';
 
-const { COLOR, OFFSET, UNIT } = THEME;
+const { COLOR, FONT, OFFSET, UNIT } = THEME;
 
 const BULLET_SIZE = UNIT * 2;
 
@@ -11,35 +11,8 @@ export default StyleSheet.create({
     marginBottom: UNIT / 2,
   },
 
-  container: {
-    alignSelf: 'center',
-    height: '100%',
-    padding: OFFSET,
-    maxWidth: UNIT * 40,
-    minWidth: UNIT * 32,
-  },
-
-  content: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingHorizontal: OFFSET,
-  },
-
-  text: {
-    alignSelf: 'center',
-    maxWidth: '90%',
-    textAlign: 'center',
-  },
-
-  title: {
-    marginBottom: UNIT,
-  },
-
-  pin: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: OFFSET * 2,
+  active: {
+    backgroundColor: COLOR.TEXT_HIGHLIGHT,
   },
 
   bullet: {
@@ -54,7 +27,39 @@ export default StyleSheet.create({
     backgroundColor: COLOR.PRIMARY,
   },
 
-  active: {
-    backgroundColor: COLOR.TEXT_HIGHLIGHT,
+  container: {
+    alignSelf: 'center',
+    height: '100%',
+    paddingHorizontal: OFFSET,
+    maxWidth: UNIT * 40,
+    minWidth: UNIT * 32,
   },
+
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: OFFSET,
+  },
+
+  logo: {
+    alignSelf: 'center',
+    width: UNIT * 12.8,
+    height: UNIT * 8,
+    marginBottom: OFFSET / 2,
+  },
+
+  pin: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: OFFSET * 2,
+  },
+
+  text: {
+    alignSelf: 'center',
+    maxWidth: '90%',
+    textAlign: 'center',
+  },
+
+  textSlogan: FONT.HEADLINE,
 });

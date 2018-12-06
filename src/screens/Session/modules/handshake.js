@@ -7,7 +7,7 @@ export default async (component, { pin, store, navigation }) => {
 
   const hash = await store.getHash(pin).catch(error => component.setState({ error }));
   if (hash) {
-    await store.handshake().catch(error => component.setState({ error }));
+    await store.onHandshake().catch(error => component.setState({ error }));
     navigation.navigate(SCREEN.DASHBOARD);
   }
 

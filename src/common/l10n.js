@@ -79,6 +79,7 @@ export default {
 
     SAVE: 'Save',
     SEARCH: 'Search',
+    SLOGAN: 'Your private accounting on the blockchain.',
     STATS: 'Stats',
 
     TITLE: 'Title',
@@ -90,14 +91,8 @@ export default {
 
     VAULT: 'Vault',
     VAULT_EMPTY: "You don't have any transaction.",
-
     VAULTS: 'Vaults',
     VAULT_CAPTION: 'You can create as many vaults as you want. You can continue using your base currency or choose any other.', // eslint-disable-line
-
-    WELCOME: 'Welcome',
-    WELCOME_CAPTION: '$This is your first...',
-    WELCOME_BACK: 'Welcome Back',
-    WELCOME_BACK_CAPTION: 'Still remember that knock-knock combination we agreed on?',
 
     YESTERDAY: 'Yesterday',
   },

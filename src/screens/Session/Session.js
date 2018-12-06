@@ -1,17 +1,15 @@
 import { bool } from 'prop-types';
 import React, { PureComponent } from 'react';
-import { View } from 'react-native';
+import { Image, View } from 'react-native';
 
+import { logo } from '../../assets';
 import { Consumer } from '../../context';
 import { NumKeyboard } from '../../components';
-import { THEME } from '../../reactor/common';
 import {
   Activity, Motion, Text, Viewport,
 } from '../../reactor/components';
 import handshake from './modules/handshake';
 import styles from './Session.style';
-
-const { MOTION: { DURATION } } = THEME;
 
 class Session extends PureComponent {
   static propTypes = {
@@ -34,10 +32,9 @@ class Session extends PureComponent {
     this.setState({ pin });
 
     if (pin.length === 4) {
-      setTimeout(() => {
-        if (store.pin === undefined || store.pin === pin) handshake(this, { pin, store, navigation });
-        else this.setState({ pin: '' });
-      }, DURATION);
+      this.setState({ pin });
+      if (store.pin === undefined || store.pin === pin) handshake(this, { pin, store, navigation });
+      else setTimeout(() => this.setState({ pin: '' }), 100);
     }
   }
 
@@ -54,12 +51,7 @@ class Session extends PureComponent {
           { ({ l10n, store, navigation }) => (
             <View style={styles.container}>
               <View style={styles.content}>
-                <Text headline level={4} style={[styles.title, styles.text]}>
-                  { store.pin ? l10n.WELCOME_BACK : l10n.WELCOME }
-                </Text>
-                <Text lighten style={styles.text}>
-                  { store.pin ? l10n.WELCOME_BACK_CAPTION : l10n.WELCOME_CAPTION }
-                </Text>
+                <Image source={logo} resizeMode="contain" style={styles.logo} />
                 <View style={styles.pin}>
                   { busy || store.hash
                     ? <Activity size="large" style={styles.activity} />

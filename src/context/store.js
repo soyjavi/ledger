@@ -67,13 +67,13 @@ class ProviderStore extends Component {
   }
 
   handshake = async () => {
-    const { onError, _store, state: { hash: authorization, latestTransaction, ...state } } = this;
+    const { onError, _store, state: { hash: authorization, latestTransaction = {}, ...state } } = this;
     const headers = { authorization };
     let { state: { txs } } = this;
 
-    const response = await fetch({ service: 'profile', headers }).catch(onError);
-    if (response) {
-      const { latestTransaction: { hash } } = response;
+    const profile = await fetch({ service: 'profile', headers }).catch(onError);
+    if (profile) {
+      const { latestTransaction: { hash } } = profile;
 
       if (hash !== latestTransaction.hash) {
         const service = `transactions?latestTransaction=${latestTransaction.hash ? latestTransaction.hash : ''}`;
@@ -81,10 +81,11 @@ class ProviderStore extends Component {
         txs = [...txs, ...newTxs];
       }
 
-      const vaults = sortByTransactions(response.vaults.map((vault, index) => calcVault(vault, txs, index)));
-      await _store({ ...response, txs, vaults });
+      const vaults = sortByTransactions(profile.vaults.map((vault, index) => calcVault(vault, txs, index)));
+
+      await _store({ ...profile, txs, vaults });
       this.setState({
-        ...response, overall: calcOverall({ ...state, vaults }), txs, vaults,
+        ...profile, overall: calcOverall({ ...state, vaults }), txs, vaults,
       });
     }
   }
