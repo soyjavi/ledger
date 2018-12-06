@@ -64,7 +64,8 @@ class TransactionItem extends PureComponent {
     const isBottom = inherit.last;
     const { incomes, expenses } = inherit.cashflow || {};
     const regular = category !== VAULT_TRANSFER;
-    const color = regular ? COLORS[category] : COLOR.TEXT;
+    let color = COLOR.TEXT;
+    if (regular) color = type === EXPENSE ? COLORS[category] : COLORS[(COLORS.length - 1) - category];
     const time = new Date(timestamp);
 
     return (
