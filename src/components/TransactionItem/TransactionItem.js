@@ -63,9 +63,9 @@ class TransactionItem extends PureComponent {
     const isHeading = !hash;
     const isBottom = inherit.last;
     const { incomes, expenses } = inherit.cashflow || {};
-    const color = COLORS[category];
+    const regular = category !== VAULT_TRANSFER;
+    const color = regular ? COLORS[category] : COLOR.TEXT;
     const time = new Date(timestamp);
-    const isRegularTx = category !== VAULT_TRANSFER;
 
     return (
       <Consumer>
@@ -82,14 +82,14 @@ class TransactionItem extends PureComponent {
                 />
                 <View style={[styles.bullet, hash && color && { backgroundColor: color }]} />
                 <View style={styles.texts}>
-                  { hash && isRegularTx && (
+                  { hash && regular && (
                     <Text subtitle level={2} numberOfLines={1}>{l10n.CATEGORIES[type][category]}</Text>)}
-                  { hash && !isRegularTx && (
+                  { hash && !regular && (
                     <Text subtitle level={2} numberOfLines={1}>
                       {`${l10n.TRANSFER} ${type === EXPENSE ? l10n.TO : l10n.FROM} ${title}`}
                     </Text>)}
                   { !hash && <Text subtitle level={3} lighten>{verboseDate(timestamp, l10n)}</Text> }
-                  { title && isRegularTx && <Text level={2} lighten numberOfLines={1}>{title}</Text> }
+                  { title && regular && <Text level={2} lighten numberOfLines={1}>{title}</Text> }
                 </View>
                 <View style={styles.row}>
                   { incomes > 0 && (
@@ -132,7 +132,7 @@ class TransactionItem extends PureComponent {
                     </View>
                   </View>
                 </View>
-                <View style={[styles.row, styles.container, styles.extended]}>
+                <View style={[styles.row, styles.container]}>
                   <View style={[styles.line, isBottom && styles.lineBottom]} />
                   <View style={styles.bullet} />
                   <View style={styles.texts}>
