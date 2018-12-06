@@ -4,13 +4,13 @@ import { View, ScrollView } from 'react-native';
 
 import { iconBack } from '../../assets';
 import { C } from '../../common';
-import { BulletPrice, ChartCategories } from '../../components';
+import { ChartCategories } from '../../components';
 import { Header } from '../../containers';
 import { Consumer } from '../../context';
-import { Text, Viewport } from '../../reactor/components';
+import { Price, Text, Viewport } from '../../reactor/components';
 import styles from './Stats.style';
 
-const { COLORS } = C;
+const { COLORS, FIXED, SYMBOL } = C;
 
 class Stats extends Component {
   static propTypes = {
@@ -56,7 +56,13 @@ class Stats extends Component {
                   <View style={styles.content}>
                     <View style={styles.row}>
                       <Text headline level={6} style={styles.title}>{l10n.EXPENSES}</Text>
-                      <BulletPrice expenses currency={baseCurrency} value={cashflow.expenses} />
+                      <Price
+                        fixed={FIXED[baseCurrency]}
+                        headline
+                        level={6}
+                        symbol={SYMBOL[baseCurrency]}
+                        value={cashflow.expenses}
+                      />
                     </View>
                     <View>
                       { Object.keys(expenses).map(key => (
@@ -76,7 +82,14 @@ class Stats extends Component {
                   <View style={styles.content}>
                     <View style={styles.row}>
                       <Text headline level={6} style={styles.title}>{l10n.INCOMES}</Text>
-                      <BulletPrice incomes currency={baseCurrency} value={cashflow.incomes} />
+                      <Price
+                        fixed={FIXED[baseCurrency]}
+                        headline
+                        level={6}
+                        title="+"
+                        symbol={SYMBOL[baseCurrency]}
+                        value={cashflow.incomes}
+                      />
                     </View>
                     <View>
                       { Object.keys(incomes).map(key => (

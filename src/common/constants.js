@@ -49,6 +49,7 @@ export default {
     DASHBOARD_HEIGHT: UNIT * 16,
     HEADER_HEIGHT: UNIT * 5.8,
     NOTCH_HEIGHT: IS_ANDROID && (H / W > 1.95) ? 36 : 0,
+    VAULT_HEIGHT: UNIT * 9.6,
     SLIDER_MONTHS_HEIGHT: UNIT * 3,
   },
   SYMBOL: {

@@ -21,11 +21,11 @@ const VaultBalance = ({ dataSource = {}, baseCurrency, txs }) => {
     <Consumer>
       { ({ l10n, store: { rates } }) => (
         <View style={styles.container}>
-          <Text lighten subtitle level={3}>{l10n.OVERALL_BALANCE}</Text>
+          <Text lighten subtitle level={2}>{l10n.BALANCE}</Text>
           <Price
             fixed={FIXED[activeCurrency]}
             headline
-            level={5}
+            level={4}
             symbol={SYMBOL[activeCurrency]}
             value={baseCurrency ? exchange(overallBalance, currency, baseCurrency, rates) : overallBalance}
           />

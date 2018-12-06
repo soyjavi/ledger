@@ -18,7 +18,6 @@ export default StyleSheet.create({
   },
 
   container: {
-    alignItems: 'center',
     backgroundColor: COLOR.BACKGROUND_OPACITY,
     position: 'absolute',
     top: HEADER_HEIGHT,

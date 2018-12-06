@@ -21,7 +21,7 @@ export default () => (
               <Icon value={iconIncomes} />
             </View>
             <View>
-              <Text caption lighten>{l10n.INCOMES}</Text>
+              <Text subtitle level={3} lighten>{l10n.INCOMES}</Text>
               <Price
                 headline
                 level={6}
@@ -37,7 +37,7 @@ export default () => (
               <Icon value={iconExpenses} />
             </View>
             <View>
-              <Text caption lighten>{l10n.EXPENSES}</Text>
+              <Text subtitle level={3} lighten>{l10n.EXPENSES}</Text>
               <Price
                 headline
                 level={6}

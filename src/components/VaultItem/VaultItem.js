@@ -31,7 +31,7 @@ const VaultItem = (props) => {
                   <Price
                     fixed={FIXED[currency]}
                     subtitle
-                    level={2}
+                    level={1}
                     lighten
                     value={overallBalance}
                     symbol={SYMBOL[currency]}
