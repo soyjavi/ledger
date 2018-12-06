@@ -1,6 +1,6 @@
 import { exchange } from '../../common';
 
-export default ({ baseCurrency, vaults = [], rates }) => {
+export default ({ baseCurrency, rates, vaults = [] }) => {
   const currentMonth = new Date().toISOString().substr(0, 7);
   const months = [currentMonth];
   const exchangeProps = [baseCurrency, rates];

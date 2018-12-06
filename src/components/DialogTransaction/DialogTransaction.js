@@ -41,21 +41,17 @@ class DialogTransaction extends PureComponent {
 
   _onValid = valid => this.setState({ valid })
 
-  _onSubmit = async ({
-    l10n: { CATEGORIES },
-    store: { onTransaction, latestTransaction: { hash: previousHash } },
-  }) => {
+  _onSubmit = async ({ l10n: { CATEGORIES }, store: { onTransaction } }) => {
     const {
       props: { onClose, type, vault },
       state: { form: { category, value, title = '' } },
     } = this;
 
     this.setState({ busy: true });
-    const { hash } = await onTransaction({
+    const response = await onTransaction({
       category: category
         ? parseInt(Object.keys(CATEGORIES[type]).find(key => CATEGORIES[type][key] === category), 10)
         : 1,
-      previousHash,
       title,
       type,
       value: parseFloat(value, 10),
@@ -63,7 +59,7 @@ class DialogTransaction extends PureComponent {
     });
 
     this.setState({ busy: false });
-    if (hash) onClose();
+    if (response) onClose();
   }
 
   render() {

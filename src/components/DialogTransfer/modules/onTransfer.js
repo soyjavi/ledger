@@ -9,23 +9,19 @@ export default async ({
       from, to, exchange, value,
     },
   },
-  store: { latestTransaction: { hash: previousHash }, onTransaction },
+  store: { onTransaction },
 }) => {
-  let response = {};
-
-  const { hash } = await onTransaction({
+  let response = await onTransaction({
     category: VAULT_TRANSFER,
-    previousHash,
     title: to.title,
     type: EXPENSE,
     value: parseFloat(value, 10),
     vault,
   });
 
-  if (hash) {
+  if (response) {
     response = await onTransaction({
       category: VAULT_TRANSFER,
-      previousHash: hash,
       title: from.title,
       type: INCOME,
       value: parseFloat(exchange, 10),

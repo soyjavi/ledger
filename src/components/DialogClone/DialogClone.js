@@ -27,7 +27,7 @@ class DialogClone extends PureComponent {
     busy: false,
   };
 
-  _onSubmit = async ({ latestTransaction: { hash: previousHash }, onTransaction }) => {
+  _onSubmit = async ({ onTransaction }) => {
     const {
       dataSource: {
         vault, category, value, title, type,
@@ -37,7 +37,7 @@ class DialogClone extends PureComponent {
 
     this.setState({ busy: true });
     const tx = await onTransaction({
-      vault, category, value, title, type, previousHash,
+      vault, category, value, title, type,
     });
     this.setState({ busy: false });
 
