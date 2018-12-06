@@ -4,9 +4,13 @@ import { LAYOUT, THEME } from '../../reactor/common';
 
 const { COLOR, OFFSET, UNIT } = THEME;
 
-const BAR_HEIGHT = OFFSET / 2;
+const BAR_HEIGHT = UNIT * 1.6;
 
 export default StyleSheet.create({
+  bar: {
+    minWidth: BAR_HEIGHT,
+  },
+
   chart: {
     backgroundColor: COLOR.BASE,
     borderRadius: BAR_HEIGHT / 2,
@@ -15,21 +19,14 @@ export default StyleSheet.create({
     width: '100%',
   },
 
-  bar: {
-    minWidth: BAR_HEIGHT,
-  },
-
-  container: {
-    // marginBottom: OFFSET / 2,
-  },
-
   content: {
-    marginBottom: UNIT / 2,
+    marginVertical: UNIT / 2,
   },
 
   row: LAYOUT.STYLE.ROW,
 
   text: {
     flex: 1,
+    marginBottom: UNIT / 4,
   },
 });

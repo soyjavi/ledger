@@ -3,11 +3,14 @@ import React, { Fragment, Component } from 'react';
 import { View, ScrollView } from 'react-native';
 
 import { iconBack } from '../../assets';
+import { C } from '../../common';
 import { BulletPrice, ChartCategories } from '../../components';
 import { Header } from '../../containers';
 import { Consumer } from '../../context';
 import { Text, Viewport } from '../../reactor/components';
 import styles from './Stats.style';
+
+const { COLORS } = C;
 
 class Stats extends Component {
   static propTypes = {
@@ -40,7 +43,7 @@ class Stats extends Component {
         <Consumer>
           { ({
             navigation, l10n,
-            store: { baseCurrency, queryTxs, vaults },
+            store: { baseCurrency, queryTxs: { cashflow = {}, expenses = {}, incomes = {} } = {} },
           }) => (
             <Fragment>
               <Header
@@ -49,51 +52,45 @@ class Stats extends Component {
                 visible={visible}
               />
               <ScrollView contentContainerStyle={styles.scroll}>
-                { vaults.map(({ color, hash, title }) => (
-                  queryTxs[hash]
-                    ? (
-                      <View key={hash} style={styles.content}>
-                        <Text headline level={5}>{title}</Text>
-                        { Object.keys(queryTxs[hash].incomes).length > 0 && (
-                          <View>
-                            <View style={styles.row}>
-                              <Text subtitle level={3} lighten style={styles.subtitle}>{l10n.INCOMES}</Text>
-                              { Object.keys(queryTxs[hash].incomes).length > 1 && (
-                                <BulletPrice
-                                  incomes
-                                  currency={baseCurrency}
-                                  value={Object.values(queryTxs[hash].incomes).reduce((a, b) => a + b, 0)}
-                                />)}
-                            </View>
-                            <ChartCategories
-                              categories={l10n.CATEGORIES[1]}
-                              color={color}
-                              currency={baseCurrency}
-                              total={queryTxs.cashflow.incomes}
-                              values={queryTxs[hash].incomes}
-                            />
-                          </View>)}
+                { Object.keys(expenses).length > 0 && (
+                  <View style={styles.content}>
+                    <View style={styles.row}>
+                      <Text headline level={6} style={styles.title}>{l10n.EXPENSES}</Text>
+                      <BulletPrice expenses currency={baseCurrency} value={cashflow.expenses} />
+                    </View>
+                    <View>
+                      { Object.keys(expenses).map(key => (
+                        <ChartCategories
+                          key={key}
+                          category={key}
+                          color={COLORS[key]}
+                          currency={baseCurrency}
+                          l10n={l10n.CATEGORIES[0]}
+                          total={cashflow.expenses}
+                          value={expenses[key]}
+                        />))}
+                    </View>
+                  </View>)}
 
-                        { Object.keys(queryTxs[hash].expenses).length > 0 && (
-                          <View>
-                            <View style={styles.row}>
-                              <Text subtitle level={3} lighten style={styles.subtitle}>{l10n.EXPENSES}</Text>
-                              { Object.keys(queryTxs[hash].expenses).length > 1 && (
-                                <BulletPrice
-                                  currency={baseCurrency}
-                                  value={Object.values(queryTxs[hash].expenses).reduce((a, b) => a + b, 0)}
-                                />)}
-                            </View>
-                            <ChartCategories
-                              categories={l10n.CATEGORIES[0]}
-                              color={color}
-                              currency={baseCurrency}
-                              total={queryTxs.cashflow.expenses}
-                              values={queryTxs[hash].expenses}
-                            />
-                          </View>)}
-                      </View>)
-                    : <View key={hash} />))}
+                { Object.keys(incomes).length > 0 && (
+                  <View style={styles.content}>
+                    <View style={styles.row}>
+                      <Text headline level={6} style={styles.title}>{l10n.INCOMES}</Text>
+                      <BulletPrice incomes currency={baseCurrency} value={cashflow.incomes} />
+                    </View>
+                    <View>
+                      { Object.keys(incomes).map(key => (
+                        <ChartCategories
+                          key={key}
+                          category={key}
+                          color={COLORS[(COLORS.length - 1) - key]}
+                          currency={baseCurrency}
+                          l10n={l10n.CATEGORIES[1]}
+                          total={cashflow.incomes}
+                          value={incomes[key]}
+                        />))}
+                    </View>
+                  </View>)}
               </ScrollView>
             </Fragment>
           )}

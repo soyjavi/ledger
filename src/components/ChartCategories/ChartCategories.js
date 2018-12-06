@@ -9,12 +9,20 @@ import styles from './ChartCategories.style';
 const { FIXED, SYMBOL } = C;
 
 const Chart = ({
-  category, color, currency, l10n, value, total, ...inherit
+  category, color, currency, l10n, value, total,
 }) => (
   <View style={styles.content}>
     <View style={styles.row}>
-      <Text level={2} lighten numberOfLines={1} style={styles.text}>{l10n[category]}</Text>
-      <Price {...inherit} subtitle level={3} lighten fixed={FIXED[currency]} symbol={SYMBOL[currency]} value={value} />
+      <Text subtitle level={3} lighten numberOfLines={1} style={styles.text}>{l10n[category]}</Text>
+      <Price
+        subtitle
+        level={3}
+        lighten
+        fixed={FIXED[currency]}
+        style={styles.text}
+        symbol={SYMBOL[currency]}
+        value={value}
+      />
     </View>
     <View style={styles.chart}>
       <View
@@ -28,34 +36,13 @@ const Chart = ({
   </View>
 );
 
-const ChartCategories = ({
-  categories, color, currency, total, values,
-}) => (
-  <View style={styles.container}>
-    <View>
-      { Object.keys(values).map(key => (
-        <Chart
-          key={key}
-          color={color}
-          currency={currency}
-          category={key}
-          l10n={categories}
-          total={total}
-          value={values[key]}
-        />))}
-    </View>
-  </View>
-);
-
-ChartCategories.propTypes = {
-  categories: shape({}).isRequired,
+Chart.propTypes = {
+  category: string.isRequired,
   color: string.isRequired,
   currency: string.isRequired,
+  l10n: shape({}).isRequired,
   total: number.isRequired,
-  values: shape({}).isRequired,
+  value: number.isRequired,
 };
 
-ChartCategories.defaultProps = {
-};
-
-export default ChartCategories;
+export default Chart;

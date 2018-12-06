@@ -7,7 +7,11 @@ export default (state, { date }) => {
   const {
     baseCurrency, rates, txs, vaults,
   } = state;
-  const dataSource = { cashflow: { expenses: 0, incomes: 0 } };
+  const dataSource = {
+    cashflow: { expenses: 0, incomes: 0 },
+    expenses: {},
+    incomes: {},
+  };
 
   sortByTimestamp(txs, date)
     .forEach(({
@@ -21,8 +25,7 @@ export default (state, { date }) => {
         if (type === EXPENSE) context = 'expenses';
         if (type === INCOME) context = 'incomes';
 
-        if (!dataSource[vault]) dataSource[vault] = { expenses: {}, incomes: {} };
-        dataSource[vault][context][category] = (dataSource[vault][context][category] || 0) + amount;
+        dataSource[context][category] = (dataSource[context][category] || 0) + amount;
         dataSource.cashflow[context] += amount;
       }
     });

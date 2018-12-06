@@ -7,7 +7,7 @@ import {
   AsyncStore, calcOverall, calcVault, groupByCategory, groupByDay, sortByTransactions,
 } from './modules';
 
-const { NAME } = C;
+const { COLORS, NAME } = C;
 const KEY = `${NAME}:context:store`;
 const { Provider, Consumer: ConsumerStore } = createContext(KEY);
 
@@ -109,7 +109,7 @@ class ProviderStore extends Component {
     if (latestTransaction) {
       const txs = [...state.txs, latestTransaction];
       const vaults = sortByTransactions(state.vaults.map((vault, index) => (
-        vault.hash !== props.vault ? vault : calcVault(vault, txs, index)
+        vault.hash !== props.vault ? { ...vault, color: COLORS[index] } : calcVault(vault, txs, index)
       )));
       const overall = calcOverall({ ...state, vaults });
 
