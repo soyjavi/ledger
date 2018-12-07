@@ -2,15 +2,16 @@ import { StyleSheet } from 'react-native';
 
 import { THEME } from '../../reactor/common';
 
-const { UNIT } = THEME;
+const { OFFSET, UNIT } = THEME;
 
 export default StyleSheet.create({
   container: {
+    alignSelf: 'flex-end',
+    bottom: OFFSET * 2,
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    alignSelf: 'flex-end',
   },
 
   touchable: {

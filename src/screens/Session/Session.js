@@ -3,13 +3,18 @@ import React, { PureComponent } from 'react';
 import { Image, View } from 'react-native';
 
 import { logo } from '../../assets';
+import { C } from '../../common';
 import { Consumer } from '../../context';
 import { NumKeyboard } from '../../components';
+import { THEME } from '../../reactor/common';
 import {
   Activity, Motion, Text, Viewport,
 } from '../../reactor/components';
 import handshake from './modules/handshake';
 import styles from './Session.style';
+
+const { VERSION } = C;
+const { MOTION: { DURATION } } = THEME;
 
 class Session extends PureComponent {
   static propTypes = {
@@ -21,6 +26,7 @@ class Session extends PureComponent {
   };
 
   state = {
+    autoLogin: false,
     busy: false,
     pin: '',
   }
@@ -32,10 +38,16 @@ class Session extends PureComponent {
     this.setState({ pin });
 
     if (pin.length === 4) {
-      this.setState({ pin });
-      if (store.pin === undefined || store.pin === pin) handshake(this, { pin, store, navigation });
-      else setTimeout(() => this.setState({ pin: '' }), 100);
+      setTimeout(() => {
+        if (store.pin === undefined || store.pin === pin) handshake(this, { pin, store, navigation });
+        else this.setState({ pin: '' });
+      }, DURATION / 2);
     }
+  }
+
+  _onAutoLogin = ({ store, navigation }) => {
+    this.setState({ autoLogin: true });
+    handshake(this, { pin: store.pin, store, navigation });
   }
 
   render() {
@@ -50,6 +62,7 @@ class Session extends PureComponent {
         <Consumer>
           { ({ l10n, store, navigation }) => (
             <View style={styles.container}>
+              { 1 === 2 && visible && store.pin && !this.state.autoLogin ? this._onAutoLogin({ store, navigation }) : undefined}
               <View style={styles.content}>
                 <Image source={logo} resizeMode="contain" style={styles.logo} />
                 <View style={styles.pin}>
@@ -68,6 +81,7 @@ class Session extends PureComponent {
               </View>
 
               <NumKeyboard onPress={number => _onNumber({ number, store, navigation })} />
+              <Text lighten caption level={3} style={styles.text}>{`v${VERSION}`}</Text>
             </View>
           )}
         </Consumer>
