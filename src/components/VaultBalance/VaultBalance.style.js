@@ -5,7 +5,7 @@ import { LAYOUT, THEME } from '../../reactor/common';
 
 const { COLOR, OFFSET } = THEME;
 
-const { STYLE: { HEADER_HEIGHT, VAULT_HEIGHT } } = C;
+const { STYLE: { HEADER_HEIGHT, HEADER_EXTENDED_HEIGHT } } = C;
 
 export default StyleSheet.create({
   bulletPrice: {
@@ -18,13 +18,15 @@ export default StyleSheet.create({
   },
 
   container: {
+    alignItems: 'center',
     backgroundColor: COLOR.BACKGROUND_OPACITY,
-    position: 'absolute',
-    top: HEADER_HEIGHT,
+    height: HEADER_EXTENDED_HEIGHT,
     left: 0,
-    right: 0,
+    position: 'absolute',
+    paddingTop: HEADER_HEIGHT,
     paddingHorizontal: OFFSET,
-    height: VAULT_HEIGHT,
+    right: 0,
+    top: 0,
     zIndex: 1,
   },
 

@@ -46,10 +46,9 @@ export default {
       marginTop: OFFSET,
       width: UNIT * 28.8,
     },
-    DASHBOARD_HEIGHT: UNIT * 16,
     HEADER_HEIGHT: UNIT * 5.8,
+    HEADER_EXTENDED_HEIGHT: UNIT * 16,
     NOTCH_HEIGHT: IS_ANDROID && (H / W > 1.95) ? 36 : 0,
-    VAULT_HEIGHT: UNIT * 9.6,
     SLIDER_MONTHS_HEIGHT: UNIT * 3,
   },
   SYMBOL: {

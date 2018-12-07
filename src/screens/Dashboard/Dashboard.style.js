@@ -5,7 +5,7 @@ import { THEME } from '../../reactor/common';
 
 const { OFFSET } = THEME;
 
-const { STYLE: { DASHBOARD_HEIGHT, HEADER_HEIGHT } } = C;
+const { STYLE: { HEADER_EXTENDED_HEIGHT, HEADER_HEIGHT } } = C;
 
 export default StyleSheet.create({
   button: {
@@ -28,7 +28,7 @@ export default StyleSheet.create({
   },
 
   scroll: {
-    paddingTop: DASHBOARD_HEIGHT,
+    paddingTop: HEADER_EXTENDED_HEIGHT,
     paddingBottom: HEADER_HEIGHT,
   },
 });

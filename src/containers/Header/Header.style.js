@@ -14,7 +14,7 @@ export default StyleSheet.create({
     position: ENV.IS_WEB ? 'fixed' : 'absolute',
     top: 0,
     width: '100%',
-    zIndex: 1,
+    zIndex: 2,
   },
 
   title: {

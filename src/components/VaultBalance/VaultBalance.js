@@ -13,7 +13,7 @@ import styles from './VaultBalance.style';
 const { FIXED, SYMBOL } = C;
 
 const VaultBalance = ({ dataSource = {}, baseCurrency, txs }) => {
-  const { color, currency, overallBalance } = dataSource;
+  const { color, currency, overallBalance, title } = dataSource;
   const activeCurrency = baseCurrency || currency;
   const { incomes: monthIncomes, expenses: monthExpenses } = cashflow(txs);
 
@@ -21,7 +21,7 @@ const VaultBalance = ({ dataSource = {}, baseCurrency, txs }) => {
     <Consumer>
       { ({ l10n, store: { rates } }) => (
         <View style={styles.container}>
-          <Text lighten subtitle level={2}>{l10n.BALANCE}</Text>
+          <Text lighten subtitle level={2}>{`${title} ${l10n.BALANCE}`}</Text>
           <Price
             fixed={FIXED[activeCurrency]}
             headline

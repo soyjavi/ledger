@@ -89,7 +89,6 @@ class Vault extends Component {
             <Fragment>
               <Header
                 left={{ icon: iconBack, onPress: () => navigation.goBack() }}
-                title={title}
                 right={currency !== baseCurrency ? { icon: iconShuffle, onPress: _onSwitchCurrency } : undefined}
                 visible={visible}
               />
