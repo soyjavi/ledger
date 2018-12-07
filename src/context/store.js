@@ -7,7 +7,7 @@ import {
   AsyncStore, calcOverall, calcVault, groupByCategory, groupByDay, sortByTransactions,
 } from './modules';
 
-const { COLORS, NAME } = C;
+const { COLORS, NAME, VERSION } = C;
 const KEY = `${NAME}:context:store`;
 const { Provider, Consumer: ConsumerStore } = createContext(KEY);
 
@@ -29,6 +29,7 @@ class ProviderStore extends Component {
     rates: {},
     txs: [],
     vaults: [],
+    version: undefined,
   }
 
   async componentWillMount() {
@@ -62,16 +63,16 @@ class ProviderStore extends Component {
   onError = error => this.setState({ error: error ? error.message : undefined });
 
   onHandshake = async () => {
-    const { onError, _store, state: { hash: authorization } } = this;
+    const { onError, _store, state: { hash: authorization, version } } = this;
     const headers = { authorization };
     let { state: { txs = [] } } = this;
 
     const profile = await fetch({ service: 'profile', headers }).catch(onError);
     if (profile) {
       const { baseCurrency, latestTransaction: { hash } = {}, rates } = profile;
-      const [, { hash: latestHash } = {}] = txs;
+      const { hash: latestHash } = txs[txs.length - 1] || {};
 
-      if (hash !== latestHash) {
+      if (hash !== latestHash || version !== VERSION) {
         // const service = `transactions?latestTransaction=${latestTransaction.hash ? latestTransaction.hash : ''}`;
         const service = 'transactions';
         const { txs: newTxs } = await fetch({ service, headers }).catch(onError);
@@ -84,6 +85,7 @@ class ProviderStore extends Component {
         rates,
         txs,
         vaults: sortByTransactions(profile.vaults.map((vault, index) => calcVault(vault, txs, index))),
+        version: VERSION,
       };
       await _store(nextState);
       this.setState({ ...nextState, overall: calcOverall(nextState) });
@@ -162,11 +164,11 @@ class ProviderStore extends Component {
 
   _store = async (value) => {
     const {
-      baseCurrency, pin, rates = {}, txs = [], vaults = [],
+      baseCurrency, pin, rates = {}, txs = [], vaults = [], version,
     } = this.state;
 
     await AsyncStore.setItem(KEY, {
-      baseCurrency, pin, rates, txs, vaults, ...value,
+      baseCurrency, pin, rates, txs, vaults, version, ...value,
     });
   }
 
