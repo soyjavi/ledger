@@ -14,6 +14,8 @@ import iconPlace from './icon_place.png';
 import iconShuffle from './icon_shuffle.png';
 import iconTime from './icon_time.png';
 
+import logo from './logo.png';
+
 export {
   bannerClone,
   bannerEmpty,
@@ -30,4 +32,6 @@ export {
   iconPlace,
   iconShuffle,
   iconTime,
+
+  logo,
 };
