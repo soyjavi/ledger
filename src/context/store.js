@@ -134,13 +134,13 @@ class ProviderStore extends Component {
       const vaults = [...state.vaults, calcVault(vault, state.txs, state.vaults.length)];
       if (vaults.length === 1) {
         baseCurrency = vault.currency;
-        delete state.rates[vault.currency];
+        delete rates[vault.currency];
       }
 
       const nextState = {
         baseCurrency,
         overall: calcOverall({ baseCurrency, rates, vaults }),
-        rates: state.rates,
+        rates,
         vaults,
       };
 
