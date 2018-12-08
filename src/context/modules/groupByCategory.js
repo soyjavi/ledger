@@ -17,7 +17,7 @@ export default (state, { date }) => {
     .forEach(({
       category, type, value, vault,
     }) => {
-      if (category !== VAULT_TRANSFER) {
+      if (value && category !== VAULT_TRANSFER) {
         const { currency } = vaults.find(({ hash }) => vault === hash);
         const amount = baseCurrency === currency ? value : exchange(value, currency, baseCurrency, rates);
         let context;

@@ -9,9 +9,9 @@ export default ({ txs }, { date, search, vault }) => {
   let groupIndex = 0;
 
   sortByTimestamp(txs).forEach((tx) => {
-    const { title, category } = tx;
+    const { title = '' } = tx;
 
-    if (vault === tx.vault && (!search || tx.title.toLowerCase().includes(search))) {
+    if (vault === tx.vault && (!search || title.toLowerCase().includes(search))) {
       const txDate = tx.timestamp.substr(0, 10);
 
       if (group !== txDate) {
