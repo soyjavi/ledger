@@ -13,6 +13,7 @@ import { Text, Viewport } from '../../reactor/components';
 import styles from './Vault.style';
 
 const { TX: { TYPE: { EXPENSE, TRANSFER } } } = C;
+let TIMEOUT;
 
 class Vault extends Component {
   static propTypes = {
@@ -50,6 +51,20 @@ class Vault extends Component {
       || (nextState.switchCurrency !== switchCurrency);
   }
 
+  _onSearch = ({ value, store: { query }}) => {
+    const { dataSource: { hash: vault } } = this.props;
+
+    clearTimeout(TIMEOUT);
+    TIMEOUT = setTimeout(() => {
+      query({ method: 'groupByDay', search: value.toLowerCase().trim(), vault })
+    }, 300);
+  }
+
+  _onSwitchCurrency = () => {
+    const { state: { switchCurrency } } = this;
+    this.setState({ switchCurrency: !switchCurrency });
+  }
+
   _onToggleClone = clone => this.setState({ clone });
 
   _onToggleDialog = () => {
@@ -59,14 +74,9 @@ class Vault extends Component {
 
   _onTransactionType = type => this.setState({ dialog: type !== undefined, type });
 
-  _onSwitchCurrency = () => {
-    const { state: { switchCurrency } } = this;
-    this.setState({ switchCurrency: !switchCurrency });
-  }
-
   render() {
     const {
-      _onSwitchCurrency, _onToggleClone, _onToggleDialog, _onTransactionType,
+      _onSearch, _onSwitchCurrency, _onToggleClone, _onToggleDialog, _onTransactionType,
       props: {
         dataSource: { currency, hash, title },
         visible,
@@ -83,12 +93,15 @@ class Vault extends Component {
           { ({
             navigation, l10n,
             store: {
-              baseCurrency, queryTxs, rates, vaults,
+              baseCurrency, queryTxs, rates, vaults, ...store
             },
           }) => (
             <Fragment>
               <Header
                 left={{ icon: iconBack, onPress: () => navigation.goBack() }}
+                onSearch={visible 
+                  ? value => _onSearch({ value, store })
+                  : undefined}
                 right={currency !== baseCurrency ? { icon: iconShuffle, onPress: _onSwitchCurrency } : undefined}
                 visible={visible}
               />
