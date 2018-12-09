@@ -18,17 +18,16 @@ export default StyleSheet.create({
   },
 
   content: {
-    flex: 1,    
+    flex: 1,
     backgroundColor: 'rgba(0,255,0,0,25)',
   },
 
   input: {
+    ...FONT.HEADLINE,
     backgroundColor: COLOR.WHITE,
     borderWidth: 0,
     color: COLOR.TEXT,
-    fontFamily: FONT.FAMILY,
-    fontSize: UNIT * 1.6,
-    fontWeight: FONT.WEIGHT.REGULAR,
+    fontSize: UNIT * 2,
     height: UNIT * 4,
     paddingHorizontal: UNIT * 0.5,
     width: '100%',

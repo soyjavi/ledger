@@ -3,15 +3,16 @@ import sortByTimestamp from './sortByTimestamp';
 
 const { VAULT_TRANSFER, TX: { TYPE: { EXPENSE, INCOME } } } = C;
 
-export default ({ txs }, { date, search, vault }) => {
+export default ({ txs }, { date, search = '', vault }) => {
   const dataSource = [];
   let group;
   let groupIndex = 0;
+  const hasSearch = search.length > 0;
 
   sortByTimestamp(txs).forEach((tx) => {
-    const { title = '' } = tx;
+    const filter = !hasSearch || (tx.title && tx.title.toLowerCase().includes(search));
 
-    if (vault === tx.vault && (!search || title.toLowerCase().includes(search))) {
+    if (vault === tx.vault && filter) {
       const txDate = tx.timestamp.substr(0, 10);
 
       if (group !== txDate) {

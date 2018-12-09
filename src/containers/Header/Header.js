@@ -1,5 +1,5 @@
-import { 
-  bool, func, shape, string
+import {
+  bool, func, shape, string,
 } from 'prop-types';
 import React from 'react';
 import { TextInput, View } from 'react-native';
@@ -20,9 +20,9 @@ const Header = ({
         <Button color={COLOR.TRANSPARENT} rippleColor={COLOR.PRIMARY} {...left} iconSize={24} />
         <View style={styles.content}>
           { onSearch && (
-            <TextInput 
-              blurOnSubmit 
-              onChangeText={onSearch} 
+            <TextInput
+              blurOnSubmit
+              onChangeText={onSearch}
               placeholder={`${l10n.SEARCH}...`}
               placeholderTextColor={COLOR.TEXT_LIGHTEN}
               underlineColorAndroid="transparent"
