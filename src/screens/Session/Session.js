@@ -26,7 +26,6 @@ class Session extends PureComponent {
   };
 
   state = {
-    autoLogin: false,
     busy: false,
     pin: '',
   }
@@ -45,11 +44,6 @@ class Session extends PureComponent {
     }
   }
 
-  _onAutoLogin = ({ store, navigation }) => {
-    this.setState({ autoLogin: true });
-    handshake(this, { pin: store.pin, store, navigation });
-  }
-
   render() {
     const {
       _onNumber,
@@ -62,7 +56,6 @@ class Session extends PureComponent {
         <Consumer>
           { ({ l10n, store, navigation }) => (
             <View style={styles.container}>
-              { 1 === 2 && visible && store.pin && !this.state.autoLogin ? this._onAutoLogin({ store, navigation }) : undefined}
               <View style={styles.content}>
                 <Image source={logo} resizeMode="contain" style={styles.logo} />
                 <View style={styles.pin}>
