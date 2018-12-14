@@ -51,12 +51,14 @@ class Vault extends Component {
       || (nextState.switchCurrency !== switchCurrency);
   }
 
-  _onSearch = ({ value, store: { query } }) => {
+  _onSearch = ({ value, store: { query }, l10n }) => {
     const { dataSource: { hash: vault } } = this.props;
 
     clearTimeout(TIMEOUT);
     TIMEOUT = setTimeout(() => {
-      query({ method: 'groupByDay', search: value.toLowerCase().trim(), vault });
+      query({
+        l10n, method: 'groupByDay', search: value.toLowerCase().trim(), vault,
+      });
     }, 300);
   }
 
@@ -100,7 +102,7 @@ class Vault extends Component {
               <Header
                 left={{ icon: iconBack, onPress: () => navigation.goBack() }}
                 onSearch={visible
-                  ? value => _onSearch({ value, store })
+                  ? value => _onSearch({ value, store, l10n })
                   : undefined}
                 right={currency !== baseCurrency ? { icon: iconShuffle, onPress: _onSwitchCurrency } : undefined}
                 visible={visible}
