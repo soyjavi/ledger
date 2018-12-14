@@ -43,7 +43,12 @@ class Stats extends Component {
         <Consumer>
           { ({
             navigation, l10n,
-            store: { baseCurrency, queryTxs: { cashflow = {}, expenses = {}, incomes = {} } = {} },
+            store: {
+              baseCurrency,
+              queryTxs: {
+                cashflow = {}, expenses = {}, group = {}, incomes = {},
+              } = {},
+            },
           }) => (
             <Fragment>
               <Header
@@ -71,6 +76,7 @@ class Stats extends Component {
                           category={key}
                           color={COLORS[key]}
                           currency={baseCurrency}
+                          group={group.expenses[key]}
                           l10n={l10n.CATEGORIES[0]}
                           total={cashflow.expenses}
                           value={expenses[key]}
@@ -98,6 +104,7 @@ class Stats extends Component {
                           category={key}
                           color={COLORS[(COLORS.length - 1) - key]}
                           currency={baseCurrency}
+                          group={group.incomes[key]}
                           l10n={l10n.CATEGORIES[1]}
                           total={cashflow.incomes}
                           value={incomes[key]}

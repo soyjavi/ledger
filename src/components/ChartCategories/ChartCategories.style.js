@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import { LAYOUT, THEME } from '../../reactor/common';
 
-const { UNIT } = THEME;
+const { OFFSET, UNIT } = THEME;
 
 const BAR_HEIGHT = UNIT * 1.6;
 
@@ -19,13 +19,22 @@ export default StyleSheet.create({
     width: '100%',
   },
 
+  chartExtended: {
+    borderRadius: BAR_HEIGHT / 4,
+    height: BAR_HEIGHT / 2,
+  },
+
+  container: {
+    marginVertical: OFFSET / 4,
+  },
+
   content: {
-    marginVertical: BAR_HEIGHT / 2,
+    marginVertical: OFFSET / 4,
   },
 
   row: {
     ...LAYOUT.STYLE.ROW,
-    marginBottom: UNIT / 2,
+    marginBottom: UNIT / 4,
   },
 
   text: {
