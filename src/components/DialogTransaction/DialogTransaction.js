@@ -6,8 +6,9 @@ import { bannerExpense, bannerIncome } from '../../assets';
 import { C, translate } from '../../common';
 import { Consumer } from '../../context';
 import {
-  Button, Dialog, Form, Text,
+  Button, Dialog, Form, Switch, Text,
 } from '../../reactor/components';
+import MapStaticImage from '../MapStaticImage';
 import { hydrateTransaction } from './modules';
 
 import styles from './DialogTransaction.style';
@@ -29,15 +30,20 @@ class DialogTransaction extends PureComponent {
   state = {
     busy: false,
     form: {},
+    location: false,
     valid: false,
   };
 
   componentWillReceiveProps({ visible }) {
     const { props } = this;
-    if (visible === true && visible !== props.visible) this.setState({ form: { title: '' } });
+    if (visible === true && visible !== props.visible) this.setState({ form: { title: '' }, location: false });
   }
 
   _onChange = form => this.setState({ form });
+
+  _onChangeLocation = (location) => {
+    this.setState({ location });
+  }
 
   _onValid = valid => this.setState({ valid })
 
@@ -64,9 +70,11 @@ class DialogTransaction extends PureComponent {
 
   render() {
     const {
-      _onChange, _onSubmit, _onValid,
+      _onChange, _onChangeLocation, _onSubmit, _onValid,
       props: { onClose, type, visible },
-      state: { busy, form, valid },
+      state: {
+        busy, form, location, valid,
+      },
     } = this;
 
     return (
@@ -80,14 +88,18 @@ class DialogTransaction extends PureComponent {
             <Text lighten level={2} style={styles.text}>
               {type === EXPENSE ? l10n.EXPENSE_CAPTION : l10n.INCOME_CAPTION}
             </Text>
-            <Form
-              attributes={translate(hydrateTransaction({ l10n, type }), l10n)}
-              color={COLORS[type]}
-              onValid={_onValid}
-              onChange={_onChange}
-              style={styles.form}
-              value={form}
-            />
+            <View style={styles.form}>
+              <Form
+                attributes={translate(hydrateTransaction({ l10n, type }), l10n)}
+                color={COLORS[type]}
+                onValid={_onValid}
+                onChange={_onChange}
+                value={form}
+              />
+              <Switch label={l10n.SAVE_LOCATION} onChange={_onChangeLocation} value={location} />
+              { location && <MapStaticImage latitude={98.9648672} longitude={18.8059893} zoom={12} /> }
+            </View>
+
             <View style={styles.buttons}>
               <Button
                 color={COLORS[type]}

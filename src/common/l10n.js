@@ -78,6 +78,7 @@ export default {
     OVERALL_BALANCE: 'Overall Balance',
 
     SAVE: 'Save',
+    SAVE_LOCATION: 'Save location',
     SEARCH: 'Search',
     SLOGAN: 'Your private accounting on the blockchain.',
     STATS: 'Stats',

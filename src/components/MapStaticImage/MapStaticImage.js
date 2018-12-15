@@ -1,12 +1,11 @@
 import { number } from 'prop-types';
 import React, { PureComponent } from 'react';
-import { Image } from 'react-native';
 
 import { C } from '../../common';
+import { Image } from '../../reactor/components';
 import styles from './MapStaticImage.style';
 
-const { MAPBOX_ACCESS_TOKEN } = C;
-const MAPBOX_URL = 'https://api.mapbox.com/styles/v1/mapbox/light-v9/static';
+const { ENDPOINT } = C;
 
 class Map extends PureComponent {
   static propTypes = {
@@ -16,7 +15,7 @@ class Map extends PureComponent {
   };
 
   static defaultProps = {
-    zoom: 13,
+    zoom: 14,
   };
 
   render() {
@@ -26,9 +25,7 @@ class Map extends PureComponent {
 
     return (
       <Image
-        source={{
-          uri: `${MAPBOX_URL}/${latitude},${longitude},${zoom},0,0/480x128@2x?access_token=${MAPBOX_ACCESS_TOKEN}`,
-        }}
+        source={{ uri: `${ENDPOINT}/staticmap?latitude=${latitude}&longitude=${longitude}&zoom=${zoom}` }}
         resizeMode="cover"
         style={styles.container}
       />
