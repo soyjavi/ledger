@@ -9,6 +9,7 @@ import {
   Button, Icon, Price, Text, Touchable,
 } from '../../reactor/components';
 import { THEME } from '../../reactor/common';
+import MapStaticImage from '../MapStaticImage';
 import BulletPrice from '../BulletPrice';
 import formatTime from './modules/formatTime';
 import styles from './TransactionItem.style';
@@ -125,11 +126,11 @@ class TransactionItem extends PureComponent {
                   <View style={styles.bullet} />
                   <View style={styles.texts}>
                     <Touchable rippleColor={COLOR.WHITE} onPress={() => {}}>
-                      <View style={styles.map} />
+                      <MapStaticImage latitude={98.9648672} longitude={18.8059893} />
                     </Touchable>
                     <View style={styles.row}>
                       <Icon value={iconPlace} style={styles.icon} />
-                      <Text level={2} lighten>$Location</Text>
+                      <Text level={2} lighten>Mueang Chiang Mai, Chiang Mai, Thailand</Text>
                     </View>
                   </View>
                 </View>

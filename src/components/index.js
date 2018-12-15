@@ -6,6 +6,7 @@ import DialogTransaction from './DialogTransaction';
 import DialogTransfer from './DialogTransfer';
 import DialogVault from './DialogVault';
 import FloatingButton from './FloatingButton';
+import MapStaticImage from './MapStaticImage';
 import NumKeyboard from './NumKeyboard';
 import OverallBalance from './OverallBalance';
 import SliderMonths from './SliderMonths';
@@ -22,6 +23,7 @@ export {
   DialogTransfer,
   DialogVault,
   FloatingButton,
+  MapStaticImage,
   NumKeyboard,
   OverallBalance,
   SliderMonths,
