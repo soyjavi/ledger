@@ -1,4 +1,4 @@
-import { func, number, string } from 'prop-types';
+import { func, number, shape, string } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
 import { View } from 'react-native';
 
@@ -24,6 +24,7 @@ class TransactionItem extends PureComponent {
     category: number,
     currency: string,
     hash: string,
+    location: shape({}),
     onClone: func,
     timestamp: string.isRequired,
     title: string,
@@ -36,6 +37,7 @@ class TransactionItem extends PureComponent {
     category: undefined,
     currency: undefined,
     hash: undefined,
+    location: undefined,
     onClone: undefined,
     title: undefined,
     type: undefined,
@@ -56,7 +58,7 @@ class TransactionItem extends PureComponent {
     const {
       _onToggleExtended,
       props: {
-        category, currency, hash, onClone, timestamp, title, type, value, vault, ...inherit
+        category, currency, hash, location, onClone, timestamp, title, type, value, vault, ...inherit
       },
       state: { extended },
     } = this;
@@ -121,19 +123,20 @@ class TransactionItem extends PureComponent {
                     <Text level={2} lighten>{formatTime(time)}</Text>
                   </View>
                 </View>
-                <View style={[styles.row, styles.container, styles.extended]}>
-                  <View style={styles.line} />
-                  <View style={styles.bullet} />
-                  <View style={styles.texts}>
-                    <Touchable rippleColor={COLOR.WHITE} onPress={() => {}}>
-                      <MapStaticImage latitude={98.9648672} longitude={18.8059893} />
-                    </Touchable>
-                    <View style={styles.row}>
-                      <Icon value={iconPlace} style={styles.icon} />
-                      <Text level={2} lighten>Mueang Chiang Mai, Chiang Mai, Thailand</Text>
+                { location && (
+                  <View style={[styles.row, styles.container, styles.extended]}>
+                    <View style={styles.line} />
+                    <View style={styles.bullet} />
+                    <View style={styles.texts}>
+                      <Touchable rippleColor={COLOR.WHITE} onPress={() => {}}>
+                        <MapStaticImage {...location} />
+                      </Touchable>
+                      <View style={styles.row}>
+                        <Icon value={iconPlace} style={styles.icon} />
+                        <Text level={2} lighten>{location.place}</Text>
+                      </View>
                     </View>
-                  </View>
-                </View>
+                  </View>)}
                 <View style={[styles.row, styles.container]}>
                   <View style={[styles.line, isBottom && styles.lineBottom]} />
                   <View style={styles.bullet} />

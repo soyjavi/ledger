@@ -1,6 +1,7 @@
 import C from './constants';
 import cashflow from './cashflow';
 import exchange from './exchange';
+import getLocationAsync from './getLocationAsync';
 import FORM from './forms';
 import L10N from './l10n';
 import fetch from './fetch';
@@ -12,6 +13,7 @@ export {
   C,
   cashflow,
   exchange,
+  getLocationAsync,
   FORM,
   L10N,
   fetch,

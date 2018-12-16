@@ -1,9 +1,9 @@
 import { bool, func, number } from 'prop-types';
-import React, { PureComponent } from 'react';
+import React, { Fragment, PureComponent } from 'react';
 import { Image, View } from 'react-native';
 
 import { bannerExpense, bannerIncome } from '../../assets';
-import { C, translate } from '../../common';
+import { C, fetch, translate } from '../../common';
 import { Consumer } from '../../context';
 import {
   Button, Dialog, Form, Switch, Text,
@@ -19,6 +19,7 @@ const BANNERS = [bannerExpense, bannerIncome];
 class DialogTransaction extends PureComponent {
   static propTypes = {
     onClose: func.isRequired,
+    getLocationAsync: func.isRequired,
     type: number.isRequired,
     visible: bool,
   };
@@ -31,6 +32,8 @@ class DialogTransaction extends PureComponent {
     busy: false,
     form: {},
     location: false,
+    coords: undefined,
+    place: undefined,
     valid: false,
   };
 
@@ -41,8 +44,17 @@ class DialogTransaction extends PureComponent {
 
   _onChange = form => this.setState({ form });
 
-  _onChangeLocation = (location) => {
-    this.setState({ location });
+  _onChangeLocation = async (location) => {
+    const { props: { getLocationAsync } } = this;
+    this.setState({ coords: undefined, place: undefined, location });
+
+    if (location) {
+      const coords = await getLocationAsync();
+      const { place } = await fetch({
+        service: `place?latitude=${coords.latitude}&longitude=${coords.longitude}`,
+      });
+      this.setState({ coords, place });
+    }
   }
 
   _onValid = valid => this.setState({ valid })
@@ -50,7 +62,7 @@ class DialogTransaction extends PureComponent {
   _onSubmit = async ({ l10n: { CATEGORIES }, store: { onTransaction } }) => {
     const {
       props: { onClose, type, vault },
-      state: { form: { category, value, title = '' } },
+      state: { coords, form: { category, value, title = '' }, place },
     } = this;
 
     this.setState({ busy: true });
@@ -62,6 +74,8 @@ class DialogTransaction extends PureComponent {
       type,
       value: parseFloat(value, 10),
       vault,
+      place,
+      ...coords,
     });
 
     this.setState({ busy: false });
@@ -71,9 +85,11 @@ class DialogTransaction extends PureComponent {
   render() {
     const {
       _onChange, _onChangeLocation, _onSubmit, _onValid,
-      props: { onClose, type, visible },
+      props: {
+        getLocationAsync, onClose, type, visible,
+      },
       state: {
-        busy, form, location, valid,
+        busy, coords, form, location, place, valid,
       },
     } = this;
 
@@ -96,8 +112,15 @@ class DialogTransaction extends PureComponent {
                 onChange={_onChange}
                 value={form}
               />
-              <Switch label={l10n.SAVE_LOCATION} onChange={_onChangeLocation} value={location} />
-              { location && <MapStaticImage latitude={98.9648672} longitude={18.8059893} zoom={12} /> }
+              { getLocationAsync && (
+                <Fragment>
+                  <Switch label={l10n.SAVE_LOCATION} onChange={_onChangeLocation} value={location} />
+                  { location && (
+                    <Fragment>
+                      <MapStaticImage {...coords} zoom={coords ? 14.5 : 12} />
+                      <Text level={2} lighten>{place || '$Unknown place'}</Text>
+                    </Fragment>)}
+                </Fragment>)}
             </View>
 
             <View style={styles.buttons}>

@@ -1,7 +1,11 @@
 import { NativeModules, View } from 'react-native';
 import React, { PureComponent } from 'react';
-import { Font } from 'expo';
-
+import {
+  // Constants,
+  Font,
+  Location,
+  Permissions,
+} from 'expo';
 import { theme } from './src/common';
 import { THEME } from './src/reactor/common';
 
@@ -21,11 +25,20 @@ class Container extends PureComponent {
     this.setState({ loaded: true });
   }
 
+  _getLocationAsync = async () => {
+    const { status } = await Permissions.askAsync(Permissions.LOCATION);
+    if (status !== 'granted') return console.log('ERROR', status, 'Permission to access location was denied');
+
+    const { coords: { latitude, longitude } = {} } = await Location.getCurrentPositionAsync({});
+    return { latitude, longitude };
+  };
+
+
   render() {
-    const { state: { loaded } } = this;
+    const { _getLocationAsync, state: { loaded } } = this;
     const Component = loaded ? require('./src/App').default : View;
 
-    return <Component />;
+    return <Component getLocationAsync={_getLocationAsync} />;
   }
 }
 

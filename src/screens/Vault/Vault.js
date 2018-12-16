@@ -143,6 +143,7 @@ class Vault extends Component {
               { visible && (
                 <Fragment>
                   <DialogTransaction
+                    getLocationAsync={inherit.getLocationAsync}
                     type={type}
                     vault={hash}
                     onClose={_onToggleDialog}

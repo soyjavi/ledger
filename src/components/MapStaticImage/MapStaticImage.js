@@ -9,12 +9,14 @@ const { ENDPOINT } = C;
 
 class Map extends PureComponent {
   static propTypes = {
-    latitude: number.isRequired,
-    longitude: number.isRequired,
+    latitude: number,
+    longitude: number,
     zoom: number,
   };
 
   static defaultProps = {
+    latitude: undefined,
+    longitude: undefined,
     zoom: 14,
   };
 
@@ -25,7 +27,9 @@ class Map extends PureComponent {
 
     return (
       <Image
-        source={{ uri: `${ENDPOINT}/staticmap?latitude=${latitude}&longitude=${longitude}&zoom=${zoom}` }}
+        source={latitude && longitude
+          ? { uri: `${ENDPOINT}/staticmap?latitude=${latitude}&longitude=${longitude}&zoom=${zoom}` }
+          : undefined}
         resizeMode="cover"
         style={styles.container}
       />

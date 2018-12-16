@@ -12,7 +12,7 @@ const {
   SESSION, DASHBOARD, STATS, VAULT,
 } = SCREEN;
 
-export default () => (
+export default ({ ...props }) => (
   <Provider dictionary={L10N} language={LANGUAGE}>
     <ConsumerNavigation>
       { ({
@@ -22,7 +22,7 @@ export default () => (
           <Session backward={current !== SESSION} visible={stack.includes(SESSION)} />
 
           <Dashboard backward={current !== DASHBOARD} visible={stack.includes(DASHBOARD)} />
-          <Vault backward={current !== VAULT} dataSource={parameters} visible={stack.includes(VAULT)} />
+          <Vault {...props} backward={current !== VAULT} dataSource={parameters} visible={stack.includes(VAULT)} />
           <Stats backward={current !== STATS} visible={stack.includes(STATS)} />
 
           <Consumer>
