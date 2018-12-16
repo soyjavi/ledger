@@ -12,7 +12,7 @@ const {
   SESSION, DASHBOARD, STATS, VAULT,
 } = SCREEN;
 
-export default ({ ...props }) => (
+export default props => (
   <Provider dictionary={L10N} language={LANGUAGE}>
     <ConsumerNavigation>
       { ({
