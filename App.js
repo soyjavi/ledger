@@ -29,7 +29,7 @@ class Container extends PureComponent {
     const { status } = await Permissions.askAsync(Permissions.LOCATION);
     if (status !== 'granted') return console.log('ERROR', status, 'Permission to access location was denied');
 
-    const { coords: { latitude, longitude } = {} } = await Location.getCurrentPositionAsync({});
+    const { coords: { latitude, longitude } = {} } = await Location.getCurrentPositionAsync({ enableHighAccuracy: true });
     return { latitude, longitude };
   };
 
