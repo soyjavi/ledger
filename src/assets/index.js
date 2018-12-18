@@ -1,10 +1,3 @@
-import bannerClone from './banner_clone.png';
-import bannerEmpty from './banner_empty.png';
-import bannerExpense from './banner_expense.png';
-import bannerIncome from './banner_income.png';
-import bannerTransfer from './banner_transfer.png';
-import bannerVault from './banner_vault.png';
-
 import iconAdd from './icon_add.png';
 import iconBack from './icon_back.png';
 import iconChart from './icon_chart.png';
@@ -17,13 +10,6 @@ import iconTime from './icon_time.png';
 import logo from './logo.png';
 
 export {
-  bannerClone,
-  bannerEmpty,
-  bannerExpense,
-  bannerIncome,
-  bannerTransfer,
-  bannerVault,
-
   iconAdd,
   iconBack,
   iconChart,

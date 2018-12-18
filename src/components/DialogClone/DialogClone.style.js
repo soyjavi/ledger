@@ -22,10 +22,6 @@ export default StyleSheet.create({
     paddingVertical: OFFSET / 4,
   },
 
-  caption: {
-    textAlign: 'center',
-  },
-
   dialog: {
     justifyContent: 'flex-end',
   },
@@ -33,12 +29,10 @@ export default StyleSheet.create({
   frame: {
     alignSelf: 'flex-end',
     paddingTop: OFFSET,
-    maxHeight: IS_NATIVE ? UNIT * 40 : undefined,
+    maxHeight: IS_NATIVE ? UNIT * 18 : undefined,
   },
 
-  text: {
-    alignSelf: 'center',
-    textAlign: 'center',
-    width: '90%',
+  title: {
+    marginBottom: OFFSET / 2,
   },
 });

@@ -28,16 +28,14 @@ export default StyleSheet.create({
   frame: {
     alignSelf: 'flex-end',
     paddingTop: OFFSET,
-    maxHeight: IS_NATIVE ? UNIT * 53.6 : undefined,
+    maxHeight: IS_NATIVE ? UNIT * 52 : undefined,
   },
 
   form: {
     marginVertical: OFFSET,
   },
 
-  text: {
-    alignSelf: 'center',
-    textAlign: 'center',
-    width: '90%',
+  title: {
+    marginBottom: OFFSET / 2,
   },
 });

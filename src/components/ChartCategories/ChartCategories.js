@@ -79,16 +79,16 @@ class ChartCategory extends PureComponent {
     } = this;
 
     return (
-      <Touchable onPress={_onPress}>
-        <View style={styles.container}>
+      <View style={styles.container}>
+        <Touchable onPress={group ? _onPress : undefined} rippleColor={inherit.color}>
           <Item {...inherit} title={l10n[category]} />
-          { extended && (
-            <View>
-              { Object.keys(group).map(key => (
-                <Item {...inherit} key={key} extended title={key} total={inherit.value} value={group[key]} />))}
-            </View>)}
-        </View>
-      </Touchable>
+        </Touchable>
+        { extended && (
+          <View>
+            { Object.keys(group).map(key => (
+              <Item {...inherit} key={key} extended title={key} total={inherit.value} value={group[key]} />))}
+          </View>)}
+      </View>
     );
   }
 }

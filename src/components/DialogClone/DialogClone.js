@@ -1,8 +1,7 @@
 import { bool, func, shape } from 'prop-types';
 import React, { PureComponent } from 'react';
-import { Image, View } from 'react-native';
+import { View } from 'react-native';
 
-import { bannerClone } from '../../assets';
 import { C } from '../../common';
 import { Consumer } from '../../context';
 import { Button, Dialog, Text } from '../../reactor/components';
@@ -59,11 +58,10 @@ class DialogClone extends PureComponent {
       <Consumer>
         { ({ l10n, store }) => (
           <Dialog style={styles.frame} styleContainer={styles.dialog} visible={visible}>
-            <Text color={color} headline level={5} style={styles.text}>
+            <Text color={color} headline level={5} style={styles.title}>
               {`${l10n.CLONE} ${l10n.TRANSACTION}`}
             </Text>
-            <Image source={bannerClone} resizeMode="contain" style={styles.banner} />
-            <Text lighten level={2} style={styles.caption}>
+            <Text lighten level={2}>
               {l10n.CLONE_CAPTION}
             </Text>
             <View style={styles.buttons}>

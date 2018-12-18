@@ -66,6 +66,7 @@ export default {
     INCOME_CAPTION: 'Register a new income in this vault.',
     INCOMES: 'Incomes',
 
+    LOADING_PLACE: 'Wait a moment, loading place.',
     LOADING_PROFILE: 'Wait a moment, syncing your blockchain.',
 
     MONTHS: [

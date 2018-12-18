@@ -1,8 +1,7 @@
 import { bool, func, string } from 'prop-types';
 import React, { PureComponent } from 'react';
-import { Image, View } from 'react-native';
+import { View } from 'react-native';
 
-import { bannerTransfer } from '../../assets';
 import { C, translate } from '../../common';
 import { Consumer } from '../../context';
 import {
@@ -88,11 +87,10 @@ class DialogTransfer extends PureComponent {
             style={styles.frame}
             styleContainer={styles.dialog}
           >
-            <Text color={COLOR_TX} headline level={5} style={styles.text}>
+            <Text color={COLOR_TX} headline level={5} style={styles.title}>
               {`${l10n.NEW} ${l10n.TRANSFER}`}
             </Text>
-            <Image source={bannerTransfer} resizeMode="contain" style={styles.banner} />
-            <Text lighten level={2} style={styles.text}>
+            <Text lighten level={2}>
               {l10n.TRANSFER_CAPTION}
             </Text>
             <Form

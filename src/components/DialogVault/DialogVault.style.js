@@ -1,15 +1,11 @@
 import { StyleSheet } from 'react-native';
 
 import { ENV, LAYOUT, THEME } from '../../reactor/common';
-import { C } from '../../common';
 
-const { STYLE: { BANNER } } = C;
 const { IS_NATIVE } = ENV;
 const { UNIT, OFFSET } = THEME;
 
 export default StyleSheet.create({
-  banner: BANNER,
-
   button: {
     flex: 1,
     marginHorizontal: OFFSET / 4,
@@ -28,16 +24,14 @@ export default StyleSheet.create({
   frame: {
     alignSelf: 'flex-end',
     paddingTop: OFFSET,
-    maxHeight: IS_NATIVE ? UNIT * 56.6 : undefined,
+    maxHeight: IS_NATIVE ? UNIT * 36 : undefined,
   },
 
   form: {
     marginVertical: OFFSET,
   },
 
-  text: {
-    alignSelf: 'center',
-    textAlign: 'center',
-    width: '90%',
+  title: {
+    marginBottom: OFFSET / 2,
   },
 });

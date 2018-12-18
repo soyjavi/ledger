@@ -19,12 +19,11 @@ export default StyleSheet.create({
 
   content: {
     flex: 1,
-    backgroundColor: 'rgba(0,255,0,0.25)',
   },
 
   input: {
     ...FONT.HEADLINE,
-    backgroundColor: COLOR.WHITE,
+    backgroundColor: COLOR.TRANSPARENT,
     borderWidth: 0,
     color: COLOR.TEXT,
     fontSize: UNIT * 2,

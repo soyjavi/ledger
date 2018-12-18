@@ -1,8 +1,7 @@
 import { bool, func, number } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
-import { Image, View } from 'react-native';
+import { View } from 'react-native';
 
-import { bannerExpense, bannerIncome } from '../../assets';
 import { C, fetch, translate } from '../../common';
 import { Consumer } from '../../context';
 import {
@@ -14,7 +13,6 @@ import { hydrateTransaction } from './modules';
 import styles from './DialogTransaction.style';
 
 const { COLORS, TX: { TYPE: { EXPENSE } } } = C;
-const BANNERS = [bannerExpense, bannerIncome];
 
 class DialogTransaction extends PureComponent {
   static propTypes = {
@@ -105,11 +103,10 @@ class DialogTransaction extends PureComponent {
       <Consumer>
         { ({ l10n, store }) => (
           <Dialog visible={visible} style={styles.frame} styleContainer={styles.dialog}>
-            <Text color={COLORS[type]} headline level={5} style={styles.text}>
+            <Text color={COLORS[type]} headline level={5} style={styles.title}>
               {`${l10n.NEW} ${type === EXPENSE ? l10n.EXPENSE : l10n.INCOME}`}
             </Text>
-            <Image source={BANNERS[type]} resizeMode="contain" style={styles.banner} />
-            <Text lighten level={2} style={styles.text}>
+            <Text lighten level={2}>
               {type === EXPENSE ? l10n.EXPENSE_CAPTION : l10n.INCOME_CAPTION}
             </Text>
             <View style={styles.form}>
@@ -126,7 +123,7 @@ class DialogTransaction extends PureComponent {
                   { location && (
                     <Fragment>
                       <MapStaticImage {...coords} zoom={coords ? 14.5 : 12} />
-                      <Text level={2} lighten>{place || '$Unknown place'}</Text>
+                      <Text level={2} lighten>{place || l10n.LOADING_PLACE}</Text>
                     </Fragment>)}
                 </Fragment>)}
             </View>

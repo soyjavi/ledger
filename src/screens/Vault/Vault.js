@@ -2,7 +2,7 @@ import { bool, shape } from 'prop-types';
 import React, { Fragment, Component } from 'react';
 import { Image, ScrollView, View } from 'react-native';
 
-import { bannerEmpty, iconBack, iconShuffle } from '../../assets';
+import { iconBack, iconShuffle } from '../../assets';
 import { C, exchange } from '../../common';
 import {
   DialogClone, DialogTransaction, DialogTransfer, FloatingButton, TransactionItem, VaultBalance,
@@ -130,7 +130,6 @@ class Vault extends Component {
                     />))
                   : (
                     <View style={styles.content}>
-                      <Image source={bannerEmpty} resizeMode="contain" style={styles.banner} />
                       <Text level={2} lighten>{l10n.VAULT_EMPTY}</Text>
                     </View>)
                 }
