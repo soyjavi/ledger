@@ -30,23 +30,31 @@ class DialogTransaction extends PureComponent {
 
   state = {
     busy: false,
+    coords: undefined,
     form: {},
     location: false,
-    coords: undefined,
     place: undefined,
     valid: false,
   };
 
   componentWillReceiveProps({ visible }) {
     const { props } = this;
-    if (visible === true && visible !== props.visible) this.setState({ form: { title: '' }, location: false });
+
+    if (visible === true && visible !== props.visible) {
+      this.setState({
+        coords: undefined,
+        form: { title: '' },
+        location: false,
+        place: undefined,
+      });
+    }
   }
 
   _onChange = form => this.setState({ form });
 
   _onChangeLocation = async (location) => {
     const { props: { getLocationAsync } } = this;
-    this.setState({ coords: undefined, place: undefined, location });
+    this.setState({ coords: undefined, location, place: undefined });
 
     if (location) {
       const coords = await getLocationAsync();
