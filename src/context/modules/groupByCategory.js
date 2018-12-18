@@ -2,16 +2,18 @@ import { C, exchange } from '../../common';
 import sortByTimestamp from './sortByTimestamp';
 
 const { VAULT_TRANSFER, TX: { TYPE: { EXPENSE, INCOME } } } = C;
+const EXPENSES = 'expenses';
+const INCOMES = 'incomes';
 
 export default (state, { date }) => {
   const {
     baseCurrency, rates, txs, vaults,
   } = state;
   const data = {
-    cashflow: { expenses: 0, incomes: 0 },
-    expenses: {},
-    group: { expenses: {}, incomes: {} },
-    incomes: {},
+    cashflow: { [EXPENSES]: 0, [INCOMES]: 0 },
+    [EXPENSES]: {},
+    group: { [EXPENSES]: {}, [INCOMES]: {} },
+    [INCOMES]: {},
   };
 
   sortByTimestamp(txs, date)
@@ -23,8 +25,8 @@ export default (state, { date }) => {
         const amount = baseCurrency === currency ? value : exchange(value, currency, baseCurrency, rates);
         let context;
 
-        if (type === EXPENSE) context = 'expenses';
-        if (type === INCOME) context = 'incomes';
+        if (type === EXPENSE) context = EXPENSES;
+        if (type === INCOME) context = INCOMES;
 
         data[context][category] = (data[context][category] || 0) + amount;
         data.cashflow[context] += amount;
@@ -36,6 +38,17 @@ export default (state, { date }) => {
         }
       }
     });
+
+  [EXPENSES, INCOMES].forEach((context) => {
+    Object.keys(data.group[context]).forEach((category) => {
+      const base = data.group[context][category];
+      let keysSorted = {};
+      Object.keys(base)
+        .sort((a, b) => base[b] - base[a])
+        .forEach((key) => { keysSorted = { ...keysSorted, [key]: base[key] }; });
+      data.group[context][category] = keysSorted;
+    });
+  });
 
   return data;
 };
