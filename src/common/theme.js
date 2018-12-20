@@ -1,7 +1,6 @@
 import { ENV } from '../reactor/common';
 import C from './constants';
 
-const { COLORS } = C;
 const { IS_WEB } = ENV;
 
 const FAMILY = IS_WEB ? 'Google Sans' : 'google-sans';
@@ -21,8 +20,7 @@ export default {
     // TEXT: '#ccc',
     // TEXT_LIGHTEN: '#999',
 
-    PRIMARY: COLORS[0],
-    SECONDARY: COLORS[1],
+    PRIMARY: '#21ce99', // PRIMARY: '#33E468',
   },
 
   FONT: {

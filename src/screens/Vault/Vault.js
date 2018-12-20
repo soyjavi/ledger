@@ -80,7 +80,7 @@ class Vault extends Component {
     const {
       _onSearch, _onSwitchCurrency, _onToggleClone, _onToggleDialog, _onTransactionType,
       props: {
-        dataSource: { currency, hash },
+        dataSource: { color, currency, hash },
         visible,
         ...inherit
       },
@@ -135,6 +135,7 @@ class Vault extends Component {
                 }
               </ScrollView>
               <FloatingButton
+                color={color}
                 onPress={dialog ? _onToggleDialog : _onTransactionType}
                 options={vaults.length === 1 ? [l10n.EXPENSE, l10n.INCOME] : [l10n.EXPENSE, l10n.INCOME, l10n.TRANSFER]}
                 visible={!dialog && !inherit.backward}

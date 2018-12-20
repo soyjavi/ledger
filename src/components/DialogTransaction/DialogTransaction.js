@@ -119,7 +119,12 @@ class DialogTransaction extends PureComponent {
               />
               { getLocationAsync && (
                 <Fragment>
-                  <Switch label={l10n.SAVE_LOCATION} onChange={_onChangeLocation} value={location} />
+                  <Switch
+                    color={COLORS[type]}
+                    label={l10n.SAVE_LOCATION}
+                    onChange={_onChangeLocation}
+                    value={location}
+                  />
                   { location && (
                     <Fragment>
                       <MapStaticImage {...coords} zoom={coords ? 14.5 : 12} />

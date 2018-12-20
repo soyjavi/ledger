@@ -5,7 +5,18 @@ import { LAYOUT, THEME } from '../../reactor/common';
 const { COLOR, UNIT, OFFSET } = THEME;
 const CONTAINER_SIZE = UNIT * 5.6;
 
+export { CONTAINER_SIZE };
+
 export default StyleSheet.create({
+  button: {
+    ...LAYOUT.STYLE.SHADOW,
+    ...LAYOUT.STYLE.CENTERED,
+    backgroundColor: COLOR.PRIMARY,
+    borderRadius: CONTAINER_SIZE / 2,
+    height: CONTAINER_SIZE,
+    width: CONTAINER_SIZE,
+  },
+
   container: {
     alignItems: 'flex-end',
     bottom: OFFSET,
@@ -13,16 +24,6 @@ export default StyleSheet.create({
     right: OFFSET,
     zIndex: 1,
   },
-
-  button: {
-    ...LAYOUT.STYLE.SHADOW,
-    ...LAYOUT.STYLE.CENTERED,
-    backgroundColor: COLOR.TEXT,
-    borderRadius: CONTAINER_SIZE / 2,
-    height: CONTAINER_SIZE,
-    width: CONTAINER_SIZE,
-  },
-
   buttonOpened: {
     transform: [{ rotate: '45deg' }],
   },

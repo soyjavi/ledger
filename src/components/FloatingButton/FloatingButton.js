@@ -10,19 +10,21 @@ import { THEME } from '../../reactor/common';
 import {
   Icon, Motion, Text, Touchable,
 } from '../../reactor/components';
-import styles from './FloatingButton.style';
+import styles, { CONTAINER_SIZE } from './FloatingButton.style';
 
 const { COLORS } = C;
 const { MOTION: { DURATION } } = THEME;
 
 class FloatingButton extends PureComponent {
   static propTypes = {
+    color: string,
     onPress: func.isRequired,
     options: arrayOf(string),
     visible: bool,
   };
 
   static defaultProps = {
+    color: undefined,
     options: undefined,
     visible: false,
   };
@@ -47,7 +49,7 @@ class FloatingButton extends PureComponent {
 
   render() {
     const {
-      _onPress, _onOption, state: { opened }, props: { options, visible },
+      _onPress, _onOption, state: { opened }, props: { color, options, visible },
     } = this;
 
     return (
@@ -62,7 +64,10 @@ class FloatingButton extends PureComponent {
                 preset="fade"
                 visible={opened}
               >
-                <Touchable onPress={opened ? () => _onOption(index) : undefined}>
+                <Touchable
+
+                  onPress={opened ? () => _onOption(index) : undefined}
+                >
                   <View style={styles.option}>
                     <Text subtitle level={3}>{option}</Text>
                     <View style={[styles.optionBullet, { backgroundColor: COLORS[index] }]} />
@@ -73,9 +78,15 @@ class FloatingButton extends PureComponent {
           </View>)}
 
         <Motion preset="fade" visible={visible} delay={visible ? DURATION * 2 : 0}>
-          <Motion timeline={[{ property: 'scale', value: opened ? 0.75 : 1 }]}>
-            <Touchable onPress={_onPress}>
-              <View style={[styles.button, opened && styles.buttonOpened]}>
+          <Motion timeline={[{ property: 'scale', value: visible && opened ? 0.75 : 1 }]}>
+            <Touchable containerBorderRadius={CONTAINER_SIZE / 2} onPress={_onPress} rippleColor={COLORS.BACKGROUND}>
+              <View
+                style={[
+                  styles.button,
+                  visible && opened && styles.buttonOpened,
+                  color && { backgroundColor: color },
+                ]}
+              >
                 <Icon value={iconAdd} style={styles.icon} />
               </View>
             </Touchable>
