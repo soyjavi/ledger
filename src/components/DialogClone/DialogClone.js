@@ -29,14 +29,14 @@ class DialogClone extends PureComponent {
   _onSubmit = async ({ onTransaction }) => {
     const {
       dataSource: {
-        vault, category, value, title, type,
+        vault, category, location, value, title, type,
       },
       onClose,
     } = this.props;
 
     this.setState({ busy: true });
     const tx = await onTransaction({
-      vault, category, value, title, type,
+      vault, category, value, title, type, ...location,
     });
     this.setState({ busy: false });
 
