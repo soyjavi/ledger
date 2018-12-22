@@ -2,6 +2,7 @@ import iconAdd from './icon_add.png';
 import iconBack from './icon_back.png';
 import iconChart from './icon_chart.png';
 import iconExpenses from './icon_expenses.png';
+import iconFingerprint from './icon_fingerprint.png';
 import iconIncomes from './icon_incomes.png';
 import iconPlace from './icon_place.png';
 import iconShuffle from './icon_shuffle.png';
@@ -14,6 +15,7 @@ export {
   iconBack,
   iconChart,
   iconExpenses,
+  iconFingerprint,
   iconIncomes,
   iconPlace,
   iconShuffle,
