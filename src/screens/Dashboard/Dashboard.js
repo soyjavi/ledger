@@ -57,7 +57,6 @@ class Dashboard extends PureComponent {
             <Fragment>
               <Button
                 color={COLOR.TRANSPARENT}
-                rippleColor={COLOR.PRIMARY}
                 icon={iconChart}
                 iconSize={24}
                 onPress={() => _onStats({ navigation, store })}

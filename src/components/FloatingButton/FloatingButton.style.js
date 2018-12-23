@@ -11,7 +11,7 @@ export default StyleSheet.create({
   button: {
     ...LAYOUT.STYLE.SHADOW,
     ...LAYOUT.STYLE.CENTERED,
-    backgroundColor: COLOR.PRIMARY,
+    backgroundColor: COLOR.TEXT,
     borderRadius: CONTAINER_SIZE / 2,
     height: CONTAINER_SIZE,
     width: CONTAINER_SIZE,
@@ -36,11 +36,8 @@ export default StyleSheet.create({
   options: {
     alignItems: 'flex-end',
     flexDirection: 'column-reverse',
-    marginRight: (CONTAINER_SIZE / 3),
-    // backgroundColor: 'rgba(0, 255, 0, 0.25)', // @TODO
+    marginRight: UNIT,
   },
-
-  optionsOpened: {},
 
   option: {
     ...LAYOUT.STYLE.SHADOW,
@@ -52,13 +49,5 @@ export default StyleSheet.create({
     marginVertical: OFFSET / 2,
     paddingHorizontal: UNIT,
     paddingVertical: UNIT / 2,
-  },
-
-  optionBullet: {
-    backgroundColor: COLOR.BASE,
-    borderRadius: UNIT / 2,
-    height: UNIT,
-    marginLeft: UNIT,
-    width: UNIT,
   },
 });

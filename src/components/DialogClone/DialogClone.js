@@ -51,7 +51,6 @@ class DialogClone extends PureComponent {
       },
       state: { busy },
     } = this;
-
     const color = COLORS[category];
 
     return (

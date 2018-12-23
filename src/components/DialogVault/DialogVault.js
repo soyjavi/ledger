@@ -63,7 +63,7 @@ class DialogVault extends PureComponent {
           },
         }) => (
           <Dialog style={styles.frame} styleContainer={styles.dialog} visible={visible}>
-            <Text color={COLOR.PRIMARY} headline level={5} style={styles.title}>
+            <Text color={COLOR.TEXT} headline level={5} style={styles.title}>
               {`${l10n.NEW} ${l10n.VAULT}`}
             </Text>
             <Text lighten level={2}>
@@ -83,7 +83,7 @@ class DialogVault extends PureComponent {
               { vaults.length > 0 && (
                 <Button
                   title={l10n.CANCEL}
-                  color={COLOR.PRIMARY}
+                  color={COLOR.TEXT}
                   outlined
                   onPress={onClose}
                   rounded
@@ -91,7 +91,7 @@ class DialogVault extends PureComponent {
                 />)}
               <Button
                 activity={busy}
-                color={COLOR.PRIMARY}
+                color={COLOR.TEXT}
                 disabled={busy || !valid}
                 onPress={() => _onSubmit(store)}
                 rounded

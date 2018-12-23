@@ -1,6 +1,7 @@
 import { ENV } from '../reactor/common';
 import C from './constants';
 
+const { COLORS } = C;
 const { IS_WEB } = ENV;
 
 const FAMILY = IS_WEB ? 'Google Sans' : 'google-sans';
@@ -13,14 +14,15 @@ export default {
   COLOR: {
     BACKGROUND: '#fff',
     BACKGROUND_OPACITY: 'rgba(255,255,255,0.9)',
+    BASE: 'rgba(0,0,0,0.1)',
+    TEXT: '#333',
     // DARK-MODE
     // BACKGROUND: '#000',
     // BACKGROUND_OPACITY: 'rgba(0,0,0,0.9)',
-    // BASE: '#333',
-    // TEXT: '#ccc',
-    // TEXT_LIGHTEN: '#999',
+    // BASE: 'rgba(255,255,255,0.1)',
+    // TEXT: '#fff',
 
-    PRIMARY: '#21ce99', // PRIMARY: '#33E468',
+    PRIMARY: COLORS[0],
   },
 
   FONT: {

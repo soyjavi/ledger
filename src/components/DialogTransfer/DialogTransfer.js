@@ -11,7 +11,7 @@ import { hydrateTransfer, onTransfer } from './modules';
 
 import styles from './DialogTransfer.style';
 
-const COLOR_TX = C.COLORS[2];
+const { COLORS } = C;
 
 class DialogTransfer extends PureComponent {
   static propTypes = {
@@ -87,7 +87,7 @@ class DialogTransfer extends PureComponent {
             style={styles.frame}
             styleContainer={styles.dialog}
           >
-            <Text color={COLOR_TX} headline level={5} style={styles.title}>
+            <Text color={COLORS.TEXT} headline level={5} style={styles.title}>
               {`${l10n.NEW} ${l10n.TRANSFER}`}
             </Text>
             <Text lighten level={2}>
@@ -97,7 +97,7 @@ class DialogTransfer extends PureComponent {
               attributes={translate(hydrateTransfer({
                 form, l10n, store, vault,
               }), l10n)}
-              color={COLOR_TX}
+              color={COLORS.TEXT}
               onValid={_onValid}
               onChange={value => _onChange(value, store)}
               style={styles.form}
@@ -105,7 +105,7 @@ class DialogTransfer extends PureComponent {
             />
             <View style={styles.buttons}>
               <Button
-                color={COLOR_TX}
+                color={COLORS.TEXT}
                 outlined
                 onPress={onClose}
                 rounded
@@ -114,7 +114,7 @@ class DialogTransfer extends PureComponent {
               />
               <Button
                 activity={busy}
-                color={COLOR_TX}
+                color={COLORS.TEXT}
                 disabled={busy || !valid}
                 onPress={() => _onSubmit({ l10n, store })}
                 rounded

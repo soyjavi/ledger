@@ -17,7 +17,7 @@ const Header = ({
   <Consumer>
     { ({ l10n }) => (
       <View style={[styles.container, inherit.style]}>
-        <Button color={COLOR.TRANSPARENT} rippleColor={COLOR.PRIMARY} {...left} iconSize={24} />
+        <Button color={COLOR.TRANSPARENT} {...left} iconSize={24} />
         <View style={styles.content}>
           { onSearch && (
             <TextInput
@@ -33,7 +33,7 @@ const Header = ({
               { title }
             </Text>)}
         </View>
-        <Button color={COLOR.TRANSPARENT} rippleColor={COLOR.PRIMARY} {...right} iconSize={24} />
+        <Button color={COLOR.TRANSPARENT} {...right} iconSize={24} />
       </View>
     )}
   </Consumer>

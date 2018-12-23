@@ -1,4 +1,6 @@
-import { bool, func, number } from 'prop-types';
+import {
+  bool, func, number, string,
+} from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
 import { View } from 'react-native';
 
@@ -16,6 +18,7 @@ const { COLORS, TX: { TYPE: { EXPENSE } } } = C;
 
 class DialogTransaction extends PureComponent {
   static propTypes = {
+    color: string,
     onClose: func.isRequired,
     getLocationAsync: func.isRequired,
     type: number.isRequired,
@@ -23,6 +26,7 @@ class DialogTransaction extends PureComponent {
   };
 
   static defaultProps = {
+    color: COLORS.TEXT,
     visible: false,
   };
 
@@ -92,7 +96,7 @@ class DialogTransaction extends PureComponent {
     const {
       _onChange, _onChangeLocation, _onSubmit, _onValid,
       props: {
-        getLocationAsync, onClose, type, visible,
+        color, getLocationAsync, onClose, type, visible,
       },
       state: {
         busy, coords, form, location, place, valid,
@@ -103,7 +107,7 @@ class DialogTransaction extends PureComponent {
       <Consumer>
         { ({ l10n, store }) => (
           <Dialog visible={visible} style={styles.frame} styleContainer={styles.dialog}>
-            <Text color={COLORS[type]} headline level={5} style={styles.title}>
+            <Text color={color} headline level={5} style={styles.title}>
               {`${l10n.NEW} ${type === EXPENSE ? l10n.EXPENSE : l10n.INCOME}`}
             </Text>
             <Text lighten level={2}>
@@ -112,7 +116,7 @@ class DialogTransaction extends PureComponent {
             <View style={styles.form}>
               <Form
                 attributes={translate(hydrateTransaction({ l10n, type }), l10n)}
-                color={COLORS[type]}
+                color={color}
                 onValid={_onValid}
                 onChange={_onChange}
                 value={form}
@@ -120,7 +124,7 @@ class DialogTransaction extends PureComponent {
               { getLocationAsync && (
                 <Fragment>
                   <Switch
-                    color={COLORS[type]}
+                    color={color}
                     label={l10n.SAVE_LOCATION}
                     onChange={_onChangeLocation}
                     value={location}
@@ -135,7 +139,7 @@ class DialogTransaction extends PureComponent {
 
             <View style={styles.buttons}>
               <Button
-                color={COLORS[type]}
+                color={color}
                 outlined
                 onPress={onClose}
                 rounded
@@ -144,7 +148,7 @@ class DialogTransaction extends PureComponent {
               />
               <Button
                 activity={busy}
-                color={COLORS[type]}
+                color={color}
                 disabled={busy || !valid}
                 onPress={() => _onSubmit({ l10n, store })}
                 rounded

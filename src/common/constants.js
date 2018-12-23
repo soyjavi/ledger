@@ -15,11 +15,10 @@ const IS_ANDROID = Platform.OS === 'android';
 export default {
   VAULT_TRANSFER: 99,
   COLORS: [
-    // '#7C4DFF', '#00C09A', '#639CEB', '#CA66BD', '#28BC34', '#50CDEA', '#F45D88',
-    // '#8460D0', '#FF7233', '#69F0AE', '#FF4081', '#FFD740', '#536DFE', '#FF5252',
-
-    '#21ce99', '#7C4DFF', '#639CEB', '#CA66BD', '#50CDEA', '#F45D88',
-    '#8460D0', '#FF7233', '#FF4081', '#FFD740', '#536DFE', '#FF5252',
+    '#7C4DFF', '#00C09A', '#639CEB', '#CA66BD', '#28BC34', '#50CDEA', '#F45D88',
+    '#8460D0', '#FF7233', '#69F0AE', '#FF4081', '#FFD740', '#536DFE', '#FF5252',
+    // '#21ce99'
+    // '#21ce99', // PRIMARY: '#33E468',
   ],
 
   ENDPOINT: IS_PRODUCTION ? 'https://voltvault.glitch.me' : 'http://localhost:8080',
@@ -33,6 +32,7 @@ export default {
   },
 
   LANGUAGE: 'en-EN',
+  LOCATION_PROPS: { enableHighAccuracy: true },
 
   NAME: PKG.name,
 

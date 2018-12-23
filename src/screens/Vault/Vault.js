@@ -1,6 +1,6 @@
 import { bool, shape } from 'prop-types';
 import React, { Fragment, Component } from 'react';
-import { Image, ScrollView, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
 import { iconBack, iconShuffle } from '../../assets';
 import { C, exchange } from '../../common';
@@ -143,6 +143,7 @@ class Vault extends Component {
               { visible && (
                 <Fragment>
                   <DialogTransaction
+                    color={color}
                     getLocationAsync={inherit.getLocationAsync}
                     type={type}
                     vault={hash}

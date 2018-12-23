@@ -55,7 +55,7 @@ class FloatingButton extends PureComponent {
     return (
       <View style={styles.container}>
         { options && visible && (
-          <View style={[styles.options, opened && styles.optionsOpened]} pointerEvents={opened ? undefined : 'none'}>
+          <View style={styles.options} pointerEvents={opened ? undefined : 'none'}>
             { options.map((option, index) => (
               <Motion
                 delay={(index / 2) * (DURATION / 2)}
@@ -64,13 +64,9 @@ class FloatingButton extends PureComponent {
                 preset="fade"
                 visible={opened}
               >
-                <Touchable
-
-                  onPress={opened ? () => _onOption(index) : undefined}
-                >
+                <Touchable onPress={opened ? () => _onOption(index) : undefined}>
                   <View style={styles.option}>
                     <Text subtitle level={3}>{option}</Text>
-                    <View style={[styles.optionBullet, { backgroundColor: COLORS[index] }]} />
                   </View>
                 </Touchable>
               </Motion>
