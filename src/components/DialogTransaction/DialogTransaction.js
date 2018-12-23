@@ -149,7 +149,7 @@ class DialogTransaction extends PureComponent {
               <Button
                 activity={busy}
                 color={color}
-                disabled={busy || !valid}
+                disabled={busy || !valid || (location && !place)}
                 onPress={() => _onSubmit({ l10n, store })}
                 rounded
                 shadow
