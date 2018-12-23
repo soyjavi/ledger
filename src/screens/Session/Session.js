@@ -1,8 +1,8 @@
-import { bool } from 'prop-types';
+import { bool, func } from 'prop-types';
 import React, { PureComponent } from 'react';
 import { Image, View } from 'react-native';
 
-import { logo } from '../../assets';
+import { iconFingerprint, logo } from '../../assets';
 import { C } from '../../common';
 import { Consumer } from '../../context';
 import { NumKeyboard } from '../../components';
@@ -18,16 +18,26 @@ const { MOTION: { DURATION } } = THEME;
 
 class Session extends PureComponent {
   static propTypes = {
+    getFingerprintAsync: func,
     visible: bool,
   };
 
   static defaultProps = {
+    getFingerprintAsync: undefined,
     visible: false,
   };
 
   state = {
     busy: false,
     pin: '',
+  }
+
+  async componentDidMount() {
+    const { props: { getFingerprintAsync } } = this;
+
+    if (getFingerprintAsync && await getFingerprintAsync()) {
+      console.log('fingerprint readed');
+    }
   }
 
   _onNumber = ({ number, store, navigation }) => {
@@ -47,7 +57,7 @@ class Session extends PureComponent {
   render() {
     const {
       _onNumber,
-      props: { visible, ...inherit },
+      props: { getFingerprintAsync, visible, ...inherit },
       state: { busy, pin },
     } = this;
 
@@ -72,6 +82,8 @@ class Session extends PureComponent {
                   { busy ? l10n.LOADING_PROFILE : l10n.ENTER_PIN }
                 </Text>
               </View>
+              { getFingerprintAsync && (
+                <Image source={iconFingerprint} resizeMode="contain" style={styles.fingerprint} />)}
 
               <NumKeyboard onPress={number => _onNumber({ number, store, navigation })} />
               <Text lighten caption level={3} style={styles.text}>{`v${VERSION}`}</Text>

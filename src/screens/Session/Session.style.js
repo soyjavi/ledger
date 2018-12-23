@@ -2,7 +2,9 @@ import { StyleSheet } from 'react-native';
 
 import { THEME } from '../../reactor/common';
 
-const { COLOR, FONT, OFFSET, UNIT } = THEME;
+const {
+  COLOR, FONT, OFFSET, UNIT,
+} = THEME;
 
 const BULLET_SIZE = UNIT * 2;
 
@@ -24,7 +26,7 @@ export default StyleSheet.create({
   },
 
   bulletActive: {
-    backgroundColor: COLOR.PRIMARY,
+    backgroundColor: COLOR.TEXT,
   },
 
   container: {
@@ -39,6 +41,13 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     paddingHorizontal: OFFSET,
+  },
+
+  fingerprint: {
+    alignSelf: 'center',
+    width: BULLET_SIZE * 2,
+    height: BULLET_SIZE * 2,
+    marginBottom: UNIT * 2.4,
   },
 
   logo: {
