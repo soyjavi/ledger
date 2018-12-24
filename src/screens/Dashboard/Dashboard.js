@@ -34,13 +34,15 @@ class Dashboard extends PureComponent {
   }
 
   _onVault = ({ navigation, store, vault }) => {
-    store.query({ vault: vault.hash, method: 'groupByDay', date: new Date().toISOString().substr(0, 7) });
     navigation.navigate('vault', vault);
+    setTimeout(() => {
+      store.query({ vault: vault.hash, method: 'groupByDay', date: new Date().toISOString().substr(0, 7) });
+    }, 250);
   }
 
   _onStats = ({ navigation, store: { overall: { months }, query } }) => {
-    query({ method: 'groupByCategory', date: months[months.length - 1] });
     navigation.navigate(SCREEN.STATS);
+    query({ method: 'groupByCategory', date: months[months.length - 1] });
   }
 
   render() {
