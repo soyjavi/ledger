@@ -15,10 +15,11 @@ const IS_ANDROID = Platform.OS === 'android';
 export default {
   VAULT_TRANSFER: 99,
   COLORS: [
-    '#7C4DFF', '#00C09A', '#639CEB', '#CA66BD', '#28BC34', '#50CDEA', '#F45D88',
-    '#8460D0', '#FF7233', '#69F0AE', '#FF4081', '#FFD740', '#536DFE', '#FF5252',
-    // '#21ce99'
-    // '#21ce99', // PRIMARY: '#33E468',
+    '#21ce99',
+    '#FFC312', '#C4E538', '#12CBC4', '#FDA7DF', '#ED4C67',
+    '#F79F1F', '#A3CB38', '#1289A7', '#D980FA', '#B53471',
+    '#EE5A24', '#009432', '#0652DD', '#9980FA', '#833471',
+    '#EA2027', '#006266', '#1B1464', '#5758BB', '#6F1E51',
   ],
 
   ENDPOINT: IS_PRODUCTION ? 'https://voltvault.glitch.me' : 'http://localhost:8080',

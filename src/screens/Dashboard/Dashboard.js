@@ -35,12 +35,12 @@ class Dashboard extends PureComponent {
 
   _onVault = async ({ navigation, store, vault }) => {
     await store.query({ vault: vault.hash, method: 'groupByDay', date: new Date().toISOString().substr(0, 7) });
-    setTimeout(navigation.navigate(SCREEN.VAULT, vault), MOTION.DURATION);
+    setTimeout(() => navigation.navigate(SCREEN.VAULT, vault), MOTION.DURATION);
   }
 
   _onStats = async ({ navigation, store: { overall: { months }, query } }) => {
     await query({ method: 'groupByCategory', date: months[months.length - 1] });
-    setTimeout(navigation.navigate(SCREEN.STATS), MOTION.DURATION);
+    setTimeout(() => navigation.navigate(SCREEN.STATS), MOTION.DURATION);
   }
 
   render() {

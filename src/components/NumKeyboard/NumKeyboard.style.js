@@ -10,7 +10,7 @@ export { KEY_HEIGHT };
 export default StyleSheet.create({
   container: {
     alignSelf: 'flex-end',
-    bottom: OFFSET * 2,
+    bottom: OFFSET,
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
