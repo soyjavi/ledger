@@ -13,7 +13,7 @@ import { Button, Viewport } from '../../reactor/components';
 import styles from './Dashboard.style';
 
 const { SCREEN } = C;
-const { COLOR } = THEME;
+const { COLOR, MOTION } = THEME;
 
 class Dashboard extends PureComponent {
   static propTypes = {
@@ -33,16 +33,14 @@ class Dashboard extends PureComponent {
     this.setState({ dialog: !dialog });
   }
 
-  _onVault = ({ navigation, store, vault }) => {
-    navigation.navigate('vault', vault);
-    setTimeout(() => {
-      store.query({ vault: vault.hash, method: 'groupByDay', date: new Date().toISOString().substr(0, 7) });
-    }, 250);
+  _onVault = async ({ navigation, store, vault }) => {
+    await store.query({ vault: vault.hash, method: 'groupByDay', date: new Date().toISOString().substr(0, 7) });
+    setTimeout(navigation.navigate(SCREEN.VAULT, vault), MOTION.DURATION);
   }
 
-  _onStats = ({ navigation, store: { overall: { months }, query } }) => {
-    navigation.navigate(SCREEN.STATS);
-    query({ method: 'groupByCategory', date: months[months.length - 1] });
+  _onStats = async ({ navigation, store: { overall: { months }, query } }) => {
+    await query({ method: 'groupByCategory', date: months[months.length - 1] });
+    setTimeout(navigation.navigate(SCREEN.STATS), MOTION.DURATION);
   }
 
   render() {

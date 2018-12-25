@@ -156,10 +156,12 @@ class ProviderStore extends Component {
     const { method } = queryProps;
     let queryTxs = [];
 
-    if (method === 'groupByDay') queryTxs = groupByDay(state, queryProps);
-    else if (method === 'groupByCategory') queryTxs = groupByCategory(state, queryProps);
+    if (JSON.stringify(queryProps) !== JSON.stringify(state.queryProps)) {
+      if (method === 'groupByDay') queryTxs = groupByDay(state, queryProps);
+      else if (method === 'groupByCategory') queryTxs = groupByCategory(state, queryProps);
 
-    this.setState({ queryProps, queryTxs });
+      this.setState({ queryProps, queryTxs });
+    }
   }
 
   _store = async (value) => {
