@@ -38,10 +38,10 @@ export default {
   NAME: PKG.name,
 
   SCREEN: {
-    SESSION: 'session',
-    DASHBOARD: 'dashboard',
-    STATS: 'stats',
-    VAULT: 'vault',
+    SESSION: 'Session',
+    DASHBOARD: 'Dashboard',
+    STATS: 'Stats',
+    VAULT: 'Vault',
   },
   STYLE: {
     BANNER: {

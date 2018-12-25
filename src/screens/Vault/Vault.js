@@ -18,11 +18,13 @@ let TIMEOUT;
 class Vault extends Component {
   static propTypes = {
     dataSource: shape({}),
+    navigation: shape({}),
     visible: bool,
   };
 
   static defaultProps = {
     dataSource: {},
+    navigation: undefined,
     visible: false,
   };
 
@@ -82,7 +84,7 @@ class Vault extends Component {
       props: {
         dataSource: { color, currency, hash },
         visible,
-        ...inherit
+        ...props
       },
       state: {
         clone, dialog, switchCurrency, type,
@@ -90,7 +92,7 @@ class Vault extends Component {
     } = this;
 
     return (
-      <Viewport {...inherit} scroll={false} visible={visible}>
+      <Viewport {...props} scroll={false} visible={visible}>
         <Consumer>
           { ({
             navigation, l10n,
@@ -100,7 +102,7 @@ class Vault extends Component {
           }) => (
             <Fragment>
               <Header
-                left={{ icon: iconBack, onPress: () => navigation.goBack() }}
+                left={{ icon: iconBack, onPress: () => navigation.goBack(props.navigation) }}
                 onSearch={visible
                   ? value => _onSearch({ value, store, l10n })
                   : undefined}
@@ -138,13 +140,13 @@ class Vault extends Component {
                 color={color}
                 onPress={dialog ? _onToggleDialog : _onTransactionType}
                 options={vaults.length === 1 ? [l10n.EXPENSE, l10n.INCOME] : [l10n.EXPENSE, l10n.INCOME, l10n.TRANSFER]}
-                visible={!dialog && !inherit.backward}
+                visible={!dialog && !props.backward}
               />
               { visible && (
                 <Fragment>
                   <DialogTransaction
                     color={color}
-                    getLocationAsync={inherit.getLocationAsync}
+                    getLocationAsync={props.getLocationAsync}
                     type={type}
                     vault={hash}
                     onClose={_onToggleDialog}

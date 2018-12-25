@@ -1,4 +1,4 @@
-import { bool } from 'prop-types';
+import { bool, shape } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
 import { ScrollView } from 'react-native';
 
@@ -13,15 +13,17 @@ import { Button, Viewport } from '../../reactor/components';
 import styles from './Dashboard.style';
 
 const { SCREEN } = C;
-const { COLOR, MOTION } = THEME;
+const { COLOR } = THEME;
 
 class Dashboard extends PureComponent {
   static propTypes = {
+    navigation: shape({}),
     visible: bool,
   };
 
   static defaultProps = {
-    visible: false,
+    navigation: undefined,
+    visible: true,
   };
 
   state = {
@@ -33,14 +35,18 @@ class Dashboard extends PureComponent {
     this.setState({ dialog: !dialog });
   }
 
-  _onVault = async ({ navigation, store, vault }) => {
-    await store.query({ vault: vault.hash, method: 'groupByDay', date: new Date().toISOString().substr(0, 7) });
-    setTimeout(() => navigation.navigate(SCREEN.VAULT, vault), MOTION.DURATION);
+  _onVault = ({ navigation, store, vault }) => {
+    const { props } = this;
+
+    store.query({ vault: vault.hash, method: 'groupByDay', date: new Date().toISOString().substr(0, 7) });
+    navigation.navigate(SCREEN.VAULT, vault, props.navigation);
   }
 
-  _onStats = async ({ navigation, store: { overall: { months }, query } }) => {
-    await query({ method: 'groupByCategory', date: months[months.length - 1] });
-    setTimeout(() => navigation.navigate(SCREEN.STATS), MOTION.DURATION);
+  _onStats = ({ navigation, store: { overall: { months }, query } }) => {
+    const { props } = this;
+
+    query({ method: 'groupByCategory', date: months[months.length - 1] });
+    navigation.navigate(SCREEN.STATS, undefined, props.navigation);
   }
 
   render() {
