@@ -33,19 +33,21 @@ class ProviderNavigation extends PureComponent {
     return params[current];
   }
 
-  goBack = () => {
+  goBack = (navigator) => {
     const { state: { stack } } = this;
 
     stack.pop();
     if (stack.length === 0) stack.push(SESSION);
     this.setState({ stack });
     this.forceUpdate();
+    if (navigator) navigator.goBack();
   }
 
-  navigate = (screen, parameters) => {
+  navigate = (screen, parameters = {}, navigator) => {
     const { state: { params, stack } } = this;
 
     this.setState({ stack: [...stack, screen], params: { ...params, [screen]: parameters } });
+    if (navigator) navigator.navigate(screen, parameters);
   }
 
   render() {
