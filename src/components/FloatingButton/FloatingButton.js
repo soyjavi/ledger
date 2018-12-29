@@ -80,7 +80,7 @@ class FloatingButton extends PureComponent {
                 style={[
                   styles.button,
                   visible && opened && styles.buttonOpened,
-                  color && { backgroundColor: color },
+                  color && { backgroundColor: color, shadowColor: color },
                 ]}
               >
                 <Icon value={iconAdd} style={styles.icon} />
