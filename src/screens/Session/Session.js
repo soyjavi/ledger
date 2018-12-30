@@ -62,7 +62,7 @@ class Session extends PureComponent {
     } = this;
 
     return (
-      <Viewport scroll={false} visible={visible} {...inherit}>
+      <Viewport scroll={false} visible {...inherit}>
         <Consumer>
           { ({ l10n, store, navigation }) => (
             <View style={styles.container}>

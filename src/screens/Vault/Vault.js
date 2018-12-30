@@ -17,15 +17,13 @@ let TIMEOUT;
 
 class Vault extends Component {
   static propTypes = {
-    dataSource: shape({}),
     navigation: shape({}),
     visible: bool,
   };
 
   static defaultProps = {
-    dataSource: {},
     navigation: undefined,
-    visible: false,
+    visible: true,
   };
 
   state = {
@@ -81,15 +79,12 @@ class Vault extends Component {
   render() {
     const {
       _onSearch, _onSwitchCurrency, _onToggleClone, _onToggleDialog, _onTransactionType,
-      props: {
-        dataSource: { color, currency, hash },
-        visible,
-        ...props
-      },
+      props: { visible, ...props },
       state: {
         clone, dialog, switchCurrency, type,
       },
     } = this;
+    const { state: { params: { color, currency, hash } = {} } = {} } = props.navigation;
 
     return (
       <Viewport {...props} scroll={false} visible={visible}>
@@ -142,20 +137,17 @@ class Vault extends Component {
                 options={vaults.length === 1 ? [l10n.EXPENSE, l10n.INCOME] : [l10n.EXPENSE, l10n.INCOME, l10n.TRANSFER]}
                 visible={!dialog && !props.backward}
               />
-              { visible && (
-                <Fragment>
-                  <DialogTransaction
-                    color={color}
-                    getLocationAsync={props.getLocationAsync}
-                    type={type}
-                    vault={hash}
-                    onClose={_onToggleDialog}
-                    visible={dialog && type !== TRANSFER}
-                  />
-                  { vaults.length > 1 && (
-                    <DialogTransfer vault={hash} onClose={_onToggleDialog} visible={dialog && type === TRANSFER} />)}
-                  <DialogClone dataSource={clone} visible={!!clone} onClose={() => _onToggleClone()} />
-                </Fragment>)}
+              <DialogTransaction
+                color={color}
+                getLocationAsync={props.getLocationAsync}
+                type={type}
+                vault={hash}
+                onClose={_onToggleDialog}
+                visible={dialog && type !== TRANSFER}
+              />
+              { vaults.length > 1 && (
+                <DialogTransfer vault={hash} onClose={_onToggleDialog} visible={dialog && type === TRANSFER} />)}
+              <DialogClone dataSource={clone} visible={!!clone} onClose={() => _onToggleClone()} />
             </Fragment>
           )}
         </Consumer>
