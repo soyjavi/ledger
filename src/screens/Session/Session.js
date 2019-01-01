@@ -1,4 +1,4 @@
-import { bool, func } from 'prop-types';
+import { bool } from 'prop-types';
 import React, { PureComponent } from 'react';
 import { Image, View } from 'react-native';
 

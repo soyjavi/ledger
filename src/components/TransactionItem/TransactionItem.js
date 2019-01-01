@@ -1,4 +1,6 @@
-import { func, number, shape, string } from 'prop-types';
+import {
+  func, number, shape, string,
+} from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
 import { View } from 'react-native';
 
