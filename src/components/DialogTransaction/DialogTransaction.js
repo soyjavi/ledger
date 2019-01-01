@@ -20,7 +20,6 @@ class DialogTransaction extends PureComponent {
   static propTypes = {
     color: string,
     onClose: func.isRequired,
-    getLocationAsync: func.isRequired,
     type: number.isRequired,
     visible: bool,
   };
@@ -54,8 +53,7 @@ class DialogTransaction extends PureComponent {
 
   _onChange = form => this.setState({ form });
 
-  _onChangeLocation = async (location) => {
-    const { props: { getLocationAsync } } = this;
+  _onChangeLocation = async (location, getLocationAsync) => {
     this.setState({ coords: undefined, location, place: undefined });
 
     if (location) {
@@ -96,7 +94,7 @@ class DialogTransaction extends PureComponent {
     const {
       _onChange, _onChangeLocation, _onSubmit, _onValid,
       props: {
-        color, getLocationAsync, onClose, type, visible,
+        color, onClose, type, visible,
       },
       state: {
         busy, coords, form, location, place, valid,
@@ -105,7 +103,7 @@ class DialogTransaction extends PureComponent {
 
     return (
       <Consumer>
-        { ({ l10n, store }) => (
+        { ({ events: { getLocationAsync }, l10n, store }) => (
           <Dialog visible={visible} style={styles.frame} styleContainer={styles.dialog}>
             <Text color={color} headline level={5} style={styles.title}>
               {`${l10n.NEW} ${type === EXPENSE ? l10n.EXPENSE : l10n.INCOME}`}
@@ -126,7 +124,7 @@ class DialogTransaction extends PureComponent {
                   <Switch
                     color={color}
                     label={l10n.SAVE_LOCATION}
-                    onChange={_onChangeLocation}
+                    onChange={value => _onChangeLocation(value, getLocationAsync)}
                     value={location}
                   />
                   { location && (

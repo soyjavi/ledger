@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { C, L10N } from './common';
+import { C, L10N, getLocationAsync } from './common';
 import { Provider, Consumer, ConsumerNavigation } from './context';
 import { LayoutView, Snackbar } from './reactor/components';
 import {
@@ -13,11 +13,9 @@ const {
 } = SCREEN;
 
 export default props => (
-  <Provider dictionary={L10N} language={LANGUAGE}>
+  <Provider dictionary={L10N} language={LANGUAGE} getLocationAsync={getLocationAsync}>
     <ConsumerNavigation>
-      { ({
-        current, stack, parameters,
-      }) => (
+      { ({ current, params, stack }) => (
         <LayoutView>
           <Session backward={current !== SESSION} visible={stack.includes(SESSION)} />
 
@@ -25,7 +23,7 @@ export default props => (
           <Vault
             {...props}
             backward={current !== VAULT}
-            navigation={{ state: { params: parameters } }}
+            navigation={{ state: { params: params.Vault } }}
             visible={stack.includes(VAULT)}
           />
           <Stats backward={current !== STATS} visible={stack.includes(STATS)} />

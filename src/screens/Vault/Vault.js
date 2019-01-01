@@ -86,6 +86,8 @@ class Vault extends Component {
     } = this;
     const { state: { params: { color, currency, hash } = {} } = {} } = props.navigation;
 
+    console.log('⚡️', '<Vault />:render');
+
     return (
       <Viewport {...props} scroll={false} visible={visible}>
         <Consumer>
@@ -111,7 +113,7 @@ class Vault extends Component {
               />
               <ScrollView contentContainerStyle={styles.scroll}>
                 { queryTxs.length > 0
-                  ? queryTxs.map(tx => (
+                  ? (visible ? queryTxs : queryTxs.slice(0, 10)).map(tx => (
                     <TransactionItem
                       key={tx.hash || tx.timestamp}
                       {...tx}
@@ -137,17 +139,19 @@ class Vault extends Component {
                 options={vaults.length === 1 ? [l10n.EXPENSE, l10n.INCOME] : [l10n.EXPENSE, l10n.INCOME, l10n.TRANSFER]}
                 visible={!dialog && !props.backward}
               />
-              <DialogTransaction
-                color={color}
-                getLocationAsync={props.getLocationAsync}
-                type={type}
-                vault={hash}
-                onClose={_onToggleDialog}
-                visible={dialog && type !== TRANSFER}
-              />
-              { vaults.length > 1 && (
-                <DialogTransfer vault={hash} onClose={_onToggleDialog} visible={dialog && type === TRANSFER} />)}
-              <DialogClone dataSource={clone} visible={!!clone} onClose={() => _onToggleClone()} />
+              { visible && (
+                <Fragment>
+                  <DialogTransaction
+                    color={color}
+                    type={type}
+                    vault={hash}
+                    onClose={_onToggleDialog}
+                    visible={dialog && type !== TRANSFER}
+                  />
+                  { vaults.length > 1 && (
+                    <DialogTransfer vault={hash} onClose={_onToggleDialog} visible={dialog && type === TRANSFER} />)}
+                  <DialogClone dataSource={clone} visible={!!clone} onClose={() => _onToggleClone()} />
+                </Fragment>)}
             </Fragment>
           )}
         </Consumer>

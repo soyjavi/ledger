@@ -18,13 +18,11 @@ const { MOTION: { DURATION } } = THEME;
 
 class Session extends PureComponent {
   static propTypes = {
-    getFingerprintAsync: func,
     visible: bool,
   };
 
   static defaultProps = {
-    getFingerprintAsync: undefined,
-    visible: false,
+    visible: true,
   };
 
   state = {
@@ -55,16 +53,14 @@ class Session extends PureComponent {
   }
 
   render() {
-    const {
-      _onNumber,
-      props: { getFingerprintAsync, visible, ...inherit },
-      state: { busy, pin },
-    } = this;
+    const { _onNumber, props: { visible, ...props }, state: { busy, pin } } = this;
 
     return (
-      <Viewport scroll={false} visible {...inherit}>
+      <Viewport {...props} scroll={false} visible={visible}>
         <Consumer>
-          { ({ l10n, store, navigation }) => (
+          { ({
+            l10n, store, navigation, events: { getFingerprintAsync } = {},
+          }) => (
             <View style={styles.container}>
               <View style={styles.content}>
                 <Image source={logo} resizeMode="contain" style={styles.logo} />

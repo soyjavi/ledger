@@ -54,17 +54,17 @@ class App extends PureComponent {
     const Component = loaded ? require('./src/App').default : View; // eslint-disable-line
 
     return (
-      <Provider dictionary={L10N} language={LANGUAGE}>
+      <Provider
+        dictionary={L10N}
+        fingerprint={fingerprint ? LocalAuthentication : undefined}
+        getLocationAsync={_getLocationAsync}
+        language={LANGUAGE}
+      >
         { loaded
           ? <Navigation />
           : <View /> }
       </Provider>
     );
-    // return (
-    //   <Component
-    //     Fingerprint={fingerprint ? LocalAuthentication : undefined}
-    //     getLocationAsync={_getLocationAsync}
-    //   />);
   }
 }
 

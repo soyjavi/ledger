@@ -13,7 +13,9 @@ import styles from './VaultBalance.style';
 const { FIXED, SYMBOL } = C;
 
 const VaultBalance = ({ dataSource = {}, baseCurrency, txs }) => {
-  const { color, currency, overallBalance, title } = dataSource;
+  const {
+    color, currency, overallBalance, title,
+  } = dataSource;
   const activeCurrency = baseCurrency || currency;
   const { incomes: monthIncomes, expenses: monthExpenses } = cashflow(txs);
 

@@ -27,12 +27,6 @@ class ProviderNavigation extends PureComponent {
     return stack[stack.length - 1];
   }
 
-  get parameters() {
-    const { current, state: { params } } = this;
-
-    return params[current];
-  }
-
   goBack = (navigator) => {
     const { state: { stack } } = this;
 
@@ -40,27 +34,28 @@ class ProviderNavigation extends PureComponent {
     if (stack.length === 0) stack.push(SESSION);
     this.setState({ stack });
     this.forceUpdate();
-    if (navigator) navigator.goBack();
+    if (navigator && navigator.goBack) navigator.goBack();
   }
 
   navigate = (screen, parameters = {}, navigator) => {
     const { state: { params, stack } } = this;
 
     this.setState({ stack: [...stack, screen], params: { ...params, [screen]: parameters } });
+
     if (navigator) navigator.navigate(screen, parameters);
   }
 
   render() {
     const {
-      current, goBack, navigate, parameters,
+      current, goBack, navigate,
       props: { children },
-      state: { stack },
+      state: { params, stack },
     } = this;
 
     return (
       <Provider
         value={{
-          current, goBack, navigate, parameters, stack,
+          current, goBack, navigate, params, stack,
         }}
       >
         { children }
