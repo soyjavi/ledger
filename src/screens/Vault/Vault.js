@@ -1,6 +1,6 @@
 import { bool, shape } from 'prop-types';
 import React, { Fragment, Component } from 'react';
-import { ScrollView, View } from 'react-native';
+import { FlatList, View } from 'react-native';
 
 import { iconBack, iconShuffle } from '../../assets';
 import { C, exchange } from '../../common';
@@ -52,7 +52,7 @@ class Vault extends Component {
   }
 
   _onSearch = ({ value, store: { query }, l10n }) => {
-    const { dataSource: { hash: vault } } = this.props;
+    const { navigation: { state: { params: { hash: vault } } } } = this.props;
 
     clearTimeout(TIMEOUT);
     TIMEOUT = setTimeout(() => {
@@ -109,28 +109,34 @@ class Vault extends Component {
                 baseCurrency={switchCurrency ? baseCurrency : undefined}
                 txs={visible ? queryTxs : []}
               />
-              <ScrollView contentContainerStyle={styles.scroll}>
-                { queryTxs.length > 0
-                  ? (visible ? queryTxs : queryTxs.slice(0, 10)).map(tx => (
-                    <TransactionItem
-                      key={tx.hash || tx.timestamp}
-                      {...tx}
-                      currency={switchCurrency ? baseCurrency : currency}
-                      cashflow={switchCurrency && tx.cashflow
-                        ? {
-                          incomes: exchange(tx.cashflow.incomes, currency, baseCurrency, rates),
-                          expenses: exchange(tx.cashflow.expenses, currency, baseCurrency, rates),
-                        }
-                        : tx.cashflow}
-                      onClone={() => _onToggleClone(tx)}
-                      value={switchCurrency && tx.hash ? exchange(tx.value, currency, baseCurrency, rates) : tx.value}
-                    />))
-                  : (
-                    <View style={styles.content}>
-                      <Text level={2} lighten>{l10n.VAULT_EMPTY}</Text>
-                    </View>)
-                }
-              </ScrollView>
+
+              { queryTxs.length > 0
+                ? (
+                  <FlatList
+                    contentContainerStyle={styles.container}
+                    data={queryTxs}
+                    extraData={switchCurrency}
+                    keyExtractor={tx => tx.hash || tx.timestamp}
+                    renderItem={({ item: tx }) => (
+                      <TransactionItem
+                        {...tx}
+                        currency={switchCurrency ? baseCurrency : currency}
+                        cashflow={switchCurrency && tx.cashflow
+                          ? {
+                            incomes: exchange(tx.cashflow.incomes, currency, baseCurrency, rates),
+                            expenses: exchange(tx.cashflow.expenses, currency, baseCurrency, rates),
+                          }
+                          : tx.cashflow}
+                        onClone={() => _onToggleClone(tx)}
+                        value={switchCurrency && tx.hash ? exchange(tx.value, currency, baseCurrency, rates) : tx.value}
+                      />
+                    )}
+                  />)
+                : (
+                  <View style={[styles.content, styles.container]}>
+                    <Text level={2} lighten>{l10n.VAULT_EMPTY}</Text>
+                  </View>)}
+
               <FloatingButton
                 color={color}
                 onPress={dialog ? _onToggleDialog : _onTransactionType}

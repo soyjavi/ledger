@@ -1,7 +1,7 @@
 import {
   func, number, shape, string,
 } from 'prop-types';
-import React, { Fragment, PureComponent } from 'react';
+import React, { Fragment, Component } from 'react';
 import { View } from 'react-native';
 
 import { iconPlace, iconTime } from '../../assets';
@@ -21,7 +21,7 @@ const {
 } = C;
 const { COLOR } = THEME;
 
-class TransactionItem extends PureComponent {
+class TransactionItem extends Component {
   static propTypes = {
     category: number,
     currency: string,
@@ -50,6 +50,11 @@ class TransactionItem extends PureComponent {
   state = {
     extended: false,
   };
+
+  shouldComponentUpdate(nextProps, nextState) {
+    const { props: { currency, hash }, state: { extended } } = this;
+    return hash !== nextProps.hash || currency !== nextProps.currency || extended !== nextState.extended;
+  }
 
   _onToggleExtended = () => {
     const { state: { extended } } = this;
