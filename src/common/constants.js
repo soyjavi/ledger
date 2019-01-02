@@ -3,7 +3,7 @@ import { Platform } from 'react-native';
 import { LAYOUT, THEME } from '../reactor/common';
 import PKG from '../../package.json';
 
-const { OFFSET, UNIT } = THEME;
+const { COLOR, OFFSET, UNIT } = THEME;
 const { VIEWPORT: { W, H } } = LAYOUT;
 
 // const DEV = __DEV__ ? __DEV__ : { hello: 'world' }; // eslint-disable-line;
@@ -44,11 +44,9 @@ export default {
     VAULT: 'Vault',
   },
   STYLE: {
-    BANNER: {
-      alignSelf: 'center',
-      height: UNIT * 19.2,
-      marginTop: OFFSET,
-      width: UNIT * 28.8,
+    DIALOG: {
+      backgroundColor: COLOR.BACKGROUND_OPACITY,
+      justifyContent: 'flex-end',
     },
     HEADER_HEIGHT: UNIT * 5.8,
     HEADER_EXTENDED_HEIGHT: UNIT * 16,
