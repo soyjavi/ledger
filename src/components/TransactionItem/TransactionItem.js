@@ -108,7 +108,7 @@ class TransactionItem extends Component {
                   { expenses > 0 && (
                     <BulletPrice currency={currency} value={expenses} style={styles.bulletPrice} />)}
                 </View>
-                { value && (
+                { value > 0 && (
                   <Price
                     subtitle
                     level={2}
