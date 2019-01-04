@@ -3,7 +3,7 @@ import { Platform } from 'react-native';
 import { LAYOUT, THEME } from '../reactor/common';
 import PKG from '../../package.json';
 
-const { COLOR, OFFSET, UNIT } = THEME;
+const { UNIT } = THEME;
 const { VIEWPORT: { W, H } } = LAYOUT;
 
 // const DEV = __DEV__ ? __DEV__ : { hello: 'world' }; // eslint-disable-line;
@@ -45,7 +45,7 @@ export default {
   },
   STYLE: {
     DIALOG: {
-      backgroundColor: COLOR.BACKGROUND_OPACITY,
+      backgroundColor: 'rgba(255,255,255,0.9)',
       justifyContent: 'flex-end',
     },
     HEADER_HEIGHT: UNIT * 5.8,

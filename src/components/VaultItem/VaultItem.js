@@ -14,7 +14,7 @@ const { FIXED, SYMBOL } = C;
 
 const VaultItem = (props) => {
   const {
-    chart, color, currency, onPress, overallBalance, title,
+    balance, chart, color, currency, onPress, overallBalance, title,
   } = props;
 
   return (
@@ -37,7 +37,7 @@ const VaultItem = (props) => {
                     symbol={SYMBOL[currency]}
                   />
                 </View>
-                <Chart color={color} values={chart} />
+                <Chart color={color} inheritValue={balance} values={chart} />
               </View>
             </View>
           </View>
@@ -48,6 +48,7 @@ const VaultItem = (props) => {
 };
 
 VaultItem.propTypes = {
+  balance: number.isRequired,
   chart: arrayOf(number).isRequired,
   color: string,
   currency: string.isRequired,
