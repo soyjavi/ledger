@@ -1,17 +1,17 @@
-import { bool, func, shape } from 'prop-types';
+import {
+  bool, func, shape, string,
+} from 'prop-types';
 import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
-import { C } from '../../common';
 import { Consumer } from '../../context';
 import { Button, Dialog, Text } from '../../reactor/components';
 
 import styles from './DialogClone.style';
 
-const { COLORS } = C;
-
 class DialogClone extends PureComponent {
   static propTypes = {
+    color: string.isRequired,
     dataSource: shape({}),
     onClose: func.isRequired,
     visible: bool,
@@ -46,12 +46,9 @@ class DialogClone extends PureComponent {
   render() {
     const {
       _onSubmit,
-      props: {
-        dataSource: { category }, onClose, visible,
-      },
+      props: { color, onClose, visible },
       state: { busy },
     } = this;
-    const color = COLORS[category];
 
     return (
       <Consumer>

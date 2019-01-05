@@ -17,7 +17,7 @@ import formatTime from './modules/formatTime';
 import styles from './TransactionItem.style';
 
 const {
-  VAULT_TRANSFER, COLORS, FIXED, SYMBOL, TX: { TYPE: { EXPENSE } },
+  VAULT_TRANSFER, FIXED, SYMBOL, TX: { TYPE: { EXPENSE } },
 } = C;
 const { COLOR } = THEME;
 
@@ -74,8 +74,7 @@ class TransactionItem extends Component {
     const isBottom = inherit.last;
     const { incomes, expenses } = inherit.cashflow || {};
     const regular = category !== VAULT_TRANSFER;
-    let color = COLOR.TEXT;
-    if (regular) color = type === EXPENSE ? COLORS[category] : COLORS[(COLORS.length - 1) - category];
+    const color = regular ? inherit.color : COLOR.TEXT;
     const time = new Date(timestamp);
 
     return (

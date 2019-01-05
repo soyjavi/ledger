@@ -20,30 +20,26 @@ const VaultItem = (props) => {
   return (
     <Consumer>
       { ({ l10n }) => (
-        <Touchable rippleColor={color} onPress={onPress}>
-          <View style={styles.container}>
-            <View style={[styles.bullet, color && { backgroundColor: color }]} />
-            <View style={styles.content}>
-              <Text headline level={5} numberOfLines={1}>{title}</Text>
-              <View style={styles.summary}>
-                <View style={styles.texts}>
-                  <Text level={2} lighten numberOfLines={1}>{l10n.BALANCE}</Text>
-                  <Price
-                    fixed={FIXED[currency]}
-                    subtitle
-                    level={1}
-                    lighten
-                    value={overallBalance}
-                    symbol={SYMBOL[currency]}
-                  />
-                </View>
-                <Chart color={color} inheritValue={balance} values={chart} />
-              </View>
+        <Touchable rippleColor={color} onPress={onPress} style={styles.container}>
+          <View style={styles.content}>
+            <View style={styles.info}>
+              <Text headline level={5} numberOfLines={1} style={styles.title}>{title}</Text>
+              <Text caption lighten numberOfLines={1}>{l10n.BALANCE}</Text>
+              <Price
+                fixed={FIXED[currency]}
+                headline
+                level={5}
+                lighten
+                value={overallBalance}
+                symbol={SYMBOL[currency]}
+              />
             </View>
+            <Chart color={color} inheritValue={balance} values={chart} />
           </View>
         </Touchable>
       )}
     </Consumer>
+
   );
 };
 

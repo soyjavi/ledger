@@ -3,27 +3,28 @@ import { StyleSheet } from 'react-native';
 import { LAYOUT, THEME } from '../../reactor/common';
 
 const { COLOR, UNIT } = THEME;
+const BAR_SIZE = UNIT * 0.2;
 
 export default StyleSheet.create({
   container: {
     ...LAYOUT.STYLE.ROW,
     alignItems: 'flex-end',
-    height: UNIT * 4,
+    height: UNIT * 4.4,
     justifyContent: 'space-between',
   },
 
   bar: {
     backgroundColor: COLOR.BASE,
-    borderRadius: UNIT * 0.2,
+    borderRadius: BAR_SIZE,
     height: '100%',
-    marginHorizontal: UNIT * 0.2,
-    minHeight: UNIT * 0.5,
-    width: UNIT * 0.5,
+    marginHorizontal: BAR_SIZE,
+    minHeight: BAR_SIZE * 2,
+    width: BAR_SIZE * 2,
   },
 
   barTiny: {
-    marginHorizontal: UNIT * 0.1,
-    minHeight: UNIT * 0.2,
-    width: UNIT * 0.2,
+    marginHorizontal: BAR_SIZE / 2,
+    minHeight: BAR_SIZE,
+    width: BAR_SIZE,
   },
 });

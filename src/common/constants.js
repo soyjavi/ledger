@@ -15,11 +15,8 @@ const IS_ANDROID = Platform.OS === 'android';
 export default {
   VAULT_TRANSFER: 99,
   COLORS: [
-    '#21ce99',
-    '#FFC312', '#C4E538', '#12CBC4', '#FDA7DF', '#ED4C67',
-    '#F79F1F', '#A3CB38', '#1289A7', '#D980FA', '#B53471',
-    '#EE5A24', '#009432', '#0652DD', '#9980FA', '#833471',
-    '#EA2027', '#006266', '#1B1464', '#5758BB', '#6F1E51',
+    '#9d47b6', '#0fbde9', '#e6639b', '#ffb129', '#0c5061', '#6141da', '#f74440',
+    '#f87c44', '#1B1464', '#6F1E51', '#d6e06b', '#7c50b9', '#ffcc41', '#f88181',
   ],
 
   ENDPOINT: IS_PRODUCTION ? 'https://voltvault.glitch.me' : 'http://localhost:8080',
@@ -49,7 +46,7 @@ export default {
       justifyContent: 'flex-end',
     },
     HEADER_HEIGHT: UNIT * 5.8,
-    HEADER_EXTENDED_HEIGHT: UNIT * 16,
+    HEADER_EXTENDED_HEIGHT: UNIT * 15.2,
     NOTCH_HEIGHT: IS_ANDROID && (H / W > 1.95) ? 36 : 0,
     SLIDER_MONTHS_HEIGHT: UNIT * 3,
   },

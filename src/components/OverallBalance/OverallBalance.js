@@ -13,7 +13,7 @@ export default () => (
   <Consumer>
     { ({ l10n, store: { baseCurrency, overall = {} } }) => (
       <View style={styles.container}>
-        <Text lighten subtitle level={2} style={styles.title}>{l10n.OVERALL_BALANCE}</Text>
+        <Text lighten subtitle level={2}>{l10n.OVERALL_BALANCE}</Text>
         <Price headline level={4} fixed={FIXED[baseCurrency]} value={overall.total} symbol={SYMBOL[baseCurrency]} />
         <View style={styles.content}>
           <View style={styles.context}>
@@ -21,7 +21,7 @@ export default () => (
               <Icon value={iconIncomes} />
             </View>
             <View>
-              <Text subtitle level={3} lighten>{l10n.INCOMES}</Text>
+              <Text caption lighten>{l10n.INCOMES}</Text>
               <Price
                 headline
                 level={6}
@@ -37,7 +37,7 @@ export default () => (
               <Icon value={iconExpenses} />
             </View>
             <View>
-              <Text subtitle level={3} lighten>{l10n.EXPENSES}</Text>
+              <Text caption lighten>{l10n.EXPENSES}</Text>
               <Price
                 headline
                 level={6}

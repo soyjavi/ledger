@@ -14,18 +14,17 @@ import { hydrateTransaction } from './modules';
 
 import styles from './DialogTransaction.style';
 
-const { COLORS, TX: { TYPE: { EXPENSE } } } = C;
+const { TX: { TYPE: { EXPENSE } } } = C;
 
 class DialogTransaction extends PureComponent {
   static propTypes = {
-    color: string,
+    color: string.isRequired,
     onClose: func.isRequired,
     type: number.isRequired,
     visible: bool,
   };
 
   static defaultProps = {
-    color: COLORS.TEXT,
     visible: false,
   };
 

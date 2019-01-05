@@ -13,17 +13,15 @@ export default StyleSheet.create({
   },
 
   cashflow: {
-    flex: 1,
-    alignSelf: 'flex-end',
+    marginTop: OFFSET / 2,
   },
 
   container: {
-    alignItems: 'center',
     backgroundColor: COLOR.BACKGROUND_OPACITY,
     height: HEADER_EXTENDED_HEIGHT,
     left: 0,
     position: 'absolute',
-    paddingTop: HEADER_HEIGHT,
+    paddingTop: HEADER_HEIGHT + (OFFSET / 2),
     paddingHorizontal: OFFSET,
     right: 0,
     top: 0,
@@ -31,7 +29,11 @@ export default StyleSheet.create({
   },
 
   content: {
-    width: '100%',
+    alignItems: 'flex-end',
+  },
+
+  info: {
+    flex: 1,
   },
 
   row: LAYOUT.STYLE.ROW,
