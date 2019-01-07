@@ -3,22 +3,25 @@ import { StyleSheet } from 'react-native';
 import { LAYOUT, THEME } from '../../reactor/common';
 
 const { COLOR, UNIT } = THEME;
-const BULLET_SIZE = UNIT * 2;
 
 export default StyleSheet.create({
   bullet: {
     ...LAYOUT.STYLE.CENTERED,
-    backgroundColor: COLOR.BASE,
-    borderRadius: BULLET_SIZE / 2,
-    height: BULLET_SIZE,
+    borderWidth: UNIT / 4,
+    borderRadius: UNIT / 2,
+    height: UNIT,
     marginRight: UNIT / 2,
-    width: BULLET_SIZE,
+    width: UNIT,
+    opacity: 0.75,
   },
 
   container: LAYOUT.STYLE.ROW,
 
-  icon: {
-    height: BULLET_SIZE * 0.6,
-    width: BULLET_SIZE * 0.6,
+  expenses: {
+    borderColor: COLOR.ERROR,
+  },
+
+  incomes: {
+    borderColor: COLOR.SUCCESS,
   },
 });

@@ -1,5 +1,7 @@
-import { func, number, shape, string } from 'prop-types';
-import React, { Fragment, PureComponent } from 'react';
+import {
+  func, number, shape, string,
+} from 'prop-types';
+import React, { Fragment, Component } from 'react';
 import { View } from 'react-native';
 
 import { iconPlace, iconTime } from '../../assets';
@@ -15,11 +17,11 @@ import formatTime from './modules/formatTime';
 import styles from './TransactionItem.style';
 
 const {
-  VAULT_TRANSFER, COLORS, FIXED, SYMBOL, TX: { TYPE: { EXPENSE } },
+  VAULT_TRANSFER, FIXED, SYMBOL, TX: { TYPE: { EXPENSE } },
 } = C;
 const { COLOR } = THEME;
 
-class TransactionItem extends PureComponent {
+class TransactionItem extends Component {
   static propTypes = {
     category: number,
     currency: string,
@@ -49,6 +51,11 @@ class TransactionItem extends PureComponent {
     extended: false,
   };
 
+  shouldComponentUpdate(nextProps, nextState) {
+    const { props: { currency, hash }, state: { extended } } = this;
+    return hash !== nextProps.hash || currency !== nextProps.currency || extended !== nextState.extended;
+  }
+
   _onToggleExtended = () => {
     const { state: { extended } } = this;
     this.setState({ extended: !extended });
@@ -67,8 +74,7 @@ class TransactionItem extends PureComponent {
     const isBottom = inherit.last;
     const { incomes, expenses } = inherit.cashflow || {};
     const regular = category !== VAULT_TRANSFER;
-    let color = COLOR.TEXT;
-    if (regular) color = type === EXPENSE ? COLORS[category] : COLORS[(COLORS.length - 1) - category];
+    const color = regular ? inherit.color : COLOR.TEXT;
     const time = new Date(timestamp);
 
     return (
@@ -76,7 +82,7 @@ class TransactionItem extends PureComponent {
         { ({ l10n }) => (
           <Fragment>
             <Touchable rippleColor={color} onPress={hash ? _onToggleExtended : undefined}>
-              <View style={[styles.row, styles.container, isHeading && styles.heading]}>
+              <View style={[styles.container, isHeading && styles.heading]}>
                 <View
                   style={[
                     styles.line,
@@ -84,39 +90,42 @@ class TransactionItem extends PureComponent {
                     isBottom && !extended && styles.lineBottom,
                   ]}
                 />
-                <View style={[styles.bullet, hash && color && { backgroundColor: color }]} />
-                <View style={styles.texts}>
-                  { hash && regular && (
-                    <Text subtitle level={2} numberOfLines={1}>{l10n.CATEGORIES[type][category]}</Text>)}
-                  { hash && !regular && (
-                    <Text subtitle level={2} numberOfLines={1}>
-                      {`${l10n.TRANSFER} ${type === EXPENSE ? l10n.TO : l10n.FROM} ${title}`}
-                    </Text>)}
-                  { !hash && <Text subtitle level={3} lighten>{verboseDate(timestamp, l10n)}</Text> }
-                  { title && regular && <Text level={2} lighten numberOfLines={1}>{title}</Text> }
+                <View style={[styles.row, styles.content]}>
+                  <View style={[styles.bullet, hash && color && { backgroundColor: color }]} />
+                  <View style={styles.texts}>
+                    { hash && regular && (
+                      <Text subtitle level={2} numberOfLines={1}>{l10n.CATEGORIES[type][category]}</Text>)}
+                    { hash && !regular && (
+                      <Text subtitle level={2} numberOfLines={1}>
+                        {`${l10n.TRANSFER} ${type === EXPENSE ? l10n.TO : l10n.FROM} ${title}`}
+                      </Text>)}
+                    { !hash && <Text subtitle level={3} lighten>{verboseDate(timestamp, l10n)}</Text> }
+                    { title && regular && <Text level={2} lighten numberOfLines={1}>{title}</Text> }
+                  </View>
+                  <View style={styles.row}>
+                    { incomes > 0 && (
+                      <BulletPrice currency={currency} incomes value={incomes} style={styles.bulletPrice} />)}
+                    { expenses > 0 && (
+                      <BulletPrice currency={currency} value={expenses} style={styles.bulletPrice} />)}
+                  </View>
+                  { value > 0 && (
+                    <Price
+                      subtitle
+                      level={2}
+                      fixed={FIXED[currency]}
+                      symbol={SYMBOL[currency]}
+                      title={type === EXPENSE ? undefined : '+'}
+                      value={value}
+                    />)}
                 </View>
-                <View style={styles.row}>
-                  { incomes > 0 && (
-                    <BulletPrice currency={currency} incomes value={incomes} style={styles.bulletPrice} />)}
-                  { expenses > 0 && (
-                    <BulletPrice currency={currency} value={expenses} style={styles.bulletPrice} />)}
-                </View>
-                { value && (
-                  <Price
-                    subtitle
-                    level={2}
-                    fixed={FIXED[currency]}
-                    symbol={SYMBOL[currency]}
-                    title={type === EXPENSE ? undefined : '+'}
-                    value={value}
-                  />)}
               </View>
+
             </Touchable>
 
             { hash && extended && (
-              <Fragment>
+              <View>
+                <View style={[styles.line, isBottom && styles.lineBottomExtended]} />
                 <View style={[styles.row, styles.container, styles.extended]}>
-                  <View style={styles.line} />
                   <View style={styles.bullet} />
                   <View style={[styles.row, styles.texts]}>
                     <Icon value={iconTime} style={styles.icon} />
@@ -125,7 +134,6 @@ class TransactionItem extends PureComponent {
                 </View>
                 { location && (
                   <View style={[styles.row, styles.container, styles.extended]}>
-                    <View style={styles.line} />
                     <View style={styles.bullet} />
                     <View style={styles.texts}>
                       <Touchable rippleColor={COLOR.WHITE} onPress={() => {}}>
@@ -137,22 +145,19 @@ class TransactionItem extends PureComponent {
                       </View>
                     </View>
                   </View>)}
-                <View style={[styles.row, styles.container]}>
-                  <View style={[styles.line, isBottom && styles.lineBottom]} />
+                <View style={[styles.row, styles.container, styles.extended, styles.extendedBottom]}>
                   <View style={styles.bullet} />
-                  <View style={styles.texts}>
-                    <Button
-                      color={color}
-                      rounded
-                      title={l10n.CLONE}
-                      shadow
-                      small
-                      style={styles.button}
-                      onPress={onClone}
-                    />
-                  </View>
+                  <Button
+                    color={color}
+                    rounded
+                    title={l10n.CLONE}
+                    shadow
+                    small
+                    style={styles.button}
+                    onPress={onClone}
+                  />
                 </View>
-              </Fragment>
+              </View>
             )}
           </Fragment>
         )}

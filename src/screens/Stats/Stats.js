@@ -1,4 +1,4 @@
-import { bool } from 'prop-types';
+import { bool, shape } from 'prop-types';
 import React, { Fragment, Component } from 'react';
 import { View, ScrollView } from 'react-native';
 
@@ -14,11 +14,13 @@ const { COLORS, FIXED, SYMBOL } = C;
 
 class Stats extends Component {
   static propTypes = {
+    navigation: shape({}),
     visible: bool,
   };
 
   static defaultProps = {
-    visible: false,
+    navigation: undefined,
+    visible: true,
   };
 
   state = {
@@ -36,10 +38,10 @@ class Stats extends Component {
   }
 
   render() {
-    const { props: { visible, ...inherit } } = this;
+    const { props: { visible, ...props } } = this;
 
     return (
-      <Viewport {...inherit} scroll={false} visible={visible}>
+      <Viewport {...props} scroll={false} visible={visible}>
         <Consumer>
           { ({
             navigation, l10n,
@@ -52,7 +54,7 @@ class Stats extends Component {
           }) => (
             <Fragment>
               <Header
-                left={{ icon: iconBack, onPress: () => navigation.goBack() }}
+                left={{ icon: iconBack, onPress: () => navigation.goBack(props.navigation) }}
                 title={l10n.STATS}
                 visible={visible}
               />

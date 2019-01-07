@@ -1,6 +1,6 @@
-import { bool } from 'prop-types';
+import { bool, shape } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
-import { ScrollView } from 'react-native';
+import { BackHandler, ScrollView } from 'react-native';
 
 import { iconChart } from '../../assets';
 import { C } from '../../common';
@@ -13,34 +13,48 @@ import { Button, Viewport } from '../../reactor/components';
 import styles from './Dashboard.style';
 
 const { SCREEN } = C;
-const { COLOR, MOTION } = THEME;
+const { COLOR } = THEME;
 
 class Dashboard extends PureComponent {
   static propTypes = {
+    navigation: shape({}),
     visible: bool,
   };
 
   static defaultProps = {
-    visible: false,
+    navigation: undefined,
+    visible: true,
   };
 
   state = {
     dialog: false,
   };
 
+  componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      const { state: { dialog } } = this;
+      if (dialog) this.setState({ dialog: false });
+      return true;
+    });
+  }
+
   _onToggleDialog = () => {
     const { state: { dialog } } = this;
     this.setState({ dialog: !dialog });
   }
 
-  _onVault = async ({ navigation, store, vault }) => {
-    await store.query({ vault: vault.hash, method: 'groupByDay', date: new Date().toISOString().substr(0, 7) });
-    setTimeout(() => navigation.navigate(SCREEN.VAULT, vault), MOTION.DURATION);
+  _onVault = ({ navigation, store, vault }) => {
+    const { props } = this;
+
+    store.query({ vault: vault.hash, method: 'groupByDay', date: new Date().toISOString().substr(0, 7) });
+    navigation.navigate(SCREEN.VAULT, vault, props.navigation);
   }
 
-  _onStats = async ({ navigation, store: { overall: { months }, query } }) => {
-    await query({ method: 'groupByCategory', date: months[months.length - 1] });
-    setTimeout(() => navigation.navigate(SCREEN.STATS), MOTION.DURATION);
+  _onStats = ({ navigation, store: { overall: { months }, query } }) => {
+    const { props } = this;
+
+    query({ method: 'groupByCategory', date: months[months.length - 1] });
+    navigation.navigate(SCREEN.STATS, undefined, props.navigation);
   }
 
   render() {
@@ -67,7 +81,7 @@ class Dashboard extends PureComponent {
                 { vaults.map(vault => (
                   <VaultItem key={vault.hash} {...vault} onPress={() => _onVault({ navigation, store, vault })} />))}
               </ScrollView>
-              <FloatingButton onPress={_onToggleDialog} visible={!dialog && !inherit.backward} />
+              <FloatingButton color={COLOR.PRIMARY} onPress={_onToggleDialog} visible={!dialog && !inherit.backward} />
               { visible && vaults.length === 0 && !dialog && this.setState({ dialog: true }) }
               { visible && <DialogVault visible={dialog} onClose={_onToggleDialog} /> }
             </Fragment>

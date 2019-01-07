@@ -1,7 +1,7 @@
 {
   "name": "voltvault-app",
   "description": "Cross-Device client for voltvault",
-  "version": "0.4.9",
+  "version": "0.5.0",
   "keywords": [
     "finance",
     "personal",
@@ -23,7 +23,8 @@
     "react-art": "16.4.2",
     "react-dom": "16.4.2",
     "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
-    "react-native-web": "0.8.11"
+    "react-native-web": "0.8.11",
+    "react-navigation": "3.0.9"
   },
   "devDependencies": {
     "babel-plugin-file-loader": "1.0.0",

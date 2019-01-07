@@ -2,39 +2,26 @@ import { StyleSheet } from 'react-native';
 
 import { LAYOUT, THEME } from '../../reactor/common';
 
-const { COLOR, OFFSET, UNIT } = THEME;
+const { COLOR, OFFSET } = THEME;
 
 export default StyleSheet.create({
-  bullet: {
-    top: OFFSET / 2,
-    width: UNIT,
-    height: UNIT,
-    borderRadius: UNIT / 2,
-    backgroundColor: COLOR.BASE,
-  },
-
   container: {
-    ...LAYOUT.STYLE.ROW,
-    alignItems: 'flex-start',
     paddingHorizontal: OFFSET,
-    paddingTop: OFFSET,
-    // marginBottom: UNIT,
   },
 
   content: {
-    marginHorizontal: UNIT,
-    flex: 1,
+    ...LAYOUT.STYLE.ROW,
+    alignItems: 'flex-end',
     borderBottomColor: COLOR.BASE,
     borderBottomWidth: 1,
+    paddingVertical: OFFSET,
   },
 
-  summary: {
-    ...LAYOUT.STYLE.ROW,
-    paddingTop: OFFSET / 2,
-    paddingBottom: OFFSET,
-  },
-
-  texts: {
+  info: {
     flex: 1,
+  },
+
+  title: {
+    marginBottom: OFFSET / 2,
   },
 });

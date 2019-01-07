@@ -21,6 +21,7 @@ export default StyleSheet.create({
   },
 
   button: {
+    marginLeft: OFFSET,
     alignSelf: 'flex-start',
   },
 
@@ -28,11 +29,18 @@ export default StyleSheet.create({
 
   container: {
     paddingHorizontal: OFFSET,
+  },
+
+  content: {
     paddingVertical: OFFSET / 2,
   },
 
   extended: {
     paddingVertical: OFFSET / 4,
+  },
+
+  extendedBottom: {
+    paddingBottom: OFFSET,
   },
 
   heading: {
@@ -70,6 +78,10 @@ export default StyleSheet.create({
   lineBottom: {
     top: 0,
     height: '50%',
+  },
+
+  lineBottomExtended: {
+    bottom: OFFSET + (OFFSET / 4),
   },
 
   lineHeading: {

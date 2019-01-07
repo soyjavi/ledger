@@ -1,16 +1,21 @@
 import React from 'react';
 import { AppRegistry } from 'react-native';
-// import { createBrowserHistory } from 'history';
 
-import { theme, getLocationAsync } from './common';
+import {
+  C, getLocationAsync, L10N, theme,
+} from './common';
+import { Provider } from './context';
 import { THEME } from './reactor/common';
 
 THEME.extend(theme);
+const { LANGUAGE } = C;
 const App = require('./App').default;
 
-// const history = createBrowserHistory();
-
-const BrowserApp = () => <App getLocationAsync={getLocationAsync} />;
+const BrowserApp = () => (
+  <Provider dictionary={L10N} language={LANGUAGE} getLocationAsync={getLocationAsync}>
+    <App />
+  </Provider>
+);
 
 AppRegistry.registerComponent('App', () => BrowserApp);
 AppRegistry.runApplication('App', {

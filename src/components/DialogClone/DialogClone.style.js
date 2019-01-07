@@ -3,13 +3,11 @@ import { StyleSheet } from 'react-native';
 import { C } from '../../common';
 import { ENV, LAYOUT, THEME } from '../../reactor/common';
 
-const { STYLE: { BANNER } } = C;
+const { STYLE: { DIALOG } } = C;
 const { IS_NATIVE } = ENV;
 const { OFFSET, UNIT } = THEME;
 
 export default StyleSheet.create({
-  banner: BANNER,
-
   button: {
     flex: 1,
     marginHorizontal: OFFSET / 4,
@@ -22,9 +20,7 @@ export default StyleSheet.create({
     paddingVertical: OFFSET / 4,
   },
 
-  dialog: {
-    justifyContent: 'flex-end',
-  },
+  dialog: DIALOG,
 
   frame: {
     alignSelf: 'flex-end',

@@ -1,7 +1,9 @@
 import { StyleSheet } from 'react-native';
 
+import { C } from '../../common';
 import { ENV, LAYOUT, THEME } from '../../reactor/common';
 
+const { STYLE: { DIALOG } } = C;
 const { IS_NATIVE } = ENV;
 const { UNIT, OFFSET } = THEME;
 
@@ -17,9 +19,7 @@ export default StyleSheet.create({
     paddingVertical: OFFSET / 4,
   },
 
-  dialog: {
-    justifyContent: 'flex-end',
-  },
+  dialog: DIALOG,
 
   frame: {
     alignSelf: 'flex-end',

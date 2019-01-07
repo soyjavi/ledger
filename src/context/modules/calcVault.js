@@ -32,7 +32,7 @@ export default (vault = {}, txs = [], index) => {
   return Object.assign({}, vault, {
     months,
     chart: [
-      ...Array.from({ length: 12 - chart.length }, () => 0),
+      ...Array.from({ length: 12 - chart.length }, () => vault.balance),
       ...chart,
     ],
     color: COLORS[index],

@@ -2,6 +2,7 @@ import { func, node } from 'prop-types';
 import React from 'react';
 
 import { ConsumerL10N, ProviderL10N } from '../reactor/context/L10N';
+import { ConsumerEvents, ProviderEvents } from './events';
 import { ConsumerStore, ProviderStore } from './store';
 import { ConsumerNavigation, ProviderNavigation } from './navigation';
 
@@ -10,26 +11,35 @@ const Consumer = ({ children }) => (
     { ({ l10n }) => (
       <ConsumerNavigation>
         { navigation => (
-          <ConsumerStore>
-            { store => children({ l10n, navigation, store })}
-          </ConsumerStore>
+          <ConsumerEvents>
+            { events => (
+              <ConsumerStore>
+                { store => children({
+                  l10n, navigation, events, store,
+                })}
+              </ConsumerStore>
+            )}
+          </ConsumerEvents>
         )}
       </ConsumerNavigation>
     )}
   </ConsumerL10N>
-
 );
 
 Consumer.propTypes = {
   children: func.isRequired,
 };
 
-const Provider = ({ children, ...l10n }) => (
-  <ProviderL10N {...l10n}>
+const Provider = ({
+  children, dictionary, language, ...events
+}) => (
+  <ProviderL10N dictionary={dictionary} language={language}>
     <ProviderNavigation>
-      <ProviderStore>
-        {children}
-      </ProviderStore>
+      <ProviderEvents {...events}>
+        <ProviderStore>
+          {children}
+        </ProviderStore>
+      </ProviderEvents>
     </ProviderNavigation>
   </ProviderL10N>
 );
@@ -41,6 +51,8 @@ Provider.propTypes = {
 export {
   Consumer,
   Provider,
+  ConsumerEvents,
+  ProviderEvents,
   ConsumerStore,
   ProviderStore,
   ConsumerNavigation,

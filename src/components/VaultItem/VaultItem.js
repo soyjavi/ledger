@@ -5,7 +5,6 @@ import React from 'react';
 import { View } from 'react-native';
 
 import { C } from '../../common';
-import { Consumer } from '../../context';
 import { Price, Text, Touchable } from '../../reactor/components';
 import Chart from '../Chart';
 import styles from './VaultItem.style';
@@ -14,40 +13,31 @@ const { FIXED, SYMBOL } = C;
 
 const VaultItem = (props) => {
   const {
-    chart, color, currency, onPress, overallBalance, title,
+    balance, chart, color, currency, onPress, overallBalance, title,
   } = props;
 
   return (
-    <Consumer>
-      { ({ l10n }) => (
-        <Touchable rippleColor={color} onPress={onPress}>
-          <View style={styles.container}>
-            <View style={[styles.bullet, color && { backgroundColor: color }]} />
-            <View style={styles.content}>
-              <Text headline level={5} numberOfLines={1}>{title}</Text>
-              <View style={styles.summary}>
-                <View style={styles.texts}>
-                  <Text level={2} lighten numberOfLines={1}>{l10n.BALANCE}</Text>
-                  <Price
-                    fixed={FIXED[currency]}
-                    subtitle
-                    level={1}
-                    lighten
-                    value={overallBalance}
-                    symbol={SYMBOL[currency]}
-                  />
-                </View>
-                <Chart color={color} values={chart} />
-              </View>
-            </View>
-          </View>
-        </Touchable>
-      )}
-    </Consumer>
+    <Touchable rippleColor={color} onPress={onPress} style={styles.container}>
+      <View style={styles.content}>
+        <View style={styles.info}>
+          <Text subtitle level={1} numberOfLines={1}>{title}</Text>
+          <Price
+            fixed={FIXED[currency]}
+            headline
+            level={6}
+            lighten
+            value={overallBalance}
+            symbol={SYMBOL[currency]}
+          />
+        </View>
+        <Chart color={color} inheritValue={balance} values={chart} />
+      </View>
+    </Touchable>
   );
 };
 
 VaultItem.propTypes = {
+  balance: number.isRequired,
   chart: arrayOf(number).isRequired,
   color: string,
   currency: string.isRequired,
