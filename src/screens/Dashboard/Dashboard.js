@@ -1,6 +1,6 @@
 import { bool, shape } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
-import { ScrollView } from 'react-native';
+import { BackHandler, ScrollView } from 'react-native';
 
 import { iconChart } from '../../assets';
 import { C } from '../../common';
@@ -29,6 +29,14 @@ class Dashboard extends PureComponent {
   state = {
     dialog: false,
   };
+
+  componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      const { state: { dialog } } = this;
+      if (dialog) this.setState({ dialog: false });
+      return true;
+    });
+  }
 
   _onToggleDialog = () => {
     const { state: { dialog } } = this;
@@ -73,7 +81,7 @@ class Dashboard extends PureComponent {
                 { vaults.map(vault => (
                   <VaultItem key={vault.hash} {...vault} onPress={() => _onVault({ navigation, store, vault })} />))}
               </ScrollView>
-              <FloatingButton onPress={_onToggleDialog} visible={!dialog && !inherit.backward} />
+              <FloatingButton color={COLOR.PRIMARY} onPress={_onToggleDialog} visible={!dialog && !inherit.backward} />
               { visible && vaults.length === 0 && !dialog && this.setState({ dialog: true }) }
               { visible && <DialogVault visible={dialog} onClose={_onToggleDialog} /> }
             </Fragment>

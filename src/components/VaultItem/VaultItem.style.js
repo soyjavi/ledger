@@ -2,21 +2,19 @@ import { StyleSheet } from 'react-native';
 
 import { LAYOUT, THEME } from '../../reactor/common';
 
-const { BORDER_RADIUS, COLOR, OFFSET } = THEME;
+const { COLOR, OFFSET } = THEME;
 
 export default StyleSheet.create({
   container: {
-    borderColor: COLOR.BASE,
-    borderWidth: 1,
-    borderRadius: BORDER_RADIUS,
-    padding: OFFSET,
-    marginHorizontal: OFFSET,
-    marginBottom: OFFSET,
+    paddingHorizontal: OFFSET,
   },
 
   content: {
     ...LAYOUT.STYLE.ROW,
     alignItems: 'flex-end',
+    borderBottomColor: COLOR.BASE,
+    borderBottomWidth: 1,
+    paddingVertical: OFFSET,
   },
 
   info: {

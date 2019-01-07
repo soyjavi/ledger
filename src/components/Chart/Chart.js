@@ -21,7 +21,7 @@ const Chart = ({
             ...style,
             {
               height: `${parseInt((value * 100) / max, 10)}%`,
-              opacity: inheritValue === value ? 0.25 : 1,
+              opacity: inheritValue === value ? 0.2 : 1,
             },
             color && { backgroundColor: color },
           ]}

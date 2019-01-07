@@ -2,9 +2,8 @@ import { bool, number, string } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 
-import { iconExpenses, iconIncomes } from '../../assets';
 import { C } from '../../common';
-import { Icon, Price } from '../../reactor/components';
+import { Price } from '../../reactor/components';
 import styles from './BulletPrice.style';
 
 const { FIXED, SYMBOL } = C;
@@ -13,10 +12,9 @@ const BulletPrice = ({
   currency, incomes, value, ...inherit
 }) => (
   <View style={[styles.container, inherit.style]}>
-    <View style={styles.bullet}>
-      <Icon value={incomes ? iconIncomes : iconExpenses} style={styles.icon} />
-    </View>
+    <View style={[styles.bullet, incomes ? styles.incomes : styles.expenses]} />
     <Price
+      color={inherit.color}
       fixed={FIXED[currency]}
       level={3}
       lighten

@@ -10,14 +10,14 @@ export default {
   COLOR: {
     BACKGROUND: '#fff',
     BACKGROUND_OPACITY: 'rgba(255,255,255,0.9)',
-    BASE: '#ddd',
+    BASE: '#eee',
     TEXT: '#333',
     // DARK-MODE
     // BACKGROUND: '#000',
     // BACKGROUND_OPACITY: 'rgba(0,0,0,0.9)',
     // BASE: '#333',
     // TEXT: '#fff',
-    // TEXT_LIGHTEN: '#ccc',
+    // TEXT_LIGHTEN: '#aaa',
     PRIMARY: '#3247C7',
     SECONDARY: '#21ce99',
   },

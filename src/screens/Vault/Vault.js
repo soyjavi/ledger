@@ -1,6 +1,6 @@
 import { bool, shape } from 'prop-types';
 import React, { Fragment, Component } from 'react';
-import { FlatList, View } from 'react-native';
+import { BackHandler, FlatList, View } from 'react-native';
 
 import { iconBack, iconShuffle } from '../../assets';
 import { C, exchange } from '../../common';
@@ -35,7 +35,6 @@ class Vault extends Component {
 
   componentWillReceiveProps({ visible }) {
     const { props } = this;
-
     if (visible && !props.visible) this.setState({ switchCurrency: false });
   }
 
@@ -120,13 +119,14 @@ class Vault extends Component {
                     renderItem={({ item: tx }) => (
                       <TransactionItem
                         {...tx}
-                        currency={switchCurrency ? baseCurrency : currency}
                         cashflow={switchCurrency && tx.cashflow
                           ? {
                             incomes: exchange(tx.cashflow.incomes, currency, baseCurrency, rates),
                             expenses: exchange(tx.cashflow.expenses, currency, baseCurrency, rates),
                           }
                           : tx.cashflow}
+                        color={color}
+                        currency={switchCurrency ? baseCurrency : currency}
                         onClone={() => _onToggleClone(tx)}
                         value={switchCurrency && tx.hash ? exchange(tx.value, currency, baseCurrency, rates) : tx.value}
                       />
@@ -154,7 +154,7 @@ class Vault extends Component {
                   />
                   { vaults.length > 1 && (
                     <DialogTransfer vault={hash} onClose={_onToggleDialog} visible={dialog && type === TRANSFER} />)}
-                  <DialogClone dataSource={clone} visible={!!clone} onClose={() => _onToggleClone()} />
+                  <DialogClone color={color} dataSource={clone} visible={!!clone} onClose={() => _onToggleClone()} />
                 </Fragment>)}
             </Fragment>
           )}

@@ -23,6 +23,7 @@ export default StyleSheet.create({
   },
 
   barTiny: {
+    borderRadius: 0,
     marginHorizontal: BAR_SIZE / 2,
     minHeight: BAR_SIZE,
     width: BAR_SIZE,

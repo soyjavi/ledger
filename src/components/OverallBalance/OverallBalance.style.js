@@ -12,11 +12,10 @@ export default StyleSheet.create({
   },
 
   container: {
-    // alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: COLOR.BACKGROUND_OPACITY,
     height: HEADER_EXTENDED_HEIGHT,
-    paddingHorizontal: OFFSET * 2,
+    paddingTop: OFFSET,
+    paddingHorizontal: OFFSET,
     position: 'absolute',
     width: '100%',
     zIndex: 1,
