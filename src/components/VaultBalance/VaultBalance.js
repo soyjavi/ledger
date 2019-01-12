@@ -12,9 +12,11 @@ import styles from './VaultBalance.style';
 
 const { FIXED, SYMBOL } = C;
 
-const VaultBalance = ({ dataSource = {}, baseCurrency, txs }) => {
+const VaultBalance = ({
+  dataSource = {}, baseCurrency, txs,
+}) => {
   const {
-    color, currency, overallBalance, title,
+    color, currency, currentBalance, title,
   } = dataSource;
   const activeCurrency = baseCurrency || currency;
   const { incomes: monthIncomes, expenses: monthExpenses } = cashflow(txs);
@@ -22,33 +24,31 @@ const VaultBalance = ({ dataSource = {}, baseCurrency, txs }) => {
   return (
     <Consumer>
       { ({ l10n, store: { rates } }) => (
-        <View style={styles.container}>
-          <View style={[styles.row, styles.content]}>
-            <View style={styles.info}>
-              <Text lighten subtitle level={2}>{`${title} ${l10n.BALANCE}`}</Text>
-              <Price
-                fixed={FIXED[activeCurrency]}
-                headline
-                level={4}
-                symbol={SYMBOL[activeCurrency]}
-                value={baseCurrency ? exchange(overallBalance, currency, baseCurrency, rates) : overallBalance}
+        <View style={[styles.row, styles.container]}>
+          <View style={styles.info}>
+            <Text lighten subtitle>{title}</Text>
+            <Price
+              fixed={FIXED[activeCurrency]}
+              headline
+              level={4}
+              symbol={SYMBOL[activeCurrency]}
+              value={baseCurrency ? exchange(currentBalance, currency, baseCurrency, rates) : currentBalance}
+            />
+            <View style={[styles.row, styles.cashflow]}>
+              <BulletPrice
+                currency={activeCurrency}
+                incomes
+                value={baseCurrency ? exchange(monthIncomes, currency, baseCurrency, rates) : monthIncomes}
+                style={styles.bulletPrice}
               />
-              <View style={[styles.row, styles.cashflow]}>
-                <BulletPrice
-                  currency={activeCurrency}
-                  incomes
-                  value={baseCurrency ? exchange(monthIncomes, currency, baseCurrency, rates) : monthIncomes}
-                  style={styles.bulletPrice}
-                />
-                <BulletPrice
-                  currency={activeCurrency}
-                  value={baseCurrency ? exchange(monthExpenses, currency, baseCurrency, rates) : monthExpenses}
-                  style={styles.bulletPrice}
-                />
-              </View>
+              <BulletPrice
+                currency={activeCurrency}
+                value={baseCurrency ? exchange(monthExpenses, currency, baseCurrency, rates) : monthExpenses}
+                style={styles.bulletPrice}
+              />
             </View>
-            <Chart color={color} values={chartCashflow(txs)} />
           </View>
+          <Chart color={color} title={l10n.LAST_30_DAYS} values={chartCashflow(txs)} />
         </View>
       )}
     </Consumer>

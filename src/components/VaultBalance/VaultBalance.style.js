@@ -17,19 +17,16 @@ export default StyleSheet.create({
   },
 
   container: {
+    alignItems: 'flex-end',
     backgroundColor: COLOR.BACKGROUND_OPACITY,
     height: HEADER_EXTENDED_HEIGHT,
     left: 0,
     position: 'absolute',
-    paddingTop: HEADER_HEIGHT + (OFFSET / 2),
+    paddingTop: HEADER_HEIGHT,
     paddingHorizontal: OFFSET,
     right: 0,
     top: 0,
     zIndex: 1,
-  },
-
-  content: {
-    alignItems: 'flex-end',
   },
 
   info: {
