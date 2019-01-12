@@ -12,6 +12,7 @@ export default StyleSheet.create({
   },
 
   container: {
+    justifyContent: 'center',
     backgroundColor: COLOR.BACKGROUND_OPACITY,
     height: HEADER_EXTENDED_HEIGHT,
     paddingTop: OFFSET,
@@ -19,6 +20,10 @@ export default StyleSheet.create({
     position: 'absolute',
     width: '100%',
     zIndex: 1,
+  },
+
+  info: {
+    flex: 1,
   },
 
   month: {
