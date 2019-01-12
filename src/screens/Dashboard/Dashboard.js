@@ -50,10 +50,10 @@ class Dashboard extends PureComponent {
     navigation.navigate(SCREEN.VAULT, vault, props.navigation);
   }
 
-  _onStats = ({ navigation, store: { overall: { months }, query } }) => {
+  _onStats = ({ navigation, store: { query } }) => {
     const { props } = this;
 
-    query({ method: 'groupByCategory', date: months[months.length - 1] });
+    query({ method: 'groupByCategory', date: (new Date().toISOString()).substr(0, 7) });
     navigation.navigate(SCREEN.STATS, undefined, props.navigation);
   }
 
