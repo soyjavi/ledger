@@ -12,6 +12,7 @@ export default {
     BACKGROUND_OPACITY: 'rgba(255,255,255,0.9)',
     BASE: '#eee',
     TEXT: '#333',
+    TEXT_LIGHTEN: '#999',
     // DARK-MODE
     // BACKGROUND: '#000',
     // BACKGROUND_OPACITY: 'rgba(0,0,0,0.9)',

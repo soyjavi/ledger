@@ -84,10 +84,11 @@ class ProviderStore extends Component {
         baseCurrency,
         rates,
         txs,
-        vaults: sortByTransactions(profile.vaults.map((vault, index) => calcVault(vault, txs, index))),
+        vaults: profile.vaults.map((vault, index) => calcVault(vault, txs, index)),
         version: VERSION,
       };
       await _store(nextState);
+
       this.setState({ ...nextState, overall: calcOverall(nextState) });
     }
   }

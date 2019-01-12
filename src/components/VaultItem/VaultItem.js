@@ -1,19 +1,16 @@
-import {
-  arrayOf, func, number, string,
-} from 'prop-types';
+import { func, number, string } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 
 import { C } from '../../common';
 import { Price, Text, Touchable } from '../../reactor/components';
-import Chart from '../Chart';
 import styles from './VaultItem.style';
 
 const { FIXED, SYMBOL } = C;
 
 const VaultItem = (props) => {
   const {
-    balance, chart, color, currency, onPress, overallBalance, title,
+    color, currency, onPress, currentBalance, title,
   } = props;
 
   return (
@@ -26,23 +23,20 @@ const VaultItem = (props) => {
             headline
             level={6}
             lighten
-            value={overallBalance}
+            value={currentBalance}
             symbol={SYMBOL[currency]}
           />
         </View>
-        <Chart color={color} inheritValue={balance} values={chart} />
       </View>
     </Touchable>
   );
 };
 
 VaultItem.propTypes = {
-  balance: number.isRequired,
-  chart: arrayOf(number).isRequired,
   color: string,
   currency: string.isRequired,
   onPress: func.isRequired,
-  overallBalance: number.isRequired,
+  currentBalance: number.isRequired,
   title: string.isRequired,
 };
 

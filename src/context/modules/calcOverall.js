@@ -1,29 +1,31 @@
 import { exchange } from '../../common';
 
+const CHART_MONTHS = 12;
+
 export default ({ baseCurrency, rates, vaults = [] }) => {
   const currentMonth = new Date().toISOString().substr(0, 7);
-  const chart = {};
+  const months = {};
   let balance = 0;
   let currentBalance = 0;
   let expenses = 0;
   let incomes = 0;
 
   vaults.forEach(({
-    balance: vaultBalance, currentBalance: vaultCurrentBalance, months, currency,
+    balance: vaultBalance, currentBalance: vaultCurrentBalance, months: vaultMonths, currency,
   }) => {
     const sameCurrency = currency === baseCurrency;
     const exchangeProps = [currency, baseCurrency, rates];
     currentBalance += sameCurrency ? vaultCurrentBalance : exchange(vaultCurrentBalance, ...exchangeProps);
     balance += sameCurrency ? vaultBalance : exchange(vaultBalance, ...exchangeProps);
 
-    Object.keys(months).forEach((month) => {
-      const monthlyTotal = months[month].incomes - months[month].expenses;
+    Object.keys(vaultMonths).forEach((month) => {
+      const monthlyTotal = vaultMonths[month].incomes - vaultMonths[month].expenses;
 
-      chart[month] = chart[month] || 0;
-      chart[month] += sameCurrency ? monthlyTotal : exchange(monthlyTotal, ...exchangeProps);
+      months[month] = months[month] || 0;
+      months[month] += sameCurrency ? monthlyTotal : exchange(monthlyTotal, ...exchangeProps);
     });
 
-    const month = months[currentMonth];
+    const month = vaultMonths[currentMonth];
     if (month) {
       expenses += sameCurrency ? month.expenses : exchange(month.expenses, ...exchangeProps);
       incomes += sameCurrency ? month.incomes : exchange(month.incomes, ...exchangeProps);
@@ -31,10 +33,10 @@ export default ({ baseCurrency, rates, vaults = [] }) => {
   });
 
   let summation = 0;
-  const last12Months = Object.keys(chart)
+  const lastMonths = Object.keys(months)
     .sort()
-    .map(key => chart[key])
-    .slice(Math.max(Object.keys(chart).length - 12, 0))
+    .map(key => months[key])
+    .slice(Math.max(Object.keys(months).length - CHART_MONTHS, 0))
     .map((value) => {
       summation += value;
       return summation;
@@ -43,8 +45,8 @@ export default ({ baseCurrency, rates, vaults = [] }) => {
   return {
     balance,
     chart: [
-      ...Array.from({ length: 12 - last12Months.length }, () => balance),
-      ...(last12Months.map(value => balance + value)),
+      ...Array.from({ length: CHART_MONTHS - lastMonths.length }, () => balance),
+      ...(lastMonths.map(value => balance + value)),
     ],
     currentBalance,
     expenses,

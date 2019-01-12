@@ -53,6 +53,7 @@ export default {
     CLONE_CAPTION: 'To make your life easier you can clone this transaction with a simple touch of the button.',
     CLOSE: 'Close',
     CURRENCY: 'Currency',
+    CURRENT_MONTH: 'Current month',
 
     ENTER_PIN: 'Enter your pin',
     EXPENSE: 'Expense',
@@ -66,6 +67,8 @@ export default {
     INCOME_CAPTION: 'Register a new income in this vault.',
     INCOMES: 'Incomes',
 
+    LAST_30_DAYS: 'Last 30 days',
+    LAST_12_MONTHS: 'Last 12 months',
     LOADING_PLACE: 'Wait a moment, loading place.',
     LOADING_PROFILE: 'Wait a moment, syncing your blockchain.',
 
