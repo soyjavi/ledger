@@ -1,25 +1,22 @@
-import { arrayOf, shape, string } from 'prop-types';
+import { shape, string } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 
-import { C, cashflow, exchange } from '../../common';
+import { C, exchange } from '../../common';
 import { Consumer } from '../../context';
 import { Price, Text } from '../../reactor/components';
 import BulletPrice from '../BulletPrice';
 import Chart from '../Chart';
-import { chartCashflow } from './modules';
 import styles from './VaultBalance.style';
 
 const { FIXED, SYMBOL } = C;
 
-const VaultBalance = ({
-  dataSource = {}, baseCurrency, txs,
-}) => {
+const VaultBalance = ({ dataSource = {}, baseCurrency }) => {
   const {
-    color, currency, currentBalance, title,
+    chart, color, currency, currentBalance, lastWeek: { expenses, incomes } = {}, title,
   } = dataSource;
-  const activeCurrency = baseCurrency || currency;
-  const { incomes: monthIncomes, expenses: monthExpenses } = cashflow(txs);
+  const currentCurrency = baseCurrency || currency;
+  const exchangeProps = [currency, baseCurrency];
 
   return (
     <Consumer>
@@ -28,27 +25,28 @@ const VaultBalance = ({
           <View style={styles.info}>
             <Text lighten subtitle>{title}</Text>
             <Price
-              fixed={FIXED[activeCurrency]}
+              fixed={FIXED[currentCurrency]}
               headline
               level={4}
-              symbol={SYMBOL[activeCurrency]}
-              value={baseCurrency ? exchange(currentBalance, currency, baseCurrency, rates) : currentBalance}
+              symbol={SYMBOL[currentCurrency]}
+              value={baseCurrency ? exchange(currentBalance, ...exchangeProps, rates) : currentBalance}
             />
-            <View style={[styles.row, styles.cashflow]}>
+            <Text subtitle level={3} lighten style={styles.cashflowTitle}>{l10n.THIS_WEEK}</Text>
+            <View style={styles.row}>
               <BulletPrice
-                currency={activeCurrency}
+                currency={currentCurrency}
                 incomes
-                value={baseCurrency ? exchange(monthIncomes, currency, baseCurrency, rates) : monthIncomes}
+                value={baseCurrency ? exchange(incomes, ...exchangeProps, rates) : incomes}
                 style={styles.bulletPrice}
               />
               <BulletPrice
-                currency={activeCurrency}
-                value={baseCurrency ? exchange(monthExpenses, currency, baseCurrency, rates) : monthExpenses}
+                currency={currentCurrency}
+                value={baseCurrency ? exchange(expenses, ...exchangeProps, rates) : expenses}
                 style={styles.bulletPrice}
               />
             </View>
           </View>
-          <Chart color={color} title={l10n.LAST_30_DAYS} values={chartCashflow(txs)} />
+          <Chart inheritValue={0} color={color} title={l10n.LAST_WEEKS} values={chart} />
         </View>
       )}
     </Consumer>
@@ -58,13 +56,11 @@ const VaultBalance = ({
 VaultBalance.propTypes = {
   baseCurrency: string,
   dataSource: shape({}),
-  txs: arrayOf(shape({})),
 };
 
 VaultBalance.defaultProps = {
   baseCurrency: undefined,
   dataSource: undefined,
-  txs: undefined,
 };
 
 export default VaultBalance;

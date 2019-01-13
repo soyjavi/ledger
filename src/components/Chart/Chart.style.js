@@ -3,22 +3,20 @@ import { StyleSheet } from 'react-native';
 import { LAYOUT, THEME } from '../../reactor/common';
 
 const { COLOR, UNIT } = THEME;
-const BAR_SIZE = UNIT * 0.8;
+const BAR_SIZE = UNIT * 0.7;
 
 export default StyleSheet.create({
   bar: {
     backgroundColor: COLOR.BASE,
-    borderRadius: BAR_SIZE,
+    // borderRadius: BAR_SIZE / 2,
     height: '100%',
-    marginLeft: UNIT * 0.1,
+    marginLeft: UNIT * 0.2,
     minHeight: BAR_SIZE,
     width: BAR_SIZE,
   },
 
-  barTiny: {
-    borderRadius: BAR_SIZE / 2,
-    minHeight: BAR_SIZE / 2,
-    width: BAR_SIZE / 2,
+  barFlex: {
+    flex: 1,
   },
 
   chart: {

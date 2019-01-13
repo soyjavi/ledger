@@ -26,7 +26,7 @@ export default StyleSheet.create({
     flex: 1,
   },
 
-  month: {
+  cashflowTitle: {
     marginTop: OFFSET / 2,
     marginBottom: OFFSET / 4,
   },

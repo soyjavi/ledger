@@ -67,8 +67,7 @@ export default {
     INCOME_CAPTION: 'Register a new income in this vault.',
     INCOMES: 'Incomes',
 
-    LAST_30_DAYS: 'Last 30 days',
-    LAST_12_MONTHS: 'Last 12 months',
+    LAST_WEEKS: 'Last weeks',
     LOADING_PLACE: 'Wait a moment, loading place.',
     LOADING_PROFILE: 'Wait a moment, syncing your blockchain.',
 
@@ -87,6 +86,7 @@ export default {
     SLOGAN: 'Your private accounting on the blockchain.',
     STATS: 'Stats',
 
+    THIS_WEEK: 'This Week',
     TITLE: 'Title',
     TO: 'to',
     TODAY: 'Today',

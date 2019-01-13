@@ -16,17 +16,18 @@ const VaultItem = (props) => {
   return (
     <Touchable rippleColor={color} onPress={onPress} style={styles.container}>
       <View style={styles.content}>
+        <View style={[styles.bullet, { backgroundColor: color }]} />
         <View style={styles.info}>
-          <Text subtitle level={1} numberOfLines={1}>{title}</Text>
-          <Price
-            fixed={FIXED[currency]}
-            headline
-            level={6}
-            lighten
-            value={currentBalance}
-            symbol={SYMBOL[currency]}
-          />
+          <Text subtitle level={2} numberOfLines={1}>{title}</Text>
+          <Text caption lighten numberOfLines={1}>{title}</Text>
         </View>
+        <Price
+          fixed={FIXED[currency]}
+          subtitle
+          level={2}
+          value={currentBalance}
+          symbol={SYMBOL[currency]}
+        />
       </View>
     </Touchable>
   );

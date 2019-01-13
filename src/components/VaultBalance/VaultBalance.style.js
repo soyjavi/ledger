@@ -12,8 +12,9 @@ export default StyleSheet.create({
     marginRight: OFFSET / 2,
   },
 
-  cashflow: {
+  cashflowTitle: {
     marginTop: OFFSET / 2,
+    marginBottom: OFFSET / 4,
   },
 
   container: {

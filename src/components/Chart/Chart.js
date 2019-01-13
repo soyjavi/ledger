@@ -1,6 +1,4 @@
-import {
-  arrayOf, bool, number, string,
-} from 'prop-types';
+import { arrayOf, number, string } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 
@@ -14,8 +12,7 @@ const Chart = ({
   color, inheritValue, title, values,
 }) => {
   const max = values.length > 0 ? Math.max(...values) : 0;
-  const min = values.length > 0 ? Math.min(...values) : 0;
-  const style = [styles.bar, values.length > 12 && styles.barTiny];
+  const floor = values.length > 0 ? (Math.min(...values) / 1.015) : 0;
 
   return (
     <View style={styles.container}>
@@ -25,9 +22,9 @@ const Chart = ({
           <View
             key={`${index}-${value}`} // eslint-disable-line
             style={[
-              ...style,
+              styles.bar,
               {
-                height: `${parseInt(((value - min) * 100) / (max - min), 10)}%`,
+                height: `${parseInt(((value - floor) * 100) / (max - floor), 10)}%`,
                 opacity: inheritValue === value ? 0.2 : 1,
               },
               color && { backgroundColor: color },
