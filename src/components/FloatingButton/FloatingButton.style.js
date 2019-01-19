@@ -9,12 +9,40 @@ export { CONTAINER_SIZE };
 
 export default StyleSheet.create({
   button: {
-    ...LAYOUT.STYLE.SHADOW,
+    // ...LAYOUT.STYLE.SHADOW,
     ...LAYOUT.STYLE.CENTERED,
+
+    shadowOffset: { height: 2, width: 0 },
+    shadowOpacity: 0.75,
+    shadowRadius: 8,
+    // ...Platform.select({
+    //   android: { elevation: 4 },
+    // }),
+
     backgroundColor: COLOR.TEXT,
     borderRadius: CONTAINER_SIZE / 2,
     height: CONTAINER_SIZE,
     width: CONTAINER_SIZE,
+  },
+
+  bullet: {
+    backgroundColor: COLOR.BASE,
+    borderRadius: UNIT / 2,
+    height: UNIT,
+    marginLeft: UNIT / 2,
+    width: UNIT,
+  },
+
+  income: {
+    backgroundColor: COLOR.SUCCESS,
+  },
+
+  expense: {
+    backgroundColor: COLOR.ERROR,
+  },
+
+  transfer: {
+    backgroundColor: COLOR.TEXT,
   },
 
   container: {

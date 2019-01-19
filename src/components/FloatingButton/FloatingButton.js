@@ -67,6 +67,7 @@ class FloatingButton extends PureComponent {
                 <Touchable onPress={opened ? () => _onOption(index) : undefined}>
                   <View style={styles.option}>
                     <Text subtitle level={3}>{option}</Text>
+                    <View style={[styles.bullet, styles[option.toLowerCase()]]} />
                   </View>
                 </Touchable>
               </Motion>
