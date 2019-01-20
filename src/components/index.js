@@ -1,3 +1,4 @@
+import BalanceCard from './BalanceCard';
 import BulletPrice from './BulletPrice';
 import Chart from './Chart';
 import ChartCategories from './ChartCategories';
@@ -8,13 +9,13 @@ import DialogVault from './DialogVault';
 import FloatingButton from './FloatingButton';
 import MapStaticImage from './MapStaticImage';
 import NumKeyboard from './NumKeyboard';
-import OverallBalance from './OverallBalance';
 import SliderMonths from './SliderMonths';
 import TransactionItem from './TransactionItem';
 import VaultBalance from './VaultBalance';
 import VaultItem from './VaultItem';
 
 export {
+  BalanceCard,
   BulletPrice,
   Chart,
   ChartCategories,
@@ -25,7 +26,6 @@ export {
   FloatingButton,
   MapStaticImage,
   NumKeyboard,
-  OverallBalance,
   SliderMonths,
   TransactionItem,
   VaultBalance,
