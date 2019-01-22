@@ -4,49 +4,38 @@ import { View } from 'react-native';
 
 import { THEME } from '../../reactor/common';
 import { Text } from '../../reactor/components';
+import Bars from './Bars';
 import styles from './Chart.style';
 
 const { COLOR } = THEME;
 
 const Chart = ({
-  color, inheritValue, title, values,
+  balance, color, expenses, title,
 }) => {
-  const max = values.length > 0 ? Math.max(...values) : 0;
-  const floor = values.length > 0 ? (Math.min(...values) / 1.015) : 0;
+  const props = { color };
 
   return (
-    <View style={styles.container}>
+    <View>
       { title && <Text subtitle level={3} lighten style={styles.title}>{title}</Text> }
-      <View style={styles.chart}>
-        { values.map((value, index) => (
-          <View
-            key={`${index}-${value}`} // eslint-disable-line
-            style={[
-              styles.bar,
-              {
-                height: `${parseInt(((value - floor) * 100) / (max - floor), 10)}%`,
-                opacity: inheritValue === value ? 0.2 : 1,
-              },
-              color && { backgroundColor: color },
-            ]}
-          />))}
-      </View>
+      <Bars values={balance} {...props} />
+      <Bars values={expenses} {...props} inverted />
+      { title && <Text subtitle level={3} lighten style={styles.title}>{title}</Text> }
     </View>
   );
 };
 
 Chart.propTypes = {
+  balance: arrayOf(number),
   color: string,
-  inheritValue: number,
+  expenses: arrayOf(number),
   title: string,
-  values: arrayOf(number),
 };
 
 Chart.defaultProps = {
+  balance: [],
   color: COLOR.PRIMARY,
-  inheritValue: undefined,
+  expenses: [],
   title: undefined,
-  values: [],
 };
 
 export default Chart;
