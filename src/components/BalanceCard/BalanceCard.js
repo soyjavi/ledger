@@ -1,4 +1,4 @@
-import { arrayOf, shape, number, string } from 'prop-types';
+import { shape, number, string } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 
@@ -25,12 +25,13 @@ const BalanceCard = ({
           <View style={styles.background}>
             <Price {...priceProps} headline level={1} value={value} />
           </View>
-          <Text subtitle level={2} style={[styles.text, styles.caption]}>{title}</Text>
-          <Price {...priceProps} headline level={4} value={value} />
-
-          <View style={[styles.row, styles.info]}>
-            <View style={styles.lastBalance}>
-              <Text caption style={[styles.text, styles.caption]}>{l10n.THIS_WEEK}</Text>
+          <View style={[styles.row, styles.summary]}>
+            <View>
+              <Text subtitle level={2} style={[styles.text, styles.caption]}>{title}</Text>
+              <Price {...priceProps} headline level={4} value={value} />
+            </View>
+            <View style={styles.info}>
+              <Text subtitle level={3} style={[styles.text, styles.caption]}>{l10n.THIS_WEEK}</Text>
               <View style={styles.row}>
                 <BulletPrice
                   {...priceProps}
@@ -47,9 +48,8 @@ const BalanceCard = ({
                 />
               </View>
             </View>
-            <Chart inheritValue={inherit.inheritValue} color={COLOR.WHITE} values={chart} />
           </View>
-
+          <Chart color={COLOR.WHITE} {...chart} />
         </View>
       )}
     </Consumer>
@@ -57,16 +57,16 @@ const BalanceCard = ({
 };
 
 BalanceCard.propTypes = {
-  chart: arrayOf(number),
+  chart: shape({}),
   color: number,
   currency: number.isRequired,
-  lastWeek: shape,
+  lastWeek: shape({}),
   title: string.isRequired,
   value: number.isRequired,
 };
 
 BalanceCard.defaultProps = {
-  chart: undefined,
+  chart: {},
   color: COLOR.PRIMARY,
   lastWeek: {},
 };

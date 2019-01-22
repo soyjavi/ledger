@@ -11,10 +11,16 @@ export default StyleSheet.create({
   background: {
     position: 'absolute',
     opacity: 0.1,
+    top: OFFSET,
+    left: OFFSET,
   },
 
   bulletPrice: {
-    marginRight: OFFSET / 2,
+    marginLeft: OFFSET / 2,
+  },
+
+  caption: {
+    opacity: 0.8,
   },
 
   container: {
@@ -22,24 +28,23 @@ export default StyleSheet.create({
     backgroundColor: COLOR.BACKGROUND_OPACITY,
     borderRadius: BORDER_RADIUS,
     height: BALANCE_CARD_HEIGHT,
+    overflow: 'hidden',
     padding: OFFSET,
-    margin: OFFSET,
+    marginVertical: OFFSET,
+    marginHorizontal: OFFSET,
     zIndex: 1,
   },
 
   info: {
     alignItems: 'flex-end',
-    flex: 1,
-  },
-
-  lastBalance: {
-    flex: 1,
+    alignSelf: 'flex-start',
   },
 
   row: LAYOUT.STYLE.ROW,
 
-  caption: {
-    opacity: 0.8,
+  summary: {
+    justifyContent: 'space-between',
+    marginBottom: OFFSET,
   },
 
   text: {
