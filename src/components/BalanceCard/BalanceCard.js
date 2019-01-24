@@ -23,33 +23,38 @@ const BalanceCard = ({
       { ({ l10n }) => (
         <View style={[styles.container, inherit.style, { backgroundColor: color, shadowColor: color }]}>
           <View style={styles.background}>
-            <Price {...priceProps} headline level={1} value={value} />
+            <Price {...priceProps} headline level={2} value={value} />
           </View>
-          <View style={[styles.row, styles.summary]}>
+          <View style={styles.summary}>
             <View>
               <Text subtitle level={2} style={[styles.text, styles.caption]}>{title}</Text>
               <Price {...priceProps} headline level={4} value={value} />
             </View>
-            <View style={styles.info}>
-              <Text subtitle level={3} style={[styles.text, styles.caption]}>{l10n.THIS_WEEK}</Text>
-              <View style={styles.row}>
-                <BulletPrice
-                  {...priceProps}
-                  color={COLOR.WHITE}
-                  incomes
-                  value={lastWeek.incomes}
-                  style={styles.bulletPrice}
-                />
-                <BulletPrice
-                  color={COLOR.WHITE}
-                  currency={currency}
-                  value={lastWeek.expenses}
-                  style={styles.bulletPrice}
-                />
-              </View>
-            </View>
+          </View>
+          <View style={styles.row}>
+            <Text subtitle level={3} style={[styles.text, styles.caption]}>{l10n.LAST_6_MONTHS}</Text>
+            <Text caption level={2} style={[styles.text, styles.ruler]}>{l10n.BALANCE.toLowerCase()}</Text>
           </View>
           <Chart color={COLOR.WHITE} {...chart} />
+          <View style={styles.row}>
+            <Text subtitle level={3} style={[styles.text, styles.caption]}>{l10n.THIS_WEEK}</Text>
+            <Text caption level={2} style={[styles.text, styles.ruler]}>{l10n.EXPENSES.toLowerCase()}</Text>
+          </View>
+          <View style={styles.row}>
+            <BulletPrice
+              {...priceProps}
+              color={COLOR.WHITE}
+              incomes
+              value={lastWeek.incomes}
+              style={styles.bulletPrice}
+            />
+            <BulletPrice
+              color={COLOR.WHITE}
+              currency={currency}
+              value={lastWeek.expenses}
+              style={styles.bulletPrice}
+            />
+          </View>
         </View>
       )}
     </Consumer>

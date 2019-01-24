@@ -103,6 +103,7 @@ class Vault extends Component {
                 right={currency !== baseCurrency ? { icon: iconShuffle, onPress: _onSwitchCurrency } : undefined}
                 visible={visible}
               />
+
               <VaultBalance
                 dataSource={vaults.find(vault => vault.hash === hash)}
                 baseCurrency={switchCurrency ? baseCurrency : undefined}

@@ -1,4 +1,6 @@
-import { arrayOf, bool, number, string } from 'prop-types';
+import {
+  arrayOf, bool, number, string,
+} from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 
@@ -7,11 +9,11 @@ import styles from './Bars.style';
 
 const { COLOR } = THEME;
 
-const Bars = ({
-  color, inverted, values
-}) => {
+const Bars = ({ color, inverted, values }) => {
   const max = values.length > 0 ? Math.max(...values) : 0;
-  const floor = values.length > 0 ? (Math.min(...(values.filter(value => value > 0))) / 1.015) : 0;
+  const floor = values.length > 0 && !inverted
+    ? (Math.min(...(values.filter(value => value > 0))) / 1.015)
+    : 0;
 
   return (
     <View style={[styles.container, inverted && styles.inverted]}>

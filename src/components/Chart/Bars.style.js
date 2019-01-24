@@ -4,7 +4,7 @@ import { LAYOUT, THEME } from '../../reactor/common';
 
 const { COLOR, UNIT } = THEME;
 const BAR_SIZE = UNIT * 0.6;
-const CONTAINER_SIZE = UNIT * 6.4;
+const CONTAINER_SIZE = UNIT * 4.8;
 
 export default StyleSheet.create({
   container: {
@@ -12,25 +12,27 @@ export default StyleSheet.create({
     alignItems: 'flex-end',
     flex: 1,
     height: CONTAINER_SIZE,
-    justifyContent: 'space-between',
+    minHeight: CONTAINER_SIZE,
     marginVertical: UNIT * 0.1,
+    justifyContent: 'space-between',
   },
 
   inverted: {
-    height: CONTAINER_SIZE / 2,
     alignItems: 'flex-start',
+    height: CONTAINER_SIZE / 2,
     marginHorizontal: (BAR_SIZE / 2) - UNIT * 0.1,
+    minHeight: CONTAINER_SIZE / 2,
   },
 
   item: {
     backgroundColor: COLOR.BASE,
-    // borderRadius: BAR_SIZE,
     height: '100%',
     minHeight: BAR_SIZE,
     width: BAR_SIZE,
   },
 
   itemInverted: {
-    width: UNIT * 0.1,
+    width: BAR_SIZE / 3,
+    minHeight: BAR_SIZE / 3,
   },
 });

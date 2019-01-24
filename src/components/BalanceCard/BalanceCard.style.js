@@ -16,11 +16,18 @@ export default StyleSheet.create({
   },
 
   bulletPrice: {
-    marginLeft: OFFSET / 2,
+    top: OFFSET / 4,
+    marginRight: OFFSET / 2,
   },
 
   caption: {
     opacity: 0.8,
+  },
+
+  ruler: {
+    flex: 1,
+    textAlign: 'right',
+    opacity: 0.4,
   },
 
   container: {
@@ -44,7 +51,7 @@ export default StyleSheet.create({
 
   summary: {
     justifyContent: 'space-between',
-    marginBottom: OFFSET,
+    marginBottom: OFFSET / 4,
   },
 
   text: {
