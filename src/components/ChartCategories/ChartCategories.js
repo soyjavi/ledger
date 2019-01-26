@@ -12,33 +12,24 @@ const { FIXED, SYMBOL } = C;
 
 const Item = ({
   color, currency, extended, title, total = 0, value = 0,
-}) => (
-  <View style={styles.content}>
-    <View style={styles.row}>
-      <Text subtitle={!extended} level={extended ? 2 : 3} lighten numberOfLines={1} style={styles.text}>
+}) => {
+  const percent = parseInt((value * 100) / total, 10);
+
+  return (
+    <View style={[styles.content, extended && styles.contentExtended]}>
+      <View style={[styles.bar, { width: `${percent}%` }]} />
+      <View style={[styles.gauge, { backgroundColor: color }]}>
+        <Text caption level={2} color="white">{percent}</Text>
+      </View>
+      <Text subtitle level={extended ? 3 : 2} lighten={extended} numberOfLines={1} style={styles.text}>
         {title}
       </Text>
-      <Price
-        subtitle={!extended}
-        level={extended ? 2 : 3}
-        lighten
-        fixed={FIXED[currency]}
-        symbol={SYMBOL[currency]}
-        value={value}
-      />
+      <View style={styles.price}>
+        <Price subtitle level={extended ? 3 : 2} fixed={FIXED[currency]} symbol={SYMBOL[currency]} value={value} />
+      </View>
     </View>
-    <View style={[styles.chart, extended && styles.chartExtended]}>
-      <View
-        style={[
-          styles.chart,
-          styles.bar,
-          extended && styles.chartExtended,
-          { backgroundColor: color, width: `${parseInt((value * 100) / total, 10)}%` },
-        ]}
-      />
-    </View>
-  </View>
-);
+  );
+};
 
 Item.propTypes = {
   color: string.isRequired,
@@ -80,7 +71,7 @@ class ChartCategory extends PureComponent {
 
     return (
       <View style={styles.container}>
-        <Touchable onPress={group ? _onPress : undefined} rippleColor={inherit.color}>
+        <Touchable onPress={group ? _onPress : undefined} rippleColor={inherit.color} style={styles.touchable}>
           <Item {...inherit} title={l10n[category]} />
         </Touchable>
         { extended && (

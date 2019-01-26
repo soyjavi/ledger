@@ -2,42 +2,59 @@ import { StyleSheet } from 'react-native';
 
 import { LAYOUT, THEME } from '../../reactor/common';
 
-const { OFFSET, UNIT } = THEME;
+const {
+  COLOR, OFFSET, UNIT,
+} = THEME;
 
-const BAR_HEIGHT = UNIT * 1.6;
+const ITEM_HEIGHT = UNIT * 4.4;
+const GAUGE_HEIGHT = UNIT * 2.8;
 
 export default StyleSheet.create({
   bar: {
-    minWidth: BAR_HEIGHT,
-  },
-
-  chart: {
-    backgroundColor: 'rgba(0,0,0,0.03)',
-    borderRadius: BAR_HEIGHT / 2,
-    height: BAR_HEIGHT,
-    maxWidth: '100%',
-    width: '100%',
-  },
-
-  chartExtended: {
-    borderRadius: BAR_HEIGHT / 4,
-    height: BAR_HEIGHT / 2,
+    backgroundColor: COLOR.BASE,
+    borderRadius: ITEM_HEIGHT / 2,
+    bottom: 0,
+    left: 0,
+    minWidth: ITEM_HEIGHT,
+    top: 0,
+    position: 'absolute',
+    zIndex: -1,
   },
 
   container: {
-    marginVertical: OFFSET / 4,
   },
 
   content: {
-    marginVertical: OFFSET / 4,
+    ...LAYOUT.STYLE.ROW,
+    height: ITEM_HEIGHT,
+    padding: OFFSET / 2,
   },
 
-  row: {
-    ...LAYOUT.STYLE.ROW,
-    marginBottom: UNIT / 4,
+  contentExtended: {
+    // height: ITEM_HEIGHT * 0.8,
+    marginBottom: OFFSET / 4,
+  },
+
+  gauge: {
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: GAUGE_HEIGHT / 2,
+    height: GAUGE_HEIGHT,
+    marginRight: UNIT,
+    width: GAUGE_HEIGHT,
+  },
+
+  price: {
+    position: 'absolute',
+    right: 0,
   },
 
   text: {
     flex: 1,
+  },
+
+  touchable: {
+    marginBottom: OFFSET / 4,
   },
 });
