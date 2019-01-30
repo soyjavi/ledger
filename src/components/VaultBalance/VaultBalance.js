@@ -8,7 +8,7 @@ import styles from './VaultBalance.style';
 
 const VaultBalance = ({ dataSource = {}, baseCurrency }) => {
   const {
-    chart, color, currency, currentBalance, lastWeek, title, weekBalance, weekExpenses,
+    chart, color, currency, currentBalance, lastWeek, title,
   } = dataSource;
   const currentCurrency = baseCurrency || currency;
   const exchangeProps = [currency, baseCurrency];

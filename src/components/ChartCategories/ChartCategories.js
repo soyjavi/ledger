@@ -6,6 +6,7 @@ import { View } from 'react-native';
 
 import { C } from '../../common';
 import { Price, Text, Touchable } from '../../reactor/components';
+import Thumbnail from '../Thumbnail';
 import styles from './ChartCategories.style';
 
 const { FIXED, SYMBOL } = C;
@@ -17,16 +18,12 @@ const Item = ({
 
   return (
     <View style={[styles.content, extended && styles.contentExtended]}>
-      <View style={[styles.bar, { width: `${percent}%` }]} />
-      <View style={[styles.gauge, { backgroundColor: color }]}>
-        <Text caption level={2} color="white">{percent}</Text>
-      </View>
-      <Text subtitle level={extended ? 3 : 2} lighten={extended} numberOfLines={1} style={styles.text}>
+      { !extended && <View style={[styles.bar, { backgroundColor: color, width: `${percent}%` }]} /> }
+      <Thumbnail caption="%" color={color} title={percent} />
+      <Text subtitle level={extended ? 3 : 2} numberOfLines={1} style={styles.text}>
         {title}
       </Text>
-      <View style={styles.price}>
-        <Price subtitle level={extended ? 3 : 2} fixed={FIXED[currency]} symbol={SYMBOL[currency]} value={value} />
-      </View>
+      <Price subtitle level={extended ? 3 : 2} fixed={FIXED[currency]} symbol={SYMBOL[currency]} value={value} />
     </View>
   );
 };
@@ -68,16 +65,17 @@ class ChartCategory extends PureComponent {
       },
       state: { extended },
     } = this;
+    const categoryKey = category.split(':')[1];
 
     return (
       <View style={styles.container}>
         <Touchable onPress={group ? _onPress : undefined} rippleColor={inherit.color} style={styles.touchable}>
-          <Item {...inherit} title={l10n[category]} />
+          <Item {...inherit} title={l10n[categoryKey]} />
         </Touchable>
         { extended && (
           <View>
-            { Object.keys(group).map(key => (
-              <Item {...inherit} key={key} extended title={key} total={inherit.value} value={group[key]} />))}
+            { Object.keys(group[categoryKey]).map(key => (
+              <Item {...inherit} key={key} extended title={key} total={inherit.value} value={group[categoryKey][key]} />))}
           </View>)}
       </View>
     );

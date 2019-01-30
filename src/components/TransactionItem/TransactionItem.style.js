@@ -1,7 +1,9 @@
 import { StyleSheet } from 'react-native';
 
+import { C } from '../../common';
 import { LAYOUT, THEME } from '../../reactor/common';
 
+const { STYLE: { THUMBNAIL_SIZE } } = C;
 const { COLOR, OFFSET, UNIT } = THEME;
 const BULLET_SIZE = UNIT * 1.2;
 const LINE_SIZE = UNIT * 0.2;
@@ -14,6 +16,8 @@ export default StyleSheet.create({
     backgroundColor: COLOR.BASE,
     borderColor: COLOR.BACKGROUND,
     borderWidth: UNIT * 0.1,
+    marginLeft: (THUMBNAIL_SIZE / 2) - (BULLET_SIZE / 2),
+    marginRight: (BULLET_SIZE / 2),
   },
 
   bulletPrice: {
@@ -68,11 +72,12 @@ export default StyleSheet.create({
 
   line: {
     position: 'absolute',
-    left: OFFSET + (BULLET_SIZE / 2) - (LINE_SIZE / 2),
+    left: OFFSET + (THUMBNAIL_SIZE / 2) - (LINE_SIZE / 2),
     width: LINE_SIZE,
     height: '100%',
     backgroundColor: COLOR.BASE,
     opacity: 0.5,
+    zIndex: -1,
   },
 
   lineBottom: {

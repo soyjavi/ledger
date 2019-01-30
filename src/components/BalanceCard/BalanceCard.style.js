@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { C } from '../../common';
 import { LAYOUT, THEME } from '../../reactor/common';
 
-const { BORDER_RADIUS, COLOR, OFFSET } = THEME;
+const { COLOR, OFFSET, UNIT } = THEME;
 
 const { STYLE: { BALANCE_CARD_HEIGHT } } = C;
 
@@ -21,19 +21,19 @@ export default StyleSheet.create({
   },
 
   caption: {
-    opacity: 0.8,
+    // opacity: 0.75,
   },
 
   ruler: {
     flex: 1,
     textAlign: 'right',
-    opacity: 0.4,
+    opacity: 0.25,
   },
 
   container: {
     ...LAYOUT.STYLE.SHADOW,
     backgroundColor: COLOR.BACKGROUND_OPACITY,
-    borderRadius: BORDER_RADIUS,
+    borderRadius: UNIT,
     height: BALANCE_CARD_HEIGHT,
     overflow: 'hidden',
     padding: OFFSET,

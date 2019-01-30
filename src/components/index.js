@@ -9,6 +9,7 @@ import DialogVault from './DialogVault';
 import FloatingButton from './FloatingButton';
 import MapStaticImage from './MapStaticImage';
 import NumKeyboard from './NumKeyboard';
+import Thumbnail from './Thumbnail';
 import TransactionItem from './TransactionItem';
 import VaultBalance from './VaultBalance';
 import VaultItem from './VaultItem';
@@ -25,6 +26,7 @@ export {
   FloatingButton,
   MapStaticImage,
   NumKeyboard,
+  Thumbnail,
   TransactionItem,
   VaultBalance,
   VaultItem,

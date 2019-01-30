@@ -4,7 +4,7 @@ import {
 import React, { Fragment, Component } from 'react';
 import { View } from 'react-native';
 
-import { iconPlace, iconTime } from '../../assets';
+import ASSETS, { iconPlace, iconTime } from '../../assets';
 import { C, verboseDate } from '../../common';
 import { Consumer } from '../../context';
 import {
@@ -13,6 +13,7 @@ import {
 import { THEME } from '../../reactor/common';
 import MapStaticImage from '../MapStaticImage';
 import BulletPrice from '../BulletPrice';
+import Thumbnail from '../Thumbnail';
 import formatTime from './modules/formatTime';
 import styles from './TransactionItem.style';
 
@@ -91,7 +92,11 @@ class TransactionItem extends Component {
                   ]}
                 />
                 <View style={[styles.row, styles.content]}>
-                  <View style={[styles.bullet, hash && color && { backgroundColor: color }]} />
+                  <Thumbnail
+                    color={hash ? color : undefined}
+                    icon={ASSETS[`iconCategory${category}`]}
+                    title={hash ? undefined : (new Date(timestamp)).getDate()}
+                  />
                   <View style={styles.texts}>
                     { hash && regular && (
                       <Text subtitle level={2} numberOfLines={1}>{l10n.CATEGORIES[type][category]}</Text>)}
@@ -110,8 +115,8 @@ class TransactionItem extends Component {
                   </View>
                   { value > 0 && (
                     <Price
-                      subtitle
-                      level={2}
+                      headline
+                      level={6}
                       fixed={FIXED[currency]}
                       symbol={SYMBOL[currency]}
                       title={type === EXPENSE ? undefined : '+'}
@@ -126,7 +131,7 @@ class TransactionItem extends Component {
               <View>
                 <View style={[styles.line, isBottom && styles.lineBottomExtended]} />
                 <View style={[styles.row, styles.container, styles.extended]}>
-                  <View style={styles.bullet} />
+                  <View style={[styles.bullet, { backgroundColor: color }]} />
                   <View style={[styles.row, styles.texts]}>
                     <Icon value={iconTime} style={styles.icon} />
                     <Text level={2} lighten>{formatTime(time)}</Text>
@@ -134,7 +139,7 @@ class TransactionItem extends Component {
                 </View>
                 { location && (
                   <View style={[styles.row, styles.container, styles.extended]}>
-                    <View style={styles.bullet} />
+                    <View style={[styles.bullet, { backgroundColor: color }]} />
                     <View style={styles.texts}>
                       <Touchable rippleColor={COLOR.WHITE} onPress={() => {}}>
                         <MapStaticImage {...location} />
@@ -146,7 +151,7 @@ class TransactionItem extends Component {
                     </View>
                   </View>)}
                 <View style={[styles.row, styles.container, styles.extended, styles.extendedBottom]}>
-                  <View style={styles.bullet} />
+                  <View style={[styles.bullet, { backgroundColor: color }]} />
                   <Button
                     color={color}
                     rounded

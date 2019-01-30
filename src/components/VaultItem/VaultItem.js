@@ -4,6 +4,7 @@ import { View } from 'react-native';
 
 import { C } from '../../common';
 import { Price, Text, Touchable } from '../../reactor/components';
+import Thumbnail from '../Thumbnail';
 import styles from './VaultItem.style';
 
 const { FIXED, SYMBOL } = C;
@@ -12,20 +13,15 @@ const VaultItem = (props) => {
   const {
     color, currency, onPress, currentBalance, title,
   } = props;
-  const priceProps = { fixed: FIXED[currency], symbol: SYMBOL[currency], style: styles.text };
 
   return (
-    <Touchable onPress={onPress} rippleColor={color} style={[styles.container]}>
-      <View>
-        <View style={styles.background}>
-          <Price {...priceProps} color={color} headline level={2} value={currentBalance} />
+    <Touchable onPress={onPress} rippleColor={color} style={styles.container}>
+      <View style={styles.row}>
+        <Thumbnail color={color} title={title.substring(0, 2).trim().toUpperCase()} small />
+        <View style={styles.content}>
+          <Text subtitle level={2} numberOfLines={1}>{title}</Text>
         </View>
-        <View style={[styles.row]}>
-          <View style={styles.info}>
-            <Text subtitle level={3} numberOfLines={1} color={color} style={styles.text}>{title}</Text>
-            <Price {...priceProps} headline level={5} value={currentBalance} />
-          </View>
-        </View>
+        <Price fixed={FIXED[currency]} symbol={SYMBOL[currency]} headline level={6} value={currentBalance} />
       </View>
     </Touchable>
   );

@@ -1,13 +1,12 @@
 import { StyleSheet } from 'react-native';
 
+import { C } from '../../common';
 import { LAYOUT, THEME } from '../../reactor/common';
 
-const {
-  COLOR, OFFSET, UNIT,
-} = THEME;
+const { STYLE: { THUMBNAIL_SIZE } } = C;
+const { COLOR, OFFSET, UNIT } = THEME;
 
-const ITEM_HEIGHT = UNIT * 4.4;
-const GAUGE_HEIGHT = UNIT * 2.8;
+const ITEM_HEIGHT = THUMBNAIL_SIZE + (OFFSET / 3);
 
 export default StyleSheet.create({
   bar: {
@@ -16,8 +15,9 @@ export default StyleSheet.create({
     bottom: 0,
     left: 0,
     minWidth: ITEM_HEIGHT,
-    top: 0,
+    opacity: 0.25,
     position: 'absolute',
+    top: 0,
     zIndex: -1,
   },
 
@@ -26,32 +26,18 @@ export default StyleSheet.create({
 
   content: {
     ...LAYOUT.STYLE.ROW,
-    height: ITEM_HEIGHT,
-    padding: OFFSET / 2,
+    paddingLeft: UNIT / 4,
+    paddingVertical: UNIT / 4,
   },
 
   contentExtended: {
-    // height: ITEM_HEIGHT * 0.8,
     marginBottom: OFFSET / 4,
-  },
-
-  gauge: {
-    alignContent: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: GAUGE_HEIGHT / 2,
-    height: GAUGE_HEIGHT,
-    marginRight: UNIT,
-    width: GAUGE_HEIGHT,
-  },
-
-  price: {
-    position: 'absolute',
-    right: 0,
+    opacity: 0.75,
   },
 
   text: {
     flex: 1,
+    marginHorizontal: OFFSET,
   },
 
   touchable: {

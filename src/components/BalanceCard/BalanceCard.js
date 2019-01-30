@@ -27,17 +27,17 @@ const BalanceCard = ({
           </View>
           <View style={styles.summary}>
             <View>
-              <Text subtitle level={2} style={[styles.text, styles.caption]}>{title}</Text>
+              <Text caption style={[styles.text, styles.caption]}>{title}</Text>
               <Price {...priceProps} headline level={4} value={value} />
             </View>
           </View>
           <View style={styles.row}>
-            <Text subtitle level={3} style={[styles.text, styles.caption]}>{l10n.LAST_6_MONTHS}</Text>
+            <Text caption style={[styles.text, styles.caption]}>{l10n.LAST_6_MONTHS}</Text>
             <Text caption level={2} style={[styles.text, styles.ruler]}>{l10n.BALANCE.toLowerCase()}</Text>
           </View>
           <Chart color={COLOR.WHITE} {...chart} />
           <View style={styles.row}>
-            <Text subtitle level={3} style={[styles.text, styles.caption]}>{l10n.THIS_WEEK}</Text>
+            <Text caption style={[styles.text, styles.caption]}>{l10n.THIS_WEEK}</Text>
             <Text caption level={2} style={[styles.text, styles.ruler]}>{l10n.EXPENSES.toLowerCase()}</Text>
           </View>
           <View style={styles.row}>
@@ -63,8 +63,8 @@ const BalanceCard = ({
 
 BalanceCard.propTypes = {
   chart: shape({}),
-  color: number,
-  currency: number.isRequired,
+  color: string,
+  currency: number,
   lastWeek: shape({}),
   title: string.isRequired,
   value: number.isRequired,
@@ -73,6 +73,7 @@ BalanceCard.propTypes = {
 BalanceCard.defaultProps = {
   chart: {},
   color: COLOR.PRIMARY,
+  currency: 'EUR',
   lastWeek: {},
 };
 
