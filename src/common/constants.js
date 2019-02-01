@@ -3,13 +3,13 @@ import { Platform } from 'react-native';
 import { LAYOUT, THEME } from '../reactor/common';
 import PKG from '../../package.json';
 
-const { UNIT } = THEME;
+const { OFFSET, UNIT } = THEME;
 const { VIEWPORT: { W, H } } = LAYOUT;
 
 // const DEV = __DEV__ ? __DEV__ : { hello: 'world' }; // eslint-disable-line;
 // const isDev = packagerOpts && packagerOpts.dev;
 
-const IS_PRODUCTION = false;
+const IS_PRODUCTION = true;
 const IS_ANDROID = Platform.OS === 'android';
 
 export default {
@@ -48,6 +48,11 @@ export default {
       backgroundColor: 'rgba(255,255,255,0.9)',
       justifyContent: 'flex-end',
       zIndex: 2,
+    },
+    FOOTER: {
+      ...LAYOUT.STYLE.ROW,
+      justifyContent: 'space-between',
+      padding: OFFSET,
     },
     HEADER_HEIGHT: UNIT * 5.8,
     NOTCH_HEIGHT: IS_ANDROID && (H / W > 1.95) ? 36 : 0,

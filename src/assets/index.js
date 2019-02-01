@@ -55,8 +55,8 @@ export default {
   iconType1Category2,
   iconType1Category3,
   iconType1Category4,
+  iconType1Category99: iconVaultTransfer,
   iconIncomes,
-  iconIncome99: iconVaultTransfer,
 
   iconPlace,
 

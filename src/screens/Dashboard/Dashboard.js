@@ -4,9 +4,7 @@ import { BackHandler, ScrollView, View } from 'react-native';
 
 import ASSETS from '../../assets';
 import { C } from '../../common';
-import {
-  BalanceCard, DialogVault, FloatingButton, VaultItem,
-} from '../../components';
+import { BalanceCard, DialogVault, VaultItem } from '../../components';
 import { Consumer } from '../../context';
 import { THEME } from '../../reactor/common';
 import { Button, Text, Viewport } from '../../reactor/components';
@@ -75,14 +73,6 @@ class Dashboard extends PureComponent {
             },
           }) => (
             <Fragment>
-              <Button
-                contained={false}
-                icon={iconChart}
-                iconSize={24}
-                onPress={() => _onStats({ navigation, store })}
-                style={[styles.button, styles.right]}
-              />
-
               <ScrollView contentContainerStyle={styles.scroll}>
                 <BalanceCard
                   chart={overall.chart}
@@ -105,8 +95,16 @@ class Dashboard extends PureComponent {
                 <Text subtitle level={3} lighten style={styles.subtitle}>$January Expenses</Text>
                 <Text subtitle level={3} lighten style={styles.subtitle}>$January Incomes</Text>
               </ScrollView>
-
-              <FloatingButton color={COLOR.PRIMARY} onPress={_onToggleDialog} visible={!dialog && !inherit.backward} />
+              <View style={styles.footer}>
+                <Button outlined onPress={() => _onStats({ navigation, store })} title={l10n.STATS} />
+                <Button
+                  color={COLOR.PRIMARY}
+                  onPress={_onToggleDialog}
+                  shadow
+                  style={styles.button}
+                  title={`${l10n.NEW} ${l10n.VAULT}`}
+                />
+              </View>
               { visible && vaults.length === 0 && !dialog && this.setState({ dialog: true }) }
               { visible && <DialogVault visible={dialog} onClose={_onToggleDialog} /> }
             </Fragment>

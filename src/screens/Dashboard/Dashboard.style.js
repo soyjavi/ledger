@@ -1,34 +1,25 @@
 import { StyleSheet } from 'react-native';
 
 import { C } from '../../common';
-import { THEME } from '../../reactor/common';
+import { LAYOUT, THEME } from '../../reactor/common';
 
 const { OFFSET } = THEME;
 
-const { STYLE: { HEADER_HEIGHT } } = C;
+const { STYLE: { FOOTER, HEADER_HEIGHT } } = C;
 
 export default StyleSheet.create({
   button: {
-    position: 'absolute',
-    top: OFFSET / 2,
-    zIndex: 2,
+    marginLeft: OFFSET,
+    flex: 1,
   },
 
-  buttonIcon: {
-    width: 40,
-    height: 40,
-  },
-
-  left: {
-    left: 0,
-  },
-
-  right: {
-    right: 0,
+  footer: {
+    ...FOOTER,
+    ...LAYOUT.STYLE.SHADOW,
+    zIndex: -1,
   },
 
   scroll: {
-    paddingTop: OFFSET,
     paddingBottom: HEADER_HEIGHT,
   },
 
