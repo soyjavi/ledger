@@ -32,6 +32,8 @@ export default {
   LANGUAGE: 'en-EN',
   LOCATION_PROPS: { enableHighAccuracy: true },
 
+  MS_IN_WEEK: 1000 * 7 * 24 * 60 * 60,
+
   NAME: PKG.name,
 
   SCREEN: {
@@ -41,14 +43,16 @@ export default {
     VAULT: 'Vault',
   },
   STYLE: {
+    BALANCE_CARD_HEIGHT: UNIT * 21.6,
     DIALOG: {
       backgroundColor: 'rgba(255,255,255,0.9)',
       justifyContent: 'flex-end',
+      zIndex: 2,
     },
     HEADER_HEIGHT: UNIT * 5.8,
-    HEADER_EXTENDED_HEIGHT: UNIT * 15.2,
     NOTCH_HEIGHT: IS_ANDROID && (H / W > 1.95) ? 36 : 0,
     SLIDER_MONTHS_HEIGHT: UNIT * 3,
+    THUMBNAIL_SIZE: UNIT * 4,
   },
   SYMBOL: {
     AUD: 'AU$',
@@ -96,4 +100,6 @@ export default {
   },
 
   VERSION: PKG.version,
+
+  WEEKS: 28,
 };

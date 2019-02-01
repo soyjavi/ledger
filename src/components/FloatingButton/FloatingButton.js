@@ -4,7 +4,7 @@ import {
 import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
-import { iconAdd } from '../../assets';
+import ASSETS from '../../assets';
 import { C } from '../../common';
 import { THEME } from '../../reactor/common';
 import {
@@ -12,6 +12,7 @@ import {
 } from '../../reactor/components';
 import styles, { CONTAINER_SIZE } from './FloatingButton.style';
 
+const { iconAdd } = ASSETS;
 const { COLORS } = C;
 const { MOTION: { DURATION } } = THEME;
 

@@ -5,6 +5,18 @@ const { VAULT_TRANSFER, TX: { TYPE: { EXPENSE, INCOME } } } = C;
 const EXPENSES = 'expenses';
 const INCOMES = 'incomes';
 
+const sortByValue = (data = {}) => {
+  let keysSorted = {};
+
+  Object.keys(data)
+    .sort((a, b) => data[b] - data[a])
+    .forEach((key) => {
+      keysSorted = { ...keysSorted, [key.toString()]: data[key] };
+    });
+
+  return keysSorted;
+};
+
 export default (state, { date }) => {
   const {
     baseCurrency, rates, txs, vaults,
@@ -23,12 +35,13 @@ export default (state, { date }) => {
       if (value && category !== VAULT_TRANSFER) {
         const { currency } = vaults.find(({ hash }) => vault === hash);
         const amount = baseCurrency === currency ? value : exchange(value, currency, baseCurrency, rates);
+        const categoryKey = `category:${category}`;
         let context;
 
         if (type === EXPENSE) context = EXPENSES;
         if (type === INCOME) context = INCOMES;
 
-        data[context][category] = (data[context][category] || 0) + amount;
+        data[context][categoryKey] = (data[context][categoryKey] || 0) + amount;
         data.cashflow[context] += amount;
 
         const title = tx.title ? tx.title.toLowerCase().trim() : undefined;
@@ -40,13 +53,10 @@ export default (state, { date }) => {
     });
 
   [EXPENSES, INCOMES].forEach((context) => {
+    data[context] = sortByValue(data[context]);
+
     Object.keys(data.group[context]).forEach((category) => {
-      const base = data.group[context][category];
-      let keysSorted = {};
-      Object.keys(base)
-        .sort((a, b) => base[b] - base[a])
-        .forEach((key) => { keysSorted = { ...keysSorted, [key]: base[key] }; });
-      data.group[context][category] = keysSorted;
+      data.group[context][category] = sortByValue(data.group[context][category]);
     });
   });
 

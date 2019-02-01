@@ -2,7 +2,7 @@ import { bool, shape } from 'prop-types';
 import React, { Fragment, Component } from 'react';
 import { BackHandler, FlatList, View } from 'react-native';
 
-import { iconBack, iconShuffle } from '../../assets';
+import ASSETS from '../../assets';
 import { C, exchange } from '../../common';
 import {
   DialogClone, DialogTransaction, DialogTransfer, FloatingButton, TransactionItem, VaultBalance,
@@ -12,6 +12,7 @@ import { Consumer } from '../../context';
 import { Text, Viewport } from '../../reactor/components';
 import styles from './Vault.style';
 
+const { iconBack, iconShuffle } = ASSETS;
 const { TX: { TYPE: { EXPENSE, TRANSFER } } } = C;
 let TIMEOUT;
 
@@ -75,6 +76,22 @@ class Vault extends Component {
 
   _onTransactionType = type => this.setState({ dialog: type !== undefined, type });
 
+  renderBalanceCard = ({
+    baseCurrency, hash, switchCurrency, queryTxs, vaults, visible,
+  }) => (
+    <VaultBalance
+      dataSource={vaults.find(vault => vault.hash === hash)}
+      baseCurrency={switchCurrency ? baseCurrency : undefined}
+      txs={visible ? queryTxs : []}
+    />
+  )
+
+  renderEmpty = ({ l10n }) => (
+    <View style={[styles.content, styles.container]}>
+      <Text level={2} lighten>{l10n.VAULT_EMPTY}</Text>
+    </View>
+  )
+
   render() {
     const {
       _onSearch, _onSwitchCurrency, _onToggleClone, _onToggleDialog, _onTransactionType,
@@ -104,39 +121,29 @@ class Vault extends Component {
                 visible={visible}
               />
 
-              <VaultBalance
-                dataSource={vaults.find(vault => vault.hash === hash)}
-                baseCurrency={switchCurrency ? baseCurrency : undefined}
-                txs={visible ? queryTxs : []}
+              <FlatList
+                contentContainerStyle={styles.container}
+                data={visible ? queryTxs : []}
+                extraData={switchCurrency}
+                keyExtractor={tx => tx.hash || tx.timestamp}
+                ListHeaderComponent={() => this.renderBalanceCard({ baseCurrency, hash, switchCurrency, queryTxs, vaults, visible })}
+                ListEmptyComponent={() => this.renderEmpty({ l10n })}
+                renderItem={({ item: tx }) => (
+                  <TransactionItem
+                    {...tx}
+                    cashflow={switchCurrency && tx.cashflow
+                      ? {
+                        incomes: exchange(tx.cashflow.incomes, currency, baseCurrency, rates),
+                        expenses: exchange(tx.cashflow.expenses, currency, baseCurrency, rates),
+                      }
+                      : tx.cashflow}
+                    color={color}
+                    currency={switchCurrency ? baseCurrency : currency}
+                    onClone={() => _onToggleClone(tx)}
+                    value={switchCurrency && tx.hash ? exchange(tx.value, currency, baseCurrency, rates) : tx.value}
+                  />
+                )}
               />
-
-              { queryTxs.length > 0
-                ? (
-                  <FlatList
-                    contentContainerStyle={styles.container}
-                    data={queryTxs}
-                    extraData={switchCurrency}
-                    keyExtractor={tx => tx.hash || tx.timestamp}
-                    renderItem={({ item: tx }) => (
-                      <TransactionItem
-                        {...tx}
-                        cashflow={switchCurrency && tx.cashflow
-                          ? {
-                            incomes: exchange(tx.cashflow.incomes, currency, baseCurrency, rates),
-                            expenses: exchange(tx.cashflow.expenses, currency, baseCurrency, rates),
-                          }
-                          : tx.cashflow}
-                        color={color}
-                        currency={switchCurrency ? baseCurrency : currency}
-                        onClone={() => _onToggleClone(tx)}
-                        value={switchCurrency && tx.hash ? exchange(tx.value, currency, baseCurrency, rates) : tx.value}
-                      />
-                    )}
-                  />)
-                : (
-                  <View style={[styles.content, styles.container]}>
-                    <Text level={2} lighten>{l10n.VAULT_EMPTY}</Text>
-                  </View>)}
 
               <FloatingButton
                 color={color}

@@ -2,12 +2,13 @@ import { bool, number, string } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 
-import { iconExpenses, iconIncomes } from '../../assets';
+import ASSETS from '../../assets';
 import { C } from '../../common';
 import { Icon, Price } from '../../reactor/components';
 import styles from './BulletPrice.style';
 
 const { FIXED, SYMBOL } = C;
+const { iconExpenses, iconIncomes } = ASSETS;
 
 const BulletPrice = ({
   currency, incomes, value, ...inherit

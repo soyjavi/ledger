@@ -4,7 +4,7 @@ import {
 import React, { Fragment, Component } from 'react';
 import { View } from 'react-native';
 
-import ASSETS, { iconPlace, iconTime } from '../../assets';
+import ASSETS from '../../assets';
 import { C, verboseDate } from '../../common';
 import { Consumer } from '../../context';
 import {
@@ -17,6 +17,7 @@ import Thumbnail from '../Thumbnail';
 import formatTime from './modules/formatTime';
 import styles from './TransactionItem.style';
 
+const { iconPlace, iconTime } = ASSETS;
 const {
   VAULT_TRANSFER, FIXED, SYMBOL, TX: { TYPE: { EXPENSE } },
 } = C;
@@ -94,7 +95,7 @@ class TransactionItem extends Component {
                 <View style={[styles.row, styles.content]}>
                   <Thumbnail
                     color={hash ? color : undefined}
-                    icon={ASSETS[`iconCategory${category}`]}
+                    icon={ASSETS[`iconType${type}Category${category}`]}
                     title={hash ? undefined : (new Date(timestamp)).getDate()}
                   />
                   <View style={styles.texts}>

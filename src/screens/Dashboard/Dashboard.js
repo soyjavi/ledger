@@ -1,17 +1,18 @@
 import { bool, shape } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
-import { BackHandler, ScrollView } from 'react-native';
+import { BackHandler, ScrollView, View } from 'react-native';
 
-import { iconChart } from '../../assets';
+import ASSETS from '../../assets';
 import { C } from '../../common';
 import {
-  DialogVault, FloatingButton, OverallBalance, VaultItem,
+  BalanceCard, DialogVault, FloatingButton, VaultItem,
 } from '../../components';
 import { Consumer } from '../../context';
 import { THEME } from '../../reactor/common';
-import { Button, Viewport } from '../../reactor/components';
+import { Button, Text, Viewport } from '../../reactor/components';
 import styles from './Dashboard.style';
 
+const { iconChart } = ASSETS;
 const { SCREEN } = C;
 const { COLOR } = THEME;
 
@@ -67,20 +68,44 @@ class Dashboard extends PureComponent {
     return (
       <Viewport {...inherit} scroll={false} visible={visible}>
         <Consumer>
-          { ({ navigation, store: { vaults, ...store } }) => (
+          { ({
+            l10n, navigation,
+            store: {
+              baseCurrency, overall, vaults, ...store
+            },
+          }) => (
             <Fragment>
               <Button
-                color={COLOR.TRANSPARENT}
+                contained={false}
                 icon={iconChart}
                 iconSize={24}
                 onPress={() => _onStats({ navigation, store })}
                 style={[styles.button, styles.right]}
               />
-              <OverallBalance />
+
               <ScrollView contentContainerStyle={styles.scroll}>
-                { vaults.map(vault => (
-                  <VaultItem key={vault.hash} {...vault} onPress={() => _onVault({ navigation, store, vault })} />))}
+                <BalanceCard
+                  chart={overall.chart}
+                  currency={baseCurrency}
+                  lastWeek={overall.lastWeek}
+                  title={l10n.OVERALL_BALANCE}
+                  value={overall.currentBalance}
+                />
+
+                <Text subtitle level={3} lighten style={styles.subtitle}>$Vaults</Text>
+                <View>
+                  { vaults.map(vault => (
+                    <VaultItem
+                      key={vault.hash}
+                      {...vault}
+                      onPress={() => _onVault({ navigation, store, vault })}
+                    />))}
+                </View>
+
+                <Text subtitle level={3} lighten style={styles.subtitle}>$January Expenses</Text>
+                <Text subtitle level={3} lighten style={styles.subtitle}>$January Incomes</Text>
               </ScrollView>
+
               <FloatingButton color={COLOR.PRIMARY} onPress={_onToggleDialog} visible={!dialog && !inherit.backward} />
               { visible && vaults.length === 0 && !dialog && this.setState({ dialog: true }) }
               { visible && <DialogVault visible={dialog} onClose={_onToggleDialog} /> }

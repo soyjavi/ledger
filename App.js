@@ -1,5 +1,5 @@
-import { NativeModules, View } from 'react-native';
 import React, { PureComponent } from 'react';
+import { NativeModules, View } from 'react-native';
 import {
   LocalAuthentication,
   Font,
@@ -7,24 +7,17 @@ import {
   Permissions,
 } from 'expo';
 import { C, L10N, theme } from './src/common';
-import { Provider, Consumer } from './src/context';
+import { Provider } from './src/context';
 import { THEME } from './src/reactor/common';
 
 THEME.extend(theme);
-
-const Navigation = require('./App.Navigation').default;
 
 const { LANGUAGE, LOCATION_PROPS } = C;
 const { UIManager: { setLayoutAnimationEnabledExperimental: setLayoutAnimation } } = NativeModules;
 if (setLayoutAnimation) setLayoutAnimation(true);
 
-// <Consumer>
-//   { ({ navigation }) => <Navigation ref={navigator => navigation.setNavigator(navigator)} /> }
-// </Consumer>
-
 class App extends PureComponent {
   state = {
-    // appContainer: undefined,
     fingerprint: false,
     loaded: false,
   }
@@ -51,7 +44,8 @@ class App extends PureComponent {
 
   render() {
     const { _getLocationAsync, state: { fingerprint, loaded } } = this;
-    const Component = loaded ? require('./src/App').default : View; // eslint-disable-line
+    const App = loaded ? require('./src/App').default : View; // eslint-disable-line
+    // const Navigation = require('./App.Navigation').default;
 
     return (
       <Provider
@@ -60,9 +54,7 @@ class App extends PureComponent {
         getLocationAsync={_getLocationAsync}
         language={LANGUAGE}
       >
-        { loaded
-          ? <Navigation />
-          : <View /> }
+        <App />
       </Provider>
     );
   }

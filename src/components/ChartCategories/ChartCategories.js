@@ -19,7 +19,7 @@ const Item = ({
   return (
     <View style={[styles.content, extended && styles.contentExtended]}>
       { !extended && <View style={[styles.bar, { backgroundColor: color, width: `${percent}%` }]} /> }
-      <Thumbnail caption="%" color={color} title={percent} />
+      <Thumbnail caption="%" color={color} title={percent > 0 ? percent.toString() : '1'} />
       <Text subtitle level={extended ? 3 : 2} numberOfLines={1} style={styles.text}>
         {title}
       </Text>

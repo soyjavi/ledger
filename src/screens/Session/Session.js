@@ -2,7 +2,7 @@ import { bool } from 'prop-types';
 import React, { PureComponent } from 'react';
 import { Image, View } from 'react-native';
 
-import { iconFingerprint, logo } from '../../assets';
+import ASSETS from '../../assets';
 import { C } from '../../common';
 import { Consumer } from '../../context';
 import { NumKeyboard } from '../../components';
@@ -13,6 +13,7 @@ import {
 import handshake from './modules/handshake';
 import styles from './Session.style';
 
+const { iconFingerprint, logo } = ASSETS;
 const { VERSION } = C;
 const { MOTION: { DURATION } } = THEME;
 
@@ -52,6 +53,8 @@ class Session extends PureComponent {
     }
   }
 
+  _ = props => handshake(this, props);
+
   render() {
     const { _onNumber, props: { visible, ...props }, state: { busy, pin } } = this;
 
@@ -62,6 +65,9 @@ class Session extends PureComponent {
             l10n, store, navigation, events: { getFingerprintAsync } = {},
           }) => (
             <View style={styles.container}>
+              { !navigation.stack.includes('Dashboard') && visible && store.pin && !busy
+                ? this._({ pin: store.pin, store, navigation }) && <View />
+                : undefined}
               <View style={styles.content}>
                 <Image source={logo} resizeMode="contain" style={styles.logo} />
                 <View style={styles.pin}>

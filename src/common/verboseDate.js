@@ -8,5 +8,5 @@ export default (timestamp, l10n) => {
     if (date.getDate() === (today.getDate() - 1)) verboseDay = l10n.YESTERDAY; // @TODO How about if change month
   }
 
-  return `${verboseDay ? `${verboseDay}, ` : ''}${date.getDate()} ${l10n.MONTHS[date.getMonth()]}`;
+  return `${verboseDay ? `${verboseDay}, ` : ''}${l10n.MONTHS[date.getMonth()]}`;
 };
