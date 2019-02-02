@@ -7,6 +7,7 @@ const { STYLE: { THUMBNAIL_SIZE } } = C;
 const { COLOR, OFFSET, UNIT } = THEME;
 const BULLET_SIZE = UNIT * 1.2;
 const LINE_SIZE = UNIT * 0.2;
+const ICON_SIZE = UNIT * 2.2;
 
 export default StyleSheet.create({
   bullet: {
@@ -52,10 +53,9 @@ export default StyleSheet.create({
   },
 
   icon: {
-    height: OFFSET,
-    marginRight: UNIT / 4,
-    opacity: 0.5,
-    width: OFFSET,
+    height: ICON_SIZE,
+    marginRight: OFFSET,
+    width: ICON_SIZE,
   },
 
   map: {
@@ -66,8 +66,8 @@ export default StyleSheet.create({
 
   texts: {
     flex: 1,
-    marginLeft: OFFSET,
-    marginRight: OFFSET / 2,
+    // marginLeft: OFFSET,
+    // marginRight: OFFSET / 2,
   },
 
   line: {

@@ -73,7 +73,6 @@ class TransactionItem extends Component {
     } = this;
 
     const isHeading = !hash;
-    const isBottom = inherit.last;
     const { incomes, expenses } = inherit.cashflow || {};
     const regular = category !== VAULT_TRANSFER;
     const color = regular ? inherit.color : COLOR.TEXT;
@@ -85,19 +84,10 @@ class TransactionItem extends Component {
           <Fragment>
             <Touchable rippleColor={color} onPress={hash ? _onToggleExtended : undefined}>
               <View style={[styles.container, isHeading && styles.heading]}>
-                <View
-                  style={[
-                    styles.line,
-                    isHeading && styles.lineHeading,
-                    isBottom && !extended && styles.lineBottom,
-                  ]}
-                />
                 <View style={[styles.row, styles.content]}>
-                  <Thumbnail
-                    color={hash ? color : undefined}
-                    icon={ASSETS[`iconType${type}Category${category}`]}
-                    title={hash ? undefined : (new Date(timestamp)).getDate()}
-                  />
+                  { hash &&<Icon value={ASSETS[`iconType${type}Category${category}`]} style={styles.icon} /> }
+
+
                   <View style={styles.texts}>
                     { hash && regular && (
                       <Text subtitle level={2} numberOfLines={1}>{l10n.CATEGORIES[type][category]}</Text>)}
@@ -105,32 +95,26 @@ class TransactionItem extends Component {
                       <Text subtitle level={2} numberOfLines={1}>
                         {`${l10n.TRANSFER} ${type === EXPENSE ? l10n.TO : l10n.FROM} ${title}`}
                       </Text>)}
-                    { !hash && <Text subtitle level={3} lighten>{verboseDate(timestamp, l10n)}</Text> }
+                    { !hash && <Text lighten>{verboseDate(timestamp, l10n)}</Text> }
                     { title && regular && <Text level={2} lighten numberOfLines={1}>{title}</Text> }
                   </View>
-                  <View style={styles.row}>
-                    { incomes > 0 && (
-                      <BulletPrice currency={currency} incomes value={incomes} style={styles.bulletPrice} />)}
-                    { expenses > 0 && (
-                      <BulletPrice currency={currency} value={expenses} style={styles.bulletPrice} />)}
-                  </View>
-                  { value > 0 && (
-                    <Price
-                      headline
-                      level={6}
-                      fixed={FIXED[currency]}
-                      symbol={SYMBOL[currency]}
-                      title={type === EXPENSE ? undefined : '+'}
-                      value={value}
-                    />)}
+                  { hash
+                    ? (
+                      <Price
+                        headline
+                        level={6}
+                        fixed={FIXED[currency]}
+                        symbol={SYMBOL[currency]}
+                        title={type === EXPENSE ? undefined : '+'}
+                        value={value}
+                      />)
+                    : <Price lighten fixed={FIXED[currency]} symbol={SYMBOL[currency]} value={0} />}
                 </View>
               </View>
-
             </Touchable>
 
             { hash && extended && (
               <View>
-                <View style={[styles.line, isBottom && styles.lineBottomExtended]} />
                 <View style={[styles.row, styles.container, styles.extended]}>
                   <View style={[styles.bullet, { backgroundColor: color }]} />
                   <View style={[styles.row, styles.texts]}>
