@@ -18,6 +18,7 @@ import iconType0Category9 from './icon_expense_9.png';
 import iconType0Category10 from './icon_expense_10.png';
 import iconType0Category11 from './icon_expense_11.png';
 import iconType0Category12 from './icon_expense_12.png';
+import iconType0Category13 from './icon_expense_13.png';
 import iconType1Category1 from './icon_income_1.png';
 import iconType1Category2 from './icon_income_2.png';
 import iconType1Category3 from './icon_income_3.png';
@@ -56,6 +57,7 @@ export default {
   iconType0Category10,
   iconType0Category11,
   iconType0Category12,
+  iconType0Category13,
   iconType0Category99: iconVaultTransfer,
   iconType1Category1,
   iconType1Category2,
