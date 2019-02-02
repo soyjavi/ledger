@@ -1,22 +1,21 @@
 import { StyleSheet } from 'react-native';
 
 import { C } from '../../common';
-import { ENV, LAYOUT, THEME } from '../../reactor/common';
+import { ENV, THEME } from '../../reactor/common';
 
-const { STYLE: { DIALOG } } = C;
+const { STYLE: { DIALOG, FOOTER } } = C;
 const { IS_NATIVE } = ENV;
 const { UNIT, OFFSET } = THEME;
 
 export default StyleSheet.create({
   button: {
     flex: 1,
-    marginHorizontal: OFFSET / 4,
+    marginLeft: OFFSET,
   },
 
-  buttons: {
-    ...LAYOUT.STYLE.ROW,
-    marginHorizontal: -OFFSET / 4,
-    paddingVertical: OFFSET / 4,
+  footer: {
+    ...FOOTER,
+    marginHorizontal: -OFFSET,
   },
 
   dialog: DIALOG,

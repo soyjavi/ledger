@@ -155,7 +155,6 @@ class TransactionItem extends Component {
                   <View style={[styles.bullet, { backgroundColor: color }]} />
                   <Button
                     color={color}
-                    rounded
                     title={l10n.CLONE}
                     shadow
                     small

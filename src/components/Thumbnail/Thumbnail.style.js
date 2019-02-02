@@ -4,7 +4,9 @@ import { C } from '../../common';
 import { LAYOUT, THEME } from '../../reactor/common';
 
 const { STYLE: { THUMBNAIL_SIZE } } = C;
-const { COLOR } = THEME;
+const { COLOR, UNIT } = THEME;
+
+const HALO_GAP = UNIT * 0.6;
 
 export default StyleSheet.create({
   caption: {
@@ -12,6 +14,10 @@ export default StyleSheet.create({
   },
 
   container: {
+    zIndex: 1,
+  },
+
+  content: {
     ...LAYOUT.STYLE.ROW,
     alignContent: 'center',
     alignItems: 'center',
@@ -19,7 +25,16 @@ export default StyleSheet.create({
     height: THUMBNAIL_SIZE,
     justifyContent: 'center',
     width: THUMBNAIL_SIZE,
-    zIndex: 1,
+  },
+
+  halo: {
+    borderRadius: (THUMBNAIL_SIZE + HALO_GAP) / 2,
+    height: (THUMBNAIL_SIZE + HALO_GAP),
+    left: -(HALO_GAP / 2),
+    top: -(HALO_GAP / 2),
+    opacity: 0.2,
+    position: 'absolute',
+    width: (THUMBNAIL_SIZE + HALO_GAP),
   },
 
   icon: {

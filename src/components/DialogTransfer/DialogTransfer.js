@@ -104,20 +104,12 @@ class DialogTransfer extends PureComponent {
               value={form}
             />
             <View style={styles.buttons}>
-              <Button
-                color={COLORS.TEXT}
-                outlined
-                onPress={onClose}
-                rounded
-                style={styles.button}
-                title={l10n.CANCEL}
-              />
+              <Button color={COLORS.TEXT} outlined onPress={onClose} style={styles.button} title={l10n.CANCEL} />
               <Button
                 activity={busy}
                 color={COLORS.TEXT}
                 disabled={busy || !valid}
                 onPress={() => _onSubmit({ l10n, store })}
-                rounded
                 shadow
                 style={styles.button}
                 title={l10n.SAVE}

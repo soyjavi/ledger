@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { C } from '../../common';
 import { LAYOUT, THEME } from '../../reactor/common';
 
-const { COLOR, OFFSET, UNIT } = THEME;
+const { BORDER_RADIUS, COLOR, OFFSET } = THEME;
 
 const { STYLE: { BALANCE_CARD_HEIGHT } } = C;
 
@@ -33,7 +33,7 @@ export default StyleSheet.create({
   container: {
     ...LAYOUT.STYLE.SHADOW,
     backgroundColor: COLOR.BACKGROUND_OPACITY,
-    borderRadius: UNIT,
+    borderRadius: BORDER_RADIUS * 2,
     height: BALANCE_CARD_HEIGHT,
     overflow: 'hidden',
     padding: OFFSET,
@@ -48,6 +48,10 @@ export default StyleSheet.create({
   },
 
   row: LAYOUT.STYLE.ROW,
+
+  separator: {
+    marginLeft: OFFSET / 2,
+  },
 
   summary: {
     justifyContent: 'space-between',

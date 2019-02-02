@@ -1,24 +1,23 @@
 import { C } from '../../common';
 
-const {
-  VAULT_TRANSFER, COLORS, TX: { TYPE }, WEEKS,
-} = C;
-const MS_IN_WEEK = 1000 * 7 * 24 * 60 * 60;
+const { COLORS, TX: { TYPE }, WEEKS } = C;
+const MS_IN_DAY = 1000 * 24 * 60 * 60;
+const MS_IN_WEEK = MS_IN_DAY * 7;
 
 export default (vault = {}, txs = [], index) => {
-  const lastWeek = { expenses: 0, incomes: 0 };
   const chartBalance = new Array(WEEKS).fill(0);
   const weekBalance = new Array(WEEKS).fill(0);
   const weekExpenses = new Array(WEEKS).fill(0);
   const now = new Date();
   let { balance = 0 } = vault;
   let progression = 0;
+  let total = 0;
 
-  txs.filter(tx => tx.vault === vault.hash).forEach(({
-    category, timestamp, type, value,
-  }) => {
+  txs.filter(tx => tx.vault === vault.hash).forEach(({ timestamp, type, value }) => {
     const isExpense = type === TYPE.EXPENSE;
-    const weekNumber = Math.floor(Math.abs(now - new Date(timestamp)) / MS_IN_WEEK);
+    const ms = Math.abs(now - new Date(timestamp));
+    const weekNumber = Math.floor(ms / MS_IN_WEEK);
+    const dayNumber = Math.round(ms / MS_IN_DAY);
 
     balance += isExpense ? -(value) : value;
 
@@ -26,15 +25,10 @@ export default (vault = {}, txs = [], index) => {
       const weekIndex = (WEEKS - 1) - weekNumber;
 
       chartBalance[weekIndex] += isExpense ? -(value) : value;
-      if (category !== VAULT_TRANSFER) {
-        if (isExpense) weekExpenses[weekIndex] += value;
-        weekBalance[weekIndex] += isExpense ? -(value) : value;
+      if (isExpense) weekExpenses[weekIndex] += value;
+      weekBalance[weekIndex] += isExpense ? -(value) : value;
 
-        if (weekNumber === 0) {
-          if (isExpense) lastWeek.expenses += value;
-          else lastWeek.incomes += value;
-        }
-      }
+      if (dayNumber <= 30) progression += isExpense ? -(value) : value;
     }
   });
 
@@ -42,14 +36,16 @@ export default (vault = {}, txs = [], index) => {
     months: {},
     color: COLORS[index],
     currentBalance: balance,
-    lastWeek,
+    progression,
+
     weekBalance,
     weekExpenses,
     chart: {
       balance: chartBalance
+        // .reduce((total, value) => total + value)
         .map((value) => {
-          progression += value;
-          return progression;
+          total += value;
+          return total;
         })
         .map(value => (value !== 0 ? value + vault.balance : 0)),
       expenses: weekExpenses,

@@ -79,22 +79,14 @@ class DialogVault extends PureComponent {
                 ...form,
               }}
             />
-            <View style={styles.buttons}>
+            <View style={styles.footer}>
               { vaults.length > 0 && (
-                <Button
-                  title={l10n.CANCEL}
-                  color={COLOR.TEXT}
-                  outlined
-                  onPress={onClose}
-                  rounded
-                  style={styles.button}
-                />)}
+                <Button title={l10n.CANCEL} color={COLOR.TEXT} outlined onPress={onClose} />)}
               <Button
                 activity={busy}
                 color={COLOR.TEXT}
                 disabled={busy || !valid}
                 onPress={() => _onSubmit(store)}
-                rounded
                 shadow
                 style={styles.button}
                 title={l10n.SAVE}

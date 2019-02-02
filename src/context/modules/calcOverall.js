@@ -5,14 +5,18 @@ const { WEEKS } = C;
 export default ({ baseCurrency, rates, vaults = [] }) => {
   const chartBalance = new Array(WEEKS).fill(0);
   const chartExpenses = new Array(WEEKS).fill(0);
-  const lastWeek = { expenses: 0, incomes: 0 };
   let balance = 0;
   let currentBalance = 0;
   let progression = 0;
+  let total = 0;
 
   vaults.forEach(({
-    balance: vaultBalance, currentBalance: vaultCurrentBalance, currency,
-    weekBalance, weekExpenses, lastWeek: { expenses, incomes },
+    balance: vaultBalance,
+    currentBalance: vaultCurrentBalance,
+    currency,
+    progression: vaultProgression = 0,
+    weekBalance,
+    weekExpenses,
   }) => {
     const sameCurrency = currency === baseCurrency;
     const exchangeProps = [currency, baseCurrency, rates];
@@ -29,8 +33,7 @@ export default ({ baseCurrency, rates, vaults = [] }) => {
       chartExpenses[weekIndex] += sameCurrency ? value : exchange(value, ...exchangeProps);
     });
 
-    lastWeek.expenses += sameCurrency ? expenses : exchange(expenses, ...exchangeProps);
-    lastWeek.incomes += sameCurrency ? incomes : exchange(incomes, ...exchangeProps);
+    progression += sameCurrency ? vaultProgression : exchange(vaultProgression, ...exchangeProps);
   });
 
   return {
@@ -38,13 +41,13 @@ export default ({ baseCurrency, rates, vaults = [] }) => {
     chart: {
       balance: chartBalance
         .map((value) => {
-          progression += value;
-          return progression;
+          total += value;
+          return total;
         })
         .map(value => (value !== 0 ? value + balance : 0)),
       expenses: chartExpenses,
     },
     currentBalance,
-    lastWeek,
+    progression,
   };
 };

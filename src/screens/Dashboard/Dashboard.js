@@ -2,15 +2,15 @@ import { bool, shape } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
 import { BackHandler, ScrollView, View } from 'react-native';
 
-import ASSETS from '../../assets';
 import { C } from '../../common';
 import { BalanceCard, DialogVault, VaultItem } from '../../components';
 import { Consumer } from '../../context';
 import { THEME } from '../../reactor/common';
-import { Button, Text, Viewport } from '../../reactor/components';
+import {
+  Button, Price, Text, Viewport,
+} from '../../reactor/components';
 import styles from './Dashboard.style';
 
-const { iconChart } = ASSETS;
 const { SCREEN } = C;
 const { COLOR } = THEME;
 
@@ -77,13 +77,16 @@ class Dashboard extends PureComponent {
                 <BalanceCard
                   chart={overall.chart}
                   currency={baseCurrency}
-                  lastWeek={overall.lastWeek}
+                  progression={overall.progression}
                   title={l10n.OVERALL_BALANCE}
                   value={overall.currentBalance}
                 />
 
-                <Text subtitle level={3} lighten style={styles.subtitle}>$Vaults</Text>
-                <View>
+                <View style={styles.row}>
+                  <Text headline level={5} style={styles.subtitle}>{l10n.VAULTS}</Text>
+                  <Text caption level={2} lighten>$Current state</Text>
+                </View>
+                <View style={styles.vaults}>
                   { vaults.map(vault => (
                     <VaultItem
                       key={vault.hash}
@@ -92,8 +95,14 @@ class Dashboard extends PureComponent {
                     />))}
                 </View>
 
-                <Text subtitle level={3} lighten style={styles.subtitle}>$January Expenses</Text>
-                <Text subtitle level={3} lighten style={styles.subtitle}>$January Incomes</Text>
+                <View style={styles.row}>
+                  <Text headline level={5} style={styles.subtitle}>{l10n.EXPENSES}</Text>
+                  <Price caption color={COLOR.EXPENSES} level={2} lighten symbol={baseCurrency} />
+                </View>
+                <View style={styles.row}>
+                  <Text headline level={5} style={styles.subtitle}>{l10n.INCOMES}</Text>
+                  <Price caption color={COLOR.INCOMES} level={2} lighten symbol={baseCurrency} />
+                </View>
               </ScrollView>
               <View style={styles.footer}>
                 <Button outlined onPress={() => _onStats({ navigation, store })} title={l10n.STATS} />

@@ -68,6 +68,7 @@ export default {
     INCOMES: 'Incomes',
 
     LAST_6_MONTHS: 'Last 6 months',
+    LAST_30_DAYS: 'Last 30 days',
     LAST_WEEKS: 'Last weeks',
     LOADING_PLACE: 'Wait a moment, loading place.',
     LOADING_PROFILE: 'Wait a moment, syncing your blockchain.',
@@ -87,7 +88,6 @@ export default {
     SLOGAN: 'Your private accounting on the blockchain.',
     STATS: 'Stats',
 
-    THIS_WEEK: 'This Week',
     TITLE: 'Title',
     TO: 'to',
     TODAY: 'Today',

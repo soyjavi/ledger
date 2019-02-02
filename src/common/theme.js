@@ -19,8 +19,10 @@ export default {
     // BASE: '#333',
     // TEXT: '#fff',
     // TEXT_LIGHTEN: '#aaa',
-    PRIMARY: '#3247C7',
-    SECONDARY: '#21ce99',
+    PRIMARY: '#6141da',
+
+    EXPENSES: '#f74440',
+    INCOMES: '#21ce99',
   },
 
   FONT: {

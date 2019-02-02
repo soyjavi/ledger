@@ -135,20 +135,12 @@ class DialogTransaction extends PureComponent {
             </View>
 
             <View style={styles.buttons}>
-              <Button
-                color={color}
-                outlined
-                onPress={onClose}
-                rounded
-                style={styles.button}
-                title={l10n.CANCEL}
-              />
+              <Button color={color} outlined onPress={onClose} style={styles.button} title={l10n.CANCEL} />
               <Button
                 activity={busy}
                 color={color}
                 disabled={busy || !valid || (location && !place)}
                 onPress={() => _onSubmit({ l10n, store })}
-                rounded
                 shadow
                 style={styles.button}
                 title={l10n.SAVE}

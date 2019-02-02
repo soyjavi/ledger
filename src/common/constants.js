@@ -9,13 +9,13 @@ const { VIEWPORT: { W, H } } = LAYOUT;
 // const DEV = __DEV__ ? __DEV__ : { hello: 'world' }; // eslint-disable-line;
 // const isDev = packagerOpts && packagerOpts.dev;
 
-const IS_PRODUCTION = true;
+const IS_PRODUCTION = false;
 const IS_ANDROID = Platform.OS === 'android';
 
 export default {
   VAULT_TRANSFER: 99,
   COLORS: [
-    '#9d47b6', '#0fbde9', '#e6639b', '#ffb129', '#0c5061', '#6141da', '#f74440',
+    '#9d47b6', '#0fbde9', '#e6639b', '#ffb129', '#0c5061', '#3247C7', '#f74440',
     '#f87c44', '#1B1464', '#6F1E51', '#d6e06b', '#7c50b9', '#ffcc41', '#f88181',
   ],
 

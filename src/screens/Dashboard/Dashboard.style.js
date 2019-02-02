@@ -19,12 +19,27 @@ export default StyleSheet.create({
     zIndex: -1,
   },
 
+  row: {
+    ...LAYOUT.STYLE.ROW,
+    marginHorizontal: OFFSET,
+    marginVertical: OFFSET / 2,
+  },
+
   scroll: {
     paddingBottom: HEADER_HEIGHT,
   },
 
   subtitle: {
-    marginTop: OFFSET,
-    marginHorizontal: OFFSET,
+    flex: 1,
+  },
+
+  vaults: {
+    display: 'flex',
+    // flexDirection: 'row',
+    flexWrap: 'wrap',
+    // justifyContent: 'center',
+    marginHorizontal: OFFSET / 2,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
   },
 });

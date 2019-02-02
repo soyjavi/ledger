@@ -9,10 +9,12 @@ export default {
       keyboard: 'numeric',
       label: 'l10n.AMOUNT',
       required: true,
+      inline: 2,
       style: 'inline2',
     },
     title: {
       label: 'l10n.TITLE',
+      inline: 2,
       style: 'inline2',
     },
   },
@@ -43,12 +45,14 @@ export default {
     title: {
       label: 'l10n.TITLE',
       required: true,
+      inline: 2,
       style: 'inline2',
     },
     balance: {
       keyboard: 'numeric',
       label: 'l10n.BALANCE',
       style: 'inline2',
+      inline: 2,
       required: true,
     },
   },
