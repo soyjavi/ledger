@@ -100,7 +100,7 @@ class Vault extends Component {
         clone, dialog, switchCurrency, type,
       },
     } = this;
-    const { state: { params: { color, currency, hash } = {} } = {} } = props.navigation;
+    const { state: { params: { currency, hash } = {} } = {} } = props.navigation;
 
     return (
       <Viewport {...props} scroll={false} visible={visible}>
@@ -137,7 +137,6 @@ class Vault extends Component {
                         expenses: exchange(tx.cashflow.expenses, currency, baseCurrency, rates),
                       }
                       : tx.cashflow}
-                    color={color}
                     currency={switchCurrency ? baseCurrency : currency}
                     onClone={() => _onToggleClone(tx)}
                     value={switchCurrency && tx.hash ? exchange(tx.value, currency, baseCurrency, rates) : tx.value}
@@ -146,7 +145,6 @@ class Vault extends Component {
               />
 
               <FloatingButton
-                color={color}
                 onPress={dialog ? _onToggleDialog : _onTransactionType}
                 options={vaults.length === 1 ? [l10n.EXPENSE, l10n.INCOME] : [l10n.EXPENSE, l10n.INCOME, l10n.TRANSFER]}
                 visible={!dialog && !props.backward}
@@ -154,7 +152,6 @@ class Vault extends Component {
               { visible && (
                 <Fragment>
                   <DialogTransaction
-                    color={color}
                     type={type}
                     vault={hash}
                     onClose={_onToggleDialog}
@@ -162,7 +159,7 @@ class Vault extends Component {
                   />
                   { vaults.length > 1 && (
                     <DialogTransfer vault={hash} onClose={_onToggleDialog} visible={dialog && type === TRANSFER} />)}
-                  <DialogClone color={color} dataSource={clone} visible={!!clone} onClose={() => _onToggleClone()} />
+                  <DialogClone dataSource={clone} visible={!!clone} onClose={() => _onToggleClone()} />
                 </Fragment>)}
             </Fragment>
           )}

@@ -18,7 +18,6 @@ const VaultBalance = ({ dataSource = {}, baseCurrency }) => {
       { ({ l10n, store: { rates } }) => (
         <BalanceCard
           chart={chart}
-          color={color}
           currency={currentCurrency}
           progression={progression}
           title={`${title} ${l10n.BALANCE}`}
