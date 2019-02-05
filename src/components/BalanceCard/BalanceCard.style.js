@@ -31,7 +31,6 @@ export default StyleSheet.create({
   },
 
   container: {
-    ...LAYOUT.STYLE.SHADOW,
     backgroundColor: COLOR.BACKGROUND_OPACITY,
     borderRadius: BORDER_RADIUS * 2,
     height: BALANCE_CARD_HEIGHT,

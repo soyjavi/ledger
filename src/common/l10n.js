@@ -26,7 +26,8 @@ export default {
     CANCEL: 'Cancel',
     CATEGORIES: [
       { // Expenses
-        1: 'Food & Drinks',
+        1: 'Food',
+        13: 'Drinks',
         2: 'Hobby & Toys',
         3: 'Travel',
         4: 'Debt',

@@ -9,17 +9,9 @@ export { CONTAINER_SIZE };
 
 export default StyleSheet.create({
   button: {
-    // ...LAYOUT.STYLE.SHADOW,
+    ...LAYOUT.STYLE.SHADOW,
     ...LAYOUT.STYLE.CENTERED,
-
-    shadowOffset: { height: 2, width: 0 },
-    shadowOpacity: 0.75,
-    shadowRadius: 8,
-    // ...Platform.select({
-    //   android: { elevation: 4 },
-    // }),
-
-    backgroundColor: COLOR.TEXT,
+    backgroundColor: COLOR.PRIMARY,
     borderRadius: CONTAINER_SIZE / 2,
     height: CONTAINER_SIZE,
     width: CONTAINER_SIZE,

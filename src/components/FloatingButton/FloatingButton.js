@@ -18,14 +18,12 @@ const { MOTION: { DURATION } } = THEME;
 
 class FloatingButton extends PureComponent {
   static propTypes = {
-    color: string,
     onPress: func.isRequired,
     options: arrayOf(string),
     visible: bool,
   };
 
   static defaultProps = {
-    color: undefined,
     options: undefined,
     visible: false,
   };
@@ -50,7 +48,7 @@ class FloatingButton extends PureComponent {
 
   render() {
     const {
-      _onPress, _onOption, state: { opened }, props: { color, options, visible },
+      _onPress, _onOption, state: { opened }, props: { options, visible },
     } = this;
 
     return (
@@ -78,13 +76,7 @@ class FloatingButton extends PureComponent {
         <Motion preset="pop" visible={visible} delay={visible ? DURATION * 2 : 0}>
           <Motion timeline={[{ property: 'scale', value: visible && opened ? 0.75 : 1 }]}>
             <Touchable containerBorderRadius={CONTAINER_SIZE / 2} onPress={_onPress} rippleColor={COLORS.BACKGROUND}>
-              <View
-                style={[
-                  styles.button,
-                  visible && opened && styles.buttonOpened,
-                  color && { backgroundColor: color, shadowColor: color },
-                ]}
-              >
+              <View style={[styles.button, visible && opened && styles.buttonOpened]}>
                 <Icon value={iconAdd} style={styles.icon} />
               </View>
             </Touchable>

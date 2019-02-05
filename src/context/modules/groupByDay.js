@@ -1,7 +1,7 @@
 import { C } from '../../common';
 import sortByTimestamp from './sortByTimestamp';
 
-const { VAULT_TRANSFER, TX: { TYPE: { EXPENSE, INCOME } } } = C;
+const { VAULT_TRANSFER, TX: { TYPE: { INCOME } } } = C;
 const MAX_DAYS = 31;
 
 export default ({ txs }, { l10n: { CATEGORIES = [] } = {}, search = '', vault }) => {
@@ -26,15 +26,11 @@ export default ({ txs }, { l10n: { CATEGORIES = [] } = {}, search = '', vault })
 
           group = txDate;
           groupIndex = dataSource.length;
-          dataSource.push({
-            cashflow: { expenses: 0, incomes: 0 },
-            timestamp: tx.timestamp,
-          });
+          dataSource.push({ progression: 0, timestamp: tx.timestamp });
         }
 
         if (tx.category !== VAULT_TRANSFER) {
-          if (tx.type === EXPENSE) dataSource[groupIndex].cashflow.expenses += tx.value;
-          else if (tx.type === INCOME) dataSource[groupIndex].cashflow.incomes += tx.value;
+          dataSource[groupIndex].progression += tx.type === INCOME ? tx.value : -(tx.value);
         }
 
         dataSource.push(tx);

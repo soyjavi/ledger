@@ -12,8 +12,6 @@ import {
 } from '../../reactor/components';
 import { THEME } from '../../reactor/common';
 import MapStaticImage from '../MapStaticImage';
-import BulletPrice from '../BulletPrice';
-import Thumbnail from '../Thumbnail';
 import formatTime from './modules/formatTime';
 import styles from './TransactionItem.style';
 
@@ -73,7 +71,6 @@ class TransactionItem extends Component {
     } = this;
 
     const isHeading = !hash;
-    const { incomes, expenses } = inherit.cashflow || {};
     const regular = category !== VAULT_TRANSFER;
     const color = regular ? inherit.color : COLOR.TEXT;
     const time = new Date(timestamp);
@@ -85,67 +82,47 @@ class TransactionItem extends Component {
             <Touchable rippleColor={color} onPress={hash ? _onToggleExtended : undefined}>
               <View style={[styles.container, isHeading && styles.heading]}>
                 <View style={[styles.row, styles.content]}>
-                  { hash &&<Icon value={ASSETS[`iconType${type}Category${category}`]} style={styles.icon} /> }
-
+                  { !isHeading && <Icon value={ASSETS[`iconType${type}Category${category}`]} style={styles.icon} /> }
 
                   <View style={styles.texts}>
-                    { hash && regular && (
+                    { !isHeading && regular && (
                       <Text subtitle level={2} numberOfLines={1}>{l10n.CATEGORIES[type][category]}</Text>)}
-                    { hash && !regular && (
+                    { !isHeading && !regular && (
                       <Text subtitle level={2} numberOfLines={1}>
                         {`${l10n.TRANSFER} ${type === EXPENSE ? l10n.TO : l10n.FROM} ${title}`}
                       </Text>)}
-                    { !hash && <Text lighten>{verboseDate(timestamp, l10n)}</Text> }
+                    { isHeading && <Text level={2} lighten subtitle>{verboseDate(timestamp, l10n)}</Text> }
                     { title && regular && <Text level={2} lighten numberOfLines={1}>{title}</Text> }
                   </View>
-                  { hash
-                    ? (
-                      <Price
-                        headline
-                        level={6}
-                        fixed={FIXED[currency]}
-                        symbol={SYMBOL[currency]}
-                        title={type === EXPENSE ? undefined : '+'}
-                        value={value}
-                      />)
-                    : <Price lighten fixed={FIXED[currency]} symbol={SYMBOL[currency]} value={0} />}
+                  <Price
+                    headline={!isHeading}
+                    subtitle={isHeading}
+                    level={!isHeading ? 6 : 2}
+                    lighten={isHeading}
+                    fixed={FIXED[currency]}
+                    symbol={SYMBOL[currency]}
+                    title={!isHeading ? (type === EXPENSE ? undefined : '+') : undefined}
+                    value={isHeading ? inherit.progression : value}
+                  />
                 </View>
               </View>
             </Touchable>
 
             { hash && extended && (
-              <View>
-                <View style={[styles.row, styles.container, styles.extended]}>
-                  <View style={[styles.bullet, { backgroundColor: color }]} />
-                  <View style={[styles.row, styles.texts]}>
-                    <Icon value={iconTime} style={styles.icon} />
-                    <Text level={2} lighten>{formatTime(time)}</Text>
-                  </View>
+              <View style={[styles.container, styles.extended]}>
+                <View style={styles.row}>
+                  <Icon value={iconTime} style={[styles.icon, styles.iconExtended]} />
+                  <Text level={2} lighten>{formatTime(time)}</Text>
                 </View>
                 { location && (
-                  <View style={[styles.row, styles.container, styles.extended]}>
-                    <View style={[styles.bullet, { backgroundColor: color }]} />
+                  <View style={styles.row}>
+                    <Icon value={iconPlace} style={[styles.icon, styles.iconExtended]} />
                     <View style={styles.texts}>
-                      <Touchable rippleColor={COLOR.WHITE} onPress={() => {}}>
-                        <MapStaticImage {...location} />
-                      </Touchable>
-                      <View style={styles.row}>
-                        <Icon value={iconPlace} style={styles.icon} />
-                        <Text level={2} lighten>{location.place}</Text>
-                      </View>
+                      <Text level={2} lighten>{location.place}</Text>
+                      <MapStaticImage {...location} />
                     </View>
                   </View>)}
-                <View style={[styles.row, styles.container, styles.extended, styles.extendedBottom]}>
-                  <View style={[styles.bullet, { backgroundColor: color }]} />
-                  <Button
-                    color={color}
-                    title={l10n.CLONE}
-                    shadow
-                    small
-                    style={styles.button}
-                    onPress={onClone}
-                  />
-                </View>
+                <Button color={COLOR.PRIMARY} onPress={onClone} shadow small style={styles.button} title={l10n.CLONE} />
               </View>
             )}
           </Fragment>

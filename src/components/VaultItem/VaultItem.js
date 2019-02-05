@@ -22,7 +22,7 @@ const VaultItem = (props) => {
   } = props;
 
   return (
-    <Touchable onPress={onPress} rippleColor={COLOR.PRIMARY} style={styles.container}>
+    <Touchable onPress={onPress} style={styles.container}>
       <View>
         <Text caption numberOfLines={1}>{title.toUpperCase()}</Text>
         <Price fixed={FIXED[currency]} symbol={SYMBOL[currency]} headline level={5} value={currentBalance} />
