@@ -26,15 +26,15 @@ export default StyleSheet.create({
   },
 
   income: {
-    backgroundColor: COLOR.SUCCESS,
+    backgroundColor: COLOR.INCOMES,
   },
 
   expense: {
-    backgroundColor: COLOR.ERROR,
+    backgroundColor: COLOR.EXPENSES,
   },
 
   transfer: {
-    backgroundColor: COLOR.TEXT,
+    backgroundColor: COLOR.PRIMARY,
   },
 
   container: {
