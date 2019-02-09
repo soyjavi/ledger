@@ -1,17 +1,16 @@
-import {
-  bool, func, shape, string,
-} from 'prop-types';
+import { bool, func, shape } from 'prop-types';
 import React, { PureComponent } from 'react';
-import { View } from 'react-native';
 
 import { Consumer } from '../../context';
+import { THEME } from '../../reactor/common';
 import { Button, Dialog, Text } from '../../reactor/components';
 
 import styles from './DialogClone.style';
 
+const { COLOR } = THEME;
+
 class DialogClone extends PureComponent {
   static propTypes = {
-    color: string.isRequired,
     dataSource: shape({}),
     onClose: func.isRequired,
     visible: bool,
@@ -46,32 +45,33 @@ class DialogClone extends PureComponent {
   render() {
     const {
       _onSubmit,
-      props: { color, onClose, visible },
+      props: { onClose, visible },
       state: { busy },
     } = this;
 
     return (
       <Consumer>
         { ({ l10n, store }) => (
-          <Dialog style={styles.frame} styleContainer={styles.dialog} visible={visible}>
-            <Text color={color} headline level={5} style={styles.title}>
-              {`${l10n.CLONE} ${l10n.TRANSACTION}`}
-            </Text>
+          <Dialog
+            onClose={onClose}
+            style={styles.frame}
+            styleContainer={styles.dialog}
+            title={`${l10n.CLONE} ${l10n.TRANSACTION}`}
+            visible={visible}
+          >
             <Text lighten level={2}>
               {l10n.CLONE_CAPTION}
             </Text>
-            <View style={styles.buttons}>
-              <Button color={color} outlined onPress={onClose} style={styles.button} title={l10n.CANCEL} />
-              <Button
-                activity={busy}
-                color={color}
-                disabled={busy}
-                onPress={() => _onSubmit(store)}
-                shadow
-                style={styles.button}
-                title={l10n.ACCEPT}
-              />
-            </View>
+            <Button
+              activity={busy}
+              color={COLOR.PRIMARY}
+              disabled={busy}
+              onPress={() => _onSubmit(store)}
+              rounded
+              shadow
+              style={styles.button}
+              title={l10n.ACCEPT}
+            />
           </Dialog>
         )}
       </Consumer>

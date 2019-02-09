@@ -1,9 +1,9 @@
 import { bool, func, string } from 'prop-types';
 import React, { PureComponent } from 'react';
-import { View } from 'react-native';
 
-import { C, translate } from '../../common';
+import { translate } from '../../common';
 import { Consumer } from '../../context';
+import { THEME } from '../../reactor/common';
 import {
   Button, Dialog, Form, Text,
 } from '../../reactor/components';
@@ -11,7 +11,7 @@ import { hydrateTransfer, onTransfer } from './modules';
 
 import styles from './DialogTransfer.style';
 
-const { COLORS } = C;
+const { COLOR } = THEME;
 
 class DialogTransfer extends PureComponent {
   static propTypes = {
@@ -83,13 +83,12 @@ class DialogTransfer extends PureComponent {
       <Consumer>
         { ({ l10n, store }) => (
           <Dialog
+            onClose={onClose}
             visible={visible}
             style={styles.frame}
             styleContainer={styles.dialog}
+            title={`${l10n.NEW} ${l10n.TRANSFER}`}
           >
-            <Text color={COLORS.TEXT} headline level={5} style={styles.title}>
-              {`${l10n.NEW} ${l10n.TRANSFER}`}
-            </Text>
             <Text lighten level={2}>
               {l10n.TRANSFER_CAPTION}
             </Text>
@@ -97,24 +96,21 @@ class DialogTransfer extends PureComponent {
               attributes={translate(hydrateTransfer({
                 form, l10n, store, vault,
               }), l10n)}
-              color={COLORS.TEXT}
               onValid={_onValid}
               onChange={value => _onChange(value, store)}
               style={styles.form}
               value={form}
             />
-            <View style={styles.buttons}>
-              <Button color={COLORS.TEXT} outlined onPress={onClose} style={styles.button} title={l10n.CANCEL} />
-              <Button
-                activity={busy}
-                color={COLORS.TEXT}
-                disabled={busy || !valid}
-                onPress={() => _onSubmit({ l10n, store })}
-                shadow
-                style={styles.button}
-                title={l10n.SAVE}
-              />
-            </View>
+            <Button
+              activity={busy}
+              color={COLOR.PRIMARY}
+              disabled={busy || !valid}
+              onPress={() => _onSubmit({ l10n, store })}
+              rounded
+              shadow
+              style={styles.button}
+              title={l10n.SAVE}
+            />
           </Dialog>
         )}
       </Consumer>
