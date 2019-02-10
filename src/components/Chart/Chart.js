@@ -1,25 +1,40 @@
-import { arrayOf, number } from 'prop-types';
+import { arrayOf, number, string } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 
-import Bars from './Bars';
 import styles from './Chart.style';
 
-const Chart = ({ balance, expenses, ...inherit }) => (
-  <View style={styles.container}>
-    <Bars values={balance} {...inherit} />
-    <Bars values={expenses} {...inherit} inverted />
-  </View>
-);
+const Chart = ({ color, values }) => {
+  const max = values.length > 0 ? Math.max(...values) : 0;
+  const floor = values.length > 0
+    ? (Math.min(...(values.filter(value => value > 0))) / 1.015)
+    : 0;
+
+  return (
+    <View style={styles.container}>
+      { values.map((value, index) => (
+        <View
+          key={`${index}-${value}`} // eslint-disable-line
+          style={[
+            styles.item,
+            {
+              backgroundColor: color,
+              height: `${parseInt(((value - floor) * 100) / (max - floor), 10)}%`,
+              opacity: value === 0 ? 0.2 : 1,
+            },
+          ]}
+        />))}
+    </View>
+  );
+};
 
 Chart.propTypes = {
-  balance: arrayOf(number),
-  expenses: arrayOf(number),
+  color: string.isRequired,
+  values: arrayOf(number),
 };
 
 Chart.defaultProps = {
-  balance: [],
-  expenses: [],
+  values: [],
 };
 
 export default Chart;
