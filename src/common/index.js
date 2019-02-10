@@ -8,6 +8,7 @@ import fetch from './fetch';
 import theme from './theme';
 import translate from './translate';
 import verboseDate from './verboseDate';
+import verboseMonth from './verboseMonth';
 
 export {
   C,
@@ -20,4 +21,5 @@ export {
   theme,
   translate,
   verboseDate,
+  verboseMonth,
 };
