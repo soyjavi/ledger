@@ -4,10 +4,10 @@ import React, { Component, createContext } from 'react';
 import { C, fetch } from '../common';
 import { Fingerprint } from '../reactor/context/Amplitude/modules';
 import {
-  AsyncStore, calcOverall, calcVault, groupByCategory, groupByDay, sortByTransactions,
+  AsyncStore, calcOverall, calcVault, groupByCategory, groupByDay,
 } from './modules';
 
-const { COLORS, NAME, VERSION } = C;
+const { NAME, VERSION } = C;
 const KEY = `${NAME}:context:store`;
 const { Provider, Consumer: ConsumerStore } = createContext(KEY);
 
@@ -107,9 +107,9 @@ class ProviderStore extends Component {
 
     if (newTransaction) {
       txs = [...txs, newTransaction];
-      const vaults = sortByTransactions(state.vaults.map((vault, index) => (
-        vault.hash !== props.vault ? { ...vault, color: COLORS[index] } : calcVault(vault, txs, index)
-      )));
+      const vaults = state.vaults.map((vault, index) => (
+        vault.hash !== props.vault ? vault : calcVault(vault, txs, index)
+      ));
       const nextState = { txs, vaults };
 
       await _store(nextState);

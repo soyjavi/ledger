@@ -3,7 +3,7 @@ import { Platform } from 'react-native';
 import { LAYOUT, THEME } from '../reactor/common';
 import PKG from '../../package.json';
 
-const { OFFSET, UNIT } = THEME;
+const { COLOR, OFFSET, UNIT } = THEME;
 const { VIEWPORT: { W, H } } = LAYOUT;
 
 // const DEV = __DEV__ ? __DEV__ : { hello: 'world' }; // eslint-disable-line;
@@ -13,12 +13,6 @@ const IS_PRODUCTION = false;
 const IS_ANDROID = Platform.OS === 'android';
 
 export default {
-  VAULT_TRANSFER: 99,
-  COLORS: [
-    '#9d47b6', '#0fbde9', '#e6639b', '#ffb129', '#0c5061', '#3247C7', '#f74440',
-    '#f87c44', '#1B1464', '#6F1E51', '#d6e06b', '#7c50b9', '#ffcc41', '#f88181',
-  ],
-
   ENDPOINT: IS_PRODUCTION ? 'https://voltvault.glitch.me' : 'http://localhost:8080',
 
   FIXED: {
@@ -44,18 +38,39 @@ export default {
   },
   STYLE: {
     BALANCE_CARD_HEIGHT: UNIT * 21.6,
+    CARD: {
+      borderRadius: UNIT,
+      overflow: 'hidden',
+      paddingTop: OFFSET * 0.9,
+      paddingHorizontal: OFFSET,
+      paddingBottom: OFFSET,
+      width: UNIT * 16,
+    },
     DIALOG: {
-      backgroundColor: 'rgba(255,255,255,0.9)',
       justifyContent: 'flex-end',
       zIndex: 2,
+    },
+    DIALOG_FRAME: {
+      borderRadius: UNIT * 2.2,
+      margin: OFFSET,
     },
     FOOTER: {
       ...LAYOUT.STYLE.ROW,
       justifyContent: 'space-between',
       padding: OFFSET,
     },
+
     HEADER_HEIGHT: UNIT * 5.8,
     NOTCH_HEIGHT: IS_ANDROID && (H / W > 1.95) ? 36 : 0,
+    SHADOW: {
+      shadowColor: COLOR.BLACK,
+      shadowOffset: { height: 0, width: 0 },
+      shadowOpacity: 0.1,
+      shadowRadius: OFFSET * 1,
+      ...Platform.select({
+        android: { elevation: 4 },
+      }),
+    },
     SLIDER_MONTHS_HEIGHT: UNIT * 3,
     THUMBNAIL_SIZE: UNIT * 4,
   },
@@ -71,7 +86,7 @@ export default {
     DKK: 'Dkr',
     GBP: '£',
     EUR: '€',
-    HKD: 'HK$',
+    HKD: 'HKD',
     // HRK: '',
     HUF: 'Ft',
     IDR: 'Rp',
@@ -104,6 +119,7 @@ export default {
     },
   },
 
+  VAULT_TRANSFER: 99,
   VERSION: PKG.version,
 
   WEEKS: 28,

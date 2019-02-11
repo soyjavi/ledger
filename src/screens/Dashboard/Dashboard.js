@@ -1,18 +1,25 @@
 import { bool, shape } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
-import { BackHandler, ScrollView, View } from 'react-native';
+import { BackHandler, ScrollView } from 'react-native';
 
 import { C } from '../../common';
-import { BalanceCard, DialogVault, VaultItem } from '../../components';
+import {
+  BalanceCard, DialogVault, FloatingButton, HeadingItem, StatItem, VaultItem,
+} from '../../components';
 import { Consumer } from '../../context';
 import { THEME } from '../../reactor/common';
-import {
-  Button, Price, Text, Viewport,
-} from '../../reactor/components';
+import { Slider, Viewport } from '../../reactor/components';
 import styles from './Dashboard.style';
 
-const { SCREEN } = C;
-const { COLOR } = THEME;
+const { SCREEN, STYLE, TX: { TYPE } } = C;
+const { OFFSET } = THEME;
+const SLIDER_PROPS = {
+  itemMargin: 0,
+  itemWidth: STYLE.CARD.width + OFFSET,
+  momentum: true,
+  navigation: false,
+  style: styles.slider,
+};
 
 class Dashboard extends PureComponent {
   static propTypes = {
@@ -58,10 +65,11 @@ class Dashboard extends PureComponent {
 
   render() {
     const {
-      _onStats, _onToggleDialog, _onVault,
+      _onToggleDialog, _onVault,
       props: { visible, ...inherit },
       state: { dialog },
     } = this;
+    const currentMonth = (new Date()).getMonth();
 
     return (
       <Viewport {...inherit} scroll={false} visible={visible}>
@@ -69,51 +77,41 @@ class Dashboard extends PureComponent {
           { ({
             l10n, navigation,
             store: {
-              baseCurrency, overall, vaults, ...store
+              baseCurrency, overall: { stats: { expenses, incomes } = {}, ...overall }, vaults, ...store
             },
           }) => (
             <Fragment>
               <ScrollView contentContainerStyle={styles.scroll}>
-                <BalanceCard
-                  chart={overall.chart}
-                  currency={baseCurrency}
-                  progression={overall.progression}
-                  title={l10n.OVERALL_BALANCE}
-                  value={overall.currentBalance}
+                <BalanceCard currency={baseCurrency} title={l10n.BALANCE} {...overall} />
+
+                <HeadingItem title={l10n.VAULTS} />
+                <Slider
+                  {...SLIDER_PROPS}
+                  dataSource={vaults}
+                  item={({ data: vault }) => (
+                    <VaultItem key={vault.hash} {...vault} onPress={() => _onVault({ navigation, store, vault })} />)}
                 />
 
-                <View style={styles.row}>
-                  <Text headline level={5} style={styles.subtitle}>{l10n.VAULTS}</Text>
-                  <Text caption level={2} lighten>$Current state</Text>
-                </View>
-                <View style={styles.vaults}>
-                  { vaults.map(vault => (
-                    <VaultItem
-                      key={vault.hash}
-                      {...vault}
-                      onPress={() => _onVault({ navigation, store, vault })}
-                    />))}
-                </View>
-
-                <View style={styles.row}>
-                  <Text headline level={5} style={styles.subtitle}>{l10n.EXPENSES}</Text>
-                  <Price caption color={COLOR.EXPENSES} level={2} lighten symbol={baseCurrency} />
-                </View>
-                <View style={styles.row}>
-                  <Text headline level={5} style={styles.subtitle}>{l10n.INCOMES}</Text>
-                  <Price caption color={COLOR.INCOMES} level={2} lighten symbol={baseCurrency} />
-                </View>
+                { incomes && incomes.length > 0 && (
+                  <Fragment>
+                    <HeadingItem title={`${l10n.MONTHS[currentMonth]}'s ${l10n.INCOMES}`} />
+                    <Slider
+                      {...SLIDER_PROPS}
+                      dataSource={incomes}
+                      item={({ data }) => <StatItem type={TYPE.INCOME} {...data} />}
+                    />
+                  </Fragment>)}
+                { expenses && expenses.length > 0 && (
+                  <Fragment>
+                    <HeadingItem title={`${l10n.MONTHS[currentMonth]}'s ${l10n.EXPENSES}`} />
+                    <Slider
+                      {...SLIDER_PROPS}
+                      dataSource={expenses}
+                      item={({ data }) => <StatItem type={TYPE.EXPENSE} {...data} />}
+                    />
+                  </Fragment>)}
               </ScrollView>
-              <View style={styles.footer}>
-                <Button outlined onPress={() => _onStats({ navigation, store })} title={l10n.STATS} />
-                <Button
-                  color={COLOR.PRIMARY}
-                  onPress={_onToggleDialog}
-                  shadow
-                  style={styles.button}
-                  title={`${l10n.NEW} ${l10n.VAULT}`}
-                />
-              </View>
+              <FloatingButton onPress={_onToggleDialog} visible={!dialog} />
               { visible && vaults.length === 0 && !dialog && this.setState({ dialog: true }) }
               { visible && <DialogVault visible={dialog} onClose={_onToggleDialog} /> }
             </Fragment>

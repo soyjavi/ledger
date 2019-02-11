@@ -24,8 +24,8 @@ class App extends PureComponent {
 
   async componentDidMount() {
     await Font.loadAsync({
-      'google-sans': require('./assets/fonts/GoogleSans-Regular.ttf'), // eslint-disable-line
-      'google-sans-bold': require('./assets/fonts/GoogleSans-Bold.ttf'), // eslint-disable-line
+      'product-sans': require('./assets/fonts/ProductSans-Regular.ttf'), // eslint-disable-line
+      'product-sans-bold': require('./assets/fonts/ProductSans-Bold.ttf'), // eslint-disable-line
     });
 
     this.setState({

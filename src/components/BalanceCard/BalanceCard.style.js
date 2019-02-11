@@ -3,61 +3,52 @@ import { StyleSheet } from 'react-native';
 import { C } from '../../common';
 import { LAYOUT, THEME } from '../../reactor/common';
 
-const { BORDER_RADIUS, COLOR, OFFSET } = THEME;
-
-const { STYLE: { BALANCE_CARD_HEIGHT } } = C;
+const { STYLE } = C;
+const { COLOR, OFFSET } = THEME;
 
 export default StyleSheet.create({
-  background: {
-    position: 'absolute',
-    opacity: 0.1,
-    top: OFFSET,
-    left: OFFSET,
-  },
-
-  bulletPrice: {
-    top: OFFSET / 4,
-    marginRight: OFFSET / 2,
-  },
-
-  caption: {
-    // opacity: 0.75,
-  },
-
-  ruler: {
-    flex: 1,
+  alignRight: {
     textAlign: 'right',
-    opacity: 0.25,
+  },
+
+  card: {
+    ...STYLE.CARD,
+    marginTop: OFFSET,
+    backgroundColor: COLOR.BASE,
+    minHeight: 0,
+    flex: 1,
+  },
+
+  cardDisabled: {
+    opacity: 0.33,
+  },
+
+  cardLeft: {
+    marginRight: OFFSET,
+  },
+
+  cardMiddle: {
+    marginHorizontal: OFFSET,
   },
 
   container: {
-    backgroundColor: COLOR.BACKGROUND_OPACITY,
-    borderRadius: BORDER_RADIUS * 2,
-    height: BALANCE_CARD_HEIGHT,
-    overflow: 'hidden',
-    padding: OFFSET,
-    marginVertical: OFFSET,
-    marginHorizontal: OFFSET,
+    marginTop: OFFSET,
     zIndex: 1,
-  },
-
-  info: {
-    alignItems: 'flex-end',
-    alignSelf: 'flex-start',
   },
 
   row: LAYOUT.STYLE.ROW,
 
-  separator: {
-    marginLeft: OFFSET / 2,
+  section: {
+    marginHorizontal: OFFSET,
+    marginBottom: OFFSET,
   },
 
   summary: {
-    justifyContent: 'space-between',
-    marginBottom: OFFSET / 4,
+    alignItems: 'flex-start',
+    marginBottom: OFFSET,
   },
 
-  text: {
-    color: COLOR.WHITE,
+  separator: {
+    flex: 1,
   },
 });

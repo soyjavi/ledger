@@ -22,7 +22,9 @@ class Map extends PureComponent {
 
   render() {
     const {
-      props: { latitude, longitude, zoom },
+      props: {
+        latitude, longitude, zoom, ...inherit
+      },
     } = this;
 
     return (
@@ -31,7 +33,7 @@ class Map extends PureComponent {
           ? { uri: `${ENDPOINT}/staticmap?latitude=${latitude}&longitude=${longitude}&zoom=${zoom}` }
           : undefined}
         resizeMode="cover"
-        style={styles.container}
+        style={[styles.container, inherit.style]}
       />
     );
   }

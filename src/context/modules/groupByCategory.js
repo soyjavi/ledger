@@ -17,7 +17,7 @@ const sortByValue = (data = {}) => {
   return keysSorted;
 };
 
-export default (state, { date }) => {
+export default (state, { date = (new Date().toISOString()).substr(0, 7) }) => {
   const {
     baseCurrency, rates, txs, vaults,
   } = state;

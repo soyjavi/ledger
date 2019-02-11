@@ -1,58 +1,67 @@
-import { func, number, string } from 'prop-types';
-import React from 'react';
+import {
+  func, number, shape, string,
+} from 'prop-types';
+import React, { Fragment } from 'react';
 import { View } from 'react-native';
 
-import ASSETS from '../../assets';
-import { C } from '../../common';
-import {
-  Icon, Price, Text, Touchable,
-} from '../../reactor/components';
+import { exchange } from '../../common';
+import { Consumer } from '../../context';
+import { Text, Touchable } from '../../reactor/components';
 import { THEME } from '../../reactor/common';
+import Percentage from '../Percentage';
+import PriceFriendly from '../PriceFriendly';
 import styles from './VaultItem.style';
 
-const { iconExpense, iconIncome } = ASSETS;
-const { FIXED, SYMBOL } = C;
 const { COLOR } = THEME;
-
-// progression: balance > 0 ? (progression * 100) / (balance - progression) : undefined,
 
 const VaultItem = (props) => {
   const {
-    currency, onPress, currentBalance, progression, title,
+    currency, onPress, currentBalance, last30Days: { progression }, title,
   } = props;
 
   return (
-    <Touchable onPress={onPress} style={styles.container}>
-      <View>
-        <Text caption numberOfLines={1}>{title.toUpperCase()}</Text>
-        <Price fixed={FIXED[currency]} symbol={SYMBOL[currency]} headline level={5} value={currentBalance} />
-        <View style={styles.progression}>
-          { progression
-            ? (
-              <View style={styles.row}>
-                <Icon value={progression > 0 ? iconIncome : iconExpense} />
-                <Price
-                  fixed={2}
-                  caption
-                  color={progression > 0 ? COLOR.INCOMES : COLOR.EXPENSES}
-                  symbol="%"
-                  value={Math.abs((progression * 100) / (currentBalance - progression))}
-                />
-                <View style={styles.separator} />
-                <Price
-                  caption
-                  fixed={FIXED[currency]}
-                  lighten
-                  style={styles.progressionValue}
-                  symbol={SYMBOL[currency]}
-                  value={progression}
-                />
-              </View>)
-            : <Text caption lighten>$No transaction</Text>
-          }
-        </View>
-      </View>
-    </Touchable>
+    <Consumer>
+      { ({ store: { baseCurrency, rates } }) => (
+        <Touchable onPress={onPress} rippleColor={COLOR.TEXT_LIGHTEN} style={styles.container}>
+          <View style={styles.content}>
+            <Text caption level={2} numberOfLines={1}>{title.toUpperCase()}</Text>
+            <PriceFriendly
+              headline
+              level={5}
+              currency={baseCurrency}
+              value={baseCurrency !== currency
+                ? exchange(Math.abs(currentBalance), currency, baseCurrency, rates)
+                : Math.abs(currentBalance)}
+            />
+            { currency !== baseCurrency && (
+              <PriceFriendly subtitle level={3} lighten currency={currency} value={currentBalance} />)}
+
+            <View style={styles.separator} />
+
+            <View style={styles.row}>
+              { progression
+                ? (
+                  <Fragment>
+                    <Percentage subtitle level={2} value={(progression * 100) / (currentBalance - progression)} />
+                    <View style={styles.separator} />
+                    <PriceFriendly
+                      subtitle
+                      level={3}
+                      currency={baseCurrency}
+                      lighten
+                      value={baseCurrency !== currency
+                        ? exchange(Math.abs(progression), currency, baseCurrency, rates)
+                        : Math.abs(progression)}
+                    />
+                  </Fragment>)
+                : <Text caption lighten>$No transaction</Text>
+              }
+            </View>
+          </View>
+        </Touchable>
+      )}
+    </Consumer>
+
   );
 };
 
@@ -60,12 +69,12 @@ VaultItem.propTypes = {
   currency: string.isRequired,
   onPress: func.isRequired,
   currentBalance: number.isRequired,
-  progression: number,
+  last30Days: shape({}),
   title: string.isRequired,
 };
 
 VaultItem.defaultProps = {
-  progression: undefined,
+  last30Days: {},
 };
 
 export default VaultItem;

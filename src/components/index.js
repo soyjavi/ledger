@@ -1,5 +1,4 @@
 import BalanceCard from './BalanceCard';
-import BulletPrice from './BulletPrice';
 import Chart from './Chart';
 import ChartCategories from './ChartCategories';
 import DialogClone from './DialogClone';
@@ -7,16 +6,18 @@ import DialogTransaction from './DialogTransaction';
 import DialogTransfer from './DialogTransfer';
 import DialogVault from './DialogVault';
 import FloatingButton from './FloatingButton';
+import HeadingItem from './HeadingItem';
 import MapStaticImage from './MapStaticImage';
 import NumKeyboard from './NumKeyboard';
+import Percentage from './Percentage';
+import PriceFriendly from './PriceFriendly';
+import StatItem from './StatItem';
 import Thumbnail from './Thumbnail';
 import TransactionItem from './TransactionItem';
-import VaultBalance from './VaultBalance';
 import VaultItem from './VaultItem';
 
 export {
   BalanceCard,
-  BulletPrice,
   Chart,
   ChartCategories,
   DialogClone,
@@ -24,10 +25,13 @@ export {
   DialogTransfer,
   DialogVault,
   FloatingButton,
+  HeadingItem,
   MapStaticImage,
   NumKeyboard,
+  Percentage,
+  PriceFriendly,
+  StatItem,
   Thumbnail,
   TransactionItem,
-  VaultBalance,
   VaultItem,
 };

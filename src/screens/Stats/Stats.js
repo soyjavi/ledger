@@ -11,7 +11,7 @@ import { Price, Text, Viewport } from '../../reactor/components';
 import styles from './Stats.style';
 
 const { iconBack } = ASSETS;
-const { COLORS, FIXED, SYMBOL } = C;
+const { FIXED, SYMBOL } = C;
 
 class Stats extends Component {
   static propTypes = {
@@ -73,11 +73,10 @@ class Stats extends Component {
                       />
                     </View>
                     <View style={styles.values}>
-                      { Object.keys(expenses).map((key, index) => (
+                      { Object.keys(expenses).map(key => (
                         <ChartCategories
                           key={key}
                           category={key}
-                          color={COLORS[index]}
                           currency={baseCurrency}
                           group={group.expenses}
                           l10n={l10n.CATEGORIES[0]}
@@ -101,11 +100,10 @@ class Stats extends Component {
                       />
                     </View>
                     <View style={styles.values}>
-                      { Object.keys(incomes).map((key, index) => (
+                      { Object.keys(incomes).map(key => (
                         <ChartCategories
                           key={key}
                           category={key}
-                          color={COLORS[(COLORS.length - 1) - index]}
                           currency={baseCurrency}
                           group={group.incomes}
                           l10n={l10n.CATEGORIES[1]}

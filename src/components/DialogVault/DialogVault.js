@@ -1,6 +1,5 @@
 import { bool, func } from 'prop-types';
 import React, { PureComponent } from 'react';
-import { View } from 'react-native';
 
 import { translate } from '../../common';
 import { Consumer } from '../../context';

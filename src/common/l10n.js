@@ -26,8 +26,7 @@ export default {
     CANCEL: 'Cancel',
     CATEGORIES: [
       { // Expenses
-        1: 'Food',
-        13: 'Drinks',
+        1: 'Food & Drinks',
         2: 'Hobby & Toys',
         3: 'Travel',
         4: 'Debt',
@@ -39,6 +38,7 @@ export default {
         10: 'Personal',
         11: 'Services',
         12: 'Transfer',
+        13: 'Miscellaneous',
         99: 'Vault Transfer',
       },
       { // Incomes
@@ -46,6 +46,7 @@ export default {
         2: 'Investment',
         3: 'Pasives',
         4: 'Transfer',
+        5: 'Miscellaneous',
         99: 'Vault Transfer',
       },
     ],
@@ -55,6 +56,8 @@ export default {
     CLOSE: 'Close',
     CURRENCY: 'Currency',
     CURRENT_MONTH: 'Current month',
+
+    DAY_NAMES: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
 
     ENTER_PIN: 'Enter your pin',
     EXPENSE: 'Expense',

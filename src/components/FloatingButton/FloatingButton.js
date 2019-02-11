@@ -5,7 +5,6 @@ import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
 import ASSETS from '../../assets';
-import { C } from '../../common';
 import { THEME } from '../../reactor/common';
 import {
   Icon, Motion, Text, Touchable,
@@ -13,7 +12,6 @@ import {
 import styles, { CONTAINER_SIZE } from './FloatingButton.style';
 
 const { iconAdd } = ASSETS;
-const { COLORS } = C;
 const { MOTION: { DURATION } } = THEME;
 
 class FloatingButton extends PureComponent {
@@ -75,7 +73,7 @@ class FloatingButton extends PureComponent {
 
         <Motion preset="pop" visible={visible} delay={visible ? DURATION * 2 : 0}>
           <Motion timeline={[{ property: 'scale', value: visible && opened ? 0.75 : 1 }]}>
-            <Touchable containerBorderRadius={CONTAINER_SIZE / 2} onPress={_onPress} rippleColor={COLORS.BACKGROUND}>
+            <Touchable containerBorderRadius={CONTAINER_SIZE / 2} onPress={_onPress}>
               <View style={[styles.button, visible && opened && styles.buttonOpened]}>
                 <Icon value={iconAdd} style={styles.icon} />
               </View>
