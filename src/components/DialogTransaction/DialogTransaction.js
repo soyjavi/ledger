@@ -1,24 +1,33 @@
-import {
-  bool, func, number, string,
-} from 'prop-types';
-import React, { Fragment, PureComponent } from 'react';
+import { bool, func, number } from 'prop-types';
+import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
 import { C, fetch, translate } from '../../common';
 import { Consumer } from '../../context';
+import { THEME } from '../../reactor/common';
 import {
-  Button, Dialog, Form, Switch, Text,
+  Button, Dialog, Form, Text,
 } from '../../reactor/components';
 import MapStaticImage from '../MapStaticImage';
 import { hydrateTransaction } from './modules';
 
 import styles from './DialogTransaction.style';
 
+const { COLOR } = THEME;
 const { TX: { TYPE: { EXPENSE } } } = C;
+
+const getLocation = async (component, getLocationAsync) => {
+  component.setState({ coords: undefined, location: true, place: undefined });
+
+  const coords = await getLocationAsync();
+  const { place } = await fetch({
+    service: `place?latitude=${coords.latitude}&longitude=${coords.longitude}`,
+  });
+  component.setState({ coords, place });
+};
 
 class DialogTransaction extends PureComponent {
   static propTypes = {
-    color: string.isRequired,
     onClose: func.isRequired,
     type: number.isRequired,
     visible: bool,
@@ -52,16 +61,8 @@ class DialogTransaction extends PureComponent {
 
   _onChange = form => this.setState({ form });
 
-  _onChangeLocation = async (location, getLocationAsync) => {
-    this.setState({ coords: undefined, location, place: undefined });
-
-    if (location) {
-      const coords = await getLocationAsync();
-      const { place } = await fetch({
-        service: `place?latitude=${coords.latitude}&longitude=${coords.longitude}`,
-      });
-      this.setState({ coords, place });
-    }
+  _getLocation = (getLocationAsync) => {
+    getLocation(this, getLocationAsync);
   }
 
   _onValid = valid => this.setState({ valid })
@@ -91,10 +92,8 @@ class DialogTransaction extends PureComponent {
 
   render() {
     const {
-      _onChange, _onChangeLocation, _onSubmit, _onValid,
-      props: {
-        color, onClose, type, visible,
-      },
+      _getLocation, _onChange, _onSubmit, _onValid,
+      props: { onClose, type, visible },
       state: {
         busy, coords, form, location, place, valid,
       },
@@ -103,57 +102,41 @@ class DialogTransaction extends PureComponent {
     return (
       <Consumer>
         { ({ events: { getLocationAsync }, l10n, store }) => (
-          <Dialog visible={visible} style={styles.frame} styleContainer={styles.dialog}>
-            <Text color={color} headline level={5} style={styles.title}>
-              {`${l10n.NEW} ${type === EXPENSE ? l10n.EXPENSE : l10n.INCOME}`}
-            </Text>
+          <Dialog
+            onClose={onClose}
+            style={styles.frame}
+            styleContainer={styles.dialog}
+            title={`${l10n.NEW} ${type === EXPENSE ? l10n.EXPENSE : l10n.INCOME}`}
+            visible={visible}
+          >
             <Text lighten level={2}>
               {type === EXPENSE ? l10n.EXPENSE_CAPTION : l10n.INCOME_CAPTION}
             </Text>
             <View style={styles.form}>
               <Form
                 attributes={translate(hydrateTransaction({ l10n, type }), l10n)}
-                color={color}
                 onValid={_onValid}
                 onChange={_onChange}
                 value={form}
               />
               { getLocationAsync && (
-                <Fragment>
-                  <Switch
-                    color={color}
-                    label={l10n.SAVE_LOCATION}
-                    onChange={value => _onChangeLocation(value, getLocationAsync)}
-                    value={location}
-                  />
-                  { location && (
-                    <Fragment>
-                      <MapStaticImage {...coords} zoom={coords ? 14.5 : 12} />
-                      <Text level={2} lighten>{place || l10n.LOADING_PLACE}</Text>
-                    </Fragment>)}
-                </Fragment>)}
+                <View>
+                  { location === false && _getLocation(getLocationAsync)}
+                  <MapStaticImage {...coords} zoom={coords ? 14.5 : 12} style={styles.location} />
+                  <Text level={2} lighten>{place || l10n.LOADING_PLACE}</Text>
+                </View>)}
             </View>
 
-            <View style={styles.buttons}>
-              <Button
-                color={color}
-                outlined
-                onPress={onClose}
-                rounded
-                style={styles.button}
-                title={l10n.CANCEL}
-              />
-              <Button
-                activity={busy}
-                color={color}
-                disabled={busy || !valid || (location && !place)}
-                onPress={() => _onSubmit({ l10n, store })}
-                rounded
-                shadow
-                style={styles.button}
-                title={l10n.SAVE}
-              />
-            </View>
+            <Button
+              activity={busy}
+              color={COLOR.PRIMARY}
+              disabled={busy || !valid || (location && !place)}
+              onPress={() => _onSubmit({ l10n, store })}
+              rounded
+              shadow
+              style={styles.button}
+              title={l10n.SAVE}
+            />
           </Dialog>
         )}
       </Consumer>

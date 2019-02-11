@@ -3,13 +3,13 @@ import { StyleSheet } from 'react-native';
 import { C } from '../../common';
 import { LAYOUT, THEME } from '../../reactor/common';
 
-const { STYLE: { HEADER_HEIGHT, HEADER_EXTENDED_HEIGHT } } = C;
+const { STYLE: { HEADER_HEIGHT } } = C;
 const { OFFSET } = THEME;
 
 export default StyleSheet.create({
   container: {
     paddingBottom: HEADER_HEIGHT,
-    paddingTop: HEADER_EXTENDED_HEIGHT,
+    paddingTop: HEADER_HEIGHT,
   },
 
   content: {

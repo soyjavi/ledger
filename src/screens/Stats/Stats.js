@@ -2,7 +2,7 @@ import { bool, shape } from 'prop-types';
 import React, { Fragment, Component } from 'react';
 import { View, ScrollView } from 'react-native';
 
-import { iconBack } from '../../assets';
+import ASSETS from '../../assets';
 import { C } from '../../common';
 import { ChartCategories } from '../../components';
 import { Header } from '../../containers';
@@ -10,7 +10,8 @@ import { Consumer } from '../../context';
 import { Price, Text, Viewport } from '../../reactor/components';
 import styles from './Stats.style';
 
-const { COLORS, FIXED, SYMBOL } = C;
+const { iconBack } = ASSETS;
+const { FIXED, SYMBOL } = C;
 
 class Stats extends Component {
   static propTypes = {
@@ -62,7 +63,7 @@ class Stats extends Component {
                 { Object.keys(expenses).length > 0 && (
                   <View style={styles.content}>
                     <View style={styles.row}>
-                      <Text headline level={6} style={styles.title}>{l10n.EXPENSES}</Text>
+                      <Text subtitle style={styles.title}>{l10n.EXPENSES}</Text>
                       <Price
                         fixed={FIXED[baseCurrency]}
                         headline
@@ -71,14 +72,13 @@ class Stats extends Component {
                         value={cashflow.expenses}
                       />
                     </View>
-                    <View>
+                    <View style={styles.values}>
                       { Object.keys(expenses).map(key => (
                         <ChartCategories
                           key={key}
                           category={key}
-                          color={COLORS[key]}
                           currency={baseCurrency}
-                          group={group.expenses[key]}
+                          group={group.expenses}
                           l10n={l10n.CATEGORIES[0]}
                           total={cashflow.expenses}
                           value={expenses[key]}
@@ -99,14 +99,13 @@ class Stats extends Component {
                         value={cashflow.incomes}
                       />
                     </View>
-                    <View>
+                    <View style={styles.values}>
                       { Object.keys(incomes).map(key => (
                         <ChartCategories
                           key={key}
                           category={key}
-                          color={COLORS[(COLORS.length - 1) - key]}
                           currency={baseCurrency}
-                          group={group.incomes[key]}
+                          group={group.incomes}
                           l10n={l10n.CATEGORIES[1]}
                           total={cashflow.incomes}
                           value={incomes[key]}

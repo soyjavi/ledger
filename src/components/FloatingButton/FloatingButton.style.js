@@ -11,10 +11,30 @@ export default StyleSheet.create({
   button: {
     ...LAYOUT.STYLE.SHADOW,
     ...LAYOUT.STYLE.CENTERED,
-    backgroundColor: COLOR.TEXT,
+    backgroundColor: COLOR.PRIMARY,
     borderRadius: CONTAINER_SIZE / 2,
     height: CONTAINER_SIZE,
     width: CONTAINER_SIZE,
+  },
+
+  bullet: {
+    backgroundColor: COLOR.BASE,
+    borderRadius: UNIT / 2,
+    height: UNIT,
+    marginLeft: UNIT / 2,
+    width: UNIT,
+  },
+
+  income: {
+    backgroundColor: COLOR.INCOMES,
+  },
+
+  expense: {
+    backgroundColor: COLOR.EXPENSES,
+  },
+
+  transfer: {
+    backgroundColor: COLOR.TEXT,
   },
 
   container: {

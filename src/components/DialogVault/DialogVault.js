@@ -1,6 +1,5 @@
 import { bool, func } from 'prop-types';
 import React, { PureComponent } from 'react';
-import { View } from 'react-native';
 
 import { translate } from '../../common';
 import { Consumer } from '../../context';
@@ -62,10 +61,13 @@ class DialogVault extends PureComponent {
             baseCurrency, rates = {}, vaults = [], ...store
           },
         }) => (
-          <Dialog style={styles.frame} styleContainer={styles.dialog} visible={visible}>
-            <Text color={COLOR.TEXT} headline level={5} style={styles.title}>
-              {`${l10n.NEW} ${l10n.VAULT}`}
-            </Text>
+          <Dialog
+            onClose={vaults.length > 0 ? onClose : undefined}
+            style={styles.frame}
+            styleContainer={styles.dialog}
+            title={`${l10n.NEW} ${l10n.VAULT}`}
+            visible={visible}
+          >
             <Text lighten level={2}>
               { vaults.length === 0 ? l10n.FIRST_VAULT_CAPTION : l10n.VAULT_CAPTION }
             </Text>
@@ -79,27 +81,16 @@ class DialogVault extends PureComponent {
                 ...form,
               }}
             />
-            <View style={styles.buttons}>
-              { vaults.length > 0 && (
-                <Button
-                  title={l10n.CANCEL}
-                  color={COLOR.TEXT}
-                  outlined
-                  onPress={onClose}
-                  rounded
-                  style={styles.button}
-                />)}
-              <Button
-                activity={busy}
-                color={COLOR.TEXT}
-                disabled={busy || !valid}
-                onPress={() => _onSubmit(store)}
-                rounded
-                shadow
-                style={styles.button}
-                title={l10n.SAVE}
-              />
-            </View>
+            <Button
+              activity={busy}
+              color={COLOR.PRIMARY}
+              disabled={busy || !valid}
+              onPress={() => _onSubmit(store)}
+              rounded
+              shadow
+              style={styles.button}
+              title={l10n.SAVE}
+            />
           </Dialog>
         )}
       </Consumer>

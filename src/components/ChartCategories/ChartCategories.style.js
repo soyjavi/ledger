@@ -1,43 +1,46 @@
 import { StyleSheet } from 'react-native';
 
+import { C } from '../../common';
 import { LAYOUT, THEME } from '../../reactor/common';
 
-const { OFFSET, UNIT } = THEME;
+const { STYLE: { THUMBNAIL_SIZE } } = C;
+const { COLOR, OFFSET, UNIT } = THEME;
 
-const BAR_HEIGHT = UNIT * 1.6;
+const ITEM_HEIGHT = THUMBNAIL_SIZE + (OFFSET / 3);
 
 export default StyleSheet.create({
   bar: {
-    minWidth: BAR_HEIGHT,
-  },
-
-  chart: {
-    backgroundColor: 'rgba(0,0,0,0.03)',
-    borderRadius: BAR_HEIGHT / 2,
-    height: BAR_HEIGHT,
-    maxWidth: '100%',
-    width: '100%',
-  },
-
-  chartExtended: {
-    borderRadius: BAR_HEIGHT / 4,
-    height: BAR_HEIGHT / 2,
+    backgroundColor: COLOR.BASE,
+    borderRadius: ITEM_HEIGHT / 2,
+    bottom: 0,
+    left: 0,
+    minWidth: ITEM_HEIGHT,
+    opacity: 0.25,
+    position: 'absolute',
+    top: 0,
+    zIndex: -1,
   },
 
   container: {
-    marginVertical: OFFSET / 4,
   },
 
   content: {
-    marginVertical: OFFSET / 4,
+    ...LAYOUT.STYLE.ROW,
+    paddingLeft: UNIT / 4,
+    paddingVertical: UNIT / 4,
   },
 
-  row: {
-    ...LAYOUT.STYLE.ROW,
-    marginBottom: UNIT / 4,
+  contentExtended: {
+    marginBottom: OFFSET / 4,
+    opacity: 0.75,
   },
 
   text: {
     flex: 1,
+    marginHorizontal: OFFSET,
+  },
+
+  touchable: {
+    marginBottom: OFFSET / 4,
   },
 });

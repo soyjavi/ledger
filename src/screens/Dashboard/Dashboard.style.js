@@ -5,30 +5,14 @@ import { THEME } from '../../reactor/common';
 
 const { OFFSET } = THEME;
 
-const { STYLE: { HEADER_EXTENDED_HEIGHT, HEADER_HEIGHT } } = C;
+const { STYLE: { HEADER_HEIGHT } } = C;
 
 export default StyleSheet.create({
-  button: {
-    position: 'absolute',
-    top: OFFSET / 2,
-    zIndex: 2,
-  },
-
-  buttonIcon: {
-    width: 40,
-    height: 40,
-  },
-
-  left: {
-    left: 0,
-  },
-
-  right: {
-    right: 0,
-  },
-
   scroll: {
-    paddingTop: HEADER_EXTENDED_HEIGHT,
     paddingBottom: HEADER_HEIGHT,
+  },
+
+  slider: {
+    padding: OFFSET / 2,
   },
 });

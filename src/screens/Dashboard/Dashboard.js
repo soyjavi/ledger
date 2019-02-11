@@ -2,18 +2,24 @@ import { bool, shape } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
 import { BackHandler, ScrollView } from 'react-native';
 
-import { iconChart } from '../../assets';
 import { C } from '../../common';
 import {
-  DialogVault, FloatingButton, OverallBalance, VaultItem,
+  BalanceCard, DialogVault, FloatingButton, HeadingItem, StatItem, VaultItem,
 } from '../../components';
 import { Consumer } from '../../context';
 import { THEME } from '../../reactor/common';
-import { Button, Viewport } from '../../reactor/components';
+import { Slider, Viewport } from '../../reactor/components';
 import styles from './Dashboard.style';
 
-const { SCREEN } = C;
-const { COLOR } = THEME;
+const { SCREEN, STYLE, TX: { TYPE } } = C;
+const { OFFSET } = THEME;
+const SLIDER_PROPS = {
+  itemMargin: 0,
+  itemWidth: STYLE.CARD.width + OFFSET,
+  momentum: true,
+  navigation: false,
+  style: styles.slider,
+};
 
 class Dashboard extends PureComponent {
   static propTypes = {
@@ -50,38 +56,62 @@ class Dashboard extends PureComponent {
     navigation.navigate(SCREEN.VAULT, vault, props.navigation);
   }
 
-  _onStats = ({ navigation, store: { overall: { months }, query } }) => {
+  _onStats = ({ navigation, store: { query } }) => {
     const { props } = this;
 
-    query({ method: 'groupByCategory', date: months[months.length - 1] });
+    query({ method: 'groupByCategory', date: (new Date().toISOString()).substr(0, 7) });
     navigation.navigate(SCREEN.STATS, undefined, props.navigation);
   }
 
   render() {
     const {
-      _onStats, _onToggleDialog, _onVault,
+      _onToggleDialog, _onVault,
       props: { visible, ...inherit },
       state: { dialog },
     } = this;
+    const currentMonth = (new Date()).getMonth();
 
     return (
       <Viewport {...inherit} scroll={false} visible={visible}>
         <Consumer>
-          { ({ navigation, store: { vaults, ...store } }) => (
+          { ({
+            l10n, navigation,
+            store: {
+              baseCurrency, overall: { stats: { expenses, incomes } = {}, ...overall }, vaults, ...store
+            },
+          }) => (
             <Fragment>
-              <Button
-                color={COLOR.TRANSPARENT}
-                icon={iconChart}
-                iconSize={24}
-                onPress={() => _onStats({ navigation, store })}
-                style={[styles.button, styles.right]}
-              />
-              <OverallBalance />
               <ScrollView contentContainerStyle={styles.scroll}>
-                { vaults.map(vault => (
-                  <VaultItem key={vault.hash} {...vault} onPress={() => _onVault({ navigation, store, vault })} />))}
+                <BalanceCard currency={baseCurrency} title={l10n.BALANCE} {...overall} />
+
+                <HeadingItem title={l10n.VAULTS} />
+                <Slider
+                  {...SLIDER_PROPS}
+                  dataSource={vaults}
+                  item={({ data: vault }) => (
+                    <VaultItem key={vault.hash} {...vault} onPress={() => _onVault({ navigation, store, vault })} />)}
+                />
+
+                { incomes && incomes.length > 0 && (
+                  <Fragment>
+                    <HeadingItem title={`${l10n.MONTHS[currentMonth]}'s ${l10n.INCOMES}`} />
+                    <Slider
+                      {...SLIDER_PROPS}
+                      dataSource={incomes}
+                      item={({ data }) => <StatItem type={TYPE.INCOME} {...data} />}
+                    />
+                  </Fragment>)}
+                { expenses && expenses.length > 0 && (
+                  <Fragment>
+                    <HeadingItem title={`${l10n.MONTHS[currentMonth]}'s ${l10n.EXPENSES}`} />
+                    <Slider
+                      {...SLIDER_PROPS}
+                      dataSource={expenses}
+                      item={({ data }) => <StatItem type={TYPE.EXPENSE} {...data} />}
+                    />
+                  </Fragment>)}
               </ScrollView>
-              <FloatingButton color={COLOR.PRIMARY} onPress={_onToggleDialog} visible={!dialog && !inherit.backward} />
+              <FloatingButton onPress={_onToggleDialog} visible={!dialog} />
               { visible && vaults.length === 0 && !dialog && this.setState({ dialog: true }) }
               { visible && <DialogVault visible={dialog} onClose={_onToggleDialog} /> }
             </Fragment>

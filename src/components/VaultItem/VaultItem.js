@@ -1,53 +1,80 @@
 import {
-  arrayOf, func, number, string,
+  func, number, shape, string,
 } from 'prop-types';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { View } from 'react-native';
 
-import { C } from '../../common';
-import { Price, Text, Touchable } from '../../reactor/components';
-import Chart from '../Chart';
+import { exchange } from '../../common';
+import { Consumer } from '../../context';
+import { Text, Touchable } from '../../reactor/components';
+import { THEME } from '../../reactor/common';
+import Percentage from '../Percentage';
+import PriceFriendly from '../PriceFriendly';
 import styles from './VaultItem.style';
 
-const { FIXED, SYMBOL } = C;
+const { COLOR } = THEME;
 
 const VaultItem = (props) => {
   const {
-    balance, chart, color, currency, onPress, overallBalance, title,
+    currency, onPress, currentBalance, last30Days: { progression }, title,
   } = props;
 
   return (
-    <Touchable rippleColor={color} onPress={onPress} style={styles.container}>
-      <View style={styles.content}>
-        <View style={styles.info}>
-          <Text subtitle level={1} numberOfLines={1}>{title}</Text>
-          <Price
-            fixed={FIXED[currency]}
-            headline
-            level={6}
-            lighten
-            value={overallBalance}
-            symbol={SYMBOL[currency]}
-          />
-        </View>
-        <Chart color={color} inheritValue={balance} values={chart} />
-      </View>
-    </Touchable>
+    <Consumer>
+      { ({ store: { baseCurrency, rates } }) => (
+        <Touchable onPress={onPress} rippleColor={COLOR.TEXT_LIGHTEN} style={styles.container}>
+          <View style={styles.content}>
+            <Text caption level={2} numberOfLines={1}>{title.toUpperCase()}</Text>
+            <PriceFriendly
+              headline
+              level={5}
+              currency={baseCurrency}
+              value={baseCurrency !== currency
+                ? exchange(Math.abs(currentBalance), currency, baseCurrency, rates)
+                : Math.abs(currentBalance)}
+            />
+            { currency !== baseCurrency && (
+              <PriceFriendly subtitle level={3} lighten currency={currency} value={currentBalance} />)}
+
+            <View style={styles.separator} />
+
+            <View style={styles.row}>
+              { progression
+                ? (
+                  <Fragment>
+                    <Percentage subtitle level={2} value={(progression * 100) / (currentBalance - progression)} />
+                    <View style={styles.separator} />
+                    <PriceFriendly
+                      subtitle
+                      level={3}
+                      currency={baseCurrency}
+                      lighten
+                      value={baseCurrency !== currency
+                        ? exchange(Math.abs(progression), currency, baseCurrency, rates)
+                        : Math.abs(progression)}
+                    />
+                  </Fragment>)
+                : <Text caption lighten>$No transaction</Text>
+              }
+            </View>
+          </View>
+        </Touchable>
+      )}
+    </Consumer>
+
   );
 };
 
 VaultItem.propTypes = {
-  balance: number.isRequired,
-  chart: arrayOf(number).isRequired,
-  color: string,
   currency: string.isRequired,
   onPress: func.isRequired,
-  overallBalance: number.isRequired,
+  currentBalance: number.isRequired,
+  last30Days: shape({}),
   title: string.isRequired,
 };
 
 VaultItem.defaultProps = {
-  color: undefined,
+  last30Days: {},
 };
 
 export default VaultItem;

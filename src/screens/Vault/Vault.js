@@ -2,16 +2,17 @@ import { bool, shape } from 'prop-types';
 import React, { Fragment, Component } from 'react';
 import { BackHandler, FlatList, View } from 'react-native';
 
-import { iconBack, iconShuffle } from '../../assets';
-import { C, exchange } from '../../common';
+import ASSETS from '../../assets';
+import { C, verboseMonth } from '../../common';
 import {
-  DialogClone, DialogTransaction, DialogTransfer, FloatingButton, TransactionItem, VaultBalance,
+  BalanceCard, DialogClone, DialogTransaction, DialogTransfer, FloatingButton, HeadingItem,
 } from '../../components';
-import { Header } from '../../containers';
+import { GroupTransactions, Header } from '../../containers';
 import { Consumer } from '../../context';
 import { Text, Viewport } from '../../reactor/components';
 import styles from './Vault.style';
 
+const { iconBack } = ASSETS;
 const { TX: { TYPE: { EXPENSE, TRANSFER } } } = C;
 let TIMEOUT;
 
@@ -61,11 +62,6 @@ class Vault extends Component {
     }, 300);
   }
 
-  _onSwitchCurrency = () => {
-    const { state: { switchCurrency } } = this;
-    this.setState({ switchCurrency: !switchCurrency });
-  }
-
   _onToggleClone = clone => this.setState({ clone });
 
   _onToggleDialog = () => {
@@ -77,22 +73,19 @@ class Vault extends Component {
 
   render() {
     const {
-      _onSearch, _onSwitchCurrency, _onToggleClone, _onToggleDialog, _onTransactionType,
+      _onSearch, _onToggleClone, _onToggleDialog, _onTransactionType,
       props: { visible, ...props },
-      state: {
-        clone, dialog, switchCurrency, type,
-      },
+      state: { clone, dialog, type },
     } = this;
-    const { state: { params: { color, currency, hash } = {} } = {} } = props.navigation;
+    const { state: { params: vault = {} } = {} } = props.navigation;
+    const { currency, hash } = vault;
 
     return (
       <Viewport {...props} scroll={false} visible={visible}>
         <Consumer>
           { ({
             navigation, l10n,
-            store: {
-              baseCurrency, queryTxs, rates, vaults, ...store
-            },
+            store: { queryTxs, vaults, ...store },
           }) => (
             <Fragment>
               <Header
@@ -100,45 +93,29 @@ class Vault extends Component {
                 onSearch={visible
                   ? value => _onSearch({ value, store, l10n })
                   : undefined}
-                right={currency !== baseCurrency ? { icon: iconShuffle, onPress: _onSwitchCurrency } : undefined}
                 visible={visible}
               />
-              <VaultBalance
-                dataSource={vaults.find(vault => vault.hash === hash)}
-                baseCurrency={switchCurrency ? baseCurrency : undefined}
-                txs={visible ? queryTxs : []}
-              />
 
-              { queryTxs.length > 0
-                ? (
-                  <FlatList
-                    contentContainerStyle={styles.container}
-                    data={queryTxs}
-                    extraData={switchCurrency}
-                    keyExtractor={tx => tx.hash || tx.timestamp}
-                    renderItem={({ item: tx }) => (
-                      <TransactionItem
-                        {...tx}
-                        cashflow={switchCurrency && tx.cashflow
-                          ? {
-                            incomes: exchange(tx.cashflow.incomes, currency, baseCurrency, rates),
-                            expenses: exchange(tx.cashflow.expenses, currency, baseCurrency, rates),
-                          }
-                          : tx.cashflow}
-                        color={color}
-                        currency={switchCurrency ? baseCurrency : currency}
-                        onClone={() => _onToggleClone(tx)}
-                        value={switchCurrency && tx.hash ? exchange(tx.value, currency, baseCurrency, rates) : tx.value}
-                      />
-                    )}
-                  />)
-                : (
+              <FlatList
+                contentContainerStyle={styles.container}
+                data={visible ? queryTxs : []}
+                keyExtractor={tx => `${tx.timestamp}-${tx.value}`}
+                ListHeaderComponent={() => (
+                  <BalanceCard {...vault} title={`${vault.title} ${l10n.BALANCE}`} />
+                )}
+                ListEmptyComponent={() => (
                   <View style={[styles.content, styles.container]}>
                     <Text level={2} lighten>{l10n.VAULT_EMPTY}</Text>
-                  </View>)}
+                  </View>
+                )}
+                renderItem={({ item }) => (
+                  item.heading
+                    ? <HeadingItem lighten title={verboseMonth(item.timestamp, l10n)} />
+                    : <GroupTransactions {...item} currency={currency} onItem={() => _onToggleClone(item)} />
+                )}
+              />
 
               <FloatingButton
-                color={color}
                 onPress={dialog ? _onToggleDialog : _onTransactionType}
                 options={vaults.length === 1 ? [l10n.EXPENSE, l10n.INCOME] : [l10n.EXPENSE, l10n.INCOME, l10n.TRANSFER]}
                 visible={!dialog && !props.backward}
@@ -146,7 +123,6 @@ class Vault extends Component {
               { visible && (
                 <Fragment>
                   <DialogTransaction
-                    color={color}
                     type={type}
                     vault={hash}
                     onClose={_onToggleDialog}
@@ -154,7 +130,7 @@ class Vault extends Component {
                   />
                   { vaults.length > 1 && (
                     <DialogTransfer vault={hash} onClose={_onToggleDialog} visible={dialog && type === TRANSFER} />)}
-                  <DialogClone color={color} dataSource={clone} visible={!!clone} onClose={() => _onToggleClone()} />
+                  <DialogClone dataSource={clone} visible={!!clone} onClose={() => _onToggleClone()} />
                 </Fragment>)}
             </Fragment>
           )}

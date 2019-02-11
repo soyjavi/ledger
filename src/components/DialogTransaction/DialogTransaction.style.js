@@ -1,37 +1,27 @@
 import { StyleSheet } from 'react-native';
 
 import { C } from '../../common';
-import { ENV, LAYOUT, THEME } from '../../reactor/common';
+import { THEME } from '../../reactor/common';
 
-const { STYLE: { DIALOG } } = C;
-const { IS_NATIVE } = ENV;
-const { OFFSET, UNIT } = THEME;
+const { STYLE: { DIALOG, DIALOG_FRAME } } = C;
+const { BORDER_RADIUS, OFFSET, UNIT } = THEME;
 
 export default StyleSheet.create({
   button: {
     flex: 1,
-    marginHorizontal: OFFSET / 4,
-  },
-
-  buttons: {
-    ...LAYOUT.STYLE.ROW,
-    marginHorizontal: -OFFSET / 4,
-    paddingVertical: OFFSET / 4,
   },
 
   dialog: DIALOG,
 
-  frame: {
-    alignSelf: 'flex-end',
-    paddingTop: OFFSET,
-    maxHeight: IS_NATIVE ? UNIT * 52 : undefined,
-  },
+  frame: DIALOG_FRAME,
 
   form: {
     marginVertical: OFFSET,
   },
 
-  title: {
-    marginBottom: OFFSET / 2,
+  location: {
+    borderRadius: BORDER_RADIUS,
+    marginTop: OFFSET / 2,
+    marginBottom: UNIT / 2,
   },
 });

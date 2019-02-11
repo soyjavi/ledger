@@ -38,6 +38,7 @@ export default {
         10: 'Personal',
         11: 'Services',
         12: 'Transfer',
+        13: 'Miscellaneous',
         99: 'Vault Transfer',
       },
       { // Incomes
@@ -45,6 +46,7 @@ export default {
         2: 'Investment',
         3: 'Pasives',
         4: 'Transfer',
+        5: 'Miscellaneous',
         99: 'Vault Transfer',
       },
     ],
@@ -53,6 +55,9 @@ export default {
     CLONE_CAPTION: 'To make your life easier you can clone this transaction with a simple touch of the button.',
     CLOSE: 'Close',
     CURRENCY: 'Currency',
+    CURRENT_MONTH: 'Current month',
+
+    DAY_NAMES: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
 
     ENTER_PIN: 'Enter your pin',
     EXPENSE: 'Expense',
@@ -66,6 +71,9 @@ export default {
     INCOME_CAPTION: 'Register a new income in this vault.',
     INCOMES: 'Incomes',
 
+    LAST_6_MONTHS: 'Last 6 months',
+    LAST_30_DAYS: 'Last 30 days',
+    LAST_WEEKS: 'Last weeks',
     LOADING_PLACE: 'Wait a moment, loading place.',
     LOADING_PROFILE: 'Wait a moment, syncing your blockchain.',
 

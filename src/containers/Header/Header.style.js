@@ -4,7 +4,7 @@ import { C } from '../../common';
 import { LAYOUT, ENV, THEME } from '../../reactor/common';
 
 const { COLOR, FONT, UNIT } = THEME;
-const { STYLE: { HEADER_HEIGHT } } = C;
+const { STYLE: { SHADOW, HEADER_HEIGHT } } = C;
 
 export default StyleSheet.create({
   container: {
@@ -21,13 +21,14 @@ export default StyleSheet.create({
   },
 
   input: {
+    ...SHADOW,
     ...FONT.HEADLINE,
-    backgroundColor: COLOR.TRANSPARENT,
+    backgroundColor: COLOR.WHITE,
+    borderRadius: UNIT * 2.2,
     borderWidth: 0,
     color: COLOR.TEXT,
-    fontSize: UNIT * 2,
-    height: UNIT * 4,
-    paddingHorizontal: UNIT * 0.5,
+    height: UNIT * 4.4,
+    paddingHorizontal: UNIT * 2,
     width: '100%',
     ...Platform.select({
       web: {

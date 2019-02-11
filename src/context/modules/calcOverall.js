@@ -1,38 +1,75 @@
-import { exchange } from '../../common';
+import { C, exchange } from '../../common';
+
+const { WEEKS } = C;
+const KEYS = ['progression', 'incomes', 'expenses'];
+const EXPENSES = 'expenses';
+const INCOMES = 'incomes';
 
 export default ({ baseCurrency, rates, vaults = [] }) => {
-  const currentMonth = new Date().toISOString().substr(0, 7);
-  const months = [currentMonth];
-  const exchangeProps = [baseCurrency, rates];
-  let expenses = 0;
-  let incomes = 0;
+  const chartBalance = new Array(WEEKS).fill(0);
+  const chartExpenses = new Array(WEEKS).fill(0);
+  const last30Days = { progression: 0, incomes: 0, expenses: 0 };
+  const stats = { incomes: {}, expenses: {} };
+  let balance = 0;
+  let currentBalance = 0;
   let total = 0;
 
-  vaults.forEach(({ balance, months: vaultMonths, currency }) => {
-    const keysMonths = Object.keys(vaultMonths);
-    keysMonths.forEach((month) => {
-      if (!months.includes(month)) months.push(month);
-    });
-
-    const lastMonth = keysMonths[keysMonths.length - 1];
-    const month = vaultMonths[lastMonth];
+  vaults.forEach(({
+    balance: vaultBalance,
+    currentBalance: vaultCurrentBalance,
+    currency,
+    last30Days: vaultLast30Days,
+    stats: vaultStats,
+    weekBalance,
+    weekExpenses,
+  }) => {
     const sameCurrency = currency === baseCurrency;
 
-    if (month) {
-      total += sameCurrency ? month.balance : exchange(month.balance, currency, ...exchangeProps);
-      if (lastMonth === currentMonth) {
-        expenses += sameCurrency ? month.expenses : exchange(month.expenses, currency, ...exchangeProps);
-        incomes += sameCurrency ? month.incomes : exchange(month.incomes, currency, ...exchangeProps);
-      }
-    } else {
-      total += sameCurrency ? balance : exchange(balance, currency, ...exchangeProps);
-    }
+    const exchangeProps = [currency, baseCurrency, rates];
+    currentBalance += sameCurrency ? vaultCurrentBalance : exchange(vaultCurrentBalance, ...exchangeProps);
+    balance += sameCurrency ? vaultBalance : exchange(vaultBalance, ...exchangeProps);
+
+    chartBalance.forEach((week, weekIndex) => {
+      const value = weekBalance[weekIndex];
+      chartBalance[weekIndex] += sameCurrency ? value : exchange(value, ...exchangeProps);
+    });
+
+    chartExpenses.forEach((week, weekIndex) => {
+      const value = weekExpenses[weekIndex];
+      chartExpenses[weekIndex] += sameCurrency ? value : exchange(value, ...exchangeProps);
+    });
+
+    KEYS.forEach((key) => {
+      last30Days[key] += sameCurrency ? vaultLast30Days[key] : exchange(vaultLast30Days[key], ...exchangeProps);
+    });
+
+    [EXPENSES, INCOMES].forEach((type) => {
+      Object.keys(vaultStats[type]).forEach((category) => {
+        const amount = sameCurrency
+          ? vaultStats[type][category]
+          : exchange(vaultStats[type][category], ...exchangeProps);
+
+        stats[type][category] = (stats[type][category] || 0) + amount;
+      });
+    });
   });
 
   return {
-    expenses,
-    incomes,
-    months: months.sort(),
-    total,
+    balance,
+    chart: {
+      balance: chartBalance
+        .map((value) => {
+          total += value;
+          return total;
+        })
+        .map(value => (value !== 0 ? value + balance : 0)),
+      expenses: chartExpenses,
+    },
+    currentBalance,
+    last30Days,
+    stats: {
+      incomes: Object.keys(stats.incomes).map(category => ({ category, value: stats.incomes[category] })),
+      expenses: Object.keys(stats.expenses).map(category => ({ category, value: stats.expenses[category] })),
+    },
   };
 };

@@ -1,27 +1,27 @@
 import { StyleSheet } from 'react-native';
 
+import { C } from '../../common';
 import { LAYOUT, THEME } from '../../reactor/common';
 
-const { COLOR, OFFSET } = THEME;
+const { STYLE } = C;
+const { COLOR, OFFSET, UNIT } = THEME;
 
 export default StyleSheet.create({
   container: {
-    paddingHorizontal: OFFSET,
+    ...STYLE.CARD,
+    backgroundColor: COLOR.BASE,
+    margin: OFFSET / 2,
+    minHeight: UNIT * 12.8,
+    overflow: 'hidden',
   },
 
   content: {
-    ...LAYOUT.STYLE.ROW,
-    alignItems: 'flex-end',
-    borderBottomColor: COLOR.BASE,
-    borderBottomWidth: 1,
-    paddingVertical: OFFSET,
-  },
-
-  info: {
     flex: 1,
   },
 
-  title: {
-    marginBottom: OFFSET / 2,
+  row: LAYOUT.STYLE.ROW,
+
+  separator: {
+    flex: 1,
   },
 });

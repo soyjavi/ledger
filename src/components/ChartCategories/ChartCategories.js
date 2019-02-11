@@ -6,39 +6,27 @@ import { View } from 'react-native';
 
 import { C } from '../../common';
 import { Price, Text, Touchable } from '../../reactor/components';
+import Thumbnail from '../Thumbnail';
 import styles from './ChartCategories.style';
 
 const { FIXED, SYMBOL } = C;
 
 const Item = ({
   color, currency, extended, title, total = 0, value = 0,
-}) => (
-  <View style={styles.content}>
-    <View style={styles.row}>
-      <Text subtitle={!extended} level={extended ? 2 : 3} lighten numberOfLines={1} style={styles.text}>
+}) => {
+  const percent = parseInt((value * 100) / total, 10);
+
+  return (
+    <View style={[styles.content, extended && styles.contentExtended]}>
+      { !extended && <View style={[styles.bar, { backgroundColor: color, width: `${percent}%` }]} /> }
+      <Thumbnail caption="%" color={color} title={percent > 0 ? percent.toString() : '1'} />
+      <Text subtitle level={extended ? 3 : 2} numberOfLines={1} style={styles.text}>
         {title}
       </Text>
-      <Price
-        subtitle={!extended}
-        level={extended ? 2 : 3}
-        lighten
-        fixed={FIXED[currency]}
-        symbol={SYMBOL[currency]}
-        value={value}
-      />
+      <Price subtitle level={extended ? 3 : 2} fixed={FIXED[currency]} symbol={SYMBOL[currency]} value={value} />
     </View>
-    <View style={[styles.chart, extended && styles.chartExtended]}>
-      <View
-        style={[
-          styles.chart,
-          styles.bar,
-          extended && styles.chartExtended,
-          { backgroundColor: color, width: `${parseInt((value * 100) / total, 10)}%` },
-        ]}
-      />
-    </View>
-  </View>
-);
+  );
+};
 
 Item.propTypes = {
   color: string.isRequired,
@@ -77,16 +65,17 @@ class ChartCategory extends PureComponent {
       },
       state: { extended },
     } = this;
+    const categoryKey = category.split(':')[1];
 
     return (
       <View style={styles.container}>
-        <Touchable onPress={group ? _onPress : undefined} rippleColor={inherit.color}>
-          <Item {...inherit} title={l10n[category]} />
+        <Touchable onPress={group ? _onPress : undefined} rippleColor={inherit.color} style={styles.touchable}>
+          <Item {...inherit} title={l10n[categoryKey]} />
         </Touchable>
         { extended && (
           <View>
-            { Object.keys(group).map(key => (
-              <Item {...inherit} key={key} extended title={key} total={inherit.value} value={group[key]} />))}
+            { Object.keys(group[categoryKey]).map(key => (
+              <Item {...inherit} key={key} extended title={key} total={inherit.value} value={group[categoryKey][key]} />))}
           </View>)}
       </View>
     );

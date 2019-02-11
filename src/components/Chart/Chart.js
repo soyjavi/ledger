@@ -2,28 +2,26 @@ import { arrayOf, number, string } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 
-import { Motion } from '../../reactor/components';
 import styles from './Chart.style';
 
-const Chart = ({
-  color, inheritValue, maxValue, values,
-}) => {
-  let max = maxValue;
-  if (!max) max = values.length > 0 ? Math.max(...values) : 0;
-  const style = [styles.bar, values.length > 12 && styles.barTiny];
+const Chart = ({ color, values }) => {
+  const max = values.length > 0 ? Math.max(...values) : 0;
+  const floor = values.length > 0
+    ? (Math.min(...(values.filter(value => value > 0))) / 1.015)
+    : 0;
 
   return (
     <View style={styles.container}>
       { values.map((value, index) => (
-        <Motion
+        <View
           key={`${index}-${value}`} // eslint-disable-line
           style={[
-            ...style,
+            styles.item,
             {
-              height: `${parseInt((value * 100) / max, 10)}%`,
-              opacity: inheritValue === value ? 0.2 : 1,
+              backgroundColor: color,
+              height: `${parseInt(((value - floor) * 100) / (max - floor), 10)}%`,
+              opacity: value === 0 ? 0.2 : 1,
             },
-            color && { backgroundColor: color },
           ]}
         />))}
     </View>
@@ -31,16 +29,11 @@ const Chart = ({
 };
 
 Chart.propTypes = {
-  color: string,
-  inheritValue: number,
-  maxValue: number,
+  color: string.isRequired,
   values: arrayOf(number),
 };
 
 Chart.defaultProps = {
-  color: undefined,
-  inheritValue: undefined,
-  maxValue: undefined,
   values: [],
 };
 

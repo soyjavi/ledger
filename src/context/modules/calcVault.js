@@ -1,41 +1,61 @@
 import { C } from '../../common';
 
-const { VAULT_TRANSFER, COLORS, TX: { TYPE } } = C;
+const { TX: { TYPE }, VAULT_TRANSFER, WEEKS } = C;
+const MS_IN_DAY = 1000 * 24 * 60 * 60;
+const MS_IN_WEEK = MS_IN_DAY * 7;
+const EXPENSES = 'expenses';
+const INCOMES = 'incomes';
 
-export default (vault = {}, txs = [], index) => {
-  const vaultTXs = txs.filter(tx => tx.vault === vault.hash);
-  const months = {};
-  let { balance } = vault;
+export default (vault = {}, txs = []) => {
+  const chartBalance = new Array(WEEKS).fill(0);
+  const weekBalance = new Array(WEEKS).fill(0);
+  const weekExpenses = new Array(WEEKS).fill(0);
+  const now = new Date();
+  const currentMonth = now.toISOString().substr(0, 7);
+  const stats = { incomes: {}, expenses: {} };
+  let { balance = 0 } = vault;
+  let incomes = 0;
+  let expenses = 0;
+  let progression = 0;
 
-  vaultTXs.forEach(({
+  txs.filter(tx => tx.vault === vault.hash).forEach(({
     category, timestamp, type, value,
   }) => {
-    const date = (new Date(timestamp).toISOString()).substr(0, 7);
+    const isExpense = type === TYPE.EXPENSE;
+    const ms = Math.abs(now - new Date(timestamp));
+    const weekNumber = Math.floor(ms / MS_IN_WEEK);
+    const dayNumber = Math.round(ms / MS_IN_DAY);
 
-    if (!months[date]) months[date] = { balance: 0, expenses: 0, incomes: 0 };
+    balance += isExpense ? -(value) : value;
 
-    if (type === TYPE.EXPENSE) {
-      if (category !== VAULT_TRANSFER) months[date].expenses += value;
-      balance -= value;
-    } else if (type === TYPE.INCOME) {
-      if (category !== VAULT_TRANSFER) months[date].incomes += value;
-      balance += value;
+    if (weekNumber < WEEKS) {
+      const weekIndex = (WEEKS - 1) - weekNumber;
+
+      chartBalance[weekIndex] += isExpense ? -(value) : value;
+      if (isExpense) weekExpenses[weekIndex] += value;
+      weekBalance[weekIndex] += isExpense ? -(value) : value;
+
+      if (dayNumber <= 30) {
+        if (category !== VAULT_TRANSFER) {
+          if (isExpense) expenses += value;
+          else incomes += value;
+
+          if (currentMonth === (new Date(timestamp).toISOString()).substr(0, 7)) {
+            const key = isExpense ? EXPENSES : INCOMES;
+            stats[key][category] = (stats[key][category] || 0) + value;
+          }
+        }
+
+        progression += isExpense ? -(value) : value;
+      }
     }
-
-    months[date].balance = balance;
   });
 
-  const chart = Object.values(months)
-    .map(item => item.balance)
-    .slice(Math.max(Object.keys(months).length - 12, 0));
-
   return Object.assign({}, vault, {
-    months,
-    chart: [
-      ...Array.from({ length: 12 - chart.length }, () => vault.balance),
-      ...chart,
-    ],
-    color: COLORS[index],
-    overallBalance: balance,
+    currentBalance: balance,
+    last30Days: { progression, incomes, expenses },
+    stats,
+    weekBalance,
+    weekExpenses,
   });
 };

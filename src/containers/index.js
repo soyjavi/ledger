@@ -1,5 +1,7 @@
+import GroupTransactions from './GroupTransactions';
 import Header from './Header';
 
 export {
-  Header, // eslint-disable-line
+  GroupTransactions,
+  Header,
 };

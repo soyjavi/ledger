@@ -28,4 +28,8 @@ export default StyleSheet.create({
   title: {
     flex: 1,
   },
+
+  values: {
+    marginTop: OFFSET / 2,
+  },
 });

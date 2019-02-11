@@ -4,27 +4,24 @@ import {
 import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
-import { iconAdd } from '../../assets';
-import { C } from '../../common';
+import ASSETS from '../../assets';
 import { THEME } from '../../reactor/common';
 import {
   Icon, Motion, Text, Touchable,
 } from '../../reactor/components';
 import styles, { CONTAINER_SIZE } from './FloatingButton.style';
 
-const { COLORS } = C;
+const { iconAdd } = ASSETS;
 const { MOTION: { DURATION } } = THEME;
 
 class FloatingButton extends PureComponent {
   static propTypes = {
-    color: string,
     onPress: func.isRequired,
     options: arrayOf(string),
     visible: bool,
   };
 
   static defaultProps = {
-    color: undefined,
     options: undefined,
     visible: false,
   };
@@ -49,7 +46,7 @@ class FloatingButton extends PureComponent {
 
   render() {
     const {
-      _onPress, _onOption, state: { opened }, props: { color, options, visible },
+      _onPress, _onOption, state: { opened }, props: { options, visible },
     } = this;
 
     return (
@@ -67,6 +64,7 @@ class FloatingButton extends PureComponent {
                 <Touchable onPress={opened ? () => _onOption(index) : undefined}>
                   <View style={styles.option}>
                     <Text subtitle level={3}>{option}</Text>
+                    <View style={[styles.bullet, styles[option.toLowerCase()]]} />
                   </View>
                 </Touchable>
               </Motion>
@@ -75,14 +73,8 @@ class FloatingButton extends PureComponent {
 
         <Motion preset="pop" visible={visible} delay={visible ? DURATION * 2 : 0}>
           <Motion timeline={[{ property: 'scale', value: visible && opened ? 0.75 : 1 }]}>
-            <Touchable containerBorderRadius={CONTAINER_SIZE / 2} onPress={_onPress} rippleColor={COLORS.BACKGROUND}>
-              <View
-                style={[
-                  styles.button,
-                  visible && opened && styles.buttonOpened,
-                  color && { backgroundColor: color, shadowColor: color },
-                ]}
-              >
+            <Touchable containerBorderRadius={CONTAINER_SIZE / 2} onPress={_onPress}>
+              <View style={[styles.button, visible && opened && styles.buttonOpened]}>
                 <Icon value={iconAdd} style={styles.icon} />
               </View>
             </Touchable>
