@@ -31,7 +31,7 @@ const BalanceCard = ({
           <HeadingItem title={l10n.LAST_30_DAYS} />
           <View style={[styles.row, styles.section]}>
             <View style={styles.card}>
-              <Text caption level={2} numberOfLines={1}>{`${l10n.BALANCE.toUpperCase()} %`}</Text>
+              <Text caption level={2} numberOfLines={1}>{l10n.BALANCE.toUpperCase()}</Text>
               <Percentage headline level={5} value={progressionPercentage} />
             </View>
 

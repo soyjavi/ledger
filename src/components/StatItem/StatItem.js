@@ -1,4 +1,4 @@
-import { number, string } from 'prop-types';
+import { func, number, string } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 
@@ -10,10 +10,12 @@ import styles from './StatItem.style';
 
 const { COLOR } = THEME;
 
-const StatItem = ({ category, type, value }) => (
+const StatItem = ({
+  category, onPress, type, value,
+}) => (
   <Consumer>
     { ({ store: { baseCurrency }, l10n: { CATEGORIES } }) => (
-      <Touchable onPress={() => {}} rippleColor={COLOR.TEXT_LIGHTEN} style={styles.container}>
+      <Touchable onPress={onPress} rippleColor={COLOR.TEXT_LIGHTEN} style={styles.container}>
         <View>
           <Text caption level={2} numberOfLines={1}>
             {CATEGORIES[type][category].toUpperCase()}
@@ -27,6 +29,7 @@ const StatItem = ({ category, type, value }) => (
 
 StatItem.propTypes = {
   category: string.isRequired,
+  onPress: func.isRequired,
   type: number.isRequired,
   value: number.isRequired,
 };

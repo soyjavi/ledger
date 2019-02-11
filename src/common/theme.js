@@ -13,7 +13,8 @@ export default {
     BASE: '#F2F2F2',
     TEXT: '#333',
     TEXT_LIGHTEN: '#999',
-    PRIMARY: '#3434E6',
+    // PRIMARY: '#3434E6',
+    PRIMARY: '#43DDDD',
 
     // DARK-MODE
     // BACKGROUND: '#000',

@@ -63,13 +63,33 @@ class Dashboard extends PureComponent {
     navigation.navigate(SCREEN.STATS, undefined, props.navigation);
   }
 
+  renderStats = (dataSource, type, { l10n, navigation, store }) => {
+    const { _onStats } = this;
+    const currentMonth = (new Date()).getMonth();
+
+    return (
+      <Fragment>
+        <HeadingItem title={`${l10n.MONTHS[currentMonth]}'s ${type === TYPE.INCOME ? l10n.INCOMES : l10n.EXPENSES}`} />
+        <Slider
+          {...SLIDER_PROPS}
+          dataSource={dataSource}
+          item={({ data }) => (
+            <StatItem
+              onPress={() => _onStats({ navigation, store })}
+              type={type}
+              {...data}
+            />)}
+        />
+      </Fragment>
+    );
+  }
+
   render() {
     const {
-      _onToggleDialog, _onVault,
+      _onToggleDialog, _onVault, renderStats,
       props: { visible, ...inherit },
       state: { dialog },
     } = this;
-    const currentMonth = (new Date()).getMonth();
 
     return (
       <Viewport {...inherit} scroll={false} visible={visible}>
@@ -77,7 +97,7 @@ class Dashboard extends PureComponent {
           { ({
             l10n, navigation,
             store: {
-              baseCurrency, overall: { stats: { expenses, incomes } = {}, ...overall }, vaults, ...store
+              baseCurrency, overall: { stats: { expenses = [], incomes = [] } = {}, ...overall }, vaults, ...store
             },
           }) => (
             <Fragment>
@@ -92,24 +112,8 @@ class Dashboard extends PureComponent {
                     <VaultItem key={vault.hash} {...vault} onPress={() => _onVault({ navigation, store, vault })} />)}
                 />
 
-                { incomes && incomes.length > 0 && (
-                  <Fragment>
-                    <HeadingItem title={`${l10n.MONTHS[currentMonth]}'s ${l10n.INCOMES}`} />
-                    <Slider
-                      {...SLIDER_PROPS}
-                      dataSource={incomes}
-                      item={({ data }) => <StatItem type={TYPE.INCOME} {...data} />}
-                    />
-                  </Fragment>)}
-                { expenses && expenses.length > 0 && (
-                  <Fragment>
-                    <HeadingItem title={`${l10n.MONTHS[currentMonth]}'s ${l10n.EXPENSES}`} />
-                    <Slider
-                      {...SLIDER_PROPS}
-                      dataSource={expenses}
-                      item={({ data }) => <StatItem type={TYPE.EXPENSE} {...data} />}
-                    />
-                  </Fragment>)}
+                { incomes.length > 0 && renderStats(incomes, TYPE.INCOME, { l10n, navigation, store }) }
+                { expenses.length > 0 && renderStats(expenses, TYPE.EXPENSE, { l10n, navigation, store }) }
               </ScrollView>
               <FloatingButton onPress={_onToggleDialog} visible={!dialog} />
               { visible && vaults.length === 0 && !dialog && this.setState({ dialog: true }) }
