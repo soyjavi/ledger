@@ -30,25 +30,18 @@ class Vault extends Component {
   state = {
     clone: undefined,
     dialog: false,
-    switchCurrency: false,
     type: EXPENSE,
   };
-
-  componentWillReceiveProps({ visible }) {
-    const { props } = this;
-    if (visible && !props.visible) this.setState({ switchCurrency: false });
-  }
 
   shouldComponentUpdate(nextProps, nextState) {
     const {
       props: { visible },
-      state: { clone, dialog, switchCurrency },
+      state: { clone, dialog },
     } = this;
 
     return (nextProps.visible !== visible)
       || (nextState.clone !== clone)
       || (nextState.dialog !== dialog)
-      || (nextState.switchCurrency !== switchCurrency);
   }
 
   _onSearch = ({ value, store: { query }, l10n }) => {
@@ -101,7 +94,7 @@ class Vault extends Component {
                 data={visible ? queryTxs : []}
                 keyExtractor={tx => `${tx.timestamp}-${tx.value}`}
                 ListHeaderComponent={() => (
-                  <BalanceCard {...vault} title={`${vault.title} ${l10n.BALANCE}`} />
+                  <BalanceCard {...vaults.find(v => v.hash === hash)} title={`${vault.title} ${l10n.BALANCE}`} />
                 )}
                 ListEmptyComponent={() => (
                   <View style={[styles.content, styles.container]}>
