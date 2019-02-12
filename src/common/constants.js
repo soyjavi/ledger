@@ -47,6 +47,7 @@ export default {
       width: UNIT * 16,
     },
     DIALOG: {
+      backgroundColor: 'rgba(255,255,255,0.75)',
       justifyContent: 'flex-end',
       zIndex: 2,
     },

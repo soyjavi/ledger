@@ -34,7 +34,7 @@ export default StyleSheet.create({
   },
 
   transfer: {
-    backgroundColor: COLOR.TEXT,
+    backgroundColor: COLOR.ACCENT,
   },
 
   container: {

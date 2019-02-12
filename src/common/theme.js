@@ -15,6 +15,7 @@ export default {
     TEXT_LIGHTEN: '#999',
     // PRIMARY: '#3434E6',
     PRIMARY: '#43DDDD',
+    ACCENT: '#5D0DC8',
 
     // DARK-MODE
     // BACKGROUND: '#000',
