@@ -49,7 +49,7 @@ class GroupTransactions extends Component {
           <View>
             <HeadingItem title={verboseDate(timestamp, l10n)}>
               <View style={styles.heading}>
-                <Icon value={value > 0 ? iconIncome : iconExpense} />
+                <Icon value={value > 0 ? iconIncome : iconExpense} style={styles.icon} />
                 <Price
                   color={value > 0 ? COLOR.INCOMES : COLOR.EXPENSES}
                   subtitle

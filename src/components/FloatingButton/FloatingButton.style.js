@@ -11,7 +11,7 @@ export default StyleSheet.create({
   button: {
     ...LAYOUT.STYLE.SHADOW,
     ...LAYOUT.STYLE.CENTERED,
-    backgroundColor: COLOR.PRIMARY,
+    backgroundColor: COLOR.TEXT,
     borderRadius: CONTAINER_SIZE / 2,
     height: CONTAINER_SIZE,
     width: CONTAINER_SIZE,

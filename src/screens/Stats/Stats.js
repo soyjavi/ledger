@@ -1,32 +1,47 @@
-import { bool, shape } from 'prop-types';
+import { bool, func, shape } from 'prop-types';
 import React, { Fragment, Component } from 'react';
-import { View, ScrollView } from 'react-native';
+import { BackHandler, View, ScrollView } from 'react-native';
 
 import ASSETS from '../../assets';
 import { C } from '../../common';
 import { ChartCategories } from '../../components';
 import { Header } from '../../containers';
 import { Consumer } from '../../context';
+import { ENV } from '../../reactor/common';
 import { Price, Text, Viewport } from '../../reactor/components';
 import styles from './Stats.style';
 
 const { iconBack } = ASSETS;
 const { FIXED, SYMBOL } = C;
+const { IS_WEB } = ENV;
 
 class Stats extends Component {
   static propTypes = {
     navigation: shape({}),
+    goBack: func,
     visible: bool,
   };
 
   static defaultProps = {
     navigation: undefined,
+    goBack() {},
     visible: true,
   };
 
   state = {
     date: undefined,
   };
+
+  componentWillReceiveProps({ backward, goBack }) {
+    const method = backward ? 'removeEventListener' : 'addEventListener';
+
+    BackHandler[method]('hardwareBackPress', () => {
+      const { props: { navigation } } = this;
+
+      goBack(navigation);
+      return true;
+    });
+  }
 
   shouldComponentUpdate(nextProps, nextState) {
     const { props: { visible }, state: { date } } = this;
@@ -55,7 +70,7 @@ class Stats extends Component {
           }) => (
             <Fragment>
               <Header
-                left={{ icon: iconBack, onPress: () => navigation.goBack(props.navigation) }}
+                left={IS_WEB ? { icon: iconBack, onPress: () => navigation.goBack(props.navigation) } : undefined}
                 title={l10n.STATS}
                 visible={visible}
               />

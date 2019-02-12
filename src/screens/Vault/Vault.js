@@ -1,4 +1,4 @@
-import { bool, shape } from 'prop-types';
+import { bool, func, shape } from 'prop-types';
 import React, { Fragment, Component } from 'react';
 import { BackHandler, FlatList, View } from 'react-native';
 
@@ -9,21 +9,25 @@ import {
 } from '../../components';
 import { GroupTransactions, Header } from '../../containers';
 import { Consumer } from '../../context';
+import { ENV } from '../../reactor/common';
 import { Text, Viewport } from '../../reactor/components';
 import styles from './Vault.style';
 
 const { iconBack } = ASSETS;
 const { TX: { TYPE: { EXPENSE, TRANSFER } } } = C;
+const { IS_WEB } = ENV;
 let TIMEOUT;
 
 class Vault extends Component {
   static propTypes = {
     navigation: shape({}),
+    goBack: func,
     visible: bool,
   };
 
   static defaultProps = {
     navigation: undefined,
+    goBack() {},
     visible: true,
   };
 
@@ -33,15 +37,25 @@ class Vault extends Component {
     type: EXPENSE,
   };
 
+  componentWillReceiveProps({ backward, goBack }) {
+    const method = backward ? 'removeEventListener' : 'addEventListener';
+
+    BackHandler[method]('hardwareBackPress', () => {
+      const { props: { navigation }, state: { clone, dialog } } = this;
+
+      if (clone || dialog) this.setState({ clone: false, dialog: false });
+      else goBack(navigation);
+      return true;
+    });
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     const {
       props: { visible },
       state: { clone, dialog },
     } = this;
 
-    return (nextProps.visible !== visible)
-      || (nextState.clone !== clone)
-      || (nextState.dialog !== dialog)
+    return (nextProps.visible !== visible) || (nextState.clone !== clone) || (nextState.dialog !== dialog);
   }
 
   _onSearch = ({ value, store: { query }, l10n }) => {
@@ -82,7 +96,7 @@ class Vault extends Component {
           }) => (
             <Fragment>
               <Header
-                left={{ icon: iconBack, onPress: () => navigation.goBack(props.navigation) }}
+                left={IS_WEB ? { icon: iconBack, onPress: () => navigation.goBack(props.navigation) } : undefined }
                 onSearch={visible
                   ? value => _onSearch({ value, store, l10n })
                   : undefined}

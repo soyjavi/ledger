@@ -3,7 +3,9 @@ import { Platform, StyleSheet } from 'react-native';
 import { C } from '../../common';
 import { LAYOUT, ENV, THEME } from '../../reactor/common';
 
-const { COLOR, FONT, UNIT } = THEME;
+const {
+  COLOR, FONT, OFFSET, UNIT,
+} = THEME;
 const { STYLE: { SHADOW, HEADER_HEIGHT } } = C;
 
 export default StyleSheet.create({
@@ -18,6 +20,7 @@ export default StyleSheet.create({
 
   content: {
     flex: 1,
+    paddingHorizontal: OFFSET,
   },
 
   input: {

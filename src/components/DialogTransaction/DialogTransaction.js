@@ -98,6 +98,7 @@ class DialogTransaction extends PureComponent {
         busy, coords, form, location, place, valid,
       },
     } = this;
+    const color = type === EXPENSE ? COLOR.EXPENSES : COLOR.INCOMES;
 
     return (
       <Consumer>
@@ -115,6 +116,7 @@ class DialogTransaction extends PureComponent {
             <View style={styles.form}>
               <Form
                 attributes={translate(hydrateTransaction({ l10n, type }), l10n)}
+                color={color}
                 onValid={_onValid}
                 onChange={_onChange}
                 value={form}
@@ -129,7 +131,7 @@ class DialogTransaction extends PureComponent {
 
             <Button
               activity={busy}
-              color={COLOR.PRIMARY}
+              color={color}
               disabled={busy || !valid || (location && !place)}
               onPress={() => _onSubmit({ l10n, store })}
               rounded

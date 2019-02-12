@@ -36,8 +36,10 @@ class Dashboard extends PureComponent {
     dialog: false,
   };
 
-  componentDidMount() {
-    BackHandler.addEventListener('hardwareBackPress', () => {
+  componentWillReceiveProps({ backward }) {
+    const method = backward ? 'removeEventListener' : 'addEventListener';
+
+    BackHandler[method]('hardwareBackPress', () => {
       const { state: { dialog } } = this;
       if (dialog) this.setState({ dialog: false });
       return true;

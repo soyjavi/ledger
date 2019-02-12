@@ -14,7 +14,7 @@ const {
 
 export default props => (
   <ConsumerNavigation>
-    { ({ current, params, stack }) => (
+    { ({ current, goBack, params, stack }) => (
       <LayoutView>
         <Session backward={current !== SESSION} visible={stack.includes(SESSION)} />
 
@@ -22,10 +22,11 @@ export default props => (
         <Vault
           {...props}
           backward={current !== VAULT}
+          goBack={goBack}
           navigation={{ state: { params: params.Vault } }}
           visible={stack.includes(VAULT)}
         />
-        <Stats backward={current !== STATS} visible={stack.includes(STATS)} />
+        <Stats backward={current !== STATS} goBack={goBack} visible={stack.includes(STATS)} />
 
         <Consumer>
           { ({ l10n, store: { error, onError } }) => (
