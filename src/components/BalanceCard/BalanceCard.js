@@ -27,7 +27,16 @@ const BalanceCard = ({
         <View style={[styles.container, inherit.style]}>
           <View style={styles.section}>
             <Text subtitle level={2} style={styles.subtitle}>{title}</Text>
-            <PriceFriendly currency={currency} headline level={4} value={currentBalance} />
+            <PriceFriendly
+              currency={baseCurrency}
+              headline
+              level={4}
+              value={baseCurrency !== currency
+                ? exchange(Math.abs(currentBalance), currency, baseCurrency, rates)
+                : Math.abs(currentBalance)}
+            />
+            { baseCurrency !== currency && (
+              <PriceFriendly currency={currency} subtitle level={2} lighten value={currentBalance} />)}
           </View>
 
           <HeadingItem title={l10n.LAST_30_DAYS} />
