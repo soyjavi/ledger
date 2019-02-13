@@ -17,7 +17,9 @@ const { COLOR } = THEME;
 const BalanceCard = ({
   chart, currency, currentBalance, last30Days: { progression = 0, incomes = 0, expenses = 0 }, title, ...inherit
 }) => {
-  const progressionPercentage = (progression * 100) / (currentBalance - progression);
+  const progressionPercentage = currentBalance - progression > 0
+    ? (progression * 100) / (currentBalance - progression)
+    : progression;
 
   return (
     <Consumer>
@@ -31,7 +33,7 @@ const BalanceCard = ({
           <HeadingItem title={l10n.LAST_30_DAYS} />
           <View style={[styles.row, styles.section]}>
             <View style={styles.card}>
-              <Text caption level={2} numberOfLines={1}>{l10n.BALANCE.toUpperCase()}</Text>
+              <Text caption level={2} numberOfLines={1}>{l10n.PROGRESSION.toUpperCase()}</Text>
               <Percentage headline level={5} value={progressionPercentage} />
             </View>
 

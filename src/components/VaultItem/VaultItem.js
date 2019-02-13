@@ -21,7 +21,7 @@ const VaultItem = (props) => {
 
   return (
     <Consumer>
-      { ({ store: { baseCurrency, rates } }) => (
+      { ({ l10n, store: { baseCurrency, rates } }) => (
         <Touchable onPress={onPress} rippleColor={COLOR.TEXT_LIGHTEN} style={styles.container}>
           <View style={styles.content}>
             <Text caption level={2} numberOfLines={1}>{title.toUpperCase()}</Text>
@@ -42,7 +42,13 @@ const VaultItem = (props) => {
               { progression
                 ? (
                   <Fragment>
-                    <Percentage subtitle level={2} value={(progression * 100) / (currentBalance - progression)} />
+                    <Percentage
+                      subtitle
+                      level={2}
+                      value={currentBalance - progression > 0
+                        ? (progression * 100) / (currentBalance - progression)
+                        : progression}
+                    />
                     <View style={styles.separator} />
                     <PriceFriendly
                       subtitle
@@ -54,7 +60,7 @@ const VaultItem = (props) => {
                         : Math.abs(progression)}
                     />
                   </Fragment>)
-                : <Text caption lighten>$No transaction</Text>
+                : <Text caption lighten>{l10n.WITHOUT_TXS}</Text>
               }
             </View>
           </View>

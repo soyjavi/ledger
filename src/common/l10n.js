@@ -86,6 +86,8 @@ export default {
 
     OVERALL_BALANCE: 'Overall Balance',
 
+    PROGRESSION: 'Progression',
+
     SAVE: 'Save',
     SAVE_LOCATION: 'Save location',
     SEARCH: 'Search',
@@ -103,6 +105,8 @@ export default {
     VAULT_EMPTY: "You don't have any transaction.",
     VAULTS: 'Vaults',
     VAULT_CAPTION: 'You can create as many vaults as you want. You can continue using your base currency or choose any other.', // eslint-disable-line
+
+    WITHOUT_TXS: 'No transactions',
 
     YESTERDAY: 'Yesterday',
   },

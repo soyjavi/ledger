@@ -11,10 +11,13 @@ const { COLOR } = THEME;
 
 const PriceFriendly = ({ currency, value, ...inherit }) => (
   <View style={LAYOUT.STYLE.ROW}>
-    <Icon value={value > 0 ? ASSETS.iconIncome : ASSETS.iconExpense} style={styles.icon} />
+    { Math.abs(value) > 0 && <Icon value={value > 0 ? ASSETS.iconIncome : ASSETS.iconExpense} style={styles.icon} /> }
     <Price
       fixed={Math.abs(value) < 1 ? 2 : 0}
-      color={value > 0 ? COLOR.INCOMES : COLOR.EXPENSES}
+      color={
+        Math.abs(value) === 0 // eslint-disable-line
+          ? undefined
+          : (value > 0 ? COLOR.INCOMES : COLOR.EXPENSES)}
       symbol="%"
       value={Math.abs(value)}
       {...inherit}
