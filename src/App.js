@@ -14,7 +14,9 @@ const {
 
 export default props => (
   <ConsumerNavigation>
-    { ({ current, goBack, params, stack }) => (
+    { ({
+      current, goBack, params, stack,
+    }) => (
       <LayoutView>
         <Session backward={current !== SESSION} visible={stack.includes(SESSION)} />
 

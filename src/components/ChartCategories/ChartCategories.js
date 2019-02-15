@@ -75,7 +75,14 @@ class ChartCategory extends PureComponent {
         { extended && (
           <View>
             { Object.keys(group[categoryKey]).map(key => (
-              <Item {...inherit} key={key} extended title={key} total={inherit.value} value={group[categoryKey][key]} />))}
+              <Item
+                {...inherit}
+                key={key}
+                extended
+                title={key}
+                total={inherit.value}
+                value={group[categoryKey][key]}
+              />))}
           </View>)}
       </View>
     );

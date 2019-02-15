@@ -13,7 +13,7 @@ import { HeadingItem, TransactionItem } from '../../components';
 import styles from './GroupTransactions.style';
 
 const { iconExpense, iconIncome } = ASSETS;
-const { FIXED, SYMBOL } = C;
+const { FIXED, SYMBOL, VAULT_TRANSFER } = C;
 const { COLOR } = THEME;
 
 class GroupTransactions extends Component {
@@ -62,7 +62,13 @@ class GroupTransactions extends Component {
                 />
               </View>
             </HeadingItem>
-            { txs.map(tx => <TransactionItem key={tx.hash} {...tx} currency={currency} onPress={onItem} />)}
+            { txs.map(tx => (
+              <TransactionItem
+                key={tx.hash}
+                {...tx}
+                currency={currency}
+                onPress={tx.category !== VAULT_TRANSFER ? () => onItem(tx) : undefined}
+              />))}
           </View>
         )}
       </Consumer>

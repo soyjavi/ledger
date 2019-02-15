@@ -9,7 +9,7 @@ import {
   Button, Dialog, Form, Text,
 } from '../../reactor/components';
 import MapStaticImage from '../MapStaticImage';
-import { hydrateTransaction } from './modules';
+import hydrateTransaction from './modules/hydrateTransaction';
 
 import styles from './DialogTransaction.style';
 
