@@ -1,17 +1,17 @@
 import { exchange } from '../../common';
 import sortByTimestamp from './sortByTimestamp';
 
-// const sortByValue = (data = {}) => {
-//   let keysSorted = {};
+const sortByValue = (data = {}) => {
+  let keysSorted = {};
 
-//   Object.keys(data)
-//     .sort((a, b) => data[b] - data[a])
-//     .forEach((key) => {
-//       keysSorted = { ...keysSorted, [key.toString()]: data[key] };
-//     });
+  Object.keys(data)
+    .sort((a, b) => data[b] - data[a])
+    .forEach((key) => {
+      keysSorted = { ...keysSorted, [key.toString()]: data[key] };
+    });
 
-//   return keysSorted;
-// };
+  return keysSorted;
+};
 
 export default (state, filter) => {
   const {
@@ -35,5 +35,5 @@ export default (state, filter) => {
     }
   });
 
-  return data;
+  return sortByValue(data);
 };
