@@ -4,7 +4,7 @@ import { C } from '../../common';
 import { THEME } from '../../reactor/common';
 
 const { STYLE: { DIALOG, DIALOG_FRAME } } = C;
-const { BORDER_RADIUS, OFFSET, UNIT } = THEME;
+const { OFFSET, UNIT } = THEME;
 
 export default StyleSheet.create({
   button: {
@@ -20,7 +20,6 @@ export default StyleSheet.create({
   },
 
   location: {
-    borderRadius: BORDER_RADIUS,
     marginTop: OFFSET / 2,
     marginBottom: UNIT / 2,
   },

@@ -96,7 +96,7 @@ class Vault extends Component {
           }) => (
             <Fragment>
               <Header
-                left={IS_WEB ? { icon: iconBack, onPress: () => navigation.goBack(props.navigation) } : undefined }
+                left={IS_WEB ? { icon: iconBack, onPress: () => navigation.goBack(props.navigation) } : undefined}
                 onSearch={visible
                   ? value => _onSearch({ value, store, l10n })
                   : undefined}
@@ -118,7 +118,7 @@ class Vault extends Component {
                 renderItem={({ item }) => (
                   item.heading
                     ? <HeadingItem lighten title={verboseMonth(item.timestamp, l10n)} />
-                    : <GroupTransactions {...item} currency={currency} onItem={() => _onToggleClone(item)} />
+                    : <GroupTransactions {...item} currency={currency} onItem={tx => _onToggleClone(tx)} />
                 )}
               />
 
@@ -137,7 +137,7 @@ class Vault extends Component {
                   />
                   { vaults.length > 1 && (
                     <DialogTransfer vault={hash} onClose={_onToggleDialog} visible={dialog && type === TRANSFER} />)}
-                  <DialogClone dataSource={clone} visible={!!clone} onClose={() => _onToggleClone()} />
+                  <DialogClone currency={currency} dataSource={clone} visible={!!clone} onClose={() => _onToggleClone()} />
                 </Fragment>)}
             </Fragment>
           )}

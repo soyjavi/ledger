@@ -33,7 +33,6 @@ export default {
   SCREEN: {
     SESSION: 'Session',
     DASHBOARD: 'Dashboard',
-    STATS: 'Stats',
     VAULT: 'Vault',
   },
   STYLE: {
