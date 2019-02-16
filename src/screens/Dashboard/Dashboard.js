@@ -4,7 +4,7 @@ import { BackHandler, ScrollView } from 'react-native';
 
 import { C } from '../../common';
 import {
-  BalanceCard, DialogVault, FloatingButton, HeadingItem, StatItem, VaultItem,
+  BalanceCard, DialogStats, DialogVault, FloatingButton, HeadingItem, StatItem, VaultItem,
 } from '../../components';
 import { Consumer } from '../../context';
 import { THEME } from '../../reactor/common';
@@ -34,6 +34,7 @@ class Dashboard extends PureComponent {
 
   state = {
     dialog: false,
+    stats: undefined,
   };
 
   componentWillReceiveProps({ backward }) {
@@ -41,14 +42,14 @@ class Dashboard extends PureComponent {
 
     BackHandler[method]('hardwareBackPress', () => {
       const { state: { dialog } } = this;
-      if (dialog) this.setState({ dialog: false });
+      if (dialog) this.setState({ dialog: false, stats: undefined });
       return true;
     });
   }
 
   _onToggleDialog = () => {
     const { state: { dialog } } = this;
-    this.setState({ dialog: !dialog });
+    this.setState({ dialog: !dialog, stats: undefined });
   }
 
   _onVault = ({ navigation, store, vault }) => {
@@ -58,14 +59,12 @@ class Dashboard extends PureComponent {
     navigation.navigate(SCREEN.VAULT, vault, props.navigation);
   }
 
-  _onStats = ({ navigation, store: { query } }) => {
-    const { props } = this;
-
-    query({ method: 'groupByCategory', date: (new Date().toISOString()).substr(0, 7) });
-    navigation.navigate(SCREEN.STATS, undefined, props.navigation);
+  _onStats = (stats, { store: { query } }) => {
+    query({ method: 'groupByCategory', date: (new Date().toISOString()).substr(0, 7), ...stats });
+    this.setState({ dialog: true, stats });
   }
 
-  renderStats = (dataSource, type, { l10n, navigation, store }) => {
+  renderStats = (dataSource, type, { l10n, store }) => {
     const { _onStats } = this;
     const currentMonth = (new Date()).getMonth();
 
@@ -75,12 +74,7 @@ class Dashboard extends PureComponent {
         <Slider
           {...SLIDER_PROPS}
           dataSource={dataSource}
-          item={({ data }) => (
-            <StatItem
-              onPress={() => _onStats({ navigation, store })}
-              type={type}
-              {...data}
-            />)}
+          item={({ data }) => <StatItem onPress={() => _onStats({ type, ...data }, { store })} type={type} {...data} />}
         />
       </Fragment>
     );
@@ -90,7 +84,7 @@ class Dashboard extends PureComponent {
     const {
       _onToggleDialog, _onVault, renderStats,
       props: { visible, ...inherit },
-      state: { dialog },
+      state: { dialog, stats },
     } = this;
 
     return (
@@ -114,12 +108,16 @@ class Dashboard extends PureComponent {
                     <VaultItem key={vault.hash} {...vault} onPress={() => _onVault({ navigation, store, vault })} />)}
                 />
 
-                { incomes.length > 0 && renderStats(incomes, TYPE.INCOME, { l10n, navigation, store }) }
-                { expenses.length > 0 && renderStats(expenses, TYPE.EXPENSE, { l10n, navigation, store }) }
+                { incomes.length > 0 && renderStats(incomes, TYPE.INCOME, { l10n, store }) }
+                { expenses.length > 0 && renderStats(expenses, TYPE.EXPENSE, { l10n, store }) }
               </ScrollView>
               <FloatingButton onPress={_onToggleDialog} visible={!dialog} />
-              { visible && vaults.length === 0 && !dialog && this.setState({ dialog: true }) }
-              { visible && <DialogVault visible={dialog} onClose={_onToggleDialog} /> }
+              { visible && (
+                <Fragment>
+                  { vaults.length === 0 && !dialog && this.setState({ dialog: true }) }
+                  <DialogVault visible={!stats && dialog} onClose={_onToggleDialog} />
+                  <DialogStats {...stats} visible={stats && dialog} onClose={_onToggleDialog} />
+                </Fragment>)}
             </Fragment>
           )}
         </Consumer>

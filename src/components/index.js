@@ -2,6 +2,7 @@ import BalanceCard from './BalanceCard';
 import Chart from './Chart';
 import ChartCategories from './ChartCategories';
 import DialogClone from './DialogClone';
+import DialogStats from './DialogStats';
 import DialogTransaction from './DialogTransaction';
 import DialogTransfer from './DialogTransfer';
 import DialogVault from './DialogVault';
@@ -21,6 +22,7 @@ export {
   Chart,
   ChartCategories,
   DialogClone,
+  DialogStats,
   DialogTransaction,
   DialogTransfer,
   DialogVault,
