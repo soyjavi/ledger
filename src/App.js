@@ -3,14 +3,10 @@ import React from 'react';
 import { C } from './common';
 import { Consumer, ConsumerNavigation } from './context';
 import { LayoutView, Snackbar } from './reactor/components';
-import {
-  Session, Dashboard, Stats, Vault,
-} from './screens';
+import { Session, Dashboard, Vault } from './screens';
 
 const { SCREEN } = C;
-const {
-  SESSION, DASHBOARD, STATS, VAULT,
-} = SCREEN;
+const { SESSION, DASHBOARD, VAULT } = SCREEN;
 
 export default props => (
   <ConsumerNavigation>
@@ -28,7 +24,6 @@ export default props => (
           navigation={{ state: { params: params.Vault } }}
           visible={stack.includes(VAULT)}
         />
-        <Stats backward={current !== STATS} goBack={goBack} visible={stack.includes(STATS)} />
 
         <Consumer>
           { ({ l10n, store: { error, onError } }) => (
