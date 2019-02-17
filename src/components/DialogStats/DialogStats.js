@@ -48,10 +48,19 @@ class DialogStats extends PureComponent {
             <Text lighten level={2}>
               {l10n.CLONE_CAPTION}
             </Text>
-            <View style={styles.items}>
-              { visible && Object.keys(queryTxs).map(key => (
-                <View key={key} style={styles.item}>
-                  <Text caption lighten style={styles.title}>{key}</Text>
+            { visible && Object.keys(queryTxs).map(key => (
+              <View key={key} style={styles.item}>
+                <View
+                  style={[
+                    styles.bar,
+                    {
+                      backgroundColor: type === EXPENSE ? COLOR.EXPENSES : COLOR.INCOMES,
+                      width: `${(queryTxs[key] * 100) / Math.max(...Object.values(queryTxs))}%`, // @TODO: Refacto and improvement
+                    },
+                  ]}
+                />
+                <View style={styles.texts}>
+                  <Text caption level={2} numberOfLines={1} style={styles.title}>{key.toUpperCase()}</Text>
                   <Price
                     subtitle
                     level={2}
@@ -59,17 +68,8 @@ class DialogStats extends PureComponent {
                     symbol={SYMBOL[baseCurrency]}
                     value={queryTxs[key]}
                   />
-                  <View
-                    style={[
-                      styles.bar,
-                      {
-                        backgroundColor: type === EXPENSE ? COLOR.EXPENSES : COLOR.INCOMES,
-                        width: `${(queryTxs[key] * 100) / Math.max(...Object.values(queryTxs))}%`, // @TODO: Refacto and improvement
-                      },
-                    ]}
-                  />
-                </View>))}
-            </View>
+                </View>
+              </View>))}
           </Dialog>
         )}
       </Consumer>

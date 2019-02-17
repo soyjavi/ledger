@@ -4,14 +4,14 @@ import { C } from '../../common';
 import { LAYOUT, THEME } from '../../reactor/common';
 
 const { STYLE: { DIALOG, DIALOG_FRAME } } = C;
-const { UNIT } = THEME;
-const BAR_SIZE = UNIT * 0.2;
+const { COLOR, OFFSET, UNIT } = THEME;
+const BAR_SIZE = UNIT * 3.2;
 
 export default StyleSheet.create({
   bar: {
+    borderRadius: BAR_SIZE,
     position: 'absolute',
-    bottom: -BAR_SIZE,
-    height: BAR_SIZE,
+    height: '100%',
   },
 
   dialog: DIALOG,
@@ -19,7 +19,8 @@ export default StyleSheet.create({
   frame: DIALOG_FRAME,
 
   item: {
-    ...LAYOUT.STYLE.ROW,
+    backgroundColor: COLOR.BASE,
+    borderRadius: BAR_SIZE,
     marginVertical: UNIT / 2,
   },
 
@@ -27,7 +28,15 @@ export default StyleSheet.create({
     width: '100%',
   },
 
+  texts: {
+    ...LAYOUT.STYLE.ROW,
+    height: BAR_SIZE,
+    paddingHorizontal: OFFSET,
+    zIndex: 1,
+  },
+
   title: {
     flex: 1,
+    zIndex: 1,
   },
 });
