@@ -70,6 +70,7 @@ class Session extends PureComponent {
                 : undefined}
               <View style={styles.content}>
                 <Image source={logo} resizeMode="contain" style={styles.logo} />
+                <Text headline level={3} style={styles.text}>voltvault</Text>
                 <View style={styles.pin}>
                   { busy || store.hash
                     ? <Activity size="large" style={styles.activity} />

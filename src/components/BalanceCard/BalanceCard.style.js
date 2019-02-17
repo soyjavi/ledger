@@ -4,7 +4,7 @@ import { C } from '../../common';
 import { LAYOUT, THEME } from '../../reactor/common';
 
 const { STYLE } = C;
-const { COLOR, OFFSET } = THEME;
+const { COLOR, OFFSET, UNIT } = THEME;
 
 export default StyleSheet.create({
   alignRight: {
@@ -34,6 +34,13 @@ export default StyleSheet.create({
   container: {
     marginTop: OFFSET,
     zIndex: 1,
+  },
+
+  logo: {
+    height: UNIT * 1.6,
+    width: UNIT * 2.2,
+    marginRight: UNIT / 2,
+    marginBottom: UNIT * 0.4,
   },
 
   row: LAYOUT.STYLE.ROW,

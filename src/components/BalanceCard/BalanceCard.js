@@ -1,7 +1,8 @@
 import { shape, number, string } from 'prop-types';
 import React, { Fragment } from 'react';
-import { View } from 'react-native';
+import { Image, View } from 'react-native';
 
+import ASSETS from '../../assets';
 import { exchange } from '../../common';
 import { Consumer } from '../../context';
 import { THEME } from '../../reactor/common';
@@ -12,6 +13,7 @@ import Percentage from '../Percentage';
 import PriceFriendly from '../PriceFriendly';
 import styles from './BalanceCard.style';
 
+const { logo } = ASSETS;
 const { COLOR } = THEME;
 
 const BalanceCard = ({
@@ -26,7 +28,10 @@ const BalanceCard = ({
       { ({ store: { baseCurrency, rates }, l10n }) => (
         <View style={[styles.container, inherit.style]}>
           <View style={styles.section}>
-            <Text subtitle level={2} style={styles.subtitle}>{title}</Text>
+            <View style={styles.row}>
+              <Image source={logo} resizeMode="contain" style={styles.logo} />
+              <Text subtitle level={2} style={styles.subtitle}>{title}</Text>
+            </View>
             <PriceFriendly
               currency={baseCurrency}
               headline

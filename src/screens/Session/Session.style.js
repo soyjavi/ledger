@@ -53,15 +53,14 @@ export default StyleSheet.create({
   logo: {
     alignSelf: 'center',
     width: UNIT * 16,
-    height: UNIT * 16,
-    marginBottom: OFFSET,
+    height: UNIT * 12,
   },
 
   pin: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: OFFSET * 2,
+    marginTop: OFFSET * 3,
   },
 
   text: {
