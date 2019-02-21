@@ -4,14 +4,21 @@ import { C } from '../../common';
 import { LAYOUT, THEME } from '../../reactor/common';
 
 const { STYLE: { DIALOG, DIALOG_FRAME } } = C;
-const { COLOR, OFFSET, UNIT } = THEME;
+const {
+  COLOR, ELEVATION, OFFSET, UNIT,
+} = THEME;
 const BAR_SIZE = UNIT * 3.2;
 
 export default StyleSheet.create({
   bar: {
+    ...ELEVATION.REGULAR,
     borderRadius: BAR_SIZE,
     position: 'absolute',
     height: '100%',
+  },
+
+  caption: {
+    marginBottom: OFFSET / 2,
   },
 
   dialog: DIALOG,

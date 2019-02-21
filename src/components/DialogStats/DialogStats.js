@@ -45,8 +45,8 @@ class DialogStats extends PureComponent {
             title={`${l10n.MONTHS[currentMonth]}'s ${l10n.CATEGORIES[type][category]}`}
             visible={visible}
           >
-            <Text lighten level={2}>
-              {l10n.CLONE_CAPTION}
+            <Text lighten level={2} style={styles.caption}>
+              {l10n.STATS_CAPTION}
             </Text>
             { visible && Object.keys(queryTxs).map(key => (
               <View key={key} style={styles.item}>
@@ -55,6 +55,7 @@ class DialogStats extends PureComponent {
                     styles.bar,
                     {
                       backgroundColor: type === EXPENSE ? COLOR.EXPENSES : COLOR.INCOMES,
+                      shadowColor: type === EXPENSE ? COLOR.EXPENSES : COLOR.INCOMES,
                       width: `${(queryTxs[key] * 100) / Math.max(...Object.values(queryTxs))}%`, // @TODO: Refacto and improvement
                     },
                   ]}

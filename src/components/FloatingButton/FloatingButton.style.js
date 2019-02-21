@@ -2,19 +2,26 @@ import { StyleSheet } from 'react-native';
 
 import { LAYOUT, THEME } from '../../reactor/common';
 
-const { COLOR, UNIT, OFFSET } = THEME;
+const {
+  COLOR, ELEVATION, UNIT, OFFSET,
+} = THEME;
 const CONTAINER_SIZE = UNIT * 5.6;
 
 export { CONTAINER_SIZE };
 
 export default StyleSheet.create({
   button: {
-    ...LAYOUT.STYLE.SHADOW,
+    ...ELEVATION.REGULAR,
     ...LAYOUT.STYLE.CENTERED,
     backgroundColor: COLOR.TEXT,
     borderRadius: CONTAINER_SIZE / 2,
     height: CONTAINER_SIZE,
     width: CONTAINER_SIZE,
+  },
+
+  buttonOpened: {
+    ...ELEVATION.SMALL,
+    transform: [{ rotate: '45deg' }],
   },
 
   bullet: {
@@ -44,9 +51,6 @@ export default StyleSheet.create({
     right: OFFSET,
     zIndex: 1,
   },
-  buttonOpened: {
-    transform: [{ rotate: '45deg' }],
-  },
 
   icon: {
     height: CONTAINER_SIZE / 2,
@@ -60,7 +64,7 @@ export default StyleSheet.create({
   },
 
   option: {
-    ...LAYOUT.STYLE.SHADOW,
+    ...ELEVATION.SMALL,
     ...LAYOUT.STYLE.ROW,
 
     height: UNIT * 3,

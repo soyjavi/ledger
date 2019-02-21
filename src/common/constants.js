@@ -62,15 +62,6 @@ export default {
 
     HEADER_HEIGHT: UNIT * 5.8,
     NOTCH_HEIGHT: IS_ANDROID && (H / W > 1.95) ? 36 : 0,
-    SHADOW: {
-      shadowColor: COLOR.BLACK,
-      shadowOffset: { height: 0, width: 0 },
-      shadowOpacity: 0.1,
-      shadowRadius: OFFSET * 1,
-      ...Platform.select({
-        android: { elevation: 4 },
-      }),
-    },
     SLIDER_MONTHS_HEIGHT: UNIT * 3,
     THUMBNAIL_SIZE: UNIT * 4,
   },
