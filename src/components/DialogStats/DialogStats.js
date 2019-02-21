@@ -55,7 +55,6 @@ class DialogStats extends PureComponent {
                     styles.bar,
                     {
                       backgroundColor: type === EXPENSE ? COLOR.EXPENSES : COLOR.INCOMES,
-                      shadowColor: type === EXPENSE ? COLOR.EXPENSES : COLOR.INCOMES,
                       width: `${(queryTxs[key] * 100) / Math.max(...Object.values(queryTxs))}%`, // @TODO: Refacto and improvement
                     },
                   ]}
