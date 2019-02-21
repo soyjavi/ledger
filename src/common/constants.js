@@ -9,7 +9,7 @@ const { VIEWPORT: { W, H } } = LAYOUT;
 // const DEV = __DEV__ ? __DEV__ : { hello: 'world' }; // eslint-disable-line;
 // const isDev = packagerOpts && packagerOpts.dev;
 
-const IS_PRODUCTION = false;
+const IS_PRODUCTION = true;
 const IS_ANDROID = Platform.OS === 'android';
 
 export default {
