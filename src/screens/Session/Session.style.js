@@ -52,8 +52,9 @@ export default StyleSheet.create({
 
   logo: {
     alignSelf: 'center',
-    width: UNIT * 13.4,
-    height: UNIT * 9.6,
+    width: UNIT * 9.6,
+    height: UNIT * 6.4,
+    marginBottom: OFFSET / 2,
   },
 
   pin: {

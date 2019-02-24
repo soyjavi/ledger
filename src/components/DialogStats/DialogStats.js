@@ -1,4 +1,6 @@
-import { bool, func, number } from 'prop-types';
+import {
+  bool, func, number, string,
+} from 'prop-types';
 import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
@@ -13,14 +15,14 @@ const { COLOR } = THEME;
 
 class DialogStats extends PureComponent {
   static propTypes = {
-    category: number,
+    category: string,
     type: number,
     onClose: func.isRequired,
     visible: bool,
   };
 
   static defaultProps = {
-    category: 1,
+    category: undefined,
     type: EXPENSE,
     visible: false,
   };
