@@ -9,7 +9,7 @@ import styles from './Percentage.style';
 
 const { COLOR } = THEME;
 
-const PriceFriendly = ({ currency, value, ...inherit }) => (
+const PriceFriendly = ({ value, ...inherit }) => (
   <View style={LAYOUT.STYLE.ROW}>
     { Math.abs(value) > 0 && <Icon value={value > 0 ? ASSETS.iconIncome : ASSETS.iconExpense} style={styles.icon} /> }
     <Price

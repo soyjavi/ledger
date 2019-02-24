@@ -27,11 +27,13 @@ const Header = ({
               placeholderTextColor={COLOR.TEXT_LIGHTEN}
               underlineColorAndroid="transparent"
               style={styles.input}
-            />)}
+            />
+          )}
           { title && (
             <Text headline level={5} color={highlight ? COLOR.WHITE : undefined} numberOfLines={1} style={styles.title}>
               { title }
-            </Text>)}
+            </Text>
+          )}
         </View>
         { right && <Button color={COLOR.TRANSPARENT} {...right} iconSize={24} /> }
       </View>

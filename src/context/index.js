@@ -1,4 +1,6 @@
-import { func, node } from 'prop-types';
+import {
+  func, node, shape, string,
+} from 'prop-types';
 import React from 'react';
 
 import { ConsumerL10N, ProviderL10N } from '../reactor/context/L10N';
@@ -46,6 +48,8 @@ const Provider = ({
 
 Provider.propTypes = {
   children: node.isRequired,
+  dictionary: shape({}).isRequired,
+  language: string.isRequired,
 };
 
 export {

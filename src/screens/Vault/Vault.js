@@ -20,12 +20,14 @@ let TIMEOUT;
 
 class Vault extends Component {
   static propTypes = {
+    backward: bool,
     navigation: shape({}),
     goBack: func,
     visible: bool,
   };
 
   static defaultProps = {
+    backward: false,
     navigation: undefined,
     goBack() {},
     visible: true,
@@ -137,8 +139,14 @@ class Vault extends Component {
                   />
                   { vaults.length > 1 && (
                     <DialogTransfer vault={hash} onClose={_onToggleDialog} visible={dialog && type === TRANSFER} />)}
-                  <DialogClone currency={currency} dataSource={clone} visible={!!clone} onClose={() => _onToggleClone()} />
-                </Fragment>)}
+                  <DialogClone
+                    currency={currency}
+                    dataSource={clone}
+                    visible={!!clone}
+                    onClose={() => _onToggleClone()}
+                  />
+                </Fragment>
+              )}
             </Fragment>
           )}
         </Consumer>

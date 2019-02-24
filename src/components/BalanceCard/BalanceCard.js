@@ -86,7 +86,8 @@ const BalanceCard = ({
                   <Chart values={chart.expenses} color={COLOR.EXPENSES} />
                 </View>
               </View>
-            </Fragment>)}
+            </Fragment>
+          )}
         </View>
       )}
     </Consumer>

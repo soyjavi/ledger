@@ -1,4 +1,6 @@
-import { bool, func, number } from 'prop-types';
+import {
+  bool, func, number, string,
+} from 'prop-types';
 import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
@@ -30,10 +32,12 @@ class DialogTransaction extends PureComponent {
   static propTypes = {
     onClose: func.isRequired,
     type: number.isRequired,
+    vault: string,
     visible: bool,
   };
 
   static defaultProps = {
+    vault: undefined,
     visible: false,
   };
 
@@ -126,7 +130,8 @@ class DialogTransaction extends PureComponent {
                   { location === false && _getLocation(getLocationAsync)}
                   <MapStaticImage {...coords} zoom={coords ? 14.5 : 12} style={styles.location} />
                   <Text level={2} lighten>{place || l10n.LOADING_PLACE}</Text>
-                </View>)}
+                </View>
+              )}
             </View>
 
             <Button

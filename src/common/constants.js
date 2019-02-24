@@ -3,13 +3,13 @@ import { Platform } from 'react-native';
 import { LAYOUT, THEME } from '../reactor/common';
 import PKG from '../../package.json';
 
-const { COLOR, OFFSET, UNIT } = THEME;
+const { OFFSET, UNIT } = THEME;
 const { VIEWPORT: { W, H } } = LAYOUT;
 
 // const DEV = __DEV__ ? __DEV__ : { hello: 'world' }; // eslint-disable-line;
 // const isDev = packagerOpts && packagerOpts.dev;
 
-const IS_PRODUCTION = true;
+const IS_PRODUCTION = false;
 const IS_ANDROID = Platform.OS === 'android';
 
 export default {

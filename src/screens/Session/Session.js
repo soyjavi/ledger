@@ -79,7 +79,8 @@ class Session extends PureComponent {
                         key={number}
                         style={[styles.bullet, pin.length >= number && styles.bulletActive]}
                         timeline={[{ property: 'scale', value: pin.length >= number ? 1 : 0.8 }]}
-                      />))}
+                      />
+                    ))}
                 </View>
                 <Text level={2} lighten style={styles.text}>
                   { busy ? l10n.LOADING_PROFILE : l10n.ENTER_PIN }

@@ -23,11 +23,13 @@ const SLIDER_PROPS = {
 
 class Dashboard extends PureComponent {
   static propTypes = {
+    backward: bool,
     navigation: shape({}),
     visible: bool,
   };
 
   static defaultProps = {
+    backward: false,
     navigation: undefined,
     visible: true,
   };
@@ -117,7 +119,8 @@ class Dashboard extends PureComponent {
                   { vaults.length === 0 && !dialog && this.setState({ dialog: true }) }
                   <DialogVault visible={!stats && dialog} onClose={_onToggleDialog} />
                   <DialogStats {...stats} visible={stats && dialog} onClose={_onToggleDialog} />
-                </Fragment>)}
+                </Fragment>
+              )}
             </Fragment>
           )}
         </Consumer>

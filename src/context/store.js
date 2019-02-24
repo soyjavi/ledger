@@ -2,7 +2,7 @@ import { node } from 'prop-types';
 import React, { Component, createContext } from 'react';
 
 import { C, fetch } from '../common';
-import { Fingerprint } from '../reactor/context/Amplitude/modules';
+import { Fingerprint } from '../reactor/context/Tracking/modules';
 import {
   AsyncStore, calcOverall, calcVault, groupByCategory, groupByDay,
 } from './modules';

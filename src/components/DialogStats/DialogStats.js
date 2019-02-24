@@ -1,6 +1,4 @@
-import {
-  bool, func, number, string,
-} from 'prop-types';
+import { bool, func, number } from 'prop-types';
 import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
@@ -69,7 +67,8 @@ class DialogStats extends PureComponent {
                     value={queryTxs[key]}
                   />
                 </View>
-              </View>))}
+              </View>
+            ))}
           </Dialog>
         )}
       </Consumer>

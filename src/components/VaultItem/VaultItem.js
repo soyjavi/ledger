@@ -59,7 +59,8 @@ const VaultItem = (props) => {
                         ? exchange(Math.abs(progression), currency, baseCurrency, rates)
                         : Math.abs(progression)}
                     />
-                  </Fragment>)
+                  </Fragment>
+                )
                 : <Text caption lighten>{l10n.WITHOUT_TXS}</Text>
               }
             </View>

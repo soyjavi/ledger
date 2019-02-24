@@ -23,7 +23,8 @@ const Chart = ({ color, values }) => {
               opacity: value === 0 ? 0.2 : 1,
             },
           ]}
-        />))}
+        />
+      ))}
     </View>
   );
 };
