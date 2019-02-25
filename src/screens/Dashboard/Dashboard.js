@@ -101,7 +101,6 @@ class Dashboard extends PureComponent {
             <Fragment>
               <ScrollView contentContainerStyle={styles.scroll}>
                 <BalanceCard currency={baseCurrency} title={l10n.BALANCE} {...overall} />
-
                 <HeadingItem title={l10n.VAULTS} />
                 <Slider
                   {...SLIDER_PROPS}

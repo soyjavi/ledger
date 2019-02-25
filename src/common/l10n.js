@@ -55,7 +55,7 @@ export default {
     CLONE_CAPTION: 'To make your life easier you can clone this transaction with a simple touch of the button.',
     CLOSE: 'Close',
     CURRENCY: 'Currency',
-    CURRENT_MONTH: 'Current month',
+    CURRENT_MONTH: 'This month',
 
     DAY_NAMES: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
 
@@ -72,8 +72,6 @@ export default {
     INCOMES: 'Incomes',
 
     LAST_6_MONTHS: 'Last 6 months',
-    LAST_30_DAYS: 'Last 30 days',
-    LAST_WEEKS: 'Last weeks',
     LOADING_PLACE: 'Wait a moment, loading place.',
     LOADING_PROFILE: 'Wait a moment, syncing your blockchain.',
 

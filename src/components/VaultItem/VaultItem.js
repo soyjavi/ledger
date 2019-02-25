@@ -16,7 +16,7 @@ const { COLOR } = THEME;
 
 const VaultItem = (props) => {
   const {
-    currency, onPress, currentBalance, last30Days: { progression }, title,
+    currency, onPress, currentBalance, currentMonth: { progression }, title,
   } = props;
 
   return (
@@ -50,15 +50,7 @@ const VaultItem = (props) => {
                         : progression}
                     />
                     <View style={styles.separator} />
-                    <PriceFriendly
-                      subtitle
-                      level={3}
-                      currency={baseCurrency}
-                      lighten
-                      value={baseCurrency !== currency
-                        ? exchange(Math.abs(progression), currency, baseCurrency, rates)
-                        : Math.abs(progression)}
-                    />
+                    <PriceFriendly subtitle level={3} currency={baseCurrency} lighten value={Math.abs(progression)} />
                   </Fragment>
                 )
                 : <Text caption lighten>{l10n.WITHOUT_TXS}</Text>
@@ -76,12 +68,12 @@ VaultItem.propTypes = {
   currency: string.isRequired,
   onPress: func.isRequired,
   currentBalance: number.isRequired,
-  last30Days: shape({}),
+  currentMonth: shape({}),
   title: string.isRequired,
 };
 
 VaultItem.defaultProps = {
-  last30Days: {},
+  currentMonth: {},
 };
 
 export default VaultItem;
