@@ -9,9 +9,11 @@ const INCOMES = 'incomes';
 export default ({
   vault = {}, txs = [], baseCurrency, rates = {},
 }) => {
-  const chartBalance = new Array(WEEKS).fill(0);
-  const weekBalance = new Array(WEEKS).fill(0);
-  const weekExpenses = new Array(WEEKS).fill(0);
+  const chart = {
+    balance: new Array(WEEKS).fill(0),
+    expenses: new Array(WEEKS).fill(0),
+    incomes: new Array(WEEKS).fill(0),
+  };
   const now = new Date();
   const currentMonth = now.toISOString().substr(0, 7);
   const stats = { incomes: {}, expenses: {} };
@@ -21,6 +23,7 @@ export default ({
   let incomes = 0;
   let expenses = 0;
   let progression = 0;
+  let total = 0;
 
   txs.filter(tx => tx.vault === vault.hash).forEach(({
     category, timestamp, type, value,
@@ -33,10 +36,11 @@ export default ({
 
     if (weekNumber < WEEKS) {
       const weekIndex = (WEEKS - 1) - weekNumber;
+      const valueExchange = exchangeProps ? exchange(value, ...exchangeProps) : value;
 
-      chartBalance[weekIndex] += isExpense ? -(value) : value;
-      if (isExpense) weekExpenses[weekIndex] += value;
-      weekBalance[weekIndex] += isExpense ? -(value) : value;
+      chart.balance[weekIndex] += isExpense ? -(valueExchange) : valueExchange;
+      if (isExpense) chart.expenses[weekIndex] += valueExchange;
+      else chart.incomes[weekIndex] += valueExchange;
 
       if (category !== VAULT_TRANSFER) {
         if (currentMonth === (new Date(timestamp).toISOString()).substr(0, 7)) {
@@ -52,6 +56,15 @@ export default ({
   });
 
   return Object.assign({}, vault, {
+    chart: {
+      ...chart,
+      balance: chart.balance
+        .map((value) => {
+          total += value;
+          return total;
+        })
+        .map(value => (value !== 0 ? value + balance : 0)),
+    },
     currentBalance: balance,
     currentMonth: {
       progression: exchangeProps ? exchange(progression, ...exchangeProps) : progression,
@@ -59,7 +72,5 @@ export default ({
       expenses: exchangeProps ? exchange(expenses, ...exchangeProps) : expenses,
     },
     stats,
-    weekBalance,
-    weekExpenses,
   });
 };
