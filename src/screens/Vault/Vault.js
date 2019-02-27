@@ -112,7 +112,11 @@ class Vault extends Component {
                 data={visible ? queryTxs : []}
                 keyExtractor={tx => `${tx.timestamp}-${tx.value}`}
                 ListHeaderComponent={() => (
-                  <BalanceCard {...vaults.find(v => v.hash === hash)} chart={undefined} title={`${vault.title} ${l10n.BALANCE}`} />
+                  <BalanceCard
+                    {...vaults.find(v => v.hash === hash)}
+                    chart={undefined}
+                    title={`${vault.title} ${l10n.BALANCE}`}
+                  />
                 )}
                 ListEmptyComponent={() => (
                   <View style={[styles.content, styles.container]}>

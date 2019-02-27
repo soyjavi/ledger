@@ -56,12 +56,12 @@ export default ({ baseCurrency, rates, vaults = [] }) => {
     balance,
     chart: {
       ...chart,
-      // balance: chart.balance
-      //   .map((value) => {
-      //     total += value;
-      //     return total;
-      //   })
-      //   .map(value => (value !== 0 ? value + balance : 0)),
+      balance: chart.balance
+        .map((value) => {
+          total += value;
+          return total;
+        })
+        .map(value => (value !== 0 ? value + balance : 0)),
     },
     currentBalance,
     currentMonth,
