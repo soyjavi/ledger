@@ -9,6 +9,7 @@ const { VIEWPORT: { W, H } } = LAYOUT;
 // const DEV = __DEV__ ? __DEV__ : { hello: 'world' }; // eslint-disable-line;
 // const isDev = packagerOpts && packagerOpts.dev;
 
+const CARD_WIDTH = UNIT * 16;
 const IS_PRODUCTION = false;
 const IS_ANDROID = Platform.OS === 'android';
 
@@ -35,6 +36,12 @@ export default {
     DASHBOARD: 'Dashboard',
     VAULT: 'Vault',
   },
+  SLIDER: {
+    itemMargin: 0,
+    itemWidth: CARD_WIDTH + OFFSET,
+    momentum: true,
+    navigation: false,
+  },
   STYLE: {
     BALANCE_CARD_HEIGHT: UNIT * 21.6,
     CARD: {
@@ -43,7 +50,7 @@ export default {
       paddingTop: OFFSET * 0.9,
       paddingHorizontal: OFFSET,
       paddingBottom: OFFSET,
-      width: UNIT * 16,
+      width: CARD_WIDTH,
     },
     DIALOG: {
       backgroundColor: 'rgba(255,255,255,0.75)',
@@ -59,7 +66,6 @@ export default {
       justifyContent: 'space-between',
       padding: OFFSET,
     },
-
     HEADER_HEIGHT: UNIT * 5.8,
     NOTCH_HEIGHT: IS_ANDROID && (H / W > 1.95) ? 36 : 0,
     SLIDER_MONTHS_HEIGHT: UNIT * 3,

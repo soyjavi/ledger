@@ -19,6 +19,11 @@ export default StyleSheet.create({
     flex: 1,
   },
 
+  cardChart: {
+    minWidth: UNIT * 16,
+    marginRight: OFFSET,
+  },
+
   cardDisabled: {
     opacity: 0.33,
   },
@@ -50,12 +55,18 @@ export default StyleSheet.create({
     marginBottom: OFFSET,
   },
 
+  separator: {
+    flex: 1,
+  },
+
   summary: {
     alignItems: 'flex-start',
     marginBottom: OFFSET,
   },
 
-  separator: {
-    flex: 1,
+  slider: {
+    paddingHorizontal: OFFSET,
+    marginBottom: OFFSET,
   },
+
 });

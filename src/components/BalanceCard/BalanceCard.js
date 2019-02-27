@@ -3,10 +3,10 @@ import React, { Fragment } from 'react';
 import { Image, View } from 'react-native';
 
 import ASSETS from '../../assets';
-import { exchange } from '../../common';
+import { C, exchange } from '../../common';
 import { Consumer } from '../../context';
 import { THEME } from '../../reactor/common';
-import { Text } from '../../reactor/components';
+import { Slider, Text } from '../../reactor/components';
 import Chart from '../Chart';
 import HeadingItem from '../HeadingItem';
 import Percentage from '../Percentage';
@@ -14,6 +14,7 @@ import PriceFriendly from '../PriceFriendly';
 import styles from './BalanceCard.style';
 
 const { logo } = ASSETS;
+const { SLIDER } = C;
 const { COLOR } = THEME;
 
 const BalanceCard = ({
@@ -65,16 +66,21 @@ const BalanceCard = ({
           { chart && (
             <Fragment>
               <HeadingItem title={l10n.LAST_6_MONTHS} />
-              <View style={[styles.row, styles.section]}>
-                <View style={[styles.card, styles.cardLeft]}>
+              <Slider {...SLIDER} style={styles.slider}>
+                <View style={[styles.card, styles.cardChart]}>
                   <Text caption level={2} numberOfLines={1}>{l10n.BALANCE.toUpperCase()}</Text>
                   <Chart values={chart.balance} color={COLOR.INCOMES} />
                 </View>
-                <View style={styles.card}>
+                <View style={[styles.card, styles.cardChart]}>
                   <Text caption level={2} numberOfLines={1}>{l10n.EXPENSES.toUpperCase()}</Text>
                   <Chart values={chart.expenses} color={COLOR.EXPENSES} />
                 </View>
-              </View>
+
+                <View style={[styles.card, styles.cardChart]}>
+                  <Text caption level={2} numberOfLines={1}>{l10n.INCOMES.toUpperCase()}</Text>
+                  <Chart values={chart.incomes} color={COLOR.INCOMES} />
+                </View>
+              </Slider>
             </Fragment>
           )}
         </View>

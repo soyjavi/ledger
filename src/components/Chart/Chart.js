@@ -2,7 +2,10 @@ import { arrayOf, number, string } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 
+import { THEME } from '../../reactor/common';
 import styles from './Chart.style';
+
+const { COLOR } = THEME;
 
 const Chart = ({ color, values }) => {
   const max = values.length > 0 ? Math.max(...values) : 0;
@@ -30,11 +33,12 @@ const Chart = ({ color, values }) => {
 };
 
 Chart.propTypes = {
-  color: string.isRequired,
+  color: string,
   values: arrayOf(number),
 };
 
 Chart.defaultProps = {
+  color: COLOR.ACCENT,
   values: [],
 };
 

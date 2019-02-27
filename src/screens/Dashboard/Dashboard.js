@@ -7,19 +7,10 @@ import {
   BalanceCard, DialogStats, DialogVault, FloatingButton, HeadingItem, StatItem, VaultItem,
 } from '../../components';
 import { Consumer } from '../../context';
-import { THEME } from '../../reactor/common';
 import { Slider, Viewport } from '../../reactor/components';
 import styles from './Dashboard.style';
 
-const { SCREEN, STYLE, TX: { TYPE } } = C;
-const { OFFSET } = THEME;
-const SLIDER_PROPS = {
-  itemMargin: 0,
-  itemWidth: STYLE.CARD.width + OFFSET,
-  momentum: true,
-  navigation: false,
-  style: styles.slider,
-};
+const { SCREEN, SLIDER, TX: { TYPE } } = C;
 
 class Dashboard extends PureComponent {
   static propTypes = {
@@ -74,9 +65,10 @@ class Dashboard extends PureComponent {
       <Fragment>
         <HeadingItem title={`${l10n.MONTHS[currentMonth]}'s ${type === TYPE.INCOME ? l10n.INCOMES : l10n.EXPENSES}`} />
         <Slider
-          {...SLIDER_PROPS}
+          {...SLIDER}
           dataSource={dataSource}
           item={({ data }) => <StatItem onPress={() => _onStats({ type, ...data }, { store })} type={type} {...data} />}
+          style={styles.slider}
         />
       </Fragment>
     );
@@ -88,6 +80,8 @@ class Dashboard extends PureComponent {
       props: { visible, ...inherit },
       state: { dialog, stats },
     } = this;
+
+    console.log('<Dashboard>');
 
     return (
       <Viewport {...inherit} scroll={false} visible={visible}>
@@ -103,10 +97,11 @@ class Dashboard extends PureComponent {
                 <BalanceCard currency={baseCurrency} title={l10n.BALANCE} {...overall} />
                 <HeadingItem title={l10n.VAULTS} />
                 <Slider
-                  {...SLIDER_PROPS}
+                  {...SLIDER}
                   dataSource={vaults}
                   item={({ data: vault }) => (
                     <VaultItem key={vault.hash} {...vault} onPress={() => _onVault({ navigation, store, vault })} />)}
+                  style={styles.slider}
                 />
 
                 { incomes.length > 0 && renderStats(incomes, TYPE.INCOME, { l10n, store }) }
