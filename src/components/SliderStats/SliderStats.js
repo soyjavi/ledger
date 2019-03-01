@@ -1,5 +1,5 @@
 import {
-  arrayOf, func, shape, string,
+  arrayOf, func, shape, number,
 } from 'prop-types';
 import React, { Fragment } from 'react';
 
@@ -33,7 +33,7 @@ const SliderStats = ({ dataSource, onItem, type }) => (
 SliderStats.propTypes = {
   dataSource: arrayOf(shape({})).isRequired,
   onItem: func.isRequired,
-  type: string.isRequired,
+  type: number.isRequired,
 };
 
 export default SliderStats;

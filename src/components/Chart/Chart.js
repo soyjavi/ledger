@@ -8,10 +8,13 @@ import styles from './Chart.style';
 const { COLOR } = THEME;
 
 const Chart = ({ color, values }) => {
-  const max = values.length > 0 ? Math.max(...values) : 0;
-  const floor = values.length > 0
-    ? (Math.min(...(values.filter(value => value > 0))) / 1.015)
-    : 0;
+  let max = 0;
+  let floor = 0;
+
+  if (values.length) {
+    max = Math.max(...values);
+    floor = Math.min(...(values.filter(value => value > 0))) / 1.05;
+  }
 
   return (
     <View style={styles.container}>
