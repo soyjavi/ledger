@@ -67,6 +67,7 @@ const BalanceCard = ({
             <Fragment>
               <HeadingItem title={l10n.LAST_6_MONTHS} />
               <Slider {...SLIDER} style={styles.slider}>
+                {Object.keys}
                 <View style={[styles.card, styles.cardChart]}>
                   <Text caption level={2} numberOfLines={1}>{l10n.BALANCE.toUpperCase()}</Text>
                   <Chart values={chart.balance} color={COLOR.INCOMES} />

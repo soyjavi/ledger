@@ -9,7 +9,8 @@ import { C, exchange, verboseDate } from '../../common';
 import { Consumer } from '../../context';
 import { Icon, Price } from '../../reactor/components';
 import { THEME } from '../../reactor/common';
-import { HeadingItem, TransactionItem } from '../../components';
+import HeadingItem from '../HeadingItem';
+import TransactionItem from '../TransactionItem';
 import styles from './GroupTransactions.style';
 
 const { iconExpense, iconIncome } = ASSETS;

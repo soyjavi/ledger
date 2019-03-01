@@ -50,7 +50,14 @@ const VaultItem = (props) => {
                         : progression}
                     />
                     <View style={styles.separator} />
-                    <PriceFriendly subtitle level={3} currency={baseCurrency} lighten value={Math.abs(progression)} />
+                    <PriceFriendly
+                      currency={baseCurrency}
+                      level={3}
+                      lighten
+                      subtitle
+                      title={progression > 0 ? '+' : '-'}
+                      value={progression}
+                    />
                   </Fragment>
                 )
                 : <Text caption lighten>{l10n.WITHOUT_TXS}</Text>

@@ -1,8 +1,8 @@
 export default (vaults = []) => vaults.sort((a, b) => {
-  const { progression: aValue } = a.currentMonth;
-  const { progression: bValue } = b.currentMonth;
+  const { progression } = a.currentMonth;
+  const { progression: nextProgression } = b.currentMonth;
 
-  return (Math.abs(aValue) > Math.abs(bValue))
+  return (Math.abs(progression) > Math.abs(nextProgression))
     ? -1
     : 1;
 });

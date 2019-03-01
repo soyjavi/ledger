@@ -4,7 +4,7 @@ import { BackHandler, ScrollView } from 'react-native';
 
 import { C } from '../../common';
 import {
-  BalanceCard, DialogStats, DialogVault, FloatingButton, HeadingItem, StatItem, VaultItem,
+  BalanceCard, DialogStats, DialogVault, FloatingButton, HeadingItem, SliderStats, VaultItem,
 } from '../../components';
 import { Consumer } from '../../context';
 import { Slider, Viewport } from '../../reactor/components';
@@ -52,31 +52,16 @@ class Dashboard extends PureComponent {
     navigation.navigate(SCREEN.VAULT, vault, props.navigation);
   }
 
-  _onStats = (stats, { store: { query } }) => {
+  _onStats = (type, data, { query }) => {
+    const stats = { type, ...data };
+
     query({ method: 'groupByCategory', date: (new Date().toISOString()).substr(0, 7), ...stats });
     this.setState({ dialog: true, stats });
   }
 
-  renderStats = (dataSource, type, { l10n, store }) => {
-    const { _onStats } = this;
-    const currentMonth = (new Date()).getMonth();
-
-    return (
-      <Fragment>
-        <HeadingItem title={`${l10n.MONTHS[currentMonth]}'s ${type === TYPE.INCOME ? l10n.INCOMES : l10n.EXPENSES}`} />
-        <Slider
-          {...SLIDER}
-          dataSource={dataSource}
-          item={({ data }) => <StatItem onPress={() => _onStats({ type, ...data }, { store })} type={type} {...data} />}
-          style={styles.slider}
-        />
-      </Fragment>
-    );
-  }
-
   render() {
     const {
-      _onToggleDialog, _onVault, renderStats,
+      _onStats, _onToggleDialog, _onVault,
       props: { visible, ...inherit },
       state: { dialog, stats },
     } = this;
@@ -104,8 +89,21 @@ class Dashboard extends PureComponent {
                   style={styles.slider}
                 />
 
-                { incomes.length > 0 && renderStats(incomes, TYPE.INCOME, { l10n, store }) }
-                { expenses.length > 0 && renderStats(expenses, TYPE.EXPENSE, { l10n, store }) }
+                { incomes.length > 0 && (
+                  <SliderStats
+                    dataSource={incomes}
+                    type={TYPE.INCOME}
+                    onItem={data => _onStats(TYPE.INCOME, data, store)}
+                  />
+                )}
+
+                { expenses.length > 0 && (
+                  <SliderStats
+                    dataSource={expenses}
+                    type={TYPE.EXPENSE}
+                    onItem={data => _onStats(TYPE.EXPENSE, data, store)}
+                  />
+                )}
               </ScrollView>
               <FloatingButton onPress={_onToggleDialog} visible={!dialog} />
               { visible && (
