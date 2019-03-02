@@ -17,10 +17,6 @@ export default StyleSheet.create({
     backgroundColor: COLOR.BASE,
     minHeight: 0,
     flex: 1,
-  },
-
-  cardChart: {
-    minWidth: UNIT * 16,
     marginRight: OFFSET,
   },
 
@@ -28,12 +24,8 @@ export default StyleSheet.create({
     opacity: 0.33,
   },
 
-  cardLeft: {
-    marginRight: OFFSET,
-  },
-
-  cardMiddle: {
-    marginHorizontal: OFFSET,
+  cardLast: {
+    marginRight: 0,
   },
 
   container: {

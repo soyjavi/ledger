@@ -18,11 +18,15 @@ const { SLIDER } = C;
 const { COLOR } = THEME;
 
 const BalanceCard = ({
-  chart, currency, currentBalance, currentMonth: { progression = 0, incomes = 0, expenses = 0 }, title, ...inherit
+  chart, currency, currentBalance, currentMonth, title, ...inherit
 }) => {
+  const {
+    progression = 0, incomes = 0, expenses = 0,
+  } = currentMonth;
   const progressionPercentage = currentBalance - progression > 0
     ? (progression * 100) / (currentBalance - progression)
     : progression;
+  const numberOfDay = (new Date()).getDate();
 
   return (
     <Consumer>
@@ -50,34 +54,50 @@ const BalanceCard = ({
             <View style={styles.card}>
               <Text caption level={2} numberOfLines={1}>{l10n.PROGRESSION.toUpperCase()}</Text>
               <Percentage headline level={5} value={progressionPercentage} />
+              <PriceFriendly
+                subtitle
+                level={3}
+                lighten
+                currency={baseCurrency}
+                value={progression}
+              />
             </View>
 
-            <View style={[styles.card, styles.cardMiddle, incomes === 0 && styles.cardDisabled]}>
+            <View style={[styles.card, incomes === 0 && styles.cardDisabled]}>
               <Text caption level={2} numberOfLines={1}>{l10n.INCOMES.toUpperCase()}</Text>
               <PriceFriendly headline level={5} currency={baseCurrency} value={incomes} />
+              <View style={styles.row}>
+                <PriceFriendly subtitle level={3} lighten fixed={0} currency={baseCurrency} value={incomes / numberOfDay} />
+                <Text level={3} lighten> per day</Text>
+              </View>
             </View>
 
-            <View style={[styles.card, expenses === 0 && styles.cardDisabled]}>
+            <View style={[styles.card, styles.cardLast, expenses === 0 && styles.cardDisabled]}>
               <Text caption level={2} lighten={expenses === 0} numberOfLines={1}>{l10n.EXPENSES.toUpperCase()}</Text>
               <PriceFriendly headline level={5} lighten={expenses === 0} currency={baseCurrency} value={expenses} />
+              <View style={styles.row}>
+                <PriceFriendly subtitle level={3} lighten fixed={0} currency={baseCurrency} value={expenses / numberOfDay} />
+                <Text level={3} lighten> per day</Text>
+              </View>
             </View>
           </View>
+
 
           { chart && (
             <Fragment>
               <HeadingItem title={l10n.LAST_6_MONTHS} />
               <Slider {...SLIDER} style={styles.slider}>
-                {Object.keys}
-                <View style={[styles.card, styles.cardChart]}>
+                <View style={styles.card}>
                   <Text caption level={2} numberOfLines={1}>{l10n.BALANCE.toUpperCase()}</Text>
                   <Chart values={chart.balance} color={COLOR.INCOMES} />
                 </View>
-                <View style={[styles.card, styles.cardChart]}>
+
+                <View style={styles.card}>
                   <Text caption level={2} numberOfLines={1}>{l10n.EXPENSES.toUpperCase()}</Text>
                   <Chart values={chart.expenses} color={COLOR.EXPENSES} />
                 </View>
 
-                <View style={[styles.card, styles.cardChart]}>
+                <View style={styles.card}>
                   <Text caption level={2} numberOfLines={1}>{l10n.INCOMES.toUpperCase()}</Text>
                   <Chart values={chart.incomes} color={COLOR.INCOMES} />
                 </View>
