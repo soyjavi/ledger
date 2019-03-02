@@ -41,15 +41,15 @@ export default ({
       if (isExpense) chart.expenses[weekIndex] += valueExchange;
       else chart.incomes[weekIndex] += valueExchange;
 
-      if (category !== VAULT_TRANSFER) {
-        if (currentMonth === (new Date(timestamp).toISOString()).substr(0, 7)) {
-          const key = isExpense ? EXPENSES : INCOMES;
-          stats[key][category] = (stats[key][category] || 0) + value;
+      if (currentMonth === (new Date(timestamp).toISOString()).substr(0, 7)) {
+        const key = isExpense ? EXPENSES : INCOMES;
+        stats[key][category] = (stats[key][category] || 0) + value;
 
+        if (category !== VAULT_TRANSFER) {
           if (isExpense) expenses += value;
           else incomes += value;
-          progression += isExpense ? -(value) : value;
         }
+        progression += isExpense ? -(value) : value;
       }
     }
   });
