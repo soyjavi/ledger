@@ -3,8 +3,8 @@ import calcOverall from './calcOverall';
 import calcVault from './calcVault';
 import groupByCategory from './groupByCategory';
 import groupByDay from './groupByDay';
+import sortByProgression from './sortByProgression';
 import sortByTimestamp from './sortByTimestamp';
-import sortByTransactions from './sortByTransactions';
 
 export {
   AsyncStore,
@@ -12,6 +12,6 @@ export {
   calcVault,
   groupByCategory,
   groupByDay,
+  sortByProgression,
   sortByTimestamp,
-  sortByTransactions,
 };

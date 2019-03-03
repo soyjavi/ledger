@@ -4,7 +4,7 @@ import React, { Component, createContext } from 'react';
 import { C, fetch } from '../common';
 import { Fingerprint } from '../reactor/context/Tracking/modules';
 import {
-  AsyncStore, calcOverall, calcVault, groupByCategory, groupByDay, sortByTransactions,
+  AsyncStore, calcOverall, calcVault, groupByCategory, groupByDay, sortByProgression,
 } from './modules';
 
 const { NAME, VERSION } = C;
@@ -84,7 +84,7 @@ class ProviderStore extends Component {
         baseCurrency,
         rates,
         txs,
-        vaults: sortByTransactions(profile.vaults.map(vault => calcVault({
+        vaults: sortByProgression(profile.vaults.map(vault => calcVault({
           vault, txs, baseCurrency, rates,
         }))),
         version: VERSION,
@@ -109,7 +109,7 @@ class ProviderStore extends Component {
 
     if (newTransaction) {
       txs = [...txs, newTransaction];
-      const vaults = sortByTransactions(state.vaults.map(vault => (
+      const vaults = sortByProgression(state.vaults.map(vault => (
         vault.hash !== props.vault ? vault : calcVault({ ...state, vault, txs })
       )));
       const nextState = { txs, vaults };
