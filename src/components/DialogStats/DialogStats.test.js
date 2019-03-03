@@ -2,11 +2,11 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 
 import { C } from '../../common';
-import Stats from './Stats';
+import DialogVault from './DialogVault';
 
-describe('<Stats>', () => {
+describe('<DialogVault>', () => {
   it('renders', () => {
-    const tree = renderer.create(<Stats />).toJSON();
+    const tree = renderer.create(<DialogVault />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 

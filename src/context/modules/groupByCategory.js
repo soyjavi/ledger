@@ -1,9 +1,5 @@
-import { C, exchange } from '../../common';
+import { exchange } from '../../common';
 import sortByTimestamp from './sortByTimestamp';
-
-const { VAULT_TRANSFER, TX: { TYPE: { EXPENSE, INCOME } } } = C;
-const EXPENSES = 'expenses';
-const INCOMES = 'incomes';
 
 const sortByValue = (data = {}) => {
   let keysSorted = {};
@@ -17,48 +13,28 @@ const sortByValue = (data = {}) => {
   return keysSorted;
 };
 
-export default (state, { date = (new Date().toISOString()).substr(0, 7) }) => {
+export default (state, filter) => {
   const {
     baseCurrency, rates, txs, vaults,
   } = state;
-  const data = {
-    cashflow: { [EXPENSES]: 0, [INCOMES]: 0 },
-    [EXPENSES]: {},
-    group: { [EXPENSES]: {}, [INCOMES]: {} },
-    [INCOMES]: {},
-  };
+  const { date = (new Date().toISOString()).substr(0, 7) } = filter;
+  const data = {};
 
-  sortByTimestamp(txs, date)
-    .forEach(({
-      category, type, value, vault, ...tx
-    }) => {
-      if (value && category !== VAULT_TRANSFER) {
-        const { currency } = vaults.find(({ hash }) => vault === hash);
-        const amount = baseCurrency === currency ? value : exchange(value, currency, baseCurrency, rates);
-        const categoryKey = `category:${category}`;
-        let context;
 
-        if (type === EXPENSE) context = EXPENSES;
-        if (type === INCOME) context = INCOMES;
+  sortByTimestamp(txs, date).forEach(({
+    category, title, type, value, vault,
+  }) => {
+    if (value && type === filter.type && category === parseInt(filter.category, 10)) {
+      const { currency } = vaults.find(({ hash }) => vault === hash);
+      const amount = baseCurrency === currency ? value : exchange(value, currency, baseCurrency, rates);
 
-        data[context][categoryKey] = (data[context][categoryKey] || 0) + amount;
-        data.cashflow[context] += amount;
-
-        const title = tx.title ? tx.title.toLowerCase().trim() : undefined;
-        if (title) {
-          data.group[context][category] = data.group[context][category] || {};
-          data.group[context][category][title] = (data.group[context][category][title] || 0) + amount;
-        }
+      if (title) {
+        // const categoryKey = title.split(' ')[0].toLowerCase();
+        const categoryKey = title.toLowerCase();
+        data[categoryKey] = (data[categoryKey] || 0) + amount;
       }
-    });
-
-  [EXPENSES, INCOMES].forEach((context) => {
-    data[context] = sortByValue(data[context]);
-
-    Object.keys(data.group[context]).forEach((category) => {
-      data.group[context][category] = sortByValue(data.group[context][category]);
-    });
+    }
   });
 
-  return data;
+  return sortByValue(data);
 };

@@ -3,8 +3,10 @@ import { Platform, StyleSheet } from 'react-native';
 import { C } from '../../common';
 import { LAYOUT, ENV, THEME } from '../../reactor/common';
 
-const { COLOR, FONT, UNIT } = THEME;
-const { STYLE: { SHADOW, HEADER_HEIGHT } } = C;
+const {
+  COLOR, ELEVATION, FONT, OFFSET, UNIT,
+} = THEME;
+const { STYLE: { HEADER_HEIGHT } } = C;
 
 export default StyleSheet.create({
   container: {
@@ -18,10 +20,11 @@ export default StyleSheet.create({
 
   content: {
     flex: 1,
+    paddingHorizontal: OFFSET,
   },
 
   input: {
-    ...SHADOW,
+    ...ELEVATION.REGULAR,
     ...FONT.HEADLINE,
     backgroundColor: COLOR.WHITE,
     borderRadius: UNIT * 2.2,

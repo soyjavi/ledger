@@ -9,7 +9,8 @@ import { C, exchange, verboseDate } from '../../common';
 import { Consumer } from '../../context';
 import { Icon, Price } from '../../reactor/components';
 import { THEME } from '../../reactor/common';
-import { HeadingItem, TransactionItem } from '../../components';
+import HeadingItem from '../HeadingItem';
+import TransactionItem from '../TransactionItem';
 import styles from './GroupTransactions.style';
 
 const { iconExpense, iconIncome } = ASSETS;
@@ -49,7 +50,7 @@ class GroupTransactions extends Component {
           <View>
             <HeadingItem title={verboseDate(timestamp, l10n)}>
               <View style={styles.heading}>
-                <Icon value={value > 0 ? iconIncome : iconExpense} />
+                <Icon value={value > 0 ? iconIncome : iconExpense} style={styles.icon} />
                 <Price
                   color={value > 0 ? COLOR.INCOMES : COLOR.EXPENSES}
                   subtitle
@@ -62,7 +63,9 @@ class GroupTransactions extends Component {
                 />
               </View>
             </HeadingItem>
-            { txs.map(tx => <TransactionItem key={tx.hash} {...tx} currency={currency} onPress={onItem} />)}
+            { txs.map(tx => (
+              <TransactionItem key={tx.hash} {...tx} currency={currency} onPress={() => onItem(tx)} />
+            ))}
           </View>
         )}
       </Consumer>

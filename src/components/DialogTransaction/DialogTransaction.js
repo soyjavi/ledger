@@ -1,4 +1,6 @@
-import { bool, func, number } from 'prop-types';
+import {
+  bool, func, number, string,
+} from 'prop-types';
 import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
@@ -9,7 +11,7 @@ import {
   Button, Dialog, Form, Text,
 } from '../../reactor/components';
 import MapStaticImage from '../MapStaticImage';
-import { hydrateTransaction } from './modules';
+import hydrateTransaction from './modules/hydrateTransaction';
 
 import styles from './DialogTransaction.style';
 
@@ -30,10 +32,12 @@ class DialogTransaction extends PureComponent {
   static propTypes = {
     onClose: func.isRequired,
     type: number.isRequired,
+    vault: string,
     visible: bool,
   };
 
   static defaultProps = {
+    vault: undefined,
     visible: false,
   };
 
@@ -98,6 +102,7 @@ class DialogTransaction extends PureComponent {
         busy, coords, form, location, place, valid,
       },
     } = this;
+    const color = type === EXPENSE ? COLOR.EXPENSES : COLOR.INCOMES;
 
     return (
       <Consumer>
@@ -115,21 +120,23 @@ class DialogTransaction extends PureComponent {
             <View style={styles.form}>
               <Form
                 attributes={translate(hydrateTransaction({ l10n, type }), l10n)}
+                color={color}
                 onValid={_onValid}
                 onChange={_onChange}
                 value={form}
               />
               { getLocationAsync && (
                 <View>
-                  { location === false && _getLocation(getLocationAsync)}
+                  { visible && location === false && _getLocation(getLocationAsync) }
                   <MapStaticImage {...coords} zoom={coords ? 14.5 : 12} style={styles.location} />
                   <Text level={2} lighten>{place || l10n.LOADING_PLACE}</Text>
-                </View>)}
+                </View>
+              )}
             </View>
 
             <Button
               activity={busy}
-              color={COLOR.PRIMARY}
+              color={color}
               disabled={busy || !valid || (location && !place)}
               onPress={() => _onSubmit({ l10n, store })}
               rounded

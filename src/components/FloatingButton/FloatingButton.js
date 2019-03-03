@@ -69,7 +69,8 @@ class FloatingButton extends PureComponent {
                 </Touchable>
               </Motion>
             ))}
-          </View>)}
+          </View>
+        )}
 
         <Motion preset="pop" visible={visible} delay={visible ? DURATION * 2 : 0}>
           <Motion timeline={[{ property: 'scale', value: visible && opened ? 0.75 : 1 }]}>

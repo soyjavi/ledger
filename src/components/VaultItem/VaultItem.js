@@ -16,12 +16,12 @@ const { COLOR } = THEME;
 
 const VaultItem = (props) => {
   const {
-    currency, onPress, currentBalance, last30Days: { progression }, title,
+    currency, onPress, currentBalance, currentMonth: { progression }, title,
   } = props;
 
   return (
     <Consumer>
-      { ({ store: { baseCurrency, rates } }) => (
+      { ({ l10n, store: { baseCurrency, rates } }) => (
         <Touchable onPress={onPress} rippleColor={COLOR.TEXT_LIGHTEN} style={styles.container}>
           <View style={styles.content}>
             <Text caption level={2} numberOfLines={1}>{title.toUpperCase()}</Text>
@@ -42,19 +42,25 @@ const VaultItem = (props) => {
               { progression
                 ? (
                   <Fragment>
-                    <Percentage subtitle level={2} value={(progression * 100) / (currentBalance - progression)} />
+                    <Percentage
+                      subtitle
+                      level={2}
+                      value={currentBalance - progression > 0
+                        ? (progression * 100) / (currentBalance - progression)
+                        : progression}
+                    />
                     <View style={styles.separator} />
                     <PriceFriendly
-                      subtitle
-                      level={3}
                       currency={baseCurrency}
+                      level={3}
                       lighten
-                      value={baseCurrency !== currency
-                        ? exchange(Math.abs(progression), currency, baseCurrency, rates)
-                        : Math.abs(progression)}
+                      subtitle
+                      title={progression > 0 ? '+' : '-'}
+                      value={progression}
                     />
-                  </Fragment>)
-                : <Text caption lighten>$No transaction</Text>
+                  </Fragment>
+                )
+                : <Text caption lighten>{l10n.WITHOUT_TXS}</Text>
               }
             </View>
           </View>
@@ -69,12 +75,12 @@ VaultItem.propTypes = {
   currency: string.isRequired,
   onPress: func.isRequired,
   currentBalance: number.isRequired,
-  last30Days: shape({}),
+  currentMonth: shape({}),
   title: string.isRequired,
 };
 
 VaultItem.defaultProps = {
-  last30Days: {},
+  currentMonth: {},
 };
 
 export default VaultItem;

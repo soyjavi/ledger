@@ -55,8 +55,9 @@ export default {
     CLONE_CAPTION: 'To make your life easier you can clone this transaction with a simple touch of the button.',
     CLOSE: 'Close',
     CURRENCY: 'Currency',
-    CURRENT_MONTH: 'Current month',
+    CURRENT_MONTH: 'This month',
 
+    DAY: 'day',
     DAY_NAMES: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
 
     ENTER_PIN: 'Enter your pin',
@@ -72,8 +73,6 @@ export default {
     INCOMES: 'Incomes',
 
     LAST_6_MONTHS: 'Last 6 months',
-    LAST_30_DAYS: 'Last 30 days',
-    LAST_WEEKS: 'Last weeks',
     LOADING_PLACE: 'Wait a moment, loading place.',
     LOADING_PROFILE: 'Wait a moment, syncing your blockchain.',
 
@@ -86,11 +85,14 @@ export default {
 
     OVERALL_BALANCE: 'Overall Balance',
 
+    PROGRESSION: 'Progression',
+
     SAVE: 'Save',
     SAVE_LOCATION: 'Save location',
     SEARCH: 'Search',
     SLOGAN: 'Your private accounting on the blockchain.',
     STATS: 'Stats',
+    STATS_CAPTION: 'In this summary you can see a breakdown of your operations in the selected category.',
 
     TITLE: 'Title',
     TO: 'to',
@@ -103,6 +105,8 @@ export default {
     VAULT_EMPTY: "You don't have any transaction.",
     VAULTS: 'Vaults',
     VAULT_CAPTION: 'You can create as many vaults as you want. You can continue using your base currency or choose any other.', // eslint-disable-line
+
+    WITHOUT_TXS: 'No transactions',
 
     YESTERDAY: 'Yesterday',
   },

@@ -44,7 +44,8 @@ const TransactionItem = ({
                 symbol={SYMBOL[currency]}
                 title={type === INCOME ? '+' : undefined}
                 value={value}
-              />)}
+              />
+            )}
           </View>
         </View>
       </Touchable>

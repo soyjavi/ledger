@@ -70,6 +70,7 @@ class Session extends PureComponent {
                 : undefined}
               <View style={styles.content}>
                 <Image source={logo} resizeMode="contain" style={styles.logo} />
+                <Text headline level={4} style={styles.text}>voltvault</Text>
                 <View style={styles.pin}>
                   { busy || store.hash
                     ? <Activity size="large" style={styles.activity} />
@@ -78,7 +79,8 @@ class Session extends PureComponent {
                         key={number}
                         style={[styles.bullet, pin.length >= number && styles.bulletActive]}
                         timeline={[{ property: 'scale', value: pin.length >= number ? 1 : 0.8 }]}
-                      />))}
+                      />
+                    ))}
                 </View>
                 <Text level={2} lighten style={styles.text}>
                   { busy ? l10n.LOADING_PROFILE : l10n.ENTER_PIN }

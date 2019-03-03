@@ -3,18 +3,16 @@ import React from 'react';
 import { C } from './common';
 import { Consumer, ConsumerNavigation } from './context';
 import { LayoutView, Snackbar } from './reactor/components';
-import {
-  Session, Dashboard, Stats, Vault,
-} from './screens';
+import { Session, Dashboard, Vault } from './screens';
 
 const { SCREEN } = C;
-const {
-  SESSION, DASHBOARD, STATS, VAULT,
-} = SCREEN;
+const { SESSION, DASHBOARD, VAULT } = SCREEN;
 
 export default props => (
   <ConsumerNavigation>
-    { ({ current, params, stack }) => (
+    { ({
+      current, goBack, params, stack,
+    }) => (
       <LayoutView>
         <Session backward={current !== SESSION} visible={stack.includes(SESSION)} />
 
@@ -22,10 +20,10 @@ export default props => (
         <Vault
           {...props}
           backward={current !== VAULT}
+          goBack={goBack}
           navigation={{ state: { params: params.Vault } }}
           visible={stack.includes(VAULT)}
         />
-        <Stats backward={current !== STATS} visible={stack.includes(STATS)} />
 
         <Consumer>
           { ({ l10n, store: { error, onError } }) => (

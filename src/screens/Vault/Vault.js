@@ -1,29 +1,34 @@
-import { bool, shape } from 'prop-types';
+import { bool, func, shape } from 'prop-types';
 import React, { Fragment, Component } from 'react';
 import { BackHandler, FlatList, View } from 'react-native';
 
 import ASSETS from '../../assets';
 import { C, verboseMonth } from '../../common';
 import {
-  BalanceCard, DialogClone, DialogTransaction, DialogTransfer, FloatingButton, HeadingItem,
+  BalanceCard, DialogClone, DialogTransaction, DialogTransfer, FloatingButton, GroupTransactions, Header, HeadingItem,
 } from '../../components';
-import { GroupTransactions, Header } from '../../containers';
 import { Consumer } from '../../context';
+import { ENV } from '../../reactor/common';
 import { Text, Viewport } from '../../reactor/components';
 import styles from './Vault.style';
 
 const { iconBack } = ASSETS;
 const { TX: { TYPE: { EXPENSE, TRANSFER } } } = C;
+const { IS_WEB } = ENV;
 let TIMEOUT;
 
 class Vault extends Component {
   static propTypes = {
+    backward: bool,
     navigation: shape({}),
+    goBack: func,
     visible: bool,
   };
 
   static defaultProps = {
+    backward: false,
     navigation: undefined,
+    goBack() {},
     visible: true,
   };
 
@@ -33,15 +38,25 @@ class Vault extends Component {
     type: EXPENSE,
   };
 
+  componentWillReceiveProps({ backward, goBack }) {
+    const method = backward ? 'removeEventListener' : 'addEventListener';
+
+    BackHandler[method]('hardwareBackPress', () => {
+      const { props: { navigation }, state: { clone, dialog } } = this;
+
+      if (clone || dialog) this.setState({ clone: false, dialog: false });
+      else goBack(navigation);
+      return true;
+    });
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     const {
       props: { visible },
       state: { clone, dialog },
     } = this;
 
-    return (nextProps.visible !== visible)
-      || (nextState.clone !== clone)
-      || (nextState.dialog !== dialog)
+    return (nextProps.visible !== visible) || (nextState.clone !== clone) || (nextState.dialog !== dialog);
   }
 
   _onSearch = ({ value, store: { query }, l10n }) => {
@@ -73,6 +88,8 @@ class Vault extends Component {
     const { state: { params: vault = {} } = {} } = props.navigation;
     const { currency, hash } = vault;
 
+    console.log('<Vault>');
+
     return (
       <Viewport {...props} scroll={false} visible={visible}>
         <Consumer>
@@ -82,7 +99,7 @@ class Vault extends Component {
           }) => (
             <Fragment>
               <Header
-                left={{ icon: iconBack, onPress: () => navigation.goBack(props.navigation) }}
+                left={IS_WEB ? { icon: iconBack, onPress: () => navigation.goBack(props.navigation) } : undefined}
                 onSearch={visible
                   ? value => _onSearch({ value, store, l10n })
                   : undefined}
@@ -94,7 +111,11 @@ class Vault extends Component {
                 data={visible ? queryTxs : []}
                 keyExtractor={tx => `${tx.timestamp}-${tx.value}`}
                 ListHeaderComponent={() => (
-                  <BalanceCard {...vaults.find(v => v.hash === hash)} title={`${vault.title} ${l10n.BALANCE}`} />
+                  <BalanceCard
+                    {...vaults.find(v => v.hash === hash)}
+                    chart={undefined}
+                    title={`${vault.title} ${l10n.BALANCE}`}
+                  />
                 )}
                 ListEmptyComponent={() => (
                   <View style={[styles.content, styles.container]}>
@@ -104,7 +125,7 @@ class Vault extends Component {
                 renderItem={({ item }) => (
                   item.heading
                     ? <HeadingItem lighten title={verboseMonth(item.timestamp, l10n)} />
-                    : <GroupTransactions {...item} currency={currency} onItem={() => _onToggleClone(item)} />
+                    : <GroupTransactions {...item} currency={currency} onItem={tx => _onToggleClone(tx)} />
                 )}
               />
 
@@ -123,8 +144,14 @@ class Vault extends Component {
                   />
                   { vaults.length > 1 && (
                     <DialogTransfer vault={hash} onClose={_onToggleDialog} visible={dialog && type === TRANSFER} />)}
-                  <DialogClone dataSource={clone} visible={!!clone} onClose={() => _onToggleClone()} />
-                </Fragment>)}
+                  <DialogClone
+                    currency={currency}
+                    dataSource={clone}
+                    visible={!!clone}
+                    onClose={() => _onToggleClone()}
+                  />
+                </Fragment>
+              )}
             </Fragment>
           )}
         </Consumer>

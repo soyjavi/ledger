@@ -19,7 +19,8 @@ const NumKeyboard = ({ onPress }) => (
         <View style={styles.touchable}>
           <Text style={styles.key}>{typeof key === 'number' ? key : ''}</Text>
         </View>
-      </Touchable>))}
+      </Touchable>
+    ))}
   </View>
 );
 

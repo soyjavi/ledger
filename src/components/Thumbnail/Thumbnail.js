@@ -23,7 +23,8 @@ const Thumbnail = ({
           style={styles.text}
         >
           {title}
-        </Text>)}
+        </Text>
+      )}
       { caption && <Text caption level={2} style={[styles.caption, styles.text]}>{caption}</Text>}
     </View>
   </View>

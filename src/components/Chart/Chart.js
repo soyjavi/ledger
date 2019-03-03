@@ -2,13 +2,19 @@ import { arrayOf, number, string } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 
+import { THEME } from '../../reactor/common';
 import styles from './Chart.style';
 
+const { COLOR } = THEME;
+
 const Chart = ({ color, values }) => {
-  const max = values.length > 0 ? Math.max(...values) : 0;
-  const floor = values.length > 0
-    ? (Math.min(...(values.filter(value => value > 0))) / 1.015)
-    : 0;
+  let max = 0;
+  let floor = 0;
+
+  if (values.length) {
+    max = Math.max(...values);
+    floor = Math.min(...(values.filter(value => value > 0))) / 1.05;
+  }
 
   return (
     <View style={styles.container}>
@@ -23,17 +29,19 @@ const Chart = ({ color, values }) => {
               opacity: value === 0 ? 0.2 : 1,
             },
           ]}
-        />))}
+        />
+      ))}
     </View>
   );
 };
 
 Chart.propTypes = {
-  color: string.isRequired,
+  color: string,
   values: arrayOf(number),
 };
 
 Chart.defaultProps = {
+  color: COLOR.ACCENT,
   values: [],
 };
 

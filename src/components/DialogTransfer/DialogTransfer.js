@@ -96,6 +96,7 @@ class DialogTransfer extends PureComponent {
               attributes={translate(hydrateTransfer({
                 form, l10n, store, vault,
               }), l10n)}
+              color={COLOR.ACCENT}
               onValid={_onValid}
               onChange={value => _onChange(value, store)}
               style={styles.form}
@@ -103,7 +104,7 @@ class DialogTransfer extends PureComponent {
             />
             <Button
               activity={busy}
-              color={COLOR.PRIMARY}
+              color={COLOR.ACCENT}
               disabled={busy || !valid}
               onPress={() => _onSubmit({ l10n, store })}
               rounded

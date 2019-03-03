@@ -6,9 +6,12 @@ const EXPENSES = 'expenses';
 const INCOMES = 'incomes';
 
 export default ({ baseCurrency, rates, vaults = [] }) => {
-  const chartBalance = new Array(WEEKS).fill(0);
-  const chartExpenses = new Array(WEEKS).fill(0);
-  const last30Days = { progression: 0, incomes: 0, expenses: 0 };
+  const chart = {
+    balance: new Array(WEEKS).fill(0),
+    expenses: new Array(WEEKS).fill(0),
+    incomes: new Array(WEEKS).fill(0),
+  };
+  const currentMonth = { progression: 0, incomes: 0, expenses: 0 };
   const stats = { incomes: {}, expenses: {} };
   let balance = 0;
   let currentBalance = 0;
@@ -16,31 +19,26 @@ export default ({ baseCurrency, rates, vaults = [] }) => {
 
   vaults.forEach(({
     balance: vaultBalance,
+    chart: vaultChart,
     currentBalance: vaultCurrentBalance,
     currency,
-    last30Days: vaultLast30Days,
+    currentMonth: vaultLast30Days,
     stats: vaultStats,
-    weekBalance,
-    weekExpenses,
   }) => {
     const sameCurrency = currency === baseCurrency;
-
     const exchangeProps = [currency, baseCurrency, rates];
+
     currentBalance += sameCurrency ? vaultCurrentBalance : exchange(vaultCurrentBalance, ...exchangeProps);
     balance += sameCurrency ? vaultBalance : exchange(vaultBalance, ...exchangeProps);
 
-    chartBalance.forEach((week, weekIndex) => {
-      const value = weekBalance[weekIndex];
-      chartBalance[weekIndex] += sameCurrency ? value : exchange(value, ...exchangeProps);
-    });
-
-    chartExpenses.forEach((week, weekIndex) => {
-      const value = weekExpenses[weekIndex];
-      chartExpenses[weekIndex] += sameCurrency ? value : exchange(value, ...exchangeProps);
+    Object.keys(vaultChart).forEach((key) => {
+      chart[key].forEach((week, index) => {
+        chart[key][index] += vaultChart[key][index];
+      });
     });
 
     KEYS.forEach((key) => {
-      last30Days[key] += sameCurrency ? vaultLast30Days[key] : exchange(vaultLast30Days[key], ...exchangeProps);
+      currentMonth[key] += vaultLast30Days[key];
     });
 
     [EXPENSES, INCOMES].forEach((type) => {
@@ -57,16 +55,16 @@ export default ({ baseCurrency, rates, vaults = [] }) => {
   return {
     balance,
     chart: {
-      balance: chartBalance
+      ...chart,
+      balance: chart.balance
         .map((value) => {
           total += value;
           return total;
         })
         .map(value => (value !== 0 ? value + balance : 0)),
-      expenses: chartExpenses,
     },
     currentBalance,
-    last30Days,
+    currentMonth,
     stats: {
       incomes: Object.keys(stats.incomes).map(category => ({ category, value: stats.incomes[category] })),
       expenses: Object.keys(stats.expenses).map(category => ({ category, value: stats.expenses[category] })),

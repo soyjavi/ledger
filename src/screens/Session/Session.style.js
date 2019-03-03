@@ -52,16 +52,16 @@ export default StyleSheet.create({
 
   logo: {
     alignSelf: 'center',
-    width: UNIT * 19.2,
-    height: UNIT * 19.2,
-    marginBottom: OFFSET,
+    width: UNIT * 9.6,
+    height: UNIT * 6.4,
+    marginBottom: OFFSET / 2,
   },
 
   pin: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: OFFSET * 2,
+    marginTop: OFFSET * 3,
   },
 
   text: {
