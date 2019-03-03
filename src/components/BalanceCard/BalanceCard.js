@@ -26,7 +26,7 @@ const BalanceCard = ({
   const progressionPercentage = currentBalance - progression > 0
     ? (progression * 100) / (currentBalance - progression)
     : progression;
-  const numberOfDay = (new Date()).getDate();
+  const days = (new Date()).getDate();
 
   return (
     <Consumer>
@@ -67,8 +67,8 @@ const BalanceCard = ({
               <Text caption level={2} numberOfLines={1}>{l10n.INCOMES.toUpperCase()}</Text>
               <PriceFriendly headline level={5} currency={baseCurrency} value={incomes} />
               <View style={styles.row}>
-                <PriceFriendly subtitle level={3} lighten fixed={0} currency={baseCurrency} value={incomes / numberOfDay} />
-                <Text level={3} lighten> per day</Text>
+                <PriceFriendly subtitle level={3} lighten fixed={0} currency={baseCurrency} value={incomes / days} />
+                <Text level={3} lighten>{` / ${l10n.DAY}`}</Text>
               </View>
             </View>
 
@@ -76,8 +76,8 @@ const BalanceCard = ({
               <Text caption level={2} lighten={expenses === 0} numberOfLines={1}>{l10n.EXPENSES.toUpperCase()}</Text>
               <PriceFriendly headline level={5} lighten={expenses === 0} currency={baseCurrency} value={expenses} />
               <View style={styles.row}>
-                <PriceFriendly subtitle level={3} lighten fixed={0} currency={baseCurrency} value={expenses / numberOfDay} />
-                <Text level={3} lighten> per day</Text>
+                <PriceFriendly subtitle level={3} lighten fixed={0} currency={baseCurrency} value={expenses / days} />
+                <Text level={3} lighten>{` / ${l10n.DAY}`}</Text>
               </View>
             </View>
           </View>

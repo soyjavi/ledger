@@ -57,6 +57,7 @@ export default {
     CURRENCY: 'Currency',
     CURRENT_MONTH: 'This month',
 
+    DAY: 'day',
     DAY_NAMES: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
 
     ENTER_PIN: 'Enter your pin',
