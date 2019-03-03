@@ -10,7 +10,7 @@ const { VIEWPORT: { W, H } } = LAYOUT;
 // const isDev = packagerOpts && packagerOpts.dev;
 
 const CARD_WIDTH = UNIT * 16;
-const IS_PRODUCTION = false;
+const IS_PRODUCTION = true;
 const IS_ANDROID = Platform.OS === 'android';
 
 export default {

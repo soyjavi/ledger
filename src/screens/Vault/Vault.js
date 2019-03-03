@@ -5,7 +5,7 @@ import { BackHandler, FlatList, View } from 'react-native';
 import ASSETS from '../../assets';
 import { C, verboseMonth } from '../../common';
 import {
-  BalanceCard, DialogClone, DialogTransaction, DialogTransfer, FloatingButton,GroupTransactions, Header, HeadingItem,
+  BalanceCard, DialogClone, DialogTransaction, DialogTransfer, FloatingButton, GroupTransactions, Header, HeadingItem,
 } from '../../components';
 import { Consumer } from '../../context';
 import { ENV } from '../../reactor/common';
