@@ -10,7 +10,7 @@ const { VIEWPORT: { W, H } } = LAYOUT;
 // const isDev = packagerOpts && packagerOpts.dev;
 
 const CARD_WIDTH = UNIT * 16;
-const IS_PRODUCTION = true;
+const IS_PRODUCTION = false;
 const IS_ANDROID = Platform.OS === 'android';
 
 export default {
@@ -39,8 +39,6 @@ export default {
   SLIDER: {
     itemMargin: 0,
     itemWidth: CARD_WIDTH + OFFSET,
-    momentum: true,
-    navigation: false,
   },
   STYLE: {
     BALANCE_CARD_HEIGHT: UNIT * 21.6,

@@ -76,11 +76,12 @@ VaultItem.propTypes = {
   onPress: func.isRequired,
   currentBalance: number.isRequired,
   currentMonth: shape({}),
-  title: string.isRequired,
+  title: string,
 };
 
 VaultItem.defaultProps = {
   currentMonth: {},
+  title: '',
 };
 
 export default VaultItem;
