@@ -88,8 +88,6 @@ class Vault extends Component {
     const { state: { params: vault = {} } = {} } = props.navigation;
     const { currency, hash } = vault;
 
-    console.log('<Vault>');
-
     return (
       <Viewport {...props} scroll={false} visible={visible}>
         <Consumer>

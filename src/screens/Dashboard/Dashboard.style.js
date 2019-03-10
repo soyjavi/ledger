@@ -13,6 +13,6 @@ export default StyleSheet.create({
 
   slider: {
     marginVertical: OFFSET,
-    paddingRight: OFFSET * 2,
+    paddingRight: OFFSET * 4,
   },
 });

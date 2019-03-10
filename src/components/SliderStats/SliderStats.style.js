@@ -7,5 +7,6 @@ const { OFFSET } = THEME;
 export default StyleSheet.create({
   container: {
     marginVertical: OFFSET,
+    paddingRight: OFFSET * 4,
   },
 });
