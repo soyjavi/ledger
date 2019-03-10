@@ -51,7 +51,7 @@ const BalanceCard = ({
 
           <HeadingItem title={l10n.CURRENT_MONTH} />
           <View style={[styles.row, styles.section]}>
-            <View style={styles.card}>
+            <View style={[styles.card, styles.cardValue]}>
               <Text caption level={2} numberOfLines={1}>{l10n.PROGRESSION.toUpperCase()}</Text>
               <Percentage headline level={5} value={progressionPercentage} />
               <PriceFriendly
@@ -63,7 +63,7 @@ const BalanceCard = ({
               />
             </View>
 
-            <View style={[styles.card, incomes === 0 && styles.cardDisabled]}>
+            <View style={[styles.card, styles.cardValue, incomes === 0 && styles.cardDisabled]}>
               <Text caption level={2} numberOfLines={1}>{l10n.INCOMES.toUpperCase()}</Text>
               <PriceFriendly headline level={5} currency={baseCurrency} value={incomes} />
               <View style={styles.row}>
@@ -72,7 +72,7 @@ const BalanceCard = ({
               </View>
             </View>
 
-            <View style={[styles.card, styles.cardLast, expenses === 0 && styles.cardDisabled]}>
+            <View style={[styles.card, styles.cardValue, styles.cardLast, expenses === 0 && styles.cardDisabled]}>
               <Text caption level={2} lighten={expenses === 0} numberOfLines={1}>{l10n.EXPENSES.toUpperCase()}</Text>
               <PriceFriendly headline level={5} lighten={expenses === 0} currency={baseCurrency} value={expenses} />
               <View style={styles.row}>
@@ -86,18 +86,18 @@ const BalanceCard = ({
           { chart && (
             <Fragment>
               <HeadingItem title={l10n.LAST_6_MONTHS} />
-              <Slider {...SLIDER} style={styles.slider}>
-                <View style={styles.card}>
+              <Slider {...SLIDER} snap={false} style={styles.slider}>
+                <View style={[styles.card, styles.cardChart]}>
                   <Text caption level={2} numberOfLines={1}>{l10n.BALANCE.toUpperCase()}</Text>
                   <Chart values={chart.balance} color={COLOR.INCOMES} />
                 </View>
 
-                <View style={styles.card}>
+                <View style={[styles.card, styles.cardChart]}>
                   <Text caption level={2} numberOfLines={1}>{l10n.EXPENSES.toUpperCase()}</Text>
                   <Chart values={chart.expenses} color={COLOR.EXPENSES} />
                 </View>
 
-                <View style={styles.card}>
+                <View style={[styles.card, styles.cardChart]}>
                   <Text caption level={2} numberOfLines={1}>{l10n.INCOMES.toUpperCase()}</Text>
                   <Chart values={chart.incomes} color={COLOR.INCOMES} />
                 </View>
