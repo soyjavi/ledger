@@ -38,8 +38,10 @@ export default ({
       const valueExchange = exchangeProps ? exchange(value, ...exchangeProps) : value;
 
       chart.balance[weekIndex] += isExpense ? -(valueExchange) : valueExchange;
-      if (isExpense) chart.expenses[weekIndex] += valueExchange;
-      else chart.incomes[weekIndex] += valueExchange;
+      if (category !== VAULT_TRANSFER) {
+        if (isExpense) chart.expenses[weekIndex] += valueExchange;
+        else chart.incomes[weekIndex] += valueExchange;
+      }
 
       if (currentMonth === (new Date(timestamp).toISOString()).substr(0, 7)) {
         const key = isExpense ? EXPENSES : INCOMES;
