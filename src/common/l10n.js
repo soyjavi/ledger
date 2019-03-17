@@ -99,6 +99,7 @@ export default {
     TODAY: 'Today',
     TRANSACTION: 'Transaction',
     TRANSFER: 'Transfer',
+    TRANSFERS: 'Transfers',
     TRANSFER_CAPTION: 'Transfer any amount to another of your vaults.',
 
     VAULT: 'Vault',

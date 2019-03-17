@@ -17,7 +17,29 @@ const { logo } = ASSETS;
 const { SLIDER } = C;
 const { COLOR } = THEME;
 
-class BalanceCard2 extends Component {
+const MonthCard = ({ title, value }) => (
+  <Consumer>
+    { ({ store: { baseCurrency }, l10n }) => (
+      <View style={[styles.card, value === 0 && styles.cardDisabled]}>
+        <Text caption level={2} lighten={value === 0} numberOfLines={1}>{title.toUpperCase()}</Text>
+        <PriceFriendly headline level={5} lighten={value === 0} currency={baseCurrency} value={value} />
+        <View style={styles.row}>
+          <PriceFriendly
+            subtitle
+            level={3}
+            lighten
+            fixed={0}
+            currency={baseCurrency}
+            value={value / (new Date()).getDate()}
+          />
+          <Text level={3} lighten>{` / ${l10n.DAY}`}</Text>
+        </View>
+      </View>
+    )}
+  </Consumer>
+);
+
+class BalanceCard extends Component {
   static propTypes = {
     chart: shape({}),
     currency: string,
@@ -45,12 +67,11 @@ class BalanceCard2 extends Component {
     } = this.props;
 
     const {
-      progression = 0, incomes = 0, expenses = 0,
+      progression = 0, incomes = 0, expenses = 0, transfers = 0,
     } = currentMonth;
     const progressionPercentage = currentBalance - progression > 0
       ? (progression * 100) / (currentBalance - progression)
       : progression;
-    const days = (new Date()).getDate();
 
     return (
       <Consumer>
@@ -74,8 +95,8 @@ class BalanceCard2 extends Component {
             </View>
 
             <HeadingItem title={l10n.CURRENT_MONTH} />
-            <View style={[styles.row, styles.section]}>
-              <View style={[styles.card, styles.cardValue]}>
+            <Slider {...SLIDER} style={styles.slider}>
+              <View style={styles.card}>
                 <Text caption level={2} numberOfLines={1}>{l10n.PROGRESSION.toUpperCase()}</Text>
                 <Percentage headline level={5} value={progressionPercentage} />
                 <PriceFriendly
@@ -86,42 +107,26 @@ class BalanceCard2 extends Component {
                   value={progression}
                 />
               </View>
-
-              <View style={[styles.card, styles.cardValue, incomes === 0 && styles.cardDisabled]}>
-                <Text caption level={2} numberOfLines={1}>{l10n.INCOMES.toUpperCase()}</Text>
-                <PriceFriendly headline level={5} currency={baseCurrency} value={incomes} />
-                <View style={styles.row}>
-                  <PriceFriendly subtitle level={3} lighten fixed={0} currency={baseCurrency} value={incomes / days} />
-                  <Text level={3} lighten>{` / ${l10n.DAY}`}</Text>
-                </View>
-              </View>
-
-              <View style={[styles.card, styles.cardValue, styles.cardLast, expenses === 0 && styles.cardDisabled]}>
-                <Text caption level={2} lighten={expenses === 0} numberOfLines={1}>{l10n.EXPENSES.toUpperCase()}</Text>
-                <PriceFriendly headline level={5} lighten={expenses === 0} currency={baseCurrency} value={expenses} />
-                <View style={styles.row}>
-                  <PriceFriendly subtitle level={3} lighten fixed={0} currency={baseCurrency} value={expenses / days} />
-                  <Text level={3} lighten>{` / ${l10n.DAY}`}</Text>
-                </View>
-              </View>
-            </View>
-
+              <MonthCard title={l10n.EXPENSES} value={expenses} />
+              <MonthCard title={l10n.INCOMES} value={incomes} />
+              <MonthCard title={`${l10n.VAULT} ${l10n.TRANSFERS}`} value={transfers} />
+            </Slider>
 
             { chart && (
               <Fragment>
                 <HeadingItem title={l10n.LAST_6_MONTHS} />
                 <Slider {...SLIDER} style={styles.slider}>
-                  <View style={[styles.card, styles.cardChart]}>
+                  <View style={styles.card}>
                     <Text caption level={2} numberOfLines={1}>{l10n.BALANCE.toUpperCase()}</Text>
                     <Chart values={chart.balance} color={COLOR.INCOMES} />
                   </View>
 
-                  <View style={[styles.card, styles.cardChart]}>
+                  <View style={styles.card}>
                     <Text caption level={2} numberOfLines={1}>{l10n.EXPENSES.toUpperCase()}</Text>
                     <Chart values={chart.expenses} color={COLOR.EXPENSES} />
                   </View>
 
-                  <View style={[styles.card, styles.cardChart]}>
+                  <View style={styles.card}>
                     <Text caption level={2} numberOfLines={1}>{l10n.INCOMES.toUpperCase()}</Text>
                     <Chart values={chart.incomes} color={COLOR.INCOMES} />
                   </View>
@@ -135,4 +140,4 @@ class BalanceCard2 extends Component {
   }
 }
 
-export default BalanceCard2;
+export default BalanceCard;

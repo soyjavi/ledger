@@ -15,23 +15,11 @@ export default StyleSheet.create({
     ...STYLE.CARD,
     backgroundColor: COLOR.BASE,
     flex: 1,
-  },
-
-  cardChart: {
     marginLeft: OFFSET,
   },
 
   cardDisabled: {
     opacity: 0.33,
-  },
-
-  cardLast: {
-    marginRight: 0,
-  },
-
-  cardValue: {
-    marginTop: OFFSET,
-    marginRight: OFFSET,
   },
 
   container: {
