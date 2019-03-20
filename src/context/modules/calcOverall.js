@@ -1,7 +1,7 @@
 import { C, exchange } from '../../common';
 
 const { WEEKS } = C;
-const KEYS = ['progression', 'incomes', 'expenses'];
+const KEYS = ['progression', 'incomes', 'expenses', 'transfers'];
 const EXPENSES = 'expenses';
 const INCOMES = 'incomes';
 
@@ -11,7 +11,9 @@ export default ({ baseCurrency, rates, vaults = [] }) => {
     expenses: new Array(WEEKS).fill(0),
     incomes: new Array(WEEKS).fill(0),
   };
-  const currentMonth = { progression: 0, incomes: 0, expenses: 0 };
+  const currentMonth = {
+    progression: 0, incomes: 0, expenses: 0, transfers: 0,
+  };
   const stats = { incomes: {}, expenses: {} };
   let balance = 0;
   let currentBalance = 0;
