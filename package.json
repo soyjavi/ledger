@@ -1,7 +1,7 @@
 {
   "name": "voltvault-app",
   "description": "Cross-Device client for voltvault",
-  "version": "0.8.7",
+  "version": "0.8.8",
   "keywords": [
     "finance",
     "personal",
