@@ -85,8 +85,6 @@ export default {
 
     OVERALL_BALANCE: 'Overall Balance',
 
-    PROGRESSION: 'Progression',
-
     SAVE: 'Save',
     SAVE_LOCATION: 'Save location',
     SEARCH: 'Search',
@@ -99,6 +97,7 @@ export default {
     TODAY: 'Today',
     TRANSACTION: 'Transaction',
     TRANSFER: 'Transfer',
+    TRANSFERS: 'Transfers',
     TRANSFER_CAPTION: 'Transfer any amount to another of your vaults.',
 
     VAULT: 'Vault',

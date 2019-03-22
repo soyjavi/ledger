@@ -15,7 +15,6 @@ import Percentage from './Percentage';
 import PriceFriendly from './PriceFriendly';
 import SliderStats from './SliderStats';
 import StatItem from './StatItem';
-import Thumbnail from './Thumbnail';
 import TransactionItem from './TransactionItem';
 import VaultItem from './VaultItem';
 
@@ -37,7 +36,6 @@ export {
   PriceFriendly,
   SliderStats,
   StatItem,
-  Thumbnail,
   TransactionItem,
   VaultItem,
 };

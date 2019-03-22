@@ -10,7 +10,7 @@ export default StyleSheet.create({
   container: {
     ...STYLE.CARD,
     backgroundColor: COLOR.BASE,
-    margin: OFFSET / 2,
+    marginLeft: OFFSET,
     minHeight: UNIT * 12.8,
     overflow: 'hidden',
   },

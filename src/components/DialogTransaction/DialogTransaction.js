@@ -4,29 +4,19 @@ import {
 import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
-import { C, fetch, translate } from '../../common';
+import { C, translate } from '../../common';
 import { Consumer } from '../../context';
 import { THEME } from '../../reactor/common';
 import {
   Button, Dialog, Form, Text,
 } from '../../reactor/components';
 import MapStaticImage from '../MapStaticImage';
-import hydrateTransaction from './modules/hydrateTransaction';
+import { getLocation, hydrateTransaction } from './modules';
 
 import styles from './DialogTransaction.style';
 
 const { COLOR } = THEME;
 const { TX: { TYPE: { EXPENSE } } } = C;
-
-const getLocation = async (component, getLocationAsync) => {
-  component.setState({ coords: undefined, location: true, place: undefined });
-
-  const coords = await getLocationAsync();
-  const { place } = await fetch({
-    service: `place?latitude=${coords.latitude}&longitude=${coords.longitude}`,
-  });
-  component.setState({ coords, place });
-};
 
 class DialogTransaction extends PureComponent {
   static propTypes = {
@@ -74,7 +64,7 @@ class DialogTransaction extends PureComponent {
   _onSubmit = async ({ l10n: { CATEGORIES }, store: { onTransaction } }) => {
     const {
       props: { onClose, type, vault },
-      state: { coords, form: { category, value, title = '' }, place },
+      state: { coords = {}, form: { category, value, title = '' }, place },
     } = this;
 
     this.setState({ busy: true });
@@ -137,7 +127,7 @@ class DialogTransaction extends PureComponent {
             <Button
               activity={busy}
               color={color}
-              disabled={busy || !valid || (location && !place)}
+              disabled={busy || !valid}
               onPress={() => _onSubmit({ l10n, store })}
               rounded
               shadow

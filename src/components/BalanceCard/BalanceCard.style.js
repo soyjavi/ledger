@@ -13,19 +13,13 @@ export default StyleSheet.create({
 
   card: {
     ...STYLE.CARD,
-    marginTop: OFFSET,
     backgroundColor: COLOR.BASE,
-    minHeight: 0,
     flex: 1,
-    marginRight: OFFSET,
+    marginLeft: OFFSET,
   },
 
   cardDisabled: {
     opacity: 0.33,
-  },
-
-  cardLast: {
-    marginRight: 0,
   },
 
   container: {
@@ -57,8 +51,8 @@ export default StyleSheet.create({
   },
 
   slider: {
-    paddingHorizontal: OFFSET,
-    marginBottom: OFFSET,
+    marginVertical: OFFSET,
+    paddingRight: OFFSET * 4,
   },
 
 });

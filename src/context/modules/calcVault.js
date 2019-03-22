@@ -23,6 +23,7 @@ export default ({
   let incomes = 0;
   let expenses = 0;
   let progression = 0;
+  let transfers = 0;
 
   txs.filter(tx => tx.vault === vault.hash).forEach(({
     category, timestamp, type, value,
@@ -38,18 +39,20 @@ export default ({
       const valueExchange = exchangeProps ? exchange(value, ...exchangeProps) : value;
 
       chart.balance[weekIndex] += isExpense ? -(valueExchange) : valueExchange;
-      if (isExpense) chart.expenses[weekIndex] += valueExchange;
-      else chart.incomes[weekIndex] += valueExchange;
+      if (category !== VAULT_TRANSFER) {
+        if (isExpense) chart.expenses[weekIndex] += valueExchange;
+        else chart.incomes[weekIndex] += valueExchange;
+      }
 
       if (currentMonth === (new Date(timestamp).toISOString()).substr(0, 7)) {
-        const key = isExpense ? EXPENSES : INCOMES;
-        stats[key][category] = (stats[key][category] || 0) + value;
-
         if (category !== VAULT_TRANSFER) {
+          const key = isExpense ? EXPENSES : INCOMES;
+          stats[key][category] = (stats[key][category] || 0) + value;
+
           if (isExpense) expenses += value;
           else incomes += value;
-        }
-        progression += isExpense ? -(value) : value;
+          progression += isExpense ? -(value) : value;
+        } else if (isExpense) transfers += value;
       }
     }
   });
@@ -58,9 +61,10 @@ export default ({
     chart,
     currentBalance: balance,
     currentMonth: {
-      progression: exchangeProps ? exchange(progression, ...exchangeProps) : progression,
-      incomes: exchangeProps ? exchange(incomes, ...exchangeProps) : incomes,
       expenses: exchangeProps ? exchange(expenses, ...exchangeProps) : expenses,
+      incomes: exchangeProps ? exchange(incomes, ...exchangeProps) : incomes,
+      progression: exchangeProps ? exchange(progression, ...exchangeProps) : progression,
+      transfers: exchangeProps ? exchange(transfers, ...exchangeProps) : transfers,
     },
     stats,
   });
