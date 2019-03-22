@@ -85,8 +85,6 @@ export default {
 
     OVERALL_BALANCE: 'Overall Balance',
 
-    PROGRESSION: 'Progression',
-
     SAVE: 'Save',
     SAVE_LOCATION: 'Save location',
     SEARCH: 'Search',

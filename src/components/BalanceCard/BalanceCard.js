@@ -39,6 +39,11 @@ const MonthCard = ({ title, value }) => (
   </Consumer>
 );
 
+MonthCard.propTypes = {
+  title: string.isRequired,
+  value: number.isRequired,
+};
+
 class BalanceCard extends Component {
   static propTypes = {
     chart: shape({}),
@@ -97,7 +102,7 @@ class BalanceCard extends Component {
             <HeadingItem title={l10n.CURRENT_MONTH} />
             <Slider {...SLIDER} style={styles.slider}>
               <View style={styles.card}>
-                <Text caption level={2} numberOfLines={1}>{l10n.PROGRESSION.toUpperCase()}</Text>
+                <Text caption level={2} numberOfLines={1}>{l10n.BALANCE.toUpperCase()}</Text>
                 <Percentage headline level={5} value={progressionPercentage} />
                 <PriceFriendly
                   subtitle

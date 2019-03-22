@@ -31,14 +31,6 @@ class Session extends PureComponent {
     pin: '',
   }
 
-  async componentDidMount() {
-    const { props: { getFingerprintAsync } } = this;
-
-    if (getFingerprintAsync && await getFingerprintAsync()) {
-      console.log('fingerprint readed');
-    }
-  }
-
   _onNumber = ({ number, store, navigation }) => {
     let { state: { pin } } = this;
 
