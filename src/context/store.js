@@ -73,10 +73,10 @@ class ProviderStore extends Component {
       const { hash: latestHash } = txs[txs.length - 1] || {};
 
       if (hash !== latestHash || version !== VERSION) {
-        // const service = `transactions?latestTransaction=${latestTransaction.hash ? latestTransaction.hash : ''}`;
-        const service = 'transactions';
+        let service = 'transactions';
+        if (hash) service += `?latestTransaction=${hash}`;
         const { txs: newTxs } = await fetch({ service, headers }).catch(onError);
-        // txs = [...txs, ...newTxs];
+        txs = [...txs, ...newTxs];
         txs = newTxs;
       }
 
