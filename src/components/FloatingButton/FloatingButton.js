@@ -5,6 +5,7 @@ import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
 import ASSETS from '../../assets';
+import { ConsumerEvents } from '../../context';
 import { THEME } from '../../reactor/common';
 import {
   Icon, Motion, Text, Touchable,
@@ -72,15 +73,19 @@ class FloatingButton extends PureComponent {
           </View>
         )}
 
-        <Motion preset="pop" visible={visible} delay={visible ? DURATION * 2 : 0}>
-          <Motion timeline={[{ property: 'scale', value: visible && opened ? 0.75 : 1 }]}>
-            <Touchable containerBorderRadius={CONTAINER_SIZE / 2} onPress={_onPress}>
-              <View style={[styles.button, visible && opened && styles.buttonOpened]}>
-                <Icon value={iconAdd} style={styles.icon} />
-              </View>
-            </Touchable>
-          </Motion>
-        </Motion>
+        <ConsumerEvents>
+          { ({ isConnected }) => (
+            <Motion preset="pop" visible={visible && isConnected} delay={visible && isConnected ? DURATION * 2 : 0}>
+              <Motion timeline={[{ property: 'scale', value: visible && opened ? 0.75 : 1 }]}>
+                <Touchable containerBorderRadius={CONTAINER_SIZE / 2} onPress={_onPress}>
+                  <View style={[styles.button, visible && opened && styles.buttonOpened]}>
+                    <Icon value={iconAdd} style={styles.icon} />
+                  </View>
+                </Touchable>
+              </Motion>
+            </Motion>
+          )}
+        </ConsumerEvents>
       </View>
     );
   }
