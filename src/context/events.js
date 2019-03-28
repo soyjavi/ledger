@@ -1,5 +1,6 @@
 import { func, node } from 'prop-types';
 import React, { PureComponent, createContext } from 'react';
+import { NetInfo } from 'react-native';
 
 import { C } from '../common';
 
@@ -19,11 +20,27 @@ class ProviderEvents extends PureComponent {
     getLocationAsync: undefined,
   };
 
+  state = {
+    isConnected: false,
+  };
+
+  componentWillMount() {
+    NetInfo.isConnected.fetch().then(isConnected => this.setState({ isConnected }));
+  }
+
+  componentDidMount() {
+    NetInfo.isConnected.addEventListener('connectionChange', isConnected => this.setState({ isConnected }));
+  }
+
+  componentWillUnmount() {
+    NetInfo.isConnected.removeEventListener('connectionChange');
+  }
+
   render() {
-    const { props: { children, getFingerprintAsync, getLocationAsync } } = this;
+    const { props: { children, getFingerprintAsync, getLocationAsync }, state } = this;
 
     return (
-      <Provider value={{ getFingerprintAsync, getLocationAsync }}>
+      <Provider value={{ ...state, getFingerprintAsync, getLocationAsync }}>
         { children }
       </Provider>
     );
