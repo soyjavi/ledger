@@ -2,11 +2,15 @@ import { StyleSheet } from 'react-native';
 
 import { LAYOUT, THEME } from '../../reactor/common';
 
-const { OFFSET, UNIT } = THEME;
+const { COLOR, OFFSET, UNIT } = THEME;
 
 export default StyleSheet.create({
-  timestamp: {
+  icon: {
+    backgroundColor: COLOR.BASE,
+    borderRadius: UNIT,
+    height: UNIT * 4.8,
     width: UNIT * 4.8,
+    marginRight: UNIT,
   },
 
   container: {
