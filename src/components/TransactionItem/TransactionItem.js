@@ -26,7 +26,7 @@ const TransactionItem = ({
           </View>
           <View style={styles.texts}>
             { title && <Text subtitle level={1} numberOfLines={1}>{title}</Text> }
-            { location && location.place && <Text caption lighten>{location.place}</Text> }
+            { location && location.place && <Text caption lighten>{location.place.split(',')[0]}</Text> }
             <Text caption lighten>{formatTime(new Date(timestamp))}</Text>
           </View>
           <View style={styles.prices}>
