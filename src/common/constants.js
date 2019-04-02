@@ -107,4 +107,5 @@ export default {
   VERSION: PKG.version,
 
   WEEKS: 28,
+  WIPE: 0,
 };

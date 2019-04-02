@@ -31,22 +31,27 @@ class DialogClone extends PureComponent {
   };
 
   state = {
-    busy: false,
+    busyClone: false,
+    busyWipe: false,
   };
 
-  _onSubmit = async ({ onTransaction }) => {
+  _onSubmit = async ({ onTransaction }, wipe = false) => {
+    const { props: { dataSource, onClose } } = this;
     const {
-      dataSource: {
-        vault, category, location, value, title, type,
-      },
-      onClose,
-    } = this.props;
+      value, vault, location, title,
+    } = dataSource;
+    let { category, type = EXPENSE } = dataSource;
 
-    this.setState({ busy: true });
+    this.setState({ [wipe ? 'busyWipe' : 'busyClone']: true });
+    if (wipe) {
+      category = 0; // wipe
+      type = type === EXPENSE ? INCOME : EXPENSE;
+    }
+
     const tx = await onTransaction({
       vault, category, value, title, type, ...location,
     });
-    this.setState({ busy: false });
+    this.setState({ [wipe ? 'busyWipe' : 'busyClone']: false });
 
     if (tx) onClose();
   }
@@ -57,10 +62,10 @@ class DialogClone extends PureComponent {
       props: {
         currency, onClose, visible,
         dataSource: {
-          category, location, title, type = 0, value,
+          category, location, title, type = EXPENSE, value,
         },
       },
-      state: { busy },
+      state: { busyClone, busyWipe },
     } = this;
 
     return (
@@ -96,16 +101,27 @@ class DialogClone extends PureComponent {
               { location && <Text caption lighten>{location.place}</Text> }
             </View>
 
-            <Button
-              activity={busy}
-              color={type === EXPENSE ? COLOR.EXPENSES : COLOR.INCOMES}
-              disabled={busy}
-              onPress={() => _onSubmit(store)}
-              rounded
-              shadow
-              style={styles.button}
-              title={`${l10n.CLONE} ${l10n.TRANSACTION}`}
-            />
+            <View style={styles.row}>
+              <Button
+                activity={busyWipe}
+                contained={false}
+                onPress={() => _onSubmit(store, true)}
+                outlined
+                rounded
+                style={styles.button}
+                title={!busyWipe ? l10n.WIPE : undefined}
+              />
+              <View style={styles.buttonSeparator} />
+              <Button
+                activity={busyClone}
+                color={type === EXPENSE ? COLOR.EXPENSES : COLOR.INCOMES}
+                onPress={() => _onSubmit(store, false)}
+                rounded
+                shadow
+                style={styles.button}
+                title={!busyClone ? `${l10n.CLONE} ${l10n.TRANSACTION}` : undefined}
+              />
+            </View>
           </Dialog>
         )}
       </Consumer>

@@ -26,6 +26,7 @@ export default {
     CANCEL: 'Cancel',
     CATEGORIES: [
       { // Expenses
+        0: 'Wipe',
         1: 'Food & Drinks',
         7: 'Shopping',
         6: 'Entertainment',
@@ -42,6 +43,7 @@ export default {
         99: 'Vault Transfer',
       },
       { // Incomes
+        0: 'Wipe',
         1: 'Salary',
         2: 'Investment',
         3: 'Pasives',
@@ -105,6 +107,7 @@ export default {
     VAULTS: 'Vaults',
     VAULT_CAPTION: 'You can create as many vaults as you want. You can continue using your base currency or choose any other.', // eslint-disable-line
 
+    WIPE: 'Wipe',
     WITHOUT_TXS: 'No transactions',
 
     YESTERDAY: 'Yesterday',

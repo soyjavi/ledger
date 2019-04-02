@@ -5,7 +5,9 @@ import { LAYOUT, THEME } from '../../reactor/common';
 
 const { STYLE: { DIALOG, DIALOG_FRAME } } = C;
 
-const { COLOR, OFFSET, UNIT } = THEME;
+const {
+  COLOR, OFFSET, UNIT, SPACE,
+} = THEME;
 
 export default StyleSheet.create({
   button: {
@@ -13,12 +15,15 @@ export default StyleSheet.create({
     marginTop: OFFSET / 2,
   },
 
+  buttonSeparator: {
+    width: SPACE.S,
+  },
+
   dialog: DIALOG,
 
   frame: DIALOG_FRAME,
 
   info: {
-    // backgroundColor: COLOR.BASE,
     borderRadius: OFFSET,
     borderWidth: UNIT * 0.1,
     borderColor: COLOR.BASE,
