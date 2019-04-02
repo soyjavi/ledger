@@ -14,7 +14,7 @@ import MapStaticImage from '../MapStaticImage';
 
 import styles from './DialogClone.style';
 
-const { FIXED, SYMBOL, TX: { TYPE: { INCOME, EXPENSE } } } = C;
+const { FIXED, SYMBOL, TX: { TYPE: { INCOME, EXPENSE } }, WIPE } = C;
 const { COLOR } = THEME;
 
 class DialogClone extends PureComponent {
@@ -38,19 +38,26 @@ class DialogClone extends PureComponent {
   _onSubmit = async ({ onTransaction }, wipe = false) => {
     const { props: { dataSource, onClose } } = this;
     const {
-      value, vault, location, title,
+      category, hash, value, vault, location, title, type = EXPENSE,
     } = dataSource;
-    let { category, type = EXPENSE } = dataSource;
 
     this.setState({ [wipe ? 'busyWipe' : 'busyClone']: true });
+    let props = {
+      vault, category, value, title, type,
+    };
+
     if (wipe) {
-      category = 0; // wipe
-      type = type === EXPENSE ? INCOME : EXPENSE;
+      props = {
+        ...props,
+        category: WIPE,
+        tx: hash,
+        type: type === EXPENSE ? INCOME : EXPENSE,
+      };
+    } else {
+      props = { ...props, ...location };
     }
 
-    const tx = await onTransaction({
-      vault, category, value, title, type, ...location,
-    });
+    const tx = await onTransaction(props);
     this.setState({ [wipe ? 'busyWipe' : 'busyClone']: false });
 
     if (tx) onClose();
