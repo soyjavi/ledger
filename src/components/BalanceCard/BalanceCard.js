@@ -6,7 +6,7 @@ import ASSETS from '../../assets';
 import { C, exchange } from '../../common';
 import { Consumer } from '../../context';
 import { THEME } from '../../reactor/common';
-import { Slider, Text } from '../../reactor/components';
+import { Slider, Text, Touchable } from '../../reactor/components';
 import Chart from '../Chart';
 import HeadingItem from '../HeadingItem';
 import Percentage from '../Percentage';
@@ -14,7 +14,7 @@ import PriceFriendly from '../PriceFriendly';
 import styles from './BalanceCard.style';
 
 const { logo } = ASSETS;
-const { SLIDER } = C;
+const { SCREEN, SLIDER } = C;
 const { COLOR } = THEME;
 
 const MonthCard = ({ title, value }) => (
@@ -80,7 +80,7 @@ class BalanceCard extends Component {
 
     return (
       <Consumer>
-        { ({ store: { baseCurrency, rates }, l10n }) => (
+        { ({ navigation, store: { baseCurrency, rates }, l10n }) => (
           <View style={[styles.container, inherit.style]}>
             <View style={styles.section}>
               <View style={styles.row}>
@@ -121,10 +121,14 @@ class BalanceCard extends Component {
               <Fragment>
                 <HeadingItem title={l10n.LAST_6_MONTHS} />
                 <Slider {...SLIDER} style={styles.slider}>
-                  <View style={styles.card}>
+                  <Touchable
+                    style={styles.card}
+                    onPress={() => navigation.navigate(SCREEN.STATS)}
+                    rippleColor="red"
+                  >
                     <Text caption level={2} numberOfLines={1}>{l10n.BALANCE.toUpperCase()}</Text>
                     <Chart values={chart.balance} color={COLOR.INCOMES} />
-                  </View>
+                  </Touchable>
 
                   <View style={styles.card}>
                     <Text caption level={2} numberOfLines={1}>{l10n.EXPENSES.toUpperCase()}</Text>

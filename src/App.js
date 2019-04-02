@@ -3,10 +3,14 @@ import React from 'react';
 import { C } from './common';
 import { Consumer, ConsumerNavigation } from './context';
 import { LayoutView, Snackbar } from './reactor/components';
-import { Session, Dashboard, Vault } from './screens';
+import {
+  Session, Stats, Dashboard, Vault,
+} from './screens';
 
 const { SCREEN } = C;
-const { SESSION, DASHBOARD, VAULT } = SCREEN;
+const {
+  SESSION, STATS, DASHBOARD, VAULT,
+} = SCREEN;
 
 export default props => (
   <ConsumerNavigation>
@@ -17,6 +21,9 @@ export default props => (
         <Session backward={current !== SESSION} visible={stack.includes(SESSION)} />
 
         <Dashboard backward={current !== DASHBOARD} visible={stack.includes(DASHBOARD)} />
+
+        <Stats backward={current !== STATS} visible={stack.includes(STATS)} />
+
 
         { stack.includes(DASHBOARD) && (
           <Vault

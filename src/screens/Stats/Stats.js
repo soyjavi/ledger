@@ -2,17 +2,21 @@ import { bool, shape } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
 import { BackHandler, ScrollView } from 'react-native';
 
+import ASSETS from '../../assets';
 import { C } from '../../common';
 import {
-  BalanceCard, DialogVault, FloatingButton, HeadingItem, VaultItem,
+  BalanceCard, DialogStats, Header, HeadingItem, SliderStats, VaultItem,
 } from '../../components';
 import { Consumer } from '../../context';
+import { ENV } from '../../reactor/common';
 import { Slider, Viewport } from '../../reactor/components';
-import styles from './Dashboard.style';
+import styles from './Stats.style';
 
-const { SCREEN, SLIDER } = C;
+const { iconBack } = ASSETS;
+const { SCREEN, SLIDER, TX: { TYPE } } = C;
+const { IS_WEB } = ENV;
 
-class Dashboard extends PureComponent {
+class Stats extends PureComponent {
   static propTypes = {
     backward: bool,
     navigation: shape({}),
@@ -73,30 +77,32 @@ class Dashboard extends PureComponent {
             { ({
               l10n, navigation,
               store: {
-                baseCurrency, overall, vaults, ...store
+                baseCurrency, overall: { stats: { expenses = [], incomes = [] } = {}, ...overall }, vaults, ...store
               },
             }) => (
               <Fragment>
+                <Header
+                  left={IS_WEB ? { icon: iconBack, onPress: () => navigation.goBack() } : undefined}
+                  visible={visible}
+                />
                 <ScrollView contentContainerStyle={styles.scroll}>
-                  <BalanceCard currency={baseCurrency} title={l10n.BALANCE} {...overall} />
-                  <HeadingItem title={l10n.VAULTS} />
-                  <Slider
-                    {...SLIDER}
-                    dataSource={vaults}
-                    item={({ data: vault }) => (
-                      <VaultItem key={vault.hash} {...vault} onPress={() => _onVault({ navigation, store, vault })} />)}
-                    style={styles.slider}
-                  />
-                  <HeadingItem title='$Last Transactions' />
+                  { incomes.length > 0 && (
+                    <SliderStats
+                      dataSource={incomes}
+                      type={TYPE.INCOME}
+                      onItem={data => _onStats(TYPE.INCOME, data, store)}
+                    />
+                  )}
 
+                  { expenses.length > 0 && (
+                    <SliderStats
+                      dataSource={expenses}
+                      type={TYPE.EXPENSE}
+                      onItem={data => _onStats(TYPE.EXPENSE, data, store)}
+                    />
+                  )}
                 </ScrollView>
-                <FloatingButton onPress={_onToggleDialog} visible={!dialog} />
-                { visible && (
-                  <Fragment>
-                    { vaults.length === 0 && !dialog && this.setState({ dialog: true }) }
-                    <DialogVault visible={!stats && dialog} onClose={_onToggleDialog} />
-                  </Fragment>
-                )}
+                <DialogStats {...stats} visible={stats && dialog} onClose={_onToggleDialog} />
               </Fragment>
             )}
           </Consumer>
@@ -107,4 +113,4 @@ class Dashboard extends PureComponent {
   }
 }
 
-export default Dashboard;
+export default Stats;
