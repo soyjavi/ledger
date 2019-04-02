@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { LAYOUT, THEME } from '../../reactor/common';
 
 const { UNIT } = THEME;
-const BAR_SIZE = UNIT * 0.3;
+const BAR_SIZE = UNIT * 0.2;
 const CONTAINER_SIZE = UNIT * 4.8;
 
 export default StyleSheet.create({
@@ -20,8 +20,6 @@ export default StyleSheet.create({
     borderTopRightRadius: UNIT,
     height: '100%',
     minHeight: BAR_SIZE,
-    minWidth: BAR_SIZE,
-    flex: 1,
-    marginHorizontal: 2,
+    width: BAR_SIZE,
   },
 });

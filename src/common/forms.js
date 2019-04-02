@@ -4,10 +4,10 @@ export default {
       type: 'select', dataSource: [], label: 'l10n.CATEGORY',
     },
     value: {
-      keyboard: 'numeric', label: 'l10n.AMOUNT', required: true, inline: 2,
+      keyboard: 'numeric', label: 'l10n.AMOUNT', required: true,
     },
     title: {
-      label: 'l10n.TITLE', required: true, inline: 2,
+      label: 'l10n.TITLE', required: true,
     },
   },
 

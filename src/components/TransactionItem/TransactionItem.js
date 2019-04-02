@@ -5,10 +5,12 @@ import React from 'react';
 import { View } from 'react-native';
 
 import { C, exchange } from '../../common';
-import { Consumer } from '../../context';
-import { Price, Text, Touchable } from '../../reactor/components';
+import { ConsumerStore } from '../../context';
+import {
+  Icon, Price, Text, Touchable,
+} from '../../reactor/components';
 import { THEME } from '../../reactor/common';
-import formatTime from './modules/formatTime';
+import formatCaption from './modules/formatCaption';
 import styles from './TransactionItem.style';
 
 const { FIXED, SYMBOL, TX: { TYPE: { INCOME } } } = C;
@@ -17,45 +19,46 @@ const { COLOR } = THEME;
 const TransactionItem = ({
   category, currency, hash, location, onPress, timestamp, title, type, value,
 }) => (
-  <Consumer>
-    { ({ store: { baseCurrency, rates }, l10n }) => (
+  <ConsumerStore>
+    { ({ baseCurrency, rates }) => (
       <Touchable key={hash} rippleColor={COLOR.TEXT_LIGHTEN} onPress={onPress}>
-        <View style={styles.container}>
+        <View style={[styles.container, styles.row]}>
           <View style={styles.icon}>
-            <Text caption lighten numberOfLines={1}>{l10n.CATEGORIES[type][category]}</Text>
+            <Icon value="doneContrast" />
           </View>
-          <View style={styles.texts}>
-            { title && <Text subtitle level={1} numberOfLines={1}>{title}</Text> }
-            { location && location.place && <Text caption lighten>{location.place.split(',')[0]}</Text> }
-            <Text caption lighten>{formatTime(new Date(timestamp))}</Text>
-          </View>
-          <View style={styles.prices}>
-            <Price
-              subtitle
-              level={2}
-              fixed={FIXED[baseCurrency]}
-              symbol={SYMBOL[baseCurrency]}
-              title={type === INCOME ? '+' : undefined}
-              value={baseCurrency !== currency
-                ? exchange(Math.abs(value), currency, baseCurrency, rates)
-                : Math.abs(value)}
-            />
-
-            { baseCurrency !== currency && (
+          <View style={[styles.content, styles.row]}>
+            <View style={styles.texts}>
+              { title && <Text subtitle level={2} numberOfLines={1}>{title}</Text> }
+              <Text caption lighten>{formatCaption(new Date(timestamp), location)}</Text>
+            </View>
+            <View style={styles.prices}>
               <Price
-                caption
-                lighten
-                fixed={FIXED[currency]}
-                symbol={SYMBOL[currency]}
+                subtitle
+                level={2}
+                fixed={FIXED[baseCurrency]}
+                symbol={SYMBOL[baseCurrency]}
                 title={type === INCOME ? '+' : undefined}
-                value={value}
+                value={baseCurrency !== currency
+                  ? exchange(Math.abs(value), currency, baseCurrency, rates)
+                  : Math.abs(value)}
               />
-            )}
+
+              { baseCurrency !== currency && (
+                <Price
+                  caption
+                  lighten
+                  fixed={FIXED[currency]}
+                  symbol={SYMBOL[currency]}
+                  title={type === INCOME ? '+' : undefined}
+                  value={value}
+                />
+              )}
+            </View>
           </View>
         </View>
       </Touchable>
     )}
-  </Consumer>
+  </ConsumerStore>
 );
 
 TransactionItem.propTypes = {
