@@ -114,7 +114,6 @@ class DialogClone extends PureComponent {
                 contained={false}
                 onPress={() => _onSubmit(store, true)}
                 outlined
-                rounded
                 style={styles.button}
                 title={!busyWipe ? l10n.WIPE : undefined}
               />
@@ -123,10 +122,9 @@ class DialogClone extends PureComponent {
                 activity={busyClone}
                 color={type === EXPENSE ? COLOR.EXPENSES : COLOR.INCOMES}
                 onPress={() => _onSubmit(store, false)}
-                rounded
                 shadow
                 style={styles.button}
-                title={!busyClone ? `${l10n.CLONE} ${l10n.TRANSACTION}` : undefined}
+                title={!busyClone ? l10n.CLONE : undefined}
               />
             </View>
           </Dialog>

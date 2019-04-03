@@ -129,7 +129,6 @@ class DialogTransaction extends PureComponent {
               color={color}
               disabled={busy || !valid}
               onPress={() => _onSubmit({ l10n, store })}
-              rounded
               shadow
               style={styles.button}
               title={l10n.SAVE}

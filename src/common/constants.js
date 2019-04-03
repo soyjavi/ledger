@@ -55,8 +55,9 @@ export default {
       zIndex: 2,
     },
     DIALOG_FRAME: {
-      borderRadius: UNIT * 2.2,
-      margin: OFFSET,
+      borderTopLeftRadius: UNIT,
+      borderTopRightRadius: UNIT,
+      margin: 0,
     },
     HEADER_HEIGHT: UNIT * 5.8,
   },

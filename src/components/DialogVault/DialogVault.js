@@ -86,7 +86,6 @@ class DialogVault extends PureComponent {
               color={COLOR.PRIMARY}
               disabled={busy || !valid}
               onPress={() => _onSubmit(store)}
-              rounded
               shadow
               style={styles.button}
               title={l10n.SAVE}

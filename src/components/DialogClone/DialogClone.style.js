@@ -6,13 +6,13 @@ import { LAYOUT, THEME } from '../../reactor/common';
 const { STYLE: { DIALOG, DIALOG_FRAME } } = C;
 
 const {
-  COLOR, OFFSET, UNIT, SPACE,
+  BORDER_RADIUS, COLOR, ELEVATION, SPACE, UNIT,
 } = THEME;
 
 export default StyleSheet.create({
   button: {
     flex: 1,
-    marginTop: OFFSET / 2,
+    marginTop: SPACE.S,
   },
 
   buttonSeparator: {
@@ -24,15 +24,16 @@ export default StyleSheet.create({
   frame: DIALOG_FRAME,
 
   info: {
-    borderRadius: OFFSET,
+    ...ELEVATION.SMALL,
+    borderRadius: BORDER_RADIUS,
     borderWidth: UNIT * 0.1,
     borderColor: COLOR.BASE,
-    padding: OFFSET,
-    marginVertical: OFFSET,
+    padding: SPACE.MEDIUM,
+    marginVertical: SPACE.MEDIUM,
   },
 
   map: {
-    marginVertical: OFFSET / 2,
+    marginVertical: SPACE.S,
   },
 
   row: LAYOUT.STYLE.ROW,
