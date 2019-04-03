@@ -1,15 +1,15 @@
-import { C, exchange } from '../../common';
+import { exchange } from '../../common';
 
-const { WEEKS } = C;
 const KEYS = ['progression', 'incomes', 'expenses', 'transfers'];
 const EXPENSES = 'expenses';
 const INCOMES = 'incomes';
 
 export default ({ baseCurrency, rates, vaults = [] }) => {
   const chart = {
-    balance: new Array(WEEKS).fill(0),
-    expenses: new Array(WEEKS).fill(0),
-    incomes: new Array(WEEKS).fill(0),
+    balance: new Array(12).fill(0),
+    expenses: new Array(12).fill(),
+    incomes: new Array(12).fill(),
+    week: new Array(7).fill(),
   };
   const currentMonth = {
     progression: 0, incomes: 0, expenses: 0, transfers: 0,
@@ -34,9 +34,21 @@ export default ({ baseCurrency, rates, vaults = [] }) => {
     balance += sameCurrency ? vaultBalance : exchange(vaultBalance, ...exchangeProps);
 
     Object.keys(vaultChart).forEach((key) => {
-      chart[key].forEach((week, index) => {
-        chart[key][index] += vaultChart[key][index];
-      });
+      if (key === 'balance') {
+        chart[key].forEach((_, index) => {
+          chart[key][index] += vaultChart[key][index];
+        });
+      } else {
+        vaultChart[key].forEach((categories, dayNumber) => {
+          if (categories) {
+            chart[key][dayNumber] = chart[key][dayNumber] || {};
+            Object.keys(categories).forEach((category) => {
+              chart[key][dayNumber][category] = chart[key][dayNumber][category] || 0;
+              chart[key][dayNumber][category] += categories[category] || 0;
+            });
+          }
+        });
+      }
     });
 
     KEYS.forEach((key) => {

@@ -3,7 +3,7 @@ import { Platform } from 'react-native';
 import { THEME } from '../reactor/common';
 import PKG from '../../package.json';
 
-const { SPACE, OFFSET, UNIT } = THEME;
+const { ELEVATION, SPACE, OFFSET, UNIT } = THEME;
 
 // const DEV = __DEV__ ? __DEV__ : { hello: 'world' }; // eslint-disable-line;
 // const isDev = packagerOpts && packagerOpts.dev;
@@ -33,6 +33,7 @@ export default {
     SESSION: 'Session',
     DASHBOARD: 'Dashboard',
     VAULT: 'Vault',
+    STATS: 'Stats',
   },
   SLIDER: {
     itemMargin: 0,
@@ -41,6 +42,7 @@ export default {
   STYLE: {
     BALANCE_CARD_HEIGHT: UNIT * 21.6,
     CARD: {
+      ...ELEVATION.CARD,
       borderRadius: UNIT,
       overflow: 'hidden',
       paddingVertical: SPACE.S,
@@ -106,6 +108,5 @@ export default {
   VAULT_TRANSFER: 99,
   VERSION: PKG.version,
 
-  WEEKS: 28,
   WIPE: 0,
 };
