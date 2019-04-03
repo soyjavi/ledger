@@ -1,4 +1,4 @@
-import { arrayOf, number, string } from 'prop-types';
+import { arrayOf, number, shape, string } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 
@@ -7,18 +7,27 @@ import styles from './Chart.style';
 
 const { COLOR } = THEME;
 
-const Chart = ({ color, values }) => {
+const Chart = ({ color, series = [], values = [] }) => {
+  const detailed = series.length > 7 || values.length > 7;
   let max = 0;
   let floor = 0;
 
-  if (values.length) {
-    max = Math.max(...values);
-    floor = Math.min(...(values.filter(value => value > 0))) / 1.05;
+  let sample = [];
+  if (values.length > 0) sample = values;
+  else {
+    series.forEach((serie, index) => {
+      sample[index] = serie ? Object.values(serie).reduce((a, b) => a += b) : 0;
+    });
+  }
+
+  if (sample.length) {
+    max = Math.max(...sample);
+    floor = Math.min(...(sample.filter(value => value > 0))) / 1.05;
   }
 
   return (
     <View style={styles.container}>
-      { values.map((value, index) => (
+      { sample.map((value, index) => (
         <View
           key={`${index}-${value}`} // eslint-disable-line
           style={[
@@ -37,11 +46,13 @@ const Chart = ({ color, values }) => {
 
 Chart.propTypes = {
   color: string,
+  series: arrayOf(shape),
   values: arrayOf(number),
 };
 
 Chart.defaultProps = {
-  color: COLOR.ACCENT,
+  color: COLOR.TEXT,
+  series: [],
   values: [],
 };
 

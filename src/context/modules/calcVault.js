@@ -1,21 +1,24 @@
 import { C, exchange } from '../../common';
 
-const { TX: { TYPE }, VAULT_TRANSFER, WEEKS } = C;
+const { TX: { TYPE }, VAULT_TRANSFER, WIPE } = C;
 const MS_IN_DAY = 1000 * 24 * 60 * 60;
 const MS_IN_WEEK = MS_IN_DAY * 7;
 const EXPENSES = 'expenses';
 const INCOMES = 'incomes';
+const CURRENT_MONTH = 11;
+const CURRENT_WEEK = 0;
 
 export default ({
   vault = {}, txs = [], baseCurrency, rates = {},
 }) => {
   const chart = {
-    balance: new Array(WEEKS).fill(0),
-    expenses: new Array(WEEKS).fill(0),
-    incomes: new Array(WEEKS).fill(0),
+    balance: new Array(12).fill(0),
+    expenses: new Array(12).fill(),
+    incomes: new Array(12).fill(),
+    week: new Array(7).fill(),
   };
   const now = new Date();
-  const currentMonth = now.toISOString().substr(0, 7);
+  const lastYear = new Date(now.getFullYear(), now.getMonth() - 11, 1);
   const stats = { incomes: {}, expenses: {} };
   const { currency } = vault;
   const exchangeProps = baseCurrency !== currency ? [currency, baseCurrency, rates] : undefined;
@@ -29,22 +32,39 @@ export default ({
     category, timestamp, type, value,
   }) => {
     const isExpense = type === TYPE.EXPENSE;
-    const ms = Math.abs(now - new Date(timestamp));
+    const date = new Date(timestamp);
+    const ms = Math.abs(now - date);
     const weekNumber = Math.floor(ms / MS_IN_WEEK);
+    const monthNumber = date.getMonth() - lastYear.getMonth() + (12 * (date.getFullYear() - lastYear.getFullYear()));
 
     balance += isExpense ? -(value) : value;
 
-    if (weekNumber < WEEKS) {
-      const weekIndex = (WEEKS - 1) - weekNumber;
-      const valueExchange = exchangeProps ? exchange(value, ...exchangeProps) : value;
+    const valueExchange = exchangeProps ? exchange(value, ...exchangeProps) : value;
 
-      chart.balance[weekIndex] += isExpense ? -(valueExchange) : valueExchange;
+    if (monthNumber >= 0) {
+      chart.balance[monthNumber] += isExpense ? -(valueExchange) : valueExchange;
+
+      // @TODO: DRY
+      chart.expenses[monthNumber] = chart.expenses[monthNumber] || {};
+      chart.expenses[monthNumber][category] = chart.expenses[monthNumber][category] || 0;
+      chart.incomes[monthNumber] = chart.incomes[monthNumber] || {};
+      chart.incomes[monthNumber][category] = chart.incomes[monthNumber][category] || 0;
+      // --
+
       if (category !== VAULT_TRANSFER) {
-        if (isExpense) chart.expenses[weekIndex] += valueExchange;
-        else chart.incomes[weekIndex] += valueExchange;
+        if (isExpense) chart.expenses[monthNumber][category] += valueExchange;
+        else chart.incomes[monthNumber][category] += valueExchange;
       }
 
-      if (currentMonth === (new Date(timestamp).toISOString()).substr(0, 7)) {
+      if (monthNumber === CURRENT_MONTH) {
+        if (weekNumber === CURRENT_WEEK) {
+          const dayNumber = Math.floor(ms / MS_IN_DAY);
+
+          chart.week[dayNumber] = chart.week[dayNumber] || {};
+          chart.week[dayNumber][category] = chart.week[dayNumber][category] || 0;
+          if (isExpense) chart.week[dayNumber][category] += valueExchange;
+        }
+
         if (category !== VAULT_TRANSFER) {
           const key = isExpense ? EXPENSES : INCOMES;
           stats[key][category] = (stats[key][category] || 0) + value;

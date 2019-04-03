@@ -1,16 +1,20 @@
 import { bool, shape } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
-import { BackHandler, ScrollView } from 'react-native';
+import { BackHandler, ScrollView, View } from 'react-native';
 
 import { C } from '../../common';
 import {
-  BalanceCard, DialogVault, FloatingButton, HeadingItem, VaultItem,
+  BalanceCard, Chart, DialogVault, FloatingButton, HeadingItem, VaultItem,
 } from '../../components';
 import { Consumer } from '../../context';
-import { Slider, Viewport } from '../../reactor/components';
+import {
+  Slider, Text, Touchable, Viewport,
+} from '../../reactor/components';
+import { THEME } from '../../reactor/common';
 import styles from './Dashboard.style';
 
 const { SCREEN, SLIDER } = C;
+const { COLOR } = THEME;
 
 class Dashboard extends PureComponent {
   static propTypes = {
@@ -52,16 +56,9 @@ class Dashboard extends PureComponent {
     navigation.navigate(SCREEN.VAULT, vault, props.navigation);
   }
 
-  _onStats = (type, data, { query }) => {
-    const stats = { type, ...data };
-
-    query({ method: 'groupByCategory', date: (new Date().toISOString()).substr(0, 7), ...stats });
-    this.setState({ dialog: true, stats });
-  }
-
   render() {
     const {
-      _onStats, _onToggleDialog, _onVault,
+      _onToggleDialog, _onVault,
       props: { visible, ...inherit },
       state: { dialog, stats },
     } = this;
@@ -79,6 +76,30 @@ class Dashboard extends PureComponent {
               <Fragment>
                 <ScrollView contentContainerStyle={styles.scroll}>
                   <BalanceCard currency={baseCurrency} title={l10n.BALANCE} {...overall} />
+
+                  <HeadingItem title={l10n.MONTHLY} />
+                  <Slider {...SLIDER} style={styles.slider}>
+                    <Touchable style={styles.card} onPress={() => navigation.navigate(SCREEN.STATS)} rippleColor='red'>
+                      <Text caption level={2} numberOfLines={1}>{l10n.BALANCE.toUpperCase()}</Text>
+                      <Chart values={overall.chart.balance} />
+                    </Touchable>
+
+                    <View style={styles.card}>
+                      <Text caption level={2} numberOfLines={1}>{l10n.EXPENSES.toUpperCase()}</Text>
+                      <Chart series={overall.chart.expenses} color={COLOR.EXPENSES} />
+                    </View>
+
+                    <View style={styles.card}>
+                      <Text caption level={2} numberOfLines={1}>{l10n.INCOMES.toUpperCase()}</Text>
+                      <Chart series={overall.chart.incomes} color={COLOR.INCOMES} />
+                    </View>
+
+                    <View style={styles.card}>
+                      <Text caption level={2} numberOfLines={1}>{l10n.EXPENSES.toUpperCase()}</Text>
+                      <Chart series={overall.chart.week} />
+                    </View>
+                  </Slider>
+
                   <HeadingItem title={l10n.VAULTS} />
                   <Slider
                     {...SLIDER}
@@ -87,8 +108,8 @@ class Dashboard extends PureComponent {
                       <VaultItem key={vault.hash} {...vault} onPress={() => _onVault({ navigation, store, vault })} />)}
                     style={styles.slider}
                   />
-                  <HeadingItem title='$Last Transactions' />
 
+                  <HeadingItem title='$Last Transactions' />
                 </ScrollView>
                 <FloatingButton onPress={_onToggleDialog} visible={!dialog} />
                 { visible && (
