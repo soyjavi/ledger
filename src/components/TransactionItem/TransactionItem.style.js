@@ -19,8 +19,7 @@ export default StyleSheet.create({
 
   container: {
     paddingVertical: OFFSET / 1.5,
-    paddingLeft: OFFSET * 1.5,
-    paddingRight: OFFSET,
+    paddingHorizontal: OFFSET,
   },
 
   content: {

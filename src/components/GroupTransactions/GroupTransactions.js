@@ -54,7 +54,7 @@ class GroupTransactions extends Component {
                 <Price
                   color={value > 0 ? COLOR.INCOMES : COLOR.EXPENSES}
                   subtitle
-                  level={2}
+                  level={3}
                   fixed={FIXED[baseCurrency]}
                   symbol={SYMBOL[baseCurrency]}
                   value={baseCurrency !== currency

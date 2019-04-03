@@ -1,4 +1,4 @@
-export default (timestamp, { TODAY, YESTERDAY, DAY_NAMES }) => {
+export default (timestamp, { MONTHS, TODAY, YESTERDAY }) => {
   const today = new Date();
   const date = new Date(timestamp);
 
@@ -8,5 +8,5 @@ export default (timestamp, { TODAY, YESTERDAY, DAY_NAMES }) => {
     if (date.getDate() === (today.getDate() - 1)) verboseDay = YESTERDAY; // @TODO How about if change month
   }
 
-  return verboseDay || `${DAY_NAMES[date.getDay()]} ${date.getDate()}`;
+  return verboseDay || `${date.getDate()} ${MONTHS[date.getMonth()].substring(0, 3)}`;
 };

@@ -121,9 +121,7 @@ class Vault extends Component {
                   </View>
                 )}
                 renderItem={({ item }) => (
-                  item.heading
-                    ? <HeadingItem lighten title={verboseMonth(item.timestamp, l10n)} />
-                    : <GroupTransactions {...item} currency={currency} onItem={tx => _onToggleClone(tx)} />
+                  <GroupTransactions {...item} currency={currency} onItem={tx => _onToggleClone(tx)} />
                 )}
               />
 

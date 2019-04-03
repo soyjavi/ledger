@@ -11,7 +11,6 @@ export default ({ txs }, { l10n: { CATEGORIES = [] } = {}, search = '', vault })
   let days = 0;
   let date;
   let dateIndex = 0;
-  let month;
 
   sortByTimestamp(txs).some((tx) => {
     if (vault === tx.vault) {
@@ -19,13 +18,7 @@ export default ({ txs }, { l10n: { CATEGORIES = [] } = {}, search = '', vault })
       const category = CATEGORIES[tx.type] ? CATEGORIES[tx.type][tx.category].toLowerCase() : undefined;
 
       if (!hasSearch || (title && title.includes(search)) || (category && category.includes(search))) {
-        const txMonth = new Date(new Date(tx.timestamp).getTime() - offset).toISOString().substr(0, 7);
         const txDate = new Date(new Date(tx.timestamp).getTime() - offset).toISOString().substr(0, 10);
-
-        if (month !== txMonth) {
-          month = txMonth;
-          dataSource.push({ heading: true, timestamp: tx.timestamp });
-        }
 
         if (date !== txDate) {
           days += 1;
