@@ -1,21 +1,18 @@
 import { shape, number, string } from 'prop-types';
-import React, { Fragment, Component } from 'react';
+import React, { Component } from 'react';
 import { Image, View } from 'react-native';
 
 import ASSETS from '../../assets';
 import { C, exchange } from '../../common';
 import { Consumer } from '../../context';
-import { THEME } from '../../reactor/common';
-import { Slider, Text, Touchable } from '../../reactor/components';
-import Chart from '../Chart';
+import { Slider, Text } from '../../reactor/components';
 import HeadingItem from '../HeadingItem';
 import Percentage from '../Percentage';
 import PriceFriendly from '../PriceFriendly';
 import styles from './BalanceCard.style';
 
 const { logo } = ASSETS;
-const { SCREEN, SLIDER } = C;
-const { COLOR } = THEME;
+const { SLIDER } = C;
 
 const MonthCard = ({ title, value }) => (
   <Consumer>
@@ -46,7 +43,6 @@ MonthCard.propTypes = {
 
 class BalanceCard extends Component {
   static propTypes = {
-    chart: shape({}),
     currency: string,
     currentBalance: number,
     currentMonth: shape({}),
@@ -54,7 +50,6 @@ class BalanceCard extends Component {
   };
 
   static defaultProps = {
-    chart: undefined,
     currency: 'EUR',
     currentBalance: undefined,
     currentMonth: {},
@@ -68,7 +63,7 @@ class BalanceCard extends Component {
 
   render() {
     const {
-      chart, currency, currentBalance, currentMonth, title, ...inherit
+      currency, currentBalance, currentMonth, title, ...inherit
     } = this.props;
 
     const {
@@ -80,7 +75,7 @@ class BalanceCard extends Component {
 
     return (
       <Consumer>
-        { ({ navigation, store: { baseCurrency, rates }, l10n }) => (
+        { ({ store: { baseCurrency, rates }, l10n }) => (
           <View style={[styles.container, inherit.style]}>
             <View style={styles.section}>
               <View style={styles.row}>
@@ -116,32 +111,6 @@ class BalanceCard extends Component {
               <MonthCard title={l10n.INCOMES} value={incomes} />
               <MonthCard title={`${l10n.VAULT} ${l10n.TRANSFERS}`} value={transfers} />
             </Slider>
-
-            { chart && (
-              <Fragment>
-                <HeadingItem title={l10n.LAST_6_MONTHS} />
-                <Slider {...SLIDER} style={styles.slider}>
-                  <Touchable
-                    style={styles.card}
-                    onPress={() => navigation.navigate(SCREEN.STATS)}
-                    rippleColor="red"
-                  >
-                    <Text caption level={2} numberOfLines={1}>{l10n.BALANCE.toUpperCase()}</Text>
-                    <Chart values={chart.balance} color={COLOR.INCOMES} />
-                  </Touchable>
-
-                  <View style={styles.card}>
-                    <Text caption level={2} numberOfLines={1}>{l10n.EXPENSES.toUpperCase()}</Text>
-                    <Chart values={chart.expenses} color={COLOR.EXPENSES} />
-                  </View>
-
-                  <View style={styles.card}>
-                    <Text caption level={2} numberOfLines={1}>{l10n.INCOMES.toUpperCase()}</Text>
-                    <Chart values={chart.incomes} color={COLOR.INCOMES} />
-                  </View>
-                </Slider>
-              </Fragment>
-            )}
           </View>
         )}
       </Consumer>
