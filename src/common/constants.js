@@ -11,6 +11,8 @@ const { ELEVATION, SPACE, OFFSET, UNIT } = THEME;
 const CARD_WIDTH = UNIT * 16;
 const IS_PRODUCTION = false;
 const IS_ANDROID = Platform.OS === 'android';
+const MS_IN_DAY = 1000 * 24 * 60 * 60;
+const MS_IN_WEEK = MS_IN_DAY * 7;
 
 export default {
   ENDPOINT: IS_PRODUCTION ? 'https://voltvault.glitch.me' : 'http://localhost:8080',
@@ -25,7 +27,9 @@ export default {
 
   LANGUAGE: 'en-EN',
   LOCATION_PROPS: { enableHighAccuracy: true },
-  MS_IN_WEEK: 1000 * 7 * 24 * 60 * 60,
+
+  MS_IN_DAY,
+  MS_IN_WEEK,
 
   NAME: PKG.name,
 

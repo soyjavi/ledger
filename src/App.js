@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { C } from './common';
-import { Consumer, ConsumerNavigation } from './context';
+import { Consumer, ConsumerNavigation, ConsumerStore } from './context';
 import { LayoutView, Snackbar } from './reactor/components';
 import {
   Session, Stats, Dashboard, Vault,
@@ -22,8 +22,9 @@ export default props => (
 
         <Dashboard backward={current !== DASHBOARD} visible={stack.includes(DASHBOARD)} />
 
-        <Stats backward={current !== STATS} visible={stack.includes(STATS)} />
-
+        <ConsumerStore>
+          { store => <Stats backward={current !== STATS} {...store} visible={stack.includes(STATS)} /> }
+        </ConsumerStore>
 
         { stack.includes(DASHBOARD) && (
           <Vault

@@ -1,10 +1,8 @@
 import { C, exchange } from '../../common';
 
-const { TX: { TYPE }, VAULT_TRANSFER, WIPE } = C;
-const MS_IN_DAY = 1000 * 24 * 60 * 60;
-const MS_IN_WEEK = MS_IN_DAY * 7;
-const EXPENSES = 'expenses';
-const INCOMES = 'incomes';
+const {
+  MS_IN_DAY, MS_IN_WEEK, TX: { TYPE }, VAULT_TRANSFER, WIPE,
+} = C;
 const CURRENT_MONTH = 11;
 const CURRENT_WEEK = 0;
 
@@ -19,7 +17,6 @@ export default ({
   };
   const now = new Date();
   const lastYear = new Date(now.getFullYear(), now.getMonth() - 11, 1);
-  const stats = { incomes: {}, expenses: {} };
   const { currency } = vault;
   const exchangeProps = baseCurrency !== currency ? [currency, baseCurrency, rates] : undefined;
   let { balance = 0 } = vault;
@@ -66,9 +63,6 @@ export default ({
         }
 
         if (category !== VAULT_TRANSFER) {
-          const key = isExpense ? EXPENSES : INCOMES;
-          stats[key][category] = (stats[key][category] || 0) + value;
-
           if (isExpense) expenses += value;
           else incomes += value;
           progression += isExpense ? -(value) : value;
@@ -86,6 +80,5 @@ export default ({
       progression: exchangeProps ? exchange(progression, ...exchangeProps) : progression,
       transfers: exchangeProps ? exchange(transfers, ...exchangeProps) : transfers,
     },
-    stats,
   });
 };

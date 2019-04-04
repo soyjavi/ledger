@@ -1,8 +1,6 @@
 import { exchange } from '../../common';
 
 const KEYS = ['progression', 'incomes', 'expenses', 'transfers'];
-const EXPENSES = 'expenses';
-const INCOMES = 'incomes';
 
 export default ({ baseCurrency, rates, vaults = [] }) => {
   const chart = {
@@ -14,7 +12,6 @@ export default ({ baseCurrency, rates, vaults = [] }) => {
   const currentMonth = {
     progression: 0, incomes: 0, expenses: 0, transfers: 0,
   };
-  const stats = { incomes: {}, expenses: {} };
   let balance = 0;
   let currentBalance = 0;
   let total = 0;
@@ -25,7 +22,6 @@ export default ({ baseCurrency, rates, vaults = [] }) => {
     currentBalance: vaultCurrentBalance,
     currency,
     currentMonth: vaultLast30Days,
-    stats: vaultStats,
   }) => {
     const sameCurrency = currency === baseCurrency;
     const exchangeProps = [currency, baseCurrency, rates];
@@ -54,16 +50,6 @@ export default ({ baseCurrency, rates, vaults = [] }) => {
     KEYS.forEach((key) => {
       currentMonth[key] += vaultLast30Days[key];
     });
-
-    [EXPENSES, INCOMES].forEach((type) => {
-      Object.keys(vaultStats[type]).forEach((category) => {
-        const amount = sameCurrency
-          ? vaultStats[type][category]
-          : exchange(vaultStats[type][category], ...exchangeProps);
-
-        stats[type][category] = (stats[type][category] || 0) + amount;
-      });
-    });
   });
 
   return {
@@ -79,9 +65,5 @@ export default ({ baseCurrency, rates, vaults = [] }) => {
     },
     currentBalance,
     currentMonth,
-    stats: {
-      incomes: Object.keys(stats.incomes).map(category => ({ category, value: stats.incomes[category] })),
-      expenses: Object.keys(stats.expenses).map(category => ({ category, value: stats.expenses[category] })),
-    },
   };
 };

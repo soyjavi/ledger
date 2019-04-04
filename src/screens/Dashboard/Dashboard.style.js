@@ -4,7 +4,7 @@ import { C } from '../../common';
 import { THEME } from '../../reactor/common';
 
 const { STYLE: { CARD, HEADER_HEIGHT } } = C;
-const { COLOR, OFFSET } = THEME;
+const { COLOR, SPACE } = THEME;
 
 export default StyleSheet.create({
   scroll: {
@@ -12,14 +12,14 @@ export default StyleSheet.create({
   },
 
   slider: {
-    marginVertical: OFFSET,
-    paddingRight: OFFSET * 4,
+    marginVertical: SPACE.MEDIUM,
+    paddingRight: SPACE.XXS,
   },
 
   card: {
     ...CARD,
     backgroundColor: COLOR.BASE,
     flex: 1,
-    marginLeft: OFFSET,
+    marginLeft: SPACE.MEDIUM,
   },
 });

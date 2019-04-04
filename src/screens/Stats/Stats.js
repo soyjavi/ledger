@@ -1,108 +1,94 @@
-import { bool, shape } from 'prop-types';
+import { arrayOf, bool, shape } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
-import { BackHandler, ScrollView } from 'react-native';
+import { BackHandler, ScrollView, View } from 'react-native';
 
 import ASSETS from '../../assets';
-import { C } from '../../common';
-import {
-  BalanceCard, DialogStats, Header, HeadingItem, SliderStats, VaultItem,
-} from '../../components';
+import { Chart, Header, HeadingItem } from '../../components';
 import { Consumer } from '../../context';
-import { ENV } from '../../reactor/common';
-import { Slider, Viewport } from '../../reactor/components';
+import { ENV, THEME } from '../../reactor/common';
+import { Activity, Text, Viewport } from '../../reactor/components';
+import { ItemGroupCategories } from './components';
+import query from './modules/query';
 import styles from './Stats.style';
 
 const { iconBack } = ASSETS;
-const { SCREEN, SLIDER, TX: { TYPE } } = C;
+const { COLOR } = THEME;
 const { IS_WEB } = ENV;
 
 class Stats extends PureComponent {
   static propTypes = {
     backward: bool,
+    txs: arrayOf(shape({})),
     navigation: shape({}),
+    vaults: arrayOf(shape({})),
     visible: bool,
   };
 
   static defaultProps = {
     backward: false,
+    txs: undefined,
     navigation: undefined,
+    vaults: undefined,
     visible: true,
   };
 
   state = {
-    dialog: false,
-    stats: undefined,
+    values: undefined,
   };
 
-  componentWillReceiveProps({ backward }) {
+  componentWillReceiveProps({
+    backward, visible, ...inherit
+  }) {
     const method = backward ? 'removeEventListener' : 'addEventListener';
 
+    if (visible) {
+      this.setState({ values: undefined });
+      this.setState({ values: query(inherit, { month: true }) });
+    }
+
     BackHandler[method]('hardwareBackPress', () => {
-      const { state: { dialog } } = this;
-      if (dialog) this.setState({ dialog: false, stats: undefined });
       return true;
     });
   }
 
-  _onToggleDialog = () => {
-    const { state: { dialog } } = this;
-    this.setState({ dialog: !dialog, stats: undefined });
-  }
-
-  _onVault = ({ navigation, store, vault }) => {
-    const { props } = this;
-
-    store.query({ vault: vault.hash, method: 'groupByDay', date: new Date().toISOString().substr(0, 7) });
-    navigation.navigate(SCREEN.VAULT, vault, props.navigation);
-  }
-
-  _onStats = (type, data, { query }) => {
-    const stats = { type, ...data };
-
-    query({ method: 'groupByCategory', date: (new Date().toISOString()).substr(0, 7), ...stats });
-    this.setState({ dialog: true, stats });
-  }
-
   render() {
-    const {
-      _onStats, _onToggleDialog, _onVault,
-      props: { visible, ...inherit },
-      state: { dialog, stats },
-    } = this;
+    const { props: { visible, ...inherit }, state: { values } } = this;
 
     return (
       <Viewport {...inherit} scroll={false} visible={visible}>
         { visible && (
           <Consumer>
-            { ({
-              l10n, navigation,
-              store: {
-                baseCurrency, overall: { stats: { expenses = [], incomes = [] } = {}, ...overall }, vaults, ...store
-              },
-            }) => (
+            { ({ l10n, navigation, store: { overall } }) => (
               <Fragment>
                 <Header
                   left={IS_WEB ? { icon: iconBack, onPress: () => navigation.goBack() } : undefined}
+                  title={l10n.STATS}
                   visible={visible}
                 />
-                <ScrollView contentContainerStyle={styles.scroll}>
-                  { incomes.length > 0 && (
-                    <SliderStats
-                      dataSource={incomes}
-                      type={TYPE.INCOME}
-                      onItem={data => _onStats(TYPE.INCOME, data, store)}
-                    />
-                  )}
+                <ScrollView contentContainerStyle={styles.container}>
+                  <HeadingItem title="$This Year" />
+                  <View style={styles.content}>
+                    <View style={[styles.card, styles.cardLarge]}>
+                      <Text caption level={2} numberOfLines={1}>$CAPTION CONTEXT</Text>
+                      <Chart captions={l10n.MONTHS} values={overall.chart.balance} />
+                    </View>
 
-                  { expenses.length > 0 && (
-                    <SliderStats
-                      dataSource={expenses}
-                      type={TYPE.EXPENSE}
-                      onItem={data => _onStats(TYPE.EXPENSE, data, store)}
-                    />
-                  )}
+                    <View style={[styles.card, styles.cardSmall, styles.cardGap]}>
+                      <Text caption level={2} numberOfLines={1}>{l10n.EXPENSES.toUpperCase()}</Text>
+                      <Chart series={overall.chart.expenses} color={COLOR.EXPENSES} />
+                    </View>
+
+                    <View style={[styles.card, styles.cardSmall]}>
+                      <Text caption level={2} numberOfLines={1}>{l10n.INCOMES.toUpperCase()}</Text>
+                      <Chart series={overall.chart.incomes} color={COLOR.INCOMES} />
+                    </View>
+                  </View>
+
+                  { !values && <Activity /> }
+
+                  { values && values[0] && <ItemGroupCategories type={0} dataSource={values[0]} /> }
+                  { values && values[1] && <ItemGroupCategories type={1} dataSource={values[1]} /> }
                 </ScrollView>
-                <DialogStats {...stats} visible={stats && dialog} onClose={_onToggleDialog} />
               </Fragment>
             )}
           </Consumer>

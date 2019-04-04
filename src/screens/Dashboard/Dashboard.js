@@ -86,16 +86,6 @@ class Dashboard extends PureComponent {
 
                     <View style={styles.card}>
                       <Text caption level={2} numberOfLines={1}>{l10n.EXPENSES.toUpperCase()}</Text>
-                      <Chart series={overall.chart.expenses} color={COLOR.EXPENSES} />
-                    </View>
-
-                    <View style={styles.card}>
-                      <Text caption level={2} numberOfLines={1}>{l10n.INCOMES.toUpperCase()}</Text>
-                      <Chart series={overall.chart.incomes} color={COLOR.INCOMES} />
-                    </View>
-
-                    <View style={styles.card}>
-                      <Text caption level={2} numberOfLines={1}>{l10n.EXPENSES.toUpperCase()}</Text>
                       <Chart series={overall.chart.week} />
                     </View>
                   </Slider>
@@ -108,8 +98,6 @@ class Dashboard extends PureComponent {
                       <VaultItem key={vault.hash} {...vault} onPress={() => _onVault({ navigation, store, vault })} />)}
                     style={styles.slider}
                   />
-
-                  <HeadingItem title='$Last Transactions' />
                 </ScrollView>
                 <FloatingButton onPress={_onToggleDialog} visible={!dialog} />
                 { visible && (
