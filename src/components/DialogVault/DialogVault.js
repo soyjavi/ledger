@@ -88,7 +88,7 @@ class DialogVault extends PureComponent {
               onPress={() => _onSubmit(store)}
               shadow
               style={styles.button}
-              title={l10n.SAVE}
+              title={!busy ? l10n.SAVE : undefined}
             />
           </Dialog>
         )}

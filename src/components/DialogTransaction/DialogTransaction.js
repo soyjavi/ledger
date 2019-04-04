@@ -110,7 +110,6 @@ class DialogTransaction extends PureComponent {
             <View style={styles.form}>
               <Form
                 attributes={translate(hydrateTransaction({ l10n, type }), l10n)}
-                color={color}
                 onValid={_onValid}
                 onChange={_onChange}
                 value={form}
@@ -126,12 +125,12 @@ class DialogTransaction extends PureComponent {
 
             <Button
               activity={busy}
-              color={color}
+              color={COLOR.PRIMARY}
               disabled={busy || !valid}
               onPress={() => _onSubmit({ l10n, store })}
               shadow
               style={styles.button}
-              title={l10n.SAVE}
+              title={!busy ? l10n.SAVE : undefined}
             />
           </Dialog>
         )}

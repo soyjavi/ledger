@@ -112,6 +112,7 @@ class DialogClone extends PureComponent {
               <Button
                 activity={busyWipe}
                 contained={false}
+                disabled={busyWipe}
                 onPress={() => _onSubmit(store, true)}
                 outlined
                 style={styles.button}
@@ -120,7 +121,8 @@ class DialogClone extends PureComponent {
               <View style={styles.buttonSeparator} />
               <Button
                 activity={busyClone}
-                color={type === EXPENSE ? COLOR.EXPENSES : COLOR.INCOMES}
+                color={COLOR.PRIMARY}
+                disabled={busyClone}
                 onPress={() => _onSubmit(store, false)}
                 shadow
                 style={styles.button}

@@ -104,12 +104,12 @@ class DialogTransfer extends PureComponent {
             />
             <Button
               activity={busy}
-              color={COLOR.ACCENT}
+              color={COLOR.PRIMARY}
               disabled={busy || !valid}
               onPress={() => _onSubmit({ l10n, store })}
               shadow
               style={styles.button}
-              title={l10n.SAVE}
+              title={!busy ? l10n.SAVE : undefined}
             />
           </Dialog>
         )}
