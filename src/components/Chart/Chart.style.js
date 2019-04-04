@@ -2,31 +2,49 @@ import { StyleSheet } from 'react-native';
 
 import { LAYOUT, THEME } from '../../reactor/common';
 
-const { BORDER_RADIUS, UNIT } = THEME;
-const BAR_SIZE = UNIT * 0.8;
-const CONTAINER_SIZE = UNIT * 4.8;
+const { BORDER_RADIUS, UNIT, SPACE } = THEME;
+
+const ITEM_DETAILED_SIZE = UNIT * 2.2;
 
 export default StyleSheet.create({
-  container: {
+  caption: {
+    textAlign: 'center',
+    height: ITEM_DETAILED_SIZE,
+    width: ITEM_DETAILED_SIZE,
+    overflow: 'hidden',
+  },
+
+  captions: {
     ...LAYOUT.STYLE.ROW,
-    alignItems: 'flex-end',
-    flex: 1,
-    height: CONTAINER_SIZE,
+    marginTop: SPACE.XXS,
     justifyContent: 'space-between',
   },
 
+  container: {
+    alignItems: 'flex-end',
+    height: UNIT * 4.8,
+  },
+
   detailed: {
-    borderTopLeftRadius: BAR_SIZE / 2,
-    borderTopRightRadius: BAR_SIZE / 2,
-    height: '100%',
-    minHeight: BAR_SIZE,
-    width: BAR_SIZE,
+    height: UNIT * 9.6,
   },
 
   item: {
-    borderRadius: BORDER_RADIUS,
+    borderRadius: BORDER_RADIUS / 2,
     height: '100%',
-    minHeight: BAR_SIZE,
-    width: BAR_SIZE,
+    minHeight: UNIT * 0.7,
+    width: UNIT * 0.7,
+  },
+
+  itemDetailed: {
+    borderRadius: BORDER_RADIUS,
+    minHeight: ITEM_DETAILED_SIZE,
+    width: ITEM_DETAILED_SIZE,
+  },
+
+  row: {
+    ...LAYOUT.STYLE.ROW,
+    flex: 1,
+    justifyContent: 'space-between',
   },
 });
