@@ -4,15 +4,17 @@ import { C } from '../../common';
 import { LAYOUT, THEME } from '../../reactor/common';
 
 const { STYLE } = C;
-const { COLOR, OFFSET, UNIT } = THEME;
+const { COLOR, SPACE, UNIT } = THEME;
 
 export default StyleSheet.create({
   container: {
     ...STYLE.CARD,
     backgroundColor: COLOR.BASE,
-    marginLeft: OFFSET,
-    minHeight: UNIT * 12.8,
+    marginBottom: SPACE.MEDIUM,
+    marginLeft: SPACE.MEDIUM,
+    minHeight: UNIT * 12,
     overflow: 'hidden',
+    width: (LAYOUT.VIEWPORT.W / 2) - (SPACE.MEDIUM * 1.5),
   },
 
   content: {
