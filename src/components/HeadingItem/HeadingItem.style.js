@@ -5,12 +5,16 @@ import { LAYOUT, THEME } from '../../reactor/common';
 const { COLOR, SPACE } = THEME;
 
 export default StyleSheet.create({
-  container: {
-    ...LAYOUT.STYLE.ROW,
+  breakline: {
     borderBottomColor: COLOR.BASE,
     borderBottomWidth: 1,
-    paddingHorizontal: SPACE.MEDIUM,
-    paddingTop: SPACE.MEDIUM,
-    paddingBottom: SPACE.XS,
+  },
+
+  container: {
+    ...LAYOUT.STYLE.ROW,
+    paddingVertical: SPACE.XS,
+    marginLeft: SPACE.MEDIUM,
+    marginRight: SPACE.MEDIUM,
+
   },
 });

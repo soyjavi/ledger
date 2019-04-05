@@ -1,4 +1,4 @@
-import { node, string } from 'prop-types';
+import { bool, node, string } from 'prop-types';
 import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
@@ -7,19 +7,23 @@ import styles from './HeadingItem.style';
 
 class HeadingItem extends PureComponent {
   static propTypes = {
+    breakline: bool,
     children: node,
     title: string.isRequired,
   };
 
   static defaultProps = {
+    breakline: false,
     children: undefined,
   };
 
   render() {
-    const { props: { children, title, ...inherit } } = this;
+    const {
+      breakline, children, title, ...inherit
+    } = this.props;
 
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, breakline && styles.breakline]}>
         <Text subtitle level={3} {...inherit}>{title}</Text>
         { children }
       </View>
