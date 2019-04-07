@@ -1,44 +1,22 @@
 import { shape, number, string } from 'prop-types';
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Image, View } from 'react-native';
 
 import ASSETS from '../../assets';
 import { C, exchange } from '../../common';
 import { Consumer } from '../../context';
-import { Slider, Text } from '../../reactor/components';
+import { Button, Text } from '../../reactor/components';
+import Chart from '../Chart';
 import HeadingItem from '../HeadingItem';
 import Percentage from '../Percentage';
 import PriceFriendly from '../PriceFriendly';
 import styles from './BalanceCard.style';
 
+const { SCREEN } = C;
 const { logo } = ASSETS;
-const { SLIDER } = C;
 
-const MonthCard = ({ title, value }) => (
-  <Consumer>
-    { ({ store: { baseCurrency }, l10n }) => (
-      <View style={[styles.card, value === 0 && styles.cardDisabled]}>
-        <Text caption level={2} lighten={value === 0} numberOfLines={1}>{title.toUpperCase()}</Text>
-        <PriceFriendly headline level={5} lighten={value === 0} currency={baseCurrency} value={value} />
-        <View style={styles.row}>
-          <PriceFriendly
-            subtitle
-            level={3}
-            lighten
-            fixed={0}
-            currency={baseCurrency}
-            value={value / (new Date()).getDate()}
-          />
-          <Text level={3} lighten>{` / ${l10n.DAY}`}</Text>
-        </View>
-      </View>
-    )}
-  </Consumer>
-);
-
-MonthCard.propTypes = {
-  title: string.isRequired,
-  value: number.isRequired,
+const captionProps = {
+  caption: true, level: 2, lighten: true, numberOfLines: 1, style: styles.cardCaption,
 };
 
 class BalanceCard extends Component {
@@ -66,51 +44,58 @@ class BalanceCard extends Component {
       currency, currentBalance, currentMonth, title, ...inherit
     } = this.props;
 
-    const {
-      progression = 0, incomes = 0, expenses = 0, transfers = 0,
-    } = currentMonth;
+    const { progression = 0, incomes = 0, expenses = 0 } = currentMonth;
     const progressionPercentage = currentBalance - progression > 0
       ? (progression * 100) / (currentBalance - progression)
       : progression;
 
+    console.log('inherit', inherit);
+
     return (
       <Consumer>
-        { ({ store: { baseCurrency, rates }, l10n }) => (
+        { ({
+          l10n,
+          navigation,
+          store: { baseCurrency, rates },
+        }) => (
           <View style={[styles.container, inherit.style]}>
-            <View style={styles.section}>
+            <View style={styles.content}>
               <View style={styles.row}>
                 <Image source={logo} resizeMode="contain" style={styles.logo} />
-                <Text subtitle level={2} style={styles.subtitle}>{title}</Text>
+                <Text caption level={2} lighten>{title.toUpperCase()}</Text>
               </View>
               <PriceFriendly
-                currency={baseCurrency}
                 headline
                 level={4}
+                currency={baseCurrency}
                 value={baseCurrency !== currency
                   ? exchange(Math.abs(currentBalance), currency, baseCurrency, rates)
                   : Math.abs(currentBalance)}
               />
-              { baseCurrency !== currency && (
-                <PriceFriendly currency={currency} subtitle level={2} lighten value={currentBalance} />)}
+              <View style={styles.row}>
+                { baseCurrency !== currency && (
+                  <PriceFriendly currency={currency} value={currentBalance} subtitle level={2} lighten />
+                )}
+              </View>
             </View>
 
-            <HeadingItem title={l10n.CURRENT_MONTH} />
-            <Slider {...SLIDER} style={styles.slider}>
+            <HeadingItem title={l10n.CURRENT_MONTH}>
+              <Button outlined small title="$Show" onPress={() => navigation.navigate(SCREEN.STATS)} />
+            </HeadingItem>
+            <View style={[styles.row, styles.cards]}>
               <View style={styles.card}>
-                <Text caption level={2} numberOfLines={1}>{l10n.BALANCE.toUpperCase()}</Text>
-                <Percentage headline level={5} value={progressionPercentage} />
-                <PriceFriendly
-                  subtitle
-                  level={3}
-                  lighten
-                  currency={baseCurrency}
-                  value={progression}
-                />
+                <Percentage headline level={6} value={progressionPercentage} />
+                <Text {...captionProps}>{l10n.PROGRESS.toUpperCase()}</Text>
               </View>
-              <MonthCard title={l10n.EXPENSES} value={expenses} />
-              <MonthCard title={l10n.INCOMES} value={incomes} />
-              <MonthCard title={`${l10n.VAULT} ${l10n.TRANSFERS}`} value={transfers} />
-            </Slider>
+              <View style={styles.card}>
+                <PriceFriendly headline level={6} lighten={incomes === 0} currency={baseCurrency} value={incomes} />
+                <Text {...captionProps}>{l10n.INCOMES.toUpperCase()}</Text>
+              </View>
+              <View style={[styles.card, styles.cardLast]}>
+                <PriceFriendly headline level={6} lighten={expenses === 0} currency={baseCurrency} value={expenses} />
+                <Text {...captionProps}>{l10n.EXPENSES.toUpperCase()}</Text>
+              </View>
+            </View>
           </View>
         )}
       </Consumer>

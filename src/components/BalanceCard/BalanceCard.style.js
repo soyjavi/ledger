@@ -4,27 +4,41 @@ import { C } from '../../common';
 import { LAYOUT, THEME } from '../../reactor/common';
 
 const { STYLE } = C;
-const { COLOR, OFFSET, UNIT } = THEME;
+const { COLOR, SPACE, UNIT } = THEME;
 
 export default StyleSheet.create({
-  alignRight: {
-    textAlign: 'right',
-  },
-
   card: {
     ...STYLE.CARD,
     backgroundColor: COLOR.BASE,
     flex: 1,
-    marginLeft: OFFSET,
+    justifyContent: 'space-between',
+    marginRight: SPACE.MEDIUM,
+    paddingVertical: SPACE.MEDIUM,
   },
 
-  cardDisabled: {
-    opacity: 0.33,
+  cardCaption: {
+    marginTop: SPACE.XXS,
+  },
+
+  cardLast: {
+    marginRight: 0,
+  },
+
+  cards: {
+    paddingHorizontal: SPACE.MEDIUM,
   },
 
   container: {
-    marginTop: OFFSET,
-    zIndex: 1,
+    backgroundColor: COLOR.WHITE,
+    marginBottom: SPACE.MEDIUM,
+    paddingVertical: SPACE.REGULAR,
+    borderBottomColor: COLOR.BASE,
+    borderBottomWidth: 1,
+  },
+
+  content: {
+    paddingHorizontal: SPACE.MEDIUM,
+    marginBottom: SPACE.MEDIUM,
   },
 
   logo: {
@@ -35,24 +49,4 @@ export default StyleSheet.create({
   },
 
   row: LAYOUT.STYLE.ROW,
-
-  section: {
-    marginHorizontal: OFFSET,
-    marginBottom: OFFSET,
-  },
-
-  separator: {
-    flex: 1,
-  },
-
-  summary: {
-    alignItems: 'flex-start',
-    marginBottom: OFFSET,
-  },
-
-  slider: {
-    marginVertical: OFFSET,
-    paddingRight: OFFSET * 4,
-  },
-
 });
