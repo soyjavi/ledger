@@ -15,6 +15,5 @@ export default StyleSheet.create({
     paddingVertical: SPACE.XS,
     marginLeft: SPACE.MEDIUM,
     marginRight: SPACE.MEDIUM,
-
   },
 });

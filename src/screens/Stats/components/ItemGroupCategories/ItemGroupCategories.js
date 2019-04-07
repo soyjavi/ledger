@@ -32,16 +32,16 @@ class ItemGroupCategories extends PureComponent {
     return (
       <Consumer>
         { ({ store: { baseCurrency }, l10n }) => (
-          <View style={styles.container}>
+          <View >
             <HeadingItem title={isExpense ? l10n.EXPENSES : l10n.INCOMES} />
             <View>
               { Object.keys(dataSource).map(category => (
-                <View key={category}>
-                  <HeadingItem title={l10n.CATEGORIES[type][category]}>
+                <View key={category} style={styles.container}>
+                  <HeadingItem breakline subtitle={l10n.CATEGORIES[type][category]}>
                     <View style={styles.heading}>
                       <Price
                         subtitle
-                        level={2}
+                        level={3}
                         fixed={FIXED[baseCurrency]}
                         symbol={SYMBOL[baseCurrency]}
                         value={total[category]}

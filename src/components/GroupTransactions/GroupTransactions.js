@@ -48,7 +48,7 @@ class GroupTransactions extends Component {
       <Consumer>
         { ({ store: { baseCurrency, rates }, l10n }) => (
           <View>
-            <HeadingItem title={verboseDate(timestamp, l10n)}>
+            <HeadingItem breakline subtitle={verboseDate(timestamp, l10n)}>
               <View style={styles.heading}>
                 <Icon value={value > 0 ? iconIncome : iconExpense} style={styles.icon} />
                 <Price

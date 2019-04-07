@@ -9,17 +9,18 @@ const {
 
 export default StyleSheet.create({
   bar: {
-    borderRadius: BORDER_RADIUS / 2,
-    height: UNIT * 0.7,
-    width: '50%',
     backgroundColor: COLOR.PRIMARY,
+    borderRadius: BORDER_RADIUS / 2,
+    height: UNIT * 0.2,
+    minWidth: UNIT * 0.2,
   },
 
   container: {
+    marginBottom: SPACE.REGULAR,
   },
 
   content: {
-    paddingTop: SPACE.XS,
+    paddingTop: SPACE.XXS,
     paddingHorizontal: SPACE.MEDIUM,
   },
 

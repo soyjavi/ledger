@@ -9,22 +9,26 @@ class HeadingItem extends PureComponent {
   static propTypes = {
     breakline: bool,
     children: node,
-    title: string.isRequired,
+    subtitle: string,
+    title: string,
   };
 
   static defaultProps = {
     breakline: false,
     children: undefined,
+    subtitle: undefined,
+    title: undefined,
   };
 
   render() {
     const {
-      breakline, children, title, ...inherit
+      breakline, children, subtitle, title, ...inherit
     } = this.props;
 
     return (
       <View style={[styles.container, breakline && styles.breakline]}>
-        <Text subtitle level={3} {...inherit}>{title}</Text>
+        { title && <Text headline level={6} {...inherit}>{title}</Text> }
+        { subtitle && <Text subtitle level={3} {...inherit}>{subtitle}</Text> }
         { children }
       </View>
     );
