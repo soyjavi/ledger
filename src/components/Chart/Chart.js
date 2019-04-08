@@ -1,4 +1,6 @@
-import { arrayOf, number, shape, string } from 'prop-types';
+import {
+  arrayOf, bool, number, string,
+} from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 
@@ -9,46 +11,70 @@ import styles from './Chart.style';
 const { COLOR } = THEME;
 
 const Chart = ({
-  captions, color, series, values,
+  captions, color, inverted, scale, symbol, values, ...inherit
 }) => {
   let max = 0;
   let floor = 0;
+  let scaleValues = [];
+  let thousands;
 
-  let sample = [];
-  if (values.length > 0) sample = values;
-  else {
-    series.forEach((serie, index) => {
-      sample[index] = serie ? Object.values(serie).reduce((a, b) => a += b) : 0;
-    });
+  if (values.length) {
+    max = Math.max(...values);
+    floor = Math.min(...(values.filter(value => value > 0))) / 1.05;
   }
 
-  if (sample.length) {
-    max = Math.max(...sample);
-    floor = Math.min(...(sample.filter(value => value > 0))) / 1.05;
+  if (scale) {
+    thousands = max >= 1000;
+    const maxScale = parseInt(thousands ? max / 1000 : max, 10);
+
+    const gap = floor + ((max - floor) / 2);
+    const middleScale = parseInt(thousands ? gap / 1000 : gap, 10);
+    scaleValues = !inverted ? [maxScale, middleScale, 0] : ['', middleScale, maxScale];
   }
 
   return (
-    <View>
-      <View style={[styles.row, styles.container, captions && styles.detailed]}>
-        { sample.map((value, index) => (
-          <View
-            key={`${index}-${value}`} // eslint-disable-line
-            style={[
-              styles.item,
-              captions && styles.itemDetailed,
-              {
-                backgroundColor: color,
-                height: `${parseInt(((value - floor) * 100) / (max - floor), 10)}%`,
-                opacity: value === 0 ? 0.2 : 1,
-              },
-            ]}
-          />
+    <View style={[styles.container, inherit.styleContainer]}>
+      { scale && (
+        <View style={[styles.scale, captions && styles.scaleCaptions]}>
+          <View style={styles.scaleValues}>
+            { scaleValues.map(value => (
+              <Text lighten style={styles.caption}>
+                {`${value}${thousands && value > 0 ? 'k' : ''}`}
+              </Text>
+            ))}
+          </View>
+          <View style={styles.scaleLines}>
+            { scaleValues.map(() => <View style={styles.scaleLine} />)}
+          </View>
+        </View>
+      )}
+
+      <View style={[styles.content, styles.row, scale && styles.rowScale, inherit.style]}>
+        { values.map((value, index) => (
+          <View style={[styles.column, inverted && styles.inverted]}>
+            <View
+              key={`${index}-${value}`} // eslint-disable-line
+              style={[
+                styles.item,
+                inverted && styles.itemInverted,
+                {
+                  backgroundColor: color,
+                  height: `${parseInt(((value - floor) * 100) / (max - floor), 10)}%`,
+                  opacity: value === 0 ? 0.2 : 1,
+                },
+              ]}
+            />
+          </View>
         ))}
       </View>
       { captions && (
-        <View style={[styles.row, styles.captions]}>
+        <View style={[styles.captions, styles.row, scale && styles.rowScale]}>
           { captions.map(caption => (
-            <Text key={caption} caption level={2} lighten style={styles.caption}>{caption.substring(0, 3)}</Text>
+            <View style={styles.column}>
+              <Text key={caption} caption level={2} lighten style={styles.caption}>
+                {caption.substring(0, 3).toUpperCase()}
+              </Text>
+            </View>
           ))}
         </View>
       )}
@@ -60,14 +86,18 @@ const Chart = ({
 Chart.propTypes = {
   captions: arrayOf(string),
   color: string,
-  series: arrayOf(shape),
+  inverted: bool,
+  scale: bool,
+  symbol: string,
   values: arrayOf(number),
 };
 
 Chart.defaultProps = {
   captions: undefined,
-  color: COLOR.TEXT,
-  series: [],
+  color: COLOR.PRIMARY,
+  inverted: false,
+  scale: true,
+  symbol: undefined,
   values: [],
 };
 
