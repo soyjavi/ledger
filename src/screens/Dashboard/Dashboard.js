@@ -4,17 +4,13 @@ import { BackHandler, ScrollView, View } from 'react-native';
 
 import { C } from '../../common';
 import {
-  BalanceCard, Chart, DialogVault, FloatingButton, HeadingItem, VaultItem,
+  BalanceCard, DialogVault, FloatingButton, Header, Heading, VaultItem,
 } from '../../components';
 import { Consumer } from '../../context';
-import {
-  Slider, Text, Touchable, Viewport,
-} from '../../reactor/components';
-import { THEME } from '../../reactor/common';
+import { Slider, Viewport } from '../../reactor/components';
 import styles from './Dashboard.style';
 
-const { SCREEN, SLIDER } = C;
-const { COLOR } = THEME;
+const { SCREEN } = C;
 
 class Dashboard extends PureComponent {
   static propTypes = {
@@ -31,6 +27,7 @@ class Dashboard extends PureComponent {
 
   state = {
     dialog: false,
+    scroll: false,
     stats: undefined,
   };
 
@@ -42,6 +39,12 @@ class Dashboard extends PureComponent {
       if (dialog) this.setState({ dialog: false, stats: undefined });
       return true;
     });
+  }
+
+  _onScroll = ({ nativeEvent: { contentOffset: { y } } }) => {
+    const { state } = this;
+    const scroll = y > 58;
+    if (scroll !== state.scroll) this.setState({ scroll });
   }
 
   _onToggleDialog = () => {
@@ -58,9 +61,9 @@ class Dashboard extends PureComponent {
 
   render() {
     const {
-      _onToggleDialog, _onVault,
+      _onScroll, _onToggleDialog, _onVault,
       props: { visible, ...inherit },
-      state: { dialog, stats },
+      state: { dialog, scroll, stats },
     } = this;
 
     return (
@@ -74,30 +77,18 @@ class Dashboard extends PureComponent {
               },
             }) => (
               <Fragment>
-                <ScrollView contentContainerStyle={styles.scroll}>
-                  <BalanceCard currency={baseCurrency} title={l10n.BALANCE} {...overall} />
-
-                  <HeadingItem title={l10n.MONTHLY} />
-                  <Slider {...SLIDER} style={styles.slider}>
-                    <Touchable style={styles.card} onPress={() => navigation.navigate(SCREEN.STATS)} rippleColor='red'>
-                      <Text caption level={2} numberOfLines={1}>{l10n.BALANCE.toUpperCase()}</Text>
-                      <Chart values={overall.chart.balance} />
-                    </Touchable>
-
-                    <View style={styles.card}>
-                      <Text caption level={2} numberOfLines={1}>{l10n.EXPENSES.toUpperCase()}</Text>
-                      <Chart series={overall.chart.week} />
-                    </View>
+                <Header highlight={scroll} title={l10n.OVERALL_BALANCE} />
+                <ScrollView onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.scroll}>
+                  <BalanceCard currency={baseCurrency} title={l10n.OVERALL_BALANCE} {...overall} />
+                  <Heading breakline title={l10n.VAULTS} />
+                  <Slider style={styles.vaults}>
+                    { vaults.map(vault => (
+                      <VaultItem key={vault.hash} {...vault} onPress={() => _onVault({ navigation, store, vault })} />
+                    ))}
                   </Slider>
 
-                  <HeadingItem title={l10n.VAULTS} />
-                  <Slider
-                    {...SLIDER}
-                    dataSource={vaults}
-                    item={({ data: vault }) => (
-                      <VaultItem key={vault.hash} {...vault} onPress={() => _onVault({ navigation, store, vault })} />)}
-                    style={styles.slider}
-                  />
+                  <Heading breakline title="$Last Transactions" />
+
                 </ScrollView>
                 <FloatingButton onPress={_onToggleDialog} visible={!dialog} />
                 { visible && (

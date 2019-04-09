@@ -1,22 +1,23 @@
 import { shape, number, string } from 'prop-types';
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Image, View } from 'react-native';
 
 import ASSETS from '../../assets';
 import { C, exchange } from '../../common';
 import { Consumer } from '../../context';
+import { THEME } from '../../reactor/common';
 import { Button, Text } from '../../reactor/components';
-import Chart from '../Chart';
-import HeadingItem from '../HeadingItem';
+import Heading from '../Heading';
 import Percentage from '../Percentage';
 import PriceFriendly from '../PriceFriendly';
 import styles from './BalanceCard.style';
 
 const { SCREEN } = C;
 const { logo } = ASSETS;
+const { COLOR } = THEME;
 
 const captionProps = {
-  caption: true, level: 2, lighten: true, numberOfLines: 1, style: styles.cardCaption,
+  caption: true, level: 2, lighten: true, numberOfLines: 1,
 };
 
 class BalanceCard extends Component {
@@ -49,8 +50,6 @@ class BalanceCard extends Component {
       ? (progression * 100) / (currentBalance - progression)
       : progression;
 
-    console.log('inherit', inherit);
-
     return (
       <Consumer>
         { ({
@@ -79,21 +78,27 @@ class BalanceCard extends Component {
               </View>
             </View>
 
-            <HeadingItem title={l10n.CURRENT_MONTH}>
-              <Button outlined small title="$Show" onPress={() => navigation.navigate(SCREEN.STATS)} />
-            </HeadingItem>
+            <Heading title={l10n.CURRENT_MONTH}>
+              <Button
+                color={COLOR.PRIMARY}
+                outlined
+                small
+                title={l10n.ACTIVITY}
+                onPress={() => navigation.navigate(SCREEN.STATS)}
+              />
+            </Heading>
             <View style={[styles.row, styles.cards]}>
               <View style={styles.card}>
-                <Percentage headline level={6} value={progressionPercentage} />
                 <Text {...captionProps}>{l10n.PROGRESS.toUpperCase()}</Text>
+                <Percentage headline level={6} value={progressionPercentage} />
               </View>
               <View style={styles.card}>
-                <PriceFriendly headline level={6} lighten={incomes === 0} currency={baseCurrency} value={incomes} />
                 <Text {...captionProps}>{l10n.INCOMES.toUpperCase()}</Text>
+                <PriceFriendly headline level={6} lighten={incomes === 0} currency={baseCurrency} value={incomes} />
               </View>
               <View style={[styles.card, styles.cardLast]}>
-                <PriceFriendly headline level={6} lighten={expenses === 0} currency={baseCurrency} value={expenses} />
                 <Text {...captionProps}>{l10n.EXPENSES.toUpperCase()}</Text>
+                <PriceFriendly headline level={6} lighten={expenses === 0} currency={baseCurrency} value={expenses} />
               </View>
             </View>
           </View>

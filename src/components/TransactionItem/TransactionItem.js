@@ -37,7 +37,7 @@ const TransactionItem = ({
                 level={2}
                 fixed={FIXED[baseCurrency]}
                 symbol={SYMBOL[baseCurrency]}
-                title={type === INCOME ? '+' : undefined}
+                title={type === INCOME ? '+' : '-'}
                 value={baseCurrency !== currency
                   ? exchange(Math.abs(value), currency, baseCurrency, rates)
                   : Math.abs(value)}
@@ -49,7 +49,7 @@ const TransactionItem = ({
                   lighten
                   fixed={FIXED[currency]}
                   symbol={SYMBOL[currency]}
-                  title={type === INCOME ? '+' : undefined}
+                  title={type === INCOME ? '+' : '-'}
                   value={value}
                 />
               )}

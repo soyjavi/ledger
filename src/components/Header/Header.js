@@ -6,7 +6,8 @@ import { TextInput, View } from 'react-native';
 
 import { Consumer } from '../../context';
 import { THEME } from '../../reactor/common';
-import { Button, Text } from '../../reactor/components';
+import { Button, Motion } from '../../reactor/components';
+import Heading from '../Heading';
 import styles from './Header.style';
 
 const { COLOR } = THEME;
@@ -16,7 +17,7 @@ const Header = ({
 }) => (
   <Consumer>
     { ({ l10n }) => (
-      <View style={[styles.container, inherit.style]}>
+      <View style={[styles.row, styles.container, highlight && styles.highlight, inherit.style]}>
         { left && <Button color={COLOR.TRANSPARENT} {...left} iconSize={24} /> }
         <View style={styles.content}>
           { onSearch && (
@@ -30,12 +31,12 @@ const Header = ({
             />
           )}
           { title && (
-            <Text headline level={5} color={highlight ? COLOR.WHITE : undefined} numberOfLines={1} style={styles.title}>
-              { title }
-            </Text>
+            <Motion preset="fade" style={styles.row} visible={highlight}>
+              <Heading title={title} logo />
+            </Motion>
           )}
         </View>
-        { right && <Button color={COLOR.TRANSPARENT} {...right} iconSize={24} /> }
+        { right && <Button contained={false} small {...right} /> }
       </View>
     )}
   </Consumer>

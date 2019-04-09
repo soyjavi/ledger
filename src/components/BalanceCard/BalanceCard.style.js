@@ -12,12 +12,7 @@ export default StyleSheet.create({
     backgroundColor: COLOR.BASE,
     flex: 1,
     justifyContent: 'space-between',
-    marginRight: SPACE.MEDIUM,
-    paddingVertical: SPACE.MEDIUM,
-  },
-
-  cardCaption: {
-    marginTop: SPACE.XXS,
+    marginRight: SPACE.S,
   },
 
   cardLast: {
@@ -44,8 +39,8 @@ export default StyleSheet.create({
   logo: {
     height: UNIT * 1.6,
     width: UNIT * 2.2,
-    marginRight: UNIT / 2,
-    marginBottom: UNIT * 0.4,
+    marginBottom: SPACE.XXS,
+    marginRight: SPACE.XXS,
   },
 
   row: LAYOUT.STYLE.ROW,
