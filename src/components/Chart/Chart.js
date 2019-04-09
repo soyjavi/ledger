@@ -37,23 +37,25 @@ const Chart = ({
       { scale && (
         <View style={[styles.scale, captions && styles.scaleCaptions]}>
           <View style={styles.scaleValues}>
-            { scaleValues.map(value => (
-              <Text lighten style={styles.caption}>
+            { scaleValues.map((value, index) => (
+              <Text key={`scale-${index.toString()}`} lighten style={styles.caption}>
                 {`${value}${thousands && value > 0 ? 'k' : ''}`}
               </Text>
             ))}
           </View>
           <View style={styles.scaleLines}>
-            { scaleValues.map(() => <View style={styles.scaleLine} />)}
+            { scaleValues.map((value, index) => <View key={`line-${index.toString()}`} style={styles.scaleLine} />)}
           </View>
         </View>
       )}
 
       <View style={[styles.content, styles.row, scale && styles.rowScale, inherit.style]}>
         { values.map((value, index) => (
-          <View style={[styles.column, inverted && styles.inverted]}>
+          <View
+            key={`${value}-${index.toString()}`}
+            style={[styles.column, inverted && styles.inverted]}
+          >
             <View
-              key={`${index}-${value}`} // eslint-disable-line
               style={[
                 styles.item,
                 inverted && styles.itemInverted,
@@ -70,8 +72,8 @@ const Chart = ({
       { captions && (
         <View style={[styles.captions, styles.row, scale && styles.rowScale]}>
           { captions.map(caption => (
-            <View style={styles.column}>
-              <Text key={caption} caption level={2} lighten style={styles.caption}>
+            <View key={caption} style={styles.column}>
+              <Text caption level={2} lighten style={styles.caption}>
                 {caption.substring(0, 3).toUpperCase()}
               </Text>
             </View>
