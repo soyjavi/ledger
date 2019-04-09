@@ -11,7 +11,7 @@ import styles from './Chart.style';
 const { COLOR } = THEME;
 
 const Chart = ({
-  captions, color, inverted, scale, symbol, values, ...inherit
+  captions, color, inverted, scale, values, ...inherit
 }) => {
   let max = 0;
   let floor = 0;
@@ -88,7 +88,6 @@ Chart.propTypes = {
   color: string,
   inverted: bool,
   scale: bool,
-  symbol: string,
   values: arrayOf(number),
 };
 
@@ -97,7 +96,6 @@ Chart.defaultProps = {
   color: COLOR.PRIMARY,
   inverted: false,
   scale: true,
-  symbol: undefined,
   values: [],
 };
 
