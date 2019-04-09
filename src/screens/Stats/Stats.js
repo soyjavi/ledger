@@ -3,17 +3,18 @@ import React, { Fragment, PureComponent } from 'react';
 import { BackHandler, ScrollView, View } from 'react-native';
 
 import ASSETS from '../../assets';
-import { Chart, Header, HeadingItem } from '../../components';
+import { Chart, Header, Heading } from '../../components';
 import { Consumer } from '../../context';
-import { ENV, THEME } from '../../reactor/common';
-import { Activity, Text, Viewport } from '../../reactor/components';
+import { THEME } from '../../reactor/common';
+import { Viewport } from '../../reactor/components';
 import { ItemGroupCategories } from './components';
-import query from './modules/query';
+import { orderCaptions, query } from './modules';
 import styles from './Stats.style';
 
 const { iconBack } = ASSETS;
 const { COLOR } = THEME;
-const { IS_WEB } = ENV;
+const MONTHLY = 0;
+const WEEKLY = 1;
 
 class Stats extends PureComponent {
   static propTypes = {
@@ -33,61 +34,82 @@ class Stats extends PureComponent {
   };
 
   state = {
-    values: undefined,
+    scroll: false,
+    typeQuery: MONTHLY,
+    values: {},
   };
 
   componentWillReceiveProps({
     backward, visible, ...inherit
   }) {
+    const { state: { typeQuery } } = this;
     const method = backward ? 'removeEventListener' : 'addEventListener';
 
     if (visible) {
-      this.setState({ values: undefined });
-      this.setState({ values: query(inherit, { month: true }) });
+      this.setState({ values: query(inherit, typeQuery) });
     }
 
-    BackHandler[method]('hardwareBackPress', () => {
-      return true;
-    });
+    BackHandler[method]('hardwareBackPress', () => true);
+  }
+
+  _onScroll = ({ nativeEvent: { contentOffset: { y } } }) => {
+    const { state } = this;
+    const scroll = y > 58;
+    if (scroll !== state.scroll) this.setState({ scroll });
+  }
+
+  _onQuery = () => {
+    const { props, state } = this;
+    const typeQuery = state.typeQuery === MONTHLY ? WEEKLY : MONTHLY;
+
+    this.setState({ typeQuery, values: query(props, typeQuery) });
   }
 
   render() {
-    const { props: { visible, ...inherit }, state: { values } } = this;
+    const {
+      _onScroll, _onQuery,
+      props: { visible, ...inherit },
+      state: { scroll, typeQuery, values },
+    } = this;
+    const { chart = {} } = values || {};
 
     return (
       <Viewport {...inherit} scroll={false} visible={visible}>
         { visible && (
           <Consumer>
-            { ({ l10n, navigation, store: { overall } }) => (
+            { ({ l10n, navigation }) => (
               <Fragment>
                 <Header
-                  left={IS_WEB ? { icon: iconBack, onPress: () => navigation.goBack() } : undefined}
-                  title={l10n.STATS}
+                  highlight={scroll}
+                  left={{ icon: iconBack, onPress: navigation.goBack }}
+                  right={{ title: typeQuery === MONTHLY ? l10n.WEEKLY : l10n.MONTHLY, onPress: _onQuery }}
+                  title={l10n.ACTIVITY}
                   visible={visible}
                 />
-                <ScrollView contentContainerStyle={styles.container}>
-                  <HeadingItem title="$This Year" />
+                <ScrollView onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.container}>
                   <View style={styles.content}>
-                    <View style={[styles.card, styles.cardLarge]}>
-                      <Text caption level={2} numberOfLines={1}>$CAPTION CONTEXT</Text>
-                      <Chart captions={l10n.MONTHS} values={overall.chart.balance} />
-                    </View>
+                    <Heading title={l10n.ACTIVITY} logo />
+                    <Heading subtitle={l10n.OVERALL_BALANCE} />
+                    <Chart
+                      captions={orderCaptions(l10n, typeQuery)}
+                      values={chart.balance}
+                      styleContainer={[styles.chart, styles.chartMargin]}
+                      style={styles.chartBalance}
+                    />
 
-                    <View style={[styles.card, styles.cardSmall, styles.cardGap]}>
-                      <Text caption level={2} numberOfLines={1}>{l10n.EXPENSES.toUpperCase()}</Text>
-                      <Chart series={overall.chart.expenses} color={COLOR.EXPENSES} />
-                    </View>
-
-                    <View style={[styles.card, styles.cardSmall]}>
-                      <Text caption level={2} numberOfLines={1}>{l10n.INCOMES.toUpperCase()}</Text>
-                      <Chart series={overall.chart.incomes} color={COLOR.INCOMES} />
-                    </View>
+                    <Heading subtitle={`${l10n.INCOMES} vs. ${l10n.EXPENSES}`} />
+                    <Chart color={COLOR.INCOMES} styleContainer={styles.chart} values={chart.incomes} />
+                    <Chart
+                      captions={orderCaptions(l10n, typeQuery)}
+                      inverted
+                      values={chart.expenses}
+                      color={COLOR.EXPENSES}
+                      styleContainer={[styles.chart, styles.chartMargin]}
+                    />
                   </View>
 
-                  { !values && <Activity /> }
-
-                  { values && values[0] && <ItemGroupCategories type={0} dataSource={values[0]} /> }
                   { values && values[1] && <ItemGroupCategories type={1} dataSource={values[1]} /> }
+                  { values && values[0] && <ItemGroupCategories type={0} dataSource={values[0]} /> }
                 </ScrollView>
               </Fragment>
             )}

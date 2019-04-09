@@ -1,18 +1,19 @@
 import { StyleSheet } from 'react-native';
 
-import { C } from '../../../../common';
 import { LAYOUT, THEME } from '../../../../reactor/common';
 
 const {
-  BORDER_RADIUS, COLOR, UNIT, SPACE,
+  COLOR, UNIT, SPACE,
 } = THEME;
+const COLUMN_WIDTH = UNIT * 1;
 
 export default StyleSheet.create({
   bar: {
     backgroundColor: COLOR.PRIMARY,
-    borderRadius: BORDER_RADIUS / 2,
-    height: UNIT * 0.2,
-    minWidth: UNIT * 0.2,
+    borderTopRightRadius: COLUMN_WIDTH / 2,
+    borderBottomRightRadius: COLUMN_WIDTH / 2,
+    height: COLUMN_WIDTH,
+    minWidth: COLUMN_WIDTH,
   },
 
   container: {

@@ -1,28 +1,22 @@
 import { StyleSheet } from 'react-native';
 
 import { C } from '../../common';
-import { LAYOUT, THEME } from '../../reactor/common';
+import { THEME } from '../../reactor/common';
 
-const { STYLE: { CARD, HEADER_HEIGHT } } = C;
+const { STYLE: { HEADER_HEIGHT } } = C;
 const { COLOR, SPACE } = THEME;
 
 export default StyleSheet.create({
-  card: {
-    ...CARD,
-    backgroundColor: COLOR.BASE,
-    marginBottom: SPACE.MEDIUM,
+  chart: {
+    marginHorizontal: SPACE.MEDIUM,
   },
 
-  cardGap: {
-    marginRight: SPACE.MEDIUM,
+  chartMargin: {
+    marginBottom: SPACE.REGULAR,
   },
 
-  cardLarge: {
-    width: '100%',
-  },
-
-  cardSmall: {
-    width: (LAYOUT.VIEWPORT.W / 2) - (SPACE.MEDIUM * 1.5),
+  chartBalance: {
+    height: 128,
   },
 
   container: {
@@ -31,14 +25,9 @@ export default StyleSheet.create({
   },
 
   content: {
-    ...LAYOUT.STYLE.ROW,
-    marginTop: SPACE.MEDIUM,
-    flexWrap: 'wrap',
-    paddingHorizontal: SPACE.MEDIUM,
-  },
-
-  slider: {
-    marginVertical: SPACE.MEDIUM,
-    paddingRight: SPACE.XXS,
+    backgroundColor: COLOR.WHITE,
+    borderBottomColor: COLOR.BASE,
+    borderBottomWidth: 1,
+    marginBottom: SPACE.MEDIUM,
   },
 });

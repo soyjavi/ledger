@@ -6,7 +6,7 @@ import { C } from '../../../../common';
 import { Consumer } from '../../../../context';
 import { THEME } from '../../../../reactor/common';
 import { Price, Text } from '../../../../reactor/components';
-import HeadingItem from '../../../../components/HeadingItem';
+import Heading from '../../../../components/Heading';
 import styles from './ItemGroupCategories.style';
 
 const { COLOR } = THEME;
@@ -33,11 +33,11 @@ class ItemGroupCategories extends PureComponent {
       <Consumer>
         { ({ store: { baseCurrency }, l10n }) => (
           <View >
-            <HeadingItem title={isExpense ? l10n.EXPENSES : l10n.INCOMES} />
+            <Heading title={isExpense ? l10n.EXPENSES : l10n.INCOMES} />
             <View>
               { Object.keys(dataSource).map(category => (
                 <View key={category} style={styles.container}>
-                  <HeadingItem breakline subtitle={l10n.CATEGORIES[type][category]}>
+                  <Heading breakline subtitle={l10n.CATEGORIES[type][category]}>
                     <View style={styles.heading}>
                       <Price
                         subtitle
@@ -47,7 +47,7 @@ class ItemGroupCategories extends PureComponent {
                         value={total[category]}
                       />
                     </View>
-                  </HeadingItem>
+                  </Heading>
 
                   { Object.keys(dataSource[category]).map(title => (
                     <View key={`${category}-${title}`} style={styles.content}>
