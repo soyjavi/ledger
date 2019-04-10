@@ -19,22 +19,20 @@ export default props => (
     }) => (
       <LayoutView>
         <Session backward={current !== SESSION} visible={stack.includes(SESSION)} />
-
         <Dashboard backward={current !== DASHBOARD} visible={stack.includes(DASHBOARD)} />
+        <Vault
+          {...props}
+          backward={current !== VAULT}
+          goBack={goBack}
+          navigation={{ state: { params: params.Vault } }}
+          visible={stack.includes(VAULT)}
+        />
 
         <ConsumerStore>
-          { store => <Stats backward={current !== STATS} {...store} visible={stack.includes(STATS)} /> }
+          { store => (
+            <Stats backward={current !== STATS} {...store} vault={params.Vault} visible={stack.includes(STATS)} />
+          )}
         </ConsumerStore>
-
-        { stack.includes(DASHBOARD) && (
-          <Vault
-            {...props}
-            backward={current !== VAULT}
-            goBack={goBack}
-            navigation={{ state: { params: params.Vault } }}
-            visible={stack.includes(VAULT)}
-          />
-        )}
 
         <Consumer>
           { ({ l10n, store: { error, onError } }) => (

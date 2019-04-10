@@ -5,29 +5,24 @@ import { LAYOUT, THEME } from '../../../../reactor/common';
 const {
   COLOR, UNIT, SPACE,
 } = THEME;
-const COLUMN_WIDTH = UNIT * 1;
+const COLUMN_WIDTH = UNIT;
 
 export default StyleSheet.create({
   bar: {
-    backgroundColor: COLOR.PRIMARY,
-    borderTopRightRadius: COLUMN_WIDTH / 2,
-    borderBottomRightRadius: COLUMN_WIDTH / 2,
+    backgroundColor: COLOR.BASE,
+    borderRadius: COLUMN_WIDTH / 2,
     height: COLUMN_WIDTH,
     minWidth: COLUMN_WIDTH,
   },
 
-  container: {
-    marginBottom: SPACE.REGULAR,
+  barContainer: {
+    marginTop: SPACE.XXS,
+    marginBottom: SPACE.XXS,
   },
 
   content: {
-    paddingTop: SPACE.XXS,
+    paddingVertical: SPACE.XS,
     paddingHorizontal: SPACE.MEDIUM,
-  },
-
-  heading: {
-    flex: 1,
-    alignItems: 'flex-end',
   },
 
   row: LAYOUT.STYLE.ROW,

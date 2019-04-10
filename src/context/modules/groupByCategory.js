@@ -20,7 +20,6 @@ export default (state, filter) => {
   const { date = (new Date().toISOString()).substr(0, 7) } = filter;
   const data = {};
 
-
   sortByTimestamp(txs, date).forEach(({
     category, title, type, value, vault,
   }) => {
@@ -29,7 +28,6 @@ export default (state, filter) => {
       const amount = baseCurrency === currency ? value : exchange(value, currency, baseCurrency, rates);
 
       if (title) {
-        // const categoryKey = title.split(' ')[0].toLowerCase();
         const categoryKey = title.toLowerCase();
         data[categoryKey] = (data[categoryKey] || 0) + amount;
       }

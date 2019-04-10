@@ -1,4 +1,4 @@
-import { arrayOf, shape, number } from 'prop-types';
+import { shape, number } from 'prop-types';
 import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
@@ -23,34 +23,57 @@ class ItemGroupCategories extends PureComponent {
   render() {
     const { dataSource, type } = this.props;
     const isExpense = type === 0;
-    const total = {};
+    const totalCategories = [];
+    let total = 0;
 
     Object.keys(dataSource).forEach((category) => {
-      total[category] = Object.values(dataSource[category]).reduce((a, b) => a += b);
+      totalCategories[category] = Object.values(dataSource[category]).reduce((a, b) => a += b);
+      total += totalCategories[category];
     });
 
     return (
       <Consumer>
         { ({ store: { baseCurrency }, l10n }) => (
-          <View >
-            <Heading title={isExpense ? l10n.EXPENSES : l10n.INCOMES} />
+          <View style={styles.container}>
+            <Heading breakline title={isExpense ? l10n.EXPENSES : l10n.INCOMES}>
+              <Price
+                subtitle
+                level={3}
+                fixed={FIXED[baseCurrency]}
+                symbol={SYMBOL[baseCurrency]}
+                value={total}
+              />
+            </Heading>
             <View>
               { Object.keys(dataSource).map(category => (
-                <View key={category} style={styles.container}>
-                  <Heading breakline subtitle={l10n.CATEGORIES[type][category]}>
-                    <View style={styles.heading}>
+                <View key={category} style={styles.content}>
+                  <View>
+                    <View style={styles.row}>
+                      <Text subtitle level={3} style={styles.title}>{l10n.CATEGORIES[type][category]}</Text>
                       <Price
                         subtitle
                         level={3}
                         fixed={FIXED[baseCurrency]}
                         symbol={SYMBOL[baseCurrency]}
-                        value={total[category]}
+                        value={totalCategories[category]}
                       />
                     </View>
-                  </Heading>
+
+                    <View style={[styles.bar, styles.barContainer]}>
+                      <View
+                        style={[
+                          styles.bar,
+                          {
+                            backgroundColor: isExpense ? COLOR.EXPENSES : COLOR.INCOMES,
+                            width: `${parseInt((totalCategories[category] * 100) / total, 10)}%`,
+                          },
+                        ]}
+                      />
+                    </View>
+                  </View>
 
                   { Object.keys(dataSource[category]).map(title => (
-                    <View key={`${category}-${title}`} style={styles.content}>
+                    <View key={`${category}-${title}`} style={styles.item}>
                       <View style={styles.row}>
                         <Text level={2} lighten style={styles.title}>{title}</Text>
                         <Price
@@ -62,15 +85,6 @@ class ItemGroupCategories extends PureComponent {
                           value={dataSource[category][title]}
                         />
                       </View>
-                      <View
-                        style={[
-                          styles.bar,
-                          {
-                            backgroundColor: isExpense ? COLOR.EXPENSES : COLOR.INCOMES,
-                            width: `${parseInt((dataSource[category][title] * 100) / total[category], 10)}%`,
-                          },
-                        ]}
-                      />
                     </View>
                   ))}
                 </View>

@@ -1,7 +1,7 @@
 import { C, exchange } from '../../../common';
 
 const {
-  MS_IN_DAY, MS_IN_WEEK, TX: { TYPE: { EXPENSE, INCOME } }, VAULT_TRANSFER, WIPE,
+  MS_IN_DAY, MS_IN_WEEK, TX: { TYPE: { EXPENSE, INCOME } }, VAULT_TRANSFER,
 } = C;
 const CURRENT_MONTH = 11;
 const CURRENT_WEEK = 0;
@@ -13,12 +13,12 @@ const parseDate = (date) => {
   return new Date(value.getFullYear(), value.getMonth(), value.getDate(), 0, 0, 0);
 };
 
-export default (store, typeQuery = MONTHLY) => {
+export default (props, typeQuery = MONTHLY) => {
   const monthly = typeQuery === MONTHLY;
   const range = monthly ? 12 : 7;
   const {
-    baseCurrency, overall: { balance, currentBalance }, rates, txs, vaults,
-  } = store;
+    baseCurrency, overall, rates, txs, vault = {}, vaults,
+  } = props;
   const chart = {
     balance: new Array(range).fill(0),
     expenses: new Array(range).fill(0),
@@ -30,8 +30,10 @@ export default (store, typeQuery = MONTHLY) => {
   const lastYear = new Date(now.getFullYear(), now.getMonth() - 11, 1);
 
   txs.forEach(({
-    category, timestamp, type, value, vault, title,
+    category, timestamp, type, value, title, ...tx
   }) => {
+    if (vault.hash && vault.hash !== tx.vault) return;
+
     const date = parseDate(timestamp);
     const ms = Math.abs(now - date);
     const month = date.getMonth() - lastYear.getMonth() + (12 * (date.getFullYear() - lastYear.getFullYear()));
@@ -40,9 +42,8 @@ export default (store, typeQuery = MONTHLY) => {
       ? date.getMonth() - lastYear.getMonth() + (12 * (date.getFullYear() - lastYear.getFullYear()))
       : Math.abs(Math.floor(ms / MS_IN_DAY) - 6);
 
-
     if (value && ((monthly && month >= 0) || (!monthly && week === 0))) {
-      const { currency } = vaults.find(({ hash }) => hash === vault);
+      const { currency } = vaults.find(({ hash }) => hash === tx.vault);
       const valueExchange = currency !== baseCurrency
         ? exchange(value, currency, baseCurrency, rates)
         : value;
@@ -63,7 +64,13 @@ export default (store, typeQuery = MONTHLY) => {
   });
 
   let total = 0;
-  const baseBalance = monthly ? balance : currentBalance;
+  let baseBalance = monthly ? overall.balance : overall.currentBalance;
+  if (vault.hash) {
+    baseBalance = monthly ? vault.balance : vault.currentBalance;
+    baseBalance = vault.currency !== baseCurrency
+      ? exchange(baseBalance, vault.currency, baseCurrency, rates)
+      : baseBalance;
+  }
 
   return {
     chart: {

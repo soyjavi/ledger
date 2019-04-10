@@ -21,6 +21,7 @@ class Stats extends PureComponent {
     backward: bool,
     txs: arrayOf(shape({})),
     navigation: shape({}),
+    vault: shape({}),
     vaults: arrayOf(shape({})),
     visible: bool,
   };
@@ -29,6 +30,7 @@ class Stats extends PureComponent {
     backward: false,
     txs: undefined,
     navigation: undefined,
+    vault: undefined,
     vaults: undefined,
     visible: true,
   };
@@ -42,13 +44,10 @@ class Stats extends PureComponent {
   componentWillReceiveProps({
     backward, visible, ...inherit
   }) {
-    const { state: { typeQuery } } = this;
     const method = backward ? 'removeEventListener' : 'addEventListener';
+    const typeQuery = MONTHLY;
 
-    if (visible) {
-      this.setState({ values: query(inherit, typeQuery) });
-    }
-
+    if (visible) this.setState({ typeQuery, values: query(inherit, typeQuery) });
     BackHandler[method]('hardwareBackPress', () => true);
   }
 
@@ -89,7 +88,7 @@ class Stats extends PureComponent {
                 <ScrollView onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.container}>
                   <View style={styles.content}>
                     <Heading title={l10n.ACTIVITY} logo />
-                    <Heading subtitle={l10n.OVERALL_BALANCE} />
+                    <Heading subtitle={l10n.BALANCE} />
                     <Chart
                       captions={orderCaptions(l10n, typeQuery)}
                       values={chart.balance}
@@ -108,8 +107,8 @@ class Stats extends PureComponent {
                     />
                   </View>
 
-                  { values && values[1] && <ItemGroupCategories type={1} dataSource={values[1]} /> }
-                  { values && values[0] && <ItemGroupCategories type={0} dataSource={values[0]} /> }
+                  { Object.keys(values[1]).length > 0 && <ItemGroupCategories type={1} dataSource={values[1]} /> }
+                  { Object.keys(values[0]).length > 0 && <ItemGroupCategories type={0} dataSource={values[0]} /> }
                 </ScrollView>
               </Fragment>
             )}
