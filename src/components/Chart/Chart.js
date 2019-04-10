@@ -28,7 +28,7 @@ const Chart = ({
     const maxScale = parseInt(thousands ? max / 1000 : max, 10);
 
     const gap = floor + ((max - floor) / 2);
-    const middleScale = parseInt(thousands ? gap / 1000 : gap, 10);
+    const middleScale = gap > 0 ? parseInt(thousands ? gap / 1000 : gap, 10) : '';
     scaleValues = !inverted ? [maxScale, middleScale, 0] : ['', middleScale, maxScale];
   }
 
