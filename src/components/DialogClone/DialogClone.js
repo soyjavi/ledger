@@ -111,6 +111,7 @@ class DialogClone extends PureComponent {
             <View style={styles.row}>
               <Button
                 activity={busyWipe}
+                color={COLOR.PRIMARY}
                 contained={false}
                 disabled={busyWipe}
                 onPress={() => _onSubmit(store, true)}

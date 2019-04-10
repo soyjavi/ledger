@@ -7,10 +7,12 @@ import {
   BalanceCard, DialogVault, FloatingButton, Header, Heading, VaultItem,
 } from '../../components';
 import { Consumer } from '../../context';
+import { THEME } from '../../reactor/common';
 import { Slider, Viewport } from '../../reactor/components';
 import styles from './Dashboard.style';
 
-const { SCREEN } = C;
+const { SCREEN, STYLE: { VAULT_ITEM_WIDTH } } = C;
+const { SPACE } = THEME;
 
 class Dashboard extends PureComponent {
   static propTypes = {
@@ -81,7 +83,11 @@ class Dashboard extends PureComponent {
                 <ScrollView onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.scroll}>
                   <BalanceCard currency={baseCurrency} title={l10n.OVERALL_BALANCE} {...overall} />
                   <Heading breakline title={l10n.VAULTS} />
-                  <Slider style={styles.vaults}>
+                  <Slider
+                    itemWidth={VAULT_ITEM_WIDTH + SPACE.S}
+                    itemMargin={0}
+                    style={styles.vaults}
+                  >
                     { vaults.map(vault => (
                       <VaultItem key={vault.hash} {...vault} onPress={() => _onVault({ navigation, store, vault })} />
                     ))}

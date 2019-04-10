@@ -13,7 +13,7 @@ export default StyleSheet.create({
   button: {
     ...ELEVATION.REGULAR,
     ...LAYOUT.STYLE.CENTERED,
-    backgroundColor: COLOR.TEXT,
+    backgroundColor: COLOR.PRIMARY,
     borderRadius: CONTAINER_SIZE / 2,
     height: CONTAINER_SIZE,
     width: CONTAINER_SIZE,
@@ -41,7 +41,7 @@ export default StyleSheet.create({
   },
 
   transfer: {
-    backgroundColor: COLOR.ACCENT,
+    backgroundColor: COLOR.TEXT,
   },
 
   container: {
