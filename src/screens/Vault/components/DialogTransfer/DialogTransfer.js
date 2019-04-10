@@ -1,12 +1,12 @@
 import { bool, func, string } from 'prop-types';
 import React, { PureComponent } from 'react';
 
-import { translate } from '../../common';
-import { Consumer } from '../../context';
-import { THEME } from '../../reactor/common';
+import { translate } from '../../../../common';
+import { Consumer } from '../../../../context';
+import { THEME } from '../../../../reactor/common';
 import {
   Button, Dialog, Form, Text,
-} from '../../reactor/components';
+} from '../../../../reactor/components';
 import { hydrateTransfer, onTransfer } from './modules';
 
 import styles from './DialogTransfer.style';

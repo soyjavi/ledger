@@ -1,6 +1,7 @@
 export default {
   'en-EN': {
     ACCEPT: 'Accept',
+    ACTIVITY: 'Activity',
     AMOUNT: 'Amount',
     BALANCE: 'Balance',
 
@@ -87,6 +88,8 @@ export default {
 
     OVERALL_BALANCE: 'Overall Balance',
 
+    PROGRESS: 'Progress',
+
     SAVE: 'Save',
     SAVE_LOCATION: 'Save location',
     SEARCH: 'Search',
@@ -107,6 +110,7 @@ export default {
     VAULTS: 'Vaults',
     VAULT_CAPTION: 'You can create as many vaults as you want. You can continue using your base currency or choose any other.', // eslint-disable-line
 
+    WEEKLY: 'Weekly',
     WIPE: 'Wipe',
     WITHOUT_TXS: 'No transactions',
 

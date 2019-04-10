@@ -8,14 +8,14 @@ const WEIGHT = { REGULAR: '400', BOLD: '700' };
 
 export default {
   COLOR: {
-    BACKGROUND: '#fff',
+    BACKGROUND: '#FDFDFF',
     BACKGROUND_OPACITY: 'rgba(255,255,255,0.9)',
-    BASE: '#F2F2F2',
+    BASE: '#F8F8F8',
+
     TEXT: '#333',
     TEXT_LIGHTEN: '#999',
-    // PRIMARY: '#3434E6',
-    PRIMARY: '#43DDDD',
-    ACCENT: '#5D0DC8',
+    PRIMARY: '#7966FF',
+    ACCENT: '#01C654',
 
     // DARK-MODE
     // BACKGROUND: '#000',
@@ -23,13 +23,13 @@ export default {
     // BASE: 'rgba(255,255,255,0.1)',
     // TEXT: '#fff',
     // TEXT_LIGHTEN: '#aaa',
-    // PRIMARY: '#43DDDD',
 
-    EXPENSES: '#f74440',
-    INCOMES: '#43DDDD',
+    EXPENSES: '#FF6262',
+    INCOMES: '#17D0BC',
   },
 
   FONT: {
+    FAMILY,
     DEFAULT: {
       fontFamily: FAMILY,
       fontWeight: WEIGHT.REGULAR,
@@ -41,6 +41,7 @@ export default {
     SUBTITLE: {
       fontFamily: FAMILY_BOLD,
       fontWeight: IS_WEB ? WEIGHT.BOLD : WEIGHT.REGULAR,
+      letterSpacing: -0.1,
     },
     CAPTION: {},
     BUTTON: {

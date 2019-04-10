@@ -1,4 +1,4 @@
-import { C } from '../../../common';
+import { C } from '../../../../../common';
 
 const { VAULT_TRANSFER, TX: { TYPE: { EXPENSE, INCOME } } } = C;
 

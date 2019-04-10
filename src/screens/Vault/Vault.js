@@ -5,17 +5,17 @@ import { BackHandler, FlatList, View } from 'react-native';
 import ASSETS from '../../assets';
 import { C, verboseMonth } from '../../common';
 import {
-  BalanceCard, DialogClone, DialogTransaction, DialogTransfer, FloatingButton, GroupTransactions, Header, HeadingItem,
+  BalanceCard, DialogClone, FloatingButton, GroupTransactions, Header,
 } from '../../components';
 import { Consumer } from '../../context';
 import { ENV } from '../../reactor/common';
 import { Text, Viewport } from '../../reactor/components';
+import { DialogTransaction, DialogTransfer, Search } from './components';
 import styles from './Vault.style';
 
 const { iconBack } = ASSETS;
 const { TX: { TYPE: { EXPENSE, TRANSFER } } } = C;
 const { IS_WEB } = ENV;
-let TIMEOUT;
 
 class Vault extends Component {
   static propTypes = {
@@ -35,6 +35,8 @@ class Vault extends Component {
   state = {
     clone: undefined,
     dialog: false,
+    scroll: false,
+    search: undefined,
     type: EXPENSE,
   };
 
@@ -53,21 +55,31 @@ class Vault extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     const {
       props: { visible },
-      state: { clone, dialog },
+      state: {
+        clone, dialog, scroll, search,
+      },
     } = this;
 
-    return (nextProps.visible !== visible) || (nextState.clone !== clone) || (nextState.dialog !== dialog);
+    return (nextProps.visible !== visible)
+      || (nextState.clone !== clone)
+      || (nextState.dialog !== dialog)
+      || (nextState.scroll !== scroll)
+      || (nextState.search !== search);
+  }
+
+  _onScroll = ({ nativeEvent: { contentOffset: { y } } }) => {
+    const { state } = this;
+    const scroll = y > 58;
+    if (scroll !== state.scroll) this.setState({ scroll });
   }
 
   _onSearch = ({ value, store: { query }, l10n }) => {
     const { navigation: { state: { params: { hash: vault } } } } = this.props;
 
-    clearTimeout(TIMEOUT);
-    TIMEOUT = setTimeout(() => {
-      query({
-        l10n, method: 'groupByDay', search: value.toLowerCase().trim(), vault,
-      });
-    }, 300);
+    this.setState({ search: value });
+    query({
+      l10n, method: 'groupByDay', search: value.toLowerCase().trim(), vault,
+    });
   }
 
   _onToggleClone = clone => this.setState({ clone });
@@ -81,12 +93,14 @@ class Vault extends Component {
 
   render() {
     const {
-      _onSearch, _onToggleClone, _onToggleDialog, _onTransactionType,
+      _onScroll, _onSearch, _onToggleClone, _onToggleDialog, _onTransactionType,
       props: { visible, ...props },
-      state: { clone, dialog, type },
+      state: {
+        clone, dialog, scroll, search, type,
+      },
     } = this;
     const { state: { params: vault = {} } = {} } = props.navigation;
-    const { currency, hash } = vault;
+    const { currency, currentBalance, hash } = vault;
 
     return (
       <Viewport {...props} scroll={false} visible={visible}>
@@ -97,10 +111,10 @@ class Vault extends Component {
           }) => (
             <Fragment>
               <Header
+                amount={{ currency, value: currentBalance }}
+                highlight={scroll}
                 left={IS_WEB ? { icon: iconBack, onPress: () => navigation.goBack(props.navigation) } : undefined}
-                onSearch={visible
-                  ? value => _onSearch({ value, store, l10n })
-                  : undefined}
+                title={vault.title}
                 visible={visible}
               />
 
@@ -108,12 +122,17 @@ class Vault extends Component {
                 contentContainerStyle={styles.container}
                 data={visible ? queryTxs : []}
                 keyExtractor={tx => `${tx.timestamp}-${tx.value}`}
+                onScroll={_onScroll}
+                scrollEventThrottle={40}
                 ListHeaderComponent={() => (
-                  <BalanceCard
-                    {...vaults.find(v => v.hash === hash)}
-                    chart={undefined}
-                    title={`${vault.title} ${l10n.BALANCE}`}
-                  />
+                  <Fragment>
+                    <BalanceCard
+                      {...vaults.find(v => v.hash === hash)}
+                      chart={undefined}
+                      title={`${vault.title} ${l10n.BALANCE}`}
+                    />
+                    <Search l10n={l10n} onValue={value => _onSearch({ value, store, l10n })} value={search} />
+                  </Fragment>
                 )}
                 ListEmptyComponent={() => (
                   <View style={[styles.content, styles.container]}>

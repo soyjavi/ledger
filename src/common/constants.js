@@ -1,21 +1,20 @@
 import { Platform } from 'react-native';
 
-import { THEME } from '../reactor/common';
+import { LAYOUT, THEME } from '../reactor/common';
 import PKG from '../../package.json';
 
-const { ELEVATION, SPACE, OFFSET, UNIT } = THEME;
+const { BORDER_RADIUS, SPACE, UNIT } = THEME;
 
 // const DEV = __DEV__ ? __DEV__ : { hello: 'world' }; // eslint-disable-line;
 // const isDev = packagerOpts && packagerOpts.dev;
 
-const CARD_WIDTH = UNIT * 16;
 const IS_PRODUCTION = false;
 const IS_ANDROID = Platform.OS === 'android';
 const MS_IN_DAY = 1000 * 24 * 60 * 60;
 const MS_IN_WEEK = MS_IN_DAY * 7;
 
 export default {
-  ENDPOINT: IS_PRODUCTION ? 'https://voltvault.glitch.me' : 'http://localhost:8080',
+  ENDPOINT: IS_PRODUCTION ? 'https://voltvault.glitch.me' : 'http://192.168.1.6:8080',
 
   FIXED: {
     BTC: 6,
@@ -39,19 +38,11 @@ export default {
     VAULT: 'Vault',
     STATS: 'Stats',
   },
-  SLIDER: {
-    itemMargin: 0,
-    itemWidth: CARD_WIDTH + OFFSET,
-  },
   STYLE: {
-    BALANCE_CARD_HEIGHT: UNIT * 21.6,
     CARD: {
-      ...ELEVATION.CARD,
-      borderRadius: UNIT,
+      borderRadius: BORDER_RADIUS,
       overflow: 'hidden',
-      paddingVertical: SPACE.S,
-      paddingHorizontal: SPACE.MEDIUM,
-      width: CARD_WIDTH,
+      padding: SPACE.MEDIUM,
     },
     DIALOG: {
       backgroundColor: 'rgba(255,255,255,0.75)',
@@ -59,11 +50,12 @@ export default {
       zIndex: 2,
     },
     DIALOG_FRAME: {
-      borderTopLeftRadius: UNIT,
-      borderTopRightRadius: UNIT,
+      borderTopLeftRadius: BORDER_RADIUS,
+      borderTopRightRadius: BORDER_RADIUS,
       margin: 0,
     },
     HEADER_HEIGHT: UNIT * 5.8,
+    VAULT_ITEM_WIDTH: (LAYOUT.VIEWPORT.W / 2) - (SPACE.MEDIUM * 3),
   },
   SYMBOL: {
     AUD: 'AU$',

@@ -1,4 +1,4 @@
-import { C, FORM } from '../../../common';
+import { C, FORM } from '../../../../../common';
 
 const { VAULT_TRANSFER, WIPE } = C;
 const { TRANSACTION } = FORM;

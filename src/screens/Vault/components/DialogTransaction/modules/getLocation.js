@@ -1,4 +1,4 @@
-import { fetch } from '../../../common';
+import { fetch } from '../../../../../common';
 
 export default async (component, getLocationAsync) => {
   component.setState({ coords: undefined, location: true, place: undefined });

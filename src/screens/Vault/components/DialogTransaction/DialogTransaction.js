@@ -4,13 +4,14 @@ import {
 import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
-import { C, translate } from '../../common';
-import { Consumer } from '../../context';
-import { THEME } from '../../reactor/common';
+import { C, translate } from '../../../../common';
+import { Consumer } from '../../../../context';
+import { MapStaticImage } from '../../../../components';
+
+import { THEME } from '../../../../reactor/common';
 import {
   Button, Dialog, Form, Text,
-} from '../../reactor/components';
-import MapStaticImage from '../MapStaticImage';
+} from '../../../../reactor/components';
 import { getLocation, hydrateTransaction } from './modules';
 
 import styles from './DialogTransaction.style';
