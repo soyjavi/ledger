@@ -2,8 +2,9 @@ import {
   func, number, shape, string,
 } from 'prop-types';
 import React, { Fragment } from 'react';
-import { View } from 'react-native';
+import { Image, View } from 'react-native';
 
+import { FLAGS } from '../../assets';
 import { exchange } from '../../common';
 import { Consumer } from '../../context';
 import { Text, Touchable } from '../../reactor/components';
@@ -24,6 +25,7 @@ const VaultItem = (props) => {
       { ({ l10n, store: { baseCurrency, rates } }) => (
         <Touchable onPress={onPress} rippleColor={COLOR.TEXT_LIGHTEN} style={styles.container}>
           <View style={styles.content}>
+            <Image source={FLAGS[currency]} style={styles.thumbnail} />
             <Text caption level={2} numberOfLines={1}>{title.toUpperCase()}</Text>
             <PriceFriendly
               headline
