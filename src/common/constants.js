@@ -8,13 +8,13 @@ const { BORDER_RADIUS, SPACE, UNIT } = THEME;
 // const DEV = __DEV__ ? __DEV__ : { hello: 'world' }; // eslint-disable-line;
 // const isDev = packagerOpts && packagerOpts.dev;
 
-const IS_PRODUCTION = false;
+const IS_PRODUCTION = true;
 const IS_ANDROID = Platform.OS === 'android';
 const MS_IN_DAY = 1000 * 24 * 60 * 60;
 const MS_IN_WEEK = MS_IN_DAY * 7;
 
 export default {
-  ENDPOINT: IS_PRODUCTION ? 'https://voltvault.glitch.me' : 'http://192.168.1.6:8080',
+  ENDPOINT: IS_PRODUCTION ? 'https://voltvault.glitch.me' : 'http://192.168.1.3:8080',
 
   FIXED: {
     BTC: 6,
@@ -60,38 +60,39 @@ export default {
   SYMBOL: {
     AUD: 'AU$',
     // BGN: '',
-    BRL: 'AU$',
+    // BRL: 'AU$',
     BTC: IS_ANDROID && Platform.Version < 26 ? 'Ƀ' : '₿',
-    CAD: 'CA$',
-    CHF: 'SFr',
+    // CAD: 'CA$',
+    // CHF: 'SFr',
     // CNY: '',
-    CZK: 'Kč',
-    DKK: 'Dkr',
+    // CZK: 'Kč',
+    // DKK: 'Dkr',
     GBP: '£',
     EUR: '€',
     HKD: 'HKD',
     // HRK: '',
-    HUF: 'Ft',
-    IDR: 'Rp',
-    ILS: '₪',
-    INR: 'Rs',
+    // HUF: 'Ft',
+    // IDR: 'Rp',
+    // ILS: '₪',
+    // INR: 'Rs',
     // ISK: '',
     JPY: '¥',
     KRW: '₩',
-    MXN: 'Mex$',
+    // MXN: 'Mex$',
     MYR: 'RM',
-    NOK: 'Kr',
-    NZD: 'NZD$',
-    PHP: '₱',
-    PLN: 'zł',
+    // NOK: 'Kr',
+    // NZD: 'NZD$',
+    // PHP: '₱',
+    // PLN: 'zł',
     // RON: '',
-    RUB: 'руб.',
-    SEK: 'Kr',
-    SGD: 'S$',
+    // RUB: 'руб.',
+    // SEK: 'Kr',
+    // SGD: 'S$',
     THB: '฿',
     // TRY: '',
     USD: '$',
-    ZAR: 'R',
+    VND: '₫',
+    // ZAR: 'R',
   },
 
   TX: {

@@ -10,12 +10,15 @@ import BTC from './bitcoin.png';
 import EUR from './europe.png';
 import HKD from './hong-kong.png';
 import JPY from './japan.png';
+import KRW from './south-korea.png';
+import MYR from './malaysia.png';
 import THB from './thailand.png';
 import GBP from './united-kingdom.png';
 import USD from './united-states.png';
+import VND from './vietnam.png';
 
 const FLAGS = {
-  AUD, BTC, EUR, HKD, JPY, THB, GBP, USD,
+  AUD, BTC, EUR, HKD, JPY, KRW, MYR, THB, GBP, USD, VND,
 };
 
 export { FLAGS };
