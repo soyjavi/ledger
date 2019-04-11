@@ -14,7 +14,9 @@ import MapStaticImage from '../MapStaticImage';
 
 import styles from './DialogClone.style';
 
-const { FIXED, SYMBOL, TX: { TYPE: { INCOME, EXPENSE } }, WIPE } = C;
+const {
+  FIXED, SYMBOL, TX: { TYPE: { INCOME, EXPENSE } }, WIPE,
+} = C;
 const { COLOR } = THEME;
 
 class DialogClone extends PureComponent {

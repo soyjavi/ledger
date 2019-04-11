@@ -70,14 +70,14 @@ class ProviderStore extends Component {
     const profile = await fetch({ service: 'profile', headers }).catch(onError);
     if (profile) {
       const { baseCurrency, latestTransaction: { hash } = {}, rates } = profile;
-      const { hash: latestHash } = txs[txs.length - 1] || {};
+      const { hash: localHash } = txs[txs.length - 1] || {};
 
-      if (hash !== latestHash || version !== VERSION) {
-        let service = 'transactions';
-        if (hash) service += `?latestTransaction=${hash}`;
+      if (hash !== localHash || version !== VERSION) {
+        const service = 'transactions';
+        // if (hash && localHash) service += `?latestTransaction=${hash}`;
         const { txs: newTxs } = await fetch({ service, headers }).catch(onError);
-        txs = [...txs, ...newTxs];
-        txs = newTxs;
+        // txs = [...txs, ...newTxs];
+        txs = [...newTxs];
       }
 
       const nextState = {

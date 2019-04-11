@@ -16,7 +16,7 @@ const Header = ({
     { left && <Button color={COLOR.TRANSPARENT} {...left} iconSize={24} /> }
     <View style={styles.content}>
       { title && (
-        <Motion preset="fade" style={styles.row} visible={highlight}>
+        <Motion timeline={[{ property: 'opacity', value: highlight ? 1 : 0 }]} style={styles.row}>
           <Heading title={title} logo />
         </Motion>
       )}

@@ -19,7 +19,6 @@ export default StyleSheet.create({
 
   content: {
     flex: 1,
-    // alignItems: 'center',
   },
 
   row: LAYOUT.STYLE.ROW,
@@ -31,8 +30,7 @@ export default StyleSheet.create({
   thumbnail: {
     borderRadius: THUMBNAIL_SIZE / 2,
     height: THUMBNAIL_SIZE,
-    width: THUMBNAIL_SIZE,
-    backgroundColor: COLOR.WHITE,
     marginBottom: SPACE.XXS,
+    width: THUMBNAIL_SIZE,
   },
 });

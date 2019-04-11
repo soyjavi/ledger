@@ -3,7 +3,7 @@ import React, { Fragment, Component } from 'react';
 import { BackHandler, FlatList, View } from 'react-native';
 
 import ASSETS from '../../assets';
-import { C, verboseMonth } from '../../common';
+import { C } from '../../common';
 import {
   Summary, DialogClone, FloatingButton, GroupTransactions, Header,
 } from '../../components';
