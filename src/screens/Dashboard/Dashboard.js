@@ -4,7 +4,7 @@ import { BackHandler, ScrollView, View } from 'react-native';
 
 import { C } from '../../common';
 import {
-  BalanceCard, DialogVault, FloatingButton, Header, Heading, VaultItem,
+  Summary, DialogVault, FloatingButton, Header, Heading, TransactionItem, VaultItem,
 } from '../../components';
 import { Consumer } from '../../context';
 import { THEME } from '../../reactor/common';
@@ -75,14 +75,14 @@ class Dashboard extends PureComponent {
             { ({
               l10n, navigation,
               store: {
-                baseCurrency, overall, vaults, ...store
+                baseCurrency, overall, txs, vaults, ...store
               },
             }) => (
               <Fragment>
                 <Header highlight={scroll} title={l10n.OVERALL_BALANCE} />
                 <ScrollView onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.scroll}>
-                  <BalanceCard currency={baseCurrency} title={l10n.OVERALL_BALANCE} {...overall} />
-                  <Heading breakline title={l10n.VAULTS} />
+                  <Summary {...overall} currency={baseCurrency} style={styles.summary} title={l10n.OVERALL_BALANCE} />
+                  <Heading title={l10n.VAULTS} />
                   <Slider
                     itemWidth={VAULT_ITEM_WIDTH + SPACE.S}
                     itemMargin={0}
@@ -94,6 +94,16 @@ class Dashboard extends PureComponent {
                   </Slider>
 
                   <Heading breakline title="$Last Transactions" />
+                  <View>
+                    { txs.slice(-10).map(tx => (
+                      <TransactionItem
+                        key={tx.hash}
+                        onPress={() => {}}
+                        {...tx}
+                        {...vaults.find(vault => vault.hash === tx.vault)}
+                      />
+                    ))}
+                  </View>
 
                 </ScrollView>
                 <FloatingButton onPress={_onToggleDialog} visible={!dialog} />

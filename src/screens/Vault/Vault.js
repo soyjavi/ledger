@@ -5,7 +5,7 @@ import { BackHandler, FlatList, View } from 'react-native';
 import ASSETS from '../../assets';
 import { C, verboseMonth } from '../../common';
 import {
-  BalanceCard, DialogClone, FloatingButton, GroupTransactions, Header,
+  Summary, DialogClone, FloatingButton, GroupTransactions, Header,
 } from '../../components';
 import { Consumer } from '../../context';
 import { ENV } from '../../reactor/common';
@@ -126,7 +126,7 @@ class Vault extends Component {
                 scrollEventThrottle={40}
                 ListHeaderComponent={() => (
                   <Fragment>
-                    <BalanceCard
+                    <Summary
                       {...vaults.find(v => v.hash === hash)}
                       chart={undefined}
                       title={`${vault.title} ${l10n.BALANCE}`}

@@ -10,7 +10,7 @@ import { Button, Text } from '../../reactor/components';
 import Heading from '../Heading';
 import Percentage from '../Percentage';
 import PriceFriendly from '../PriceFriendly';
-import styles from './BalanceCard.style';
+import styles from './Summary.style';
 
 const { SCREEN } = C;
 const { logo } = ASSETS;
@@ -20,7 +20,7 @@ const captionProps = {
   caption: true, level: 2, lighten: true, numberOfLines: 1,
 };
 
-class BalanceCard extends Component {
+class Summary extends Component {
   static propTypes = {
     currency: string,
     currentBalance: number,
@@ -108,4 +108,4 @@ class BalanceCard extends Component {
   }
 }
 
-export default BalanceCard;
+export default Summary;

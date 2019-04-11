@@ -1,7 +1,5 @@
-import BalanceCard from './BalanceCard';
 import Chart from './Chart';
 import DialogClone from './DialogClone';
-
 import DialogVault from './DialogVault';
 import FloatingButton from './FloatingButton';
 import GroupTransactions from './GroupTransactions';
@@ -11,11 +9,11 @@ import MapStaticImage from './MapStaticImage';
 import NumKeyboard from './NumKeyboard';
 import Percentage from './Percentage';
 import PriceFriendly from './PriceFriendly';
+import Summary from './Summary';
 import TransactionItem from './TransactionItem';
 import VaultItem from './VaultItem';
 
 export {
-  BalanceCard,
   Chart,
   DialogClone,
   DialogVault,
@@ -27,6 +25,7 @@ export {
   NumKeyboard,
   Percentage,
   PriceFriendly,
+  Summary,
   TransactionItem,
   VaultItem,
 };
