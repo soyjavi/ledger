@@ -130,9 +130,8 @@ class Vault extends Component {
                 ListHeaderComponent={() => (
                   <Fragment>
                     <Summary
-                      {...vaults.find(v => v.hash === hash)}
+                      {...vaults.find(row => row.hash === hash)}
                       image={FLAGS[currency]}
-                      chart={undefined}
                       title={`${vault.title} ${l10n.BALANCE}`}
                     />
                     <Search l10n={l10n} onValue={value => _onSearch({ value, store, l10n })} value={search} />

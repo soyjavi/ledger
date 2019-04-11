@@ -79,10 +79,14 @@ class Dashboard extends PureComponent {
               },
             }) => (
               <Fragment>
-                <Header highlight={scroll} title={l10n.OVERALL_BALANCE} />
+                <Header
+                  highlight={scroll}
+                  right={{ title: l10n.SETTINGS, onPress: () => {} }}
+                  title={l10n.OVERALL_BALANCE}
+                />
                 <ScrollView onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.scroll}>
                   <Summary {...overall} currency={baseCurrency} style={styles.summary} title={l10n.OVERALL_BALANCE} />
-                  <Heading title={l10n.VAULTS} />
+                  <Heading breakline subtitle={l10n.VAULTS} />
                   <Slider
                     itemWidth={VAULT_ITEM_WIDTH + SPACE.S}
                     itemMargin={0}
@@ -93,14 +97,14 @@ class Dashboard extends PureComponent {
                     ))}
                   </Slider>
 
-                  <Heading breakline title="$Last Transactions" />
+                  <Heading breakline subtitle={l10n.LAST_TRANSACTIONS} />
                   <View>
                     { txs.slice(-10).map(tx => (
                       <TransactionItem
                         key={tx.hash}
                         onPress={() => {}}
-                        {...tx}
                         {...vaults.find(vault => vault.hash === tx.vault)}
+                        {...tx}
                       />
                     ))}
                   </View>
