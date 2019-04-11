@@ -21,7 +21,7 @@ export default StyleSheet.create({
     flex: 1,
   },
 
-  logo: {
+  image: {
     height: UNIT * 1.6,
     width: UNIT * 2.2,
     marginBottom: SPACE.XXS / 2,

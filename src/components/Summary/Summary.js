@@ -1,4 +1,6 @@
-import { shape, number, string } from 'prop-types';
+import {
+  shape, number, oneOfType, string,
+} from 'prop-types';
 import React, { Component } from 'react';
 import { Image, View } from 'react-native';
 
@@ -13,7 +15,6 @@ import PriceFriendly from '../PriceFriendly';
 import styles from './Summary.style';
 
 const { SCREEN } = C;
-const { logo } = ASSETS;
 const { COLOR } = THEME;
 
 const captionProps = {
@@ -25,6 +26,7 @@ class Summary extends Component {
     currency: string,
     currentBalance: number,
     currentMonth: shape({}),
+    image: oneOfType([number, string]),
     title: string.isRequired,
   };
 
@@ -32,6 +34,7 @@ class Summary extends Component {
     currency: 'EUR',
     currentBalance: undefined,
     currentMonth: {},
+    image: ASSETS.logo,
   };
 
   shouldComponentUpdate({ currentBalance }) {
@@ -42,7 +45,7 @@ class Summary extends Component {
 
   render() {
     const {
-      currency, currentBalance, currentMonth, title, ...inherit
+      currency, currentBalance, currentMonth, image, title, ...inherit
     } = this.props;
 
     const { progression = 0, incomes = 0, expenses = 0 } = currentMonth;
@@ -60,7 +63,7 @@ class Summary extends Component {
           <View style={[styles.container, inherit.style]}>
             <View style={styles.content}>
               <View style={styles.row}>
-                <Image source={logo} resizeMode="contain" style={styles.logo} />
+                <Image source={image} resizeMode="contain" style={styles.logo} />
                 <Text caption level={2} lighten>{title.toUpperCase()}</Text>
               </View>
               <PriceFriendly

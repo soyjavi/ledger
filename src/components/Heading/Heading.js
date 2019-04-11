@@ -1,8 +1,9 @@
-import { bool, node, string } from 'prop-types';
+import {
+  bool, node, number, oneOfType, string,
+} from 'prop-types';
 import React, { PureComponent } from 'react';
 import { Image, View } from 'react-native';
 
-import ASSETS from '../../assets';
 import { Text } from '../../reactor/components';
 import styles from './Heading.style';
 
@@ -10,7 +11,7 @@ class Heading extends PureComponent {
   static propTypes = {
     breakline: bool,
     children: node,
-    logo: bool,
+    image: oneOfType([number, string]),
     subtitle: string,
     title: string,
   };
@@ -18,19 +19,19 @@ class Heading extends PureComponent {
   static defaultProps = {
     breakline: false,
     children: undefined,
-    logo: false,
+    image: undefined,
     subtitle: undefined,
     title: undefined,
   };
 
   render() {
     const {
-      breakline, children, logo, subtitle, title, ...inherit
+      breakline, children, image, subtitle, title, ...inherit
     } = this.props;
 
     return (
       <View style={[styles.container, breakline && styles.breakline]}>
-        { logo && <Image source={ASSETS.logo} resizeMode="contain" style={styles.logo} /> }
+        { image && <Image source={image} resizeMode="contain" style={styles.image} /> }
         <View style={styles.content}>
           { title && <Text headline level={6}>{title}</Text> }
           { subtitle && <Text subtitle level={3} {...inherit}>{subtitle}</Text> }

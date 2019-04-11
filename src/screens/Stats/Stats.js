@@ -87,7 +87,7 @@ class Stats extends PureComponent {
                 />
                 <ScrollView onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.container}>
                   <View style={styles.content}>
-                    <Heading title={l10n.ACTIVITY} logo />
+                    <Heading title={l10n.ACTIVITY} image={ASSETS.logo} />
                     <Heading subtitle={l10n.BALANCE} />
                     <Chart
                       captions={orderCaptions(l10n, typeQuery)}
