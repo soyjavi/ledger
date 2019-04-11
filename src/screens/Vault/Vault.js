@@ -2,15 +2,17 @@ import { bool, func, shape } from 'prop-types';
 import React, { Fragment, Component } from 'react';
 import { BackHandler, FlatList, View } from 'react-native';
 
-import ASSETS from '../../assets';
+import ASSETS, { FLAGS } from '../../assets';
 import { C } from '../../common';
 import {
-  Summary, DialogClone, FloatingButton, GroupTransactions, Header,
+  Summary, DialogClone, FloatingButton, Header,
 } from '../../components';
 import { Consumer } from '../../context';
 import { ENV } from '../../reactor/common';
 import { Text, Viewport } from '../../reactor/components';
-import { DialogTransaction, DialogTransfer, Search } from './components';
+import {
+  DialogTransaction, DialogTransfer, GroupTransactions, Search,
+} from './components';
 import styles from './Vault.style';
 
 const { iconBack } = ASSETS;
@@ -113,6 +115,7 @@ class Vault extends Component {
               <Header
                 amount={{ currency, value: currentBalance }}
                 highlight={scroll}
+                image={FLAGS[currency]}
                 left={IS_WEB ? { icon: iconBack, onPress: () => navigation.goBack(props.navigation) } : undefined}
                 title={vault.title}
                 visible={visible}
@@ -128,6 +131,7 @@ class Vault extends Component {
                   <Fragment>
                     <Summary
                       {...vaults.find(v => v.hash === hash)}
+                      image={FLAGS[currency]}
                       chart={undefined}
                       title={`${vault.title} ${l10n.BALANCE}`}
                     />

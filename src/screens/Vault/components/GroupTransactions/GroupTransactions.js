@@ -1,16 +1,15 @@
 import {
   arrayOf, func, number, shape, string,
 } from 'prop-types';
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { View } from 'react-native';
 
-import ASSETS from '../../assets';
-import { C, exchange, verboseDate } from '../../common';
-import { Consumer } from '../../context';
-import { Icon, Price } from '../../reactor/components';
-import { THEME } from '../../reactor/common';
-import Heading from '../Heading';
-import TransactionItem from '../TransactionItem';
+import ASSETS from '../../../../assets';
+import { C, exchange, verboseDate } from '../../../../common';
+import { Consumer } from '../../../../context';
+import { Heading, TransactionItem } from '../../../../components';
+import { Icon, Price } from '../../../../reactor/components';
+import { THEME } from '../../../../reactor/common';
 import styles from './GroupTransactions.style';
 
 const { iconExpense, iconIncome } = ASSETS;
@@ -47,7 +46,7 @@ class GroupTransactions extends Component {
     return (
       <Consumer>
         { ({ store: { baseCurrency, rates }, l10n }) => (
-          <View>
+          <Fragment>
             <Heading breakline subtitle={verboseDate(timestamp, l10n)}>
               <View style={styles.heading}>
                 <Icon value={value > 0 ? iconIncome : iconExpense} style={styles.icon} />
@@ -66,7 +65,7 @@ class GroupTransactions extends Component {
             { txs.map(tx => (
               <TransactionItem key={tx.hash} {...tx} currency={currency} onPress={() => onItem(tx)} />
             ))}
-          </View>
+          </Fragment>
         )}
       </Consumer>
     );

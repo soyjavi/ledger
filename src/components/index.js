@@ -2,7 +2,6 @@ import Chart from './Chart';
 import DialogClone from './DialogClone';
 import DialogVault from './DialogVault';
 import FloatingButton from './FloatingButton';
-import GroupTransactions from './GroupTransactions';
 import Header from './Header';
 import Heading from './Heading';
 import MapStaticImage from './MapStaticImage';
@@ -18,7 +17,6 @@ export {
   DialogClone,
   DialogVault,
   FloatingButton,
-  GroupTransactions,
   Header,
   Heading,
   MapStaticImage,
