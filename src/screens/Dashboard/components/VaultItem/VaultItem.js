@@ -4,13 +4,12 @@ import {
 import React, { Fragment } from 'react';
 import { Image, View } from 'react-native';
 
-import { FLAGS } from '../../assets';
-import { exchange } from '../../common';
-import { Consumer } from '../../context';
-import { Text, Touchable } from '../../reactor/components';
-import { THEME } from '../../reactor/common';
-import Percentage from '../Percentage';
-import PriceFriendly from '../PriceFriendly';
+import { FLAGS } from '../../../../assets';
+import { exchange } from '../../../../common';
+import { Percentage, PriceFriendly } from '../../../../components';
+import { Consumer } from '../../../../context';
+import { Text, Touchable } from '../../../../reactor/components';
+import { THEME } from '../../../../reactor/common';
 import styles from './VaultItem.style';
 
 const { COLOR } = THEME;

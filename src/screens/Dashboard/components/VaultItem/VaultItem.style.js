@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
-import { C } from '../../common';
-import { LAYOUT, THEME } from '../../reactor/common';
+import { C } from '../../../../common';
+import { LAYOUT, THEME } from '../../../../reactor/common';
 
 const { STYLE } = C;
 const { COLOR, UNIT, SPACE } = THEME;
