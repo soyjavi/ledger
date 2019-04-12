@@ -4,9 +4,7 @@ import { BackHandler, FlatList, View } from 'react-native';
 
 import ASSETS, { FLAGS } from '../../assets';
 import { C } from '../../common';
-import {
-  Summary, DialogClone, FloatingButton, Header,
-} from '../../components';
+import { Summary, FloatingButton, Header } from '../../components';
 import { Consumer } from '../../context';
 import { ENV } from '../../reactor/common';
 import { Text, Viewport } from '../../reactor/components';
@@ -35,7 +33,6 @@ class Vault extends Component {
   };
 
   state = {
-    clone: undefined,
     dialog: false,
     scroll: false,
     search: undefined,
@@ -46,9 +43,9 @@ class Vault extends Component {
     const method = backward ? 'removeEventListener' : 'addEventListener';
 
     BackHandler[method]('hardwareBackPress', () => {
-      const { props: { navigation }, state: { clone, dialog } } = this;
+      const { props: { navigation }, state: { dialog } } = this;
 
-      if (clone || dialog) this.setState({ clone: false, dialog: false });
+      if (dialog) this.setState({ dialog: false });
       else goBack(navigation);
       return true;
     });
@@ -57,13 +54,10 @@ class Vault extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     const {
       props: { visible },
-      state: {
-        clone, dialog, scroll, search,
-      },
+      state: { dialog, scroll, search },
     } = this;
 
     return (nextProps.visible !== visible)
-      || (nextState.clone !== clone)
       || (nextState.dialog !== dialog)
       || (nextState.scroll !== scroll)
       || (nextState.search !== search);
@@ -84,8 +78,6 @@ class Vault extends Component {
     });
   }
 
-  _onToggleClone = clone => this.setState({ clone });
-
   _onToggleDialog = () => {
     const { state: { dialog } } = this;
     this.setState({ dialog: !dialog });
@@ -95,10 +87,10 @@ class Vault extends Component {
 
   render() {
     const {
-      _onScroll, _onSearch, _onToggleClone, _onToggleDialog, _onTransactionType,
+      _onScroll, _onSearch, _onToggleDialog, _onTransactionType,
       props: { visible, ...props },
       state: {
-        clone, dialog, scroll, search, type,
+        dialog, scroll, search, type,
       },
     } = this;
     const { state: { params: vault = {} } = {} } = props.navigation;
@@ -142,9 +134,7 @@ class Vault extends Component {
                     <Text level={2} lighten>{l10n.VAULT_EMPTY}</Text>
                   </View>
                 )}
-                renderItem={({ item }) => (
-                  <GroupTransactions {...item} currency={currency} onItem={tx => _onToggleClone(tx)} />
-                )}
+                renderItem={({ item }) => <GroupTransactions {...item} currency={currency} />}
               />
 
               <FloatingButton
@@ -162,12 +152,6 @@ class Vault extends Component {
                   />
                   { vaults.length > 1 && (
                     <DialogTransfer vault={hash} onClose={_onToggleDialog} visible={dialog && type === TRANSFER} />)}
-                  <DialogClone
-                    currency={currency}
-                    dataSource={clone}
-                    visible={!!clone}
-                    onClose={() => _onToggleClone()}
-                  />
                 </Fragment>
               )}
             </Fragment>

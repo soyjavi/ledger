@@ -4,7 +4,7 @@ import React, { Component, createContext } from 'react';
 import { C, fetch } from '../common';
 import { Fingerprint } from '../reactor/context/Tracking/modules';
 import {
-  AsyncStore, calcOverall, calcVault, groupByCategory, groupByDay, sortByProgression,
+  AsyncStore, calcOverall, calcVault, groupByDay, sortByProgression,
 } from './modules';
 
 const { NAME, VERSION } = C;
@@ -23,6 +23,7 @@ class ProviderStore extends Component {
     overall: {},
     queryProps: {},
     queryTxs: [],
+    tx: undefined,
     // -- STORAGE --------------------------------------------------------------
     baseCurrency: undefined,
     pin: undefined,
@@ -125,6 +126,13 @@ class ProviderStore extends Component {
     return newTransaction;
   }
 
+  onTx = (tx) => {
+    const { state: { vaults } } = this;
+    const { currency } = tx ? vaults.find(({ hash }) => hash === tx.vault) : {};
+
+    this.setState({ tx: tx ? { ...tx, currency } : undefined });
+  }
+
   onVault = async (props) => {
     const { onError, _store, state: { hash: authorization, rates, ...state } } = this;
     let { state: { baseCurrency } } = this;
@@ -156,14 +164,9 @@ class ProviderStore extends Component {
 
   query = (queryProps = {}) => {
     const { state } = this;
-    const { method } = queryProps;
-    let queryTxs = [];
 
     if (JSON.stringify(queryProps) !== JSON.stringify(state.queryProps)) {
-      if (method === 'groupByDay') queryTxs = groupByDay(state, queryProps);
-      else if (method === 'groupByCategory') queryTxs = groupByCategory(state, queryProps);
-
-      this.setState({ queryProps, queryTxs });
+      this.setState({ queryProps, queryTxs: groupByDay(state, queryProps) });
     }
   }
 
@@ -179,7 +182,7 @@ class ProviderStore extends Component {
 
   render() {
     const {
-      getHash, onHandshake, onError, onTransaction, onVault, query,
+      getHash, onHandshake, onError, onTransaction, onTx, onVault, query,
       props: { children },
       state,
     } = this;
@@ -187,7 +190,7 @@ class ProviderStore extends Component {
     return (
       <Provider
         value={{
-          getHash, onHandshake, onError, onTransaction, onVault, query, ...state,
+          getHash, onHandshake, onError, onTransaction, onTx, onVault, query, ...state,
         }}
       >
         { children }

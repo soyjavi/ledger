@@ -1,5 +1,5 @@
 import {
-  arrayOf, func, number, shape, string,
+  arrayOf, number, shape, string,
 } from 'prop-types';
 import React, { Component, Fragment } from 'react';
 import { View } from 'react-native';
@@ -18,16 +18,13 @@ const { COLOR } = THEME;
 
 class GroupTransactions extends Component {
   static propTypes = {
-    currency: string,
-    onItem: func,
+    currency: string.isRequired,
     timestamp: string.isRequired,
     txs: arrayOf(shape()).isRequired,
     value: number,
   };
 
   static defaultProps = {
-    currency: undefined,
-    onItem: undefined,
     value: 0,
   };
 
@@ -39,7 +36,7 @@ class GroupTransactions extends Component {
   render() {
     const {
       props: {
-        currency, onItem, timestamp, txs = [], value,
+        currency, timestamp, txs = [], value,
       },
     } = this;
 
@@ -62,9 +59,7 @@ class GroupTransactions extends Component {
                 />
               </View>
             </Heading>
-            { txs.map(tx => (
-              <TransactionItem key={tx.hash} {...tx} currency={currency} onPress={() => onItem(tx)} />
-            ))}
+            { txs.map(tx => <TransactionItem key={tx.hash} {...tx} currency={currency} />)}
           </Fragment>
         )}
       </Consumer>

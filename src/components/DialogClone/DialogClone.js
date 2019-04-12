@@ -21,9 +21,7 @@ const { COLOR } = THEME;
 
 class DialogClone extends PureComponent {
   static propTypes = {
-    currency: string.isRequired,
     dataSource: shape({}),
-    onClose: func.isRequired,
     visible: bool,
   };
 
@@ -37,8 +35,8 @@ class DialogClone extends PureComponent {
     busyWipe: false,
   };
 
-  _onSubmit = async ({ onTransaction }, wipe = false) => {
-    const { props: { dataSource, onClose } } = this;
+  _onSubmit = async ({ onTransaction, onTx }, wipe = false) => {
+    const { props: { dataSource } } = this;
     const {
       category, hash, value, vault, location, title, type = EXPENSE,
     } = dataSource;
@@ -62,16 +60,16 @@ class DialogClone extends PureComponent {
     const tx = await onTransaction(props);
     this.setState({ [wipe ? 'busyWipe' : 'busyClone']: false });
 
-    if (tx) onClose();
+    if (tx) onTx(undefined);
   }
 
   render() {
     const {
       _onSubmit,
       props: {
-        currency, onClose, visible,
+        visible,
         dataSource: {
-          category, location, title, type = EXPENSE, value,
+          category, currency, location, title, type = EXPENSE, value,
         },
       },
       state: { busyClone, busyWipe },
@@ -81,7 +79,7 @@ class DialogClone extends PureComponent {
       <Consumer>
         { ({ l10n, store: { baseCurrency, rates, ...store } }) => (
           <Dialog
-            onClose={onClose}
+            onClose={() => store.onTx(undefined)}
             style={styles.frame}
             styleContainer={styles.dialog}
             title={type === EXPENSE ? l10n.EXPENSE : l10n.INCOME}
@@ -93,19 +91,33 @@ class DialogClone extends PureComponent {
 
             <View style={styles.info}>
               <View style={styles.row}>
-                <Text subtitle level={2} style={styles.title}>{title}</Text>
-                <Price
-                  subtitle
-                  level={2}
-                  fixed={FIXED[baseCurrency]}
-                  symbol={SYMBOL[baseCurrency]}
-                  title={type === INCOME ? '+' : undefined}
-                  value={baseCurrency !== currency
-                    ? exchange(Math.abs(value), currency, baseCurrency, rates)
-                    : Math.abs(value)}
-                />
+                <View style={styles.texts}>
+                  <Text subtitle level={2} style={styles.title}>{title}</Text>
+                  <Text caption lighten numberOfLines={1}>{l10n.CATEGORIES[type][category]}</Text>
+                </View>
+                <View style={styles.prices}>
+                  <Price
+                    subtitle
+                    level={2}
+                    fixed={FIXED[baseCurrency]}
+                    symbol={SYMBOL[baseCurrency]}
+                    title={type === INCOME ? '+' : undefined}
+                    value={baseCurrency !== currency
+                      ? exchange(Math.abs(value), currency, baseCurrency, rates)
+                      : Math.abs(value)}
+                  />
+                  { currency !== baseCurrency && (
+                    <Price
+                      caption
+                      lighten
+                      fixed={FIXED[currency]}
+                      symbol={SYMBOL[currency]}
+                      title={type === INCOME ? '+' : undefined}
+                      value={value}
+                    />
+                  )}
+                </View>
               </View>
-              <Text caption lighten numberOfLines={1}>{l10n.CATEGORIES[type][category]}</Text>
               { location && <MapStaticImage {...location} style={styles.map} /> }
               { location && <Text caption lighten>{location.place}</Text> }
             </View>

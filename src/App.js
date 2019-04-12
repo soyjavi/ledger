@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import { C } from './common';
 import { Consumer, ConsumerNavigation, ConsumerStore } from './context';
 import { LayoutView, Snackbar } from './reactor/components';
+import { DialogClone } from './components';
 import {
-  Session, Stats, Dashboard, Vault,
+  Session, Settings, Stats, Dashboard, Vault,
 } from './screens';
 
 const { SCREEN } = C;
 const {
-  SESSION, STATS, DASHBOARD, VAULT,
+  SESSION, SETTINGS, STATS, DASHBOARD, VAULT,
 } = SCREEN;
 
 export default props => (
@@ -20,6 +21,7 @@ export default props => (
       <LayoutView>
         <Session backward={current !== SESSION} visible={stack.includes(SESSION)} />
         <Dashboard backward={current !== DASHBOARD} visible={stack.includes(DASHBOARD)} />
+        <Settings backward={current !== SETTINGS} visible={stack.includes(SETTINGS)} />
         <Vault
           {...props}
           backward={current !== VAULT}
@@ -30,7 +32,13 @@ export default props => (
 
         <ConsumerStore>
           { store => (
-            <Stats backward={current !== STATS} {...store} vault={params.Vault} visible={stack.includes(STATS)} />
+            <Fragment>
+              <Stats backward={current !== STATS} {...store} vault={params.Vault} visible={stack.includes(STATS)} />
+              <DialogClone
+                dataSource={store.tx}
+                visible={store.tx !== undefined}
+              />
+            </Fragment>
           )}
         </ConsumerStore>
 
