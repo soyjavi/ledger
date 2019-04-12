@@ -1,7 +1,7 @@
 import Chart from './Chart';
 import DialogClone from './DialogClone';
 import DialogVault from './DialogVault';
-import FloatingButton from './FloatingButton';
+import Footer from './Footer';
 import Header from './Header';
 import Heading from './Heading';
 import MapStaticImage from './MapStaticImage';
@@ -10,13 +10,12 @@ import Percentage from './Percentage';
 import PriceFriendly from './PriceFriendly';
 import Summary from './Summary';
 import TransactionItem from './TransactionItem';
-import VaultItem from './VaultItem';
 
 export {
   Chart,
   DialogClone,
   DialogVault,
-  FloatingButton,
+  Footer,
   Header,
   Heading,
   MapStaticImage,
@@ -25,5 +24,4 @@ export {
   PriceFriendly,
   Summary,
   TransactionItem,
-  VaultItem,
 };

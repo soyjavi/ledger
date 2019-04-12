@@ -3,7 +3,9 @@ import React, { Fragment, PureComponent } from 'react';
 import { BackHandler, ScrollView, View } from 'react-native';
 
 import ASSETS from '../../assets';
-import { Chart, Header, Heading } from '../../components';
+import {
+  Chart, Footer, Header, Heading,
+} from '../../components';
 import { Consumer } from '../../context';
 import { THEME } from '../../reactor/common';
 import { Viewport } from '../../reactor/components';
@@ -80,7 +82,6 @@ class Stats extends PureComponent {
               <Fragment>
                 <Header
                   highlight={scroll}
-                  left={{ icon: iconBack, onPress: navigation.goBack }}
                   right={{ title: typeQuery === MONTHLY ? l10n.WEEKLY : l10n.MONTHLY, onPress: _onQuery }}
                   title={l10n.ACTIVITY}
                   visible={visible}
@@ -107,9 +108,11 @@ class Stats extends PureComponent {
                     />
                   </View>
 
+
                   { Object.keys(values[1]).length > 0 && <ItemGroupCategories type={1} dataSource={values[1]} /> }
                   { Object.keys(values[0]).length > 0 && <ItemGroupCategories type={0} dataSource={values[0]} /> }
                 </ScrollView>
+                <Footer onBack={navigation.goBack} />
               </Fragment>
             )}
           </Consumer>

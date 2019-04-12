@@ -2,20 +2,17 @@ import { bool, func, shape } from 'prop-types';
 import React, { Fragment, Component } from 'react';
 import { BackHandler, FlatList, View } from 'react-native';
 
-import ASSETS, { FLAGS } from '../../assets';
+import { FLAGS } from '../../assets';
 import { C } from '../../common';
-import { Summary, FloatingButton, Header } from '../../components';
+import { Summary, Footer, Header } from '../../components';
 import { Consumer } from '../../context';
-import { ENV } from '../../reactor/common';
 import { Text, Viewport } from '../../reactor/components';
 import {
   DialogTransaction, DialogTransfer, GroupTransactions, Search,
 } from './components';
 import styles from './Vault.style';
 
-const { iconBack } = ASSETS;
 const { TX: { TYPE: { EXPENSE, TRANSFER } } } = C;
-const { IS_WEB } = ENV;
 
 class Vault extends Component {
   static propTypes = {
@@ -108,7 +105,6 @@ class Vault extends Component {
                 amount={{ currency, value: currentBalance }}
                 highlight={scroll}
                 image={FLAGS[currency]}
-                left={IS_WEB ? { icon: iconBack, onPress: () => navigation.goBack(props.navigation) } : undefined}
                 title={vault.title}
                 visible={visible}
               />
@@ -137,10 +133,10 @@ class Vault extends Component {
                 renderItem={({ item }) => <GroupTransactions {...item} currency={currency} />}
               />
 
-              <FloatingButton
-                onPress={dialog ? _onToggleDialog : _onTransactionType}
+              <Footer
+                onPress={_onTransactionType}
+                onBack={() => navigation.goBack(props.navigation)}
                 options={vaults.length === 1 ? [l10n.EXPENSE, l10n.INCOME] : [l10n.EXPENSE, l10n.INCOME, l10n.TRANSFER]}
-                visible={!dialog && !props.backward}
               />
               { visible && (
                 <Fragment>

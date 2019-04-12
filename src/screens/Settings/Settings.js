@@ -3,12 +3,10 @@ import React, { Fragment, PureComponent } from 'react';
 import { ScrollView } from 'react-native';
 
 import ASSETS from '../../assets';
-import { Header } from '../../components';
+import { Footer, Header } from '../../components';
 import { Consumer } from '../../context';
 import { Viewport } from '../../reactor/components';
 import styles from './Settings.style';
-
-const { iconBack } = ASSETS;
 
 class Settings extends PureComponent {
   static propTypes = {
@@ -46,11 +44,13 @@ class Settings extends PureComponent {
               <Fragment>
                 <Header
                   highlight={scroll}
-                  left={{ icon: iconBack, onPress: navigation.goBack }}
                   title={l10n.SETTINGS}
                   visible={visible}
                 />
                 <ScrollView onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.container} />
+
+                <Footer onBack={navigation.goBack} />
+
               </Fragment>
             )}
           </Consumer>

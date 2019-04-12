@@ -4,11 +4,13 @@ import { BackHandler, ScrollView, View } from 'react-native';
 
 import { C } from '../../common';
 import {
-  Summary, DialogVault, FloatingButton, Header, Heading, TransactionItem, VaultItem,
+  DialogVault, Footer, Header, Heading, Summary, TransactionItem,
 } from '../../components';
 import { Consumer } from '../../context';
 import { THEME } from '../../reactor/common';
 import { Slider, Viewport } from '../../reactor/components';
+import { VaultItem } from './components';
+import { queryLastTxs } from './modules';
 import styles from './Dashboard.style';
 
 const { SCREEN, STYLE: { VAULT_ITEM_WIDTH } } = C;
@@ -81,9 +83,10 @@ class Dashboard extends PureComponent {
               <Fragment>
                 <Header
                   highlight={scroll}
-                  right={{ title: l10n.SETTINGS, onPress: () => {} }}
+                  right={{ title: l10n.SETTINGS, onPress: () => navigation.navigate(SCREEN.SETTINGS) }}
                   title={l10n.OVERALL_BALANCE}
                 />
+
                 <ScrollView onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.scroll}>
                   <Summary {...overall} currency={baseCurrency} style={styles.summary} title={l10n.OVERALL_BALANCE} />
                   <Heading breakline subtitle={l10n.VAULTS} />
@@ -99,18 +102,11 @@ class Dashboard extends PureComponent {
 
                   <Heading breakline subtitle={l10n.LAST_TRANSACTIONS} />
                   <View>
-                    { txs.slice(-10).map(tx => (
-                      <TransactionItem
-                        key={tx.hash}
-                        onPress={() => {}}
-                        {...vaults.find(vault => vault.hash === tx.vault)}
-                        {...tx}
-                      />
-                    ))}
+                    { queryLastTxs({ txs, vaults }).map(tx => <TransactionItem key={tx.hash} {...tx} />)}
                   </View>
-
                 </ScrollView>
-                <FloatingButton onPress={_onToggleDialog} visible={!dialog} />
+
+                <Footer onPress={_onToggleDialog} />
                 { visible && (
                   <Fragment>
                     { vaults.length === 0 && !dialog && this.setState({ dialog: true }) }
