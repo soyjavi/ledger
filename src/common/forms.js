@@ -24,9 +24,6 @@ export default {
   },
 
   VAULT: {
-    currency: {
-      type: 'select', label: 'l10n.CURRENCY',
-    },
     title: {
       label: 'l10n.TITLE', required: true, inline: 2,
     },

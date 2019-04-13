@@ -58,6 +58,7 @@ export default {
     CLONE_CAPTION: 'To make your life easier you can clone this transaction with a simple touch of the button.',
     CLOSE: 'Close',
     CURRENCY: 'Currency',
+    CURRENCIES: 'Currencies',
     CURRENT_MONTH: 'This month',
 
     DAY: 'day',

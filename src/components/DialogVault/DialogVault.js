@@ -1,32 +1,40 @@
-import { bool, func } from 'prop-types';
+import { bool, func, string } from 'prop-types';
 import React, { PureComponent } from 'react';
+import { Image, View } from 'react-native';
 
-import { translate } from '../../common';
+import { FLAGS } from '../../assets';
+import { FORM, translate } from '../../common';
 import { Consumer } from '../../context';
 import { THEME } from '../../reactor/common';
 import {
-  Button, Dialog, Form, Text,
+  Button, Dialog, Form, Slider, Text, Touchable,
 } from '../../reactor/components';
-import hydrate from './modules/hydrate';
 import styles from './DialogVault.style';
 
 const { COLOR } = THEME;
 
 class DialogVault extends PureComponent {
   static propTypes = {
+    baseCurrency: string,
     onClose: func.isRequired,
     visible: bool,
   };
 
   static defaultProps = {
+    baseCurrency: undefined,
     visible: false,
   };
 
-  state = {
-    busy: false,
-    form: {},
-    valid: false,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      busy: false,
+      currency: props.baseCurrency,
+      form: {},
+      valid: false,
+    };
+  }
 
   componentWillReceiveProps({ visible }) {
     const { props } = this;
@@ -35,22 +43,26 @@ class DialogVault extends PureComponent {
 
   _onChange = form => this.setState({ form });
 
+  _onCurrency = currency => this.setState({ currency });
+
   _onValid = valid => this.setState({ valid })
 
   _onSubmit = async ({ onVault }) => {
-    const { props: { onClose }, state: { form } } = this;
+    const { props: { onClose }, state: { currency, form } } = this;
 
     this.setState({ busy: true });
-    const vault = await onVault(form);
+    const vault = await onVault({ currency, ...form });
     if (vault) onClose();
     this.setState({ busy: false });
   }
 
   render() {
     const {
-      _onChange, _onSubmit, _onValid,
-      props: { onClose, visible },
-      state: { busy, form: { currency, ...form }, valid },
+      _onChange, _onCurrency, _onSubmit, _onValid,
+      props: { baseCurrency, onClose, visible },
+      state: {
+        busy, currency, form, valid,
+      },
     } = this;
 
     return (
@@ -58,7 +70,7 @@ class DialogVault extends PureComponent {
         { ({
           l10n,
           store: {
-            baseCurrency, rates = {}, vaults = [], ...store
+            rates = {}, vaults = [], ...store
           },
         }) => (
           <Dialog
@@ -71,16 +83,22 @@ class DialogVault extends PureComponent {
             <Text lighten level={2}>
               { vaults.length === 0 ? l10n.FIRST_VAULT_CAPTION : l10n.VAULT_CAPTION }
             </Text>
-            <Form
-              attributes={translate(hydrate({ baseCurrency, rates, vaults }), l10n)}
-              onValid={_onValid}
-              onChange={_onChange}
-              style={styles.form}
-              value={{
-                currency: currency || baseCurrency,
-                ...form,
-              }}
-            />
+            <View style={styles.form}>
+              <Text subtitle level={3}>{l10n.CURRENCIES}</Text>
+              <Slider style={styles.currencies}>
+                { [baseCurrency, ...Object.keys(rates)].map(item => (
+                  <Touchable
+                    key={item}
+                    onPress={() => _onCurrency(item)}
+                    style={[styles.card, currency === item && styles.cardSelected]}
+                  >
+                    <Image source={FLAGS[item]} style={styles.thumbnail} />
+                    <Text caption level={2} color={currency === item ? COLOR.WHITE : undefined} style={currency === item && styles.textHighlight}>{item}</Text>
+                  </Touchable>
+                ))}
+              </Slider>
+              <Form attributes={translate(FORM.VAULT, l10n)} onValid={_onValid} onChange={_onChange} value={form} />
+            </View>
             <Button
               activity={busy}
               color={COLOR.PRIMARY}
