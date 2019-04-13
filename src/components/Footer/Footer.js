@@ -61,7 +61,7 @@ class Footer extends PureComponent {
         { options && (
           <Motion
             style={styles.options}
-            timeline={[{ property: 'bottom', value: visibleOptions ? 0 : -512 }]}
+            timeline={[{ property: 'translateY', value: visibleOptions ? 0 : -512 }]}
             pointerEvents={visibleOptions ? undefined : 'none'}
           >
             <Text headline level={6} style={styles.title}>
