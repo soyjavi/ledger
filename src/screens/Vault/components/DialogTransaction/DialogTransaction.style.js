@@ -3,24 +3,28 @@ import { StyleSheet } from 'react-native';
 import { C } from '../../../../common';
 import { THEME } from '../../../../reactor/common';
 
-const { STYLE: { DIALOG, DIALOG_FRAME } } = C;
-const { OFFSET, UNIT } = THEME;
+const { STYLE } = C;
+const { SPACE } = THEME;
 
 export default StyleSheet.create({
   button: {
     flex: 1,
   },
 
-  dialog: DIALOG,
+  categories: {
+    marginBottom: SPACE.REGULAR,
+    marginTop: SPACE.XS,
+  },
 
-  frame: DIALOG_FRAME,
+  dialog: STYLE.DIALOG,
+
+  frame: STYLE.DIALOG_FRAME,
 
   form: {
-    marginVertical: OFFSET,
+    marginVertical: SPACE.MEDIUM,
   },
 
   location: {
-    marginTop: OFFSET / 2,
-    marginBottom: UNIT / 2,
+    marginVertical: SPACE.XXS,
   },
 });

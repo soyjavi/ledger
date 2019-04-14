@@ -4,15 +4,15 @@ import {
 import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
-import { C, translate } from '../../../../common';
+import { C, FORM, translate } from '../../../../common';
 import { Consumer } from '../../../../context';
-import { MapStaticImage } from '../../../../components';
+import { CardOption, MapStaticImage } from '../../../../components';
 
 import { THEME } from '../../../../reactor/common';
 import {
-  Button, Dialog, Form, Text,
+  Button, Dialog, Form, Slider, Text,
 } from '../../../../reactor/components';
-import { getLocation, hydrateTransaction } from './modules';
+import { getLocation, queryCategories } from './modules';
 
 import styles from './DialogTransaction.style';
 
@@ -34,11 +34,11 @@ class DialogTransaction extends PureComponent {
 
   state = {
     busy: false,
+    category: undefined,
     coords: undefined,
     form: {},
     location: false,
     place: undefined,
-    valid: false,
   };
 
   componentWillReceiveProps({ visible }) {
@@ -46,6 +46,7 @@ class DialogTransaction extends PureComponent {
 
     if (visible === true && visible !== props.visible) {
       this.setState({
+        category: undefined,
         coords: undefined,
         form: { title: '' },
         location: false,
@@ -54,18 +55,20 @@ class DialogTransaction extends PureComponent {
     }
   }
 
+  _onCategory = category => this.setState({ category });
+
   _onChange = form => this.setState({ form });
 
   _getLocation = (getLocationAsync) => {
     getLocation(this, getLocationAsync);
   }
 
-  _onValid = valid => this.setState({ valid })
-
   _onSubmit = async ({ l10n: { CATEGORIES }, store: { onTransaction } }) => {
     const {
       props: { onClose, type, vault },
-      state: { coords = {}, form: { category, value, title = '' }, place },
+      state: {
+        category, coords = {}, form: { value, title = '' }, place,
+      },
     } = this;
 
     this.setState({ busy: true });
@@ -87,13 +90,14 @@ class DialogTransaction extends PureComponent {
 
   render() {
     const {
-      _getLocation, _onChange, _onSubmit, _onValid,
+      _getLocation, _onCategory, _onChange, _onSubmit,
       props: { onClose, type, visible },
       state: {
-        busy, coords, form, location, place, valid,
+        busy, category, coords, form, location, place,
       },
     } = this;
     const color = type === EXPENSE ? COLOR.EXPENSES : COLOR.INCOMES;
+    const valid = category !== undefined && form.title !== '' && form.value > 0;
 
     return (
       <Consumer>
@@ -109,12 +113,20 @@ class DialogTransaction extends PureComponent {
               {type === EXPENSE ? l10n.EXPENSE_CAPTION : l10n.INCOME_CAPTION}
             </Text>
             <View style={styles.form}>
-              <Form
-                attributes={translate(hydrateTransaction({ l10n, type }), l10n)}
-                onValid={_onValid}
-                onChange={_onChange}
-                value={form}
-              />
+              <Text subtitle level={3}>{l10n.CATEGORY}</Text>
+              <Slider style={styles.categories}>
+                { queryCategories({ l10n, type }).map(item => (
+                  <CardOption
+                    key={item}
+                    onPress={() => _onCategory(item)}
+                    selected={category === item}
+                    title={item}
+                  />
+                ))}
+              </Slider>
+
+              <Form attributes={translate(FORM.TRANSACTION, l10n)} onChange={_onChange} value={form} />
+
               { getLocationAsync && (
                 <View>
                   { visible && location === false && _getLocation(getLocationAsync) }

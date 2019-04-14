@@ -1,7 +1,7 @@
 import getLocation from './getLocation';
-import hydrateTransaction from './hydrateTransaction';
+import queryCategories from './queryCategories';
 
 export {
   getLocation,
-  hydrateTransaction,
+  queryCategories,
 };
