@@ -1,14 +1,15 @@
 import { bool, func, string } from 'prop-types';
 import React, { PureComponent } from 'react';
-import { Image, View } from 'react-native';
+import { View } from 'react-native';
 
-import { FLAGS } from '../../assets';
-import { FORM, translate } from '../../common';
-import { Consumer } from '../../context';
-import { THEME } from '../../reactor/common';
+import { FLAGS } from '../../../../assets';
+import { FORM, translate } from '../../../../common';
+import { CardOption } from '../../../../components';
+import { Consumer } from '../../../../context';
+import { THEME } from '../../../../reactor/common';
 import {
-  Button, Dialog, Form, Slider, Text, Touchable,
-} from '../../reactor/components';
+  Button, Dialog, Form, Slider, Text,
+} from '../../../../reactor/components';
 import styles from './DialogVault.style';
 
 const { COLOR } = THEME;
@@ -36,9 +37,9 @@ class DialogVault extends PureComponent {
     };
   }
 
-  componentWillReceiveProps({ visible }) {
+  componentWillReceiveProps({ baseCurrency: currency, visible }) {
     const { props } = this;
-    if (visible === true && visible !== props.visible) this.setState({ form: { balance: '0' } });
+    if (visible === true && visible !== props.visible) this.setState({ currency, form: { balance: '0' } });
   }
 
   _onChange = form => this.setState({ form });
@@ -87,14 +88,13 @@ class DialogVault extends PureComponent {
               <Text subtitle level={3}>{l10n.CURRENCIES}</Text>
               <Slider style={styles.currencies}>
                 { [baseCurrency, ...Object.keys(rates)].map(item => (
-                  <Touchable
+                  <CardOption
+                    image={FLAGS[item]}
                     key={item}
                     onPress={() => _onCurrency(item)}
-                    style={[styles.card, currency === item && styles.cardSelected]}
-                  >
-                    <Image source={FLAGS[item]} style={styles.thumbnail} />
-                    <Text caption level={2} color={currency === item ? COLOR.WHITE : undefined} style={currency === item && styles.textHighlight}>{item}</Text>
-                  </Touchable>
+                    selected={currency === item}
+                    title={item}
+                  />
                 ))}
               </Slider>
               <Form attributes={translate(FORM.VAULT, l10n)} onValid={_onValid} onChange={_onChange} value={form} />
