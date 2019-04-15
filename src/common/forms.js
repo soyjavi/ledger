@@ -1,8 +1,5 @@
 export default {
   TRANSACTION: {
-    category: {
-      type: 'select', dataSource: [], label: 'l10n.CATEGORY',
-    },
     value: {
       keyboard: 'numeric', label: 'l10n.AMOUNT', required: true,
     },
