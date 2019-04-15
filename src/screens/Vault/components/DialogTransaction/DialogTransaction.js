@@ -4,6 +4,7 @@ import {
 import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
+import { CATEGORIES } from '../../../../assets';
 import { C, FORM, translate } from '../../../../common';
 import { Consumer } from '../../../../context';
 import { CardOption, MapStaticImage } from '../../../../components';
@@ -14,9 +15,9 @@ import {
 } from '../../../../reactor/components';
 import { getLocation, queryCategories } from './modules';
 
-import styles from './DialogTransaction.style';
+import styles, { CARD_WIDTH } from './DialogTransaction.style';
 
-const { COLOR } = THEME;
+const { COLOR, SPACE } = THEME;
 const { TX: { TYPE: { EXPENSE } } } = C;
 
 class DialogTransaction extends PureComponent {
@@ -63,7 +64,7 @@ class DialogTransaction extends PureComponent {
     getLocation(this, getLocationAsync);
   }
 
-  _onSubmit = async ({ l10n: { CATEGORIES }, store: { onTransaction } }) => {
+  _onSubmit = async ({ onTransaction }) => {
     const {
       props: { onClose, type, vault },
       state: {
@@ -73,9 +74,7 @@ class DialogTransaction extends PureComponent {
 
     this.setState({ busy: true });
     const response = await onTransaction({
-      category: category
-        ? parseInt(Object.keys(CATEGORIES[type]).find(key => CATEGORIES[type][key] === category), 10)
-        : 1,
+      category,
       title,
       type,
       value: parseFloat(value, 10),
@@ -114,13 +113,15 @@ class DialogTransaction extends PureComponent {
             </Text>
             <View style={styles.form}>
               <Text subtitle level={3}>{l10n.CATEGORY}</Text>
-              <Slider style={styles.categories}>
+              <Slider itemMargin={0} itemWidth={CARD_WIDTH + SPACE.S} snap={3} style={styles.cards}>
                 { queryCategories({ l10n, type }).map(item => (
                   <CardOption
-                    key={item}
-                    onPress={() => _onCategory(item)}
-                    selected={category === item}
-                    title={item}
+                    key={item.key}
+                    icon={CATEGORIES[type][item.key]}
+                    onPress={() => _onCategory(item.key)}
+                    selected={category === item.key}
+                    style={styles.card}
+                    title={item.caption}
                   />
                 ))}
               </Slider>
@@ -140,7 +141,7 @@ class DialogTransaction extends PureComponent {
               activity={busy}
               color={COLOR.PRIMARY}
               disabled={busy || !valid}
-              onPress={() => _onSubmit({ l10n, store })}
+              onPress={() => _onSubmit(store)}
               shadow
               style={styles.button}
               title={!busy ? l10n.SAVE : undefined}

@@ -10,9 +10,9 @@ import { THEME } from '../../../../reactor/common';
 import {
   Button, Dialog, Form, Slider, Text,
 } from '../../../../reactor/components';
-import styles from './DialogVault.style';
+import styles, { CARD_WIDTH } from './DialogVault.style';
 
-const { COLOR } = THEME;
+const { COLOR, SPACE } = THEME;
 
 class DialogVault extends PureComponent {
   static propTypes = {
@@ -86,13 +86,14 @@ class DialogVault extends PureComponent {
             </Text>
             <View style={styles.form}>
               <Text subtitle level={3}>{l10n.CURRENCIES}</Text>
-              <Slider style={styles.currencies}>
+              <Slider itemMargin={0} itemWidth={CARD_WIDTH + SPACE.S} snap={4} style={styles.currencies}>
                 { [baseCurrency, ...Object.keys(rates)].map(item => (
                   <CardOption
                     image={FLAGS[item]}
                     key={item}
                     onPress={() => _onCurrency(item)}
                     selected={currency === item}
+                    style={styles.card}
                     title={item}
                   />
                 ))}

@@ -1,13 +1,13 @@
 import {
   arrayOf, bool, func, string,
 } from 'prop-types';
-import React, { PureComponent } from 'react';
+import React, { Fragment, PureComponent } from 'react';
 import { View } from 'react-native';
 
 import ASSETS from '../../assets';
 import { Consumer, ConsumerEvents } from '../../context';
 import { THEME } from '../../reactor/common';
-import { Button, Dialog } from '../../reactor/components';
+import { Button, Dialog, Form } from '../../reactor/components';
 import CardOption from '../CardOption';
 import styles from './Footer.style';
 
@@ -29,8 +29,8 @@ class Footer extends PureComponent {
   };
 
   state = {
-    dialog: true,
-  }
+    dialog: false,
+  };
 
   _onOption = (option) => {
     const { props: { onPress } } = this;
@@ -56,31 +56,32 @@ class Footer extends PureComponent {
     } = this;
 
     return (
-      <View style={[styles.container, scroll && styles.scroll, inherit.style]}>
-        { onBack && (
-          <Button
-            color={COLOR.WHITE}
-            icon={ASSETS.iconBack}
-            onPress={onBack}
-            shadow
-            style={onPress && styles.buttonBack}
-          />
-        )}
+      <Fragment>
+        <View style={[styles.container, scroll && styles.scroll, inherit.style]}>
+          { onBack && (
+            <Button
+              color={COLOR.WHITE}
+              icon={ASSETS.back}
+              onPress={onBack}
+              shadow
+              style={onPress && styles.buttonBack}
+            />
+          )}
 
-        { onPress && (
-          <ConsumerEvents>
-            { ({ isConnected }) => (
-              <Button
-                color={COLOR.PRIMARY}
-                disabled={!isConnected}
-                icon={ASSETS.iconAdd}
-                onPress={onPress ? _onPress : undefined}
-                shadow
-              />
-            )}
-          </ConsumerEvents>
-        )}
-
+          { onPress && (
+            <ConsumerEvents>
+              { ({ isConnected }) => (
+                <Button
+                  color={COLOR.PRIMARY}
+                  disabled={!isConnected}
+                  icon={ASSETS.add}
+                  onPress={onPress ? _onPress : undefined}
+                  shadow
+                />
+              )}
+            </ConsumerEvents>
+          )}
+        </View>
         { options && (
           <Consumer>
             { ({ l10n }) => (
@@ -91,6 +92,7 @@ class Footer extends PureComponent {
                 styleContainer={styles.dialog}
                 visible={dialog}
               >
+                <Form />
                 <View style={styles.cards}>
                   { options.map((option, index) => (
                     <CardOption
@@ -106,7 +108,7 @@ class Footer extends PureComponent {
             )}
           </Consumer>
         )}
-      </View>
+      </Fragment>
     );
   }
 }

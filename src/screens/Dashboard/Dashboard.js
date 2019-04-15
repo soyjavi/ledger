@@ -4,13 +4,13 @@ import { BackHandler, ScrollView, View } from 'react-native';
 
 import { C } from '../../common';
 import {
-  DialogVault, Footer, Header, Heading, Summary, TransactionItem,
+  Footer, Header, Heading, Summary, TransactionItem,
 } from '../../components';
 import { Consumer } from '../../context';
 import { THEME } from '../../reactor/common';
 import { Slider, Viewport } from '../../reactor/components';
-import { VaultItem } from './components';
-import { queryLastTxs } from './modules';
+import { DialogVault, VaultItem } from './components';
+import { queryEnabledVaults, queryLastTxs } from './modules';
 import styles from './Dashboard.style';
 
 const { SCREEN, STYLE: { VAULT_ITEM_WIDTH } } = C;
@@ -95,7 +95,7 @@ class Dashboard extends PureComponent {
                     itemMargin={0}
                     style={styles.vaults}
                   >
-                    { vaults.map(vault => (
+                    { queryEnabledVaults(vaults).map(vault => (
                       <VaultItem key={vault.hash} {...vault} onPress={() => _onVault({ navigation, store, vault })} />
                     ))}
                   </Slider>
@@ -110,7 +110,7 @@ class Dashboard extends PureComponent {
                 { visible && (
                   <Fragment>
                     { vaults.length === 0 && !dialog && this.setState({ dialog: true }) }
-                    <DialogVault visible={!stats && dialog} onClose={_onToggleDialog} />
+                    <DialogVault baseCurrency={baseCurrency} visible={!stats && dialog} onClose={_onToggleDialog} />
                   </Fragment>
                 )}
               </Fragment>

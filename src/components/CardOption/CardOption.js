@@ -2,20 +2,23 @@ import {
   bool, func, number, oneOfType, string,
 } from 'prop-types';
 import React from 'react';
-import { Image } from 'react-native';
+import { Image, View } from 'react-native';
 
-import { Text, Touchable } from '../../reactor/components';
+import { Icon, Text, Touchable } from '../../reactor/components';
 
 import styles from './CardOption.style';
 
 const CardOption = ({
-  image, onPress, selected, title,
+  icon, image, onPress, selected, title, ...inherit
 }) => (
   <Touchable
     onPress={onPress}
-    style={[styles.container, selected && styles.selected]}
+    style={[styles.container, selected && styles.selected, inherit.style]}
   >
-    <Image source={image} style={styles.image} />
+    <View style={[styles.thumbnail, selected && styles.thumbnailHighlight]}>
+      { image && <Image source={image} style={styles.image} /> }
+      { icon && <Icon value={icon} style={styles.icon} /> }
+    </View>
     <Text caption level={2} style={[styles.title, selected && styles.titleHighlight]}>
       {title}
     </Text>
@@ -23,6 +26,7 @@ const CardOption = ({
 );
 
 CardOption.propTypes = {
+  icon: oneOfType([number, string]),
   image: oneOfType([number, string]),
   onPress: func.isRequired,
   selected: bool,
@@ -30,6 +34,7 @@ CardOption.propTypes = {
 };
 
 CardOption.defaultProps = {
+  icon: undefined,
   image: undefined,
   selected: false,
 };

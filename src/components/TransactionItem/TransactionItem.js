@@ -2,6 +2,7 @@ import { number, shape, string } from 'prop-types';
 import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
+import { CATEGORIES } from '../../assets';
 import { C, exchange } from '../../common';
 import { ConsumerStore } from '../../context';
 import {
@@ -44,7 +45,7 @@ class TransactionItem extends PureComponent {
           <Touchable rippleColor={COLOR.TEXT_LIGHTEN} onPress={() => onTx(this.props)}>
             <View style={[styles.container, styles.row]}>
               <View style={styles.icon}>
-                <Icon value="doneContrast" />
+                <Icon value={CATEGORIES[type][category]} />
               </View>
               <View style={[styles.content, styles.row]}>
                 <View style={styles.texts}>

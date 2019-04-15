@@ -4,14 +4,22 @@ import { C } from '../../../../common';
 import { THEME } from '../../../../reactor/common';
 
 const { STYLE } = C;
-const { SPACE } = THEME;
+const { SPACE, UNIT } = THEME;
+const CARD_WIDTH = UNIT * 9.6;
+
+export { CARD_WIDTH };
 
 export default StyleSheet.create({
   button: {
     flex: 1,
   },
 
-  categories: {
+  card: {
+    paddingHorizontal: 0,
+    width: CARD_WIDTH,
+  },
+
+  cards: {
     marginBottom: SPACE.REGULAR,
     marginTop: SPACE.XS,
   },

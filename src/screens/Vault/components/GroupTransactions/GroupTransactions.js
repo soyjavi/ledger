@@ -12,7 +12,6 @@ import { Icon, Price } from '../../../../reactor/components';
 import { THEME } from '../../../../reactor/common';
 import styles from './GroupTransactions.style';
 
-const { iconExpense, iconIncome } = ASSETS;
 const { FIXED, SYMBOL } = C;
 const { COLOR } = THEME;
 
@@ -46,7 +45,7 @@ class GroupTransactions extends Component {
           <Fragment>
             <Heading breakline subtitle={verboseDate(timestamp, l10n)}>
               <View style={styles.heading}>
-                <Icon value={value > 0 ? iconIncome : iconExpense} style={styles.icon} />
+                <Icon value={value > 0 ? ASSETS.income : ASSETS.expense} style={styles.icon} />
                 <Price
                   color={value > 0 ? COLOR.INCOMES : COLOR.EXPENSES}
                   subtitle

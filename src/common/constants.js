@@ -3,18 +3,20 @@ import { Platform } from 'react-native';
 import { LAYOUT, THEME } from '../reactor/common';
 import PKG from '../../package.json';
 
-const { BORDER_RADIUS, SPACE, UNIT } = THEME;
+const {
+  BORDER_RADIUS, COLOR, SPACE, UNIT,
+} = THEME;
 
 // const DEV = __DEV__ ? __DEV__ : { hello: 'world' }; // eslint-disable-line;
 // const isDev = packagerOpts && packagerOpts.dev;
 
-const IS_PRODUCTION = true;
+const IS_PRODUCTION = false;
 const IS_ANDROID = Platform.OS === 'android';
 const MS_IN_DAY = 1000 * 24 * 60 * 60;
 const MS_IN_WEEK = MS_IN_DAY * 7;
 
 export default {
-  ENDPOINT: IS_PRODUCTION ? 'https://voltvault.glitch.me' : 'http://192.168.1.3:8080',
+  ENDPOINT: IS_PRODUCTION ? 'https://voltvault.glitch.me' : 'http://192.168.1.4:8080',
 
   FIXED: {
     BTC: 6,
@@ -33,10 +35,11 @@ export default {
   NAME: PKG.name,
 
   SCREEN: {
-    SESSION: 'Session',
     DASHBOARD: 'Dashboard',
-    VAULT: 'Vault',
+    SESSION: 'Session',
+    SETTINGS: 'Settings',
     STATS: 'Stats',
+    VAULT: 'Vault',
   },
   STYLE: {
     CARD: {
@@ -50,10 +53,12 @@ export default {
       zIndex: 2,
     },
     DIALOG_FRAME: {
+      backgroundColor: COLOR.WHITE,
       borderTopLeftRadius: BORDER_RADIUS,
       borderTopRightRadius: BORDER_RADIUS,
       margin: 0,
     },
+    FOOTER_HEIGHT: UNIT * 7.6,
     HEADER_HEIGHT: UNIT * 5.8,
     VAULT_ITEM_WIDTH: (LAYOUT.VIEWPORT.W / 2) - (SPACE.MEDIUM * 3),
   },

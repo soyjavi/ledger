@@ -67,6 +67,7 @@ class ProviderStore extends Component {
     const { onError, _store, state: { hash: authorization, version } } = this;
     const headers = { authorization };
     let { state: { txs = [] } } = this;
+    let nextState = {};
 
     const profile = await fetch({ service: 'profile', headers }).catch(onError);
     if (profile) {
@@ -81,7 +82,7 @@ class ProviderStore extends Component {
         txs = [...newTxs];
       }
 
-      const nextState = {
+      nextState = {
         baseCurrency,
         rates,
         txs,
@@ -93,7 +94,13 @@ class ProviderStore extends Component {
       await _store(nextState);
 
       this.setState({ ...nextState, overall: calcOverall(nextState) });
+
     }
+    return nextState;
+  }
+
+  onSettings = async () => {
+
   }
 
   onTransaction = async (props) => {
@@ -182,7 +189,7 @@ class ProviderStore extends Component {
 
   render() {
     const {
-      getHash, onHandshake, onError, onTransaction, onTx, onVault, query,
+      getHash, onError, onHandshake, onSettings, onTransaction, onTx, onVault, query,
       props: { children },
       state,
     } = this;
@@ -190,7 +197,7 @@ class ProviderStore extends Component {
     return (
       <Provider
         value={{
-          getHash, onHandshake, onError, onTransaction, onTx, onVault, query, ...state,
+          getHash, onError, onHandshake, onSettings, onTransaction, onTx, onVault, query, ...state,
         }}
       >
         { children }

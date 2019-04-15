@@ -7,20 +7,41 @@ const { STYLE } = C;
 
 const { COLOR, SPACE, UNIT } = THEME;
 
-const IMAGE_SIZE = UNIT * 3.2;
+const THUMBNAIL_SIZE = UNIT * 3.2;
 
 export default StyleSheet.create({
   container: {
     ...STYLE.CARD,
-    paddingHorizontal: 0,
     alignItems: 'center',
     backgroundColor: COLOR.BASE,
-    width: 96,
     marginRight: SPACE.S,
+  },
+
+  icon: {
+    opacity: 0.66,
+  },
+
+  image: {
+    height: THUMBNAIL_SIZE,
+    width: THUMBNAIL_SIZE,
   },
 
   selected: {
     backgroundColor: COLOR.PRIMARY,
+  },
+
+  thumbnail: {
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.05)',
+    borderRadius: THUMBNAIL_SIZE / 2,
+    height: THUMBNAIL_SIZE,
+    justifyContent: 'center',
+    marginBottom: SPACE.XS,
+    width: THUMBNAIL_SIZE,
+  },
+
+  thumbnailHighlight: {
+    backgroundColor: 'rgba(255,255,255,0.05)',
   },
 
   title: {
@@ -29,13 +50,5 @@ export default StyleSheet.create({
 
   titleHighlight: {
     color: COLOR.WHITE,
-  },
-
-  image: {
-    backgroundColor: 'rgba(0,0,0,0.05)',
-    borderRadius: IMAGE_SIZE / 2,
-    height: IMAGE_SIZE,
-    marginBottom: SPACE.XS,
-    width: IMAGE_SIZE,
   },
 });

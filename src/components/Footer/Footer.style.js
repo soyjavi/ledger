@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { C } from '../../common';
 import { LAYOUT, ENV, THEME } from '../../reactor/common';
 
-const { COLOR, ELEVATION, SPACE } = THEME;
+const { SPACE } = THEME;
 const { STYLE } = C;
 
 export default StyleSheet.create({
@@ -17,13 +17,17 @@ export default StyleSheet.create({
 
   card: {
     flex: 1,
+    width: '100%',
   },
 
   cardLast: {
     marginRight: 0,
   },
 
-  cards: LAYOUT.STYLE.ROW,
+  cards: {
+    ...LAYOUT.STYLE.ROW,
+    width: LAYOUT.VIEWPORT.W - (SPACE.MEDIUM * 2),
+  },
 
   container: {
     ...LAYOUT.STYLE.ROW,
@@ -40,22 +44,6 @@ export default StyleSheet.create({
 
   frame: {
     ...STYLE.DIALOG_FRAME,
-    width: '100vw',
-  },
-
-  options: {
-    ...ELEVATION.LARGE,
-    backgroundColor: COLOR.WHITE,
-    bottom: 0,
-    left: 0,
-    paddingTop: SPACE.MEDIUM,
-    paddingHorizontal: SPACE.MEDIUM,
-    paddingBottom: STYLE.FOOTER_HEIGHT - SPACE.MEDIUM,
-    position: ENV.IS_WEB ? 'fixed' : 'absolute',
-    right: 0,
-  },
-
-  title: {
-    marginBottom: SPACE.MEDIUM,
+    width: '100%',
   },
 });
