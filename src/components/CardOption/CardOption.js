@@ -5,15 +5,17 @@ import React from 'react';
 import { Image, View } from 'react-native';
 
 import { Icon, Text, Touchable } from '../../reactor/components';
-
+import { THEME } from '../../reactor/common';
 import styles from './CardOption.style';
 
+const { COLOR } = THEME;
+
 const CardOption = ({
-  icon, image, onPress, selected, title, ...inherit
+  color, icon, image, onPress, selected, title, ...inherit
 }) => (
   <Touchable
     onPress={onPress}
-    style={[styles.container, selected && styles.selected, inherit.style]}
+    style={[styles.container, selected && { backgroundColor: color }, inherit.style]}
   >
     <View style={[styles.thumbnail, selected && styles.thumbnailHighlight]}>
       { image && <Image source={image} style={styles.image} /> }
@@ -26,6 +28,7 @@ const CardOption = ({
 );
 
 CardOption.propTypes = {
+  color: string,
   icon: oneOfType([number, string]),
   image: oneOfType([number, string]),
   onPress: func.isRequired,
@@ -34,6 +37,7 @@ CardOption.propTypes = {
 };
 
 CardOption.defaultProps = {
+  color: COLOR.PRIMARY,
   icon: undefined,
   image: undefined,
   selected: false,

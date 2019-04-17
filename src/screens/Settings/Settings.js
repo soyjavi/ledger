@@ -2,10 +2,10 @@ import { bool, shape } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
 import { ScrollView } from 'react-native';
 
-import ASSETS from '../../assets';
-import { Footer, Header } from '../../components';
+import { Footer, Header, Heading } from '../../components';
 import { Consumer } from '../../context';
 import { Viewport } from '../../reactor/components';
+import { VaultItem } from './components';
 import styles from './Settings.style';
 
 class Settings extends PureComponent {
@@ -40,14 +40,17 @@ class Settings extends PureComponent {
       <Viewport {...inherit} scroll={false} visible={visible}>
         { visible && (
           <Consumer>
-            { ({ l10n, navigation }) => (
+            { ({ l10n, navigation, store: { vaults } }) => (
               <Fragment>
                 <Header
                   highlight={scroll}
                   title={l10n.SETTINGS}
                   visible={visible}
                 />
-                <ScrollView onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.container} />
+                <ScrollView onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.container}>
+                  <Heading breakline subtitle={`${l10n.ACTIVE} ${l10n.VAULTS}`} />
+                  { vaults.map(vault => <VaultItem key={vault.hash} {...vault} />)}
+                </ScrollView>
 
                 <Footer onBack={navigation.goBack} />
 

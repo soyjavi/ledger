@@ -113,10 +113,11 @@ class DialogTransaction extends PureComponent {
             </Text>
             <View style={styles.form}>
               <Text subtitle level={3}>{l10n.CATEGORY}</Text>
-              <Slider itemMargin={0} itemWidth={CARD_WIDTH + SPACE.S} snap={3} style={styles.cards}>
+              <Slider itemMargin={0} itemWidth={CARD_WIDTH + SPACE.S} steps={3} style={styles.cards}>
                 { queryCategories({ l10n, type }).map(item => (
                   <CardOption
                     key={item.key}
+                    color={color}
                     icon={CATEGORIES[type][item.key]}
                     onPress={() => _onCategory(item.key)}
                     selected={category === item.key}
@@ -126,7 +127,12 @@ class DialogTransaction extends PureComponent {
                 ))}
               </Slider>
 
-              <Form attributes={translate(FORM.TRANSACTION, l10n)} onChange={_onChange} value={form} />
+              <Form
+                attributes={translate(FORM.TRANSACTION, l10n)}
+                color={color}
+                onChange={_onChange}
+                value={form}
+              />
 
               { getLocationAsync && (
                 <View>
@@ -139,7 +145,7 @@ class DialogTransaction extends PureComponent {
 
             <Button
               activity={busy}
-              color={COLOR.PRIMARY}
+              color={color}
               disabled={busy || !valid}
               onPress={() => _onSubmit(store)}
               shadow

@@ -96,7 +96,7 @@ class DialogTransfer extends PureComponent {
               attributes={translate(hydrateTransfer({
                 form, l10n, store, vault,
               }), l10n)}
-              color={COLOR.ACCENT}
+              color={COLOR.PRIMARY}
               onValid={_onValid}
               onChange={value => _onChange(value, store)}
               style={styles.form}

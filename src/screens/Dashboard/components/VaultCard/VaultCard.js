@@ -10,11 +10,11 @@ import { Percentage, PriceFriendly } from '../../../../components';
 import { Consumer } from '../../../../context';
 import { Text, Touchable } from '../../../../reactor/components';
 import { THEME } from '../../../../reactor/common';
-import styles from './VaultItem.style';
+import styles from './VaultCard.style';
 
 const { COLOR } = THEME;
 
-const VaultItem = (props) => {
+const VaultCard = (props) => {
   const {
     currency, onPress, currentBalance, currentMonth: { progression }, title,
   } = props;
@@ -72,7 +72,7 @@ const VaultItem = (props) => {
   );
 };
 
-VaultItem.propTypes = {
+VaultCard.propTypes = {
   currency: string.isRequired,
   onPress: func.isRequired,
   currentBalance: number.isRequired,
@@ -80,9 +80,9 @@ VaultItem.propTypes = {
   title: string,
 };
 
-VaultItem.defaultProps = {
+VaultCard.defaultProps = {
   currentMonth: {},
   title: '',
 };
 
-export default VaultItem;
+export default VaultCard;

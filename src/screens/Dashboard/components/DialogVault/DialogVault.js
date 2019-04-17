@@ -86,7 +86,7 @@ class DialogVault extends PureComponent {
             </Text>
             <View style={styles.form}>
               <Text subtitle level={3}>{l10n.CURRENCIES}</Text>
-              <Slider itemMargin={0} itemWidth={CARD_WIDTH + SPACE.S} snap={4} style={styles.currencies}>
+              <Slider itemMargin={0} itemWidth={CARD_WIDTH + SPACE.S} steps={4} style={styles.currencies}>
                 { [baseCurrency, ...Object.keys(rates)].map(item => (
                   <CardOption
                     image={FLAGS[item]}

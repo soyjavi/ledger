@@ -64,7 +64,7 @@ class ProviderStore extends Component {
   onError = error => this.setState({ error: error ? error.message : undefined });
 
   onHandshake = async () => {
-    const { onError, _store, state: { hash: authorization, version } } = this;
+    const { onError, _store, state: { hash: authorization, version, vaults } } = this;
     const headers = { authorization };
     let { state: { txs = [] } } = this;
     let nextState = {};
@@ -87,20 +87,16 @@ class ProviderStore extends Component {
         rates,
         txs,
         vaults: sortByProgression(profile.vaults.map(vault => calcVault({
-          vault, txs, baseCurrency, rates,
+          txs, baseCurrency, rates, vault: { ...(vaults.find(item => item.hash === vault.hash) || {}), ...vault },
         }))),
         version: VERSION,
       };
+
       await _store(nextState);
-
       this.setState({ ...nextState, overall: calcOverall(nextState) });
-
     }
+
     return nextState;
-  }
-
-  onSettings = async () => {
-
   }
 
   onTransaction = async (props) => {
@@ -169,6 +165,19 @@ class ProviderStore extends Component {
     return vault;
   }
 
+  onVaultUpdate = async (updatedVault) => {
+    const { _store, state: { vaults } } = this;
+
+    const nextState = {
+      vaults: vaults.map(vault => (
+        vault.hash !== updatedVault.hash ? vault : updatedVault
+      )),
+    };
+
+    await _store(nextState);
+    this.setState(nextState);
+  }
+
   query = (queryProps = {}) => {
     const { state } = this;
 
@@ -188,18 +197,10 @@ class ProviderStore extends Component {
   }
 
   render() {
-    const {
-      getHash, onError, onHandshake, onSettings, onTransaction, onTx, onVault, query,
-      props: { children },
-      state,
-    } = this;
+    const { props: { children }, state, ...events } = this;
 
     return (
-      <Provider
-        value={{
-          getHash, onError, onHandshake, onSettings, onTransaction, onTx, onVault, query, ...state,
-        }}
-      >
+      <Provider value={{ ...events, ...state }}>
         { children }
       </Provider>
     );

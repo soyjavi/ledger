@@ -43,7 +43,7 @@ export default StyleSheet.create({
   item: {
     borderTopLeftRadius: COLUMN_WIDTH / 2,
     borderTopRightRadius: COLUMN_WIDTH / 2,
-    height: '100%',
+    maxHeight: '100%',
     minHeight: COLUMN_WIDTH,
     width: COLUMN_WIDTH,
   },

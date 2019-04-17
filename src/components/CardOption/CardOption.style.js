@@ -26,10 +26,6 @@ export default StyleSheet.create({
     width: THUMBNAIL_SIZE,
   },
 
-  selected: {
-    backgroundColor: COLOR.PRIMARY,
-  },
-
   thumbnail: {
     alignItems: 'center',
     backgroundColor: 'rgba(0,0,0,0.05)',

@@ -9,7 +9,7 @@ import {
 import { Consumer } from '../../context';
 import { THEME } from '../../reactor/common';
 import { Slider, Viewport } from '../../reactor/components';
-import { DialogVault, VaultItem } from './components';
+import { DialogVault, VaultCard } from './components';
 import { queryEnabledVaults, queryLastTxs } from './modules';
 import styles from './Dashboard.style';
 
@@ -96,7 +96,7 @@ class Dashboard extends PureComponent {
                     style={styles.vaults}
                   >
                     { queryEnabledVaults(vaults).map(vault => (
-                      <VaultItem key={vault.hash} {...vault} onPress={() => _onVault({ navigation, store, vault })} />
+                      <VaultCard key={vault.hash} {...vault} onPress={() => _onVault({ navigation, store, vault })} />
                     ))}
                   </Slider>
 

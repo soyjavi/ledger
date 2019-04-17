@@ -1,7 +1,7 @@
 import DialogVault from './DialogVault';
-import VaultItem from './VaultItem';
+import VaultCard from './VaultCard';
 
 export {
   DialogVault,
-  VaultItem,
+  VaultCard,
 };

@@ -1,6 +1,7 @@
 export default {
   'en-EN': {
     ACCEPT: 'Accept',
+    ACTIVE: 'Active',
     ACTIVITY: 'Activity',
     AMOUNT: 'Amount',
     BALANCE: 'Balance',

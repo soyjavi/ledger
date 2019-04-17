@@ -3,7 +3,9 @@ import { StyleSheet } from 'react-native';
 import { C } from '../../common';
 import { LAYOUT, ENV, THEME } from '../../reactor/common';
 
-const { COLOR, UNIT, SPACE } = THEME;
+const {
+  COLOR, ELEVATION, UNIT, SPACE,
+} = THEME;
 const { STYLE: { HEADER_HEIGHT } } = C;
 
 export default StyleSheet.create({
@@ -21,10 +23,7 @@ export default StyleSheet.create({
     flex: 1,
   },
 
-  highlight: {
-    borderBottomColor: COLOR.BASE,
-    borderBottomWidth: 1,
-  },
+  highlight: ELEVATION.SMALL,
 
   logo: {
     height: UNIT * 1.6,
