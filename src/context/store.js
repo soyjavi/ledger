@@ -4,7 +4,7 @@ import React, { Component, createContext } from 'react';
 import { C, fetch } from '../common';
 import { Fingerprint } from '../reactor/context/Tracking/modules';
 import {
-  AsyncStore, calcOverall, calcVault, groupByDay, sortByProgression,
+  AsyncStore, calcOverall, calcVault, sortByProgression, sortByTimestamp,
 } from './modules';
 
 const { NAME, VERSION } = C;
@@ -21,8 +21,6 @@ class ProviderStore extends Component {
     fingerprint: undefined,
     hash: undefined,
     overall: {},
-    queryProps: {},
-    queryTxs: [],
     tx: undefined,
     // -- STORAGE --------------------------------------------------------------
     baseCurrency: undefined,
@@ -85,7 +83,7 @@ class ProviderStore extends Component {
       nextState = {
         baseCurrency,
         rates,
-        txs,
+        txs: sortByTimestamp(txs),
         vaults: sortByProgression(profile.vaults.map(vault => calcVault({
           txs, baseCurrency, rates, vault: { ...(vaults.find(item => item.hash === vault.hash) || {}), ...vault },
         }))),
@@ -102,7 +100,7 @@ class ProviderStore extends Component {
   onTransaction = async (props) => {
     const {
       _store, onError,
-      state: { hash: authorization, queryProps, ...state },
+      state: { hash: authorization, ...state },
     } = this;
     let { state: { txs = [] } } = this;
     const { hash: previousHash } = txs[txs.length - 1] || {};
@@ -116,13 +114,12 @@ class ProviderStore extends Component {
       const vaults = sortByProgression(state.vaults.map(vault => (
         vault.hash !== props.vault ? vault : calcVault({ ...state, vault, txs })
       )));
-      const nextState = { txs, vaults };
+      const nextState = { txs: sortByTimestamp(txs), vaults };
 
       await _store(nextState);
       this.setState({
         ...nextState,
         overall: calcOverall({ ...state, vaults }),
-        queryTxs: groupByDay({ ...state, txs }, queryProps),
       });
     }
 
@@ -176,14 +173,6 @@ class ProviderStore extends Component {
 
     await _store(nextState);
     this.setState(nextState);
-  }
-
-  query = (queryProps = {}) => {
-    const { state } = this;
-
-    if (JSON.stringify(queryProps) !== JSON.stringify(state.queryProps)) {
-      this.setState({ queryProps, queryTxs: groupByDay(state, queryProps) });
-    }
   }
 
   _store = async (value) => {

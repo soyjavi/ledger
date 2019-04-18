@@ -13,7 +13,7 @@ const {
   SESSION, SETTINGS, STATS, DASHBOARD, VAULT,
 } = SCREEN;
 
-export default props => (
+export default () => (
   <ConsumerNavigation>
     { ({
       current, goBack, params, stack,
@@ -22,34 +22,31 @@ export default props => (
         <Session backward={current !== SESSION} visible={stack.includes(SESSION)} />
         <Dashboard backward={current !== DASHBOARD} visible={stack.includes(DASHBOARD)} />
         <Settings backward={current !== SETTINGS} visible={stack.includes(SETTINGS)} />
-        <Vault
-          {...props}
-          backward={current !== VAULT}
-          goBack={goBack}
-          navigation={{ state: { params: params.Vault } }}
-          visible={stack.includes(VAULT)}
-        />
 
-        <ConsumerStore>
-          { store => (
+        <Consumer>
+          { ({ l10n, store: { error, onError, ...store } }) => (
             <Fragment>
-              <Stats backward={current !== STATS} {...store} vault={params.Vault} visible={stack.includes(STATS)} />
+              <Vault
+                {...store}
+                l10n={l10n}
+                backward={current !== VAULT}
+                goBack={goBack}
+                navigation={{ state: { params: params.Vault } }}
+                vault={params.Vault}
+                visible={stack.includes(VAULT)}
+              />
+              <Stats {...store} backward={current !== STATS} vault={params.Vault} visible={stack.includes(STATS)} />
               <DialogClone
                 dataSource={store.tx}
                 visible={store.tx !== undefined}
               />
+              <Snackbar
+                caption={error}
+                button={l10n.CLOSE}
+                visible={error !== undefined}
+                onPress={() => onError(undefined)}
+              />
             </Fragment>
-          )}
-        </ConsumerStore>
-
-        <Consumer>
-          { ({ l10n, store: { error, onError } }) => (
-            <Snackbar
-              caption={error}
-              button={l10n.CLOSE}
-              visible={error !== undefined}
-              onPress={() => onError(undefined)}
-            />
           )}
         </Consumer>
       </LayoutView>

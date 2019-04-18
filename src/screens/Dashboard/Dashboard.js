@@ -56,10 +56,8 @@ class Dashboard extends PureComponent {
     this.setState({ dialog: !dialog, stats: undefined });
   }
 
-  _onVault = ({ navigation, store, vault }) => {
+  _onVault = ({ navigation, vault }) => {
     const { props } = this;
-
-    store.query({ vault: vault.hash, method: 'groupByDay', date: new Date().toISOString().substr(0, 7) });
     navigation.navigate(SCREEN.VAULT, vault, props.navigation);
   }
 
@@ -77,7 +75,7 @@ class Dashboard extends PureComponent {
             { ({
               l10n, navigation,
               store: {
-                baseCurrency, overall, txs, vaults, ...store
+                baseCurrency, overall, txs, vaults,
               },
             }) => (
               <Fragment>
@@ -96,7 +94,7 @@ class Dashboard extends PureComponent {
                     style={styles.vaults}
                   >
                     { queryEnabledVaults(vaults).map(vault => (
-                      <VaultCard key={vault.hash} {...vault} onPress={() => _onVault({ navigation, store, vault })} />
+                      <VaultCard key={vault.hash} {...vault} onPress={() => _onVault({ navigation, vault })} />
                     ))}
                   </Slider>
 

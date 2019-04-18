@@ -1,10 +1,9 @@
-import { C } from '../../common';
-import sortByTimestamp from './sortByTimestamp';
+import { C } from '../../../common';
 
 const { TX: { TYPE: { INCOME } } } = C;
-const MAX_DAYS = 60;
+const MAX_DAYS = 30;
 
-export default ({ txs }, { l10n: { CATEGORIES = [] } = {}, search = '', vault }) => {
+export default ({ txs, l10n: { CATEGORIES = [] } = {} }, { vault, search = '' } = {}) => {
   const dataSource = [];
   const hasSearch = search.length > 0;
   const offset = (new Date().getTimezoneOffset()) * 60 * 1000;
@@ -12,8 +11,9 @@ export default ({ txs }, { l10n: { CATEGORIES = [] } = {}, search = '', vault })
   let date;
   let dateIndex = 0;
 
-  sortByTimestamp(txs).some((tx) => {
-    if (vault === tx.vault) {
+  [...txs]
+    .filter(tx => tx.vault === vault)
+    .some((tx) => {
       const title = tx.title ? tx.title.toLowerCase() : undefined;
       const category = CATEGORIES[tx.type] ? CATEGORIES[tx.type][tx.category].toLowerCase() : undefined;
 
@@ -28,13 +28,11 @@ export default ({ txs }, { l10n: { CATEGORIES = [] } = {}, search = '', vault })
         }
 
         dataSource[dateIndex].value += tx.type === INCOME ? tx.value : -(tx.value);
-
         dataSource[dateIndex].txs.push(tx);
       }
-    }
 
-    return days === MAX_DAYS;
-  });
+      return days === MAX_DAYS && !hasSearch;
+    });
 
   return dataSource;
 };

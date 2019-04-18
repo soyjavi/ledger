@@ -10,6 +10,7 @@ import { Text, Viewport } from '../../reactor/components';
 import {
   DialogTransaction, DialogTransfer, GroupTransactions, Search,
 } from './components';
+import query from './modules/query';
 import styles from './Vault.style';
 
 const { TX: { TYPE: { EXPENSE, TRANSFER } } } = C;
@@ -19,6 +20,7 @@ class Vault extends Component {
     backward: bool,
     navigation: shape({}),
     goBack: func,
+    vault: shape({}),
     visible: bool,
   };
 
@@ -26,6 +28,7 @@ class Vault extends Component {
     backward: false,
     navigation: undefined,
     goBack() {},
+    vault: undefined,
     visible: true,
   };
 
@@ -34,10 +37,18 @@ class Vault extends Component {
     scroll: false,
     search: undefined,
     type: EXPENSE,
+    values: [],
   };
 
-  componentWillReceiveProps({ backward, goBack }) {
+  componentWillReceiveProps({
+    backward, goBack, vault: nextVault, visible, ...inherit
+  }) {
+    const { props: { vault } } = this;
     const method = backward ? 'removeEventListener' : 'addEventListener';
+
+    if (visible && nextVault !== vault) {
+      this.setState({ search: undefined, values: query(inherit, { vault: nextVault.hash }) });
+    }
 
     BackHandler[method]('hardwareBackPress', () => {
       const { props: { navigation }, state: { dialog } } = this;
@@ -66,12 +77,12 @@ class Vault extends Component {
     if (scroll !== state.scroll) this.setState({ scroll });
   }
 
-  _onSearch = ({ value, store: { query }, l10n }) => {
-    const { navigation: { state: { params: { hash: vault } } } } = this.props;
+  _onSearch = (search) => {
+    const { vault, ...inherit } = this.props;
 
-    this.setState({ search: value });
-    query({
-      l10n, method: 'groupByDay', search: value.toLowerCase().trim(), vault,
+    this.setState({
+      search,
+      values: query(inherit, { vault: vault.hash, search: search.toLowerCase().trim() }),
     });
   }
 
@@ -87,7 +98,7 @@ class Vault extends Component {
       _onScroll, _onSearch, _onToggleDialog, _onTransactionType,
       props: { visible, ...props },
       state: {
-        dialog, scroll, search, type,
+        dialog, scroll, search, type, values = [],
       },
     } = this;
     const { state: { params: vault = {} } = {} } = props.navigation;
@@ -98,7 +109,7 @@ class Vault extends Component {
         <Consumer>
           { ({
             navigation, l10n,
-            store: { queryTxs, vaults, ...store },
+            store: { vaults },
           }) => (
             <Fragment>
               <Header
@@ -111,7 +122,7 @@ class Vault extends Component {
 
               <FlatList
                 contentContainerStyle={styles.container}
-                data={visible ? queryTxs : []}
+                data={visible ? values : []}
                 keyExtractor={tx => `${tx.timestamp}-${tx.value}`}
                 onScroll={_onScroll}
                 scrollEventThrottle={40}
@@ -122,7 +133,7 @@ class Vault extends Component {
                       image={FLAGS[currency]}
                       title={`${vault.title} ${l10n.BALANCE}`}
                     />
-                    <Search l10n={l10n} onValue={value => _onSearch({ value, store, l10n })} value={search} />
+                    <Search l10n={l10n} onValue={value => _onSearch(value)} value={search} />
                   </Fragment>
                 )}
                 ListEmptyComponent={() => (
