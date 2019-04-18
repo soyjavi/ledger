@@ -76,6 +76,7 @@ export default {
     INCOME: 'Income',
     INCOME_CAPTION: 'Register a new income in this vault.',
     INCOMES: 'Incomes',
+    INITIAL_BALANCE: 'Initial balance',
 
     LAST_TRANSACTIONS: 'Last transactions',
     LOADING_PLACE: 'Wait a moment, loading place.',
@@ -87,6 +88,7 @@ export default {
       'July', 'August', 'September', 'October', 'November', 'December',
     ],
 
+    NAME: 'Name',
     NEW: 'New',
 
     OVERALL_BALANCE: 'Overall Balance',

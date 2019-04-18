@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
 import { FLAGS } from '../../../../assets';
-import { FORM, translate } from '../../../../common';
+import { FORM, setCurrency, translate } from '../../../../common';
 import { CardOption } from '../../../../components';
 import { Consumer } from '../../../../context';
 import { THEME } from '../../../../reactor/common';
@@ -44,7 +44,10 @@ class DialogVault extends PureComponent {
 
   _onChange = form => this.setState({ form });
 
-  _onCurrency = currency => this.setState({ currency });
+  _onCurrency = (currency) => {
+    const { state: { form } } = this;
+    this.setState({ currency, form: { ...form, value: 0 } });
+  }
 
   _onValid = valid => this.setState({ valid })
 
@@ -98,7 +101,12 @@ class DialogVault extends PureComponent {
                   />
                 ))}
               </Slider>
-              <Form attributes={translate(FORM.VAULT, l10n)} onValid={_onValid} onChange={_onChange} value={form} />
+              <Form
+                attributes={setCurrency(translate(FORM.VAULT, l10n), currency)}
+                onValid={_onValid}
+                onChange={_onChange}
+                value={form}
+              />
             </View>
             <Button
               activity={busy}

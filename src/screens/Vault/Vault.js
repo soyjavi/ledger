@@ -141,6 +141,7 @@ class Vault extends Component {
               { visible && (
                 <Fragment>
                   <DialogTransaction
+                    currency={currency}
                     type={type}
                     vault={hash}
                     onClose={_onToggleDialog}

@@ -5,7 +5,9 @@ import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
 import { CATEGORIES } from '../../../../assets';
-import { C, FORM, translate } from '../../../../common';
+import {
+  C, FORM, setCurrency, translate,
+} from '../../../../common';
 import { Consumer } from '../../../../context';
 import { CardOption, MapStaticImage } from '../../../../components';
 
@@ -22,6 +24,7 @@ const { TX: { TYPE: { EXPENSE } } } = C;
 
 class DialogTransaction extends PureComponent {
   static propTypes = {
+    currency: string.isRequired,
     onClose: func.isRequired,
     type: number.isRequired,
     vault: string,
@@ -90,7 +93,9 @@ class DialogTransaction extends PureComponent {
   render() {
     const {
       _getLocation, _onCategory, _onChange, _onSubmit,
-      props: { onClose, type, visible },
+      props: {
+        currency, onClose, type, visible,
+      },
       state: {
         busy, category, coords, form, location, place,
       },
@@ -128,7 +133,7 @@ class DialogTransaction extends PureComponent {
               </Slider>
 
               <Form
-                attributes={translate(FORM.TRANSACTION, l10n)}
+                attributes={setCurrency(translate(FORM.TRANSACTION, l10n), currency)}
                 color={color}
                 onChange={_onChange}
                 value={form}
