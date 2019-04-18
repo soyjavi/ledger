@@ -1,4 +1,4 @@
-import { bool, func, shape } from 'prop-types';
+import { arrayOf, bool, func, shape } from 'prop-types';
 import React, { Fragment, Component } from 'react';
 import { BackHandler, FlatList, View } from 'react-native';
 
@@ -18,7 +18,9 @@ const { TX: { TYPE: { EXPENSE, TRANSFER } } } = C;
 class Vault extends Component {
   static propTypes = {
     backward: bool,
+    l10n: shape({}).isRequired,
     navigation: shape({}),
+    txs: arrayOf(shape({})),
     goBack: func,
     vault: shape({}),
     visible: bool,
@@ -28,6 +30,7 @@ class Vault extends Component {
     backward: false,
     navigation: undefined,
     goBack() {},
+    txs: [],
     vault: undefined,
     visible: true,
   };
@@ -41,13 +44,14 @@ class Vault extends Component {
   };
 
   componentWillReceiveProps({
-    backward, goBack, vault: nextVault, visible, ...inherit
+    backward, goBack, vault, visible, ...store
   }) {
-    const { props: { vault } } = this;
+    const { props } = this;
+    const { txs } = store;
     const method = backward ? 'removeEventListener' : 'addEventListener';
 
-    if (visible && nextVault !== vault) {
-      this.setState({ search: undefined, values: query(inherit, { vault: nextVault.hash }) });
+    if (visible && (vault !== props.vault || txs.length !== props.txs.length)) {
+      this.setState({ search: undefined, values: query(store, { vault: vault.hash }) });
     }
 
     BackHandler[method]('hardwareBackPress', () => {

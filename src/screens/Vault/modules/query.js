@@ -3,7 +3,10 @@ import { C } from '../../../common';
 const { TX: { TYPE: { INCOME } } } = C;
 const MAX_DAYS = 30;
 
-export default ({ txs, l10n: { CATEGORIES = [] } = {} }, { vault, search = '' } = {}) => {
+export default (
+  { txs, l10n: { CATEGORIES = [] } = {} },
+  { vault, search = '' },
+) => {
   const dataSource = [];
   const hasSearch = search.length > 0;
   const offset = (new Date().getTimezoneOffset()) * 60 * 1000;
@@ -11,8 +14,10 @@ export default ({ txs, l10n: { CATEGORIES = [] } = {} }, { vault, search = '' } 
   let date;
   let dateIndex = 0;
 
-  [...txs]
+  txs
     .filter(tx => tx.vault === vault)
+    .slice(-128)
+    .reverse()
     .some((tx) => {
       const title = tx.title ? tx.title.toLowerCase() : undefined;
       const category = CATEGORIES[tx.type] ? CATEGORIES[tx.type][tx.category].toLowerCase() : undefined;
