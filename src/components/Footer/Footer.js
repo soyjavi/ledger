@@ -4,7 +4,7 @@ import {
 import React, { Fragment, PureComponent } from 'react';
 import { View } from 'react-native';
 
-import ASSETS from '../../assets';
+import ASSETS, { OPTIONS } from '../../assets';
 import { Consumer, ConsumerEvents } from '../../context';
 import { THEME } from '../../reactor/common';
 import { Button, Dialog, Form } from '../../reactor/components';
@@ -97,7 +97,7 @@ class Footer extends PureComponent {
                   { options.map((option, index) => (
                     <CardOption
                       key={option}
-                      icon={ASSETS[option.toLowerCase()]}
+                      icon={OPTIONS[option.toLowerCase()]}
                       onPress={() => _onOption(index)}
                       style={[styles.card, index === 2 && styles.cardLast]}
                       title={option}
