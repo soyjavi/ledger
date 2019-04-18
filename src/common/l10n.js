@@ -66,6 +66,7 @@ export default {
     DAY_NAMES: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
 
     ENTER_PIN: 'Enter your pin',
+    EXCHANGED: 'Exchanged',
     EXPENSE: 'Expense',
     EXPENSE_CAPTION: 'Register a new expense in this vault.',
     EXPENSES: 'Expenses',
@@ -112,6 +113,7 @@ export default {
     TRANSFER_CAPTION: 'Transfer any amount to another of your vaults.',
 
     VAULT: 'Vault',
+    VAULT_DESTINATION: 'Destination vault',
     VAULT_EMPTY: "You don't have any transaction.",
     VAULTS: 'Vaults',
     VAULT_CAPTION: 'You can create as many vaults as you want. You can continue using your base currency or choose any other.', // eslint-disable-line

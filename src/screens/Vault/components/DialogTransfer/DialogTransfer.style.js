@@ -1,10 +1,10 @@
 import { StyleSheet } from 'react-native';
 
 import { C } from '../../../../common';
-import { THEME } from '../../../../reactor/common';
+import { LAYOUT, THEME } from '../../../../reactor/common';
 
 const { STYLE: { DIALOG, DIALOG_FRAME } } = C;
-const { OFFSET } = THEME;
+const { SPACE } = THEME;
 
 export default StyleSheet.create({
   button: {
@@ -16,6 +16,6 @@ export default StyleSheet.create({
   frame: DIALOG_FRAME,
 
   form: {
-    marginVertical: OFFSET,
+    marginVertical: SPACE.MEDIUM,
   },
 });

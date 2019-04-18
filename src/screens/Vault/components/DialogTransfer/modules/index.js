@@ -1,7 +1,7 @@
-import hydrateTransfer from './hydrateTransfer';
+import hydrate from './hydrate';
 import onTransfer from './onTransfer';
 
 export {
-  hydrateTransfer,
+  hydrate,
   onTransfer,
 };

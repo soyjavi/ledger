@@ -9,14 +9,14 @@ export default {
   },
 
   TRANSFER: {
-    value: {
-      currency: '$', label: 'l10n.AMOUNT', required: true,
-    },
     destination: {
-      type: 'select', dataSource: [], label: 'l10n.VAULTS',
+      type: 'select', dataSource: [], label: 'l10n.VAULT_DESTINATION',
+    },
+    value: {
+      currency: '$', inline: 2, label: 'l10n.AMOUNT', required: true,
     },
     exchange: {
-      currency: '$', label: 'l10n.AMOUNT', required: true,
+      currency: '$', inline: 2, label: 'l10n.EXCHANGED', required: true,
     },
   },
 

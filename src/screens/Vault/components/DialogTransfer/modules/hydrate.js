@@ -2,12 +2,7 @@ import { FORM } from '../../../../../common';
 
 const { TRANSFER } = FORM;
 
-export default ({
-  form,
-  l10n,
-  store,
-  vault,
-}) => {
+export default ({ form, store, vault }) => {
   const { currency } = store.vaults.find(({ hash }) => hash === vault);
   const vaults = store.vaults
     .filter(({ hash }) => hash !== vault)
@@ -17,12 +12,8 @@ export default ({
 
   return Object.assign({}, TRANSFER,
     {
+      value: { ...TRANSFER.value, currency, style: { width: '25%' } },
       destination: { ...TRANSFER.destination, dataSource: vaults, selectedValue: destination.title },
-      value: { ...TRANSFER.value, label: `${l10n.AMOUNT} ${currency}` },
-      exchange: {
-        ...TRANSFER.exchange,
-        disabled: currency === destination.currency,
-        label: `${l10n.AMOUNT} ${destination.currency}`,
-      },
+      exchange: { ...TRANSFER.exchange, disabled: currency === destination.currency, currency: destination.currency },
     });
 };

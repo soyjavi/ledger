@@ -1,13 +1,13 @@
 import { bool, func, string } from 'prop-types';
 import React, { PureComponent } from 'react';
 
-import { translate } from '../../../../common';
+import { setCurrency, translate } from '../../../../common';
 import { Consumer } from '../../../../context';
 import { THEME } from '../../../../reactor/common';
 import {
   Button, Dialog, Form, Text,
 } from '../../../../reactor/components';
-import { hydrateTransfer, onTransfer } from './modules';
+import { hydrate, onTransfer } from './modules';
 
 import styles from './DialogTransfer.style';
 
@@ -93,9 +93,7 @@ class DialogTransfer extends PureComponent {
               {l10n.TRANSFER_CAPTION}
             </Text>
             <Form
-              attributes={translate(hydrateTransfer({
-                form, l10n, store, vault,
-              }), l10n)}
+              attributes={setCurrency(translate(hydrate({ form, store, vault }), l10n))}
               color={COLOR.PRIMARY}
               onValid={_onValid}
               onChange={value => _onChange(value, store)}
