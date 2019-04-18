@@ -38,7 +38,7 @@ class VaultItem extends PureComponent {
 
     return (
       <Consumer>
-        { ({ store: { baseCurrency, rates, ...store} }) => (
+        { ({ store: { baseCurrency, rates, ...store } }) => (
           <View style={styles.container}>
             <Image source={FLAGS[currency]} style={styles.thumbnail} />
             <View style={styles.content}>

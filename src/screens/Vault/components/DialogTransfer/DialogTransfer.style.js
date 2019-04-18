@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 import { C } from '../../../../common';
-import { LAYOUT, THEME } from '../../../../reactor/common';
+import { THEME } from '../../../../reactor/common';
 
 const { STYLE: { DIALOG, DIALOG_FRAME } } = C;
 const { SPACE } = THEME;
