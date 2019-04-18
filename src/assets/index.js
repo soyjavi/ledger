@@ -53,7 +53,13 @@ const FLAGS = {
   AUD, BTC, EUR, HKD, JPY, KRW, MYR, THB, GBP, USD, VND,
 };
 
-export { CATEGORIES, FLAGS };
+const OPTIONS = {
+  expense: require('./option-expense.png'),
+  income: require('./option-income.png'),
+  transfer: require('./option-transfer.png'),
+};
+
+export { CATEGORIES, FLAGS, OPTIONS };
 
 export default {
   add,
@@ -62,5 +68,4 @@ export default {
   fingerprint,
   income,
   logo,
-  transfer,
 };
