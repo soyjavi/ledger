@@ -6,7 +6,7 @@ import { FLAGS } from '../../../../assets';
 import { exchange } from '../../../../common';
 import { PriceFriendly } from '../../../../components';
 import { Consumer } from '../../../../context';
-import { InputOption, Switch, Text } from '../../../../reactor/components';
+import { InputOption, Text } from '../../../../reactor/components';
 import styles from './VaultItem.style';
 
 class VaultItem extends PureComponent {
@@ -52,7 +52,6 @@ class VaultItem extends PureComponent {
                   : Math.abs(currentBalance)}
               />
             </View>
-            <Switch onChange={value => _onChange(value, store)} style={styles.switch} value={active} />
             <InputOption onChange={value => _onChange(value, store)} style={styles.switch} value={active} />
           </View>
         )}
