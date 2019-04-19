@@ -1,4 +1,4 @@
-import { arrayOf, bool, func, shape } from 'prop-types';
+import { bool, func, shape } from 'prop-types';
 import React, { Fragment, Component } from 'react';
 import { BackHandler, FlatList, View } from 'react-native';
 
@@ -18,20 +18,18 @@ const { TX: { TYPE: { EXPENSE, TRANSFER } } } = C;
 class Vault extends Component {
   static propTypes = {
     backward: bool,
+    dataSource: shape({}),
     l10n: shape({}).isRequired,
     navigation: shape({}),
-    txs: arrayOf(shape({})),
     goBack: func,
-    vault: shape({}),
     visible: bool,
   };
 
   static defaultProps = {
     backward: false,
+    dataSource: undefined,
     navigation: undefined,
     goBack() {},
-    txs: [],
-    vault: undefined,
     visible: true,
   };
 
@@ -44,14 +42,14 @@ class Vault extends Component {
   };
 
   componentWillReceiveProps({
-    backward, goBack, vault, visible, ...store
+    backward, goBack, dataSource, visible, ...store
   }) {
-    const { props } = this;
-    const { txs } = store;
+    const { props: { dataSource: { txs = [] } = {} } } = this;
     const method = backward ? 'removeEventListener' : 'addEventListener';
 
-    if (visible && (vault !== props.vault || txs.length !== props.txs.length)) {
-      this.setState({ search: undefined, values: query(store, { vault: vault.hash }) });
+    if (visible && dataSource && dataSource.txs.length !== txs.length) {
+      const search = undefined;
+      this.setState({ search, values: query(store, { ...dataSource, search }) });
     }
 
     BackHandler[method]('hardwareBackPress', () => {
@@ -64,10 +62,7 @@ class Vault extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    const {
-      props: { visible },
-      state: { dialog, scroll, search },
-    } = this;
+    const { props: { visible }, state: { dialog, scroll, search } } = this;
 
     return (nextProps.visible !== visible)
       || (nextState.dialog !== dialog)
@@ -82,11 +77,11 @@ class Vault extends Component {
   }
 
   _onSearch = (search) => {
-    const { vault, ...inherit } = this.props;
+    const { dataSource, ...inherit } = this.props;
 
     this.setState({
       search,
-      values: query(inherit, { vault: vault.hash, search: search.toLowerCase().trim() }),
+      values: query(inherit, { ...dataSource, search: search.toLowerCase().trim() }),
     });
   }
 
@@ -106,7 +101,7 @@ class Vault extends Component {
       },
     } = this;
     const { state: { params: vault = {} } = {} } = props.navigation;
-    const { currency, currentBalance, hash } = vault;
+    const { currency, hash } = vault;
 
     return (
       <Viewport {...props} scroll={false} visible={visible}>
@@ -116,13 +111,7 @@ class Vault extends Component {
             store: { vaults },
           }) => (
             <Fragment>
-              <Header
-                amount={{ currency, value: currentBalance }}
-                highlight={scroll}
-                image={FLAGS[currency]}
-                title={vault.title}
-                visible={visible}
-              />
+              <Header highlight={scroll} image={FLAGS[currency]} title={vault.title} visible={visible} />
 
               <FlatList
                 contentContainerStyle={styles.container}

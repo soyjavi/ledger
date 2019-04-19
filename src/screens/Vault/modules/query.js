@@ -4,8 +4,8 @@ const { TX: { TYPE: { INCOME } } } = C;
 const MAX_DAYS = 30;
 
 export default (
-  { txs, l10n: { CATEGORIES = [] } = {} },
-  { vault, search = '' },
+  { l10n: { CATEGORIES = [] } = {} },
+  { txs = [], search = '' },
 ) => {
   const dataSource = [];
   const hasSearch = search.length > 0;
@@ -15,8 +15,7 @@ export default (
   let dateIndex = 0;
 
   txs
-    .filter(tx => tx.vault === vault)
-    .slice(-128)
+    .slice(!hasSearch ? -128 : 0)
     .reverse()
     .some((tx) => {
       const title = tx.title ? tx.title.toLowerCase() : undefined;

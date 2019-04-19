@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 
 import { C } from './common';
-import { Consumer, ConsumerNavigation, ConsumerStore } from './context';
+import { Consumer, ConsumerNavigation } from './context';
 import { LayoutView, Snackbar } from './reactor/components';
 import { DialogClone } from './components';
 import {
@@ -27,19 +27,15 @@ export default () => (
           { ({ l10n, store: { error, onError, ...store } }) => (
             <Fragment>
               <Vault
-                {...store}
                 l10n={l10n}
                 backward={current !== VAULT}
                 goBack={goBack}
                 navigation={{ state: { params: params.Vault } }}
-                vault={params.Vault}
+                dataSource={params.Vault ? store.vaults.find(({ hash }) => hash === params.Vault.hash) : undefined}
                 visible={stack.includes(VAULT)}
               />
               <Stats {...store} backward={current !== STATS} vault={params.Vault} visible={stack.includes(STATS)} />
-              <DialogClone
-                dataSource={store.tx}
-                visible={store.tx !== undefined}
-              />
+              <DialogClone dataSource={store.tx} visible={store.tx !== undefined} />
               <Snackbar
                 caption={error}
                 button={l10n.CLOSE}
