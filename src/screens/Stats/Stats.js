@@ -13,7 +13,6 @@ import { ItemGroupCategories } from './components';
 import { orderCaptions, query } from './modules';
 import styles from './Stats.style';
 
-const { iconBack } = ASSETS;
 const { COLOR } = THEME;
 const MONTHLY = 0;
 const WEEKLY = 1;
@@ -69,10 +68,11 @@ class Stats extends PureComponent {
   render() {
     const {
       _onScroll, _onQuery,
-      props: { visible, ...inherit },
+      props: { vault, visible, ...inherit },
       state: { scroll, typeQuery, values },
     } = this;
     const { chart = {} } = values || {};
+    const title = vault ? `${vault.title} ` : '';
 
     return (
       <Viewport {...inherit} scroll={false} visible={visible}>
@@ -83,12 +83,12 @@ class Stats extends PureComponent {
                 <Header
                   highlight={scroll}
                   right={{ title: typeQuery === MONTHLY ? l10n.WEEKLY : l10n.MONTHLY, onPress: _onQuery }}
-                  title={l10n.ACTIVITY}
+                  title={`${title}${l10n.ACTIVITY}`}
                   visible={visible}
                 />
                 <ScrollView onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.container}>
                   <View style={styles.content}>
-                    <Heading title={l10n.ACTIVITY} image={ASSETS.logo} />
+                    <Heading title={`${title}${l10n.ACTIVITY}`} image={ASSETS.logo} />
                     <Heading subtitle={l10n.BALANCE} />
                     <Chart
                       captions={orderCaptions(l10n, typeQuery)}
