@@ -15,7 +15,8 @@ export default ({
   let expenses = 0;
   let progression = 0;
 
-  txs.filter(tx => tx.vault === vault.hash).forEach(({
+  const dataSource = txs.filter(tx => tx.vault === vault.hash);
+  dataSource.forEach(({
     category, timestamp, type, value,
   }) => {
     const isExpense = type === TYPE.EXPENSE;
@@ -42,5 +43,6 @@ export default ({
       incomes: exchangeProps ? exchange(incomes, ...exchangeProps) : incomes,
       progression: exchangeProps ? exchange(progression, ...exchangeProps) : progression,
     },
+    txs: dataSource,
   });
 };
