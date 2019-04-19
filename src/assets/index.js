@@ -1,6 +1,18 @@
+import debt from './category-debt.png';
+import entertainment from './category-entertainment.png';
+import foodAndDrinks from './category-food-and-drinks.png';
+import healthcare from './category-healthcare.png';
 import investment from './category-investment.png';
 import others from './category-others.png';
+import pasives from './category-pasives.png';
+import personal from './category-personal.png';
+import salary from './category-salary.png';
+import services from './category-services.png';
+import shopping from './category-shopping.png';
 import transfer from './category-transfer.png';
+import travel from './category-travel.png';
+import utilities from './category-utilities.png';
+import vaultTransfer from './category-vault-transfer.png';
 import wipe from './category-wipe.png';
 
 import AUD from './flag-australia.png';
@@ -22,30 +34,34 @@ import fingerprint from './icon_fingerprint.png';
 import income from './icon_income.png';
 import logo from './logo.png';
 
+import optionExpense from './option-expense.png';
+import optionIncome from './option-income.png';
 
 const CATEGORIES = [
   {
     0: wipe,
-    1: require('./category-food-and-drinks.png'),
-    3: require('./category-travel.png'),
-    4: require('./category-debt.png'),
+    1: foodAndDrinks,
+    3: travel,
+    4: debt,
     5: investment,
-    6: require('./category-entertainment.png'),
-    7: require('./category-shopping.png'),
-    8: require('./category-utilities.png'),
-    9: require('./category-healthcare.png'),
-    10: require('./category-personal.png'),
-    11: require('./category-services.png'),
+    6: entertainment,
+    7: shopping,
+    8: utilities,
+    9: healthcare,
+    10: personal,
+    11: services,
     12: transfer,
     13: others,
+    99: vaultTransfer,
   },
   {
     0: wipe,
-    1: require('./category-salary.png'),
+    1: salary,
     2: investment,
-    3: require('./category-pasives.png'),
+    3: pasives,
     4: transfer,
     5: others,
+    99: vaultTransfer,
   },
 ];
 
@@ -54,9 +70,9 @@ const FLAGS = {
 };
 
 const OPTIONS = {
-  expense: require('./option-expense.png'),
-  income: require('./option-income.png'),
-  transfer: require('./option-transfer.png'),
+  expense: optionExpense,
+  income: optionIncome,
+  transfer: vaultTransfer,
 };
 
 export { CATEGORIES, FLAGS, OPTIONS };
