@@ -43,7 +43,7 @@ class Footer extends PureComponent {
     const { props: { onPress, options }, state: { dialog } } = this;
 
     if (!options) return onPress();
-    this.setState({ dialog: !dialog });
+    return this.setState({ dialog: !dialog });
   }
 
   render() {

@@ -1,5 +1,5 @@
 import ItemGroupCategories from './ItemGroupCategories';
 
 export {
-  ItemGroupCategories,
+  ItemGroupCategories, // eslint-disable-line
 };

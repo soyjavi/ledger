@@ -27,7 +27,7 @@ class ItemGroupCategories extends PureComponent {
     let total = 0;
 
     Object.keys(dataSource).forEach((category) => {
-      totalCategories[category] = Object.values(dataSource[category]).reduce((a, b) => a += b);
+      totalCategories[category] = Object.values(dataSource[category]).reduce((a, b) => a += b); // eslint-disable-line
       total += totalCategories[category];
     });
 

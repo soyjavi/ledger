@@ -1,5 +1,5 @@
 import VaultItem from './VaultItem';
 
 export {
-  VaultItem,
+  VaultItem, // eslint-disable-line
 };
