@@ -1,6 +1,6 @@
 import { bool, func, shape } from 'prop-types';
 import React, { Fragment, Component } from 'react';
-import { BackHandler, FlatList, View } from 'react-native';
+import { FlatList, View } from 'react-native';
 
 import { FLAGS } from '../../assets';
 import { C } from '../../common';
@@ -45,20 +45,11 @@ class Vault extends Component {
     backward, goBack, dataSource, visible, ...store
   }) {
     const { props: { dataSource: { txs = [] } = {} } } = this;
-    const method = backward ? 'removeEventListener' : 'addEventListener';
 
     if (visible && dataSource && dataSource.txs.length !== txs.length) {
       const search = undefined;
       this.setState({ search, values: query(store, { ...dataSource, search }) });
     }
-
-    BackHandler[method]('hardwareBackPress', () => {
-      const { props: { navigation }, state: { dialog } } = this;
-
-      if (dialog) this.setState({ dialog: false });
-      else goBack(navigation);
-      return true;
-    });
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -68,6 +59,13 @@ class Vault extends Component {
       || (nextState.dialog !== dialog)
       || (nextState.scroll !== scroll)
       || (nextState.search !== search);
+  }
+
+  _onHardwareBack = (navigation) => {
+    const { state: { dialog } } = this;
+    if (dialog) this.setState({ dialog: false });
+    else navigation.goBack();
+    return true;
   }
 
   _onScroll = ({ nativeEvent: { contentOffset: { y } } }) => {
@@ -94,7 +92,7 @@ class Vault extends Component {
 
   render() {
     const {
-      _onScroll, _onSearch, _onToggleDialog, _onTransactionType,
+      _onHardwareBack, _onScroll, _onSearch, _onToggleDialog, _onTransactionType,
       props: { visible, ...props },
       state: {
         dialog, scroll, search, type, values = [],
@@ -138,9 +136,11 @@ class Vault extends Component {
               />
 
               <Footer
-                onPress={_onTransactionType}
                 onBack={() => navigation.goBack(props.navigation)}
+                onHardwareBack={() => _onHardwareBack(navigation)}
+                onPress={_onTransactionType}
                 options={vaults.length === 1 ? [l10n.EXPENSE, l10n.INCOME] : [l10n.EXPENSE, l10n.INCOME, l10n.TRANSFER]}
+                visible={visible}
               />
               { visible && (
                 <Fragment>

@@ -2,7 +2,7 @@ import {
   arrayOf, bool, func, string,
 } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
-import { View } from 'react-native';
+import { BackHandler, View } from 'react-native';
 
 import ASSETS, { OPTIONS } from '../../assets';
 import { Consumer, ConsumerEvents } from '../../context';
@@ -16,6 +16,7 @@ const { COLOR } = THEME;
 class Footer extends PureComponent {
   static propTypes = {
     onBack: func,
+    onHardwareBack: func,
     onPress: func,
     options: arrayOf(string),
     scroll: bool,
@@ -23,6 +24,7 @@ class Footer extends PureComponent {
 
   static defaultProps = {
     onBack: undefined,
+    onHardwareBack: func,
     onPress: undefined,
     options: undefined,
     scroll: false,
@@ -31,6 +33,13 @@ class Footer extends PureComponent {
   state = {
     dialog: false,
   };
+
+  componentWillReceiveProps({ onHardwareBack, ...inherit }) {
+    if (onHardwareBack) {
+      const method = inherit.visible ? 'addEventListener' : 'removeEventListener';
+      BackHandler[method]('hardwareBackPress', () => onHardwareBack);
+    }
+  }
 
   _onOption = (option) => {
     const { props: { onPress } } = this;

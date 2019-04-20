@@ -1,6 +1,6 @@
 import { arrayOf, bool, shape } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
-import { BackHandler, ScrollView, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
 import ASSETS from '../../assets';
 import {
@@ -45,11 +45,9 @@ class Stats extends PureComponent {
   componentWillReceiveProps({
     backward, visible, ...inherit
   }) {
-    const method = backward ? 'removeEventListener' : 'addEventListener';
     const typeQuery = MONTHLY;
 
     if (visible) this.setState({ typeQuery, values: query(inherit, typeQuery) });
-    BackHandler[method]('hardwareBackPress', () => true);
   }
 
   _onScroll = ({ nativeEvent: { contentOffset: { y } } }) => {
@@ -112,7 +110,7 @@ class Stats extends PureComponent {
                   { Object.keys(values[1]).length > 0 && <ItemGroupCategories type={1} dataSource={values[1]} /> }
                   { Object.keys(values[0]).length > 0 && <ItemGroupCategories type={0} dataSource={values[0]} /> }
                 </ScrollView>
-                <Footer onBack={navigation.goBack} />
+                <Footer onBack={navigation.goBack} onHardwareBack={navigation.goBack} visible={visible} />
               </Fragment>
             )}
           </Consumer>

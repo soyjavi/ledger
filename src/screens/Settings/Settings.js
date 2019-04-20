@@ -52,7 +52,7 @@ class Settings extends PureComponent {
                   { vaults.map(vault => <VaultItem key={vault.hash} {...vault} />)}
                 </ScrollView>
 
-                <Footer onBack={navigation.goBack} />
+                <Footer onBack={navigation.goBack} onHardwareBack={navigation.goBack} visible={visible} />
 
               </Fragment>
             )}
