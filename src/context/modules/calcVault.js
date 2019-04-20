@@ -14,6 +14,7 @@ export default ({
   let incomes = 0;
   let expenses = 0;
   let progression = 0;
+  let currentMonthTxs = 0;
 
   const dataSource = txs.filter(tx => tx.vault === vault.hash);
   dataSource.forEach(({
@@ -28,6 +29,7 @@ export default ({
     if (monthNumber >= 0) {
       if (monthNumber === CURRENT_MONTH) {
         if (category !== VAULT_TRANSFER) {
+          currentMonthTxs += 1;
           if (isExpense) expenses += value;
           else incomes += value;
           progression += isExpense ? -(value) : value;
@@ -42,6 +44,7 @@ export default ({
       expenses: exchangeProps ? exchange(expenses, ...exchangeProps) : expenses,
       incomes: exchangeProps ? exchange(incomes, ...exchangeProps) : incomes,
       progression: exchangeProps ? exchange(progression, ...exchangeProps) : progression,
+      txs: currentMonthTxs,
     },
     txs: dataSource,
   });
