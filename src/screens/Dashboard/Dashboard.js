@@ -10,7 +10,7 @@ import { Consumer } from '../../context';
 import { THEME } from '../../reactor/common';
 import { Slider, Viewport } from '../../reactor/components';
 import { DialogVault, VaultCard } from './components';
-import { queryEnabledVaults, queryLastTxs } from './modules';
+import { queryLastTxs, queryVaults } from './modules';
 import styles from './Dashboard.style';
 
 const { SCREEN, STYLE: { VAULT_ITEM_WIDTH } } = C;
@@ -91,9 +91,10 @@ class Dashboard extends PureComponent {
                   <Slider
                     itemWidth={VAULT_ITEM_WIDTH + SPACE.S}
                     itemMargin={0}
+                    steps={2}
                     style={styles.vaults}
                   >
-                    { queryEnabledVaults(vaults).map(vault => (
+                    { queryVaults(vaults).map(vault => (
                       <VaultCard key={vault.hash} {...vault} onPress={() => _onVault({ navigation, vault })} />
                     ))}
                   </Slider>

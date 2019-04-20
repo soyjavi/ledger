@@ -1,7 +1,7 @@
-import queryEnabledVaults from './queryEnabledVaults';
 import queryLastTxs from './queryLastTxs';
+import queryVaults from './queryVaults';
 
 export {
-  queryEnabledVaults,
   queryLastTxs,
+  queryVaults,
 };
