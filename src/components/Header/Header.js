@@ -10,7 +10,7 @@ import Heading from '../Heading';
 import styles from './Header.style';
 
 const Header = ({
-  highlight, image, right, title, visible, ...inherit
+  highlight, image, right, title, ...inherit
 }) => (
   <View style={[styles.row, styles.container, highlight && styles.highlight, inherit.style]}>
     <View style={styles.content}>
@@ -29,7 +29,6 @@ Header.propTypes = {
   highlight: bool,
   right: shape({}),
   title: string,
-  visible: bool,
 };
 
 Header.defaultProps = {
@@ -37,7 +36,6 @@ Header.defaultProps = {
   highlight: false,
   right: undefined,
   title: undefined,
-  visible: false,
 };
 
 export default Header;

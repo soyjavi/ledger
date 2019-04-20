@@ -109,7 +109,7 @@ class Vault extends Component {
             store: { vaults },
           }) => (
             <Fragment>
-              <Header highlight={scroll} image={FLAGS[currency]} title={vault.title} visible={visible} />
+              <Header highlight={scroll} image={FLAGS[currency]} title={vault.title} />
 
               <FlatList
                 contentContainerStyle={styles.container}

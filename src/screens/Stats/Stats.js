@@ -82,7 +82,6 @@ class Stats extends PureComponent {
                   highlight={scroll}
                   right={{ title: typeQuery === MONTHLY ? l10n.WEEKLY : l10n.MONTHLY, onPress: _onQuery }}
                   title={`${title}${l10n.ACTIVITY}`}
-                  visible={visible}
                 />
                 <ScrollView onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.container}>
                   <View style={styles.content}>
