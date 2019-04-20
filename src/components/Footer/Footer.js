@@ -80,13 +80,15 @@ class Footer extends PureComponent {
           { onPress && (
             <ConsumerEvents>
               { ({ isConnected }) => (
-                <Button
-                  color={COLOR.PRIMARY}
-                  disabled={!isConnected}
-                  icon={ASSETS.add}
-                  onPress={onPress ? _onPress : undefined}
-                  shadow
-                />
+                isConnected && (
+                  <Button
+                    color={COLOR.PRIMARY}
+                    disabled={!isConnected}
+                    icon={ASSETS.add}
+                    onPress={onPress ? _onPress : undefined}
+                    shadow
+                  />
+                )
               )}
             </ConsumerEvents>
           )}
