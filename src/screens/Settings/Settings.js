@@ -6,6 +6,7 @@ import { Footer, Header, Heading } from '../../components';
 import { Consumer } from '../../context';
 import { Viewport } from '../../reactor/components';
 import { VaultItem } from './components';
+import query from './modules/query';
 import styles from './Settings.style';
 
 class Settings extends PureComponent {
@@ -42,14 +43,10 @@ class Settings extends PureComponent {
           <Consumer>
             { ({ l10n, navigation, store: { vaults } }) => (
               <Fragment>
-                <Header
-                  highlight={scroll}
-                  title={l10n.SETTINGS}
-                  visible={visible}
-                />
+                <Header highlight={scroll} title={l10n.SETTINGS} />
                 <ScrollView onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.container}>
                   <Heading breakline subtitle={`${l10n.ACTIVE} ${l10n.VAULTS}`} />
-                  { vaults.map(vault => <VaultItem key={vault.hash} {...vault} />)}
+                  { query(vaults).map(vault => <VaultItem key={vault.hash} {...vault} />)}
                 </ScrollView>
 
                 <Footer onBack={navigation.goBack} onHardwareBack={navigation.goBack} visible={visible} />
