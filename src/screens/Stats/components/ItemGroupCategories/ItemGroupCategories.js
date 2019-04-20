@@ -5,7 +5,7 @@ import { View } from 'react-native';
 import { C } from '../../../../common';
 import { Consumer } from '../../../../context';
 import { THEME } from '../../../../reactor/common';
-import { Price, Text } from '../../../../reactor/components';
+import { Price, Text, Touchable } from '../../../../reactor/components';
 import Heading from '../../../../components/Heading';
 import styles from './ItemGroupCategories.style';
 
@@ -20,8 +20,17 @@ class ItemGroupCategories extends PureComponent {
 
   static defaultProps = {};
 
+  state = {
+    expand: false,
+  };
+
+  _onPress = () => {
+    const { state: { expand } } = this;
+    this.setState({ expand: !expand });
+  }
+
   render() {
-    const { dataSource, type } = this.props;
+    const { _onPress, props: { dataSource, type }, state: { expand } } = this;
     const isExpense = type === 0;
     const totalCategories = [];
     let total = 0;
@@ -34,7 +43,7 @@ class ItemGroupCategories extends PureComponent {
     return (
       <Consumer>
         { ({ store: { baseCurrency }, l10n }) => (
-          <View style={styles.container}>
+          <View>
             <Heading breakline title={isExpense ? l10n.EXPENSES : l10n.INCOMES}>
               <Price
                 subtitle
@@ -44,9 +53,9 @@ class ItemGroupCategories extends PureComponent {
                 value={total}
               />
             </Heading>
-            <View>
+            <View style={styles.container}>
               { Object.keys(dataSource).map(category => (
-                <View key={category} style={styles.content}>
+                <Touchable onPress={_onPress} key={category} style={styles.content}>
                   <View>
                     <View style={styles.row}>
                       <Text subtitle level={3} style={styles.title}>{l10n.CATEGORIES[type][category]}</Text>
@@ -72,22 +81,20 @@ class ItemGroupCategories extends PureComponent {
                     </View>
                   </View>
 
-                  { Object.keys(dataSource[category]).map(title => (
-                    <View key={`${category}-${title}`} style={styles.item}>
-                      <View style={styles.row}>
-                        <Text level={2} lighten style={styles.title}>{title}</Text>
-                        <Price
-                          subtitle
-                          level={3}
-                          lighten
-                          fixed={FIXED[baseCurrency]}
-                          symbol={SYMBOL[baseCurrency]}
-                          value={dataSource[category][title]}
-                        />
-                      </View>
+                  { expand && Object.keys(dataSource[category]).map(title => (
+                    <View key={`${category}-${title}`} style={styles.row}>
+                      <Text level={2} lighten style={styles.title}>{title}</Text>
+                      <Price
+                        subtitle
+                        level={3}
+                        lighten
+                        fixed={FIXED[baseCurrency]}
+                        symbol={SYMBOL[baseCurrency]}
+                        value={dataSource[category][title]}
+                      />
                     </View>
                   ))}
-                </View>
+                </Touchable>
               ))}
             </View>
           </View>

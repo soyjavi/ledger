@@ -16,12 +16,16 @@ export default StyleSheet.create({
   },
 
   barContainer: {
+    marginVertical: SPACE.XXS,
+  },
+
+  container: {
     marginTop: SPACE.XXS,
-    marginBottom: SPACE.XXS,
+    marginBottom: SPACE.S,
   },
 
   content: {
-    paddingVertical: SPACE.XS,
+    paddingVertical: SPACE.XXS,
     paddingHorizontal: SPACE.MEDIUM,
   },
 
