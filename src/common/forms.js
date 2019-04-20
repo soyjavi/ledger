@@ -1,10 +1,10 @@
 export default {
   TRANSACTION: {
-    title: {
-      inline: 2, label: 'l10n.TITLE', required: true,
-    },
     value: {
       currency: '$', inline: 2, label: 'l10n.AMOUNT', required: true,
+    },
+    title: {
+      inline: 2, label: 'l10n.TITLE', required: true,
     },
   },
 
