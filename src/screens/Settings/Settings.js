@@ -1,11 +1,11 @@
 import { bool, shape } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
 import { Footer, Header, Heading } from '../../components';
 import { Consumer } from '../../context';
-import { Viewport } from '../../reactor/components';
-import { VaultItem } from './components';
+import { Text, Viewport } from '../../reactor/components';
+import { OptionItem, VaultItem } from './components';
 import query from './modules/query';
 import styles from './Settings.style';
 
@@ -26,6 +26,10 @@ class Settings extends PureComponent {
     scroll: true,
   };
 
+  _onSetting = (key, value) => {
+
+  }
+
   _onScroll = ({ nativeEvent: { contentOffset: { y } } }) => {
     const { state } = this;
     const scroll = y > 58;
@@ -34,7 +38,7 @@ class Settings extends PureComponent {
 
   render() {
     const {
-      _onScroll, props: { visible, ...inherit }, state: { scroll },
+      _onSetting, _onScroll, props: { visible, ...inherit }, state: { scroll },
     } = this;
 
     return (
@@ -44,9 +48,23 @@ class Settings extends PureComponent {
             { ({ l10n, navigation, store: { vaults } }) => (
               <Fragment>
                 <Header highlight={scroll} title={l10n.SETTINGS} />
-                <ScrollView onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.container}>
-                  <Heading breakline subtitle={`${l10n.ACTIVE} ${l10n.VAULTS}`} />
-                  { query(vaults).map(vault => <VaultItem key={vault.hash} {...vault} />)}
+                <ScrollView _onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.container}>
+                  <View style={styles.content}>
+                    <Heading title={l10n.DASHBOARD} />
+                    <OptionItem
+                      active={false}
+                      caption={l10n.SETTING_1_CAPTION}
+                      title={l10n.SETTING_1_TITLE}
+                      onChange={_onSetting}
+                    />
+                    <OptionItem
+                      caption={l10n.SETTING_2_CAPTION}
+                      title={l10n.SETTING_2_TITLE}
+                      onChange={_onSetting}
+                    />
+                    <Heading breakline lighten subtitle={`${l10n.VAULTS_VISIBILITY}`} />
+                    { query(vaults).map(vault => <VaultItem key={vault.hash} {...vault} />)}
+                  </View>
                 </ScrollView>
 
                 <Footer onBack={navigation.goBack} onHardwareBack={navigation.goBack} visible={visible} />

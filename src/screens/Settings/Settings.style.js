@@ -4,30 +4,19 @@ import { C } from '../../common';
 import { THEME } from '../../reactor/common';
 
 const { STYLE: { HEADER_HEIGHT } } = C;
-const { COLOR, SPACE } = THEME;
+const { SPACE } = THEME;
 
 export default StyleSheet.create({
-  chart: {
+  caption: {
+    marginVertical: SPACE.XXS,
     marginHorizontal: SPACE.MEDIUM,
   },
 
-  chartMargin: {
-    marginBottom: SPACE.REGULAR,
-  },
-
-  chartBalance: {
-    height: 128,
-  },
-
   container: {
-    paddingBottom: HEADER_HEIGHT,
-    paddingTop: HEADER_HEIGHT,
+    paddingVertical: HEADER_HEIGHT,
   },
 
   content: {
-    backgroundColor: COLOR.WHITE,
-    borderBottomColor: COLOR.BASE,
-    borderBottomWidth: 1,
-    marginBottom: SPACE.MEDIUM,
+    marginVertical: SPACE.MEDIUM,
   },
 });

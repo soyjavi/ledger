@@ -39,18 +39,20 @@ class VaultItem extends PureComponent {
     return (
       <Consumer>
         { ({ store: { baseCurrency, rates, ...store } }) => (
-          <View style={styles.container}>
-            <Image source={FLAGS[currency]} style={styles.thumbnail} />
+          <View style={[styles.row, styles.container]}>
             <View style={styles.content}>
               <Text subtitle level={2} numberOfLines={1}>{title}</Text>
-              <PriceFriendly
-                caption
-                lighten
-                currency={baseCurrency}
-                value={baseCurrency !== currency
-                  ? exchange(Math.abs(currentBalance), currency, baseCurrency, rates)
-                  : Math.abs(currentBalance)}
-              />
+              <View style={styles.row}>
+                <Image source={FLAGS[currency]} style={styles.thumbnail} />
+                <PriceFriendly
+                  caption
+                  lighten
+                  currency={baseCurrency}
+                  value={baseCurrency !== currency
+                    ? exchange(Math.abs(currentBalance), currency, baseCurrency, rates)
+                    : Math.abs(currentBalance)}
+                />
+              </View>
             </View>
             <InputOption onChange={value => _onChange(value, store)} style={styles.switch} value={active} />
           </View>
