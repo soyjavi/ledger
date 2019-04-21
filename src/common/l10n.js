@@ -62,6 +62,7 @@ export default {
     CURRENCIES: 'Currencies',
     CURRENT_MONTH: 'This month',
 
+    DASHBOARD: 'Dashboard',
     DAY: 'day',
     DAY_NAMES: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
 
@@ -100,6 +101,10 @@ export default {
     SAVE_LOCATION: 'Save location',
     SEARCH: 'Search',
     SETTINGS: 'Settings',
+    SETTING_1_TITLE: 'Hide overall balance on startup',
+    SETTING_1_CAPTION: 'Switch visibility just touching it',
+    SETTING_2_TITLE: 'Show vault currency',
+    SETTING_2_CAPTION: '$lorem ipsum...',
     SLOGAN: 'Your private accounting on the blockchain.',
     STATS: 'Stats',
     STATS_CAPTION: 'In this summary you can see a breakdown of your operations in the selected category.',
@@ -116,6 +121,7 @@ export default {
     VAULT_DESTINATION: 'Destination vault',
     VAULT_EMPTY: "You don't have any transaction.",
     VAULTS: 'Vaults',
+    VAULTS_VISIBILITY: 'Vaults visibility',
     VAULT_CAPTION: 'You can create as many vaults as you want. You can continue using your base currency or choose any other.', // eslint-disable-line
 
     WEEKLY: 'Weekly',
