@@ -5,7 +5,7 @@ import React, { Fragment } from 'react';
 import { Image, View } from 'react-native';
 
 import { FLAGS } from '../../../../assets';
-import { exchange } from '../../../../common';
+import { C, exchange } from '../../../../common';
 import { Percentage, PriceFriendly } from '../../../../components';
 import { Consumer } from '../../../../context';
 import { Text, Touchable } from '../../../../reactor/components';
@@ -14,6 +14,8 @@ import styles from './VaultCard.style';
 
 const { COLOR } = THEME;
 
+const { SETTINGS: { SHOW_VAULT_CURRENCY } } = C;
+
 const VaultCard = (props) => {
   const {
     currency, onPress, currentBalance, currentMonth: { progression }, title,
@@ -21,7 +23,7 @@ const VaultCard = (props) => {
 
   return (
     <Consumer>
-      { ({ l10n, store: { baseCurrency, rates } }) => (
+      { ({ l10n, store: { baseCurrency, rates, settings } }) => (
         <Touchable onPress={onPress} rippleColor={COLOR.TEXT_LIGHTEN} style={styles.container}>
           <View style={styles.content}>
             <Image source={FLAGS[currency]} style={styles.thumbnail} />
@@ -34,7 +36,7 @@ const VaultCard = (props) => {
                 ? exchange(Math.abs(currentBalance), currency, baseCurrency, rates)
                 : Math.abs(currentBalance)}
             />
-            { currency !== baseCurrency && (
+            { currency !== baseCurrency && settings[SHOW_VAULT_CURRENCY] && (
               <PriceFriendly subtitle level={3} lighten currency={currency} value={currentBalance} />)}
 
             <View style={styles.separator} />
