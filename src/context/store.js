@@ -26,19 +26,16 @@ class ProviderStore extends Component {
     baseCurrency: undefined,
     pin: undefined,
     rates: {},
+    settings: {},
     txs: [],
     vaults: [],
     version: undefined,
   }
 
   async componentWillMount() {
-    let store = (await AsyncStore.getItem(KEY)) || {};
+    const { fingerprint = (await Fingerprint()).uuid, ...store } = (await AsyncStore.getItem(KEY)) || {};
 
-    store = {
-      ...store,
-      fingerprint: store.fingerprint || (await Fingerprint()).uuid,
-    };
-    this.setState(store);
+    this.setState({ ...store, fingerprint });
   }
 
   getHash = async (pin) => {
@@ -95,6 +92,15 @@ class ProviderStore extends Component {
     }
 
     return nextState;
+  }
+
+  onSettings = (value) => {
+    const { _store } = this;
+    let { state: { settings = {} } } = this;
+
+    settings = { ...settings, ...value };
+    this.setState({ settings });
+    _store({ settings });
   }
 
   onTransaction = async (props) => {
@@ -177,11 +183,12 @@ class ProviderStore extends Component {
 
   _store = async (value) => {
     const {
-      baseCurrency, pin, rates = {}, txs = [], vaults = [], version,
+      baseCurrency, pin, rates = {}, settings, txs = [], version, ...state
     } = this.state;
+    const vaults = (value.vaults || state.vaults || []).map(({ txs, ...vault }) => vault);
 
     await AsyncStore.setItem(KEY, {
-      baseCurrency, pin, rates, txs, vaults, version, ...value,
+      baseCurrency, pin, rates, settings, txs, vaults, version, ...value,
     });
   }
 

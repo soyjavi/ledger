@@ -16,7 +16,7 @@ const MS_IN_DAY = 1000 * 24 * 60 * 60;
 const MS_IN_WEEK = MS_IN_DAY * 7;
 
 export default {
-  ENDPOINT: IS_PRODUCTION ? 'https://voltvault.glitch.me' : 'http://192.168.1.4:8080',
+  ENDPOINT: IS_PRODUCTION ? 'https://voltvault.glitch.me' : 'http://localhost:8080',
 
   FIXED: {
     BTC: 6,
@@ -40,6 +40,10 @@ export default {
     SETTINGS: 'Settings',
     STATS: 'Stats',
     VAULT: 'Vault',
+  },
+  SETTINGS: {
+    HIDE_OVERALL_BALANCE: 0,
+    SHOW_VAULT_CURRENCY: 1,
   },
   STYLE: {
     CARD: {
