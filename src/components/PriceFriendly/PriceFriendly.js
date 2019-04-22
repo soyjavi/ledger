@@ -10,7 +10,7 @@ const PriceFriendly = ({
   currency, mask, value = 0, ...inherit
 }) => (
   mask
-    ? <Text {...inherit}>{`${'?'.repeat(parseInt(value, 10).toString().length)} ${SYMBOL[currency]}`}</Text>
+    ? <Text {...inherit}>{`${'?'.repeat(parseInt(value, 10).toString().length)}${SYMBOL[currency]}`}</Text>
     : (
       <Price
         fixed={value < 1000 ? FIXED[currency] : 0}

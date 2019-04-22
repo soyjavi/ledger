@@ -51,7 +51,7 @@ class Settings extends PureComponent {
                   <View style={styles.content}>
                     <Heading title={l10n.DASHBOARD} />
                     <OptionItem
-                      active={settings[SHOW_VAULT_CURRENCY] !== undefined ? settings[HIDE_OVERALL_BALANCE] : false}
+                      active={settings[HIDE_OVERALL_BALANCE] !== undefined ? settings[HIDE_OVERALL_BALANCE] : false}
                       caption={l10n.SETTING_1_CAPTION}
                       title={l10n.SETTING_1_TITLE}
                       onChange={value => onSettings({ [HIDE_OVERALL_BALANCE]: value })}

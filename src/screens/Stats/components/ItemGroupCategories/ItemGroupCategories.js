@@ -2,15 +2,14 @@ import { shape, number } from 'prop-types';
 import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
-import { C } from '../../../../common';
+import { PriceFriendly } from '../../../../components';
 import { Consumer } from '../../../../context';
 import { THEME } from '../../../../reactor/common';
-import { Price, Text, Touchable } from '../../../../reactor/components';
+import { Text, Touchable } from '../../../../reactor/components';
 import Heading from '../../../../components/Heading';
 import styles from './ItemGroupCategories.style';
 
 const { COLOR } = THEME;
-const { FIXED, SYMBOL } = C;
 
 class ItemGroupCategories extends PureComponent {
   static propTypes = {
@@ -45,13 +44,7 @@ class ItemGroupCategories extends PureComponent {
         { ({ store: { baseCurrency }, l10n }) => (
           <View>
             <Heading breakline title={isExpense ? l10n.EXPENSES : l10n.INCOMES}>
-              <Price
-                subtitle
-                level={3}
-                fixed={FIXED[baseCurrency]}
-                symbol={SYMBOL[baseCurrency]}
-                value={total}
-              />
+              <PriceFriendly currency={baseCurrency} subtitle level={3} value={total} />
             </Heading>
             <View style={styles.container}>
               { Object.keys(dataSource).map(category => (
@@ -59,13 +52,7 @@ class ItemGroupCategories extends PureComponent {
                   <View>
                     <View style={styles.row}>
                       <Text subtitle level={3} style={styles.title}>{l10n.CATEGORIES[type][category]}</Text>
-                      <Price
-                        subtitle
-                        level={3}
-                        fixed={FIXED[baseCurrency]}
-                        symbol={SYMBOL[baseCurrency]}
-                        value={totalCategories[category]}
-                      />
+                      <PriceFriendly currency={baseCurrency} subtitle level={3} value={totalCategories[category]} />
                     </View>
 
                     <View style={[styles.bar, styles.barContainer]}>
@@ -84,12 +71,11 @@ class ItemGroupCategories extends PureComponent {
                   { expand && Object.keys(dataSource[category]).map(title => (
                     <View key={`${category}-${title}`} style={styles.row}>
                       <Text level={2} lighten style={styles.title}>{title}</Text>
-                      <Price
+                      <PriceFriendly
+                        currency={baseCurrency}
                         subtitle
                         level={3}
                         lighten
-                        fixed={FIXED[baseCurrency]}
-                        symbol={SYMBOL[baseCurrency]}
                         value={dataSource[category][title]}
                       />
                     </View>

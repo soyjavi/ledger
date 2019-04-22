@@ -13,7 +13,7 @@ import { DialogVault, VaultCard } from './components';
 import { queryLastTxs, queryVaults } from './modules';
 import styles from './Dashboard.style';
 
-const { SCREEN, STYLE: { VAULT_ITEM_WIDTH } } = C;
+const { SCREEN, STYLE: { VAULT_ITEM_WIDTH }, SETTINGS: { HIDE_OVERALL_BALANCE } } = C;
 const { SPACE } = THEME;
 
 class Dashboard extends PureComponent {
@@ -75,7 +75,7 @@ class Dashboard extends PureComponent {
             { ({
               l10n, navigation,
               store: {
-                baseCurrency, overall, txs, vaults,
+                baseCurrency, overall, settings, txs, vaults,
               },
             }) => (
               <Fragment>
@@ -86,7 +86,13 @@ class Dashboard extends PureComponent {
                 />
 
                 <ScrollView onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.scroll}>
-                  <Summary {...overall} currency={baseCurrency} style={styles.summary} title={l10n.OVERALL_BALANCE} />
+                  <Summary
+                    {...overall}
+                    currency={baseCurrency}
+                    mask={settings[HIDE_OVERALL_BALANCE]}
+                    style={styles.summary}
+                    title={l10n.OVERALL_BALANCE}
+                  />
                   <Heading breakline subtitle={l10n.VAULTS} />
                   <Slider
                     itemWidth={VAULT_ITEM_WIDTH + SPACE.S}
