@@ -104,7 +104,7 @@ export default {
     SETTING_1_TITLE: 'Hide overall balance on startup',
     SETTING_1_CAPTION: 'Switch visibility just touching it',
     SETTING_2_TITLE: 'Show vault currency',
-    SETTING_2_CAPTION: '$lorem ipsum...',
+    SETTING_2_CAPTION: 'If it is different from the base currency.',
     SLOGAN: 'Your private accounting on the blockchain.',
     STATS: 'Stats',
     STATS_CAPTION: 'In this summary you can see a breakdown of your operations in the selected category.',
