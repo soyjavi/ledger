@@ -1,6 +1,4 @@
-import {
-  bool, func, shape, string,
-} from 'prop-types';
+import { bool, shape } from 'prop-types';
 import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
@@ -14,14 +12,14 @@ import MapStaticImage from '../MapStaticImage';
 
 import styles from './DialogClone.style';
 
-const { FIXED, SYMBOL, TX: { TYPE: { INCOME, EXPENSE } } } = C;
+const {
+  FIXED, SYMBOL, TX: { TYPE: { INCOME, EXPENSE } }, WIPE,
+} = C;
 const { COLOR } = THEME;
 
 class DialogClone extends PureComponent {
   static propTypes = {
-    currency: string.isRequired,
     dataSource: shape({}),
-    onClose: func.isRequired,
     visible: bool,
   };
 
@@ -31,43 +29,55 @@ class DialogClone extends PureComponent {
   };
 
   state = {
-    busy: false,
+    busyClone: false,
+    busyWipe: false,
   };
 
-  _onSubmit = async ({ onTransaction }) => {
+  _onSubmit = async ({ onTransaction, onTx }, wipe = false) => {
+    const { props: { dataSource } } = this;
     const {
-      dataSource: {
-        vault, category, location, value, title, type,
-      },
-      onClose,
-    } = this.props;
+      category, hash, value, vault, location, title, type = EXPENSE,
+    } = dataSource;
 
-    this.setState({ busy: true });
-    const tx = await onTransaction({
-      vault, category, value, title, type, ...location,
-    });
-    this.setState({ busy: false });
+    this.setState({ [wipe ? 'busyWipe' : 'busyClone']: true });
+    let props = {
+      vault, category, value, title, type,
+    };
 
-    if (tx) onClose();
+    if (wipe) {
+      props = {
+        ...props,
+        category: WIPE,
+        tx: hash,
+        type: type === EXPENSE ? INCOME : EXPENSE,
+      };
+    } else {
+      props = { ...props, ...location };
+    }
+
+    const tx = await onTransaction(props);
+    this.setState({ [wipe ? 'busyWipe' : 'busyClone']: false });
+
+    if (tx) onTx(undefined);
   }
 
   render() {
     const {
       _onSubmit,
       props: {
-        currency, onClose, visible,
+        visible,
         dataSource: {
-          category, location, title, type = 0, value,
+          category, currency, location, title, type = EXPENSE, value,
         },
       },
-      state: { busy },
+      state: { busyClone, busyWipe },
     } = this;
 
     return (
       <Consumer>
         { ({ l10n, store: { baseCurrency, rates, ...store } }) => (
           <Dialog
-            onClose={onClose}
+            onClose={() => store.onTx(undefined)}
             style={styles.frame}
             styleContainer={styles.dialog}
             title={type === EXPENSE ? l10n.EXPENSE : l10n.INCOME}
@@ -79,33 +89,59 @@ class DialogClone extends PureComponent {
 
             <View style={styles.info}>
               <View style={styles.row}>
-                <Text subtitle level={2} style={styles.title}>{title}</Text>
-                <Price
-                  subtitle
-                  level={2}
-                  fixed={FIXED[baseCurrency]}
-                  symbol={SYMBOL[baseCurrency]}
-                  title={type === INCOME ? '+' : undefined}
-                  value={baseCurrency !== currency
-                    ? exchange(Math.abs(value), currency, baseCurrency, rates)
-                    : Math.abs(value)}
-                />
+                <View style={styles.texts}>
+                  <Text subtitle level={2} style={styles.title}>{title}</Text>
+                  <Text caption lighten numberOfLines={1}>{l10n.CATEGORIES[type][category]}</Text>
+                </View>
+                <View style={styles.prices}>
+                  <Price
+                    subtitle
+                    level={2}
+                    fixed={FIXED[baseCurrency]}
+                    symbol={SYMBOL[baseCurrency]}
+                    title={type === INCOME ? '+' : undefined}
+                    value={baseCurrency !== currency
+                      ? exchange(Math.abs(value), currency, baseCurrency, rates)
+                      : Math.abs(value)}
+                  />
+                  { currency !== baseCurrency && (
+                    <Price
+                      caption
+                      lighten
+                      fixed={FIXED[currency]}
+                      symbol={SYMBOL[currency]}
+                      title={type === INCOME ? '+' : undefined}
+                      value={value}
+                    />
+                  )}
+                </View>
               </View>
-              <Text caption lighten numberOfLines={1}>{l10n.CATEGORIES[type][category]}</Text>
               { location && <MapStaticImage {...location} style={styles.map} /> }
               { location && <Text caption lighten>{location.place}</Text> }
             </View>
 
-            <Button
-              activity={busy}
-              color={type === EXPENSE ? COLOR.EXPENSES : COLOR.INCOMES}
-              disabled={busy}
-              onPress={() => _onSubmit(store)}
-              rounded
-              shadow
-              style={styles.button}
-              title={`${l10n.CLONE} ${l10n.TRANSACTION}`}
-            />
+            <View style={styles.row}>
+              <Button
+                activity={busyWipe}
+                color={COLOR.PRIMARY}
+                contained={false}
+                disabled={busyWipe}
+                onPress={() => _onSubmit(store, true)}
+                outlined
+                style={styles.button}
+                title={!busyWipe ? l10n.WIPE : undefined}
+              />
+              <View style={styles.buttonSeparator} />
+              <Button
+                activity={busyClone}
+                color={COLOR.PRIMARY}
+                disabled={busyClone}
+                onPress={() => _onSubmit(store, false)}
+                shadow
+                style={styles.button}
+                title={!busyClone ? l10n.CLONE : undefined}
+              />
+            </View>
           </Dialog>
         )}
       </Consumer>

@@ -5,12 +5,16 @@ import { LAYOUT, THEME } from '../../reactor/common';
 
 const { STYLE: { DIALOG, DIALOG_FRAME } } = C;
 
-const { COLOR, OFFSET, UNIT } = THEME;
+const { BORDER_RADIUS, COLOR, SPACE } = THEME;
 
 export default StyleSheet.create({
   button: {
     flex: 1,
-    marginTop: OFFSET / 2,
+    marginTop: SPACE.S,
+  },
+
+  buttonSeparator: {
+    width: SPACE.S,
   },
 
   dialog: DIALOG,
@@ -18,21 +22,23 @@ export default StyleSheet.create({
   frame: DIALOG_FRAME,
 
   info: {
-    // backgroundColor: COLOR.BASE,
-    borderRadius: OFFSET,
-    borderWidth: UNIT * 0.1,
-    borderColor: COLOR.BASE,
-    padding: OFFSET,
-    marginVertical: OFFSET,
+    backgroundColor: COLOR.BASE,
+    borderRadius: BORDER_RADIUS,
+    padding: SPACE.MEDIUM,
+    marginVertical: SPACE.MEDIUM,
   },
 
   map: {
-    marginVertical: OFFSET / 2,
+    marginVertical: SPACE.S,
+  },
+
+  prices: {
+    alignItems: 'flex-end',
   },
 
   row: LAYOUT.STYLE.ROW,
 
-  title: {
+  texts: {
     flex: 1,
   },
 });

@@ -11,7 +11,7 @@ const { COLOR } = THEME;
 
 const PriceFriendly = ({ value, ...inherit }) => (
   <View style={LAYOUT.STYLE.ROW}>
-    { Math.abs(value) > 0 && <Icon value={value > 0 ? ASSETS.iconIncome : ASSETS.iconExpense} style={styles.icon} /> }
+    { Math.abs(value) > 0 && <Icon value={value > 0 ? ASSETS.income : ASSETS.expense} style={styles.icon} /> }
     <Price
       fixed={Math.abs(value) < 1 ? 2 : 0}
       color={

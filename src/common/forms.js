@@ -1,37 +1,31 @@
 export default {
   TRANSACTION: {
-    category: {
-      type: 'select', dataSource: [], label: 'l10n.CATEGORY',
-    },
     value: {
-      keyboard: 'numeric', label: 'l10n.AMOUNT', required: true, inline: 2,
+      currency: '$', inline: 2, label: 'l10n.AMOUNT', required: true,
     },
     title: {
-      label: 'l10n.TITLE', required: true, inline: 2,
+      inline: 2, label: 'l10n.TITLE', required: true,
     },
   },
 
   TRANSFER: {
-    value: {
-      keyboard: 'numeric', label: 'l10n.AMOUNT', required: true,
-    },
     destination: {
-      type: 'select', dataSource: [], label: 'l10n.VAULTS',
+      type: 'select', dataSource: [], label: 'l10n.VAULT_DESTINATION',
+    },
+    value: {
+      currency: '$', inline: 2, label: 'l10n.AMOUNT', required: true,
     },
     exchange: {
-      keyboard: 'numeric', label: 'l10n.AMOUNT', required: true,
+      currency: '$', inline: 2, label: 'l10n.EXCHANGED', required: true,
     },
   },
 
   VAULT: {
-    currency: {
-      type: 'select', label: 'l10n.CURRENCY',
-    },
     title: {
-      label: 'l10n.TITLE', required: true, inline: 2,
+      inline: 2, label: 'l10n.NAME', required: true,
     },
     balance: {
-      keyboard: 'numeric', label: 'l10n.BALANCE', inline: 2, required: true,
+      currency: '$', inline: 2, label: 'l10n.INITIAL_BALANCE', required: true,
     },
   },
 };

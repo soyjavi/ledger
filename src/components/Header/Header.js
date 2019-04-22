@@ -1,62 +1,41 @@
 import {
-  bool, func, shape, string,
+  bool, number, oneOfType, shape, string,
 } from 'prop-types';
 import React from 'react';
-import { TextInput, View } from 'react-native';
+import { View } from 'react-native';
 
-import { Consumer } from '../../context';
-import { THEME } from '../../reactor/common';
-import { Button, Text } from '../../reactor/components';
+import ASSETS from '../../assets';
+import { Button, Motion } from '../../reactor/components';
+import Heading from '../Heading';
 import styles from './Header.style';
 
-const { COLOR } = THEME;
-
 const Header = ({
-  highlight, left, onSearch, right, title, visible, ...inherit
+  highlight, image, right, title, ...inherit
 }) => (
-  <Consumer>
-    { ({ l10n }) => (
-      <View style={[styles.container, inherit.style]}>
-        { left && <Button color={COLOR.TRANSPARENT} {...left} iconSize={24} /> }
-        <View style={styles.content}>
-          { onSearch && (
-            <TextInput
-              blurOnSubmit
-              onChangeText={onSearch}
-              placeholder={`${l10n.SEARCH}...`}
-              placeholderTextColor={COLOR.TEXT_LIGHTEN}
-              underlineColorAndroid="transparent"
-              style={styles.input}
-            />
-          )}
-          { title && (
-            <Text headline level={5} color={highlight ? COLOR.WHITE : undefined} numberOfLines={1} style={styles.title}>
-              { title }
-            </Text>
-          )}
-        </View>
-        { right && <Button color={COLOR.TRANSPARENT} {...right} iconSize={24} /> }
-      </View>
-    )}
-  </Consumer>
+  <View style={[styles.row, styles.container, highlight && styles.highlight, inherit.style]}>
+    <View style={styles.content}>
+      { title && (
+        <Motion timeline={[{ property: 'opacity', value: highlight ? 1 : 0 }]} style={styles.row}>
+          <Heading title={title} image={image} />
+        </Motion>
+      )}
+    </View>
+    { right && <Button contained={false} small {...right} /> }
+  </View>
 );
 
 Header.propTypes = {
+  image: oneOfType([number, string]),
   highlight: bool,
-  left: shape({}),
-  onSearch: func,
   right: shape({}),
   title: string,
-  visible: bool,
 };
 
 Header.defaultProps = {
+  image: ASSETS.logo,
   highlight: false,
-  left: undefined,
-  onSearch: undefined,
   right: undefined,
   title: undefined,
-  visible: false,
 };
 
 export default Header;

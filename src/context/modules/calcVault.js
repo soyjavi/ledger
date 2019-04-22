@@ -1,71 +1,51 @@
 import { C, exchange } from '../../common';
 
-const { TX: { TYPE }, VAULT_TRANSFER, WEEKS } = C;
-const MS_IN_DAY = 1000 * 24 * 60 * 60;
-const MS_IN_WEEK = MS_IN_DAY * 7;
-const EXPENSES = 'expenses';
-const INCOMES = 'incomes';
+const { TX: { TYPE }, VAULT_TRANSFER } = C;
+const CURRENT_MONTH = 11;
 
 export default ({
   vault = {}, txs = [], baseCurrency, rates = {},
 }) => {
-  const chart = {
-    balance: new Array(WEEKS).fill(0),
-    expenses: new Array(WEEKS).fill(0),
-    incomes: new Array(WEEKS).fill(0),
-  };
   const now = new Date();
-  const currentMonth = now.toISOString().substr(0, 7);
-  const stats = { incomes: {}, expenses: {} };
+  const lastYear = new Date(now.getFullYear(), now.getMonth() - 11, 1);
   const { currency } = vault;
   const exchangeProps = baseCurrency !== currency ? [currency, baseCurrency, rates] : undefined;
   let { balance = 0 } = vault;
   let incomes = 0;
   let expenses = 0;
   let progression = 0;
-  let transfers = 0;
+  let currentMonthTxs = 0;
 
-  txs.filter(tx => tx.vault === vault.hash).forEach(({
+  const dataSource = txs.filter(tx => tx.vault === vault.hash);
+  dataSource.forEach(({
     category, timestamp, type, value,
   }) => {
     const isExpense = type === TYPE.EXPENSE;
-    const ms = Math.abs(now - new Date(timestamp));
-    const weekNumber = Math.floor(ms / MS_IN_WEEK);
+    const date = new Date(timestamp);
+    const monthNumber = date.getMonth() - lastYear.getMonth() + (12 * (date.getFullYear() - lastYear.getFullYear()));
 
     balance += isExpense ? -(value) : value;
 
-    if (weekNumber < WEEKS) {
-      const weekIndex = (WEEKS - 1) - weekNumber;
-      const valueExchange = exchangeProps ? exchange(value, ...exchangeProps) : value;
-
-      chart.balance[weekIndex] += isExpense ? -(valueExchange) : valueExchange;
-      if (category !== VAULT_TRANSFER) {
-        if (isExpense) chart.expenses[weekIndex] += valueExchange;
-        else chart.incomes[weekIndex] += valueExchange;
-      }
-
-      if (currentMonth === (new Date(timestamp).toISOString()).substr(0, 7)) {
+    if (monthNumber >= 0) {
+      if (monthNumber === CURRENT_MONTH) {
         if (category !== VAULT_TRANSFER) {
-          const key = isExpense ? EXPENSES : INCOMES;
-          stats[key][category] = (stats[key][category] || 0) + value;
-
+          currentMonthTxs += 1;
           if (isExpense) expenses += value;
           else incomes += value;
           progression += isExpense ? -(value) : value;
-        } else if (isExpense) transfers += value;
+        }
       }
     }
   });
 
   return Object.assign({}, vault, {
-    chart,
     currentBalance: balance,
     currentMonth: {
       expenses: exchangeProps ? exchange(expenses, ...exchangeProps) : expenses,
       incomes: exchangeProps ? exchange(incomes, ...exchangeProps) : incomes,
       progression: exchangeProps ? exchange(progression, ...exchangeProps) : progression,
-      transfers: exchangeProps ? exchange(transfers, ...exchangeProps) : transfers,
+      txs: currentMonthTxs,
     },
-    stats,
+    txs: dataSource,
   });
 };

@@ -28,11 +28,12 @@ class ProviderNavigation extends PureComponent {
   }
 
   goBack = (navigator) => {
-    const { state: { stack } } = this;
+    const { state: { params, stack } } = this;
 
+    delete params[this.current];
     stack.pop();
     if (stack.length === 0) stack.push(SESSION);
-    this.setState({ stack });
+    this.setState({ params, stack });
     this.forceUpdate();
     if (navigator && navigator.goBack) navigator.goBack();
   }

@@ -1,25 +1,25 @@
 import { bool, func, shape } from 'prop-types';
 import React, { Fragment, Component } from 'react';
-import { BackHandler, FlatList, View } from 'react-native';
+import { FlatList, View } from 'react-native';
 
-import ASSETS from '../../assets';
-import { C, verboseMonth } from '../../common';
-import {
-  BalanceCard, DialogClone, DialogTransaction, DialogTransfer, FloatingButton, GroupTransactions, Header, HeadingItem,
-} from '../../components';
+import { FLAGS } from '../../assets';
+import { C } from '../../common';
+import { Summary, Footer, Header } from '../../components';
 import { Consumer } from '../../context';
-import { ENV } from '../../reactor/common';
 import { Text, Viewport } from '../../reactor/components';
+import {
+  DialogTransaction, DialogTransfer, GroupTransactions, Search,
+} from './components';
+import query from './modules/query';
 import styles from './Vault.style';
 
-const { iconBack } = ASSETS;
 const { TX: { TYPE: { EXPENSE, TRANSFER } } } = C;
-const { IS_WEB } = ENV;
-let TIMEOUT;
 
 class Vault extends Component {
   static propTypes = {
     backward: bool,
+    dataSource: shape({}),
+    l10n: shape({}).isRequired,
     navigation: shape({}),
     goBack: func,
     visible: bool,
@@ -27,50 +27,61 @@ class Vault extends Component {
 
   static defaultProps = {
     backward: false,
+    dataSource: undefined,
     navigation: undefined,
     goBack() {},
     visible: true,
   };
 
   state = {
-    clone: undefined,
     dialog: false,
+    scroll: false,
+    search: undefined,
     type: EXPENSE,
+    values: [],
   };
 
-  componentWillReceiveProps({ backward, goBack }) {
-    const method = backward ? 'removeEventListener' : 'addEventListener';
+  componentWillReceiveProps({
+    backward, goBack, dataSource, visible, ...store
+  }) {
+    const { props: { dataSource: { txs = [] } = {} } } = this;
 
-    BackHandler[method]('hardwareBackPress', () => {
-      const { props: { navigation }, state: { clone, dialog } } = this;
-
-      if (clone || dialog) this.setState({ clone: false, dialog: false });
-      else goBack(navigation);
-      return true;
-    });
+    if (visible && dataSource && dataSource.txs.length !== txs.length) {
+      const search = undefined;
+      this.setState({ search, values: query(store, { ...dataSource, search }) });
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    const {
-      props: { visible },
-      state: { clone, dialog },
-    } = this;
+    const { props: { visible }, state: { dialog, scroll, search } } = this;
 
-    return (nextProps.visible !== visible) || (nextState.clone !== clone) || (nextState.dialog !== dialog);
+    return (nextProps.visible !== visible)
+      || (nextState.dialog !== dialog)
+      || (nextState.scroll !== scroll)
+      || (nextState.search !== search);
   }
 
-  _onSearch = ({ value, store: { query }, l10n }) => {
-    const { navigation: { state: { params: { hash: vault } } } } = this.props;
-
-    clearTimeout(TIMEOUT);
-    TIMEOUT = setTimeout(() => {
-      query({
-        l10n, method: 'groupByDay', search: value.toLowerCase().trim(), vault,
-      });
-    }, 300);
+  _onHardwareBack = (navigation) => {
+    const { state: { dialog } } = this;
+    if (dialog) this.setState({ dialog: false });
+    else navigation.goBack();
+    return true;
   }
 
-  _onToggleClone = clone => this.setState({ clone });
+  _onScroll = ({ nativeEvent: { contentOffset: { y } } }) => {
+    const { state } = this;
+    const scroll = y > 58;
+    if (scroll !== state.scroll) this.setState({ scroll });
+  }
+
+  _onSearch = (search) => {
+    const { dataSource, ...inherit } = this.props;
+
+    this.setState({
+      search,
+      values: query(inherit, { ...dataSource, search: search.toLowerCase().trim() }),
+    });
+  }
 
   _onToggleDialog = () => {
     const { state: { dialog } } = this;
@@ -81,9 +92,11 @@ class Vault extends Component {
 
   render() {
     const {
-      _onSearch, _onToggleClone, _onToggleDialog, _onTransactionType,
+      _onHardwareBack, _onScroll, _onSearch, _onToggleDialog, _onTransactionType,
       props: { visible, ...props },
-      state: { clone, dialog, type },
+      state: {
+        dialog, scroll, search, type, values = [],
+      },
     } = this;
     const { state: { params: vault = {} } = {} } = props.navigation;
     const { currency, hash } = vault;
@@ -93,48 +106,46 @@ class Vault extends Component {
         <Consumer>
           { ({
             navigation, l10n,
-            store: { queryTxs, vaults, ...store },
+            store: { vaults },
           }) => (
             <Fragment>
-              <Header
-                left={IS_WEB ? { icon: iconBack, onPress: () => navigation.goBack(props.navigation) } : undefined}
-                onSearch={visible
-                  ? value => _onSearch({ value, store, l10n })
-                  : undefined}
-                visible={visible}
-              />
+              <Header highlight={scroll} image={FLAGS[currency]} title={vault.title} />
 
               <FlatList
                 contentContainerStyle={styles.container}
-                data={visible ? queryTxs : []}
+                data={visible ? values : []}
                 keyExtractor={tx => `${tx.timestamp}-${tx.value}`}
+                onScroll={_onScroll}
+                scrollEventThrottle={40}
                 ListHeaderComponent={() => (
-                  <BalanceCard
-                    {...vaults.find(v => v.hash === hash)}
-                    chart={undefined}
-                    title={`${vault.title} ${l10n.BALANCE}`}
-                  />
+                  <Fragment>
+                    <Summary
+                      {...vaults.find(row => row.hash === hash)}
+                      image={FLAGS[currency]}
+                      title={`${vault.title} ${l10n.BALANCE}`}
+                    />
+                    <Search l10n={l10n} onValue={value => _onSearch(value)} value={search} />
+                  </Fragment>
                 )}
                 ListEmptyComponent={() => (
                   <View style={[styles.content, styles.container]}>
                     <Text level={2} lighten>{l10n.VAULT_EMPTY}</Text>
                   </View>
                 )}
-                renderItem={({ item }) => (
-                  item.heading
-                    ? <HeadingItem lighten title={verboseMonth(item.timestamp, l10n)} />
-                    : <GroupTransactions {...item} currency={currency} onItem={tx => _onToggleClone(tx)} />
-                )}
+                renderItem={({ item }) => <GroupTransactions {...item} currency={currency} />}
               />
 
-              <FloatingButton
-                onPress={dialog ? _onToggleDialog : _onTransactionType}
+              <Footer
+                onBack={() => navigation.goBack(props.navigation)}
+                onHardwareBack={() => _onHardwareBack(navigation)}
+                onPress={_onTransactionType}
                 options={vaults.length === 1 ? [l10n.EXPENSE, l10n.INCOME] : [l10n.EXPENSE, l10n.INCOME, l10n.TRANSFER]}
-                visible={!dialog && !props.backward}
+                visible={visible}
               />
               { visible && (
                 <Fragment>
                   <DialogTransaction
+                    currency={currency}
                     type={type}
                     vault={hash}
                     onClose={_onToggleDialog}
@@ -142,12 +153,6 @@ class Vault extends Component {
                   />
                   { vaults.length > 1 && (
                     <DialogTransfer vault={hash} onClose={_onToggleDialog} visible={dialog && type === TRANSFER} />)}
-                  <DialogClone
-                    currency={currency}
-                    dataSource={clone}
-                    visible={!!clone}
-                    onClose={() => _onToggleClone()}
-                  />
                 </Fragment>
               )}
             </Fragment>

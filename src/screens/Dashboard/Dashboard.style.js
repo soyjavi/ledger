@@ -4,15 +4,19 @@ import { C } from '../../common';
 import { THEME } from '../../reactor/common';
 
 const { STYLE: { HEADER_HEIGHT } } = C;
-const { OFFSET } = THEME;
+const { SPACE } = THEME;
 
 export default StyleSheet.create({
   scroll: {
-    paddingBottom: HEADER_HEIGHT,
+    paddingVertical: HEADER_HEIGHT,
   },
 
-  slider: {
-    marginVertical: OFFSET,
-    paddingRight: OFFSET * 4,
+  summary: {
+    marginBottom: SPACE.REGULAR,
+  },
+
+  vaults: {
+    marginTop: SPACE.S,
+    paddingRight: SPACE.MEDIUM,
   },
 });

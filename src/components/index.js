@@ -1,41 +1,27 @@
-import BalanceCard from './BalanceCard';
+import CardOption from './CardOption';
 import Chart from './Chart';
 import DialogClone from './DialogClone';
-import DialogStats from './DialogStats';
-import DialogTransaction from './DialogTransaction';
-import DialogTransfer from './DialogTransfer';
-import DialogVault from './DialogVault';
-import FloatingButton from './FloatingButton';
-import GroupTransactions from './GroupTransactions';
+import Footer from './Footer';
 import Header from './Header';
-import HeadingItem from './HeadingItem';
+import Heading from './Heading';
 import MapStaticImage from './MapStaticImage';
 import NumKeyboard from './NumKeyboard';
 import Percentage from './Percentage';
 import PriceFriendly from './PriceFriendly';
-import SliderStats from './SliderStats';
-import StatItem from './StatItem';
+import Summary from './Summary';
 import TransactionItem from './TransactionItem';
-import VaultItem from './VaultItem';
 
 export {
-  BalanceCard,
+  CardOption,
   Chart,
   DialogClone,
-  DialogStats,
-  DialogTransaction,
-  DialogTransfer,
-  DialogVault,
-  FloatingButton,
-  GroupTransactions,
+  Footer,
   Header,
-  HeadingItem,
+  Heading,
   MapStaticImage,
   NumKeyboard,
   Percentage,
   PriceFriendly,
-  SliderStats,
-  StatItem,
+  Summary,
   TransactionItem,
-  VaultItem,
 };

@@ -1,16 +1,17 @@
-import { Platform, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import { C } from '../../common';
 import { LAYOUT, ENV, THEME } from '../../reactor/common';
 
 const {
-  COLOR, ELEVATION, FONT, OFFSET, UNIT,
+  COLOR, ELEVATION, UNIT, SPACE,
 } = THEME;
 const { STYLE: { HEADER_HEIGHT } } = C;
 
 export default StyleSheet.create({
   container: {
     ...LAYOUT.STYLE.ROW,
+    backgroundColor: COLOR.WHITE,
     height: HEADER_HEIGHT,
     position: ENV.IS_WEB ? 'fixed' : 'absolute',
     top: 0,
@@ -20,27 +21,15 @@ export default StyleSheet.create({
 
   content: {
     flex: 1,
-    paddingHorizontal: OFFSET,
   },
 
-  input: {
-    ...ELEVATION.REGULAR,
-    ...FONT.HEADLINE,
-    backgroundColor: COLOR.WHITE,
-    borderRadius: UNIT * 2.2,
-    borderWidth: 0,
-    color: COLOR.TEXT,
-    height: UNIT * 4.4,
-    paddingHorizontal: UNIT * 2,
-    width: '100%',
-    ...Platform.select({
-      web: {
-        outline: 'none',
-      },
-    }),
+  highlight: ELEVATION.SMALL,
+
+  logo: {
+    height: UNIT * 1.6,
+    width: UNIT * 2.2,
+    marginRight: SPACE.XXS,
   },
 
-  title: {
-    textAlign: 'center',
-  },
+  row: LAYOUT.STYLE.ROW,
 });

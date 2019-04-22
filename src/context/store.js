@@ -4,7 +4,7 @@ import React, { Component, createContext } from 'react';
 import { C, fetch } from '../common';
 import { Fingerprint } from '../reactor/context/Tracking/modules';
 import {
-  AsyncStore, calcOverall, calcVault, groupByCategory, groupByDay, sortByProgression,
+  AsyncStore, calcOverall, calcVault,
 } from './modules';
 
 const { NAME, VERSION } = C;
@@ -21,25 +21,21 @@ class ProviderStore extends Component {
     fingerprint: undefined,
     hash: undefined,
     overall: {},
-    queryProps: {},
-    queryTxs: [],
+    tx: undefined,
     // -- STORAGE --------------------------------------------------------------
     baseCurrency: undefined,
     pin: undefined,
     rates: {},
+    settings: {},
     txs: [],
     vaults: [],
     version: undefined,
   }
 
   async componentWillMount() {
-    let store = (await AsyncStore.getItem(KEY)) || {};
+    const { fingerprint = (await Fingerprint()).uuid, ...store } = (await AsyncStore.getItem(KEY)) || {};
 
-    store = {
-      ...store,
-      fingerprint: store.fingerprint || (await Fingerprint()).uuid,
-    };
-    this.setState(store);
+    this.setState({ ...store, fingerprint });
   }
 
   getHash = async (pin) => {
@@ -63,42 +59,54 @@ class ProviderStore extends Component {
   onError = error => this.setState({ error: error ? error.message : undefined });
 
   onHandshake = async () => {
-    const { onError, _store, state: { hash: authorization, version } } = this;
+    const { onError, _store, state: { hash: authorization, version, vaults } } = this;
     const headers = { authorization };
     let { state: { txs = [] } } = this;
+    let nextState = {};
 
     const profile = await fetch({ service: 'profile', headers }).catch(onError);
     if (profile) {
       const { baseCurrency, latestTransaction: { hash } = {}, rates } = profile;
-      const { hash: latestHash } = txs[txs.length - 1] || {};
+      const { hash: localHash } = txs[txs.length - 1] || {};
 
-      if (hash !== latestHash || version !== VERSION) {
-        // const service = `transactions?latestTransaction=${latestTransaction.hash ? latestTransaction.hash : ''}`;
+      if (hash !== localHash || version !== VERSION) {
         const service = 'transactions';
+        // if (hash && localHash) service += `?latestTransaction=${hash}`;
         const { txs: newTxs } = await fetch({ service, headers }).catch(onError);
         // txs = [...txs, ...newTxs];
-        txs = newTxs;
+        txs = [...newTxs];
       }
 
-      const nextState = {
+      nextState = {
         baseCurrency,
         rates,
         txs,
-        vaults: sortByProgression(profile.vaults.map(vault => calcVault({
-          vault, txs, baseCurrency, rates,
-        }))),
+        vaults: profile.vaults.map(vault => calcVault({
+          txs, baseCurrency, rates, vault: { ...(vaults.find(item => item.hash === vault.hash) || {}), ...vault },
+        })),
         version: VERSION,
       };
-      await _store(nextState);
 
+      await _store(nextState);
       this.setState({ ...nextState, overall: calcOverall(nextState) });
     }
+
+    return nextState;
+  }
+
+  onSettings = (value) => {
+    const { _store } = this;
+    let { state: { settings = {} } } = this;
+
+    settings = { ...settings, ...value };
+    this.setState({ settings });
+    _store({ settings });
   }
 
   onTransaction = async (props) => {
     const {
       _store, onError,
-      state: { hash: authorization, queryProps, ...state },
+      state: { hash: authorization, ...state },
     } = this;
     let { state: { txs = [] } } = this;
     const { hash: previousHash } = txs[txs.length - 1] || {};
@@ -109,20 +117,26 @@ class ProviderStore extends Component {
 
     if (newTransaction) {
       txs = [...txs, newTransaction];
-      const vaults = sortByProgression(state.vaults.map(vault => (
+      const vaults = state.vaults.map(vault => (
         vault.hash !== props.vault ? vault : calcVault({ ...state, vault, txs })
-      )));
+      ));
       const nextState = { txs, vaults };
 
       await _store(nextState);
       this.setState({
         ...nextState,
         overall: calcOverall({ ...state, vaults }),
-        queryTxs: groupByDay({ ...state, txs }, queryProps),
       });
     }
 
     return newTransaction;
+  }
+
+  onTx = (tx) => {
+    const { state: { vaults } } = this;
+    const { currency } = tx ? vaults.find(({ hash }) => hash === tx.vault) : {};
+
+    this.setState({ tx: tx ? { ...tx, currency } : undefined });
   }
 
   onVault = async (props) => {
@@ -154,42 +168,35 @@ class ProviderStore extends Component {
     return vault;
   }
 
-  query = (queryProps = {}) => {
-    const { state } = this;
-    const { method } = queryProps;
-    let queryTxs = [];
+  onVaultUpdate = async (updatedVault) => {
+    const { _store, state: { vaults } } = this;
 
-    if (JSON.stringify(queryProps) !== JSON.stringify(state.queryProps)) {
-      if (method === 'groupByDay') queryTxs = groupByDay(state, queryProps);
-      else if (method === 'groupByCategory') queryTxs = groupByCategory(state, queryProps);
+    const nextState = {
+      vaults: vaults.map(vault => (
+        vault.hash !== updatedVault.hash ? vault : updatedVault
+      )),
+    };
 
-      this.setState({ queryProps, queryTxs });
-    }
+    await _store(nextState);
+    this.setState(nextState);
   }
 
   _store = async (value) => {
     const {
-      baseCurrency, pin, rates = {}, txs = [], vaults = [], version,
+      baseCurrency, pin, rates = {}, settings, txs = [], version, ...state
     } = this.state;
+    const vaults = (value.vaults || state.vaults || []).map(({ txs, ...vault }) => vault);
 
     await AsyncStore.setItem(KEY, {
-      baseCurrency, pin, rates, txs, vaults, version, ...value,
+      baseCurrency, pin, rates, settings, txs, vaults, version, ...value,
     });
   }
 
   render() {
-    const {
-      getHash, onHandshake, onError, onTransaction, onVault, query,
-      props: { children },
-      state,
-    } = this;
+    const { props: { children }, state, ...events } = this;
 
     return (
-      <Provider
-        value={{
-          getHash, onHandshake, onError, onTransaction, onVault, query, ...state,
-        }}
-      >
+      <Provider value={{ ...events, ...state }}>
         { children }
       </Provider>
     );
