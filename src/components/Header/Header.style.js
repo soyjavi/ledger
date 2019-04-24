@@ -9,6 +9,10 @@ const {
 const { STYLE: { HEADER_HEIGHT } } = C;
 
 export default StyleSheet.create({
+  button: {
+    marginRight: SPACE.XS,
+  },
+
   container: {
     ...LAYOUT.STYLE.ROW,
     backgroundColor: COLOR.WHITE,

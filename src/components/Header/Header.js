@@ -20,7 +20,7 @@ const Header = ({
         </Motion>
       )}
     </View>
-    { right && <Button contained={false} small {...right} /> }
+    { right && <Button contained={false} small {...right} style={styles.button} /> }
   </View>
 );
 
