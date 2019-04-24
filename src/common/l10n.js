@@ -93,6 +93,7 @@ export default {
     NAME: 'Name',
     NEW: 'New',
 
+    OFFLINE_MODE: 'Offline mode',
     OVERALL_BALANCE: 'Overall Balance',
 
     PROGRESS: 'Progress',
@@ -105,6 +106,7 @@ export default {
     SETTING_1_CAPTION: 'Switch visibility just touching it',
     SETTING_2_TITLE: 'Show vault currency',
     SETTING_2_CAPTION: 'If it is different from the base currency.',
+    SYNC_BLOCKCHAIN: 'Syncing blockchain',
     SLOGAN: 'Your private accounting on the blockchain.',
     STATS: 'Stats',
     STATS_CAPTION: 'In this summary you can see a breakdown of your operations in the selected category.',
