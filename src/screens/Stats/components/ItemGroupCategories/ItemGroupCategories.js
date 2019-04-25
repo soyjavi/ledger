@@ -20,12 +20,12 @@ class ItemGroupCategories extends PureComponent {
   static defaultProps = {};
 
   state = {
-    expand: false,
+    expand: undefined,
   };
 
-  _onPress = () => {
+  _onPress = (category) => {
     const { state: { expand } } = this;
-    this.setState({ expand: !expand });
+    this.setState({ expand: expand !== category ? category : undefined });
   }
 
   render() {
@@ -48,7 +48,11 @@ class ItemGroupCategories extends PureComponent {
             </Heading>
             <View style={styles.container}>
               { Object.keys(dataSource).map(category => (
-                <Touchable onPress={_onPress} key={category} style={styles.content}>
+                <Touchable
+                  onPress={() => _onPress(category)}
+                  key={category}
+                  style={styles.content}
+                >
                   <View>
                     <View style={styles.row}>
                       <Text subtitle level={3} style={styles.title}>{l10n.CATEGORIES[type][category]}</Text>
@@ -68,7 +72,7 @@ class ItemGroupCategories extends PureComponent {
                     </View>
                   </View>
 
-                  { expand && Object.keys(dataSource[category]).map(title => (
+                  { expand === category && Object.keys(dataSource[category]).map(title => (
                     <View key={`${category}-${title}`} style={styles.row}>
                       <Text level={2} lighten style={styles.title}>{title}</Text>
                       <PriceFriendly
