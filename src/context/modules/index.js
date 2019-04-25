@@ -1,9 +1,9 @@
-import AsyncStore from './AsyncStore';
 import calcOverall from './calcOverall';
-import calcVault from './calcVault';
+import consolidate from './consolidate';
+import Storage from './storage';
 
 export {
-  AsyncStore,
   calcOverall,
-  calcVault,
+  consolidate,
+  Storage,
 };

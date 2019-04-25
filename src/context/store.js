@@ -2,12 +2,9 @@ import { node } from 'prop-types';
 import React, { Component, createContext } from 'react';
 
 import { C, fetch } from '../common';
-import { Fingerprint } from '../reactor/context/Tracking/modules';
-import {
-  AsyncStore, calcOverall, calcVault,
-} from './modules';
+import { consolidate, Storage } from './modules';
 
-const { NAME, VERSION } = C;
+const { CURRENCY, NAME, VERSION } = C;
 const KEY = `${NAME}:context:store`;
 const { Provider, Consumer: ConsumerStore } = createContext(KEY);
 
@@ -22,8 +19,9 @@ class ProviderStore extends Component {
     hash: undefined,
     overall: {},
     tx: undefined,
+    sync: false,
     // -- STORAGE --------------------------------------------------------------
-    baseCurrency: undefined,
+    baseCurrency: CURRENCY,
     pin: undefined,
     rates: {},
     settings: {},
@@ -33,9 +31,7 @@ class ProviderStore extends Component {
   }
 
   async componentWillMount() {
-    const { fingerprint = (await Fingerprint()).uuid, ...store } = (await AsyncStore.getItem(KEY)) || {};
-
-    this.setState({ ...store, fingerprint });
+    this.setState({ ...consolidate(await Storage.get()), sync: false });
   }
 
   getHash = async (pin) => {
@@ -50,7 +46,7 @@ class ProviderStore extends Component {
 
     if (hash) {
       await _store({ pin });
-      this.setState({ pin, hash });
+      this.setState({ pin, hash, sync: false });
     }
 
     return hash;
@@ -58,37 +54,32 @@ class ProviderStore extends Component {
 
   onError = error => this.setState({ error: error ? error.message : undefined });
 
-  onHandshake = async () => {
-    const { onError, _store, state: { hash: authorization, version, vaults } } = this;
+  onSync = async () => {
+    const { onError, _store, state: { hash: authorization, version } } = this;
     const headers = { authorization };
     let { state: { txs = [] } } = this;
     let nextState = {};
 
     const profile = await fetch({ service: 'profile', headers }).catch(onError);
     if (profile) {
-      const { baseCurrency, latestTransaction: { hash } = {}, rates } = profile;
+      const {
+        baseCurrency, latestTransaction: { hash } = {}, rates, vaults = [],
+      } = profile;
       const { hash: localHash } = txs[txs.length - 1] || {};
 
       if (hash !== localHash || version !== VERSION) {
-        const service = 'transactions';
-        // if (hash && localHash) service += `?latestTransaction=${hash}`;
+        let service = 'transactions';
+        // if (hash && localHash) service += `?latestTransaction=${localHash}`;
         const { txs: newTxs } = await fetch({ service, headers }).catch(onError);
         // txs = [...txs, ...newTxs];
         txs = [...newTxs];
       }
-
-      nextState = {
-        baseCurrency,
-        rates,
-        txs,
-        vaults: profile.vaults.map(vault => calcVault({
-          txs, baseCurrency, rates, vault: { ...(vaults.find(item => item.hash === vault.hash) || {}), ...vault },
-        })),
-        version: VERSION,
-      };
+      nextState = consolidate({
+        baseCurrency, rates, sync: true, txs, vaults, version: VERSION,
+      });
 
       await _store(nextState);
-      this.setState({ ...nextState, overall: calcOverall(nextState) });
+      this.setState(nextState);
     }
 
     return nextState;
@@ -106,9 +97,8 @@ class ProviderStore extends Component {
   onTransaction = async (props) => {
     const {
       _store, onError,
-      state: { hash: authorization, ...state },
+      state: { hash: authorization, txs = [], ...state },
     } = this;
-    let { state: { txs = [] } } = this;
     const { hash: previousHash } = txs[txs.length - 1] || {};
 
     const newTransaction = await fetch({
@@ -116,17 +106,9 @@ class ProviderStore extends Component {
     }).catch(onError);
 
     if (newTransaction) {
-      txs = [...txs, newTransaction];
-      const vaults = state.vaults.map(vault => (
-        vault.hash !== props.vault ? vault : calcVault({ ...state, vault, txs })
-      ));
-      const nextState = { txs, vaults };
-
+      const nextState = consolidate({ ...state, txs: [...txs, newTransaction] });
       await _store(nextState);
-      this.setState({
-        ...nextState,
-        overall: calcOverall({ ...state, vaults }),
-      });
+      this.setState(nextState);
     }
 
     return newTransaction;
@@ -148,18 +130,16 @@ class ProviderStore extends Component {
     }).catch(onError);
 
     if (vault) {
-      const vaults = [...state.vaults, calcVault(vault, state.txs, state.vaults.length)];
+      const vaults = [...state.vaults, vault];
+
       if (vaults.length === 1) {
         baseCurrency = vault.currency;
         delete rates[vault.currency];
       }
 
-      const nextState = {
-        baseCurrency,
-        overall: calcOverall({ baseCurrency, rates, vaults }),
-        rates,
-        vaults,
-      };
+      const nextState = consolidate({
+        ...state, baseCurrency, rates, vaults,
+      });
 
       await _store(nextState);
       this.setState(nextState);
@@ -181,15 +161,8 @@ class ProviderStore extends Component {
     this.setState(nextState);
   }
 
-  _store = async (value) => {
-    const {
-      baseCurrency, pin, rates = {}, settings, txs = [], version, ...state
-    } = this.state;
-    const vaults = (value.vaults || state.vaults || []).map(({ txs, ...vault }) => vault);
-
-    await AsyncStore.setItem(KEY, {
-      baseCurrency, pin, rates, settings, txs, vaults, version, ...value,
-    });
+  _store = async (nextState) => {
+    Storage.set({ ...this.state, ...nextState });
   }
 
   render() {

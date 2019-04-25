@@ -12,6 +12,7 @@ export default async (component, { pin, store, navigation }) => {
     hash = await store.getHash(pin);
     await store.onSync();
   }
+
   navigation.navigate(SCREEN.DASHBOARD, undefined, props.navigation);
 
   if (!isSignup) {
@@ -19,6 +20,5 @@ export default async (component, { pin, store, navigation }) => {
     store.onSync();
   }
 
-  store.onSync();
   component.setState({ busy: false, pin: hash ? pin : '' });
 };
