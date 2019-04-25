@@ -9,7 +9,7 @@ import {
 import { Consumer } from '../../context';
 import { THEME } from '../../reactor/common';
 import { Slider, Viewport } from '../../reactor/components';
-import { DialogVault, VaultCard } from './components';
+import { DialogVault, Syncing, VaultCard } from './components';
 import { queryLastTxs, queryVaults } from './modules';
 import styles from './Dashboard.style';
 
@@ -84,7 +84,7 @@ class Dashboard extends PureComponent {
                   right={{ title: l10n.SETTINGS, onPress: () => navigation.navigate(SCREEN.SETTINGS) }}
                   title={l10n.OVERALL_BALANCE}
                 />
-
+                <Syncing scroll={scroll} />
                 <ScrollView onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.scroll}>
                   <Summary
                     {...overall}
@@ -93,11 +93,13 @@ class Dashboard extends PureComponent {
                     style={styles.summary}
                     title={l10n.OVERALL_BALANCE}
                   />
+
+
                   <Heading breakline subtitle={l10n.VAULTS} />
                   <Slider
                     itemWidth={VAULT_ITEM_WIDTH + SPACE.S}
                     itemMargin={0}
-                    steps={2}
+                    steps={1}
                     style={styles.vaults}
                   >
                     { queryVaults(vaults).map(vault => (
@@ -105,10 +107,14 @@ class Dashboard extends PureComponent {
                     ))}
                   </Slider>
 
-                  <Heading breakline subtitle={l10n.LAST_TRANSACTIONS} />
-                  <View>
-                    { queryLastTxs({ txs, vaults }).map(tx => <TransactionItem key={tx.hash} {...tx} />)}
-                  </View>
+                  { queryLastTxs({ txs, vaults }).length > 0 && (
+                    <Fragment>
+                      <Heading breakline subtitle={l10n.LAST_TRANSACTIONS} />
+                      <View>
+                        { queryLastTxs({ txs, vaults }).map(tx => <TransactionItem key={tx.hash} {...tx} />)}
+                      </View>
+                    </Fragment>
+                  )}
                 </ScrollView>
 
                 <Footer onPress={_onToggleDialog} />

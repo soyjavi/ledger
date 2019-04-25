@@ -9,6 +9,7 @@ class OptionItem extends PureComponent {
   static propTypes = {
     active: bool,
     caption: string,
+    disabled: bool,
     onChange: func.isRequired,
     title: string.isRequired,
   };
@@ -16,19 +17,20 @@ class OptionItem extends PureComponent {
   static defaultProps = {
     active: true,
     caption: undefined,
+    disabled: false,
   };
 
   render() {
     const {
       props: {
-        active, caption, onChange, title,
+        active, caption, disabled, onChange, title,
       },
     } = this;
 
     return (
       <View style={styles.container}>
         <View style={styles.content}>
-          <Text subtitle level={2} numberOfLines={1}>{title}</Text>
+          <Text subtitle level={2} numberOfLines={1} lighten={disabled}>{title}</Text>
           { caption && <Text caption lighten>{caption}</Text> }
         </View>
         <InputOption onChange={onChange} style={styles.switch} value={active} />

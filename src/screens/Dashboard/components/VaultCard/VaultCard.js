@@ -47,7 +47,7 @@ const VaultCard = (props) => {
                   <Fragment>
                     <Percentage
                       subtitle
-                      level={2}
+                      level={3}
                       value={currentBalance - progression > 0
                         ? (progression * 100) / (currentBalance - progression)
                         : progression}

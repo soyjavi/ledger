@@ -10,6 +10,7 @@ import { THEME } from '../../../../reactor/common';
 import {
   Button, Dialog, Form, Slider, Text,
 } from '../../../../reactor/components';
+import queryCurrencies from './modules/queryCurrencies';
 import styles, { CARD_WIDTH } from './DialogVault.style';
 
 const { COLOR, SPACE } = THEME;
@@ -63,7 +64,7 @@ class DialogVault extends PureComponent {
   render() {
     const {
       _onChange, _onCurrency, _onSubmit, _onValid,
-      props: { baseCurrency, onClose, visible },
+      props: { onClose, visible },
       state: {
         busy, currency, form, valid,
       },
@@ -71,12 +72,7 @@ class DialogVault extends PureComponent {
 
     return (
       <Consumer>
-        { ({
-          l10n,
-          store: {
-            rates = {}, vaults = [], ...store
-          },
-        }) => (
+        { ({ l10n, store: { vaults = [], ...store } }) => (
           <Dialog
             onClose={vaults.length > 0 ? onClose : undefined}
             style={styles.frame}
@@ -90,7 +86,7 @@ class DialogVault extends PureComponent {
             <View style={styles.form}>
               <Text subtitle level={3}>{l10n.CURRENCIES}</Text>
               <Slider itemMargin={0} itemWidth={CARD_WIDTH + SPACE.S} steps={4} style={styles.currencies}>
-                { [baseCurrency, ...Object.keys(rates)].map(item => (
+                { queryCurrencies(store).map(item => (
                   <CardOption
                     image={FLAGS[item]}
                     key={item}

@@ -58,6 +58,7 @@ export default {
     CLONE: 'Clone',
     CLONE_CAPTION: 'To make your life easier you can clone this transaction with a simple touch of the button.',
     CLOSE: 'Close',
+    COMING_SOON: 'Coming soon',
     CURRENCY: 'Currency',
     CURRENCIES: 'Currencies',
     CURRENT_MONTH: 'This month',
@@ -92,8 +93,10 @@ export default {
 
     NAME: 'Name',
     NEW: 'New',
+    NIGHT_MODE: 'Night mode',
 
     OFFLINE_MODE: 'Offline mode',
+    OTHERS: 'Others',
     OVERALL_BALANCE: 'Overall Balance',
 
     PROGRESS: 'Progress',

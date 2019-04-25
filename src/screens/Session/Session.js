@@ -45,7 +45,7 @@ class Session extends PureComponent {
     }
   }
 
-  _ = props => handshake(this, props);
+  handShake = ({ pin, store, navigation }) => handshake(this, { pin, store, navigation });
 
   render() {
     const { _onNumber, props: { visible, ...props }, state: { busy, pin } } = this;
@@ -57,8 +57,8 @@ class Session extends PureComponent {
             l10n, store, navigation, events: { getFingerprintAsync } = {},
           }) => (
             <View style={styles.container}>
-              { !navigation.stack.includes('Dashboard') && visible && store.pin && !busy
-                ? this._({ pin: store.pin, store, navigation }) && <View />
+              { 1 === 1 && !navigation.stack.includes('Dashboard') && visible && store.pin && !busy
+                ? this.handShake({ pin: store.pin, store, navigation }) && <View />
                 : undefined}
               <View style={styles.content}>
                 <Image source={logo} resizeMode="contain" style={styles.logo} />

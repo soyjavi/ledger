@@ -16,6 +16,8 @@ const MS_IN_DAY = 1000 * 24 * 60 * 60;
 const MS_IN_WEEK = MS_IN_DAY * 7;
 
 export default {
+  CURRENCY: 'EUR',
+
   ENDPOINT: IS_PRODUCTION ? 'https://voltvault.glitch.me' : 'http://localhost:8080',
 
   FIXED: {

@@ -49,7 +49,7 @@ class Settings extends PureComponent {
                 <Header highlight={scroll} title={l10n.SETTINGS} />
                 <ScrollView _onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.container}>
                   <View style={styles.content}>
-                    <Heading title={l10n.DASHBOARD} />
+                    <Heading breakline title={l10n.DASHBOARD} />
                     <OptionItem
                       active={settings[HIDE_OVERALL_BALANCE] !== undefined ? settings[HIDE_OVERALL_BALANCE] : false}
                       caption={l10n.SETTING_1_CAPTION}
@@ -64,6 +64,17 @@ class Settings extends PureComponent {
                     />
                     <Heading breakline lighten subtitle={`${l10n.VAULTS_VISIBILITY}`} />
                     { query(vaults).map(vault => <VaultItem key={vault.hash} {...vault} />)}
+                  </View>
+
+                  <View style={styles.content}>
+                    <Heading breakline title={l10n.OTHERS} />
+                    <OptionItem
+                      active={false}
+                      caption={l10n.COMING_SOON}
+                      disabled
+                      onChange={() => {}}
+                      title={l10n.NIGHT_MODE}
+                    />
                   </View>
                 </ScrollView>
 
