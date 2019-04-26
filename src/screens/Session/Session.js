@@ -50,6 +50,8 @@ class Session extends PureComponent {
   render() {
     const { _onNumber, props: { visible, ...props }, state: { busy, pin } } = this;
 
+    console.log('<Session>', { visible, busy, pin });
+
     return (
       <Viewport {...props} scroll={false} visible={visible}>
         <Consumer>

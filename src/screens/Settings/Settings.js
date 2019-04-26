@@ -1,4 +1,4 @@
-import { bool, shape } from 'prop-types';
+import { bool } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
 import { Image, ScrollView, View } from 'react-native';
 
@@ -18,13 +18,11 @@ const { SETTINGS: { HIDE_OVERALL_BALANCE, SHOW_VAULT_CURRENCY } } = C;
 class Settings extends PureComponent {
   static propTypes = {
     backward: bool,
-    navigation: shape({}),
     visible: bool,
   };
 
   static defaultProps = {
     backward: false,
-    navigation: undefined,
     visible: true,
   };
 
@@ -42,6 +40,8 @@ class Settings extends PureComponent {
     const {
       _onScroll, props: { visible, ...inherit }, state: { scroll },
     } = this;
+
+    console.log('<Settings>', { visible });
 
     return (
       <Viewport {...inherit} scroll={false} visible={visible}>

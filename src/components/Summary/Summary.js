@@ -14,7 +14,7 @@ import Percentage from '../Percentage';
 import PriceFriendly from '../PriceFriendly';
 import styles from './Summary.style';
 
-const { SCREEN } = C;
+const { CURRENCY, SCREEN } = C;
 const { COLOR } = THEME;
 
 const captionProps = {
@@ -32,7 +32,7 @@ class Summary extends Component {
   };
 
   static defaultProps = {
-    currency: 'EUR',
+    currency: CURRENCY,
     currentBalance: undefined,
     currentMonth: {},
     mask: undefined,
@@ -49,10 +49,12 @@ class Summary extends Component {
     if (props.mask !== mask) this.setState({ mask });
   }
 
-  shouldComponentUpdate({ currentBalance, mask }) {
+  shouldComponentUpdate({ currency, currentBalance, mask }) {
     const { props } = this;
 
-    return (currentBalance !== props.currentBalance) || (mask !== props.mask);
+    return currency !== props.currency
+      || currentBalance !== props.currentBalance
+      || mask !== props.mask;
   }
 
   _onSwitchMask = () => {
@@ -75,13 +77,11 @@ class Summary extends Component {
       ? (progression * 100) / (currentBalance - progression)
       : progression;
 
+    console.log('    <Summary>', { currency, currentBalance, mask });
+
     return (
       <Consumer>
-        { ({
-          l10n,
-          navigation,
-          store: { baseCurrency, rates },
-        }) => (
+        { ({ l10n, navigation, store: { baseCurrency, rates } }) => (
           <View style={[styles.container, inherit.style]}>
             <Touchable onPress={mask !== undefined ? _onSwitchMask : undefined} style={styles.content}>
               <View style={styles.row}>

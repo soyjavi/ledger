@@ -1,4 +1,4 @@
-import { bool, shape } from 'prop-types';
+import { bool } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
 import { BackHandler, ScrollView, View } from 'react-native';
 
@@ -19,20 +19,17 @@ const { SPACE } = THEME;
 class Dashboard extends PureComponent {
   static propTypes = {
     backward: bool,
-    navigation: shape({}),
     visible: bool,
   };
 
   static defaultProps = {
     backward: false,
-    navigation: undefined,
     visible: true,
   };
 
   state = {
     dialog: false,
     scroll: false,
-    stats: undefined,
   };
 
   componentWillReceiveProps({ backward }) {
@@ -40,7 +37,7 @@ class Dashboard extends PureComponent {
 
     BackHandler[method]('hardwareBackPress', () => {
       const { state: { dialog } } = this;
-      if (dialog) this.setState({ dialog: false, stats: undefined });
+      if (dialog) this.setState({ dialog: false });
       return true;
     });
   }
@@ -53,20 +50,21 @@ class Dashboard extends PureComponent {
 
   _onToggleDialog = () => {
     const { state: { dialog } } = this;
-    this.setState({ dialog: !dialog, stats: undefined });
+    this.setState({ dialog: !dialog });
   }
 
   _onVault = ({ navigation, vault }) => {
-    const { props } = this;
-    navigation.navigate(SCREEN.VAULT, vault, props.navigation);
+    navigation.navigate(SCREEN.VAULT, vault);
   }
 
   render() {
     const {
       _onScroll, _onToggleDialog, _onVault,
       props: { visible, ...inherit },
-      state: { dialog, scroll, stats },
+      state: { dialog, scroll },
     } = this;
+
+    console.log('<Dashboard>', { visible, dialog, scroll });
 
     return (
       <Viewport {...inherit} scroll={false} visible={visible}>
@@ -94,7 +92,6 @@ class Dashboard extends PureComponent {
                     title={l10n.OVERALL_BALANCE}
                   />
 
-
                   <Heading breakline subtitle={l10n.VAULTS} />
                   <Slider
                     itemWidth={VAULT_ITEM_WIDTH + SPACE.S}
@@ -121,7 +118,7 @@ class Dashboard extends PureComponent {
                 { visible && (
                   <Fragment>
                     { vaults.length === 0 && !dialog && this.setState({ dialog: true }) }
-                    <DialogVault baseCurrency={baseCurrency} visible={!stats && dialog} onClose={_onToggleDialog} />
+                    <DialogVault baseCurrency={baseCurrency} visible={dialog} onClose={_onToggleDialog} />
                   </Fragment>
                 )}
               </Fragment>

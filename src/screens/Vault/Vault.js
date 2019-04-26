@@ -19,8 +19,6 @@ class Vault extends Component {
   static propTypes = {
     backward: bool,
     dataSource: shape({}),
-    l10n: shape({}).isRequired,
-    navigation: shape({}),
     goBack: func,
     visible: bool,
   };
@@ -28,7 +26,6 @@ class Vault extends Component {
   static defaultProps = {
     backward: false,
     dataSource: undefined,
-    navigation: undefined,
     goBack() {},
     visible: true,
   };
@@ -36,14 +33,13 @@ class Vault extends Component {
   state = {
     dialog: false,
     scroll: false,
+    scrollQuery: false,
     search: undefined,
     type: EXPENSE,
     values: [],
   };
 
-  componentWillReceiveProps({
-    backward, goBack, dataSource, visible, ...store
-  }) {
+  componentWillReceiveProps({ dataSource, visible, ...store }) {
     const { props: { dataSource: { txs = [] } = {} } } = this;
 
     if (visible && dataSource && dataSource.txs.length !== txs.length) {
@@ -69,17 +65,22 @@ class Vault extends Component {
   }
 
   _onScroll = ({ nativeEvent: { contentOffset: { y } } }) => {
-    const { state } = this;
+    const { props: { dataSource, ...store }, state: { search, ...state } } = this;
     const scroll = y > 58;
     if (scroll !== state.scroll) this.setState({ scroll });
+
+    if (scroll && !state.scrollQuery) {
+      const scrollQuery = true;
+      this.setState({ scrollQuery, values: query(store, { ...dataSource, search }, scrollQuery) });
+    }
   }
 
   _onSearch = (search) => {
-    const { dataSource, ...inherit } = this.props;
+    const { props: { dataSource, ...inherit }, state: { scrollQuery } } = this;
 
     this.setState({
       search,
-      values: query(inherit, { ...dataSource, search: search.toLowerCase().trim() }),
+      values: query(inherit, { ...dataSource, search: search.toLowerCase().trim() }, scrollQuery),
     });
   }
 
@@ -93,23 +94,19 @@ class Vault extends Component {
   render() {
     const {
       _onHardwareBack, _onScroll, _onSearch, _onToggleDialog, _onTransactionType,
-      props: { visible, ...props },
+      props: { dataSource: vault = {}, visible, ...props },
       state: {
         dialog, scroll, search, type, values = [],
       },
     } = this;
-    const { state: { params: vault = {} } = {} } = props.navigation;
-    const { currency, hash } = vault;
+    const { currency, hash, title } = vault;
 
     return (
       <Viewport {...props} scroll={false} visible={visible}>
         <Consumer>
-          { ({
-            navigation, l10n,
-            store: { vaults },
-          }) => (
+          { ({ navigation, l10n, store: { vaults } }) => (
             <Fragment>
-              <Header highlight={scroll} image={FLAGS[currency]} title={vault.title} />
+              <Header highlight={scroll} image={FLAGS[currency]} title={title} />
 
               <FlatList
                 contentContainerStyle={styles.container}
@@ -118,14 +115,12 @@ class Vault extends Component {
                 onScroll={_onScroll}
                 scrollEventThrottle={40}
                 ListHeaderComponent={() => (
-                  <Fragment>
-                    <Summary
-                      {...vaults.find(row => row.hash === hash)}
-                      image={FLAGS[currency]}
-                      title={`${vault.title} ${l10n.BALANCE}`}
-                    />
-                    <Search l10n={l10n} onValue={value => _onSearch(value)} value={search} />
-                  </Fragment>
+                  visible && (
+                    <Fragment>
+                      <Summary {...vault} image={FLAGS[currency]} title={`${title} ${l10n.BALANCE}`} />
+                      <Search l10n={l10n} onValue={value => _onSearch(value)} value={search} />
+                    </Fragment>
+                  )
                 )}
                 ListEmptyComponent={() => (
                   <View style={[styles.content, styles.container]}>
@@ -136,12 +131,13 @@ class Vault extends Component {
               />
 
               <Footer
-                onBack={() => navigation.goBack(props.navigation)}
+                onBack={navigation.goBack}
                 onHardwareBack={() => _onHardwareBack(navigation)}
                 onPress={_onTransactionType}
                 options={vaults.length === 1 ? [l10n.EXPENSE, l10n.INCOME] : [l10n.EXPENSE, l10n.INCOME, l10n.TRANSFER]}
                 visible={visible}
               />
+
               { visible && (
                 <Fragment>
                   <DialogTransaction
@@ -152,7 +148,8 @@ class Vault extends Component {
                     visible={dialog && type !== TRANSFER}
                   />
                   { vaults.length > 1 && (
-                    <DialogTransfer vault={hash} onClose={_onToggleDialog} visible={dialog && type === TRANSFER} />)}
+                    <DialogTransfer vault={hash} onClose={_onToggleDialog} visible={dialog && type === TRANSFER} />
+                  )}
                 </Fragment>
               )}
             </Fragment>

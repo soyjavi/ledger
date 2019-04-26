@@ -15,7 +15,6 @@ import styles from './TransactionItem.style';
 const { FIXED, SYMBOL, TX: { TYPE: { INCOME } } } = C;
 const { COLOR } = THEME;
 
-
 class TransactionItem extends PureComponent {
   static propTypes = {
     category: number.isRequired,

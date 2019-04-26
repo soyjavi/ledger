@@ -6,16 +6,18 @@ const MAX_DAYS = 30;
 export default (
   { l10n: { CATEGORIES = [] } = {} },
   { txs = [], search = '' },
+  scroll = false,
 ) => {
   const dataSource = [];
   const hasSearch = search.length > 0;
   const offset = (new Date().getTimezoneOffset()) * 60 * 1000;
+  const limit = -(scroll ? 128 : 10);
   let days = 0;
   let date;
   let dateIndex = 0;
 
   txs
-    .slice(!hasSearch ? -128 : 0)
+    .slice(!hasSearch ? limit : 0)
     .reverse()
     .some((tx) => {
       const title = tx.title ? tx.title.toLowerCase() : undefined;

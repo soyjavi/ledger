@@ -1,5 +1,7 @@
-import { arrayOf, bool, shape } from 'prop-types';
-import React, { Fragment, PureComponent } from 'react';
+import {
+  arrayOf, bool, shape, string,
+} from 'prop-types';
+import React, { Fragment, Component } from 'react';
 import { ScrollView, View } from 'react-native';
 
 import ASSETS from '../../assets';
@@ -17,7 +19,7 @@ const { COLOR } = THEME;
 const MONTHLY = 0;
 const WEEKLY = 1;
 
-class Stats extends PureComponent {
+class Stats extends Component {
   static propTypes = {
     backward: bool,
     txs: arrayOf(shape({})),
@@ -50,6 +52,12 @@ class Stats extends PureComponent {
     if (visible) this.setState({ typeQuery, values: query(inherit, typeQuery) });
   }
 
+  shouldComponentUpdate({ visible }, { typeQuery }) {
+    const { props, state } = this;
+
+    return visible !== props.visible || typeQuery !== state.typeQuery;
+  }
+
   _onScroll = ({ nativeEvent: { contentOffset: { y } } }) => {
     const { state } = this;
     const scroll = y > 58;
@@ -66,11 +74,15 @@ class Stats extends PureComponent {
   render() {
     const {
       _onScroll, _onQuery,
-      props: { vault, visible, ...inherit },
+      props: {
+        vault, vaults, visible, ...inherit
+      },
       state: { scroll, typeQuery, values },
     } = this;
     const { chart = {} } = values || {};
     const title = vault ? `${vault.title} ` : '';
+
+    console.log('<Stats>', { typeQuery, visible, title });
 
     return (
       <Viewport {...inherit} scroll={false} visible={visible}>
