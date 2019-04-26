@@ -2,7 +2,9 @@ import { StyleSheet } from 'react-native';
 
 import { LAYOUT, THEME } from '../../../../reactor/common';
 
-const { SPACE } = THEME;
+const { COLOR, SPACE, UNIT } = THEME;
+const ICON_CONTAINER_SIZE = UNIT * 2.2;
+const ICON_SIZE = UNIT * 1.6;
 
 export default StyleSheet.create({
   container: {
@@ -15,7 +17,23 @@ export default StyleSheet.create({
     flex: 1,
   },
 
-  switch: {
-    marginBottom: 0,
+  iconContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLOR.TEXT,
+    borderRadius: ICON_CONTAINER_SIZE / 2,
+    height: ICON_CONTAINER_SIZE,
+    opacity: 0.2,
+    width: ICON_CONTAINER_SIZE,
+  },
+
+  iconActive: {
+    backgroundColor: COLOR.PRIMARY,
+    opacity: 1,
+  },
+
+  icon: {
+    height: ICON_SIZE,
+    width: ICON_SIZE,
   },
 });

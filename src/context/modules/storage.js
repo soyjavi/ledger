@@ -28,7 +28,11 @@ export default {
       rates,
       settings,
       txs,
-      vaults: vaults.map(({ txs, ...vault }) => vault),
+      vaults: vaults.map(({
+        balance, currency, hash, title,
+      }) => ({
+        balance, currency, hash, title,
+      })),
       version,
     }));
   },

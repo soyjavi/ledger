@@ -102,7 +102,7 @@ class Dashboard extends PureComponent {
                     steps={1}
                     style={styles.vaults}
                   >
-                    { queryVaults(vaults).map(vault => (
+                    { queryVaults({ settings, vaults }).map(vault => (
                       <VaultCard key={vault.hash} {...vault} onPress={() => _onVault({ navigation, vault })} />
                     ))}
                   </Slider>

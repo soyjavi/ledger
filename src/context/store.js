@@ -148,22 +148,7 @@ class ProviderStore extends Component {
     return vault;
   }
 
-  onVaultUpdate = async (updatedVault) => {
-    const { _store, state: { vaults } } = this;
-
-    const nextState = {
-      vaults: vaults.map(vault => (
-        vault.hash !== updatedVault.hash ? vault : updatedVault
-      )),
-    };
-
-    await _store(nextState);
-    this.setState(nextState);
-  }
-
-  _store = async (nextState) => {
-    Storage.set({ ...this.state, ...nextState });
-  }
+  _store = nextState => Storage.set({ ...this.state, ...nextState });
 
   render() {
     const { props: { children }, state, ...events } = this;
