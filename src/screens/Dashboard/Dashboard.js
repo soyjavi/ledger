@@ -108,7 +108,9 @@ class Dashboard extends PureComponent {
                     <Fragment>
                       <Heading breakline subtitle={l10n.LAST_TRANSACTIONS} />
                       <View>
-                        { queryLastTxs({ txs, vaults }).map(tx => <TransactionItem key={tx.hash} {...tx} />)}
+                        { queryLastTxs({ txs, vaults }).map(tx => (
+                          <TransactionItem key={tx.hash} showDate {...tx} />
+                        ))}
                       </View>
                     </Fragment>
                   )}

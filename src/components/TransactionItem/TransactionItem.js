@@ -1,15 +1,17 @@
-import { number, shape, string } from 'prop-types';
-import React, { PureComponent } from 'react';
+import {
+  bool, number, shape, string,
+} from 'prop-types';
+import React, { Fragment, PureComponent } from 'react';
 import { View } from 'react-native';
 
 import { CATEGORIES } from '../../assets';
 import { C, exchange } from '../../common';
-import { ConsumerStore } from '../../context';
+import { Consumer } from '../../context';
 import {
   Icon, Price, Text, Touchable,
 } from '../../reactor/components';
 import { THEME } from '../../reactor/common';
-import formatCaption from './modules/formatCaption';
+import { formatCaption, formatMonthShort } from './modules';
 import styles from './TransactionItem.style';
 
 const { FIXED, SYMBOL, TX: { TYPE: { INCOME } } } = C;
@@ -20,6 +22,7 @@ class TransactionItem extends PureComponent {
     category: number.isRequired,
     currency: string.isRequired,
     location: shape({}),
+    showDate: bool,
     timestamp: string.isRequired,
     title: string,
     type: number.isRequired,
@@ -28,24 +31,32 @@ class TransactionItem extends PureComponent {
 
   static defaultProps = {
     location: undefined,
+    showDate: false,
     title: undefined,
   };
 
   render() {
     const {
       props: {
-        category, currency, location, timestamp, title, type, value,
+        category, currency, location, showDate, timestamp, title, type, value,
       },
     } = this;
 
     return (
-      <ConsumerStore>
-        { ({ baseCurrency, onTx, rates }) => (
+      <Consumer>
+        { ({ l10n, store: { baseCurrency, onTx, rates } }) => (
           <Touchable rippleColor={COLOR.TEXT_LIGHTEN} onPress={() => onTx(this.props)}>
             <View style={[styles.container, styles.row]}>
               <View style={styles.icon}>
-                <Icon value={CATEGORIES[type][category]} />
+                { showDate
+                  ? (
+                    <Fragment>
+                      <Text style={styles.date}>{(new Date(timestamp)).getDate()}</Text>
+                      <Text lighten style={styles.month}>{formatMonthShort(timestamp, l10n)}</Text>
+                    </Fragment> )
+                  : <Icon value={CATEGORIES[type][category]} /> }
               </View>
+
               <View style={[styles.content, styles.row]}>
                 <View style={styles.texts}>
                   { title && <Text subtitle level={2} numberOfLines={1}>{title}</Text> }
@@ -78,31 +89,9 @@ class TransactionItem extends PureComponent {
             </View>
           </Touchable>
         )}
-      </ConsumerStore>
+      </Consumer>
     );
   }
 }
-// const TransactionItem = (props) => {
-//   const {
-//     category, currency, location, timestamp, title, type, value,
-//   } = props;
-
-
-// };
-
-// TransactionItem.propTypes = {
-//   category: number.isRequired,
-//   currency: string.isRequired,
-//   location: shape({}),
-//   timestamp: string.isRequired,
-//   title: string,
-//   type: number.isRequired,
-//   value: number.isRequired,
-// };
-
-// TransactionItem.defaultProps = {
-//   location: undefined,
-//   title: undefined,
-// };
 
 export default TransactionItem;
