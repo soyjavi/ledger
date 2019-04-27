@@ -53,7 +53,8 @@ class TransactionItem extends PureComponent {
                     <Fragment>
                       <Text style={styles.date}>{(new Date(timestamp)).getDate()}</Text>
                       <Text lighten style={styles.month}>{formatMonthShort(timestamp, l10n)}</Text>
-                    </Fragment> )
+                    </Fragment>
+                  )
                   : <Icon value={CATEGORIES[type][category]} /> }
               </View>
 
