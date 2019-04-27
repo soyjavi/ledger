@@ -1,6 +1,4 @@
-import {
-  arrayOf, bool, shape, string,
-} from 'prop-types';
+import { arrayOf, bool, shape } from 'prop-types';
 import React, { Fragment, Component } from 'react';
 import { ScrollView, View } from 'react-native';
 
@@ -23,7 +21,6 @@ class Stats extends Component {
   static propTypes = {
     backward: bool,
     txs: arrayOf(shape({})),
-    navigation: shape({}),
     vault: shape({}),
     vaults: arrayOf(shape({})),
     visible: bool,
@@ -32,7 +29,6 @@ class Stats extends Component {
   static defaultProps = {
     backward: false,
     txs: undefined,
-    navigation: undefined,
     vault: undefined,
     vaults: undefined,
     visible: true,
