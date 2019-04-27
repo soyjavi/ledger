@@ -68,6 +68,7 @@ export default {
     DAY_NAMES: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
 
     ENTER_PIN: 'Enter your pin',
+    ENTER_PIN_OR_FINGERPRINT: 'Enter your pin or fingerprint',
     EXCHANGED: 'Exchanged',
     EXPENSE: 'Expense',
     EXPENSE_CAPTION: 'Register a new expense in this vault.',
@@ -83,7 +84,6 @@ export default {
 
     LAST_TRANSACTIONS: 'Last transactions',
     LOADING_PLACE: 'Wait a moment, loading place.',
-    LOADING_PROFILE: 'Wait a moment, syncing your blockchain.',
 
     MONTHLY: 'Monthly',
     MONTHS: [

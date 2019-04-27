@@ -40,6 +40,7 @@ class Session extends PureComponent {
     if (getFingerprintAsync) {
       const { success } = await getFingerprintAsync('Use your fingerprint.');
       if (success) handshake(this, { pin: store.pin, store, navigation });
+      else this.setState({ askFingerprint: false });
     }
   }
 
@@ -63,7 +64,6 @@ class Session extends PureComponent {
       props: { getFingerprintAsync, visible, ...props },
       state: { askFingerprint, busy, pin },
     } = this;
-
     console.log('<Session>', { askFingerprint, visible, busy, pin });
 
     return (
@@ -89,7 +89,7 @@ class Session extends PureComponent {
                     ))}
                 </View>
                 <Text level={2} lighten style={styles.text}>
-                  { busy ? l10n.LOADING_PROFILE : l10n.ENTER_PIN }
+                  { store.pin && getFingerprintAsync ? l10n.ENTER_PIN_OR_FINGERPRINT : l10n.ENTER_PIN }
                 </Text>
               </View>
 
