@@ -1,7 +1,9 @@
 import React, { Fragment } from 'react';
 
 import { C } from './common';
-import { Consumer, ConsumerNavigation, ConsumerStore } from './context';
+import {
+  Consumer, ConsumerEvents, ConsumerNavigation, ConsumerStore,
+} from './context';
 import { LayoutView, Snackbar } from './reactor/components';
 import { DialogClone } from './components';
 import {
@@ -20,7 +22,9 @@ export default () => (
     }) => (
       <LayoutView>
         { console.log('<App>') }
-        <Session backward={current !== SESSION} visible={stack.includes(SESSION)} />
+        <ConsumerEvents>
+          { events => <Session {...events} backward={current !== SESSION} visible={stack.includes(SESSION)} /> }
+        </ConsumerEvents>
         <Dashboard backward={current !== DASHBOARD} visible={stack.includes(DASHBOARD)} />
         <Settings backward={current !== SETTINGS} visible={stack.includes(SETTINGS)} />
 

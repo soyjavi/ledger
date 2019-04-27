@@ -37,10 +37,10 @@ class ProviderEvents extends PureComponent {
   }
 
   render() {
-    const { props: { children, getFingerprintAsync, getLocationAsync }, state } = this;
+    const { props: { children, ...props }, state } = this;
 
     return (
-      <Provider value={{ ...state, getFingerprintAsync, getLocationAsync }}>
+      <Provider value={{ ...state, ...props }}>
         { children }
       </Provider>
     );

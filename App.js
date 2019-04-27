@@ -50,7 +50,7 @@ class App extends PureComponent {
     return (
       <Provider
         dictionary={L10N}
-        fingerprint={fingerprint ? LocalAuthentication : undefined}
+        getFingerprintAsync={fingerprint ? LocalAuthentication.authenticateAsync : undefined}
         getLocationAsync={_getLocationAsync}
         language={LANGUAGE}
       >

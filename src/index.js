@@ -2,7 +2,7 @@ import React from 'react';
 import { AppRegistry } from 'react-native';
 
 import {
-  C, getLocationAsync, L10N, theme,
+  C, getFingerprintAsync, getLocationAsync, L10N, theme,
 } from './common';
 import { Provider } from './context';
 import { THEME } from './reactor/common';
@@ -12,7 +12,12 @@ const { LANGUAGE } = C;
 const App = require('./App').default;
 
 const BrowserApp = () => (
-  <Provider dictionary={L10N} language={LANGUAGE} getLocationAsync={getLocationAsync}>
+  <Provider
+    dictionary={L10N}
+    language={LANGUAGE}
+    getFingerprintAsync={getFingerprintAsync}
+    getLocationAsync={getLocationAsync}
+  >
     <App />
   </Provider>
 );
