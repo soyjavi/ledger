@@ -44,7 +44,7 @@ class Vault extends Component {
 
     if (visible && dataSource && dataSource.txs.length !== txs.length) {
       const search = undefined;
-      this.setState({ search, values: query(store, { ...dataSource, search }) });
+      this.setState({ scrollQuery: false, search, values: query(store, { ...dataSource, search }) });
     }
   }
 
