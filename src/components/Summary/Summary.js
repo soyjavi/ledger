@@ -122,7 +122,7 @@ class Summary extends Component {
             </Heading>
             <View style={[styles.row, styles.cards]}>
               <View style={styles.card}>
-                <Text {...captionProps}>{l10n.PROGRESS.toUpperCase()}</Text>
+                <Text {...captionProps}>{l10n.PROGRESSION.toUpperCase()}</Text>
                 <Percentage headline level={6} value={progressionPercentage} />
               </View>
               <View style={styles.card}>

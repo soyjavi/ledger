@@ -24,10 +24,7 @@ export default StyleSheet.create({
   },
 
   container: {
-    backgroundColor: COLOR.WHITE,
     paddingVertical: SPACE.REGULAR,
-    borderBottomColor: COLOR.BASE,
-    borderBottomWidth: 1,
   },
 
   content: {

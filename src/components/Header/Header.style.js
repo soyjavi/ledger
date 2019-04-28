@@ -15,7 +15,7 @@ export default StyleSheet.create({
 
   container: {
     ...LAYOUT.STYLE.ROW,
-    backgroundColor: COLOR.WHITE,
+    backgroundColor: COLOR.BACKGROUND,
     height: HEADER_HEIGHT,
     position: ENV.IS_WEB ? 'fixed' : 'absolute',
     top: 0,
