@@ -37,19 +37,19 @@ class ProviderStore extends Component {
   getHash = async (pin) => {
     const { onError, _store, state: { fingerprint, pin: storedPin } } = this;
 
-    const { hash } = await fetch({
+    const response = await fetch({
       method: 'POST',
       service: storedPin ? 'signin' : 'signup',
       fingerprint,
       pin,
     }).catch(onError);
 
-    if (hash) {
+    if (response && response.hash) {
       await _store({ pin });
-      this.setState({ pin, hash, sync: false });
-    }
+      this.setState({ pin, hash: response.hash, sync: false });
 
-    return hash;
+      return response.hash;
+    }
   }
 
   onError = error => this.setState({ error: error ? error.message : undefined });
@@ -68,7 +68,7 @@ class ProviderStore extends Component {
       const { hash: localHash } = txs[txs.length - 1] || {};
 
       if (hash !== localHash || version !== VERSION) {
-        let service = 'transactions';
+        const service = 'transactions';
         // if (hash && localHash) service += `?latestTransaction=${localHash}`;
         const { txs: newTxs } = await fetch({ service, headers }).catch(onError);
         // txs = [...txs, ...newTxs];

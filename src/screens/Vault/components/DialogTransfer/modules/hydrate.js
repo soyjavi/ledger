@@ -2,18 +2,14 @@ import { FORM } from '../../../../../common';
 
 const { TRANSFER } = FORM;
 
-export default ({ form, store, vault }) => {
+export default (component, store) => {
+  const { state: { destination }, props: { vault } } = component;
   const { currency } = store.vaults.find(({ hash }) => hash === vault);
-  const vaults = store.vaults
-    .filter(({ hash }) => hash !== vault)
-    .map(({ title }) => title);
-
-  const destination = store.vaults.find(({ title }) => title === (form.destination || vaults[0]));
+  const { currency: destinationCurrency = currency } = store.vaults.find(({ hash }) => hash === destination) || {};
 
   return Object.assign({}, TRANSFER,
     {
-      value: { ...TRANSFER.value, currency, style: { width: '25%' } },
-      destination: { ...TRANSFER.destination, dataSource: vaults, selectedValue: destination.title },
-      exchange: { ...TRANSFER.exchange, disabled: currency === destination.currency, currency: destination.currency },
+      value: { ...TRANSFER.value, currency, disabled: destination === undefined },
+      exchange: { ...TRANSFER.exchange, currency: destinationCurrency, disabled: destination === undefined },
     });
 };

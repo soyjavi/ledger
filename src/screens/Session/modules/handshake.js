@@ -3,7 +3,6 @@ import { C } from '../../../common';
 const { SCREEN } = C;
 
 export default async (component, { pin, store, navigation }) => {
-  const { props } = component;
   const isSignup = store.pin === undefined;
   let hash;
 
@@ -13,7 +12,7 @@ export default async (component, { pin, store, navigation }) => {
     await store.onSync();
   }
 
-  navigation.navigate(SCREEN.DASHBOARD, undefined, props.navigation);
+  navigation.navigate(SCREEN.DASHBOARD, undefined);
 
   if (!isSignup) {
     hash = await store.getHash(pin);

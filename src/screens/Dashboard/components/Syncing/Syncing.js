@@ -12,11 +12,11 @@ const { COLOR, MOTION: { DURATION } } = THEME;
 
 const Syncing = ({ scroll }) => (
   <Consumer>
-    { ({ l10n, events: { isConnected }, store: { sync } }) => (
+    { ({ l10n, events: { isConnected }, store: { error, sync } }) => (
       <Motion
         delay={sync ? 0 : DURATION * 2}
         style={styles.container}
-        timeline={[{ property: 'translateY', value: !scroll && (!sync || !isConnected) ? 0 : -128 }]}
+        timeline={[{ property: 'translateY', value: !error && !scroll && (!sync || !isConnected) ? 0 : -128 }]}
       >
         { !isConnected && <Icon value="errorOutline" style={styles.icon} /> }
         <Text subtitle level={3} lighten>

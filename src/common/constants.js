@@ -3,9 +3,7 @@ import { Platform } from 'react-native';
 import { LAYOUT, THEME } from '../reactor/common';
 import PKG from '../../package.json';
 
-const {
-  BORDER_RADIUS, COLOR, SPACE, UNIT,
-} = THEME;
+const { BORDER_RADIUS, SPACE, UNIT } = THEME;
 
 // const DEV = __DEV__ ? __DEV__ : { hello: 'world' }; // eslint-disable-line;
 // const isDev = packagerOpts && packagerOpts.dev;

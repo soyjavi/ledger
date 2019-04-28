@@ -1,5 +1,5 @@
 import {
-  bool, func, number, oneOfType, string,
+  bool, func, node, number, oneOfType, string,
 } from 'prop-types';
 import React from 'react';
 import { Image, View } from 'react-native';
@@ -11,7 +11,7 @@ import styles from './CardOption.style';
 const { COLOR } = THEME;
 
 const CardOption = ({
-  color, icon, image, onPress, selected, title, ...inherit
+  children, color, icon, image, onPress, selected, title, ...inherit
 }) => (
   <Touchable
     onPress={onPress}
@@ -21,13 +21,15 @@ const CardOption = ({
       { image && <Image source={image} style={styles.image} /> }
       { icon && <Icon value={icon} style={styles.icon} /> }
     </View>
-    <Text caption level={2} style={[styles.title, selected && styles.titleHighlight]}>
+    <Text caption level={2} numberOfLines={1} style={[styles.title, selected && styles.titleHighlight]}>
       {title}
     </Text>
+    { children }
   </Touchable>
 );
 
 CardOption.propTypes = {
+  children: node,
   color: string,
   icon: oneOfType([number, string]),
   image: oneOfType([number, string]),
@@ -37,6 +39,7 @@ CardOption.propTypes = {
 };
 
 CardOption.defaultProps = {
+  children: undefined,
   color: COLOR.PRIMARY,
   icon: undefined,
   image: undefined,
