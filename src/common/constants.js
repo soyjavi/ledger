@@ -55,11 +55,12 @@ export default {
     },
     DIALOG: {
       backgroundColor: 'rgba(255,255,255,0.75)',
+      // DARK-MODE
+      // backgroundColor: 'rgba(0,0,0,0.85)',
       justifyContent: 'flex-end',
       zIndex: 2,
     },
     DIALOG_FRAME: {
-      backgroundColor: COLOR.WHITE,
       borderTopLeftRadius: BORDER_RADIUS,
       borderTopRightRadius: BORDER_RADIUS,
       margin: 0,

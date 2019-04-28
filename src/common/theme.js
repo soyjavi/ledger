@@ -8,14 +8,11 @@ const WEIGHT = { REGULAR: '400', BOLD: '700' };
 
 export default {
   COLOR: {
-    BACKGROUND: '#FDFDFF',
+    BACKGROUND: '#FFF',
     BACKGROUND_OPACITY: 'rgba(255,255,255,0.9)',
     BASE: '#F8F8F8',
-
     TEXT: '#333',
     TEXT_LIGHTEN: '#999',
-    PRIMARY: '#7966FF',
-    ACCENT: '#01C654',
 
     // DARK-MODE
     // BACKGROUND: '#000',
@@ -24,6 +21,8 @@ export default {
     // TEXT: '#fff',
     // TEXT_LIGHTEN: '#aaa',
 
+    PRIMARY: '#7966FF',
+    ACCENT: '#01C654',
     EXPENSES: '#FF6262',
     INCOMES: '#17D0BC',
   },
