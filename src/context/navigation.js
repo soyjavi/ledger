@@ -1,4 +1,4 @@
-import { node } from 'prop-types';
+import { node, shape } from 'prop-types';
 import React, { PureComponent, createContext } from 'react';
 
 import { C } from '../common';
@@ -10,10 +10,12 @@ const { SCREEN: { SESSION } } = C;
 class ProviderNavigation extends PureComponent {
   static propTypes = {
     children: node,
+    navigator: shape({}),
   };
 
   static defaultProps = {
     children: undefined,
+    navigator: undefined,
   };
 
   state = {
@@ -27,8 +29,8 @@ class ProviderNavigation extends PureComponent {
     return stack[stack.length - 1];
   }
 
-  goBack = (navigator) => {
-    const { state: { params, stack } } = this;
+  goBack = () => {
+    const { props: { navigator }, state: { params, stack } } = this;
 
     delete params[this.current];
     stack.pop();
@@ -38,8 +40,8 @@ class ProviderNavigation extends PureComponent {
     if (navigator && navigator.goBack) navigator.goBack();
   }
 
-  navigate = (screen, parameters = {}, navigator) => {
-    const { state: { params, stack } } = this;
+  navigate = (screen, parameters = {}) => {
+    const { props: { navigator }, state: { params, stack } } = this;
 
     this.setState({ stack: [...stack, screen], params: { ...params, [screen]: parameters } });
 
