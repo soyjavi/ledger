@@ -33,7 +33,7 @@ class DialogClone extends PureComponent {
     busyWipe: false,
   };
 
-  _onSubmit = async ({ onTransaction, onTx }, wipe = false) => {
+  _onSubmit = async ({ onTx, onSelectTx }, wipe = false) => {
     const { props: { dataSource } } = this;
     const {
       category, hash, value, vault, location, title, type = EXPENSE,
@@ -55,10 +55,10 @@ class DialogClone extends PureComponent {
       props = { ...props, ...location };
     }
 
-    const tx = await onTransaction(props);
+    const tx = await onTx(props);
     this.setState({ [wipe ? 'busyWipe' : 'busyClone']: false });
 
-    if (tx) onTx(undefined);
+    if (tx) onSelectTx(undefined);
   }
 
   render() {
@@ -77,7 +77,7 @@ class DialogClone extends PureComponent {
       <Consumer>
         { ({ l10n, store: { baseCurrency, rates, ...store } }) => (
           <Dialog
-            onClose={() => store.onTx(undefined)}
+            onClose={() => store.onSelectTx(undefined)}
             style={styles.frame}
             styleContainer={styles.dialog}
             title={type === EXPENSE ? l10n.EXPENSE : l10n.INCOME}

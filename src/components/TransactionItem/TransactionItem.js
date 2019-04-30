@@ -44,8 +44,8 @@ class TransactionItem extends PureComponent {
 
     return (
       <Consumer>
-        { ({ l10n, store: { baseCurrency, onTx, rates } }) => (
-          <Touchable rippleColor={COLOR.TEXT_LIGHTEN} onPress={() => onTx(this.props)}>
+        { ({ l10n, store: { baseCurrency, onSelectTx, rates } }) => (
+          <Touchable rippleColor={COLOR.TEXT_LIGHTEN} onPress={() => onSelectTx(this.props)}>
             <View style={[styles.container, styles.row]}>
               <View style={styles.icon}>
                 { showDate

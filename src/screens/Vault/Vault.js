@@ -89,11 +89,11 @@ class Vault extends Component {
     this.setState({ dialog: !dialog });
   }
 
-  _onTransactionType = type => this.setState({ dialog: type !== undefined, type });
+  _onTxType = type => this.setState({ dialog: type !== undefined, type });
 
   render() {
     const {
-      _onHardwareBack, _onScroll, _onSearch, _onToggleDialog, _onTransactionType,
+      _onHardwareBack, _onScroll, _onSearch, _onToggleDialog, _onTxType,
       props: { dataSource: vault = {}, visible, ...props },
       state: {
         dialog, scroll, search, type, values = [],
@@ -133,7 +133,7 @@ class Vault extends Component {
               <Footer
                 onBack={navigation.goBack}
                 onHardwareBack={() => _onHardwareBack(navigation)}
-                onPress={_onTransactionType}
+                onPress={_onTxType}
                 options={vaults.length === 1 ? [l10n.EXPENSE, l10n.INCOME] : [l10n.EXPENSE, l10n.INCOME, l10n.TRANSFER]}
                 visible={visible}
               />

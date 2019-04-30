@@ -67,7 +67,7 @@ class DialogTransaction extends PureComponent {
     getLocation(this, getLocationAsync);
   }
 
-  _onSubmit = async ({ onTransaction }) => {
+  _onSubmit = async ({ onTx }) => {
     const {
       props: { onClose, type, vault },
       state: {
@@ -76,7 +76,7 @@ class DialogTransaction extends PureComponent {
     } = this;
 
     this.setState({ busy: true });
-    const response = await onTransaction({
+    const tx = await onTx({
       category,
       title,
       type,
@@ -87,7 +87,7 @@ class DialogTransaction extends PureComponent {
     });
 
     this.setState({ busy: false });
-    if (response) onClose();
+    if (tx) onClose();
   }
 
   render() {
