@@ -20,10 +20,10 @@ export default async (component) => {
 
     if (remoteHash !== localHash || version !== VERSION) {
       let service = 'transactions';
-      // if (remoteHash && localHash) service += `?latestTransaction=${localHash}`;
+      if (remoteHash !== localHash) service += `?latestTransaction=${localHash}`;
 
       const { txs: newTxs = [] } = await fetch({ service, headers }).catch(onError);
-      // nextState.txs = (remoteHash && localHash) ? [...txs, ...newTxs] : newTxs;
+      nextState.txs = (remoteHash !== localHash) ? [...txs, ...newTxs] : newTxs;
       nextState.txs = newTxs;
     }
   }
