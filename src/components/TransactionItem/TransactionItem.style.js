@@ -9,10 +9,13 @@ const DATE_FONT_SIZE = UNIT * 1.6;
 const MONTH_FONT_SIZE = UNIT * 0.9;
 
 export default StyleSheet.create({
-
   container: {
     paddingVertical: OFFSET / 1.5,
     paddingHorizontal: OFFSET,
+  },
+
+  containerHighlight: {
+    backgroundColor: COLOR.BASE,
   },
 
   content: {

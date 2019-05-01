@@ -2,16 +2,17 @@ import { StyleSheet } from 'react-native';
 
 import { LAYOUT, THEME } from '../../../../reactor/common';
 
-const { OFFSET } = THEME;
+const { SPACE } = THEME;
 
 export default StyleSheet.create({
-  heading: {
+  headingValues: {
     ...LAYOUT.STYLE.ROW,
     flex: 1,
     justifyContent: 'flex-end',
   },
 
   icon: {
-    marginRight: -OFFSET / 2,
+    marginLeft: SPACE.S,
+    marginRight: -SPACE.XS,
   },
 });

@@ -44,19 +44,21 @@ class GroupTransactions extends Component {
         { ({ store: { baseCurrency, rates }, l10n }) => (
           <Fragment>
             <Heading breakline subtitle={verboseDate(timestamp, l10n)}>
-              <View style={styles.heading}>
-                <Icon value={value > 0 ? ASSETS.income : ASSETS.expense} style={styles.icon} />
-                <Price
-                  color={value > 0 ? COLOR.INCOMES : COLOR.EXPENSES}
-                  subtitle
-                  level={3}
-                  fixed={FIXED[baseCurrency]}
-                  symbol={SYMBOL[baseCurrency]}
-                  value={baseCurrency !== currency
-                    ? exchange(Math.abs(value), currency, baseCurrency, rates)
-                    : Math.abs(value)}
-                />
-              </View>
+              { value !== 0 && (
+                <View style={styles.headingValues}>
+                  <Icon value={value > 0 ? ASSETS.income : ASSETS.expense} style={styles.icon} />
+                  <Price
+                    color={value > 0 ? COLOR.INCOMES : COLOR.EXPENSES}
+                    subtitle
+                    level={3}
+                    fixed={FIXED[baseCurrency]}
+                    symbol={SYMBOL[baseCurrency]}
+                    value={baseCurrency !== currency
+                      ? exchange(Math.abs(value), currency, baseCurrency, rates)
+                      : Math.abs(value)}
+                  />
+                </View>
+              )}
             </Heading>
             { txs.map(tx => <TransactionItem key={tx.hash} {...tx} currency={currency} />)}
           </Fragment>

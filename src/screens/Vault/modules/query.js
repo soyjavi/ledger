@@ -1,6 +1,6 @@
 import { C } from '../../../common';
 
-const { TX: { TYPE: { INCOME } } } = C;
+const { TX: { TYPE: { INCOME } }, VAULT_TRANSFER } = C;
 const MAX_DAYS = 30;
 
 export default (
@@ -11,7 +11,7 @@ export default (
   const dataSource = [];
   const hasSearch = search.length > 0;
   const offset = (new Date().getTimezoneOffset()) * 60 * 1000;
-  const limit = -(scroll ? 128 : 10);
+  const limit = -(scroll ? 128 : 16);
   let days = 0;
   let date;
   let dateIndex = 0;
@@ -30,10 +30,12 @@ export default (
           days += 1;
           date = txDate;
           dateIndex = dataSource.length;
-          dataSource.push({ value: 0, timestamp: tx.timestamp, txs: [] });
+          dataSource.push({ value: 0,  timestamp: tx.timestamp, txs: [] });
         }
 
-        dataSource[dateIndex].value += tx.type === INCOME ? tx.value : -(tx.value);
+        if (tx.category !== VAULT_TRANSFER) {
+          dataSource[dateIndex].value += tx.type === INCOME ? tx.value : -(tx.value);
+        }
         dataSource[dateIndex].txs.push(tx);
       }
 

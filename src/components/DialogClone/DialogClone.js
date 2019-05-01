@@ -99,20 +99,12 @@ class DialogClone extends PureComponent {
                     level={2}
                     fixed={FIXED[baseCurrency]}
                     symbol={SYMBOL[baseCurrency]}
-                    title={type === INCOME ? '+' : undefined}
                     value={baseCurrency !== currency
-                      ? exchange(Math.abs(value), currency, baseCurrency, rates)
-                      : Math.abs(value)}
+                      ? exchange(value, currency, baseCurrency, rates)
+                      : value}
                   />
                   { currency !== baseCurrency && (
-                    <Price
-                      caption
-                      lighten
-                      fixed={FIXED[currency]}
-                      symbol={SYMBOL[currency]}
-                      title={type === INCOME ? '+' : undefined}
-                      value={value}
-                    />
+                    <Price caption lighten fixed={FIXED[currency]} symbol={SYMBOL[currency]} value={value} />
                   )}
                 </View>
               </View>

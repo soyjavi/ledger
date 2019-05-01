@@ -14,7 +14,9 @@ import { THEME } from '../../reactor/common';
 import { formatCaption, formatMonthShort } from './modules';
 import styles from './TransactionItem.style';
 
-const { FIXED, SYMBOL, TX: { TYPE: { INCOME } } } = C;
+const {
+  FIXED, SYMBOL, TX: { TYPE: { INCOME } }, VAULT_TRANSFER,
+} = C;
 const { COLOR } = THEME;
 
 class TransactionItem extends PureComponent {
@@ -41,12 +43,13 @@ class TransactionItem extends PureComponent {
         category, currency, location, showDate, timestamp, title, type, value,
       },
     } = this;
+    const isVaultTransfer = category === VAULT_TRANSFER;
 
     return (
       <Consumer>
         { ({ l10n, store: { baseCurrency, onSelectTx, rates } }) => (
           <Touchable rippleColor={COLOR.TEXT_LIGHTEN} onPress={() => onSelectTx(this.props)}>
-            <View style={[styles.container, styles.row]}>
+            <View style={[styles.container, styles.row, isVaultTransfer && styles.containerHighlight]}>
               <View style={styles.icon}>
                 { showDate
                   ? (
@@ -60,19 +63,20 @@ class TransactionItem extends PureComponent {
 
               <View style={[styles.content, styles.row]}>
                 <View style={styles.texts}>
-                  { title && <Text subtitle level={2} numberOfLines={1}>{title}</Text> }
+                  { title && <Text subtitle level={2} lighten={isVaultTransfer} numberOfLines={1}>{title}</Text> }
                   <Text caption lighten>{formatCaption(new Date(timestamp), location)}</Text>
                 </View>
                 <View style={styles.prices}>
                   <Price
                     subtitle
                     level={2}
+                    lighten={isVaultTransfer}
                     fixed={FIXED[baseCurrency]}
+                    operator={type === INCOME ? '+' : '-'}
                     symbol={SYMBOL[baseCurrency]}
-                    title={type === INCOME ? '+' : '-'}
                     value={baseCurrency !== currency
-                      ? exchange(Math.abs(value), currency, baseCurrency, rates)
-                      : Math.abs(value)}
+                      ? exchange(value, currency, baseCurrency, rates)
+                      : value}
                   />
 
                   { baseCurrency !== currency && (
@@ -80,8 +84,8 @@ class TransactionItem extends PureComponent {
                       caption
                       lighten
                       fixed={FIXED[currency]}
+                      operator={type === INCOME ? '+' : '-'}
                       symbol={SYMBOL[currency]}
-                      title={type === INCOME ? '+' : '-'}
                       value={value}
                     />
                   )}
