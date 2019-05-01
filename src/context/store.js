@@ -45,13 +45,15 @@ class ProviderStore extends Component {
       await _store({ pin });
       this.setState({ pin, hash, sync: false });
     }
+
+    return hash;
   }
 
   onError = error => this.setState({ error: error ? error.message : undefined });
 
-  onSettings = (value) => {
+  onSettings = async (value) => {
     const { _store, state: { settings = {} } } = this;
-    const nextState = { ...settings, ...value };
+    const nextState = { settings: { ...settings, ...value } };
 
     this.setState(nextState);
     _store(nextState);
@@ -70,6 +72,8 @@ class ProviderStore extends Component {
 
     await _store(nextState);
     this.setState({ ...nextState, sync: true });
+
+    return nextState;
   }
 
   onTx = async (props) => {
