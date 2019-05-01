@@ -3,8 +3,7 @@ import React, { PureComponent, createContext } from 'react';
 
 import { C } from '../common';
 
-const KEY = `${C.NAME}:context:navigation`;
-const { Provider, Consumer: ConsumerNavigation } = createContext(KEY);
+const { Provider, Consumer: ConsumerNavigation } = createContext(`${C.NAME}:context:navigation`);
 const { SCREEN: { SESSION } } = C;
 
 class ProviderNavigation extends PureComponent {

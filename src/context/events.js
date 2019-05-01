@@ -4,8 +4,7 @@ import { NetInfo } from 'react-native';
 
 import { C } from '../common';
 
-const KEY = `${C.NAME}:context:events`;
-const { Provider, Consumer: ConsumerEvents } = createContext(KEY);
+const { Provider, Consumer: ConsumerEvents } = createContext(`${C.NAME}:context:events`);
 
 class ProviderEvents extends PureComponent {
   static propTypes = {

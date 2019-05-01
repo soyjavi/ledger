@@ -93,12 +93,13 @@ class ProviderStore extends Component {
 
     if (vault) {
       const vaults = [...state.vaults, vault];
-      const nextState = { ...state, rates, vaults };
+      let nextState = { ...state, rates, vaults };
 
       if (vaults.length === 1) {
         nextState.baseCurrency = vault.currency;
         delete rates[vault.currency];
       }
+      nextState = consolidate({ ...this.state, ...nextState });
 
       await _store(nextState);
       this.setState(nextState);
