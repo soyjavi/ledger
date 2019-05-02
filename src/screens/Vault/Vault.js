@@ -49,7 +49,10 @@ class Vault extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    const { props: { visible }, state: { dialog, scroll, search } } = this;
+    const {
+      props: { visible },
+      state: { dialog, scroll, search },
+    } = this;
 
     return (nextProps.visible !== visible)
       || (nextState.dialog !== dialog)
@@ -118,7 +121,7 @@ class Vault extends Component {
                   visible && (
                     <Fragment>
                       <Summary {...vault} image={FLAGS[currency]} title={`${title} ${l10n.BALANCE}`} />
-                      <Search l10n={l10n} onValue={value => _onSearch(value)} value={search} />
+                      <Search l10n={l10n} onValue={_onSearch} value={search} />
                     </Fragment>
                   )
                 )}

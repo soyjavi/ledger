@@ -30,7 +30,7 @@ export default (
           days += 1;
           date = txDate;
           dateIndex = dataSource.length;
-          dataSource.push({ value: 0,  timestamp: tx.timestamp, txs: [] });
+          dataSource.push({ value: 0, timestamp: tx.timestamp, txs: [] });
         }
 
         if (tx.category !== VAULT_TRANSFER) {
