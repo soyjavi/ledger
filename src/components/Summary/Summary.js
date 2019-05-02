@@ -18,7 +18,7 @@ const { CURRENCY, SCREEN } = C;
 const { COLOR } = THEME;
 
 const captionProps = {
-  caption: true, level: 2, lighten: true, numberOfLines: 1,
+  caption: true, level: 2, numberOfLines: 1,
 };
 
 class Summary extends Component {

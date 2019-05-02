@@ -88,11 +88,10 @@ class Dashboard extends PureComponent {
                     {...overall}
                     currency={baseCurrency}
                     mask={settings[HIDE_OVERALL_BALANCE]}
-                    style={styles.summary}
                     title={l10n.OVERALL_BALANCE}
                   />
 
-                  <Heading breakline subtitle={l10n.VAULTS} />
+                  <Heading title={l10n.VAULTS} />
                   <Slider
                     itemWidth={VAULT_ITEM_WIDTH + SPACE.S}
                     itemMargin={0}
