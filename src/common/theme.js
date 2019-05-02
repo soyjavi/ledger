@@ -10,7 +10,7 @@ export default {
   COLOR: {
     BACKGROUND: '#FFF',
     BACKGROUND_OPACITY: 'rgba(255,255,255,0.9)',
-    BASE: '#F8F8F8',
+    BASE: '#F2F2F2',
     TEXT: '#333',
     TEXT_LIGHTEN: '#999',
 
