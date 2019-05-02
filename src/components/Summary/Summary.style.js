@@ -24,7 +24,7 @@ export default StyleSheet.create({
   },
 
   container: {
-    paddingVertical: SPACE.REGULAR,
+    paddingBottom: SPACE.MEDIUM,
   },
 
   content: {

@@ -6,6 +6,7 @@ import { FLAGS } from '../../assets';
 import { C } from '../../common';
 import { Summary, Footer, Header } from '../../components';
 import { Consumer } from '../../context';
+import { THEME } from '../../reactor/common';
 import { Text, Viewport } from '../../reactor/components';
 import {
   DialogTransaction, DialogTransfer, GroupTransactions, Search,
@@ -14,6 +15,7 @@ import query from './modules/query';
 import styles from './Vault.style';
 
 const { TX: { TYPE: { EXPENSE, TRANSFER } } } = C;
+const { SPACE } = THEME;
 
 class Vault extends Component {
   static propTypes = {
@@ -69,7 +71,7 @@ class Vault extends Component {
 
   _onScroll = ({ nativeEvent: { contentOffset: { y } } }) => {
     const { props: { dataSource, ...store }, state: { search, ...state } } = this;
-    const scroll = y > 58;
+    const scroll = y > SPACE.MEDIUM;
     if (scroll !== state.scroll) this.setState({ scroll });
 
     if (scroll && !state.scrollQuery) {

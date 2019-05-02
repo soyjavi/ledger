@@ -44,7 +44,7 @@ class Dashboard extends PureComponent {
 
   _onScroll = ({ nativeEvent: { contentOffset: { y } } }) => {
     const { state } = this;
-    const scroll = y > 58;
+    const scroll = y > SPACE.MEDIUM;
     if (scroll !== state.scroll) this.setState({ scroll });
   }
 

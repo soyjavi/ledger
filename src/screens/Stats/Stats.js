@@ -13,7 +13,7 @@ import { ItemGroupCategories } from './components';
 import { orderCaptions, query } from './modules';
 import styles from './Stats.style';
 
-const { COLOR } = THEME;
+const { COLOR, SPACE } = THEME;
 const MONTHLY = 0;
 const WEEKLY = 1;
 
@@ -35,6 +35,7 @@ class Stats extends Component {
   };
 
   state = {
+    locations: undefined,
     scroll: false,
     typeQuery: MONTHLY,
     values: {},
@@ -56,7 +57,7 @@ class Stats extends Component {
 
   _onScroll = ({ nativeEvent: { contentOffset: { y } } }) => {
     const { state } = this;
-    const scroll = y > 58;
+    const scroll = y > SPACE.MEDIUM;
     if (scroll !== state.scroll) this.setState({ scroll });
   }
 
@@ -73,7 +74,9 @@ class Stats extends Component {
       props: {
         vault, vaults, visible, ...inherit
       },
-      state: { scroll, typeQuery, values },
+      state: {
+        locations, scroll, typeQuery, values,
+      },
     } = this;
     const { chart = {} } = values || {};
     const title = vault ? `${vault.title} ` : '';
@@ -113,9 +116,11 @@ class Stats extends Component {
                     />
                   </View>
 
-
                   { Object.keys(values[1]).length > 0 && <ItemGroupCategories type={1} dataSource={values[1]} /> }
                   { Object.keys(values[0]).length > 0 && <ItemGroupCategories type={0} dataSource={values[0]} /> }
+
+                  <Heading breakline title={l10n.LOCATIONS} />
+                  <View />
                 </ScrollView>
                 <Footer onBack={navigation.goBack} onHardwareBack={navigation.goBack} visible={visible} />
               </Fragment>
