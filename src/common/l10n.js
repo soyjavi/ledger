@@ -87,6 +87,7 @@ export default {
 
     LAST_TRANSACTIONS: 'Last transactions',
     LOADING_PLACE: 'Wait a moment, loading place.',
+    LOCATIONS: 'Locations',
 
     MONTHLY: 'Monthly',
     MONTHS: [

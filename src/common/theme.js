@@ -14,13 +14,6 @@ export default {
     TEXT: '#333',
     TEXT_LIGHTEN: '#999',
 
-    // DARK-MODE
-    // BACKGROUND: '#000',
-    // BACKGROUND_OPACITY: 'rgba(0,0,0,0.9)',
-    // BASE: 'rgba(255,255,255,0.1)',
-    // TEXT: '#fff',
-    // TEXT_LIGHTEN: '#aaa',
-
     PRIMARY: '#7966FF',
     ACCENT: '#01C654',
     EXPENSES: '#FF6262',

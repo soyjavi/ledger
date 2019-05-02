@@ -2,12 +2,18 @@ import React from 'react';
 import { AppRegistry } from 'react-native';
 
 import {
-  C, getFingerprintAsync, getLocationAsync, L10N, theme,
+  C, getFingerprintAsync, getLocationAsync, L10N, theme, themeDark,
 } from './common';
 import { Provider } from './context';
 import { THEME } from './reactor/common';
 
-THEME.extend(theme);
+THEME.extend({
+  ...theme,
+  COLOR: {
+    ...theme.COLOR,
+    // ...themeDark.COLOR,
+  },
+});
 const { LANGUAGE } = C;
 const App = require('./App').default;
 

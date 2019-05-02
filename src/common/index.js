@@ -8,6 +8,7 @@ import L10N from './l10n';
 import fetch from './fetch';
 import setCurrency from './setCurrency';
 import theme from './theme';
+import themeDark from './themeDark';
 import translate from './translate';
 import verboseDate from './verboseDate';
 import verboseMonth from './verboseMonth';
@@ -23,6 +24,7 @@ export {
   fetch,
   setCurrency,
   theme,
+  themeDark,
   translate,
   verboseDate,
   verboseMonth,

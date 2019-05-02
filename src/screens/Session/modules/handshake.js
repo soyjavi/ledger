@@ -11,7 +11,7 @@ export default async (component, { pin, store, navigation }) => {
     await store.onSync();
   }
 
-  navigation.navigate(SCREEN.DASHBOARD, undefined);
+  navigation.navigate(SCREEN.DASHBOARD);
 
   if (!isSignup) {
     await store.getHash(pin);
