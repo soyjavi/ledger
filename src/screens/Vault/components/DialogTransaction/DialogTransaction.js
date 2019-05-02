@@ -94,7 +94,7 @@ class DialogTransaction extends PureComponent {
     const {
       _getLocation, _onCategory, _onChange, _onSubmit,
       props: {
-        currency, onClose, type, visible,
+        currency, onClose, type, visible, ...inherit
       },
       state: {
         busy, category, coords, form, location, place,
@@ -107,6 +107,7 @@ class DialogTransaction extends PureComponent {
       <Consumer>
         { ({ events: { getLocationAsync }, l10n, store }) => (
           <Dialog
+            {...inherit}
             onClose={onClose}
             style={styles.frame}
             styleContainer={styles.dialog}

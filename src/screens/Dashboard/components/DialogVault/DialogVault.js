@@ -64,7 +64,7 @@ class DialogVault extends PureComponent {
   render() {
     const {
       _onChange, _onCurrency, _onSubmit, _onValid,
-      props: { onClose, visible },
+      props: { onClose, visible, ...inherit },
       state: {
         busy, currency, form, valid,
       },
@@ -74,6 +74,7 @@ class DialogVault extends PureComponent {
       <Consumer>
         { ({ l10n, store: { vaults = [], ...store } }) => (
           <Dialog
+            {...inherit}
             onClose={vaults.length > 0 ? onClose : undefined}
             style={styles.frame}
             styleContainer={styles.dialog}

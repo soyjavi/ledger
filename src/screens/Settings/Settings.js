@@ -13,7 +13,7 @@ import { OptionItem } from './components';
 import query from './modules/query';
 import styles from './Settings.style';
 
-const { SETTINGS: { HIDE_OVERALL_BALANCE, SHOW_VAULT_CURRENCY } } = C;
+const { SETTINGS: { HIDE_OVERALL_BALANCE, NIGHT_MODE, SHOW_VAULT_CURRENCY } } = C;
 
 class Settings extends PureComponent {
   static propTypes = {
@@ -98,10 +98,9 @@ class Settings extends PureComponent {
                   <View style={styles.content}>
                     <Heading breakline title={l10n.OTHERS} />
                     <OptionItem
-                      active={false}
-                      caption={l10n.COMING_SOON}
-                      disabled
-                      onChange={() => {}}
+                      active={settings[NIGHT_MODE] !== undefined ? settings[NIGHT_MODE] : true}
+                      caption={l10n.NIGHT_MODE}
+                      onChange={value => onSettings({ [NIGHT_MODE]: value })}
                       title={l10n.NIGHT_MODE}
                     />
                   </View>

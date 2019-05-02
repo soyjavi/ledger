@@ -17,9 +17,14 @@ export default StyleSheet.create({
     width: SPACE.S,
   },
 
-  dialog: DIALOG,
+  dialog: {
+    ...DIALOG,
+    backgroundColor: COLOR.BACKGROUND_OPACITY,
+  },
 
-  frame: DIALOG_FRAME,
+  frame: {
+    ...DIALOG_FRAME,
+  },
 
   info: {
     backgroundColor: COLOR.BASE,

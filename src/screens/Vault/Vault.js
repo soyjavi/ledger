@@ -14,7 +14,7 @@ import {
 import query from './modules/query';
 import styles from './Vault.style';
 
-const { TX: { TYPE: { EXPENSE, TRANSFER } } } = C;
+const { SETTINGS: { NIGHT_MODE }, TX: { TYPE: { EXPENSE, TRANSFER } } } = C;
 const { SPACE } = THEME;
 
 class Vault extends Component {
@@ -109,7 +109,7 @@ class Vault extends Component {
     return (
       <Viewport {...props} scroll={false} visible={visible}>
         <Consumer>
-          { ({ navigation, l10n, store: { vaults } }) => (
+          { ({ navigation, l10n, store: { settings, vaults } }) => (
             <Fragment>
               <Header highlight={scroll} image={FLAGS[currency]} title={title} />
 
@@ -147,13 +147,19 @@ class Vault extends Component {
                 <Fragment>
                   <DialogTransaction
                     currency={currency}
+                    highlight={settings[NIGHT_MODE]}
                     type={type}
                     vault={hash}
                     onClose={_onToggleDialog}
                     visible={dialog && type !== TRANSFER}
                   />
                   { vaults.length > 1 && (
-                    <DialogTransfer vault={hash} onClose={_onToggleDialog} visible={dialog && type === TRANSFER} />
+                    <DialogTransfer
+                      highlight={settings[NIGHT_MODE]}
+                      onClose={_onToggleDialog}
+                      vault={hash}
+                      visible={dialog && type === TRANSFER}
+                    />
                   )}
                 </Fragment>
               )}

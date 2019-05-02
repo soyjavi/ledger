@@ -69,6 +69,7 @@ class DialogClone extends PureComponent {
         dataSource: {
           category, currency, location, title, type = EXPENSE, value,
         },
+        ...inherit
       },
       state: { busyClone, busyWipe },
     } = this;
@@ -77,6 +78,7 @@ class DialogClone extends PureComponent {
       <Consumer>
         { ({ l10n, store: { baseCurrency, rates, ...store } }) => (
           <Dialog
+            {...inherit}
             onClose={() => store.onSelectTx(undefined)}
             style={styles.frame}
             styleContainer={styles.dialog}

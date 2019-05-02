@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { C } from '../../common';
 import { LAYOUT, ENV, THEME } from '../../reactor/common';
 
-const { SPACE } = THEME;
+const { COLOR, SPACE } = THEME;
 const { STYLE } = C;
 
 export default StyleSheet.create({
@@ -40,7 +40,10 @@ export default StyleSheet.create({
     zIndex: 2,
   },
 
-  dialog: STYLE.DIALOG,
+  dialog: {
+    ...STYLE.DIALOG,
+    backgroundColor: COLOR.BACKGROUND_OPACITY,
+  },
 
   frame: {
     ...STYLE.DIALOG_FRAME,

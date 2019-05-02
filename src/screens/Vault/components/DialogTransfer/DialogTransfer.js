@@ -81,7 +81,7 @@ class DialogTransfer extends PureComponent {
     const {
       _onChange, _onSubmit, _onVault, _onValid,
       props: {
-        onClose, vault, visible,
+        onClose, vault, visible, ...inherit
       },
       state: {
         busy, destination, form, valid,
@@ -92,6 +92,7 @@ class DialogTransfer extends PureComponent {
       <Consumer>
         { ({ l10n, store }) => (
           <Dialog
+            {...inherit}
             onClose={onClose}
             visible={visible}
             style={styles.frame}

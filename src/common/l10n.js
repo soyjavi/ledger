@@ -59,7 +59,6 @@ export default {
     CLONE: 'Clone',
     CLONE_CAPTION: 'To make your life easier you can clone this transaction with a simple touch of the button.',
     CLOSE: 'Close',
-    COMING_SOON: 'Coming soon',
     CONCEPT: 'Concept',
     CURRENCY: 'Currency',
     CURRENCIES: 'Currencies',
@@ -98,6 +97,7 @@ export default {
     NAME: 'Name',
     NEW: 'New',
     NIGHT_MODE: 'Night mode',
+    NIGHT_MODE_CAPTION: 'Fits perfectly in OLED screens',
 
     OFFLINE_MODE: 'Offline mode',
     OTHERS: 'Others',

@@ -10,7 +10,7 @@ import {
   Session, Settings, Stats, Dashboard, Vault,
 } from './screens';
 
-const { SCREEN } = C;
+const { SCREEN, SETTINGS: { NIGHT_MODE } } = C;
 const {
   SESSION, SETTINGS, STATS, DASHBOARD, VAULT,
 } = SCREEN;
@@ -30,7 +30,7 @@ export default () => (
 
         { stack.includes(DASHBOARD) && (
           <ConsumerStore>
-            { store => (
+            { ({ settings, ...store }) => (
               <Fragment>
                 <Vault
                   backward={current !== VAULT}
@@ -42,7 +42,11 @@ export default () => (
                   visible={stack.includes(VAULT)}
                 />
                 <Stats {...store} backward={current !== STATS} vault={params.Vault} visible={stack.includes(STATS)} />
-                <DialogClone dataSource={store.tx} visible={store.tx !== undefined} />
+                <DialogClone
+                  dataSource={store.tx}
+                  highlight={settings[NIGHT_MODE]}
+                  visible={store.tx !== undefined}
+                />
               </Fragment>
             )}
           </ConsumerStore>

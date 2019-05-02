@@ -13,7 +13,7 @@ import { DialogVault, Syncing, VaultCard } from './components';
 import { queryLastTxs, queryVaults } from './modules';
 import styles from './Dashboard.style';
 
-const { SCREEN, STYLE: { VAULT_ITEM_WIDTH }, SETTINGS: { HIDE_OVERALL_BALANCE } } = C;
+const { SCREEN, STYLE: { VAULT_ITEM_WIDTH }, SETTINGS: { HIDE_OVERALL_BALANCE, NIGHT_MODE } } = C;
 const { SPACE } = THEME;
 
 class Dashboard extends PureComponent {
@@ -119,7 +119,12 @@ class Dashboard extends PureComponent {
                 { visible && (
                   <Fragment>
                     { vaults.length === 0 && !dialog && this.setState({ dialog: true }) }
-                    <DialogVault baseCurrency={baseCurrency} visible={dialog} onClose={_onToggleDialog} />
+                    <DialogVault
+                      baseCurrency={baseCurrency}
+                      highlight={settings[NIGHT_MODE]}
+                      visible={dialog}
+                      onClose={_onToggleDialog}
+                    />
                   </Fragment>
                 )}
               </Fragment>

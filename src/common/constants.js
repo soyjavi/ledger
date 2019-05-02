@@ -43,6 +43,7 @@ export default {
   },
   SETTINGS: {
     HIDE_OVERALL_BALANCE: 0,
+    NIGHT_MODE: 3,
     SHOW_VAULT_CURRENCY: 1,
   },
   STYLE: {
@@ -52,15 +53,10 @@ export default {
       padding: SPACE.MEDIUM,
     },
     DIALOG: {
-      backgroundColor: 'rgba(255,255,255,0.75)',
-      // DARK-MODE
-      // backgroundColor: 'rgba(0,0,0,0.85)',
       justifyContent: 'flex-end',
       zIndex: 2,
     },
     DIALOG_FRAME: {
-      borderTopLeftRadius: BORDER_RADIUS,
-      borderTopRightRadius: BORDER_RADIUS,
       margin: 0,
     },
     FOOTER_HEIGHT: UNIT * 7.6,
