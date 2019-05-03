@@ -47,12 +47,14 @@ class Stats extends Component {
     const typeQuery = MONTHLY;
 
     if (visible) {
-      const today = new Date();
-      this.setState({ typeQuery, values: query(inherit, typeQuery) });
+      this.setState({ locations: undefined, typeQuery, scroll: false, values: query(inherit, typeQuery) });
 
-      this.setState({
-        locations: await inherit.getLocations({ year: today.getFullYear(), month: today.getMonth() + 1 }),
-      });
+      if (!inherit.vault) {
+        const today = new Date();
+        this.setState({
+          locations: await inherit.getLocations({ year: today.getFullYear(), month: today.getMonth() + 1 }),
+        });
+      }
     }
   }
 
@@ -85,7 +87,7 @@ class Stats extends Component {
         vault, vaults, visible, ...inherit
       },
       state: {
-        locations = {}, scroll, typeQuery, values,
+        locations, scroll, typeQuery, values,
       },
     } = this;
     const { chart = {} } = values || {};
@@ -129,7 +131,7 @@ class Stats extends Component {
                   { Object.keys(values[1]).length > 0 && <ItemGroupCategories type={1} dataSource={values[1]} /> }
                   { Object.keys(values[0]).length > 0 && <ItemGroupCategories type={0} dataSource={values[0]} /> }
 
-                  <Locations dataSource={locations} />
+                  { locations && <Locations dataSource={locations} /> }
                 </ScrollView>
                 <Footer onBack={navigation.goBack} onHardwareBack={navigation.goBack} visible={visible} />
               </Fragment>
