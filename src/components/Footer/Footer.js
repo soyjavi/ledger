@@ -8,7 +8,7 @@ import ASSETS, { OPTIONS } from '../../assets';
 import { C } from '../../common';
 import { Consumer, ConsumerEvents } from '../../context';
 import { THEME } from '../../reactor/common';
-import { Button, Dialog, Form } from '../../reactor/components';
+import { Button, Dialog } from '../../reactor/components';
 import CardOption from '../CardOption';
 import styles from './Footer.style';
 

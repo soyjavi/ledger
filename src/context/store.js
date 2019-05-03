@@ -4,7 +4,7 @@ import React, { Component, createContext } from 'react';
 import { C } from '../common';
 import { consolidate, Storage } from './modules';
 import {
-  createTx, createVault, getHash, syncProfile,
+  createTx, createVault, getHash, getLocations, syncProfile,
 } from './services';
 
 const { CURRENCY, NAME } = C;
@@ -48,6 +48,8 @@ class ProviderStore extends Component {
 
     return hash;
   }
+
+  getLocations = query => getLocations(this, query);
 
   onError = error => this.setState({ error: error ? error.message : undefined });
 

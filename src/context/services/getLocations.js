@@ -1,17 +1,12 @@
 import { fetch } from '../../common';
 
-export default async (component, query) => {
+export default async (component, query = {}) => {
   const { onError, state: { hash } } = component;
   const headers = { authorization: hash };
-  const today = new Date();
-  const { year = today.getFullYear(), month = today.getMonth() } = query;
+  const queryString = Object.keys(query)
+    .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(query[key])}`).join('&');
 
-  const response = await fetch({
-    service: 'locations',
-    headers,
-    year,
-    month,
-  }).catch(onError);
+  const response = await fetch({ service: `locations?${queryString}`, headers }).catch(onError);
 
   return response;
 };

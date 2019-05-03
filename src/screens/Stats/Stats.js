@@ -8,8 +8,8 @@ import {
 } from '../../components';
 import { Consumer } from '../../context';
 import { THEME } from '../../reactor/common';
-import { Viewport } from '../../reactor/components';
-import { ItemGroupCategories } from './components';
+import { Image, Viewport } from '../../reactor/components';
+import { ItemGroupCategories, Locations } from './components';
 import { orderCaptions, query } from './modules';
 import styles from './Stats.style';
 
@@ -41,18 +41,28 @@ class Stats extends Component {
     values: {},
   };
 
-  componentWillReceiveProps({
+  async componentWillReceiveProps({
     backward, visible, ...inherit
   }) {
     const typeQuery = MONTHLY;
 
-    if (visible) this.setState({ typeQuery, values: query(inherit, typeQuery) });
+    if (visible) {
+      const today = new Date();
+      this.setState({ typeQuery, values: query(inherit, typeQuery) });
+
+      this.setState({
+        locations: await inherit.getLocations({ year: today.getFullYear(), month: today.getMonth() + 1 }),
+      });
+    }
   }
 
-  shouldComponentUpdate({ visible }, { typeQuery }) {
+  shouldComponentUpdate({ visible }, { locations, scroll, typeQuery }) {
     const { props, state } = this;
 
-    return visible !== props.visible || typeQuery !== state.typeQuery;
+    return visible !== props.visible
+      || locations !== state.locations
+      || scroll !== state.scroll
+      || typeQuery !== state.typeQuery;
   }
 
   _onScroll = ({ nativeEvent: { contentOffset: { y } } }) => {
@@ -75,7 +85,7 @@ class Stats extends Component {
         vault, vaults, visible, ...inherit
       },
       state: {
-        locations, scroll, typeQuery, values,
+        locations = {}, scroll, typeQuery, values,
       },
     } = this;
     const { chart = {} } = values || {};
@@ -119,8 +129,7 @@ class Stats extends Component {
                   { Object.keys(values[1]).length > 0 && <ItemGroupCategories type={1} dataSource={values[1]} /> }
                   { Object.keys(values[0]).length > 0 && <ItemGroupCategories type={0} dataSource={values[0]} /> }
 
-                  <Heading breakline title={l10n.LOCATIONS} />
-                  <View />
+                  <Locations dataSource={locations} />
                 </ScrollView>
                 <Footer onBack={navigation.goBack} onHardwareBack={navigation.goBack} visible={visible} />
               </Fragment>
