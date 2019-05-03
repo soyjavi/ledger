@@ -1,6 +1,6 @@
 import { bool, func, shape } from 'prop-types';
 import React, { Fragment, Component } from 'react';
-import { FlatList, View } from 'react-native';
+import { FlatList, ScrollView, View } from 'react-native';
 
 import { FLAGS } from '../../assets';
 import { C } from '../../common';
@@ -53,13 +53,16 @@ class Vault extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     const {
       props: { visible },
-      state: { dialog, scroll, search },
+      state: {
+        dialog, scroll, search, scrollQuery,
+      },
     } = this;
 
     return (nextProps.visible !== visible)
       || (nextState.dialog !== dialog)
       || (nextState.scroll !== scroll)
-      || (nextState.search !== search);
+      || (nextState.search !== search)
+      || (nextState.scrollQuery !== scrollQuery);
   }
 
   _onHardwareBack = (navigation) => {
@@ -74,7 +77,7 @@ class Vault extends Component {
     const scroll = y > SPACE.MEDIUM;
     if (scroll !== state.scroll) this.setState({ scroll });
 
-    if (scroll && !state.scrollQuery) {
+    if (y > SPACE.XXL && !state.scrollQuery) {
       const scrollQuery = true;
       this.setState({ scrollQuery, values: query(store, { ...dataSource, search }, scrollQuery) });
     }
@@ -106,34 +109,57 @@ class Vault extends Component {
     } = this;
     const { currency, hash, title } = vault;
 
+    console.log('<Vault>', {
+      visible, dialog, scroll, search,
+    });
+
     return (
       <Viewport {...props} scroll={false} visible={visible}>
         <Consumer>
           { ({ navigation, l10n, store: { settings, vaults } }) => (
             <Fragment>
               <Header highlight={scroll} image={FLAGS[currency]} title={title} />
-
-              <FlatList
-                contentContainerStyle={styles.container}
-                data={visible ? values : []}
-                keyExtractor={tx => `${tx.timestamp}-${tx.value}`}
-                onScroll={_onScroll}
-                scrollEventThrottle={40}
-                ListHeaderComponent={() => (
-                  visible && (
-                    <Fragment>
-                      <Summary {...vault} image={FLAGS[currency]} title={`${title} ${l10n.BALANCE}`} />
-                      <Search l10n={l10n} onValue={_onSearch} value={search} />
-                    </Fragment>
+              <ScrollView onScroll={_onScroll} scrollEventThrottle={40} style={styles.container}>
+                <Fragment>
+                  <Summary {...vault} image={FLAGS[currency]} title={`${title} ${l10n.BALANCE}`} />
+                  <Search l10n={l10n} onValue={_onSearch} value={search} />
+                </Fragment>
+                { visible && values.length > 0
+                  ? (
+                    <View>
+                      { values.map(item => <GroupTransactions key={item.timestamp} {...item} currency={currency} />) }
+                    </View>
                   )
-                )}
-                ListEmptyComponent={() => (
-                  <View style={[styles.content, styles.container]}>
-                    <Text level={2} lighten>{l10n.VAULT_EMPTY}</Text>
-                  </View>
-                )}
-                renderItem={({ item }) => <GroupTransactions {...item} currency={currency} />}
-              />
+                  : (
+                    <View style={[styles.content, styles.container]}>
+                      <Text level={2} lighten>{l10n.VAULT_EMPTY}</Text>
+                    </View>
+                  )}
+              </ScrollView>
+
+              { 1 === 2 && (
+                <FlatList
+                  contentContainerStyle={styles.container}
+                  data={visible ? values : []}
+                  keyExtractor={tx => `${tx.timestamp}-${tx.value}`}
+                  onScroll={_onScroll}
+                  scrollEventThrottle={40}
+                  ListHeaderComponent={() => (
+                    visible && (
+                      <Fragment>
+                        <Summary {...vault} image={FLAGS[currency]} title={`${title} ${l10n.BALANCE}`} />
+                        <Search l10n={l10n} onValue={_onSearch} value={search} />
+                      </Fragment>
+                    )
+                  )}
+                  ListEmptyComponent={() => (
+                    <View style={[styles.content, styles.container]}>
+                      <Text level={2} lighten>{l10n.VAULT_EMPTY}</Text>
+                    </View>
+                  )}
+                  renderItem={({ item }) => <GroupTransactions {...item} currency={currency} />}
+                />
+              )}
 
               <Footer
                 onBack={navigation.goBack}
