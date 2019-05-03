@@ -5,7 +5,6 @@ import Footer from './Footer';
 import Header from './Header';
 import Heading from './Heading';
 import MapStaticImage from './MapStaticImage';
-import NumKeyboard from './NumKeyboard';
 import Percentage from './Percentage';
 import PriceFriendly from './PriceFriendly';
 import Summary from './Summary';
@@ -19,7 +18,6 @@ export {
   Header,
   Heading,
   MapStaticImage,
-  NumKeyboard,
   Percentage,
   PriceFriendly,
   Summary,

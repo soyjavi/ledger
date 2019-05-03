@@ -5,11 +5,11 @@ import { Image, View } from 'react-native';
 import ASSETS from '../../assets';
 import { C } from '../../common';
 import { Consumer } from '../../context';
-import { NumKeyboard } from '../../components';
 import { THEME } from '../../reactor/common';
 import {
   Activity, Motion, Text, Viewport,
 } from '../../reactor/components';
+import { NumKeyboard } from './components';
 import handshake from './modules/handshake';
 import styles from './Session.style';
 
@@ -78,7 +78,7 @@ class Session extends PureComponent {
                 <Image source={ASSETS.logo} resizeMode="contain" style={styles.logo} />
                 <Text headline level={4} style={styles.text}>voltvault</Text>
                 <View style={styles.pin}>
-                  { busy || store.hash
+                  { busy
                     ? <Activity size="large" style={styles.activity} />
                     : [1, 2, 3, 4].map(number => (
                       <Motion
