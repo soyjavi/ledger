@@ -19,11 +19,12 @@ export default {
 
   async set(value) {
     const {
-      baseCurrency, pin, rates = {}, settings, txs = [], vaults = [], version,
+      baseCurrency, fingerprint, pin, rates = {}, settings, txs = [], vaults = [], version,
     } = value;
 
     await AsyncStorage.setItem(KEY, JSON.stringify({
       baseCurrency,
+      fingerprint,
       pin,
       rates,
       settings,
