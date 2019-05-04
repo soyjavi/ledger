@@ -98,7 +98,7 @@ class Settings extends PureComponent {
                   <View style={styles.content}>
                     <Heading breakline title={l10n.OTHERS} />
                     <OptionItem
-                      active={settings[NIGHT_MODE] !== undefined ? settings[NIGHT_MODE] : true}
+                      active={settings[NIGHT_MODE] !== undefined ? settings[NIGHT_MODE] : false}
                       caption={l10n.NIGHT_MODE}
                       onChange={value => onSettings({ [NIGHT_MODE]: value })}
                       title={l10n.NIGHT_MODE}
