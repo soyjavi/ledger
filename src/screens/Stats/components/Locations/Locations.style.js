@@ -16,6 +16,7 @@ export default StyleSheet.create({
   map: {
     borderRadius: BORDER_RADIUS,
     height: UNIT * 19.2,
+    marginBottom: SPACE.S,
     width: '100%',
   },
 });
