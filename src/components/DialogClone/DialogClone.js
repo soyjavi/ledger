@@ -73,6 +73,7 @@ class DialogClone extends PureComponent {
       },
       state: { busyClone, busyWipe },
     } = this;
+    const color = type === EXPENSE ? COLOR.EXPENSES : COLOR.INCOMES;
 
     return (
       <Consumer>
@@ -110,14 +111,14 @@ class DialogClone extends PureComponent {
                   )}
                 </View>
               </View>
-              { location && <MapStaticImage {...location} style={styles.map} /> }
+              { location && <MapStaticImage {...location} color={color} style={styles.map} /> }
               { location && <Text caption lighten>{location.place}</Text> }
             </View>
 
             <View style={styles.row}>
               <Button
                 activity={busyWipe}
-                color={COLOR.PRIMARY}
+                color={color}
                 contained={false}
                 disabled={busyWipe}
                 onPress={() => _onSubmit(store, true)}
@@ -128,7 +129,7 @@ class DialogClone extends PureComponent {
               <View style={styles.buttonSeparator} />
               <Button
                 activity={busyClone}
-                color={COLOR.PRIMARY}
+                color={color}
                 disabled={busyClone}
                 onPress={() => _onSubmit(store, false)}
                 shadow

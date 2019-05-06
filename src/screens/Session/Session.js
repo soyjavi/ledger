@@ -64,7 +64,9 @@ class Session extends PureComponent {
       props: { getFingerprintAsync, visible, ...props },
       state: { askFingerprint, busy, pin },
     } = this;
-    console.log('<Session>', { askFingerprint, visible, busy, pin });
+    console.log('<Session>', {
+      askFingerprint, visible, busy, pin,
+    });
 
     return (
       <Viewport {...props} scroll={false} visible={visible}>

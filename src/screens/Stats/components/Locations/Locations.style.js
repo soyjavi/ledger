@@ -1,12 +1,16 @@
 import { StyleSheet } from 'react-native';
 
-import { THEME } from '../../../../reactor/common';
+import { LAYOUT, THEME } from '../../../../reactor/common';
 
-const { BORDER_RADIUS, UNIT, SPACE } = THEME;
+const { VIEWPORT: { H, W } } = LAYOUT;
+const { COLOR, BORDER_RADIUS, SPACE } = THEME;
+const MAP_HEIGHT = Math.floor(H / 4);
+const MAP_WIDTH = Math.floor(W - (SPACE.MEDIUM * 2));
+
+export { MAP_HEIGHT, MAP_WIDTH };
 
 export default StyleSheet.create({
   container: {
-
   },
 
   content: {
@@ -14,9 +18,10 @@ export default StyleSheet.create({
   },
 
   map: {
+    backgroundColor: COLOR.BASE,
     borderRadius: BORDER_RADIUS,
-    height: UNIT * 19.2,
+    height: MAP_HEIGHT,
     marginBottom: SPACE.S,
-    width: '100%',
+    width: MAP_WIDTH,
   },
 });

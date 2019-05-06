@@ -4,10 +4,15 @@ import {
 import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
+import { C, objectToQueryString } from '../../../../common';
 import { Consumer } from '../../../../context';
+import { THEME } from '../../../../reactor/common';
 import { Image, Text } from '../../../../reactor/components';
 import Heading from '../../../../components/Heading';
-import styles from './Locations.style';
+import styles, { MAP_HEIGHT, MAP_WIDTH } from './Locations.style';
+
+const { ENDPOINT } = C;
+const { COLOR } = THEME;
 
 class Locations extends PureComponent {
   static propTypes = {
@@ -24,23 +29,16 @@ class Locations extends PureComponent {
     precission: 0.001,
   };
 
-  constructor(props) {
-    super(props);
-    this.state = { map: undefined };
-    this.getHeatmap(props);
-  }
-
-  async componentWillReceiveProps(nextProps) {
-    this.getHeatmap(nextProps);
-  }
-
-  getHeatmap = async ({ points, precission, ...inherit }) => {
-    const { map } = await inherit.getLocations({ points: JSON.stringify(points), precission });
-    this.setState({ map });
-  }
-
   render() {
-    const { props: { cities, countries }, state: { map } } = this;
+    const {
+      cities, countries, points, precission,
+    } = this.props;
+    const query = objectToQueryString({
+      color: COLOR.PRIMARY,
+      points: JSON.stringify(points),
+      precission,
+      resolution: `${MAP_WIDTH}x${MAP_HEIGHT}@2x`,
+    });
 
     return (
       <Consumer>
@@ -48,7 +46,11 @@ class Locations extends PureComponent {
           <View style={styles.container}>
             <Heading breakline title={l10n.LOCATIONS} />
             <View style={styles.content}>
-              <Image resizeMode="cover" source={{ uri: map }} style={styles.map} />
+              <Image
+                resizeMode="cover"
+                source={points.length > 0 ? { uri: `${ENDPOINT}/heatmap?${query}` } : undefined}
+                style={styles.map}
+              />
               <Text subtitle level={3}>$Cities</Text>
               <Text level={2} lighten>{JSON.stringify(cities)}</Text>
               <Text subtitle level={3}>$Countries</Text>

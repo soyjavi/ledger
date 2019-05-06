@@ -6,6 +6,7 @@ import getLocationAsync from './getLocationAsync';
 import FORM from './forms';
 import L10N from './l10n';
 import fetch from './fetch';
+import objectToQueryString from './objectToQueryString';
 import setCurrency from './setCurrency';
 import theme from './theme';
 import themeDark from './themeDark';
@@ -22,6 +23,7 @@ export {
   FORM,
   L10N,
   fetch,
+  objectToQueryString,
   setCurrency,
   theme,
   themeDark,

@@ -8,7 +8,7 @@ import {
 } from '../../components';
 import { Consumer } from '../../context';
 import { THEME } from '../../reactor/common';
-import { Image, Viewport } from '../../reactor/components';
+import { Viewport } from '../../reactor/components';
 import { ItemGroupCategories, Locations } from './components';
 import { orderCaptions, query } from './modules';
 import styles from './Stats.style';
@@ -35,36 +35,22 @@ class Stats extends Component {
   };
 
   state = {
-    locations: undefined,
     scroll: false,
     typeQuery: MONTHLY,
     values: {},
   };
 
-  async componentWillReceiveProps({
-    backward, visible, ...inherit
-  }) {
-    const typeQuery = MONTHLY;
-
+  componentWillReceiveProps({ backward, visible, ...inherit }) {
     if (visible) {
-      this.setState({ locations: undefined, typeQuery, scroll: false, values: query(inherit, typeQuery) });
-
-      if (!inherit.vault) {
-        const today = new Date();
-        this.setState({
-          locations: await inherit.getLocations({ year: today.getFullYear(), month: today.getMonth() + 1 }),
-        });
-      }
+      const typeQuery = MONTHLY;
+      this.setState({ typeQuery, scroll: false, values: query(inherit, typeQuery) });
     }
   }
 
-  shouldComponentUpdate({ visible }, { locations, scroll, typeQuery }) {
+  shouldComponentUpdate({ visible }, { scroll, typeQuery }) {
     const { props, state } = this;
 
-    return visible !== props.visible
-      || locations !== state.locations
-      || scroll !== state.scroll
-      || typeQuery !== state.typeQuery;
+    return visible !== props.visible || scroll !== state.scroll || typeQuery !== state.typeQuery;
   }
 
   _onScroll = ({ nativeEvent: { contentOffset: { y } } }) => {
@@ -76,8 +62,7 @@ class Stats extends Component {
   _onQuery = () => {
     const { props, state } = this;
     const typeQuery = state.typeQuery === MONTHLY ? WEEKLY : MONTHLY;
-
-    this.setState({ typeQuery, values: query(props, typeQuery) });
+    this.setState({ scroll: false, typeQuery, values: query(props, typeQuery) });
   }
 
   render() {
@@ -86,9 +71,7 @@ class Stats extends Component {
       props: {
         vault, vaults, visible, ...inherit
       },
-      state: {
-        locations, scroll, typeQuery, values,
-      },
+      state: { scroll, typeQuery, values },
     } = this;
     const { chart = {} } = values || {};
     const title = vault ? `${vault.title} ` : '';
@@ -128,10 +111,10 @@ class Stats extends Component {
                     />
                   </View>
 
+                  { !vault && <Locations {...inherit} {...values.locations} /> }
+
                   { Object.keys(values[1]).length > 0 && <ItemGroupCategories type={1} dataSource={values[1]} /> }
                   { Object.keys(values[0]).length > 0 && <ItemGroupCategories type={0} dataSource={values[0]} /> }
-
-                  { locations && <Locations dataSource={locations} /> }
                 </ScrollView>
                 <Footer onBack={navigation.goBack} onHardwareBack={navigation.goBack} visible={visible} />
               </Fragment>

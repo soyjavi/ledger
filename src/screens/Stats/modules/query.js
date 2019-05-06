@@ -1,5 +1,7 @@
 import { C, exchange } from '../../../common';
 
+import calcHeatmap from './calcHeatmap';
+
 const {
   MS_IN_DAY, MS_IN_WEEK, TX: { TYPE: { EXPENSE, INCOME } }, VAULT_TRANSFER,
 } = C;
@@ -26,7 +28,6 @@ export default (props, typeQuery = MONTHLY) => {
   };
   const cities = {};
   const countries = {};
-  const points = {};
   const values = { [EXPENSE]: {}, [INCOME]: {} };
   const now = parseDate();
   const lastYear = new Date(now.getFullYear(), now.getMonth() - 11, 1);
@@ -94,22 +95,6 @@ export default (props, typeQuery = MONTHLY) => {
       : baseBalance;
   }
 
-  // HeatMap
-  let fixed = 3;
-  if (Object.keys(countries).length > 1) fixed = 0;
-  else if (Object.keys(cities).length > 1) fixed = 1;
-
-  rangeTxs.forEach(({ location: { latitude, longitude } = {} }) => {
-    if (latitude && longitude) {
-      const point = `${longitude.toFixed(fixed)},${latitude.toFixed(fixed)}`;
-      points[point] = points[point] ? points[point] + 1 : 1;
-    }
-  });
-
-  let precission = 0.001;
-  if (fixed === 0) precission = 1;
-  if (fixed === 1) precission = 0.1;
-
   return {
     chart: {
       ...chart,
@@ -124,8 +109,7 @@ export default (props, typeQuery = MONTHLY) => {
     locations: {
       cities,
       countries,
-      points: Object.keys(points).map(point => [...point.split(',').map(value => parseFloat(value, 10)), points[point]]),
-      precission,
+      ...calcHeatmap(rangeTxs, cities, countries),
     },
   };
 };

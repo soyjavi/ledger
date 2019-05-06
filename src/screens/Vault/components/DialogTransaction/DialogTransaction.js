@@ -143,7 +143,7 @@ class DialogTransaction extends PureComponent {
               { getLocationAsync && (
                 <View>
                   { visible && location === false && _getLocation(getLocationAsync) }
-                  <MapStaticImage {...coords} zoom={coords ? 14.5 : 12} style={styles.location} />
+                  <MapStaticImage {...coords} color={color} style={styles.map} />
                   <Text level={2} lighten>{place || l10n.LOADING_PLACE}</Text>
                 </View>
               )}

@@ -5,7 +5,7 @@ import { LAYOUT, THEME } from '../../reactor/common';
 
 const { STYLE: { DIALOG, DIALOG_FRAME } } = C;
 
-const { BORDER_RADIUS, COLOR, SPACE } = THEME;
+const { COLOR, SPACE } = THEME;
 
 export default StyleSheet.create({
   button: {
@@ -27,14 +27,11 @@ export default StyleSheet.create({
   },
 
   info: {
-    backgroundColor: COLOR.BASE,
-    borderRadius: BORDER_RADIUS,
-    padding: SPACE.MEDIUM,
     marginVertical: SPACE.MEDIUM,
   },
 
   map: {
-    marginVertical: SPACE.S,
+    marginVertical: SPACE.XXS,
   },
 
   prices: {
