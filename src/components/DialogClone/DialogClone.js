@@ -1,8 +1,10 @@
 import { bool, shape } from 'prop-types';
-import React, { PureComponent } from 'react';
+import React, { Fragment, PureComponent } from 'react';
 import { View } from 'react-native';
 
-import { C, exchange } from '../../common';
+import {
+  C, exchange, verboseMonthShort, verboseTime,
+} from '../../common';
 import { Consumer } from '../../context';
 import { THEME } from '../../reactor/common';
 import {
@@ -67,7 +69,7 @@ class DialogClone extends PureComponent {
       props: {
         visible,
         dataSource: {
-          category, currency, location, title, type = EXPENSE, value,
+          category, currency, location, timestamp, title, type = EXPENSE, value,
         },
         ...inherit
       },
@@ -86,33 +88,48 @@ class DialogClone extends PureComponent {
             title={type === EXPENSE ? l10n.EXPENSE : l10n.INCOME}
             visible={visible}
           >
-            <Text lighten level={2}>
-              {l10n.CLONE_CAPTION}
-            </Text>
-
-            <View style={styles.info}>
-              <View style={styles.row}>
+            <View style={styles.container}>
+              <View style={[styles.content, styles.row]}>
+                <View style={styles.icon}>
+                  <Text style={styles.date}>{(new Date(timestamp)).getDate()}</Text>
+                  <Text lighten style={styles.month}>{verboseMonthShort(timestamp, l10n)}</Text>
+                </View>
                 <View style={styles.texts}>
                   <Text subtitle level={2} style={styles.title}>{title}</Text>
-                  <Text caption lighten numberOfLines={1}>{l10n.CATEGORIES[type][category]}</Text>
+                  <Text caption lighten numberOfLines={1}>
+                    {`${verboseTime(new Date(timestamp))} - ${l10n.CATEGORIES[type][category]}`}
+                  </Text>
                 </View>
                 <View style={styles.prices}>
                   <Price
                     subtitle
                     level={2}
                     fixed={FIXED[baseCurrency]}
+                    operator={type === INCOME ? '+' : '-'}
                     symbol={SYMBOL[baseCurrency]}
                     value={baseCurrency !== currency
                       ? exchange(value, currency, baseCurrency, rates)
                       : value}
                   />
                   { currency !== baseCurrency && (
-                    <Price caption lighten fixed={FIXED[currency]} symbol={SYMBOL[currency]} value={value} />
+                    <Price
+                      caption
+                      lighten
+                      fixed={FIXED[currency]}
+                      operator={type === INCOME ? '+' : '-'}
+                      symbol={SYMBOL[currency]}
+                      value={value}
+                    />
                   )}
                 </View>
               </View>
-              { location && <MapStaticImage {...location} color={color} style={styles.map} /> }
-              { location && <Text caption lighten>{location.place}</Text> }
+              { location && (
+                <Fragment>
+                  <MapStaticImage {...location} color={color} />
+                  <Text caption lighten style={styles.place}>{location.place}</Text>
+                </Fragment>
+              )}
+
             </View>
 
             <View style={styles.row}>

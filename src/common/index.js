@@ -13,6 +13,8 @@ import themeDark from './themeDark';
 import translate from './translate';
 import verboseDate from './verboseDate';
 import verboseMonth from './verboseMonth';
+import verboseMonthShort from './verboseMonthShort';
+import verboseTime from './verboseTime';
 
 export {
   C,
@@ -30,4 +32,6 @@ export {
   translate,
   verboseDate,
   verboseMonth,
+  verboseMonthShort,
+  verboseTime,
 };

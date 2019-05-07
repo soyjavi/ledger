@@ -5,7 +5,12 @@ import { LAYOUT, THEME } from '../../reactor/common';
 
 const { STYLE: { DIALOG, DIALOG_FRAME } } = C;
 
-const { COLOR, SPACE } = THEME;
+const {
+  COLOR, ELEVATION, SPACE, UNIT,
+} = THEME;
+const ICON_SIZE = UNIT * 3.6;
+const DATE_FONT_SIZE = UNIT * 1.6;
+const MONTH_FONT_SIZE = UNIT * 0.9;
 
 export default StyleSheet.create({
   button: {
@@ -17,6 +22,21 @@ export default StyleSheet.create({
     width: SPACE.S,
   },
 
+  container: {
+    ...ELEVATION.SMALL,
+    marginTop: SPACE.XXS,
+    marginBottom: SPACE.MEDIUM,
+  },
+
+  content: {
+    padding: SPACE.S,
+  },
+
+  date: {
+    fontSize: DATE_FONT_SIZE,
+    lineHeight: DATE_FONT_SIZE,
+  },
+
   dialog: {
     ...DIALOG,
     backgroundColor: COLOR.BACKGROUND_OPACITY,
@@ -26,12 +46,26 @@ export default StyleSheet.create({
     ...DIALOG_FRAME,
   },
 
-  info: {
-    marginVertical: SPACE.MEDIUM,
+  icon: {
+    display: 'flex',
+    alignContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLOR.BASE,
+    borderRadius: ICON_SIZE / 2,
+    height: ICON_SIZE,
+    justifyContent: 'center',
+    marginRight: UNIT,
+    width: ICON_SIZE,
   },
 
-  map: {
-    marginVertical: SPACE.XXS,
+  month: {
+    fontSize: MONTH_FONT_SIZE,
+    lineHeight: MONTH_FONT_SIZE,
+  },
+
+  place: {
+    paddingHorizontal: SPACE.S,
+    paddingVertical: SPACE.XS,
   },
 
   prices: {

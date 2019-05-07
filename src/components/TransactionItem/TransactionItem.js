@@ -5,13 +5,13 @@ import React, { Fragment, PureComponent } from 'react';
 import { View } from 'react-native';
 
 import { CATEGORIES } from '../../assets';
-import { C, exchange } from '../../common';
+import { C, exchange, verboseMonthShort } from '../../common';
 import { Consumer } from '../../context';
 import {
   Icon, Price, Text, Touchable,
 } from '../../reactor/components';
 import { THEME } from '../../reactor/common';
-import { formatCaption, formatMonthShort } from './modules';
+import { formatCaption } from './modules';
 import styles from './TransactionItem.style';
 
 const {
@@ -55,7 +55,7 @@ class TransactionItem extends PureComponent {
                   ? (
                     <Fragment>
                       <Text style={styles.date}>{(new Date(timestamp)).getDate()}</Text>
-                      <Text lighten style={styles.month}>{formatMonthShort(timestamp, l10n)}</Text>
+                      <Text lighten style={styles.month}>{verboseMonthShort(timestamp, l10n)}</Text>
                     </Fragment>
                   )
                   : <Icon value={CATEGORIES[type][category]} /> }
