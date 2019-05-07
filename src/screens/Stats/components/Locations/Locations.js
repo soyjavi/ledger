@@ -1,14 +1,14 @@
 import {
   array, arrayOf, number, shape,
 } from 'prop-types';
-import React, { PureComponent } from 'react';
+import React, { Fragment, PureComponent } from 'react';
 import { View } from 'react-native';
 
 import { C, objectToQueryString } from '../../../../common';
 import { Consumer } from '../../../../context';
 import { THEME } from '../../../../reactor/common';
-import { Image, Text } from '../../../../reactor/components';
-import Heading from '../../../../components/Heading';
+import { Image } from '../../../../reactor/components';
+import { Heading, HorizontalChartItem } from '../../../../components';
 import styles, { MAP_HEIGHT, MAP_WIDTH } from './Locations.style';
 
 const { ENDPOINT } = C;
@@ -45,16 +45,29 @@ class Locations extends PureComponent {
         { ({ l10n }) => (
           <View style={styles.container}>
             <Heading breakline title={l10n.LOCATIONS} />
-            <View style={styles.content}>
+            <View>
               <Image
                 resizeMode="cover"
                 source={points.length > 0 ? { uri: `${ENDPOINT}/heatmap?${query}` } : undefined}
-                style={styles.map}
+                style={[styles.content, styles.map]}
               />
-              <Text subtitle level={3}>$Cities</Text>
-              <Text level={2} lighten>{JSON.stringify(cities)}</Text>
-              <Text subtitle level={3}>$Countries</Text>
-              <Text level={2} lighten>{JSON.stringify(countries)}</Text>
+              <Heading breakline title={l10n.CITIES} style={styles.heading} />
+              <View style={styles.content}>
+                { Object.keys(cities).map(item => (
+                  <HorizontalChartItem key={item} currency="x" title={item} value={cities[item]} />
+                ))}
+              </View>
+
+              { Object.keys(countries).length > 1 && (
+                <Fragment>
+                  <Heading breakline title={l10n.COUNTRIES} />
+                  <View style={styles.content}>
+                    { Object.keys(countries).map(item => (
+                      <HorizontalChartItem key={item} currency="x" title={item} value={countries[item]} />
+                    ))}
+                  </View>
+                </Fragment>
+              )}
             </View>
           </View>
         )}

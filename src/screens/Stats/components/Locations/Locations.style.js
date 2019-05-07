@@ -14,14 +14,14 @@ export default StyleSheet.create({
   },
 
   content: {
-    margin: SPACE.MEDIUM,
+    marginHorizontal: SPACE.MEDIUM,
+    marginVertical: SPACE.XS,
   },
 
   map: {
     backgroundColor: COLOR.BASE,
     borderRadius: BORDER_RADIUS,
     height: MAP_HEIGHT,
-    marginBottom: SPACE.S,
     width: MAP_WIDTH,
   },
 });

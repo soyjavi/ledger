@@ -2,7 +2,7 @@ import { shape, number } from 'prop-types';
 import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
-import { PriceFriendly } from '../../../../components';
+import { HorizontalChartItem, PriceFriendly } from '../../../../components';
 import { Consumer } from '../../../../context';
 import { THEME } from '../../../../reactor/common';
 import { Text, Touchable } from '../../../../reactor/components';
@@ -53,24 +53,13 @@ class ItemGroupCategories extends PureComponent {
                   key={category}
                   style={styles.content}
                 >
-                  <View>
-                    <View style={styles.row}>
-                      <Text subtitle level={3} style={styles.title}>{l10n.CATEGORIES[type][category]}</Text>
-                      <PriceFriendly currency={baseCurrency} subtitle level={3} value={totalCategories[category]} />
-                    </View>
-
-                    <View style={[styles.bar, styles.barContainer]}>
-                      <View
-                        style={[
-                          styles.bar,
-                          {
-                            backgroundColor: isExpense ? COLOR.EXPENSES : COLOR.INCOMES,
-                            width: `${parseInt((totalCategories[category] * 100) / total, 10)}%`,
-                          },
-                        ]}
-                      />
-                    </View>
-                  </View>
+                  <HorizontalChartItem
+                    color={isExpense ? COLOR.EXPENSES : COLOR.INCOMES}
+                    currency={baseCurrency}
+                    title={l10n.CATEGORIES[type][category]}
+                    value={totalCategories[category]}
+                    width={parseInt((totalCategories[category] * 100) / total, 10)}
+                  />
 
                   { expand === category && Object.keys(dataSource[category]).map(title => (
                     <View key={`${category}-${title}`} style={styles.row}>
