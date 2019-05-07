@@ -116,6 +116,7 @@ class Dashboard extends PureComponent {
                 </ScrollView>
 
                 <Footer onPress={_onToggleDialog} />
+
                 { visible && (
                   <Fragment>
                     { vaults.length === 0 && !dialog && this.setState({ dialog: true }) }

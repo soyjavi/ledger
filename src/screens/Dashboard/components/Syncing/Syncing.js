@@ -8,13 +8,12 @@ import {
 import { THEME } from '../../../../reactor/common';
 import styles from './Syncing.style';
 
-const { COLOR, MOTION: { DURATION } } = THEME;
+const { COLOR } = THEME;
 
 const Syncing = ({ scroll }) => (
   <Consumer>
     { ({ l10n, events: { isConnected }, store: { error, sync } }) => (
       <Motion
-        delay={sync ? 0 : DURATION * 2}
         style={styles.container}
         timeline={[{ property: 'translateY', value: !error && !scroll && (!sync || !isConnected) ? 0 : -128 }]}
       >
