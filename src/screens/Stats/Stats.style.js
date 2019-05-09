@@ -25,6 +25,10 @@ export default StyleSheet.create({
   },
 
   content: {
-    marginBottom: SPACE.MEDIUM,
+    marginBottom: SPACE.S,
+  },
+
+  sliderMonths: {
+    marginBottom: SPACE.S,
   },
 });

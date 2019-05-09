@@ -8,6 +8,7 @@ import HorizontalChartItem from './HorizontalChartItem';
 import MapStaticImage from './MapStaticImage';
 import Percentage from './Percentage';
 import PriceFriendly from './PriceFriendly';
+import SliderMonths from './SliderMonths';
 import Summary from './Summary';
 import TransactionItem from './TransactionItem';
 
@@ -22,6 +23,7 @@ export {
   MapStaticImage,
   Percentage,
   PriceFriendly,
+  SliderMonths,
   Summary,
   TransactionItem,
 };

@@ -2,12 +2,7 @@ import { C, exchange } from '../../../common';
 
 import calcHeatmap from './calcHeatmap';
 
-const {
-  MS_IN_DAY, MS_IN_WEEK, TX: { TYPE: { EXPENSE, INCOME } }, VAULT_TRANSFER,
-} = C;
-const CURRENT_MONTH = 11;
-const CURRENT_WEEK = 0;
-const MONTHLY = 0;
+const { TX: { TYPE: { EXPENSE, INCOME } }, VAULT_TRANSFER } = C;
 
 const parseDate = (date) => {
   const value = date ? new Date(date) : new Date();
@@ -15,9 +10,8 @@ const parseDate = (date) => {
   return new Date(value.getFullYear(), value.getMonth(), value.getDate(), 0, 0, 0);
 };
 
-export default (props, typeQuery = MONTHLY) => {
-  const monthly = typeQuery === MONTHLY;
-  const range = monthly ? 12 : 7;
+export default (props, query = {}) => {
+  const range = 12;
   const {
     baseCurrency, overall, rates, txs, vault = {}, vaults,
   } = props;
@@ -44,14 +38,13 @@ export default (props, typeQuery = MONTHLY) => {
       if (vault.hash && vault.hash !== tx.vault) return true;
 
       const date = parseDate(timestamp);
-      const ms = Math.abs(now - date);
-      const month = date.getMonth() - lastYear.getMonth() + (12 * (date.getFullYear() - lastYear.getFullYear()));
-      const week = Math.floor(ms / MS_IN_WEEK);
-      const index = monthly
-        ? date.getMonth() - lastYear.getMonth() + (12 * (date.getFullYear() - lastYear.getFullYear()))
-        : Math.abs(Math.floor(ms / MS_IN_DAY) - 6);
+      const dMonth = date.getMonth();
+      const dYear = date.getFullYear();
 
-      if (value && ((monthly && month >= 0) || (!monthly && week === 0))) {
+      const month = date.getMonth() - lastYear.getMonth() + (12 * (date.getFullYear() - lastYear.getFullYear()));
+      const index = date.getMonth() - lastYear.getMonth() + (12 * (date.getFullYear() - lastYear.getFullYear()));
+
+      if (value && month >= 0) {
         const { currency } = vaults.find(({ hash }) => hash === tx.vault);
         const valueExchange = currency !== baseCurrency
           ? exchange(value, currency, baseCurrency, rates)
@@ -62,8 +55,8 @@ export default (props, typeQuery = MONTHLY) => {
           if (type === EXPENSE) chart.expenses[index] += valueExchange;
           else chart.incomes[index] += valueExchange;
 
-          if ((monthly && month === CURRENT_MONTH) || (!monthly && week === CURRENT_WEEK)) {
-            const categoryKey = title.toLowerCase();
+          if (query.month === dMonth && query.year === dYear) {
+            const categoryKey = title ? title.toLowerCase() : 'Unknown';
 
             // @TODO Aggregate by location
             if (place) {
@@ -87,9 +80,9 @@ export default (props, typeQuery = MONTHLY) => {
     });
 
   let total = 0;
-  let baseBalance = monthly ? overall.balance : overall.currentBalance;
+  let baseBalance = overall.balance;
   if (vault.hash) {
-    baseBalance = monthly ? vault.balance : vault.currentBalance;
+    baseBalance = vault.balance;
     baseBalance = vault.currency !== baseCurrency
       ? exchange(baseBalance, vault.currency, baseCurrency, rates)
       : baseBalance;
