@@ -90,7 +90,6 @@ export default {
     LOADING_PLACE: 'Wait a moment, loading place.',
     LOCATIONS: 'Locations',
 
-    MONTHLY: 'Monthly',
     MONTHS: [
       'January', 'February', 'March', 'April', 'May', 'June',
       'July', 'August', 'September', 'October', 'November', 'December',
@@ -135,7 +134,6 @@ export default {
     VAULTS_VISIBILITY: 'Vaults visibility',
     VAULT_CAPTION: 'You can create as many vaults as you want. You can continue using your base currency or choose any other.', // eslint-disable-line
 
-    WEEKLY: 'Weekly',
     WIPE: 'Wipe',
     WITHOUT_TXS: 'No transactions',
 

@@ -14,6 +14,7 @@ export default StyleSheet.create({
   },
 
   content: {
+    flexDirection: 'column-reverse',
     marginHorizontal: SPACE.MEDIUM,
     marginVertical: SPACE.XS,
   },

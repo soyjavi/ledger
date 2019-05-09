@@ -10,9 +10,9 @@ import styles from './HorizontalChartItem.style';
 const { COLOR } = THEME;
 
 const HorizontalChartItem = ({
-  color, currency, title, value, width,
+  color, currency, title, value, width, ...inherit
 }) => (
-  <View>
+  <View style={inherit.style}>
     <View style={styles.row}>
       <Text subtitle level={3} style={styles.title}>{title}</Text>
       <PriceFriendly currency={currency} subtitle level={3} value={value} />

@@ -11,7 +11,6 @@ export { ITEM_WIDTH };
 export default StyleSheet.create({
   container: {
     height: ITEM_HEIGHT,
-    width: LAYOUT.VIEWPORT.W,
   },
 
   item: {

@@ -20,7 +20,5 @@ export default async (component, { pin, store, navigation }) => {
     store.onSync();
   }
 
-  // navigation.navigate(SCREEN.STATS);
-
   component.setState({ busy: false, pin: '' });
 };

@@ -14,8 +14,6 @@ import { orderCaptions, query } from './modules';
 import styles from './Stats.style';
 
 const { COLOR, SPACE } = THEME;
-const MONTHLY = 0;
-const WEEKLY = 1;
 
 class Stats extends Component {
   static propTypes = {
@@ -112,7 +110,7 @@ class Stats extends Component {
                     />
                   </View>
 
-                  <SliderMonths {...slider} onChange={_onChangeSlider} style={styles.sliderMonths}/>
+                  <SliderMonths {...slider} onChange={_onChangeSlider} style={styles.sliderMonths} />
 
                   { !vault && <Locations {...inherit} {...values.locations} /> }
 

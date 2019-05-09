@@ -91,7 +91,7 @@ class DialogClone extends PureComponent {
             <View style={styles.container}>
               <View style={[styles.content, styles.row]}>
                 <View style={styles.icon}>
-                  <Text style={styles.date}>{(new Date(timestamp)).getDate()}</Text>
+                  <Text style={styles.date}>{(new Date(timestamp || null)).getDate()}</Text>
                   <Text lighten style={styles.month}>{verboseMonthShort(timestamp, l10n)}</Text>
                 </View>
                 <View style={styles.texts}>

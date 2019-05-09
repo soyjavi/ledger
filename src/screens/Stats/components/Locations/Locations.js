@@ -33,12 +33,15 @@ class Locations extends PureComponent {
     const {
       cities, countries, points, precission,
     } = this.props;
+
     const query = objectToQueryString({
       color: COLOR.PRIMARY,
       points: JSON.stringify(points),
       precission,
       resolution: `${MAP_WIDTH}x${MAP_HEIGHT}@2x`,
     });
+    const citiesTotalTxs = Object.values(cities).reduce((a, b) => a + b);
+    const countriesTotalTxs = Object.values(countries).reduce((a, b) => a + b);
 
     return (
       <Consumer>
@@ -54,7 +57,14 @@ class Locations extends PureComponent {
               <Heading breakline title={l10n.CITIES} style={styles.heading} />
               <View style={styles.content}>
                 { Object.keys(cities).map(item => (
-                  <HorizontalChartItem key={item} currency="x" title={item} value={cities[item]} />
+                  <HorizontalChartItem
+                    key={item}
+                    currency="x"
+                    style={{ order: Math.floor((cities[item] / citiesTotalTxs) * 100) }}
+                    title={item}
+                    value={cities[item]}
+                    width={Math.floor((cities[item] / citiesTotalTxs) * 100)}
+                  />
                 ))}
               </View>
 
@@ -63,7 +73,14 @@ class Locations extends PureComponent {
                   <Heading breakline title={l10n.COUNTRIES} />
                   <View style={styles.content}>
                     { Object.keys(countries).map(item => (
-                      <HorizontalChartItem key={item} currency="x" title={item} value={countries[item]} />
+                      <HorizontalChartItem
+                        key={item}
+                        currency="x"
+                        style={{ order: Math.floor((countries[item] / countriesTotalTxs) * 100) }}
+                        title={item}
+                        value={countries[item]}
+                        width={Math.floor((countries[item] / countriesTotalTxs) * 100)}
+                      />
                     ))}
                   </View>
                 </Fragment>

@@ -19,7 +19,5 @@ export default () => {
     currentMonth += 1;
   }
 
-  console.log('values', values);
-
   return values;
 };

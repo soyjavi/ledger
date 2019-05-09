@@ -31,12 +31,12 @@ class ItemGroupCategories extends PureComponent {
   render() {
     const { _onPress, props: { dataSource, type }, state: { expand } } = this;
     const isExpense = type === 0;
-    const totalCategories = [];
+    const totals = [];
     let total = 0;
 
     Object.keys(dataSource).forEach((category) => {
-      totalCategories[category] = Object.values(dataSource[category]).reduce((a, b) => a += b); // eslint-disable-line
-      total += totalCategories[category];
+      totals[category] = Object.values(dataSource[category]).reduce((a, b) => a += b); // eslint-disable-line
+      total += totals[category];
     });
 
     return (
@@ -51,14 +51,14 @@ class ItemGroupCategories extends PureComponent {
                 <Touchable
                   onPress={() => _onPress(category)}
                   key={category}
-                  style={styles.content}
+                  style={[styles.content, { order: Math.floor((totals[category] / total) * 100) }]}
                 >
                   <HorizontalChartItem
                     color={isExpense ? COLOR.EXPENSES : COLOR.INCOMES}
                     currency={baseCurrency}
                     title={l10n.CATEGORIES[type][category]}
-                    value={totalCategories[category]}
-                    width={parseInt((totalCategories[category] * 100) / total, 10)}
+                    value={totals[category]}
+                    width={Math.floor((totals[category] / total) * 100)}
                   />
 
                   { expand === category && Object.keys(dataSource[category]).map(title => (

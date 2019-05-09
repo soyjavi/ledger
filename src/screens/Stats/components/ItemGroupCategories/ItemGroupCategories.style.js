@@ -6,6 +6,7 @@ const { SPACE } = THEME;
 
 export default StyleSheet.create({
   container: {
+    flexDirection: 'column-reverse',
     marginTop: SPACE.XXS,
     marginBottom: SPACE.S,
   },

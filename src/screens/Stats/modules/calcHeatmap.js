@@ -1,6 +1,6 @@
 import { calcPoint } from './calcMatrix';
 
-export default (txs = [], countries = [], cities = []) => {
+export default (txs = [], cities = [], countries = []) => {
   const points = {};
 
   let fixed = 3;
