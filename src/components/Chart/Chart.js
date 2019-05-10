@@ -40,7 +40,7 @@ class Chart extends Component {
     }
 
     return (
-      <View style={[styles.container, inherit.styleContainer]}>
+      <View style={[styles.container, inverted && styles.containerInverted, inherit.styleContainer]}>
         { scale && (
           <View style={[styles.scale, captions && styles.scaleCaptions]}>
             <View style={styles.scaleValues}>
@@ -67,9 +67,8 @@ class Chart extends Component {
                   styles.item,
                   inverted && styles.itemInverted,
                   {
-                    backgroundColor: color,
+                    backgroundColor: value === 0 ? COLOR.BASE : color,
                     height: `${parseInt(((value - floor) * 100) / (max - floor), 10)}%`,
-                    opacity: value === 0 ? 0.2 : 1,
                   },
                 ]}
               />

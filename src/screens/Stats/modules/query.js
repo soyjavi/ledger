@@ -63,7 +63,6 @@ export default (props, query = {}) => {
               const parts = place.split(',');
               const city = parts[0].trim();
               const country = parts[2].trim();
-              // const [city, region, country] = place.split(',');
 
               cities[city] = cities[city] ? cities[city] + 1 : 1;
               countries[country] = countries[country] ? countries[country] + 1 : 1;
@@ -73,7 +72,6 @@ export default (props, query = {}) => {
             values[type][category][categoryKey] = (values[type][category][categoryKey] || 0) + valueExchange;
 
             rangeTxs.push(tx);
-            //
           }
         }
       }

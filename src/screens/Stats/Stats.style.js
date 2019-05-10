@@ -28,6 +28,11 @@ export default StyleSheet.create({
     marginBottom: SPACE.S,
   },
 
+  contentEmpty: {
+    padding: SPACE.MEDIUM,
+    alignItems: 'center',
+  },
+
   sliderMonths: {
     marginBottom: SPACE.S,
   },

@@ -40,8 +40,8 @@ class Locations extends PureComponent {
       precission,
       resolution: `${MAP_WIDTH}x${MAP_HEIGHT}@2x`,
     });
-    const citiesTotalTxs = Object.values(cities).reduce((a, b) => a + b);
-    const countriesTotalTxs = Object.values(countries).reduce((a, b) => a + b);
+    const citiesTxs = Object.values(cities).length > 0 ? Object.values(cities).reduce((a, b) => a + b) : 1;
+    const countriesTxs = Object.values(countries).length > 1 ? Object.values(countries).reduce((a, b) => a + b) : 1;
 
     return (
       <Consumer>
@@ -60,10 +60,10 @@ class Locations extends PureComponent {
                   <HorizontalChartItem
                     key={item}
                     currency="x"
-                    style={{ order: Math.floor((cities[item] / citiesTotalTxs) * 100) }}
+                    style={{ order: Math.floor((cities[item] / citiesTxs) * 100) }}
                     title={item}
                     value={cities[item]}
-                    width={Math.floor((cities[item] / citiesTotalTxs) * 100)}
+                    width={Math.floor((cities[item] / citiesTxs) * 100)}
                   />
                 ))}
               </View>
@@ -76,10 +76,10 @@ class Locations extends PureComponent {
                       <HorizontalChartItem
                         key={item}
                         currency="x"
-                        style={{ order: Math.floor((countries[item] / countriesTotalTxs) * 100) }}
+                        style={{ order: Math.floor((countries[item] / countriesTxs) * 100) }}
                         title={item}
                         value={countries[item]}
-                        width={Math.floor((countries[item] / countriesTotalTxs) * 100)}
+                        width={Math.floor((countries[item] / countriesTxs) * 100)}
                       />
                     ))}
                   </View>

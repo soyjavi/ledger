@@ -26,11 +26,12 @@ export default StyleSheet.create({
     overflow: 'hidden',
   },
 
-  inverted: {
-    justifyContent: 'flex-start',
-  },
 
   container: {
+  },
+
+  containerInverted: {
+    top: -1,
   },
 
   content: {
@@ -38,6 +39,10 @@ export default StyleSheet.create({
     alignItems: 'flex-end',
     flex: 1,
     height: COLUMN_HEIGHT,
+  },
+
+  inverted: {
+    justifyContent: 'flex-start',
   },
 
   item: {

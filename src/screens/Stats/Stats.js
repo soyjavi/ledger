@@ -3,17 +3,19 @@ import React, { Fragment, Component } from 'react';
 import { ScrollView, View } from 'react-native';
 
 import ASSETS from '../../assets';
+import { C } from '../../common';
 import {
   Chart, Footer, Header, Heading, SliderMonths,
 } from '../../components';
 import { Consumer } from '../../context';
 import { THEME } from '../../reactor/common';
-import { Viewport } from '../../reactor/components';
+import { Text, Viewport } from '../../reactor/components';
 import { ItemGroupCategories, Locations } from './components';
 import { orderCaptions, query } from './modules';
 import styles from './Stats.style';
 
 const { COLOR, SPACE } = THEME;
+const { TX: { TYPE: { EXPENSE, INCOME } } } = C;
 
 class Stats extends Component {
   static propTypes = {
@@ -57,7 +59,7 @@ class Stats extends Component {
 
   _onChangeSlider = (slider) => {
     const { props } = this;
-    this.setState({ scroll: false, slider, values: query(props, slider) });
+    this.setState({ slider, values: query(props, slider) });
   }
 
   _onScroll = ({ nativeEvent: { contentOffset: { y } } }) => {
@@ -76,8 +78,13 @@ class Stats extends Component {
         scroll, slider, values,
       },
     } = this;
-    const { chart = {} } = values || {};
+    const {
+      chart = {}, [EXPENSE]: expenses = {}, [INCOME]: incomes = {}, locations = {},
+    } = values || {};
     const title = vault ? `${vault.title} ` : '';
+    const hasExpenses = Object.keys(expenses).length > 0;
+    const hasIncomes = Object.keys(incomes).length > 0;
+    const hasPoints = locations.points && locations.points.length > 0;
 
     console.log('<Stats>', { visible, title });
 
@@ -111,11 +118,19 @@ class Stats extends Component {
                   </View>
 
                   <SliderMonths {...slider} onChange={_onChangeSlider} style={styles.sliderMonths} />
-
-                  { !vault && <Locations {...inherit} {...values.locations} /> }
-
-                  { Object.keys(values[1]).length > 0 && <ItemGroupCategories type={1} dataSource={values[1]} /> }
-                  { Object.keys(values[0]).length > 0 && <ItemGroupCategories type={0} dataSource={values[0]} /> }
+                  { (hasExpenses || hasIncomes)
+                    ? (
+                      <Fragment>
+                        { hasPoints && <Locations {...inherit} {...locations} /> }
+                        { hasIncomes && <ItemGroupCategories type={INCOME} dataSource={incomes} /> }
+                        { hasExpenses && <ItemGroupCategories type={EXPENSE} dataSource={expenses} /> }
+                      </Fragment>
+                    )
+                    : (
+                      <View style={styles.contentEmpty}>
+                        <Text level={2} lighten>{l10n.NO_TRANSACTIONS}</Text>
+                      </View>
+                    )}
                 </ScrollView>
                 <Footer onBack={navigation.goBack} onHardwareBack={navigation.goBack} visible={visible} />
               </Fragment>

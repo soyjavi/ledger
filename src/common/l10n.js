@@ -99,6 +99,8 @@ export default {
     NEW: 'New',
     NIGHT_MODE: 'Night mode',
     NIGHT_MODE_CAPTION: 'Fits perfectly in OLED screens',
+    NO_TRANSACTIONS: "You don't have any transaction.",
+
 
     OFFLINE_MODE: 'Offline mode',
     OTHERS: 'Others',
@@ -129,7 +131,6 @@ export default {
 
     VAULT: 'Vault',
     VAULT_DESTINATION: 'Destination vault',
-    VAULT_EMPTY: "You don't have any transaction.",
     VAULTS: 'Vaults',
     VAULTS_VISIBILITY: 'Vaults visibility',
     VAULT_CAPTION: 'You can create as many vaults as you want. You can continue using your base currency or choose any other.', // eslint-disable-line
