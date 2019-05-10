@@ -39,8 +39,8 @@ const PriceFriendly = ({
     ? <Text {...inherit}>{`${maskValue(value)}${SYMBOL[currency]}`}</Text>
     : (
       <Price
-        fixed={value < 1000 ? FIXED[currency] : 0}
-        symbol={SYMBOL[currency]}
+        fixed={value < 1000 ? FIXED[currency] || 0 : 0}
+        symbol={SYMBOL[currency] || currency}
         value={Math.abs(value)}
         {...inherit}
       />
