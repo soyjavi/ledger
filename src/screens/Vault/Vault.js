@@ -1,6 +1,6 @@
 import { bool, func, shape } from 'prop-types';
 import React, { Fragment, Component } from 'react';
-import { FlatList, ScrollView, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
 import { FLAGS } from '../../assets';
 import { C } from '../../common';
@@ -132,34 +132,10 @@ class Vault extends Component {
                   )
                   : (
                     <View style={[styles.content, styles.container]}>
-                      <Text level={2} lighten>{l10n.VAULT_EMPTY}</Text>
+                      <Text level={2} lighten>{l10n.NO_TRANSACTIONS}</Text>
                     </View>
                   )}
               </ScrollView>
-
-              { 1 === 2 && (
-                <FlatList
-                  contentContainerStyle={styles.container}
-                  data={visible ? values : []}
-                  keyExtractor={tx => `${tx.timestamp}-${tx.value}`}
-                  onScroll={_onScroll}
-                  scrollEventThrottle={40}
-                  ListHeaderComponent={() => (
-                    visible && (
-                      <Fragment>
-                        <Summary {...vault} image={FLAGS[currency]} title={`${title} ${l10n.BALANCE}`} />
-                        <Search l10n={l10n} onValue={_onSearch} value={search} />
-                      </Fragment>
-                    )
-                  )}
-                  ListEmptyComponent={() => (
-                    <View style={[styles.content, styles.container]}>
-                      <Text level={2} lighten>{l10n.VAULT_EMPTY}</Text>
-                    </View>
-                  )}
-                  renderItem={({ item }) => <GroupTransactions {...item} currency={currency} />}
-                />
-              )}
 
               <Footer
                 onBack={navigation.goBack}
