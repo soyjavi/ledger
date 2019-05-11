@@ -1,26 +1,41 @@
 import React, { Fragment } from 'react';
+import { StatusBar } from 'react-native';
 
 import { C } from './common';
 import {
   Consumer, ConsumerEvents, ConsumerNavigation, ConsumerStore,
 } from './context';
+import { THEME } from './reactor/common';
 import { LayoutView, Snackbar } from './reactor/components';
 import { DialogClone } from './components';
 import {
   Session, Settings, Stats, Dashboard, Vault,
 } from './screens';
+import styles from './App.style';
 
 const { SCREEN, SETTINGS: { NIGHT_MODE } } = C;
 const {
   SESSION, SETTINGS, STATS, DASHBOARD, VAULT,
 } = SCREEN;
+const { COLOR } = THEME;
 
 export default () => (
   <ConsumerNavigation>
     { ({
       current, goBack, params, stack,
     }) => (
-      <LayoutView>
+      <LayoutView style={styles.container}>
+        { stack.includes(SESSION) && (
+          <ConsumerStore>
+            { ({ settings }) => (
+              <StatusBar
+                backgroundColor={COLOR.BACKGROUND}
+                barStyle={settings[NIGHT_MODE] ? 'light-content' : 'dark-content'}
+              />
+            )}
+          </ConsumerStore>
+        )}
+
         { console.log('<App>') }
         <ConsumerEvents>
           { events => <Session {...events} backward={current !== SESSION} visible={stack.includes(SESSION)} /> }
