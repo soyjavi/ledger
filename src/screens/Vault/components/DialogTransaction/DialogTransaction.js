@@ -9,7 +9,7 @@ import {
   C, FORM, setCurrency, translate,
 } from '../../../../common';
 import { Consumer } from '../../../../context';
-import { CardOption, MapStaticImage } from '../../../../components';
+import { CardOption, HeatMap } from '../../../../components';
 
 import { THEME } from '../../../../reactor/common';
 import {
@@ -143,7 +143,7 @@ class DialogTransaction extends PureComponent {
               { getLocationAsync && (
                 <View>
                   { visible && location === false && _getLocation(getLocationAsync) }
-                  <MapStaticImage {...coords} color={color} style={styles.map} />
+                  <HeatMap color={color} points={coords ? [[coords.longitude, coords.latitude]] : undefined} />
                   <Text level={2} lighten>{place || l10n.LOADING_PLACE}</Text>
                 </View>
               )}

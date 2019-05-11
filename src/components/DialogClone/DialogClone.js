@@ -10,7 +10,7 @@ import { THEME } from '../../reactor/common';
 import {
   Button, Dialog, Price, Text,
 } from '../../reactor/components';
-import MapStaticImage from '../MapStaticImage';
+import HeatMap from '../HeatMap';
 
 import styles from './DialogClone.style';
 
@@ -125,7 +125,7 @@ class DialogClone extends PureComponent {
               </View>
               { location && (
                 <Fragment>
-                  <MapStaticImage {...location} color={color} />
+                  <HeatMap color={color} points={[[location.longitude, location.latitude]]} />
                   <Text caption lighten style={styles.place}>{location.place}</Text>
                 </Fragment>
               )}

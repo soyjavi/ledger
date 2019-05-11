@@ -1,38 +1,45 @@
-import { number, string } from 'prop-types';
+import {
+  array, arrayOf, number, string,
+} from 'prop-types';
 import React, { PureComponent } from 'react';
 
 import { C, objectToQueryString } from '../../common';
 import { ConsumerStore } from '../../context';
 import { THEME } from '../../reactor/common';
 import { Image } from '../../reactor/components';
-import styles, { MAP_HEIGHT, MAP_WIDTH } from './MapStaticImage.style';
+import styles, { MAP_HEIGHT, MAP_WIDTH } from './HeatMap.style';
 
 const { ENDPOINT, SETTINGS: { NIGHT_MODE } } = C;
 const { COLOR } = THEME;
 
-class MapStaticImage extends PureComponent {
+class HeatMap extends PureComponent {
   static propTypes = {
     color: string,
-    latitude: number,
-    longitude: number,
+    height: number,
+    width: number,
+    points: arrayOf(array),
+    precission: number,
   };
 
   static defaultProps = {
     color: COLOR.PRIMARY,
-    latitude: 0,
-    longitude: 0,
+    height: MAP_HEIGHT,
+    points: undefined,
+    precission: 0.001,
+    width: MAP_WIDTH,
   };
 
   render() {
     const {
-      color, latitude, longitude, ...inherit
+      color, height, points, precission, width, ...inherit
     } = this.props;
 
-    const queryString = latitude && longitude
+    const queryString = points
       ? objectToQueryString({
         color,
-        points: JSON.stringify([[longitude, latitude]]),
-        resolution: `${MAP_WIDTH}x${MAP_HEIGHT}@2x`,
+        points: JSON.stringify(points),
+        precission,
+        resolution: `${width}x${height}@2x`,
       })
       : undefined;
 
@@ -52,4 +59,4 @@ class MapStaticImage extends PureComponent {
   }
 }
 
-export default MapStaticImage;
+export default HeatMap;

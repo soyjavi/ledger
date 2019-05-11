@@ -4,8 +4,8 @@ import DialogClone from './DialogClone';
 import Footer from './Footer';
 import Header from './Header';
 import Heading from './Heading';
+import HeatMap from './HeatMap';
 import HorizontalChartItem from './HorizontalChartItem';
-import MapStaticImage from './MapStaticImage';
 import Percentage from './Percentage';
 import PriceFriendly from './PriceFriendly';
 import SliderMonths from './SliderMonths';
@@ -19,8 +19,8 @@ export {
   Footer,
   Header,
   Heading,
+  HeatMap,
   HorizontalChartItem,
-  MapStaticImage,
   Percentage,
   PriceFriendly,
   SliderMonths,

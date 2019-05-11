@@ -1,24 +1,17 @@
 import {
-  array, arrayOf, bool, number, shape,
+  array, arrayOf, number, shape,
 } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
 import { View } from 'react-native';
 
-import { C, objectToQueryString } from '../../../../common';
 import { Consumer } from '../../../../context';
-import { THEME } from '../../../../reactor/common';
-import { Image } from '../../../../reactor/components';
-import { Heading, HorizontalChartItem } from '../../../../components';
+import { Heading, HeatMap, HorizontalChartItem } from '../../../../components';
 import styles, { MAP_HEIGHT, MAP_WIDTH } from './Locations.style';
-
-const { ENDPOINT } = C;
-const { COLOR } = THEME;
 
 class Locations extends PureComponent {
   static propTypes = {
     cities: shape({}),
     countries: shape({}),
-    nightMode: bool,
     points: arrayOf(array),
     precission: number,
   };
@@ -26,23 +19,14 @@ class Locations extends PureComponent {
   static defaultProps = {
     cities: {},
     countries: {},
-    nightMode: false,
     points: [],
     precission: 0.001,
   };
 
   render() {
     const {
-      cities, countries, nightMode, points, precission,
+      cities, countries, points, precission,
     } = this.props;
-
-    const query = objectToQueryString({
-      color: COLOR.PRIMARY,
-      style: nightMode ? 'dark' : undefined,
-      points: JSON.stringify(points),
-      precission,
-      resolution: `${MAP_WIDTH}x${MAP_HEIGHT}@2x`,
-    });
     const citiesTxs = Object.values(cities).length > 0 ? Object.values(cities).reduce((a, b) => a + b) : 1;
     const countriesTxs = Object.values(countries).length > 1 ? Object.values(countries).reduce((a, b) => a + b) : 1;
 
@@ -52,9 +36,11 @@ class Locations extends PureComponent {
           <View style={styles.container}>
             <Heading breakline title={l10n.LOCATIONS} />
             <View>
-              <Image
-                resizeMode="cover"
-                source={points.length > 0 ? { uri: `${ENDPOINT}/heatmap?${query}` } : undefined}
+              <HeatMap
+                points={points}
+                precission={precission}
+                height={MAP_HEIGHT}
+                width={MAP_WIDTH}
                 style={[styles.content, styles.map]}
               />
               <Heading breakline title={l10n.CITIES} style={styles.heading} />
