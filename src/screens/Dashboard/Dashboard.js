@@ -71,9 +71,11 @@ class Dashboard extends PureComponent {
         { visible && (
           <Consumer>
             { ({
-              l10n, navigation,
+              events: { isConnected },
+              l10n,
+              navigation,
               store: {
-                baseCurrency, overall, settings, txs, vaults,
+                baseCurrency, overall, settings, sync, txs, vaults,
               },
             }) => (
               <Fragment>
@@ -117,7 +119,7 @@ class Dashboard extends PureComponent {
 
                 <Footer onPress={_onToggleDialog} />
 
-                { visible && (
+                { visible && isConnected && sync && (
                   <Fragment>
                     { vaults.length === 0 && !dialog && this.setState({ dialog: true }) }
                     <DialogVault
