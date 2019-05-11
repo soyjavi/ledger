@@ -2,11 +2,12 @@ import { number, string } from 'prop-types';
 import React, { PureComponent } from 'react';
 
 import { C, objectToQueryString } from '../../common';
+import { ConsumerStore } from '../../context';
 import { THEME } from '../../reactor/common';
 import { Image } from '../../reactor/components';
 import styles, { MAP_HEIGHT, MAP_WIDTH } from './MapStaticImage.style';
 
-const { ENDPOINT } = C;
+const { ENDPOINT, SETTINGS: { NIGHT_MODE } } = C;
 const { COLOR } = THEME;
 
 class MapStaticImage extends PureComponent {
@@ -36,13 +37,17 @@ class MapStaticImage extends PureComponent {
       : undefined;
 
     return (
-      <Image
-        resizeMode="cover"
-        source={queryString
-          ? { uri: `${ENDPOINT}/heatmap?${queryString}` }
-          : undefined}
-        style={[styles.container, inherit.style]}
-      />
+      <ConsumerStore>
+        { ({ settings: { [NIGHT_MODE]: nightMode } }) => (
+          <Image
+            resizeMode="cover"
+            source={queryString
+              ? { uri: `${ENDPOINT}/heatmap?${queryString}&style=${nightMode ? 'dark' : ''}` }
+              : undefined}
+            style={[styles.container, inherit.style]}
+          />
+        )}
+      </ConsumerStore>
     );
   }
 }

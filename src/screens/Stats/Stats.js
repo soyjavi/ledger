@@ -15,7 +15,7 @@ import { orderCaptions, query } from './modules';
 import styles from './Stats.style';
 
 const { COLOR, SPACE } = THEME;
-const { TX: { TYPE: { EXPENSE, INCOME } } } = C;
+const { SETTINGS: { NIGHT_MODE }, TX: { TYPE: { EXPENSE, INCOME } } } = C;
 
 class Stats extends Component {
   static propTypes = {
@@ -97,7 +97,7 @@ class Stats extends Component {
       <Viewport {...inherit} scroll={false} visible={visible}>
         { visible && (
           <Consumer>
-            { ({ l10n, navigation }) => (
+            { ({ l10n, navigation, store: { settings: { [NIGHT_MODE]: nightMode } } }) => (
               <Fragment>
                 <Header highlight={scroll} title={`${title}${l10n.ACTIVITY}`} />
                 <ScrollView onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.container}>
@@ -126,7 +126,7 @@ class Stats extends Component {
                   { (hasExpenses || hasIncomes)
                     ? (
                       <Fragment>
-                        { hasPoints && <Locations {...inherit} {...locations} /> }
+                        { hasPoints && <Locations {...inherit} {...locations} nightMode={nightMode} /> }
                         { hasIncomes && <ItemGroupCategories type={INCOME} dataSource={incomes} /> }
                         { hasExpenses && <ItemGroupCategories type={EXPENSE} dataSource={expenses} /> }
                       </Fragment>

@@ -1,5 +1,5 @@
 import {
-  array, arrayOf, number, shape,
+  array, arrayOf, bool, number, shape,
 } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
 import { View } from 'react-native';
@@ -18,6 +18,7 @@ class Locations extends PureComponent {
   static propTypes = {
     cities: shape({}),
     countries: shape({}),
+    nightMode: bool,
     points: arrayOf(array),
     precission: number,
   };
@@ -25,17 +26,19 @@ class Locations extends PureComponent {
   static defaultProps = {
     cities: {},
     countries: {},
+    nightMode: false,
     points: [],
     precission: 0.001,
   };
 
   render() {
     const {
-      cities, countries, points, precission,
+      cities, countries, nightMode, points, precission,
     } = this.props;
 
     const query = objectToQueryString({
       color: COLOR.PRIMARY,
+      style: nightMode ? 'dark' : undefined,
       points: JSON.stringify(points),
       precission,
       resolution: `${MAP_WIDTH}x${MAP_HEIGHT}@2x`,
