@@ -30,6 +30,11 @@ class Settings extends PureComponent {
     scroll: true,
   };
 
+  _onHardwareBack = (navigation) => {
+    navigation.goBack();
+    this.forceUpdate();
+  }
+
   _onScroll = ({ nativeEvent: { contentOffset: { y } } }) => {
     const { state } = this;
     const scroll = y > 58;
@@ -38,7 +43,7 @@ class Settings extends PureComponent {
 
   render() {
     const {
-      _onScroll, props: { visible, ...inherit }, state: { scroll },
+      _onHardwareBack, _onScroll, props: { visible, ...inherit }, state: { scroll },
     } = this;
 
     console.log('<Settings>', { visible });
@@ -106,8 +111,10 @@ class Settings extends PureComponent {
                   </View>
                 </ScrollView>
 
-                <Footer onBack={navigation.goBack} onHardwareBack={navigation.goBack} visible={visible} />
-
+                <Footer
+                  onBack={navigation.goBack}
+                  onHardwareBack={visible ? () => _onHardwareBack(navigation) : undefined}
+                />
               </Fragment>
             )}
           </Consumer>

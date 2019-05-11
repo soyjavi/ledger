@@ -1,8 +1,8 @@
 import { bool } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
-import { BackHandler, ScrollView, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
-import { C } from '../../common';
+import { C, onHardwareBackPress } from '../../common';
 import {
   Footer, Header, Heading, Summary, TransactionItem,
 } from '../../components';
@@ -33,12 +33,9 @@ class Dashboard extends PureComponent {
   };
 
   componentWillReceiveProps({ backward }) {
-    const method = backward ? 'removeEventListener' : 'addEventListener';
-
-    BackHandler[method]('hardwareBackPress', () => {
+    onHardwareBackPress(!backward, () => {
       const { state: { dialog } } = this;
       if (dialog) this.setState({ dialog: false });
-      return true;
     });
   }
 

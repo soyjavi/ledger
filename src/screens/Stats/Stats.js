@@ -62,6 +62,11 @@ class Stats extends Component {
     this.setState({ slider, values: query(props, slider) });
   }
 
+  _onHardwareBack = (navigation) => {
+    navigation.goBack();
+    this.forceUpdate();
+  }
+
   _onScroll = ({ nativeEvent: { contentOffset: { y } } }) => {
     const { state } = this;
     const scroll = y > SPACE.MEDIUM;
@@ -70,7 +75,7 @@ class Stats extends Component {
 
   render() {
     const {
-      _onChangeSlider, _onScroll,
+      _onChangeSlider, _onHardwareBack, _onScroll,
       props: {
         vault, vaults, visible, ...inherit
       },
@@ -132,7 +137,10 @@ class Stats extends Component {
                       </View>
                     )}
                 </ScrollView>
-                <Footer onBack={navigation.goBack} onHardwareBack={navigation.goBack} visible={visible} />
+                <Footer
+                  onBack={navigation.goBack}
+                  onHardwareBack={visible ? () => _onHardwareBack(navigation) : undefined}
+                />
               </Fragment>
             )}
           </Consumer>

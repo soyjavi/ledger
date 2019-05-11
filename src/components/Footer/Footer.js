@@ -2,10 +2,10 @@ import {
   arrayOf, bool, func, string,
 } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
-import { BackHandler, View } from 'react-native';
+import { View } from 'react-native';
 
 import ASSETS, { OPTIONS } from '../../assets';
-import { C } from '../../common';
+import { C, onHardwareBackPress } from '../../common';
 import { Consumer, ConsumerEvents } from '../../context';
 import { THEME } from '../../reactor/common';
 import { Button, Dialog } from '../../reactor/components';
@@ -36,11 +36,11 @@ class Footer extends PureComponent {
     dialog: false,
   };
 
-  componentWillReceiveProps({ onHardwareBack, ...inherit }) {
-    if (onHardwareBack) {
-      const method = inherit.visible ? 'addEventListener' : 'removeEventListener';
-      BackHandler[method]('hardwareBackPress', () => onHardwareBack);
-    }
+  componentWillReceiveProps({ onHardwareBack }) {
+    const { props } = this;
+    const subscribe = onHardwareBack && props.onHardwareBack !== onHardwareBack;
+
+    onHardwareBackPress(subscribe, onHardwareBack);
   }
 
   _onOption = (option) => {

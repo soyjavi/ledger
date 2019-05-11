@@ -68,8 +68,10 @@ class Vault extends Component {
   _onHardwareBack = (navigation) => {
     const { state: { dialog } } = this;
     if (dialog) this.setState({ dialog: false });
-    else navigation.goBack();
-    return true;
+    else {
+      navigation.goBack();
+      this.forceUpdate();
+    }
   }
 
   _onScroll = ({ nativeEvent: { contentOffset: { y } } }) => {
@@ -139,10 +141,9 @@ class Vault extends Component {
 
               <Footer
                 onBack={navigation.goBack}
-                onHardwareBack={() => _onHardwareBack(navigation)}
+                onHardwareBack={visible ? () => _onHardwareBack(navigation) : undefined}
                 onPress={_onTxType}
                 options={vaults.length === 1 ? [l10n.EXPENSE, l10n.INCOME] : [l10n.EXPENSE, l10n.INCOME, l10n.TRANSFER]}
-                visible={visible}
               />
 
               { visible && (

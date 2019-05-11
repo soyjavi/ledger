@@ -7,6 +7,7 @@ import FORM from './forms';
 import L10N from './l10n';
 import fetch from './fetch';
 import objectToQueryString from './objectToQueryString';
+import onHardwareBackPress from './onHardwareBackPress';
 import setCurrency from './setCurrency';
 import theme from './theme';
 import themeDark from './themeDark';
@@ -26,6 +27,7 @@ export {
   L10N,
   fetch,
   objectToQueryString,
+  onHardwareBackPress,
   setCurrency,
   theme,
   themeDark,
