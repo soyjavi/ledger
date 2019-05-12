@@ -51,7 +51,7 @@ class ItemGroupCategories extends PureComponent {
                 <Touchable
                   onPress={() => _onPress(category)}
                   key={category}
-                  style={[styles.content, { order: Math.floor((totals[category] / total) * 100) }]}
+                  style={[styles.content, { order: parseInt(totals[category], 10) }]}
                 >
                   <HorizontalChartItem
                     color={isExpense ? COLOR.EXPENSES : COLOR.INCOMES}

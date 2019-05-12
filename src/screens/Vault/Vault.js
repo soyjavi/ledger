@@ -42,9 +42,9 @@ class Vault extends Component {
   };
 
   componentWillReceiveProps({ dataSource, visible, ...store }) {
-    const { props: { dataSource: { txs = [] } = {} } } = this;
+    const { props: { dataSource: { hash } = {} } } = this;
 
-    if (visible && dataSource && dataSource.txs.length !== txs.length) {
+    if (visible && dataSource && dataSource.hash !== hash) {
       const search = undefined;
       this.setState({ scrollQuery: false, search, values: query(store, { ...dataSource, search }) });
     }

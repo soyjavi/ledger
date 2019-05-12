@@ -49,7 +49,7 @@ class Locations extends PureComponent {
                   <HorizontalChartItem
                     key={item}
                     currency="x"
-                    style={{ order: Math.floor((cities[item] / citiesTxs) * 100) }}
+                    style={{ order: parseInt(cities[item], 10) }}
                     title={item}
                     value={cities[item]}
                     width={Math.floor((cities[item] / citiesTxs) * 100)}

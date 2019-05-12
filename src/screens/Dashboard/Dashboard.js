@@ -13,26 +13,36 @@ import { DialogVault, Syncing, VaultCard } from './components';
 import { queryLastTxs, queryVaults } from './modules';
 import styles from './Dashboard.style';
 
-const { SCREEN, STYLE: { VAULT_ITEM_WIDTH }, SETTINGS: { HIDE_OVERALL_BALANCE, NIGHT_MODE } } = C;
+const { SCREEN, STYLE: { VAULT_ITEM_WIDTH }, SETTINGS: { NIGHT_MODE } } = C;
 const { SPACE } = THEME;
 
 class Dashboard extends PureComponent {
   static propTypes = {
     backward: bool,
+    mask: bool,
     visible: bool,
   };
 
   static defaultProps = {
     backward: false,
+    mask: false,
     visible: true,
   };
 
-  state = {
-    dialog: false,
-    scroll: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      dialog: false,
+      mask: props.mask,
+      scroll: false,
+    };
+  }
 
-  componentWillReceiveProps({ backward }) {
+  componentWillReceiveProps({ backward, mask }) {
+    const { props } = this;
+
+    if (mask !== props.mask) this.setState({ mask });
+
     onHardwareBackPress(!backward, () => {
       const { state: { dialog } } = this;
       if (dialog) this.setState({ dialog: false });
@@ -45,6 +55,8 @@ class Dashboard extends PureComponent {
     if (scroll !== state.scroll) this.setState({ scroll });
   }
 
+  _onSwitchMask = mask => this.setState({ mask });
+
   _onToggleDialog = () => {
     const { state: { dialog } } = this;
     this.setState({ dialog: !dialog });
@@ -56,9 +68,9 @@ class Dashboard extends PureComponent {
 
   render() {
     const {
-      _onScroll, _onToggleDialog, _onVault,
+      _onScroll, _onSwitchMask, _onToggleDialog, _onVault,
       props: { visible, ...inherit },
-      state: { dialog, scroll },
+      state: { dialog, mask, scroll },
     } = this;
 
     console.log('<Dashboard>', { visible, dialog, scroll });
@@ -86,7 +98,8 @@ class Dashboard extends PureComponent {
                   <Summary
                     {...overall}
                     currency={baseCurrency}
-                    mask={settings[HIDE_OVERALL_BALANCE]}
+                    onMask={_onSwitchMask}
+                    mask={mask}
                     title={l10n.OVERALL_BALANCE}
                   />
 
@@ -98,7 +111,12 @@ class Dashboard extends PureComponent {
                     style={styles.vaults}
                   >
                     { queryVaults({ settings, vaults }).map(vault => (
-                      <VaultCard key={vault.hash} {...vault} onPress={() => _onVault({ navigation, vault })} />
+                      <VaultCard
+                        {...vault}
+                        key={vault.hash}
+                        mask={mask}
+                        onPress={() => _onVault({ navigation, vault })}
+                      />
                     ))}
                   </Slider>
 
