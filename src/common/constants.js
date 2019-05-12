@@ -74,7 +74,7 @@ export default {
     // CZK: 'Kč',
     // DKK: 'Dkr',
     GBP: '£',
-    EUR: '€',
+    EUR: ' €',
     HKD: 'HKD',
     // HRK: '',
     // HUF: 'Ft',
