@@ -57,6 +57,7 @@ const VaultCard = (props) => {
                       currency={baseCurrency}
                       level={3}
                       lighten
+                      mask={mask}
                       subtitle
                       title={progression > 0 ? '+' : '-'}
                       value={progression}
