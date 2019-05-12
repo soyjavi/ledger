@@ -106,15 +106,22 @@ class Stats extends Component {
                     <Heading subtitle={l10n.BALANCE} />
                     <Chart
                       captions={orderCaptions(l10n)}
+                      highlight={slider.index}
                       values={chart.balance}
                       styleContainer={[styles.chart, styles.chartMargin]}
                       style={styles.chartBalance}
                     />
 
                     <Heading subtitle={`${l10n.INCOMES} vs. ${l10n.EXPENSES}`} />
-                    <Chart color={COLOR.INCOMES} styleContainer={styles.chart} values={chart.incomes} />
+                    <Chart
+                      color={COLOR.INCOMES}
+                      highlight={slider.index}
+                      styleContainer={styles.chart}
+                      values={chart.incomes}
+                    />
                     <Chart
                       captions={orderCaptions(l10n)}
+                      highlight={slider.index}
                       inverted
                       values={chart.expenses}
                       color={COLOR.EXPENSES}
