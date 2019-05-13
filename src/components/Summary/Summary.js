@@ -1,5 +1,5 @@
 import {
-  bool, shape, number, oneOfType, string,
+  bool, func, shape, number, oneOfType, string,
 } from 'prop-types';
 import React, { Component } from 'react';
 import { Image, View } from 'react-native';
@@ -14,11 +14,11 @@ import Percentage from '../Percentage';
 import PriceFriendly from '../PriceFriendly';
 import styles from './Summary.style';
 
-const { SCREEN } = C;
+const { CURRENCY, SCREEN } = C;
 const { COLOR } = THEME;
 
 const captionProps = {
-  caption: true, level: 2, lighten: true, numberOfLines: 1,
+  caption: true, level: 2, numberOfLines: 1,
 };
 
 class Summary extends Component {
@@ -28,46 +28,30 @@ class Summary extends Component {
     currentMonth: shape({}),
     image: oneOfType([number, string]),
     mask: bool,
+    onMask: func,
     title: string.isRequired,
   };
 
   static defaultProps = {
-    currency: 'EUR',
+    currency: CURRENCY,
     currentBalance: undefined,
     currentMonth: {},
-    mask: undefined,
+    mask: false,
+    onMask: undefined,
     image: ASSETS.logo,
   };
 
-  constructor(props) {
-    super(props);
-    this.state = { mask: props.mask };
-  }
-
-  componentWillReceiveProps({ mask }) {
-    const { props } = this;
-    if (props.mask !== mask) this.setState({ mask });
-  }
-
-  shouldComponentUpdate({ currentBalance, mask }) {
+  shouldComponentUpdate({ currency, currentBalance, mask }) {
     const { props } = this;
 
-    return (currentBalance !== props.currentBalance) || (mask !== props.mask);
-  }
-
-  _onSwitchMask = () => {
-    const { state: { mask } } = this;
-    this.setState({ mask: !mask });
-    this.forceUpdate();
+    return currency !== props.currency || currentBalance !== props.currentBalance || mask !== props.mask;
   }
 
   render() {
     const {
-      _onSwitchMask,
       props: {
-        currency, currentBalance, currentMonth, image, title, ...inherit
+        currency, currentBalance, currentMonth, image, mask, onMask, title, ...inherit
       },
-      state: { mask },
     } = this;
 
     const { progression = 0, incomes = 0, expenses = 0 } = currentMonth;
@@ -77,13 +61,9 @@ class Summary extends Component {
 
     return (
       <Consumer>
-        { ({
-          l10n,
-          navigation,
-          store: { baseCurrency, rates },
-        }) => (
+        { ({ l10n, navigation, store: { baseCurrency, rates } }) => (
           <View style={[styles.container, inherit.style]}>
-            <Touchable onPress={mask !== undefined ? _onSwitchMask : undefined} style={styles.content}>
+            <Touchable onPress={onMask ? () => onMask(!mask) : undefined} style={styles.content}>
               <View style={styles.row}>
                 <Image source={image} resizeMode="contain" style={styles.logo} />
                 <Text caption level={2} lighten>{title.toUpperCase()}</Text>
@@ -122,7 +102,7 @@ class Summary extends Component {
             </Heading>
             <View style={[styles.row, styles.cards]}>
               <View style={styles.card}>
-                <Text {...captionProps}>{l10n.PROGRESS.toUpperCase()}</Text>
+                <Text {...captionProps}>{l10n.PROGRESSION.toUpperCase()}</Text>
                 <Percentage headline level={6} value={progressionPercentage} />
               </View>
               <View style={styles.card}>

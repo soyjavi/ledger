@@ -1,7 +1,7 @@
-const ZERO = '0';
+import { verboseTime } from '../../../common';
 
 export default (time, { place } = {}) => {
-  let value = `${(ZERO + time.getHours()).slice(-2)}:${(ZERO + time.getMinutes()).slice(-2)}`;
+  let value = verboseTime(time);
 
   if (place) value += ` - ${place.split(',')[0]}`;
 

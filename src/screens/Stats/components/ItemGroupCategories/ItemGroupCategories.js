@@ -2,11 +2,12 @@ import { shape, number } from 'prop-types';
 import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
-import { PriceFriendly } from '../../../../components';
+import { HorizontalChartItem, PriceFriendly } from '../../../../components';
 import { Consumer } from '../../../../context';
 import { THEME } from '../../../../reactor/common';
-import { Text, Touchable } from '../../../../reactor/components';
+import { Touchable } from '../../../../reactor/components';
 import Heading from '../../../../components/Heading';
+import { orderByAmount } from '../../modules';
 import styles from './ItemGroupCategories.style';
 
 const { COLOR } = THEME;
@@ -20,23 +21,25 @@ class ItemGroupCategories extends PureComponent {
   static defaultProps = {};
 
   state = {
-    expand: false,
+    expand: undefined,
   };
 
-  _onPress = () => {
+  _onPress = (category) => {
     const { state: { expand } } = this;
-    this.setState({ expand: !expand });
+    this.setState({ expand: expand !== category ? category : undefined });
   }
 
   render() {
     const { _onPress, props: { dataSource, type }, state: { expand } } = this;
     const isExpense = type === 0;
-    const totalCategories = [];
+    const totals = [];
     let total = 0;
 
     Object.keys(dataSource).forEach((category) => {
-      totalCategories[category] = Object.values(dataSource[category]).reduce((a, b) => a += b); // eslint-disable-line
-      total += totalCategories[category];
+      if (category >= 0) {
+        totals[category] = Object.values(dataSource[category]).reduce((a, b) => a += b); // eslint-disable-line
+        total += totals[category];
+      }
     });
 
     return (
@@ -47,39 +50,31 @@ class ItemGroupCategories extends PureComponent {
               <PriceFriendly currency={baseCurrency} subtitle level={3} value={total} />
             </Heading>
             <View style={styles.container}>
-              { Object.keys(dataSource).map(category => (
-                <Touchable onPress={_onPress} key={category} style={styles.content}>
-                  <View>
-                    <View style={styles.row}>
-                      <Text subtitle level={3} style={styles.title}>{l10n.CATEGORIES[type][category]}</Text>
-                      <PriceFriendly currency={baseCurrency} subtitle level={3} value={totalCategories[category]} />
-                    </View>
+              { orderByAmount(totals).map(({ key, amount }) => (
+                <Touchable key={key} onPress={() => _onPress(key)} style={styles.content}>
+                  <HorizontalChartItem
+                    color={isExpense ? COLOR.EXPENSES : COLOR.INCOMES}
+                    currency={baseCurrency}
+                    title={l10n.CATEGORIES[type][key]}
+                    value={amount}
+                    width={Math.floor((amount / total) * 100)}
+                  />
 
-                    <View style={[styles.bar, styles.barContainer]}>
-                      <View
-                        style={[
-                          styles.bar,
-                          {
-                            backgroundColor: isExpense ? COLOR.EXPENSES : COLOR.INCOMES,
-                            width: `${parseInt((totalCategories[category] * 100) / total, 10)}%`,
-                          },
-                        ]}
-                      />
+                  { expand === key && (
+                    <View style={styles.expand}>
+                      { orderByAmount(dataSource[key]).map(item => (
+                        <HorizontalChartItem
+                          key={`${key}-${item.key}`}
+                          color={COLOR.TEXT_LIGHTEN}
+                          currency={baseCurrency}
+                          small
+                          title={item.key}
+                          value={item.amount}
+                          width={Math.floor((item.amount / amount) * 100)}
+                        />
+                      ))}
                     </View>
-                  </View>
-
-                  { expand && Object.keys(dataSource[category]).map(title => (
-                    <View key={`${category}-${title}`} style={styles.row}>
-                      <Text level={2} lighten style={styles.title}>{title}</Text>
-                      <PriceFriendly
-                        currency={baseCurrency}
-                        subtitle
-                        level={3}
-                        lighten
-                        value={dataSource[category][title]}
-                      />
-                    </View>
-                  ))}
+                  )}
                 </Touchable>
               ))}
             </View>

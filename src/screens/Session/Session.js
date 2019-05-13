@@ -1,34 +1,47 @@
-import { bool } from 'prop-types';
-import React, { PureComponent } from 'react';
+import { bool, func } from 'prop-types';
+import React, { Fragment, PureComponent } from 'react';
 import { Image, View } from 'react-native';
 
 import ASSETS from '../../assets';
 import { C } from '../../common';
 import { Consumer } from '../../context';
-import { NumKeyboard } from '../../components';
 import { THEME } from '../../reactor/common';
 import {
   Activity, Motion, Text, Viewport,
 } from '../../reactor/components';
+import { NumKeyboard } from './components';
 import handshake from './modules/handshake';
 import styles from './Session.style';
 
-const { iconFingerprint, logo } = ASSETS;
 const { VERSION } = C;
 const { MOTION: { DURATION } } = THEME;
 
 class Session extends PureComponent {
   static propTypes = {
+    getFingerprintAsync: func,
     visible: bool,
   };
 
   static defaultProps = {
+    getFingerprintAsync: undefined,
     visible: true,
   };
 
   state = {
     busy: false,
+    askFingerprint: false,
     pin: '',
+  }
+
+  _onFingerprint = async ({ navigation, store }) => {
+    const { props: { getFingerprintAsync } } = this;
+
+    this.setState({ askFingerprint: true });
+    if (getFingerprintAsync) {
+      const { success } = await getFingerprintAsync('Use your fingerprint.');
+      if (success) handshake(this, { pin: store.pin, store, navigation });
+      else this.setState({ askFingerprint: false });
+    }
   }
 
   _onNumber = ({ number, store, navigation }) => {
@@ -45,26 +58,29 @@ class Session extends PureComponent {
     }
   }
 
-  _ = props => handshake(this, props);
-
   render() {
-    const { _onNumber, props: { visible, ...props }, state: { busy, pin } } = this;
+    const {
+      _onFingerprint, _onNumber,
+      props: { getFingerprintAsync, visible, ...props },
+      state: { askFingerprint, busy, pin },
+    } = this;
+    console.log('<Session>', {
+      askFingerprint, visible, busy, pin,
+    });
 
     return (
       <Viewport {...props} scroll={false} visible={visible}>
         <Consumer>
-          { ({
-            l10n, store, navigation, events: { getFingerprintAsync } = {},
-          }) => (
+          { ({ l10n, store, navigation }) => (
             <View style={styles.container}>
-              { !navigation.stack.includes('Dashboard') && visible && store.pin && !busy
-                ? this._({ pin: store.pin, store, navigation }) && <View />
-                : undefined}
+              { visible && getFingerprintAsync && !askFingerprint && store.pin
+                ? _onFingerprint({ store, navigation }) && <Fragment />
+                : undefined }
               <View style={styles.content}>
-                <Image source={logo} resizeMode="contain" style={styles.logo} />
+                <Image source={ASSETS.logo} resizeMode="contain" style={styles.logo} />
                 <Text headline level={4} style={styles.text}>voltvault</Text>
                 <View style={styles.pin}>
-                  { busy || store.hash
+                  { busy
                     ? <Activity size="large" style={styles.activity} />
                     : [1, 2, 3, 4].map(number => (
                       <Motion
@@ -75,12 +91,12 @@ class Session extends PureComponent {
                     ))}
                 </View>
                 <Text level={2} lighten style={styles.text}>
-                  { busy ? l10n.LOADING_PROFILE : l10n.ENTER_PIN }
+                  { store.pin && getFingerprintAsync ? l10n.ENTER_PIN_OR_FINGERPRINT : l10n.ENTER_PIN }
                 </Text>
               </View>
-              { getFingerprintAsync && (
-                <Image source={iconFingerprint} resizeMode="contain" style={styles.fingerprint} />)}
 
+              { store.pin && !busy && getFingerprintAsync && (
+                <Image source={ASSETS.fingerprint} style={styles.fingerprint} />)}
               <NumKeyboard onPress={number => _onNumber({ number, store, navigation })} />
               <Text lighten caption level={3} style={styles.text}>{`v${VERSION}`}</Text>
             </View>

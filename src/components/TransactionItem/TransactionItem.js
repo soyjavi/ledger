@@ -1,26 +1,30 @@
-import { number, shape, string } from 'prop-types';
-import React, { PureComponent } from 'react';
+import {
+  bool, number, shape, string,
+} from 'prop-types';
+import React, { Fragment, PureComponent } from 'react';
 import { View } from 'react-native';
 
 import { CATEGORIES } from '../../assets';
-import { C, exchange } from '../../common';
-import { ConsumerStore } from '../../context';
+import { C, exchange, verboseMonthShort } from '../../common';
+import { Consumer } from '../../context';
 import {
   Icon, Price, Text, Touchable,
 } from '../../reactor/components';
 import { THEME } from '../../reactor/common';
-import formatCaption from './modules/formatCaption';
+import { formatCaption } from './modules';
 import styles from './TransactionItem.style';
 
-const { FIXED, SYMBOL, TX: { TYPE: { INCOME } } } = C;
+const {
+  FIXED, SYMBOL, TX: { TYPE: { INCOME } }, VAULT_TRANSFER,
+} = C;
 const { COLOR } = THEME;
-
 
 class TransactionItem extends PureComponent {
   static propTypes = {
     category: number.isRequired,
     currency: string.isRequired,
     location: shape({}),
+    showDate: bool,
     timestamp: string.isRequired,
     title: string,
     type: number.isRequired,
@@ -29,39 +33,50 @@ class TransactionItem extends PureComponent {
 
   static defaultProps = {
     location: undefined,
+    showDate: false,
     title: undefined,
   };
 
   render() {
     const {
       props: {
-        category, currency, location, timestamp, title, type, value,
+        category, currency, location, showDate, timestamp, title, type, value,
       },
     } = this;
+    const isVaultTransfer = category === VAULT_TRANSFER;
 
     return (
-      <ConsumerStore>
-        { ({ baseCurrency, onTx, rates }) => (
-          <Touchable rippleColor={COLOR.TEXT_LIGHTEN} onPress={() => onTx(this.props)}>
-            <View style={[styles.container, styles.row]}>
+      <Consumer>
+        { ({ l10n, store: { baseCurrency, onSelectTx, rates } }) => (
+          <Touchable rippleColor={COLOR.TEXT_LIGHTEN} onPress={() => onSelectTx(this.props)}>
+            <View style={[styles.container, styles.row, isVaultTransfer && styles.containerHighlight]}>
               <View style={styles.icon}>
-                <Icon value={CATEGORIES[type][category]} />
+                { showDate
+                  ? (
+                    <Fragment>
+                      <Text style={styles.date}>{(new Date(timestamp)).getDate()}</Text>
+                      <Text lighten style={styles.month}>{verboseMonthShort(timestamp, l10n)}</Text>
+                    </Fragment>
+                  )
+                  : <Icon value={CATEGORIES[type][category]} /> }
               </View>
+
               <View style={[styles.content, styles.row]}>
                 <View style={styles.texts}>
-                  { title && <Text subtitle level={2} numberOfLines={1}>{title}</Text> }
+                  { title && <Text subtitle level={2} lighten={isVaultTransfer} numberOfLines={1}>{title}</Text> }
                   <Text caption lighten>{formatCaption(new Date(timestamp), location)}</Text>
                 </View>
                 <View style={styles.prices}>
                   <Price
                     subtitle
                     level={2}
+                    lighten={isVaultTransfer}
                     fixed={FIXED[baseCurrency]}
+                    operator={type === INCOME ? '+' : '-'}
                     symbol={SYMBOL[baseCurrency]}
-                    title={type === INCOME ? '+' : '-'}
                     value={baseCurrency !== currency
-                      ? exchange(Math.abs(value), currency, baseCurrency, rates)
-                      : Math.abs(value)}
+                      ? exchange(value, currency, baseCurrency, rates)
+                      : value}
                   />
 
                   { baseCurrency !== currency && (
@@ -69,8 +84,8 @@ class TransactionItem extends PureComponent {
                       caption
                       lighten
                       fixed={FIXED[currency]}
+                      operator={type === INCOME ? '+' : '-'}
                       symbol={SYMBOL[currency]}
-                      title={type === INCOME ? '+' : '-'}
                       value={value}
                     />
                   )}
@@ -79,31 +94,9 @@ class TransactionItem extends PureComponent {
             </View>
           </Touchable>
         )}
-      </ConsumerStore>
+      </Consumer>
     );
   }
 }
-// const TransactionItem = (props) => {
-//   const {
-//     category, currency, location, timestamp, title, type, value,
-//   } = props;
-
-
-// };
-
-// TransactionItem.propTypes = {
-//   category: number.isRequired,
-//   currency: string.isRequired,
-//   location: shape({}),
-//   timestamp: string.isRequired,
-//   title: string,
-//   type: number.isRequired,
-//   value: number.isRequired,
-// };
-
-// TransactionItem.defaultProps = {
-//   location: undefined,
-//   title: undefined,
-// };
 
 export default TransactionItem;

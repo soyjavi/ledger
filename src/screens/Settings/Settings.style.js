@@ -1,10 +1,11 @@
 import { StyleSheet } from 'react-native';
 
 import { C } from '../../common';
-import { THEME } from '../../reactor/common';
+import { LAYOUT, THEME } from '../../reactor/common';
 
 const { STYLE: { HEADER_HEIGHT } } = C;
-const { SPACE } = THEME;
+const { SPACE, UNIT } = THEME;
+const FLAG_SIZE = UNIT * 1.6;
 
 export default StyleSheet.create({
   caption: {
@@ -19,4 +20,14 @@ export default StyleSheet.create({
   content: {
     marginVertical: SPACE.MEDIUM,
   },
+
+  optionFlag: {
+    borderRadius: FLAG_SIZE / 2,
+    height: FLAG_SIZE,
+    width: FLAG_SIZE,
+    marginBottom: SPACE.XXS / 2,
+    marginRight: SPACE.XXS,
+  },
+
+  row: LAYOUT.STYLE.ROW,
 });

@@ -11,14 +11,33 @@ import styles from './Chart.style';
 const { COLOR } = THEME;
 
 class Chart extends Component {
+  static propTypes = {
+    captions: arrayOf(string),
+    color: string,
+    highlight: number,
+    inverted: bool,
+    scale: bool,
+    values: arrayOf(number),
+  };
+
+  static defaultProps = {
+    captions: undefined,
+    color: COLOR.PRIMARY,
+    highlight: undefined,
+    inverted: false,
+    scale: true,
+    values: [],
+  };
+
   shouldComponentUpdate(nextProps) {
     return (JSON.stringify(nextProps) !== JSON.stringify(this.props));
   }
 
   render() {
     const {
-      captions, color, inverted, scale, values, ...inherit
+      captions, color, highlight, inverted, scale, values, ...inherit
     } = this.props;
+    const opacity = highlight ? 0.6 : 1;
     let max = 0;
     let floor = 0;
     let gap = 0;
@@ -40,7 +59,7 @@ class Chart extends Component {
     }
 
     return (
-      <View style={[styles.container, inherit.styleContainer]}>
+      <View style={[styles.container, inverted && styles.containerInverted, inherit.styleContainer]}>
         { scale && (
           <View style={[styles.scale, captions && styles.scaleCaptions]}>
             <View style={styles.scaleValues}>
@@ -67,9 +86,9 @@ class Chart extends Component {
                   styles.item,
                   inverted && styles.itemInverted,
                   {
-                    backgroundColor: color,
+                    backgroundColor: value === 0 ? COLOR.BASE : color,
                     height: `${parseInt(((value - floor) * 100) / (max - floor), 10)}%`,
-                    opacity: value === 0 ? 0.2 : 1,
+                    opacity: highlight === index && value !== 0 ? 1 : opacity,
                   },
                 ]}
               />
@@ -91,21 +110,5 @@ class Chart extends Component {
     );
   }
 }
-
-Chart.propTypes = {
-  captions: arrayOf(string),
-  color: string,
-  inverted: bool,
-  scale: bool,
-  values: arrayOf(number),
-};
-
-Chart.defaultProps = {
-  captions: undefined,
-  color: COLOR.PRIMARY,
-  inverted: false,
-  scale: true,
-  values: [],
-};
 
 export default Chart;

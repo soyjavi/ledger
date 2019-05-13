@@ -3,19 +3,19 @@ import { Platform } from 'react-native';
 import { LAYOUT, THEME } from '../reactor/common';
 import PKG from '../../package.json';
 
-const {
-  BORDER_RADIUS, COLOR, SPACE, UNIT,
-} = THEME;
+const { BORDER_RADIUS, SPACE, UNIT } = THEME;
 
 // const DEV = __DEV__ ? __DEV__ : { hello: 'world' }; // eslint-disable-line;
 // const isDev = packagerOpts && packagerOpts.dev;
 
-const IS_PRODUCTION = false;
+const IS_PRODUCTION = true;
 const IS_ANDROID = Platform.OS === 'android';
 const MS_IN_DAY = 1000 * 24 * 60 * 60;
 const MS_IN_WEEK = MS_IN_DAY * 7;
 
 export default {
+  CURRENCY: 'EUR',
+
   ENDPOINT: IS_PRODUCTION ? 'https://voltvault.glitch.me' : 'http://localhost:8080',
 
   FIXED: {
@@ -43,6 +43,7 @@ export default {
   },
   SETTINGS: {
     HIDE_OVERALL_BALANCE: 0,
+    NIGHT_MODE: 3,
     SHOW_VAULT_CURRENCY: 1,
   },
   STYLE: {
@@ -52,18 +53,14 @@ export default {
       padding: SPACE.MEDIUM,
     },
     DIALOG: {
-      backgroundColor: 'rgba(255,255,255,0.75)',
       justifyContent: 'flex-end',
       zIndex: 2,
     },
     DIALOG_FRAME: {
-      backgroundColor: COLOR.WHITE,
-      borderTopLeftRadius: BORDER_RADIUS,
-      borderTopRightRadius: BORDER_RADIUS,
       margin: 0,
     },
     FOOTER_HEIGHT: UNIT * 7.6,
-    HEADER_HEIGHT: UNIT * 5.8,
+    HEADER_HEIGHT: UNIT * 5.2,
     VAULT_ITEM_WIDTH: (LAYOUT.VIEWPORT.W / 2) - (SPACE.MEDIUM * 3),
   },
   SYMBOL: {
@@ -77,7 +74,7 @@ export default {
     // CZK: 'Kč',
     // DKK: 'Dkr',
     GBP: '£',
-    EUR: '€',
+    EUR: ' €',
     HKD: 'HKD',
     // HRK: '',
     // HUF: 'Ft',

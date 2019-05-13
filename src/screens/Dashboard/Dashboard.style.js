@@ -11,12 +11,8 @@ export default StyleSheet.create({
     paddingVertical: HEADER_HEIGHT,
   },
 
-  summary: {
-    marginBottom: SPACE.REGULAR,
-  },
-
   vaults: {
-    marginTop: SPACE.S,
+    paddingLeft: SPACE.XXS,
     paddingRight: SPACE.MEDIUM,
   },
 });

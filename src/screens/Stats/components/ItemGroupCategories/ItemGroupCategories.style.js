@@ -2,23 +2,9 @@ import { StyleSheet } from 'react-native';
 
 import { LAYOUT, THEME } from '../../../../reactor/common';
 
-const {
-  COLOR, UNIT, SPACE,
-} = THEME;
-const COLUMN_WIDTH = UNIT;
+const { SPACE } = THEME;
 
 export default StyleSheet.create({
-  bar: {
-    backgroundColor: COLOR.BASE,
-    borderRadius: COLUMN_WIDTH / 2,
-    height: COLUMN_WIDTH,
-    minWidth: COLUMN_WIDTH,
-  },
-
-  barContainer: {
-    marginVertical: SPACE.XXS,
-  },
-
   container: {
     marginTop: SPACE.XXS,
     marginBottom: SPACE.S,
@@ -27,6 +13,11 @@ export default StyleSheet.create({
   content: {
     paddingVertical: SPACE.XXS,
     paddingHorizontal: SPACE.MEDIUM,
+  },
+
+  expand: {
+    marginTop: SPACE.XXS,
+    marginBottom: SPACE.MEDIUM,
   },
 
   row: LAYOUT.STYLE.ROW,

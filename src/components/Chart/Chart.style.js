@@ -26,11 +26,11 @@ export default StyleSheet.create({
     overflow: 'hidden',
   },
 
-  inverted: {
-    justifyContent: 'flex-start',
+  container: {
   },
 
-  container: {
+  containerInverted: {
+    top: -1,
   },
 
   content: {
@@ -38,6 +38,10 @@ export default StyleSheet.create({
     alignItems: 'flex-end',
     flex: 1,
     height: COLUMN_HEIGHT,
+  },
+
+  inverted: {
+    justifyContent: 'flex-start',
   },
 
   item: {
@@ -57,7 +61,6 @@ export default StyleSheet.create({
 
   row: {
     ...LAYOUT.STYLE.ROW,
-    // flex: 1,
     justifyContent: 'space-between',
   },
 
@@ -83,6 +86,7 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     height: '100%',
+    opacity: 0.6,
   },
 
   scaleLine: {

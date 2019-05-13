@@ -1,15 +1,14 @@
 import { node } from 'prop-types';
 import React, { Component, createContext } from 'react';
 
-import { C, fetch } from '../common';
-import { Fingerprint } from '../reactor/context/Tracking/modules';
+import { C } from '../common';
+import { consolidate, Storage } from './modules';
 import {
-  AsyncStore, calcOverall, calcVault,
-} from './modules';
+  createTx, createVault, getHash, getLocations, syncProfile,
+} from './services';
 
-const { NAME, VERSION } = C;
-const KEY = `${NAME}:context:store`;
-const { Provider, Consumer: ConsumerStore } = createContext(KEY);
+const { CURRENCY, NAME } = C;
+const { Provider, Consumer: ConsumerStore } = createContext(`${NAME}:context:store`);
 
 class ProviderStore extends Component {
   static propTypes = {
@@ -22,8 +21,9 @@ class ProviderStore extends Component {
     hash: undefined,
     overall: {},
     tx: undefined,
+    sync: false,
     // -- STORAGE --------------------------------------------------------------
-    baseCurrency: undefined,
+    baseCurrency: CURRENCY,
     pin: undefined,
     rates: {},
     settings: {},
@@ -33,133 +33,79 @@ class ProviderStore extends Component {
   }
 
   async componentWillMount() {
-    const { fingerprint = (await Fingerprint()).uuid, ...store } = (await AsyncStore.getItem(KEY)) || {};
-
-    this.setState({ ...store, fingerprint });
+    this.setState({ ...consolidate(await Storage.get()), sync: false });
   }
 
   getHash = async (pin) => {
-    const { onError, _store, state: { fingerprint, pin: storedPin } } = this;
-
-    const { hash } = await fetch({
-      method: 'POST',
-      service: storedPin ? 'signin' : 'signup',
-      fingerprint,
-      pin,
-    }).catch(onError);
+    const hash = await getHash(this, pin);
 
     if (hash) {
+      const { _store } = this;
+
       await _store({ pin });
-      this.setState({ pin, hash });
+      this.setState({ pin, hash, sync: false });
     }
 
     return hash;
   }
 
+  getLocations = query => getLocations(this, query);
+
   onError = error => this.setState({ error: error ? error.message : undefined });
 
-  onHandshake = async () => {
-    const { onError, _store, state: { hash: authorization, version, vaults } } = this;
-    const headers = { authorization };
-    let { state: { txs = [] } } = this;
-    let nextState = {};
+  onSettings = async (value) => {
+    const { _store, state: { settings = {} } } = this;
+    const nextState = { settings: { ...settings, ...value } };
 
-    const profile = await fetch({ service: 'profile', headers }).catch(onError);
-    if (profile) {
-      const { baseCurrency, latestTransaction: { hash } = {}, rates } = profile;
-      const { hash: localHash } = txs[txs.length - 1] || {};
-
-      if (hash !== localHash || version !== VERSION) {
-        const service = 'transactions';
-        // if (hash && localHash) service += `?latestTransaction=${hash}`;
-        const { txs: newTxs } = await fetch({ service, headers }).catch(onError);
-        // txs = [...txs, ...newTxs];
-        txs = [...newTxs];
-      }
-
-      nextState = {
-        baseCurrency,
-        rates,
-        txs,
-        vaults: profile.vaults.map(vault => calcVault({
-          txs, baseCurrency, rates, vault: { ...(vaults.find(item => item.hash === vault.hash) || {}), ...vault },
-        })),
-        version: VERSION,
-      };
-
-      await _store(nextState);
-      this.setState({ ...nextState, overall: calcOverall(nextState) });
-    }
-
-    return nextState;
+    this.setState(nextState);
+    _store(nextState);
   }
 
-  onSettings = (value) => {
-    const { _store } = this;
-    let { state: { settings = {} } } = this;
-
-    settings = { ...settings, ...value };
-    this.setState({ settings });
-    _store({ settings });
-  }
-
-  onTransaction = async (props) => {
-    const {
-      _store, onError,
-      state: { hash: authorization, ...state },
-    } = this;
-    let { state: { txs = [] } } = this;
-    const { hash: previousHash } = txs[txs.length - 1] || {};
-
-    const newTransaction = await fetch({
-      method: 'POST', service: 'transaction', headers: { authorization }, previousHash, ...props,
-    }).catch(onError);
-
-    if (newTransaction) {
-      txs = [...txs, newTransaction];
-      const vaults = state.vaults.map(vault => (
-        vault.hash !== props.vault ? vault : calcVault({ ...state, vault, txs })
-      ));
-      const nextState = { txs, vaults };
-
-      await _store(nextState);
-      this.setState({
-        ...nextState,
-        overall: calcOverall({ ...state, vaults }),
-      });
-    }
-
-    return newTransaction;
-  }
-
-  onTx = (tx) => {
+  onSelectTx = (tx) => {
     const { state: { vaults } } = this;
     const { currency } = tx ? vaults.find(({ hash }) => hash === tx.vault) : {};
 
     this.setState({ tx: tx ? { ...tx, currency } : undefined });
   }
 
-  onVault = async (props) => {
-    const { onError, _store, state: { hash: authorization, rates, ...state } } = this;
-    let { state: { baseCurrency } } = this;
+  onSync = async () => {
+    const { _store } = this;
+    const nextState = consolidate(await syncProfile(this));
 
-    const vault = await fetch({
-      method: 'POST', service: 'vault', headers: { authorization }, ...props,
-    }).catch(onError);
+    await _store(nextState);
+    this.setState({ ...nextState, sync: true });
+
+    return nextState;
+  }
+
+  onTx = async (props) => {
+    const { _store, state: { txs = [], ...state } } = this;
+    const tx = await createTx(this, props);
+
+    if (tx) {
+      const nextState = consolidate({ ...state, txs: [...txs, tx] });
+
+      await _store(nextState);
+      this.setState(nextState);
+    }
+
+    return tx;
+  }
+
+  onVault = async (props) => {
+    const { _store, state: { rates, ...state } } = this;
+
+    const vault = await createVault(this, props);
 
     if (vault) {
-      const vaults = [...state.vaults, calcVault(vault, state.txs, state.vaults.length)];
+      const vaults = [...state.vaults, vault];
+      let nextState = { ...state, rates, vaults };
+
       if (vaults.length === 1) {
-        baseCurrency = vault.currency;
+        nextState.baseCurrency = vault.currency;
         delete rates[vault.currency];
       }
-
-      const nextState = {
-        baseCurrency,
-        overall: calcOverall({ baseCurrency, rates, vaults }),
-        rates,
-        vaults,
-      };
+      nextState = consolidate({ ...this.state, ...nextState });
 
       await _store(nextState);
       this.setState(nextState);
@@ -168,29 +114,7 @@ class ProviderStore extends Component {
     return vault;
   }
 
-  onVaultUpdate = async (updatedVault) => {
-    const { _store, state: { vaults } } = this;
-
-    const nextState = {
-      vaults: vaults.map(vault => (
-        vault.hash !== updatedVault.hash ? vault : updatedVault
-      )),
-    };
-
-    await _store(nextState);
-    this.setState(nextState);
-  }
-
-  _store = async (value) => {
-    const {
-      baseCurrency, pin, rates = {}, settings, txs = [], version, ...state
-    } = this.state;
-    const vaults = (value.vaults || state.vaults || []).map(({ txs, ...vault }) => vault);
-
-    await AsyncStore.setItem(KEY, {
-      baseCurrency, pin, rates, settings, txs, vaults, version, ...value,
-    });
-  }
+  _store = nextState => Storage.set({ ...this.state, ...nextState });
 
   render() {
     const { props: { children }, state, ...events } = this;

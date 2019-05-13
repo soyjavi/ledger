@@ -4,6 +4,7 @@ export default {
     ACTIVE: 'Active',
     ACTIVITY: 'Activity',
     AMOUNT: 'Amount',
+
     BALANCE: 'Balance',
 
     // CATEGORIES: [
@@ -55,9 +56,12 @@ export default {
     ],
     CATEGORY: 'Category',
     CHOOSE_TRANSACTION_TYPE: 'Choose type of transaction',
+    CITIES: 'Cities',
     CLONE: 'Clone',
     CLONE_CAPTION: 'To make your life easier you can clone this transaction with a simple touch of the button.',
     CLOSE: 'Close',
+    CONCEPT: 'Concept',
+    COUNTRIES: 'Countries',
     CURRENCY: 'Currency',
     CURRENCIES: 'Currencies',
     CURRENT_MONTH: 'This month',
@@ -67,13 +71,15 @@ export default {
     DAY_NAMES: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
 
     ENTER_PIN: 'Enter your pin',
-    EXCHANGED: 'Exchanged',
+    ENTER_PIN_OR_FINGERPRINT: 'Enter your pin or fingerprint',
     EXPENSE: 'Expense',
     EXPENSE_CAPTION: 'Register a new expense in this vault.',
     EXPENSES: 'Expenses',
 
     FIRST_VAULT_CAPTION: 'This will be your first vault. The currency you choose will be used as the basis for all reports.', // eslint-disable-line
     FROM: 'from',
+
+    GET: 'Get',
 
     INCOME: 'Income',
     INCOME_CAPTION: 'Register a new income in this vault.',
@@ -82,9 +88,8 @@ export default {
 
     LAST_TRANSACTIONS: 'Last transactions',
     LOADING_PLACE: 'Wait a moment, loading place.',
-    LOADING_PROFILE: 'Wait a moment, syncing your blockchain.',
+    LOCATIONS: 'Locations',
 
-    MONTHLY: 'Monthly',
     MONTHS: [
       'January', 'February', 'March', 'April', 'May', 'June',
       'July', 'August', 'September', 'October', 'November', 'December',
@@ -92,24 +97,31 @@ export default {
 
     NAME: 'Name',
     NEW: 'New',
+    NIGHT_MODE: 'Night mode',
+    NIGHT_MODE_CAPTION: 'Fits perfectly in OLED screens',
+    NO_TRANSACTIONS: "You don't have any transaction.",
 
+
+    OFFLINE_MODE: 'Offline mode',
+    OTHERS: 'Others',
     OVERALL_BALANCE: 'Overall Balance',
 
-    PROGRESS: 'Progress',
+    PROGRESSION: 'Progression',
 
     SAVE: 'Save',
     SAVE_LOCATION: 'Save location',
     SEARCH: 'Search',
+    SEND: 'Send',
     SETTINGS: 'Settings',
     SETTING_1_TITLE: 'Hide overall balance on startup',
     SETTING_1_CAPTION: 'Switch visibility just touching it',
     SETTING_2_TITLE: 'Show vault currency',
     SETTING_2_CAPTION: 'If it is different from the base currency.',
+    SYNC_BLOCKCHAIN: 'Syncing blockchain',
     SLOGAN: 'Your private accounting on the blockchain.',
     STATS: 'Stats',
     STATS_CAPTION: 'In this summary you can see a breakdown of your operations in the selected category.',
 
-    TITLE: 'Title',
     TO: 'to',
     TODAY: 'Today',
     TRANSACTION: 'Transaction',
@@ -119,12 +131,10 @@ export default {
 
     VAULT: 'Vault',
     VAULT_DESTINATION: 'Destination vault',
-    VAULT_EMPTY: "You don't have any transaction.",
     VAULTS: 'Vaults',
     VAULTS_VISIBILITY: 'Vaults visibility',
     VAULT_CAPTION: 'You can create as many vaults as you want. You can continue using your base currency or choose any other.', // eslint-disable-line
 
-    WEEKLY: 'Weekly',
     WIPE: 'Wipe',
     WITHOUT_TXS: 'No transactions',
 

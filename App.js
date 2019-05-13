@@ -6,13 +6,14 @@ import {
   Location,
   Permissions,
 } from 'expo';
-import { C, L10N, theme } from './src/common';
+import { C, L10N, theme, themeDark } from './src/common';
 import { Provider } from './src/context';
+import { Storage } from './src/context/modules';
 import { THEME } from './src/reactor/common';
 
 THEME.extend(theme);
 
-const { LANGUAGE, LOCATION_PROPS } = C;
+const { LANGUAGE, LOCATION_PROPS, SETTINGS: { NIGHT_MODE } } = C;
 const { UIManager: { setLayoutAnimationEnabledExperimental: setLayoutAnimation } } = NativeModules;
 if (setLayoutAnimation) setLayoutAnimation(true);
 
@@ -23,6 +24,14 @@ class App extends PureComponent {
   }
 
   async componentDidMount() {
+    const { settings = {} } = await Storage.get();
+    const nightMode = settings[NIGHT_MODE];
+
+    THEME.extend({
+      ...theme,
+      COLOR: { ...theme.COLOR, ...(nightMode ? themeDark.COLOR : {}) },
+    });
+
     await Font.loadAsync({
       'product-sans': require('./assets/fonts/ProductSans-Regular.ttf'), // eslint-disable-line
       'product-sans-bold': require('./assets/fonts/ProductSans-Bold.ttf'), // eslint-disable-line
@@ -50,7 +59,7 @@ class App extends PureComponent {
     return (
       <Provider
         dictionary={L10N}
-        fingerprint={fingerprint ? LocalAuthentication : undefined}
+        getFingerprintAsync={fingerprint ? LocalAuthentication.authenticateAsync : undefined}
         getLocationAsync={_getLocationAsync}
         language={LANGUAGE}
       >

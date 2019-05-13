@@ -1,21 +1,48 @@
-import React from 'react';
-import { AppRegistry } from 'react-native';
+import React, { PureComponent } from 'react';
+import { AppRegistry, View } from 'react-native';
 
 import {
-  C, getLocationAsync, L10N, theme,
+  C, getFingerprintAsync, getLocationAsync, L10N, theme, themeDark,
 } from './common';
 import { Provider } from './context';
+import { Storage } from './context/modules';
 import { THEME } from './reactor/common';
 
-THEME.extend(theme);
-const { LANGUAGE } = C;
-const App = require('./App').default;
+const { LANGUAGE, SETTINGS: { NIGHT_MODE } } = C;
 
-const BrowserApp = () => (
-  <Provider dictionary={L10N} language={LANGUAGE} getLocationAsync={getLocationAsync}>
-    <App />
-  </Provider>
-);
+class BrowserApp extends PureComponent {
+  state = {
+    loaded: false,
+  }
+
+  async componentDidMount() {
+    const { settings = {} } = await Storage.get();
+    const nightMode = settings[NIGHT_MODE];
+
+    THEME.extend({
+      ...theme,
+      COLOR: { ...theme.COLOR, ...(nightMode ? themeDark.COLOR : {}) },
+    });
+
+    this.setState({ loaded: true });
+  }
+
+  render() {
+    const { state: { loaded } } = this;
+    const App = loaded ? require('./App').default : View; // eslint-disable-line
+
+    return (
+      <Provider
+        dictionary={L10N}
+        getFingerprintAsync={getFingerprintAsync}
+        getLocationAsync={getLocationAsync}
+        language={LANGUAGE}
+      >
+        <App />
+      </Provider>
+    );
+  }
+}
 
 AppRegistry.registerComponent('App', () => BrowserApp);
 AppRegistry.runApplication('App', {

@@ -9,9 +9,9 @@ export default async ({
       from, to, exchange, value,
     },
   },
-  store: { onTransaction },
+  store: { onTx },
 }) => {
-  let response = await onTransaction({
+  let response = await onTx({
     category: VAULT_TRANSFER,
     title: to.title,
     type: EXPENSE,
@@ -20,7 +20,7 @@ export default async ({
   });
 
   if (response) {
-    response = await onTransaction({
+    response = await onTx({
       category: VAULT_TRANSFER,
       title: from.title,
       type: INCOME,

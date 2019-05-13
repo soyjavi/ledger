@@ -9,7 +9,7 @@ import {
   C, FORM, setCurrency, translate,
 } from '../../../../common';
 import { Consumer } from '../../../../context';
-import { CardOption, MapStaticImage } from '../../../../components';
+import { CardOption, HeatMap } from '../../../../components';
 
 import { THEME } from '../../../../reactor/common';
 import {
@@ -67,7 +67,7 @@ class DialogTransaction extends PureComponent {
     getLocation(this, getLocationAsync);
   }
 
-  _onSubmit = async ({ onTransaction }) => {
+  _onSubmit = async ({ onTx }) => {
     const {
       props: { onClose, type, vault },
       state: {
@@ -76,7 +76,7 @@ class DialogTransaction extends PureComponent {
     } = this;
 
     this.setState({ busy: true });
-    const response = await onTransaction({
+    const tx = await onTx({
       category,
       title,
       type,
@@ -87,14 +87,14 @@ class DialogTransaction extends PureComponent {
     });
 
     this.setState({ busy: false });
-    if (response) onClose();
+    if (tx) onClose();
   }
 
   render() {
     const {
       _getLocation, _onCategory, _onChange, _onSubmit,
       props: {
-        currency, onClose, type, visible,
+        currency, onClose, type, visible, ...inherit
       },
       state: {
         busy, category, coords, form, location, place,
@@ -107,6 +107,7 @@ class DialogTransaction extends PureComponent {
       <Consumer>
         { ({ events: { getLocationAsync }, l10n, store }) => (
           <Dialog
+            {...inherit}
             onClose={onClose}
             style={styles.frame}
             styleContainer={styles.dialog}
@@ -142,7 +143,7 @@ class DialogTransaction extends PureComponent {
               { getLocationAsync && (
                 <View>
                   { visible && location === false && _getLocation(getLocationAsync) }
-                  <MapStaticImage {...coords} zoom={coords ? 14.5 : 12} style={styles.location} />
+                  <HeatMap color={color} points={coords ? [[coords.longitude, coords.latitude]] : undefined} />
                   <Text level={2} lighten>{place || l10n.LOADING_PLACE}</Text>
                 </View>
               )}

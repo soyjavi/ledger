@@ -1,27 +1,26 @@
 import { arrayOf, bool, shape } from 'prop-types';
-import React, { Fragment, PureComponent } from 'react';
+import React, { Fragment, Component } from 'react';
 import { ScrollView, View } from 'react-native';
 
 import ASSETS from '../../assets';
+import { C } from '../../common';
 import {
-  Chart, Footer, Header, Heading,
+  Chart, Footer, Header, Heading, SliderMonths,
 } from '../../components';
 import { Consumer } from '../../context';
 import { THEME } from '../../reactor/common';
-import { Viewport } from '../../reactor/components';
-import { ItemGroupCategories } from './components';
+import { Text, Viewport } from '../../reactor/components';
+import { ItemGroupCategories, Locations } from './components';
 import { orderCaptions, query } from './modules';
 import styles from './Stats.style';
 
-const { COLOR } = THEME;
-const MONTHLY = 0;
-const WEEKLY = 1;
+const { COLOR, SPACE } = THEME;
+const { TX: { TYPE: { EXPENSE, INCOME } } } = C;
 
-class Stats extends PureComponent {
+class Stats extends Component {
   static propTypes = {
     backward: bool,
     txs: arrayOf(shape({})),
-    navigation: shape({}),
     vault: shape({}),
     vaults: arrayOf(shape({})),
     visible: bool,
@@ -30,7 +29,6 @@ class Stats extends PureComponent {
   static defaultProps = {
     backward: false,
     txs: undefined,
-    navigation: undefined,
     vault: undefined,
     vaults: undefined,
     visible: true,
@@ -38,39 +36,62 @@ class Stats extends PureComponent {
 
   state = {
     scroll: false,
-    typeQuery: MONTHLY,
+    slider: {},
     values: {},
   };
 
-  componentWillReceiveProps({
-    backward, visible, ...inherit
-  }) {
-    const typeQuery = MONTHLY;
+  componentWillReceiveProps({ backward, visible, ...inherit }) {
+    if (visible) {
+      const today = new Date();
+      const slider = { month: today.getMonth(), year: today.getFullYear(), index: 11 };
+      this.setState({ scroll: false, slider, values: query(inherit, slider) });
+    }
+  }
 
-    if (visible) this.setState({ typeQuery, values: query(inherit, typeQuery) });
+  shouldComponentUpdate({ visible }, { scroll, slider = {}, typeQuery }) {
+    const { props, state } = this;
+
+    return visible !== props.visible
+      || scroll !== state.scroll
+      || slider.index !== state.slider.index
+      || typeQuery !== state.typeQuery;
+  }
+
+  _onChangeSlider = (slider) => {
+    const { props } = this;
+    this.setState({ slider, values: query(props, slider) });
+  }
+
+  _onHardwareBack = (navigation) => {
+    navigation.goBack();
+    this.forceUpdate();
   }
 
   _onScroll = ({ nativeEvent: { contentOffset: { y } } }) => {
     const { state } = this;
-    const scroll = y > 58;
+    const scroll = y > SPACE.MEDIUM;
     if (scroll !== state.scroll) this.setState({ scroll });
-  }
-
-  _onQuery = () => {
-    const { props, state } = this;
-    const typeQuery = state.typeQuery === MONTHLY ? WEEKLY : MONTHLY;
-
-    this.setState({ typeQuery, values: query(props, typeQuery) });
   }
 
   render() {
     const {
-      _onScroll, _onQuery,
-      props: { vault, visible, ...inherit },
-      state: { scroll, typeQuery, values },
+      _onChangeSlider, _onHardwareBack, _onScroll,
+      props: {
+        vault, vaults, visible, ...inherit
+      },
+      state: {
+        scroll, slider, values,
+      },
     } = this;
-    const { chart = {} } = values || {};
+    const {
+      chart = {}, [EXPENSE]: expenses = {}, [INCOME]: incomes = {}, locations = {},
+    } = values || {};
     const title = vault ? `${vault.title} ` : '';
+    const hasExpenses = Object.keys(expenses).length > 0;
+    const hasIncomes = Object.keys(incomes).length > 0;
+    const hasPoints = locations.points && locations.points.length > 0;
+
+    console.log('<Stats>', { visible, title });
 
     return (
       <Viewport {...inherit} scroll={false} visible={visible}>
@@ -78,26 +99,29 @@ class Stats extends PureComponent {
           <Consumer>
             { ({ l10n, navigation }) => (
               <Fragment>
-                <Header
-                  highlight={scroll}
-                  right={{ title: typeQuery === MONTHLY ? l10n.WEEKLY : l10n.MONTHLY, onPress: _onQuery }}
-                  title={`${title}${l10n.ACTIVITY}`}
-                />
+                <Header highlight={scroll} title={`${title}${l10n.ACTIVITY}`} />
                 <ScrollView onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.container}>
                   <View style={styles.content}>
                     <Heading title={`${title}${l10n.ACTIVITY}`} image={ASSETS.logo} />
                     <Heading subtitle={l10n.BALANCE} />
                     <Chart
-                      captions={orderCaptions(l10n, typeQuery)}
+                      captions={orderCaptions(l10n)}
+                      highlight={slider.index}
                       values={chart.balance}
                       styleContainer={[styles.chart, styles.chartMargin]}
                       style={styles.chartBalance}
                     />
 
                     <Heading subtitle={`${l10n.INCOMES} vs. ${l10n.EXPENSES}`} />
-                    <Chart color={COLOR.INCOMES} styleContainer={styles.chart} values={chart.incomes} />
                     <Chart
-                      captions={orderCaptions(l10n, typeQuery)}
+                      color={COLOR.INCOMES}
+                      highlight={slider.index}
+                      styleContainer={styles.chart}
+                      values={chart.incomes}
+                    />
+                    <Chart
+                      captions={orderCaptions(l10n)}
+                      highlight={slider.index}
                       inverted
                       values={chart.expenses}
                       color={COLOR.EXPENSES}
@@ -105,11 +129,25 @@ class Stats extends PureComponent {
                     />
                   </View>
 
-
-                  { Object.keys(values[1]).length > 0 && <ItemGroupCategories type={1} dataSource={values[1]} /> }
-                  { Object.keys(values[0]).length > 0 && <ItemGroupCategories type={0} dataSource={values[0]} /> }
+                  <SliderMonths {...slider} onChange={_onChangeSlider} style={styles.sliderMonths} />
+                  { (hasExpenses || hasIncomes)
+                    ? (
+                      <Fragment>
+                        { hasPoints && <Locations {...inherit} {...locations} /> }
+                        { hasIncomes && <ItemGroupCategories type={INCOME} dataSource={incomes} /> }
+                        { hasExpenses && <ItemGroupCategories type={EXPENSE} dataSource={expenses} /> }
+                      </Fragment>
+                    )
+                    : (
+                      <View style={styles.contentEmpty}>
+                        <Text level={2} lighten>{l10n.NO_TRANSACTIONS}</Text>
+                      </View>
+                    )}
                 </ScrollView>
-                <Footer onBack={navigation.goBack} onHardwareBack={navigation.goBack} visible={visible} />
+                <Footer
+                  onBack={navigation.goBack}
+                  onHardwareBack={visible ? () => _onHardwareBack(navigation) : undefined}
+                />
               </Fragment>
             )}
           </Consumer>

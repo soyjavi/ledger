@@ -4,8 +4,7 @@ import { NetInfo } from 'react-native';
 
 import { C } from '../common';
 
-const KEY = `${C.NAME}:context:events`;
-const { Provider, Consumer: ConsumerEvents } = createContext(KEY);
+const { Provider, Consumer: ConsumerEvents } = createContext(`${C.NAME}:context:events`);
 
 class ProviderEvents extends PureComponent {
   static propTypes = {
@@ -37,10 +36,10 @@ class ProviderEvents extends PureComponent {
   }
 
   render() {
-    const { props: { children, getFingerprintAsync, getLocationAsync }, state } = this;
+    const { props: { children, ...props }, state } = this;
 
     return (
-      <Provider value={{ ...state, getFingerprintAsync, getLocationAsync }}>
+      <Provider value={{ ...state, ...props }}>
         { children }
       </Provider>
     );

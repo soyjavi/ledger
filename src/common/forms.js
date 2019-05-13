@@ -4,19 +4,16 @@ export default {
       currency: '$', inline: 2, label: 'l10n.AMOUNT', required: true,
     },
     title: {
-      inline: 2, label: 'l10n.TITLE', required: true,
+      inline: 2, label: 'l10n.CONCEPT', required: true,
     },
   },
 
   TRANSFER: {
-    destination: {
-      type: 'select', dataSource: [], label: 'l10n.VAULT_DESTINATION',
-    },
     value: {
-      currency: '$', inline: 2, label: 'l10n.AMOUNT', required: true,
+      currency: '$', inline: 2, label: 'l10n.SEND', required: true,
     },
     exchange: {
-      currency: '$', inline: 2, label: 'l10n.EXCHANGED', required: true,
+      currency: '$', inline: 2, label: 'l10n.GET', required: true,
     },
   },
 

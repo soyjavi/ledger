@@ -5,8 +5,29 @@ import { LAYOUT, THEME } from '../../reactor/common';
 const { COLOR, OFFSET, UNIT } = THEME;
 
 const ICON_SIZE = UNIT * 3.6;
+const DATE_FONT_SIZE = UNIT * 1.6;
+const MONTH_FONT_SIZE = UNIT * 0.9;
 
 export default StyleSheet.create({
+  container: {
+    paddingVertical: OFFSET / 1.5,
+    paddingHorizontal: OFFSET,
+  },
+
+  containerHighlight: {
+    backgroundColor: COLOR.BASE,
+  },
+
+  content: {
+    alignItems: 'flex-start',
+    flex: 1,
+  },
+
+  date: {
+    fontSize: DATE_FONT_SIZE,
+    lineHeight: DATE_FONT_SIZE,
+  },
+
   icon: {
     display: 'flex',
     alignContent: 'center',
@@ -19,21 +40,16 @@ export default StyleSheet.create({
     width: ICON_SIZE,
   },
 
-  container: {
-    paddingVertical: OFFSET / 1.5,
-    paddingHorizontal: OFFSET,
+  month: {
+    fontSize: MONTH_FONT_SIZE,
+    lineHeight: MONTH_FONT_SIZE,
   },
-
-  content: {
-    alignItems: 'flex-start',
-    flex: 1,
-  },
-
-  row: LAYOUT.STYLE.ROW,
 
   prices: {
     alignItems: 'flex-end',
   },
+
+  row: LAYOUT.STYLE.ROW,
 
   texts: {
     flex: 1,

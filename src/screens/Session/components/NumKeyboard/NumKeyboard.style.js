@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { THEME } from '../../reactor/common';
+import { THEME } from '../../../../reactor/common';
 
 const { OFFSET, UNIT } = THEME;
 const KEY_HEIGHT = UNIT * 5.6;

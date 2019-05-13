@@ -1,8 +1,10 @@
 import { func, shape, string } from 'prop-types';
 import React, { PureComponent } from 'react';
-import { TextInput } from 'react-native';
+import { TextInput, View } from 'react-native';
 
+import ASSETS from '../../../../assets';
 import { THEME } from '../../../../reactor/common';
+import { Activity, Icon } from '../../../../reactor/components';
 import styles from './Search.style';
 
 const { COLOR } = THEME;
@@ -21,7 +23,10 @@ class Search extends PureComponent {
 
   constructor(props) {
     super(props);
-    this.state = { value: props.value };
+    this.state = {
+      searching: false,
+      value: props.value,
+    };
   }
 
   componentWillReceiveProps({ value }) {
@@ -31,24 +36,29 @@ class Search extends PureComponent {
   _onChangeText = (value) => {
     const { props: { onValue } } = this;
 
-    this.setState({ value });
+    this.setState({ searching: value.length > 0, value });
     clearTimeout(TIMEOUT);
     TIMEOUT = setTimeout(() => onValue(value), 300);
+    setTimeout(() => this.setState({ searching: false }), 1000);
   }
 
   render() {
-    const { _onChangeText, props: { l10n }, state: { value } } = this;
+    const { _onChangeText, props: { l10n }, state: { searching, value } } = this;
 
     return (
-      <TextInput
-        blurOnSubmit
-        onChangeText={_onChangeText}
-        placeholder={`${l10n.SEARCH}...`}
-        placeholderTextColor={COLOR.TEXT_LIGHTEN}
-        underlineColorAndroid="transparent"
-        defaultValue={value}
-        style={styles.input}
-      />
+      <View style={styles.container}>
+        <Icon value={ASSETS.search} style={styles.icon} />
+        <TextInput
+          blurOnSubmit
+          onChangeText={_onChangeText}
+          placeholder={`${l10n.SEARCH}...`}
+          placeholderTextColor={COLOR.TEXT_LIGHTEN}
+          underlineColorAndroid="transparent"
+          defaultValue={value}
+          style={styles.input}
+        />
+        { searching && <Activity color={COLOR.TEXT_LIGHTEN} /> }
+      </View>
     );
   }
 }

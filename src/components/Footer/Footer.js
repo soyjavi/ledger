@@ -2,15 +2,17 @@ import {
   arrayOf, bool, func, string,
 } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
-import { BackHandler, View } from 'react-native';
+import { View } from 'react-native';
 
 import ASSETS, { OPTIONS } from '../../assets';
+import { C, onHardwareBackPress } from '../../common';
 import { Consumer, ConsumerEvents } from '../../context';
 import { THEME } from '../../reactor/common';
-import { Button, Dialog, Form } from '../../reactor/components';
+import { Button, Dialog } from '../../reactor/components';
 import CardOption from '../CardOption';
 import styles from './Footer.style';
 
+const { SETTINGS: { NIGHT_MODE } } = C;
 const { COLOR } = THEME;
 
 class Footer extends PureComponent {
@@ -34,11 +36,11 @@ class Footer extends PureComponent {
     dialog: false,
   };
 
-  componentWillReceiveProps({ onHardwareBack, ...inherit }) {
-    if (onHardwareBack) {
-      const method = inherit.visible ? 'addEventListener' : 'removeEventListener';
-      BackHandler[method]('hardwareBackPress', () => onHardwareBack);
-    }
+  componentWillReceiveProps({ onHardwareBack }) {
+    const { props } = this;
+    const subscribe = onHardwareBack && props.onHardwareBack !== onHardwareBack;
+
+    onHardwareBackPress(subscribe, onHardwareBack);
   }
 
   _onOption = (option) => {
@@ -95,15 +97,15 @@ class Footer extends PureComponent {
         </View>
         { options && (
           <Consumer>
-            { ({ l10n }) => (
+            { ({ l10n, store: { settings } }) => (
               <Dialog
+                highlight={settings[NIGHT_MODE]}
                 onClose={() => this.setState({ dialog: false })}
-                title={l10n.CHOOSE_TRANSACTION_TYPE}
                 style={styles.frame}
                 styleContainer={styles.dialog}
+                title={l10n.CHOOSE_TRANSACTION_TYPE}
                 visible={dialog}
               >
-                <Form />
                 <View style={styles.cards}>
                   { options.map((option, index) => (
                     <CardOption
