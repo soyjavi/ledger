@@ -10,11 +10,7 @@ const MAP_WIDTH = Math.floor(W - (SPACE.MEDIUM * 2));
 export { MAP_HEIGHT, MAP_WIDTH };
 
 export default StyleSheet.create({
-  container: {
-  },
-
   content: {
-    flexDirection: 'column-reverse',
     marginHorizontal: SPACE.MEDIUM,
     marginVertical: SPACE.XS,
   },

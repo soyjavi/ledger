@@ -61,7 +61,6 @@ export default StyleSheet.create({
 
   row: {
     ...LAYOUT.STYLE.ROW,
-    // flex: 1,
     justifyContent: 'space-between',
   },
 
@@ -87,13 +86,13 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     height: '100%',
+    opacity: 0.6,
   },
 
   scaleLine: {
     height: 1,
     width: '100%',
     backgroundColor: COLOR.BASE,
-    opacity: 0.66,
   },
 
   scaleValues: {

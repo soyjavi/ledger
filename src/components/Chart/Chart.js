@@ -88,7 +88,7 @@ class Chart extends Component {
                   {
                     backgroundColor: value === 0 ? COLOR.BASE : color,
                     height: `${parseInt(((value - floor) * 100) / (max - floor), 10)}%`,
-                    opacity: highlight === index ? 1 : opacity,
+                    opacity: highlight === index && value !== 0 ? 1 : opacity,
                   },
                 ]}
               />

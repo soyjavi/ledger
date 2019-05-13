@@ -6,6 +6,7 @@ import { View } from 'react-native';
 
 import { Consumer } from '../../../../context';
 import { Heading, HeatMap, HorizontalChartItem } from '../../../../components';
+import { orderByAmount } from '../../modules';
 import styles, { MAP_HEIGHT, MAP_WIDTH } from './Locations.style';
 
 class Locations extends PureComponent {
@@ -33,7 +34,7 @@ class Locations extends PureComponent {
     return (
       <Consumer>
         { ({ l10n }) => (
-          <View style={styles.container}>
+          <View>
             <Heading breakline title={l10n.LOCATIONS} />
             <View>
               <HeatMap
@@ -45,14 +46,13 @@ class Locations extends PureComponent {
               />
               <Heading breakline title={l10n.CITIES} style={styles.heading} />
               <View style={styles.content}>
-                { Object.keys(cities).map(item => (
+                { orderByAmount(cities).map(({ key, amount }) => (
                   <HorizontalChartItem
-                    key={item}
+                    key={key}
                     currency="x"
-                    style={{ order: parseInt(cities[item], 10) }}
-                    title={item}
-                    value={cities[item]}
-                    width={Math.floor((cities[item] / citiesTxs) * 100)}
+                    title={key}
+                    value={amount}
+                    width={Math.floor((amount / citiesTxs) * 100)}
                   />
                 ))}
               </View>
@@ -61,14 +61,13 @@ class Locations extends PureComponent {
                 <Fragment>
                   <Heading breakline title={l10n.COUNTRIES} />
                   <View style={styles.content}>
-                    { Object.keys(countries).map(item => (
+                    { orderByAmount(countries).map(({ key, amount }) => (
                       <HorizontalChartItem
-                        key={item}
+                        key={key}
                         currency="x"
-                        style={{ order: Math.floor((countries[item] / countriesTxs) * 100) }}
-                        title={item}
-                        value={countries[item]}
-                        width={Math.floor((countries[item] / countriesTxs) * 100)}
+                        title={key}
+                        value={amount}
+                        width={Math.floor((amount / countriesTxs) * 100)}
                       />
                     ))}
                   </View>

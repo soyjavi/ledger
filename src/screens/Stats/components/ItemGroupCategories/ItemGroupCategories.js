@@ -5,8 +5,9 @@ import { View } from 'react-native';
 import { HorizontalChartItem, PriceFriendly } from '../../../../components';
 import { Consumer } from '../../../../context';
 import { THEME } from '../../../../reactor/common';
-import { Text, Touchable } from '../../../../reactor/components';
+import { Touchable } from '../../../../reactor/components';
 import Heading from '../../../../components/Heading';
+import { orderByAmount } from '../../modules';
 import styles from './ItemGroupCategories.style';
 
 const { COLOR } = THEME;
@@ -35,8 +36,10 @@ class ItemGroupCategories extends PureComponent {
     let total = 0;
 
     Object.keys(dataSource).forEach((category) => {
-      totals[category] = Object.values(dataSource[category]).reduce((a, b) => a += b); // eslint-disable-line
-      total += totals[category];
+      if (category >= 0) {
+        totals[category] = Object.values(dataSource[category]).reduce((a, b) => a += b); // eslint-disable-line
+        total += totals[category];
+      }
     });
 
     return (
@@ -47,32 +50,31 @@ class ItemGroupCategories extends PureComponent {
               <PriceFriendly currency={baseCurrency} subtitle level={3} value={total} />
             </Heading>
             <View style={styles.container}>
-              { Object.keys(dataSource).map(category => (
-                <Touchable
-                  onPress={() => _onPress(category)}
-                  key={category}
-                  style={[styles.content, { order: parseInt(totals[category], 10) }]}
-                >
+              { orderByAmount(totals).map(({ key, amount }) => (
+                <Touchable key={key} onPress={() => _onPress(key)} style={styles.content}>
                   <HorizontalChartItem
                     color={isExpense ? COLOR.EXPENSES : COLOR.INCOMES}
                     currency={baseCurrency}
-                    title={l10n.CATEGORIES[type][category]}
-                    value={totals[category]}
-                    width={Math.floor((totals[category] / total) * 100)}
+                    title={l10n.CATEGORIES[type][key]}
+                    value={amount}
+                    width={Math.floor((amount / total) * 100)}
                   />
 
-                  { expand === category && Object.keys(dataSource[category]).map(title => (
-                    <View key={`${category}-${title}`} style={styles.row}>
-                      <Text level={2} lighten style={styles.title}>{title}</Text>
-                      <PriceFriendly
-                        currency={baseCurrency}
-                        subtitle
-                        level={3}
-                        lighten
-                        value={dataSource[category][title]}
-                      />
+                  { expand === key && (
+                    <View style={styles.expand}>
+                      { orderByAmount(dataSource[key]).map(item => (
+                        <HorizontalChartItem
+                          key={`${key}-${item.key}`}
+                          color={COLOR.TEXT_LIGHTEN}
+                          currency={baseCurrency}
+                          small
+                          title={item.key}
+                          value={item.amount}
+                          width={Math.floor((item.amount / amount) * 100)}
+                        />
+                      ))}
                     </View>
-                  ))}
+                  )}
                 </Touchable>
               ))}
             </View>
