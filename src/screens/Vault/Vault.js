@@ -46,7 +46,9 @@ class Vault extends Component {
 
     if (visible && dataSource && dataSource.txs.length !== txs.length) {
       const search = undefined;
-      this.setState({ scrollQuery: false, search, values: query(store, { ...dataSource, search }) });
+      this.setState({
+        scrollQuery: false, search, values: query(store, { ...dataSource, search }), vault: dataSource,
+      });
     }
   }
 
@@ -104,9 +106,9 @@ class Vault extends Component {
   render() {
     const {
       _onHardwareBack, _onScroll, _onSearch, _onToggleDialog, _onTxType,
-      props: { dataSource: vault = {}, visible, ...props },
+      props: { visible, ...props },
       state: {
-        dialog, scroll, search, type, values = [],
+        dialog, scroll, search, type, values = [], vault = {},
       },
     } = this;
     const { currency, hash, title } = vault;
@@ -126,7 +128,7 @@ class Vault extends Component {
                   <Summary {...vault} image={FLAGS[currency]} title={`${title} ${l10n.BALANCE}`} />
                   <Search l10n={l10n} onValue={_onSearch} value={search} />
                 </Fragment>
-                { visible && values.length > 0
+                { values.length > 0
                   ? (
                     <View>
                       { values.map(item => <GroupTransactions key={item.timestamp} {...item} currency={currency} />) }

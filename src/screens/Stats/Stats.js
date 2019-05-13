@@ -95,63 +95,61 @@ class Stats extends Component {
 
     return (
       <Viewport {...inherit} scroll={false} visible={visible}>
-        { visible && (
-          <Consumer>
-            { ({ l10n, navigation }) => (
-              <Fragment>
-                <Header highlight={scroll} title={`${title}${l10n.ACTIVITY}`} />
-                <ScrollView onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.container}>
-                  <View style={styles.content}>
-                    <Heading title={`${title}${l10n.ACTIVITY}`} image={ASSETS.logo} />
-                    <Heading subtitle={l10n.BALANCE} />
-                    <Chart
-                      captions={orderCaptions(l10n)}
-                      highlight={slider.index}
-                      values={chart.balance}
-                      styleContainer={[styles.chart, styles.chartMargin]}
-                      style={styles.chartBalance}
-                    />
+        <Consumer>
+          { ({ l10n, navigation }) => (
+            <Fragment>
+              <Header highlight={scroll} title={`${title}${l10n.ACTIVITY}`} />
+              <ScrollView onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.container}>
+                <View style={styles.content}>
+                  <Heading title={`${title}${l10n.ACTIVITY}`} image={ASSETS.logo} />
+                  <Heading subtitle={l10n.BALANCE} />
+                  <Chart
+                    captions={orderCaptions(l10n)}
+                    highlight={slider.index}
+                    values={chart.balance}
+                    styleContainer={[styles.chart, styles.chartMargin]}
+                    style={styles.chartBalance}
+                  />
 
-                    <Heading subtitle={`${l10n.INCOMES} vs. ${l10n.EXPENSES}`} />
-                    <Chart
-                      color={COLOR.INCOMES}
-                      highlight={slider.index}
-                      styleContainer={styles.chart}
-                      values={chart.incomes}
-                    />
-                    <Chart
-                      captions={orderCaptions(l10n)}
-                      highlight={slider.index}
-                      inverted
-                      values={chart.expenses}
-                      color={COLOR.EXPENSES}
-                      styleContainer={[styles.chart, styles.chartMargin]}
-                    />
-                  </View>
+                  <Heading subtitle={`${l10n.INCOMES} vs. ${l10n.EXPENSES}`} />
+                  <Chart
+                    color={COLOR.INCOMES}
+                    highlight={slider.index}
+                    styleContainer={styles.chart}
+                    values={chart.incomes}
+                  />
+                  <Chart
+                    captions={orderCaptions(l10n)}
+                    highlight={slider.index}
+                    inverted
+                    values={chart.expenses}
+                    color={COLOR.EXPENSES}
+                    styleContainer={[styles.chart, styles.chartMargin]}
+                  />
+                </View>
 
-                  <SliderMonths {...slider} onChange={_onChangeSlider} style={styles.sliderMonths} />
-                  { (hasExpenses || hasIncomes)
-                    ? (
-                      <Fragment>
-                        { hasPoints && <Locations {...inherit} {...locations} /> }
-                        { hasIncomes && <ItemGroupCategories type={INCOME} dataSource={incomes} /> }
-                        { hasExpenses && <ItemGroupCategories type={EXPENSE} dataSource={expenses} /> }
-                      </Fragment>
-                    )
-                    : (
-                      <View style={styles.contentEmpty}>
-                        <Text level={2} lighten>{l10n.NO_TRANSACTIONS}</Text>
-                      </View>
-                    )}
-                </ScrollView>
-                <Footer
-                  onBack={navigation.goBack}
-                  onHardwareBack={visible ? () => _onHardwareBack(navigation) : undefined}
-                />
-              </Fragment>
-            )}
-          </Consumer>
-        )}
+                <SliderMonths {...slider} onChange={_onChangeSlider} style={styles.sliderMonths} />
+                { (hasExpenses || hasIncomes)
+                  ? (
+                    <Fragment>
+                      { hasPoints && <Locations {...inherit} {...locations} /> }
+                      { hasIncomes && <ItemGroupCategories type={INCOME} dataSource={incomes} /> }
+                      { hasExpenses && <ItemGroupCategories type={EXPENSE} dataSource={expenses} /> }
+                    </Fragment>
+                  )
+                  : (
+                    <View style={styles.contentEmpty}>
+                      <Text level={2} lighten>{l10n.NO_TRANSACTIONS}</Text>
+                    </View>
+                  )}
+              </ScrollView>
+              <Footer
+                onBack={navigation.goBack}
+                onHardwareBack={visible ? () => _onHardwareBack(navigation) : undefined}
+              />
+            </Fragment>
+          )}
+        </Consumer>
 
       </Viewport>
     );

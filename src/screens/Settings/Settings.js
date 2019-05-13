@@ -50,75 +50,73 @@ class Settings extends PureComponent {
 
     return (
       <Viewport {...inherit} scroll={false} visible={visible}>
-        { visible && (
-          <Consumer>
-            { ({
-              l10n, navigation, store: {
-                baseCurrency, onSettings, rates, settings, vaults,
-              },
-            }) => (
-              <Fragment>
-                <Header highlight={scroll} title={l10n.SETTINGS} />
-                <ScrollView _onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.container}>
-                  <View style={styles.content}>
-                    <Heading breakline title={l10n.DASHBOARD} />
+        <Consumer>
+          { ({
+            l10n, navigation, store: {
+              baseCurrency, onSettings, rates, settings, vaults,
+            },
+          }) => (
+            <Fragment>
+              <Header highlight={scroll} title={l10n.SETTINGS} />
+              <ScrollView _onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.container}>
+                <View style={styles.content}>
+                  <Heading breakline title={l10n.DASHBOARD} />
+                  <OptionItem
+                    active={settings[HIDE_OVERALL_BALANCE] !== undefined ? settings[HIDE_OVERALL_BALANCE] : false}
+                    caption={l10n.SETTING_1_CAPTION}
+                    title={l10n.SETTING_1_TITLE}
+                    onChange={value => onSettings({ [HIDE_OVERALL_BALANCE]: value })}
+                  />
+                  <OptionItem
+                    active={settings[SHOW_VAULT_CURRENCY] !== undefined ? settings[SHOW_VAULT_CURRENCY] : true}
+                    caption={l10n.SETTING_2_CAPTION}
+                    title={l10n.SETTING_2_TITLE}
+                    onChange={value => onSettings({ [SHOW_VAULT_CURRENCY]: value })}
+                  />
+                  <Heading breakline lighten subtitle={`${l10n.VAULTS_VISIBILITY}`} />
+                  { query(vaults).map(({
+                    currency, currentBalance, hash, ...vault
+                  }) => (
                     <OptionItem
-                      active={settings[HIDE_OVERALL_BALANCE] !== undefined ? settings[HIDE_OVERALL_BALANCE] : false}
-                      caption={l10n.SETTING_1_CAPTION}
-                      title={l10n.SETTING_1_TITLE}
-                      onChange={value => onSettings({ [HIDE_OVERALL_BALANCE]: value })}
-                    />
-                    <OptionItem
-                      active={settings[SHOW_VAULT_CURRENCY] !== undefined ? settings[SHOW_VAULT_CURRENCY] : true}
-                      caption={l10n.SETTING_2_CAPTION}
-                      title={l10n.SETTING_2_TITLE}
-                      onChange={value => onSettings({ [SHOW_VAULT_CURRENCY]: value })}
-                    />
-                    <Heading breakline lighten subtitle={`${l10n.VAULTS_VISIBILITY}`} />
-                    { query(vaults).map(({
-                      currency, currentBalance, hash, ...vault
-                    }) => (
-                      <OptionItem
-                        key={hash}
-                        active={settings[hash]}
-                        onChange={value => onSettings({ [hash]: value })}
-                        {...vault}
-                      >
-                        <View style={styles.row}>
-                          <Image source={FLAGS[currency]} style={styles.optionFlag} />
-                          <PriceFriendly
-                            subtitle
-                            level={3}
-                            lighten
-                            currency={baseCurrency}
-                            value={baseCurrency !== currency
-                              ? exchange(Math.abs(currentBalance), currency, baseCurrency, rates)
-                              : Math.abs(currentBalance)}
-                          />
-                        </View>
-                      </OptionItem>
-                    ))}
-                  </View>
+                      key={hash}
+                      active={settings[hash]}
+                      onChange={value => onSettings({ [hash]: value })}
+                      {...vault}
+                    >
+                      <View style={styles.row}>
+                        <Image source={FLAGS[currency]} style={styles.optionFlag} />
+                        <PriceFriendly
+                          subtitle
+                          level={3}
+                          lighten
+                          currency={baseCurrency}
+                          value={baseCurrency !== currency
+                            ? exchange(Math.abs(currentBalance), currency, baseCurrency, rates)
+                            : Math.abs(currentBalance)}
+                        />
+                      </View>
+                    </OptionItem>
+                  ))}
+                </View>
 
-                  <View style={styles.content}>
-                    <Heading breakline title={l10n.OTHERS} />
-                    <OptionItem
-                      active={settings[NIGHT_MODE] !== undefined ? settings[NIGHT_MODE] : false}
-                      caption={l10n.NIGHT_MODE}
-                      onChange={value => onSettings({ [NIGHT_MODE]: value })}
-                      title={l10n.NIGHT_MODE}
-                    />
-                  </View>
-                </ScrollView>
+                <View style={styles.content}>
+                  <Heading breakline title={l10n.OTHERS} />
+                  <OptionItem
+                    active={settings[NIGHT_MODE] !== undefined ? settings[NIGHT_MODE] : false}
+                    caption={l10n.NIGHT_MODE}
+                    onChange={value => onSettings({ [NIGHT_MODE]: value })}
+                    title={l10n.NIGHT_MODE}
+                  />
+                </View>
+              </ScrollView>
 
-                <Footer
-                  onBack={navigation.goBack}
-                  onHardwareBack={visible ? () => _onHardwareBack(navigation) : undefined}
-                />
-              </Fragment>
-            )}
-          </Consumer>
-        )}
+              <Footer
+                onBack={navigation.goBack}
+                onHardwareBack={visible ? () => _onHardwareBack(navigation) : undefined}
+              />
+            </Fragment>
+          )}
+        </Consumer>
 
       </Viewport>
     );
