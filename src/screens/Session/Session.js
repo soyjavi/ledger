@@ -34,10 +34,10 @@ class Session extends PureComponent {
   }
 
   _onFingerprint = async ({ navigation, store }) => {
-    const { props: { getFingerprintAsync } } = this;
+    const { props: { getFingerprintAsync }, state: { busy } } = this;
 
     this.setState({ askFingerprint: true });
-    if (getFingerprintAsync) {
+    if (!busy && getFingerprintAsync) {
       const { success } = await getFingerprintAsync('Use your fingerprint.');
       if (success) handshake(this, { pin: store.pin, store, navigation });
       else this.setState({ askFingerprint: false });

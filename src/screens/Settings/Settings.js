@@ -62,13 +62,13 @@ class Settings extends PureComponent {
                 <View style={styles.content}>
                   <Heading breakline title={l10n.DASHBOARD} />
                   <OptionItem
-                    active={settings[HIDE_OVERALL_BALANCE] !== undefined ? settings[HIDE_OVERALL_BALANCE] : false}
+                    active={settings[HIDE_OVERALL_BALANCE]}
                     caption={l10n.SETTING_1_CAPTION}
                     title={l10n.SETTING_1_TITLE}
                     onChange={value => onSettings({ [HIDE_OVERALL_BALANCE]: value })}
                   />
                   <OptionItem
-                    active={settings[SHOW_VAULT_CURRENCY] !== undefined ? settings[SHOW_VAULT_CURRENCY] : true}
+                    active={settings[SHOW_VAULT_CURRENCY]}
                     caption={l10n.SETTING_2_CAPTION}
                     title={l10n.SETTING_2_TITLE}
                     onChange={value => onSettings({ [SHOW_VAULT_CURRENCY]: value })}
@@ -102,7 +102,7 @@ class Settings extends PureComponent {
                 <View style={styles.content}>
                   <Heading breakline title={l10n.OTHERS} />
                   <OptionItem
-                    active={settings[NIGHT_MODE] !== undefined ? settings[NIGHT_MODE] : false}
+                    active={settings[NIGHT_MODE]}
                     caption={l10n.NIGHT_MODE}
                     onChange={value => onSettings({ [NIGHT_MODE]: value })}
                     title={l10n.NIGHT_MODE}

@@ -24,7 +24,8 @@ export default async (component) => {
         service += `?latestTransaction=${localHash}`;
       }
 
-      const { txs: newTxs = [] } = await fetch({ service, headers }).catch(onError);
+      const { txs: newTxs = [] } = await fetch({ service, headers }).catch(onError) || {};
+
       nextState.txs = (remoteHash !== localHash) ? [...txs, ...newTxs] : newTxs;
       nextState.txs = newTxs;
     }

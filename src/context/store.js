@@ -7,7 +7,7 @@ import {
   createTx, createVault, getHash, getLocations, syncProfile,
 } from './services';
 
-const { CURRENCY, NAME } = C;
+const { CURRENCY, NAME, SETTINGS } = C;
 const { Provider, Consumer: ConsumerStore } = createContext(`${NAME}:context:store`);
 
 class ProviderStore extends Component {
@@ -26,7 +26,11 @@ class ProviderStore extends Component {
     baseCurrency: CURRENCY,
     pin: undefined,
     rates: {},
-    settings: {},
+    settings: {
+      [SETTINGS.HIDE_OVERALL_BALANCE]: false,
+      [SETTINGS.SHOW_VAULT_CURRENCY]: true,
+      [SETTINGS.NIGHT_MODE]: false,
+    },
     txs: [],
     vaults: [],
     version: undefined,
