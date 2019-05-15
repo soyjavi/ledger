@@ -53,9 +53,7 @@ class GroupTransactions extends Component {
                     level={3}
                     fixed={FIXED[baseCurrency]}
                     symbol={SYMBOL[baseCurrency]}
-                    value={baseCurrency !== currency
-                      ? exchange(Math.abs(value), currency, baseCurrency, rates)
-                      : Math.abs(value)}
+                    value={exchange(Math.abs(value), currency, baseCurrency, rates, timestamp)}
                   />
                 </View>
               )}

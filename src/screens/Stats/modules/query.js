@@ -25,7 +25,6 @@ export default (props, query = {}) => {
   const values = { [EXPENSE]: {}, [INCOME]: {} };
   const now = parseDate();
   const lastYear = new Date(now.getFullYear(), now.getMonth() - 11, 1);
-
   const rangeTxs = [];
 
   txs
@@ -46,11 +45,10 @@ export default (props, query = {}) => {
 
       if (value && month >= 0) {
         const { currency } = vaults.find(({ hash }) => hash === tx.vault);
-        const valueExchange = currency !== baseCurrency
-          ? exchange(value, currency, baseCurrency, rates)
-          : value;
+        const valueExchange = exchange(value, currency, baseCurrency, rates, timestamp);
 
         chart.balance[index] += type === EXPENSE ? -(valueExchange) : valueExchange;
+
         if (category !== VAULT_TRANSFER) {
           if (type === EXPENSE) chart.expenses[index] += valueExchange;
           else chart.incomes[index] += valueExchange;
@@ -78,13 +76,6 @@ export default (props, query = {}) => {
     });
 
   let total = 0;
-  let baseBalance = overall.balance;
-  if (vault.hash) {
-    baseBalance = vault.balance;
-    baseBalance = vault.currency !== baseCurrency
-      ? exchange(baseBalance, vault.currency, baseCurrency, rates)
-      : baseBalance;
-  }
 
   return {
     chart: {
@@ -94,7 +85,10 @@ export default (props, query = {}) => {
           total += value;
           return total;
         })
-        .map(value => (value !== 0 ? baseBalance + value : 0)),
+        .map((value, index) => {
+          const baseBalance = vault.hash ? vault.chartBalance[index] : overall.chartBalance[index];
+          return value !== 0 ? baseBalance + value : 0;
+        }),
     },
     ...values,
     locations: {

@@ -39,6 +39,10 @@ export default ({
   });
 
   return Object.assign({}, vault, {
+    chartBalance: new Array(12).fill(0).map((value, index) => {
+      const timestamp = new Date(lastYear.getFullYear(), lastYear.getMonth() + index, 15);
+      return exchange(vault.balance, currency, baseCurrency, rates, timestamp);
+    }),
     currentBalance: balance,
     currentMonth: {
       expenses: exchangeProps ? exchange(expenses, ...exchangeProps) : expenses,

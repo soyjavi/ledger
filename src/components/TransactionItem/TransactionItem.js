@@ -74,9 +74,7 @@ class TransactionItem extends PureComponent {
                     fixed={FIXED[baseCurrency]}
                     operator={type === INCOME ? '+' : '-'}
                     symbol={SYMBOL[baseCurrency]}
-                    value={baseCurrency !== currency
-                      ? exchange(value, currency, baseCurrency, rates)
-                      : value}
+                    value={exchange(value, currency, baseCurrency, rates, timestamp)}
                   />
 
                   { baseCurrency !== currency && (
