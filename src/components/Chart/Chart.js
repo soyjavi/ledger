@@ -6,6 +6,7 @@ import { View } from 'react-native';
 
 import { THEME } from '../../reactor/common';
 import { Text } from '../../reactor/components';
+import calcHeight from  './modules/calcHeight';
 import styles from './Chart.style';
 
 const { COLOR } = THEME;
@@ -39,23 +40,27 @@ class Chart extends Component {
     } = this.props;
     const opacity = highlight ? 0.6 : 1;
     let max = 0;
-    let floor = 0;
-    let gap = 0;
+    let min = 0;
+    let avg = 0;
     let scaleValues = [];
-    let k;
 
     if (values.length) {
-      max = parseInt(Math.max(...values), 10);
-      floor = (parseInt(Math.min(...(values.filter(value => value > 0))), 10) || 0) / 1.02;
-      gap = max - floor;
+      max = Math.floor(Math.max(...values));
+      min = Math.floor((parseInt(Math.min(...(values.filter(value => value > 0))), 10) || 0) / 1.05);
+      avg = Math.floor(values.reduce((a, b) => a + b) / values.filter(value => value > 0).length);
+      if (avg === max) {
+        avg /= 2;
+        min = 0;
+      }
     }
 
     if (scale) {
-      k = max >= 1000;
-      // const avg = values.reduce((a, b) => a + b) / values.filter(value => value > 0);
-      const avg = floor + (gap / 2);
+      let maxScale = Math.floor(max);
+      let avgScale = Math.floor(avg);
+      if (max >= 1000) maxScale = `${(max / 1000).toFixed(1)}k`;
+      if (avg >= 1000) avgScale = `${(avg / 1000).toFixed(1)}k`;
 
-      scaleValues = !inverted ? [max, avg, 0] : ['', avg, max];
+      scaleValues = !inverted ? [maxScale, avgScale, 0] : ['', avgScale, maxScale];
     }
 
     return (
@@ -65,7 +70,7 @@ class Chart extends Component {
             <View style={styles.scaleValues}>
               { scaleValues.map((value, index) => (
                 <Text key={`scale-${index.toString()}`} lighten style={styles.caption}>
-                  {`${value ? parseInt(value / (k ? 1000 : 1), 10) : value}${k && value > 0 ? 'k' : ''}`}
+                  {value}
                 </Text>
               ))}
             </View>
@@ -87,7 +92,7 @@ class Chart extends Component {
                   inverted && styles.itemInverted,
                   {
                     backgroundColor: value === 0 ? COLOR.BASE : color,
-                    height: `${parseInt(((value - floor) * 100) / (max - floor), 10)}%`,
+                    height: `${calcHeight(value, { min, max, avg })}%`,
                     opacity: highlight === index && value !== 0 ? 1 : opacity,
                   },
                 ]}
