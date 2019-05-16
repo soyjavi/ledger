@@ -93,7 +93,6 @@ class Summary extends Component {
 
             <Heading title={l10n.CURRENT_MONTH}>
               <Button
-                color={COLOR.PRIMARY}
                 outlined
                 small
                 title={l10n.ACTIVITY}

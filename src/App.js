@@ -31,7 +31,7 @@ export default () => (
     }) => (
       <LayoutView style={styles.container}>
         { console.log('<App>') }
-        <Session {...events} backward={current !== SESSION} visible={stack.includes(SESSION)} />
+        <Session {...events} backward={current !== SESSION} visible />
 
         { stack.includes(SESSION) && (
           <Fragment>

@@ -122,7 +122,7 @@ class Dashboard extends PureComponent {
 
                   { queryLastTxs({ txs, vaults }).length > 0 && (
                     <Fragment>
-                      <Heading breakline subtitle={l10n.LAST_TRANSACTIONS} />
+                      <Heading breakline title={l10n.LAST_TRANSACTIONS} />
                       <View>
                         { queryLastTxs({ txs, vaults }).map(tx => (
                           <TransactionItem key={tx.hash} showDate {...tx} />
