@@ -74,11 +74,14 @@ class ProviderStore extends Component {
 
   onSync = async () => {
     const { _store } = this;
-    const nextState = consolidate(await syncProfile(this));
 
-    await _store(nextState);
+    let nextState = await syncProfile(this);
+    if (nextState) {
+      nextState = consolidate(nextState);
+      await _store(nextState);
+    }
+
     this.setState({ ...nextState, sync: true });
-
     return nextState;
   }
 

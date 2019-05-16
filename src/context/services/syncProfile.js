@@ -5,7 +5,7 @@ const { VERSION } = C;
 export default async (component) => {
   const { onError, state: { hash, txs = [], version } } = component;
   const headers = { authorization: hash };
-  let nextState = {};
+  let nextState;
 
   const profile = await fetch({ service: 'profile', headers }).catch(onError);
 
