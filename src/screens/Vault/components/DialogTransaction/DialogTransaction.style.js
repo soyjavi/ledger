@@ -19,7 +19,17 @@ export default StyleSheet.create({
     width: CARD_WIDTH,
   },
 
+  cardOption: {
+    flex: 1,
+    width: '100%',
+  },
+
+  cardLast: {
+    marginRight: 0,
+  },
+
   cards: {
+    flexDirection: 'row',
     marginBottom: SPACE.REGULAR,
     marginTop: SPACE.XS,
   },
@@ -29,15 +39,9 @@ export default StyleSheet.create({
     backgroundColor: COLOR.BACKGROUND_OPACITY,
   },
 
-  frame: {
-    ...STYLE.DIALOG_FRAME,
-  },
+  frame: STYLE.DIALOG_FRAME,
 
   form: {
-    marginVertical: SPACE.MEDIUM,
-  },
-
-  location: {
-    marginVertical: SPACE.XXS,
+    marginBottom: SPACE.MEDIUM,
   },
 });

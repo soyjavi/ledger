@@ -8,13 +8,11 @@ import { Summary, Footer, Header } from '../../components';
 import { Consumer } from '../../context';
 import { THEME } from '../../reactor/common';
 import { Text, Viewport } from '../../reactor/components';
-import {
-  DialogTransaction, DialogTransfer, GroupTransactions, Search,
-} from './components';
+import { DialogTransaction, GroupTransactions, Search } from './components';
 import query from './modules/query';
 import styles from './Vault.style';
 
-const { SETTINGS: { NIGHT_MODE }, TX: { TYPE: { EXPENSE, TRANSFER } } } = C;
+const { SETTINGS: { NIGHT_MODE } } = C;
 const { SPACE } = THEME;
 
 class Vault extends Component {
@@ -37,7 +35,6 @@ class Vault extends Component {
     scroll: false,
     scrollQuery: false,
     search: undefined,
-    type: EXPENSE,
     values: [],
   };
 
@@ -101,14 +98,12 @@ class Vault extends Component {
     this.setState({ dialog: !dialog });
   }
 
-  _onTxType = type => this.setState({ dialog: type !== undefined, type });
-
   render() {
     const {
-      _onHardwareBack, _onScroll, _onSearch, _onToggleDialog, _onTxType,
+      _onHardwareBack, _onScroll, _onSearch, _onToggleDialog,
       props: { visible, ...props },
       state: {
-        dialog, scroll, search, type, values = [], vault = {},
+        dialog, scroll, search, values = [], vault = {},
       },
     } = this;
     const { currency, hash, title } = vault;
@@ -120,7 +115,7 @@ class Vault extends Component {
     return (
       <Viewport {...props} scroll={false} visible={visible}>
         <Consumer>
-          { ({ navigation, l10n, store: { settings, vaults } }) => (
+          { ({ navigation, l10n, store: { settings } }) => (
             <Fragment>
               <Header highlight={scroll} image={FLAGS[currency]} title={title} />
               <ScrollView onScroll={_onScroll} scrollEventThrottle={40} style={styles.container}>
@@ -144,29 +139,17 @@ class Vault extends Component {
               <Footer
                 onBack={navigation.goBack}
                 onHardwareBack={visible ? () => _onHardwareBack(navigation) : undefined}
-                onPress={_onTxType}
-                options={vaults.length === 1 ? [l10n.EXPENSE, l10n.INCOME] : [l10n.EXPENSE, l10n.INCOME, l10n.TRANSFER]}
+                onPress={_onToggleDialog}
               />
 
               { visible && (
-                <Fragment>
-                  <DialogTransaction
-                    currency={currency}
-                    highlight={settings[NIGHT_MODE]}
-                    type={type}
-                    vault={hash}
-                    onClose={_onToggleDialog}
-                    visible={dialog && type !== TRANSFER}
-                  />
-                  { vaults.length > 1 && (
-                    <DialogTransfer
-                      highlight={settings[NIGHT_MODE]}
-                      onClose={_onToggleDialog}
-                      vault={hash}
-                      visible={dialog && type === TRANSFER}
-                    />
-                  )}
-                </Fragment>
+                <DialogTransaction
+                  currency={currency}
+                  highlight={settings[NIGHT_MODE]}
+                  onClose={_onToggleDialog}
+                  vault={hash}
+                  visible={dialog}
+                />
               )}
             </Fragment>
           )}

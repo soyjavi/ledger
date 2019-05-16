@@ -73,7 +73,6 @@ export default {
     ENTER_PIN: 'Enter your pin',
     ENTER_PIN_OR_FINGERPRINT: 'Enter your pin or fingerprint',
     EXPENSE: 'Expense',
-    EXPENSE_CAPTION: 'Register a new expense in this vault.',
     EXPENSES: 'Expenses',
 
     FIRST_VAULT_CAPTION: 'This will be your first vault. The currency you choose will be used as the basis for all reports.', // eslint-disable-line
@@ -82,7 +81,6 @@ export default {
     GET: 'Get',
 
     INCOME: 'Income',
-    INCOME_CAPTION: 'Register a new income in this vault.',
     INCOMES: 'Incomes',
     INITIAL_BALANCE: 'Initial balance',
 
@@ -128,6 +126,7 @@ export default {
     TRANSFER: 'Transfer',
     TRANSFERS: 'Transfers',
     TRANSFER_CAPTION: 'Transfer any amount to another of your vaults.',
+    TYPE: 'Type',
 
     VAULT: 'Vault',
     VAULT_DESTINATION: 'Destination vault',

@@ -2,15 +2,16 @@ import { C } from '../../../../../common';
 
 const { VAULT_TRANSFER, TX: { TYPE: { EXPENSE, INCOME } } } = C;
 
-export default async ({
-  props: { vault },
-  state: {
-    form: {
-      from, to, exchange, value,
+export default async (component, { onTx }) => {
+  const {
+    props: { vault },
+    state: {
+      form: {
+        from, to, exchange, value,
+      },
     },
-  },
-  store: { onTx },
-}) => {
+  } = component;
+
   let response = await onTx({
     category: VAULT_TRANSFER,
     title: to.title,
