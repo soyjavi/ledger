@@ -37,7 +37,7 @@ class FormTransaction extends PureComponent {
     const from = vaults.find(({ hash }) => hash === vault);
     const to = vaults.find(({ hash }) => hash === destination);
 
-    if (exchange === form.exchange) {
+    if (destination && exchange === form.exchange) {
       if (from.currency === to.currency) exchange = value;
       else if (from.currency === baseCurrency) exchange = value * lastRates[to.currency];
       else if (to.currency === baseCurrency) exchange = value / lastRates[from.currency];
@@ -49,7 +49,9 @@ class FormTransaction extends PureComponent {
       form: {
         exchange, from, to, value,
       },
-      valid: from !== undefined && to !== undefined && value !== undefined && exchange !== undefined,
+      valid: to !== undefined
+        && (value !== undefined && value.length > 0)
+        && (exchange !== undefined && exchange.length > 0),
     });
   }
 
@@ -69,7 +71,7 @@ class FormTransaction extends PureComponent {
         { ({ l10n, store }) => (
           <Fragment>
             <Text subtitle level={3}>{l10n.VAULT_DESTINATION}</Text>
-            <Slider itemMargin={0} itemWidth={CARD_WIDTH + SPACE.S} steps={4} style={styles.cards}>
+            <Slider itemMargin={0} itemWidth={CARD_WIDTH + SPACE.S} style={styles.cards}>
               { queryAvailableVaults(store, vault).map(({
                 currency, currentBalance, hash, title,
               }) => (

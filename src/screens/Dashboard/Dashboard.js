@@ -104,12 +104,7 @@ class Dashboard extends PureComponent {
                   />
 
                   <Heading title={l10n.VAULTS} />
-                  <Slider
-                    itemWidth={VAULT_ITEM_WIDTH + SPACE.S}
-                    itemMargin={0}
-                    steps={1}
-                    style={styles.vaults}
-                  >
+                  <Slider itemWidth={VAULT_ITEM_WIDTH + SPACE.S} itemMargin={0} style={styles.vaults}>
                     { queryVaults({ settings, vaults }).map(vault => (
                       <VaultCard
                         {...vault}

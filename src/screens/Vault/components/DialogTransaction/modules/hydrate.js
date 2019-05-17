@@ -9,7 +9,7 @@ export default (component, store) => {
 
   return Object.assign({}, TRANSFER,
     {
-      value: { ...TRANSFER.value, currency, disabled: destination === undefined },
-      exchange: { ...TRANSFER.exchange, currency: destinationCurrency, disabled: destination === undefined },
+      value: { ...TRANSFER.value, currency },
+      exchange: { ...TRANSFER.exchange, currency: destinationCurrency },
     });
 };
