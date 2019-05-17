@@ -17,13 +17,16 @@ import wipe from './category-wipe.png';
 
 import AUD from './flag-australia.png';
 import BTC from './flag-bitcoin.png';
+import CNY from './flag-china.png';
 import EUR from './flag-europe.png';
 import HKD from './flag-hong-kong.png';
 import JPY from './flag-japan.png';
 import KRW from './flag-south-korea.png';
+import MXN from './flag-mexico.png';
 import MYR from './flag-malaysia.png';
 import THB from './flag-thailand.png';
 import GBP from './flag-united-kingdom.png';
+import RUB from './flag-rusia.png';
 import USD from './flag-united-states.png';
 import VND from './flag-vietnam.png';
 
@@ -64,7 +67,7 @@ const CATEGORIES = [
 ];
 
 const FLAGS = {
-  AUD, BTC, EUR, HKD, JPY, KRW, MYR, THB, GBP, USD, VND,
+  AUD, BTC, CNY, EUR, HKD, JPY, KRW, MXN, MYR, THB, GBP, RUB, USD, VND,
 };
 
 export { CATEGORIES, FLAGS };

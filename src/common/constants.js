@@ -8,7 +8,7 @@ const { BORDER_RADIUS, SPACE, UNIT } = THEME;
 // const DEV = __DEV__ ? __DEV__ : { hello: 'world' }; // eslint-disable-line;
 // const isDev = packagerOpts && packagerOpts.dev;
 
-const IS_PRODUCTION = true;
+const IS_PRODUCTION = false;
 const IS_ANDROID = Platform.OS === 'android';
 const MS_IN_DAY = 1000 * 24 * 60 * 60;
 const MS_IN_WEEK = MS_IN_DAY * 7;
@@ -70,12 +70,12 @@ export default {
     BTC: IS_ANDROID && Platform.Version < 26 ? 'Ƀ' : '₿',
     // CAD: 'CA$',
     // CHF: 'SFr',
-    // CNY: '',
+    CNY: '¥',
     // CZK: 'Kč',
     // DKK: 'Dkr',
     GBP: '£',
     EUR: ' €',
-    HKD: 'HKD',
+    HKD: 'HK$',
     // HRK: '',
     // HUF: 'Ft',
     // IDR: 'Rp',
@@ -84,14 +84,14 @@ export default {
     // ISK: '',
     JPY: '¥',
     KRW: '₩',
-    // MXN: 'Mex$',
+    MXN: 'Mex$',
     MYR: 'RM',
     // NOK: 'Kr',
     // NZD: 'NZD$',
     // PHP: '₱',
     // PLN: 'zł',
     // RON: '',
-    // RUB: 'руб.',
+    RUB: '₽',
     // SEK: 'Kr',
     // SGD: 'S$',
     THB: '฿',
