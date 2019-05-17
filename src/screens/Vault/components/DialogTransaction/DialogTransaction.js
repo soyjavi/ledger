@@ -66,9 +66,9 @@ class DialogTransaction extends PureComponent {
 
     this.setState({ busy: true });
     const method = type === TRANSFER ? onTransfer : onTransaction;
-    const { hash } = await method(this, store);
+    const tx = await method(this, store);
+    if (tx) onClose();
     this.setState({ busy: false });
-    if (hash) onClose();
   }
 
   render() {
