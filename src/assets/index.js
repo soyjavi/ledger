@@ -35,9 +35,6 @@ import income from './icon_income.png';
 import logo from './logo.png';
 import search from './icon-search.png';
 
-import optionExpense from './option-expense.png';
-import optionIncome from './option-income.png';
-
 const CATEGORIES = [
   {
     0: wipe,
@@ -70,13 +67,7 @@ const FLAGS = {
   AUD, BTC, EUR, HKD, JPY, KRW, MYR, THB, GBP, USD, VND,
 };
 
-const OPTIONS = {
-  expense: optionExpense,
-  income: optionIncome,
-  transfer: vaultTransfer,
-};
-
-export { CATEGORIES, FLAGS, OPTIONS };
+export { CATEGORIES, FLAGS };
 
 export default {
   add,

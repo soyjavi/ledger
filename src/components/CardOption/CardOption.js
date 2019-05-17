@@ -17,10 +17,12 @@ const CardOption = ({
     onPress={onPress}
     style={[styles.container, selected && { backgroundColor: color }, inherit.style]}
   >
-    <View style={[styles.thumbnail, selected && styles.thumbnailHighlight]}>
-      { image && <Image source={image} style={styles.image} /> }
-      { icon && <Icon value={icon} style={styles.icon} /> }
-    </View>
+    { (image || icon) && (
+      <View style={[styles.thumbnail, selected && styles.thumbnailHighlight]}>
+        { image && <Image source={image} style={styles.image} /> }
+        { icon && <Icon value={icon} style={styles.icon} /> }
+      </View>
+    )}
     <Text caption level={2} numberOfLines={1} style={[styles.title, selected && styles.titleHighlight]}>
       {title}
     </Text>

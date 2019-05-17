@@ -104,7 +104,6 @@ class DialogTransaction extends PureComponent {
                 <CardOption
                   key={option}
                   color={color}
-                  icon={OPTIONS[option.toLowerCase()]}
                   onPress={() => _onType(index)}
                   selected={type === index}
                   style={[styles.cardOption, index === 2 && styles.cardLast]}
