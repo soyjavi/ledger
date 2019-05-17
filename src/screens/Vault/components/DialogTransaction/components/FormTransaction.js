@@ -3,8 +3,9 @@ import {
 } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
 
-import { CATEGORIES } from '../../../../../assets';
-import { FORM, setCurrency, translate } from '../../../../../common';
+import {
+  FORM, getIconCategory, setCurrency, translate,
+} from '../../../../../common';
 import { CardOption } from '../../../../../components';
 import { Consumer } from '../../../../../context';
 import { Form, Slider, Text } from '../../../../../reactor/components';
@@ -48,7 +49,7 @@ class FormTransaction extends PureComponent {
 
     return (
       <Consumer>
-        { ({ l10n }) => (
+        { ({ l10n, store }) => (
           <Fragment>
             <Text subtitle level={3}>{l10n.CATEGORY}</Text>
             <Slider itemMargin={0} itemWidth={CARD_WIDTH + SPACE.S} style={styles.cards}>
@@ -56,7 +57,7 @@ class FormTransaction extends PureComponent {
                 <CardOption
                   key={item.key}
                   color={color}
-                  icon={CATEGORIES[type][item.key]}
+                  icon={getIconCategory({ type, category: item.key }, store)}
                   onPress={() => _onChange({ category: item.key })}
                   selected={category === item.key}
                   style={styles.card}

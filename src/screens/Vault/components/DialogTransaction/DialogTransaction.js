@@ -2,7 +2,6 @@ import { bool, func, string } from 'prop-types';
 import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
-import { OPTIONS } from '../../../../assets';
 import { C } from '../../../../common';
 import { Consumer } from '../../../../context';
 import { CardOption, HeatMap } from '../../../../components';
