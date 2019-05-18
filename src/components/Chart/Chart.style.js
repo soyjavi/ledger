@@ -11,6 +11,7 @@ const SCALE_WIDTH = SPACE.XL;
 export default StyleSheet.create({
   caption: {
     fontSize: UNIT,
+    height: UNIT,
     lineHeight: UNIT,
   },
 

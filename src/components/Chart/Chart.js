@@ -6,7 +6,7 @@ import { View } from 'react-native';
 
 import { THEME } from '../../reactor/common';
 import { Text } from '../../reactor/components';
-import calcHeight from  './modules/calcHeight';
+import calcHeight from './modules/calcHeight';
 import styles from './Chart.style';
 
 const { COLOR } = THEME;
