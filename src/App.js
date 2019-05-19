@@ -43,7 +43,7 @@ export default () => (
 
         { stack.includes(DASHBOARD) && (
           <Fragment>
-            <Settings backward={current !== SETTINGS} visible={stack.includes(SETTINGS)} />
+            <Settings visible={stack.includes(SETTINGS)} />
             <Vault
               backward={current !== VAULT}
               dataSource={stack.includes(VAULT) && params.Vault
@@ -53,7 +53,7 @@ export default () => (
               goBack={goBack}
               visible={stack.includes(VAULT)}
             />
-            <Stats {...store} backward={current !== STATS} vault={params.Vault} visible={stack.includes(STATS)} />
+            <Stats {...store} vault={params.Vault} visible={stack.includes(STATS)} />
             <DialogClone dataSource={store.tx} highlight={nightMode} visible={store.tx !== undefined} />
           </Fragment>
         )}

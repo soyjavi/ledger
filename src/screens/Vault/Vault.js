@@ -51,13 +51,14 @@ class Vault extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     const {
-      props: { visible },
+      props: { backward, visible },
       state: {
         dialog, scroll, search, scrollQuery,
       },
     } = this;
 
     return (nextProps.visible !== visible)
+      || (nextState.backward !== backward)
       || (nextState.dialog !== dialog)
       || (nextState.scroll !== scroll)
       || (nextState.search !== search)
@@ -101,7 +102,7 @@ class Vault extends Component {
   render() {
     const {
       _onHardwareBack, _onScroll, _onSearch, _onToggleDialog,
-      props: { visible, ...props },
+      props: { visible, ...inherit },
       state: {
         dialog, scroll, search, values = [], vault = {},
       },
@@ -113,7 +114,7 @@ class Vault extends Component {
     });
 
     return (
-      <Viewport {...props} scroll={false} visible={visible}>
+      <Viewport {...inherit} scroll={false} visible={visible}>
         <Consumer>
           { ({ navigation, l10n, store: { settings } }) => (
             <Fragment>
