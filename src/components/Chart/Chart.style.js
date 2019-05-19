@@ -30,10 +30,6 @@ export default StyleSheet.create({
   container: {
   },
 
-  containerInverted: {
-    top: -1,
-  },
-
   content: {
     ...LAYOUT.STYLE.ROW,
     alignItems: 'flex-end',
@@ -46,10 +42,12 @@ export default StyleSheet.create({
   },
 
   item: {
+    backgroundColor: COLOR.BASE,
     borderTopLeftRadius: COLUMN_WIDTH / 2,
     borderTopRightRadius: COLUMN_WIDTH / 2,
     maxHeight: '100%',
     minHeight: COLUMN_WIDTH,
+    opacity: 0.66,
     width: COLUMN_WIDTH,
   },
 
@@ -87,13 +85,16 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     height: '100%',
-    opacity: 0.6,
   },
 
   scaleLine: {
     height: 1,
     width: '100%',
     backgroundColor: COLOR.BASE,
+  },
+
+  scaleLineEmpty: {
+    height: 0,
   },
 
   scaleValues: {

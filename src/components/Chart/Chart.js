@@ -6,7 +6,7 @@ import { View } from 'react-native';
 
 import { THEME } from '../../reactor/common';
 import { Text } from '../../reactor/components';
-import { calcHeight, calcScaleValues } from './modules';
+import { calcHeight, calcRange, calcScaleValues } from './modules';
 import styles from './Chart.style';
 
 const { COLOR } = THEME;
@@ -38,25 +38,11 @@ class Chart extends Component {
     const {
       captions, color, highlight, inverted, scale, values, ...inherit
     } = this.props;
-    const opacity = highlight ? 0.6 : 1;
-    let max = 0;
-    let min = 0;
-    let avg = 0;
-
-    if (values.length) {
-      max = Math.floor(Math.max(...values));
-      min = Math.floor((parseInt(Math.min(...(values.filter(value => value > 0))), 10) || 0) / 1.05);
-      avg = Math.floor(values.reduce((a, b) => a + b) / values.filter(value => value > 0).length);
-      if (avg === max) {
-        avg /= 2;
-        min = 0;
-      }
-    }
-
-    const scaleValues = scale ? calcScaleValues({ avg, max, inverted }) : [];
+    const { max, min, avg } = calcRange(values);
+    const scaleValues = scale && values.length > 0 ? calcScaleValues({ avg, max, inverted }) : [];
 
     return (
-      <View style={[styles.container, inverted && styles.containerInverted, inherit.styleContainer]}>
+      <View style={[styles.container, inherit.styleContainer]}>
         { scale && (
           <View style={[styles.scale, captions && styles.scaleCaptions]}>
             <View style={styles.scaleValues}>
@@ -67,7 +53,12 @@ class Chart extends Component {
               ))}
             </View>
             <View style={styles.scaleLines}>
-              { scaleValues.map((value, index) => <View key={`line-${index.toString()}`} style={styles.scaleLine} />)}
+              { scaleValues.map((value, index) => (
+                <View
+                  key={`line-${index.toString()}`}
+                  style={[styles.scaleLine, value.length === 0 && styles.scaleLineEmpty]}
+                />
+              ))}
             </View>
           </View>
         )}
@@ -82,10 +73,10 @@ class Chart extends Component {
                 style={[
                   styles.item,
                   inverted && styles.itemInverted,
-                  {
-                    backgroundColor: value === 0 ? COLOR.BASE : color,
+                  value !== 0 && {
+                    backgroundColor: (highlight && highlight !== index) ? COLOR.TEXT_LIGHTEN : color,
                     height: `${calcHeight(value, { min, max, avg })}%`,
-                    opacity: highlight === index && value !== 0 ? 1 : opacity,
+                    opacity: 1,
                   },
                 ]}
               />
