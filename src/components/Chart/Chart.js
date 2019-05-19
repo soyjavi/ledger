@@ -6,7 +6,7 @@ import { View } from 'react-native';
 
 import { THEME } from '../../reactor/common';
 import { Text } from '../../reactor/components';
-import calcHeight from './modules/calcHeight';
+import { calcHeight, calcScaleValues } from './modules';
 import styles from './Chart.style';
 
 const { COLOR } = THEME;
@@ -42,7 +42,6 @@ class Chart extends Component {
     let max = 0;
     let min = 0;
     let avg = 0;
-    let scaleValues = [];
 
     if (values.length) {
       max = Math.floor(Math.max(...values));
@@ -54,14 +53,7 @@ class Chart extends Component {
       }
     }
 
-    if (scale) {
-      let maxScale = Math.floor(max);
-      let avgScale = Math.floor(avg);
-      if (max >= 1000) maxScale = `${(max / 1000).toFixed(1)}k`;
-      if (avg >= 1000) avgScale = `${(avg / 1000).toFixed(1)}k`;
-
-      scaleValues = !inverted ? [maxScale, avgScale, 0] : ['', avgScale, maxScale];
-    }
+    const scaleValues = scale ? calcScaleValues({ avg, max, inverted }) : [];
 
     return (
       <View style={[styles.container, inverted && styles.containerInverted, inherit.styleContainer]}>
