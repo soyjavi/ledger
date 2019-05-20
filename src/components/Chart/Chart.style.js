@@ -27,7 +27,12 @@ export default StyleSheet.create({
     overflow: 'hidden',
   },
 
+  columnInverted: {
+    justifyContent: 'flex-start',
+  },
+
   container: {
+    marginTop: SPACE.XS,
   },
 
   content: {
@@ -37,21 +42,21 @@ export default StyleSheet.create({
     height: COLUMN_HEIGHT,
   },
 
-  inverted: {
-    justifyContent: 'flex-start',
-  },
-
-  item: {
-    backgroundColor: COLOR.BASE,
+  bar: {
+    backgroundColor: COLOR.BACKGROUND,
     borderTopLeftRadius: COLUMN_WIDTH / 2,
     borderTopRightRadius: COLUMN_WIDTH / 2,
     maxHeight: '100%',
     minHeight: COLUMN_WIDTH,
-    opacity: 0.66,
     width: COLUMN_WIDTH,
   },
 
-  itemInverted: {
+  barEmpty: {
+    backgroundColor: COLOR.BASE,
+    opacity: 0.66,
+  },
+
+  barInverted: {
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
     borderBottomLeftRadius: COLUMN_WIDTH / 2,
@@ -74,7 +79,6 @@ export default StyleSheet.create({
     right: 0,
     top: 0,
     bottom: 0,
-    display: 'flex',
   },
 
   scaleCaptions: {
@@ -98,8 +102,10 @@ export default StyleSheet.create({
   },
 
   scaleValues: {
+    position: 'absolute',
+    bottom: SPACE.XS,
     justifyContent: 'space-between',
+    top: -SPACE.S,
     width: SCALE_WIDTH,
-    height: '100%',
   },
 });

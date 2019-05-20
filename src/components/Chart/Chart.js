@@ -42,7 +42,7 @@ class Chart extends Component {
     const scaleValues = scale && values.length > 0 ? calcScaleValues({ avg, max, inverted }) : [];
 
     return (
-      <View style={[styles.container, inherit.styleContainer]}>
+      <View style={[!inverted && styles.container, inherit.styleContainer]}>
         { scale && (
           <View style={[styles.scale, captions && styles.scaleCaptions]}>
             <View style={styles.scaleValues}>
@@ -67,19 +67,31 @@ class Chart extends Component {
           { values.map((value, index) => (
             <View
               key={`${value}-${index.toString()}`}
-              style={[styles.column, inverted && styles.inverted]}
+              style={[styles.column, inverted && styles.columnInverted]}
             >
               <View
                 style={[
-                  styles.item,
-                  inverted && styles.itemInverted,
-                  value !== 0 && {
-                    backgroundColor: (highlight && highlight !== index) ? COLOR.TEXT_LIGHTEN : color,
-                    height: `${calcHeight(value, { min, max, avg })}%`,
-                    opacity: 1,
-                  },
+                  styles.bar,
+                  inverted && styles.barInverted,
+                  value !== 0
+                    ? { height: `${calcHeight(value, { min, max, avg })}%` }
+                    : styles.barEmpty,
                 ]}
-              />
+              >
+                { value !== 0 && (
+                  <View
+                    style={[
+                      styles.bar,
+                      inverted && styles.barInverted,
+                      value !== 0 && {
+                        backgroundColor: color,
+                        height: '100%',
+                        opacity: (highlight && highlight === index) ? 1 : 0.66,
+                      },
+                    ]}
+                  />
+                )}
+              </View>
             </View>
           ))}
         </View>
