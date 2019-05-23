@@ -47,6 +47,7 @@ class Footer extends PureComponent {
             color={COLOR.WHITE}
             icon={ASSETS.back}
             onPress={onBack}
+            rounded
             shadow
             style={onPress && styles.buttonBack}
           />
@@ -61,6 +62,7 @@ class Footer extends PureComponent {
                   disabled={!isConnected}
                   icon={ASSETS.add}
                   onPress={onPress}
+                  rounded
                   shadow
                 />
               )
