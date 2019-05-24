@@ -18,7 +18,7 @@ export default StyleSheet.create({
     height: STYLE.FOOTER_HEIGHT,
     paddingHorizontal: SPACE.MEDIUM,
     position: ENV.IS_WEB ? 'fixed' : 'absolute',
-    width: '100%',
+    right: 0,
     zIndex: 2,
   },
 });

@@ -16,14 +16,12 @@ class Footer extends PureComponent {
     onBack: func,
     onHardwareBack: func,
     onPress: func,
-    scroll: bool,
   };
 
   static defaultProps = {
     onBack: undefined,
     onHardwareBack: func,
     onPress: undefined,
-    scroll: false,
   };
 
   componentWillReceiveProps({ onHardwareBack }) {
@@ -34,14 +32,10 @@ class Footer extends PureComponent {
   }
 
   render() {
-    const {
-      props: {
-        onBack, onPress, scroll, ...inherit
-      },
-    } = this;
+    const { onBack, onPress, ...inherit } = this.props;
 
     return (
-      <View style={[styles.container, scroll && styles.scroll, inherit.style]}>
+      <View style={[styles.container, inherit.style]}>
         { onBack && (
           <Button
             color={COLOR.WHITE}

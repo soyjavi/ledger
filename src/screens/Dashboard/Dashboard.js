@@ -93,7 +93,6 @@ class Dashboard extends PureComponent {
                   right={{ title: l10n.SETTINGS, onPress: () => navigation.navigate(SCREEN.SETTINGS) }}
                   title={l10n.OVERALL_BALANCE}
                 />
-                <Syncing scroll={scroll} />
                 <ScrollView onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.scroll}>
                   <Summary
                     {...overall}
@@ -126,6 +125,8 @@ class Dashboard extends PureComponent {
                     </Fragment>
                   )}
                 </ScrollView>
+
+                <Syncing scroll={scroll} />
 
                 <Footer onPress={_onToggleDialog} />
 

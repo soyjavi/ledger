@@ -115,11 +115,12 @@ export default {
     SETTING_1_CAPTION: 'Switch visibility just touching it',
     SETTING_2_TITLE: 'Show vault currency',
     SETTING_2_CAPTION: 'If it is different from the base currency.',
-    SYNC_BLOCKCHAIN: 'Syncing blockchain',
+    SYNCING: 'Syncing',
     SLOGAN: 'Your private accounting on the blockchain.',
     STATS: 'Stats',
     STATS_CAPTION: 'In this summary you can see a breakdown of your operations in the selected category.',
 
+    TAP_TO_UPDATE: 'Tap to Update',
     TO: 'to',
     TODAY: 'Today',
     TRANSACTION: 'Transaction',

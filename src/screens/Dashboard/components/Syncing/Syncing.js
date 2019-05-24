@@ -2,9 +2,7 @@ import { bool } from 'prop-types';
 import React from 'react';
 
 import { Consumer } from '../../../../context';
-import {
-  Activity, Icon, Motion, Text,
-} from '../../../../reactor/components';
+import { Button, Motion } from '../../../../reactor/components';
 import { THEME } from '../../../../reactor/common';
 import styles from './Syncing.style';
 
@@ -12,16 +10,23 @@ const { COLOR } = THEME;
 
 const Syncing = ({ scroll }) => (
   <Consumer>
-    { ({ l10n, events: { isConnected }, store: { error, sync } }) => (
+    { ({ l10n, events: { isConnected }, store: { onSync, sync } }) => (
       <Motion
         style={styles.container}
-        timeline={[{ property: 'translateY', value: !error && !scroll && (!sync || !isConnected) ? 0 : -128 }]}
+        timeline={[{ property: 'translateY', value: !sync || !isConnected || (sync && !scroll) ? 0 : 128 }]}
       >
-        { !isConnected && <Icon value="errorOutline" style={styles.icon} /> }
-        <Text subtitle level={3} lighten>
-          {isConnected ? l10n.SYNC_BLOCKCHAIN : l10n.OFFLINE_MODE}
-        </Text>
-        { isConnected && <Activity color={COLOR.TEXT_LIGHTEN} /> }
+        <Button
+          activity={!sync && isConnected}
+          color={sync && isConnected ? COLOR.PRIMARY : COLOR.ERROR}
+          disabled={!sync && isConnected}
+          onPress={isConnected && sync ? onSync : undefined}
+          rounded
+          small
+          title={isConnected // eslint-disable-line
+            ? (sync ? l10n.TAP_TO_UPDATE : l10n.SYNCING)
+            : l10n.OFFLINE_MODE
+          }
+        />
       </Motion>
     )}
   </Consumer>
