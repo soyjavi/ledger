@@ -1,5 +1,5 @@
 import { bool, func, shape } from 'prop-types';
-import React, { Fragment, Component } from 'react';
+import React, { Fragment, PureComponent } from 'react';
 import { ScrollView, View } from 'react-native';
 
 import { FLAGS } from '../../assets';
@@ -15,7 +15,7 @@ import styles from './Vault.style';
 const { SETTINGS: { NIGHT_MODE } } = C;
 const { SPACE } = THEME;
 
-class Vault extends Component {
+class Vault extends PureComponent {
   static propTypes = {
     backward: bool,
     dataSource: shape({}),
@@ -47,22 +47,6 @@ class Vault extends Component {
         scrollQuery: false, search, values: query(store, { ...dataSource, search }), vault: dataSource,
       });
     }
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    const {
-      props: { backward, visible },
-      state: {
-        dialog, scroll, search, scrollQuery,
-      },
-    } = this;
-
-    return (nextProps.visible !== visible)
-      || (nextState.backward !== backward)
-      || (nextState.dialog !== dialog)
-      || (nextState.scroll !== scroll)
-      || (nextState.search !== search)
-      || (nextState.scrollQuery !== scrollQuery);
   }
 
   _onHardwareBack = (navigation) => {
@@ -104,14 +88,12 @@ class Vault extends Component {
       _onHardwareBack, _onScroll, _onSearch, _onToggleDialog,
       props: { visible, ...inherit },
       state: {
-        dialog, scroll, search, values = [], vault = {},
+        dialog, scroll, scrollQuery, search, values = [], vault = {},
       },
     } = this;
     const { currency, hash, title } = vault;
 
-    console.log('<Vault>', {
-      visible, dialog, scroll, search,
-    });
+    console.log('<Vault>', { visible, dialog, scroll, scrollQuery, search });
 
     return (
       <Viewport {...inherit} scroll={false} visible={visible}>
