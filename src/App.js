@@ -37,7 +37,13 @@ export default () => (
           <Fragment>
             <StatusBar backgroundColor={COLOR.BACKGROUND} barStyle={nightMode ? 'light-content' : 'dark-content'} />
             <Dashboard backward={current !== DASHBOARD} mask={mask} visible={stack.includes(DASHBOARD)} />
-            <Snackbar caption={error} button={l10n.CLOSE} visible={!!(error)} onPress={() => onError(undefined)} />
+            <Snackbar
+              button={l10n.CLOSE}
+              caption={error}
+              color={COLOR.ERROR}
+              onPress={() => onError(undefined)}
+              visible={!!(error)}
+            />
           </Fragment>
         )}
 

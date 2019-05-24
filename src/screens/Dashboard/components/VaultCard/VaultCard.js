@@ -38,7 +38,7 @@ const VaultCard = (props) => {
                 : Math.abs(currentBalance)}
             />
             { currency !== baseCurrency && settings[SHOW_VAULT_CURRENCY] && (
-              <PriceFriendly currency={currency} subtitle level={3} lighten value={currentBalance} />)}
+              <PriceFriendly currency={currency} subtitle level={3} lighten mask={mask} value={currentBalance} />)}
             <View style={styles.separator} />
 
             <View style={styles.row}>
