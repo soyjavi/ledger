@@ -1,4 +1,6 @@
-import { func, shape, string } from 'prop-types';
+import {
+  bool, func, shape, string,
+} from 'prop-types';
 import React, { PureComponent } from 'react';
 import { TextInput, View } from 'react-native';
 
@@ -13,11 +15,13 @@ let TIMEOUT;
 class Search extends PureComponent {
   static propTypes = {
     l10n: shape({}).isRequired,
+    nightMode: bool,
     onValue: func.isRequired,
     value: string,
   };
 
   static defaultProps = {
+    nightMode: false,
     value: undefined,
   };
 
@@ -43,11 +47,11 @@ class Search extends PureComponent {
   }
 
   render() {
-    const { _onChangeText, props: { l10n }, state: { searching, value } } = this;
+    const { _onChangeText, props: { l10n, nightMode }, state: { searching, value } } = this;
 
     return (
       <View style={styles.container}>
-        <Icon value={ASSETS.search} style={styles.icon} />
+        <Icon value={nightMode ? ASSETS.searchNightMode : ASSETS.search} style={styles.icon} />
         <TextInput
           blurOnSubmit
           onChangeText={_onChangeText}

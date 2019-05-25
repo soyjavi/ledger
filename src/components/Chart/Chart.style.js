@@ -89,6 +89,7 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     height: '100%',
+    opacity: 0.5,
   },
 
   scaleLine: {

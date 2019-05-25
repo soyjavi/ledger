@@ -86,7 +86,7 @@ class Chart extends Component {
                       value !== 0 && {
                         backgroundColor: color,
                         height: '100%',
-                        opacity: (highlight && highlight === index) ? 1 : 0.66,
+                        opacity: (highlight && highlight === index) ? 1 : 0.5,
                       },
                     ]}
                   />

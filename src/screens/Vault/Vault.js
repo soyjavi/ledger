@@ -98,13 +98,13 @@ class Vault extends PureComponent {
     return (
       <Viewport {...inherit} scroll={false} visible={visible}>
         <Consumer>
-          { ({ navigation, l10n, store: { settings } }) => (
+          { ({ navigation, l10n, store: { settings: { [NIGHT_MODE]: nightMode } } }) => (
             <Fragment>
               <Header highlight={scroll} image={FLAGS[currency]} title={title} />
               <ScrollView onScroll={_onScroll} scrollEventThrottle={40} style={styles.container}>
                 <Fragment>
                   <Summary {...vault} image={FLAGS[currency]} title={`${title} ${l10n.BALANCE}`} />
-                  <Search l10n={l10n} onValue={_onSearch} value={search} />
+                  <Search l10n={l10n} nightMode={nightMode} onValue={_onSearch} value={search} />
                 </Fragment>
                 { values.length > 0
                   ? (
@@ -128,7 +128,7 @@ class Vault extends PureComponent {
               { visible && (
                 <DialogTransaction
                   currency={currency}
-                  highlight={settings[NIGHT_MODE]}
+                  highlight={nightMode}
                   onClose={_onToggleDialog}
                   vault={hash}
                   visible={dialog}

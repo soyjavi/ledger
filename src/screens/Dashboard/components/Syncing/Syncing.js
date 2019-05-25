@@ -22,7 +22,6 @@ const Syncing = ({ scroll }) => (
             : COLOR.ERROR
           }
           onPress={isConnected && sync ? onSync : undefined}
-          rounded
           small
           title={isConnected // eslint-disable-line
             ? (sync ? l10n.TAP_TO_UPDATE : l10n.SYNCING)
