@@ -17,8 +17,10 @@ const Syncing = ({ scroll }) => (
       >
         <Button
           activity={!sync && isConnected}
-          color={sync && isConnected ? COLOR.PRIMARY : COLOR.ERROR}
-          disabled={!sync && isConnected}
+          color={isConnected // eslint-disable-line
+            ? (sync ? COLOR.PRIMARY : COLOR.WHITE)
+            : COLOR.ERROR
+          }
           onPress={isConnected && sync ? onSync : undefined}
           rounded
           small
