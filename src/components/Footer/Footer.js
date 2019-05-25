@@ -11,6 +11,10 @@ import styles from './Footer.style';
 
 const { COLOR } = THEME;
 
+const BUTTON = {
+  color: COLOR.PRIMARY, rounded: true, shadow: true, style: styles.button,
+};
+
 class Footer extends PureComponent {
   static propTypes = {
     onBack: func,
@@ -36,28 +40,12 @@ class Footer extends PureComponent {
 
     return (
       <View style={[styles.container, inherit.style]}>
-        { onBack && (
-          <Button
-            color={COLOR.WHITE}
-            icon={ASSETS.back}
-            onPress={onBack}
-            shadow
-            style={onPress && styles.buttonBack}
-          />
-        )}
+        { onBack && <Button {...BUTTON} small={!!onPress} color={COLOR.WHITE} icon={ASSETS.back} onPress={onBack} /> }
 
         { onPress && (
           <ConsumerEvents>
             { ({ isConnected }) => (
-              isConnected && (
-                <Button
-                  color={COLOR.PRIMARY}
-                  disabled={!isConnected}
-                  icon={ASSETS.add}
-                  onPress={onPress}
-                  shadow
-                />
-              )
+              isConnected && <Button {...BUTTON} disabled={!isConnected} icon={ASSETS.add} onPress={onPress} />
             )}
           </ConsumerEvents>
         )}

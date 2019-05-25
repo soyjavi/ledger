@@ -1,24 +1,20 @@
 import { StyleSheet } from 'react-native';
 
-import { C } from '../../common';
 import { LAYOUT, ENV, THEME } from '../../reactor/common';
 
 const { SPACE } = THEME;
-const { STYLE } = C;
 
 export default StyleSheet.create({
-  buttonBack: {
-    marginRight: SPACE.S,
+  button: {
+    marginLeft: SPACE.S,
   },
 
   container: {
     ...LAYOUT.STYLE.ROW,
-    bottom: 0,
+    bottom: SPACE.MEDIUM,
     justifyContent: 'flex-end',
-    height: STYLE.FOOTER_HEIGHT,
-    paddingHorizontal: SPACE.MEDIUM,
     position: ENV.IS_WEB ? 'fixed' : 'absolute',
-    right: 0,
+    right: SPACE.MEDIUM,
     zIndex: 2,
   },
 });

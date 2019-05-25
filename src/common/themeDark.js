@@ -1,12 +1,12 @@
+const BASE = '#222';
+
 export default {
   COLOR: {
     BACKGROUND: '#000',
-    // BACKGROUND: '#040B14',
+    BACKGROUND_INPUT: BASE,
     BACKGROUND_OPACITY: 'rgba(16,16,16,0.85)',
-    // BASE: '#333333',
-    BASE: '#1D232B',
+    BASE,
     TEXT: '#fff',
-    // TEXT_LIGHTEN: '#888',
-    TEXT_LIGHTEN: '#54585E',
+    TEXT_LIGHTEN: '#888',
   },
 };
