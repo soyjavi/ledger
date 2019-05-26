@@ -1,5 +1,5 @@
 import { arrayOf, bool, shape } from 'prop-types';
-import React, { Fragment, Component } from 'react';
+import React, { createRef, Fragment, Component } from 'react';
 import { ScrollView, View } from 'react-native';
 
 import ASSETS from '../../assets';
@@ -34,16 +34,23 @@ class Stats extends Component {
     visible: true,
   };
 
-  state = {
-    scroll: false,
-    slider: {},
-    values: {},
-  };
+  constructor(props) {
+    super(props);
+    this.scrollview = createRef();
+    this.state = {
+      scroll: false,
+      slider: {},
+      values: {},
+    };
+  }
 
   componentWillReceiveProps({ backward, visible, ...inherit }) {
     if (visible) {
+      const { props } = this;
       const today = new Date();
       const slider = { month: today.getMonth(), year: today.getFullYear(), index: 11 };
+
+      if (visible !== props.visible) this.scrollview.current.scrollTo({ y: 0, animated: false });
       this.setState({ scroll: false, slider, values: query(inherit, slider) });
     }
   }
@@ -99,7 +106,12 @@ class Stats extends Component {
           { ({ l10n, navigation }) => (
             <Fragment>
               <Header highlight={scroll} title={`${title}${l10n.ACTIVITY}`} />
-              <ScrollView onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.container}>
+              <ScrollView
+                contentContainerStyle={styles.container}
+                onScroll={_onScroll}
+                ref={this.scrollview}
+                scrollEventThrottle={40}
+              >
                 <View style={styles.content}>
                   <Heading title={`${title}${l10n.ACTIVITY}`} image={ASSETS.logo} />
                   <Heading subtitle={l10n.BALANCE} />
