@@ -12,7 +12,7 @@ import styles from './Footer.style';
 const { COLOR } = THEME;
 
 const BUTTON = {
-  color: COLOR.PRIMARY, rounded: true, shadow: true, style: styles.button,
+  color: COLOR.TEXT, large: true, rounded: true, shadow: true, style: styles.button,
 };
 
 class Footer extends PureComponent {
@@ -40,8 +40,7 @@ class Footer extends PureComponent {
 
     return (
       <View style={[styles.container, inherit.style]}>
-        { onBack && <Button {...BUTTON} small={!!onPress} color={COLOR.WHITE} icon={ASSETS.back} onPress={onBack} /> }
-
+        { onBack && <Button {...BUTTON} icon={ASSETS.back} large={onPress === undefined} onPress={onBack} small /> }
         { onPress && (
           <ConsumerEvents>
             { ({ isConnected }) => (

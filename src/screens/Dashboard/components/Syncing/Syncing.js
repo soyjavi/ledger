@@ -19,7 +19,8 @@ const Syncing = ({ scroll }) => (
         >
           <Button
             activity={isConnected}
-            color={isConnected ? COLOR.WHITE : COLOR.ERROR}
+            color={isConnected ? undefined : COLOR.ERROR}
+            _disabled={isConnected}
             rounded
             small
             title={isConnected ? l10n.SYNCING : l10n.OFFLINE_MODE}
@@ -31,7 +32,7 @@ const Syncing = ({ scroll }) => (
           timeline={[{ property: 'translateY', value: isConnected && sync && !scroll ? 0 : 128 }]}
         >
           <Button
-            color={COLOR.PRIMARY}
+            color={COLOR.TEXT}
             onPress={onSync}
             rounded
             small

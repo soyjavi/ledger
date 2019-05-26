@@ -59,7 +59,6 @@ export default {
     DIALOG_FRAME: {
       margin: 0,
     },
-    FOOTER_HEIGHT: UNIT * 7.6,
     HEADER_HEIGHT: UNIT * 5.2,
     VAULT_ITEM_WIDTH: (LAYOUT.VIEWPORT.W / 2) - (SPACE.MEDIUM * 3),
   },

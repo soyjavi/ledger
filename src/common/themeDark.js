@@ -6,7 +6,7 @@ export default {
     BACKGROUND_INPUT: BASE,
     BACKGROUND_OPACITY: 'rgba(16,16,16,0.85)',
     BASE,
-    TEXT: '#fff',
+    TEXT: '#ffffff',
     TEXT_LIGHTEN: '#888',
   },
 };

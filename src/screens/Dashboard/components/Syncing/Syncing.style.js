@@ -8,7 +8,7 @@ export default StyleSheet.create({
   container: {
     position: 'absolute',
     left: SPACE.MEDIUM,
-    bottom: SPACE.REGULAR + SPACE.XS,
-    zIndex: 2,
+    bottom: SPACE.REGULAR,
+    zIndex: 1,
   },
 });

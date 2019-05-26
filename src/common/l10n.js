@@ -120,7 +120,7 @@ export default {
     STATS: 'Stats',
     STATS_CAPTION: 'In this summary you can see a breakdown of your operations in the selected category.',
 
-    TAP_TO_UPDATE: 'Tap to Update',
+    TAP_TO_UPDATE: 'Tap to update',
     TO: 'to',
     TODAY: 'Today',
     TRANSACTION: 'Transaction',
