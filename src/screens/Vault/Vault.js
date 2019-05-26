@@ -1,19 +1,19 @@
 import { bool, func, shape } from 'prop-types';
-import React, { Fragment, PureComponent } from 'react';
+import React, { createRef, Fragment, PureComponent } from 'react';
 import { ScrollView, View } from 'react-native';
 
 import { FLAGS } from '../../assets';
 import { C } from '../../common';
 import { Summary, Footer, Header } from '../../components';
 import { Consumer } from '../../context';
-import { THEME } from '../../reactor/common';
-import { Text, Viewport } from '../../reactor/components';
+import { LAYOUT, THEME } from '../../reactor/common';
+import { Activity, Text, Viewport } from '../../reactor/components';
 import { DialogTransaction, GroupTransactions, Search } from './components';
 import query from './modules/query';
 import styles from './Vault.style';
 
 const { SETTINGS: { NIGHT_MODE } } = C;
-const { SPACE } = THEME;
+const { COLOR, SPACE } = THEME;
 
 class Vault extends PureComponent {
   static propTypes = {
@@ -30,23 +30,27 @@ class Vault extends PureComponent {
     visible: true,
   };
 
-  state = {
-    dialog: false,
-    scroll: false,
-    scrollQuery: false,
-    search: undefined,
-    values: [],
-  };
+  constructor(props) {
+    super(props);
+    this.scrollview = createRef();
+    this.state = {
+      dialog: false,
+      scroll: false,
+      scrollQuery: false,
+      search: undefined,
+      values: [],
+    };
+  }
 
   componentWillReceiveProps({ dataSource, visible, ...store }) {
-    const { props: { dataSource: { txs = [] } = {} } } = this;
+    const { props: { dataSource: { txs = [] } = {}, ...props } } = this;
 
     if (visible && dataSource && dataSource.txs.length !== txs.length) {
       const search = undefined;
       this.setState({
         scrollQuery: false, search, values: query(store, { ...dataSource, search }), vault: dataSource,
       });
-    }
+    } else if (visible !== props.visible) this.scrollview.current.scrollTo({ y: 0, animated: false });
   }
 
   _onHardwareBack = (navigation) => {
@@ -63,7 +67,7 @@ class Vault extends PureComponent {
     const scroll = y > SPACE.MEDIUM;
     if (scroll !== state.scroll) this.setState({ scroll });
 
-    if (y > SPACE.XXL && !state.scrollQuery) {
+    if (!state.scrollQuery && y > (LAYOUT.VIEWPORT.H / 2)) {
       const scrollQuery = true;
       this.setState({ scrollQuery, values: query(store, { ...dataSource, search }, scrollQuery) });
     }
@@ -101,16 +105,19 @@ class Vault extends PureComponent {
           { ({ navigation, l10n, store: { settings: { [NIGHT_MODE]: nightMode } } }) => (
             <Fragment>
               <Header highlight={scroll} image={FLAGS[currency]} title={title} />
-              <ScrollView onScroll={_onScroll} scrollEventThrottle={40} style={styles.container}>
+              <ScrollView onScroll={_onScroll} ref={this.scrollview} scrollEventThrottle={40} style={styles.container}>
                 <Fragment>
                   <Summary {...vault} image={FLAGS[currency]} title={`${title} ${l10n.BALANCE}`} />
                   <Search l10n={l10n} nightMode={nightMode} onValue={_onSearch} value={search} />
                 </Fragment>
                 { values.length > 0
                   ? (
-                    <View>
-                      { values.map(item => <GroupTransactions key={item.timestamp} {...item} currency={currency} />) }
-                    </View>
+                    <Fragment>
+                      <Fragment>
+                        { values.map(item => <GroupTransactions key={item.timestamp} {...item} currency={currency} />) }
+                      </Fragment>
+                      { !scrollQuery && <Activity size="large" color={COLOR.BASE} style={styles.activity} /> }
+                    </Fragment>
                   )
                   : (
                     <View style={[styles.content, styles.container]}>

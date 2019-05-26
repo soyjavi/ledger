@@ -4,9 +4,14 @@ import { C } from '../../common';
 import { LAYOUT, THEME } from '../../reactor/common';
 
 const { STYLE: { HEADER_HEIGHT } } = C;
-const { OFFSET } = THEME;
+const { SPACE } = THEME;
 
 export default StyleSheet.create({
+  activity: {
+    alignSelf: 'center',
+    marginTop: SPACE.MEDIUM,
+  },
+
   container: {
     paddingBottom: HEADER_HEIGHT,
     paddingTop: HEADER_HEIGHT,
@@ -14,6 +19,6 @@ export default StyleSheet.create({
 
   content: {
     ...LAYOUT.STYLE.CENTERED,
-    padding: OFFSET,
+    padding: SPACE.MEDIUM,
   },
 });
