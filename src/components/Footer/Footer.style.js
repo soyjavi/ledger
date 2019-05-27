@@ -15,6 +15,6 @@ export default StyleSheet.create({
     justifyContent: 'flex-end',
     position: ENV.IS_WEB ? 'fixed' : 'absolute',
     right: SPACE.MEDIUM,
-    zIndex: 2,
+    zIndex: 1,
   },
 });

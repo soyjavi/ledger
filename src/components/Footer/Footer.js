@@ -3,13 +3,14 @@ import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
 import ASSETS from '../../assets';
-import { onHardwareBackPress } from '../../common';
-import { ConsumerEvents } from '../../context';
+import { C, onHardwareBackPress } from '../../common';
+import { Consumer, ConsumerEvents } from '../../context';
 import { THEME } from '../../reactor/common';
 import { Button } from '../../reactor/components';
 import styles from './Footer.style';
 
 const { COLOR } = THEME;
+const { SETTINGS: { NIGHT_MODE } } = C;
 
 const BUTTON = {
   color: COLOR.TEXT, large: true, rounded: true, shadow: true, style: styles.button,
@@ -39,16 +40,29 @@ class Footer extends PureComponent {
     const { onBack, onPress, ...inherit } = this.props;
 
     return (
-      <View style={[styles.container, inherit.style]}>
-        { onBack && <Button {...BUTTON} icon={ASSETS.back} large={onPress === undefined} onPress={onBack} small /> }
-        { onPress && (
-          <ConsumerEvents>
-            { ({ isConnected }) => (
-              isConnected && <Button {...BUTTON} disabled={!isConnected} icon={ASSETS.add} onPress={onPress} />
+      <Consumer>
+        { ({ events: { isConnected }, store: { settings: { [NIGHT_MODE]: nightMode } } }) => (
+          <View style={[styles.container, inherit.style]}>
+            { onBack && (
+              <Button
+                {...BUTTON}
+                icon={nightMode ? ASSETS.backNightMode : ASSETS.back}
+                large={onPress === undefined}
+                onPress={onBack}
+                small
+              />
             )}
-          </ConsumerEvents>
+            { onPress && isConnected && (
+              <Button
+                {...BUTTON}
+                disabled={!isConnected}
+                icon={nightMode ? ASSETS.addNightMode : ASSETS.add}
+                onPress={onPress}
+              />
+            )}
+          </View>
         )}
-      </View>
+      </Consumer>
     );
   }
 }
