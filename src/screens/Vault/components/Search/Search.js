@@ -28,6 +28,7 @@ class Search extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
+      focus: false,
       searching: false,
       value: props.value,
     };
@@ -47,14 +48,18 @@ class Search extends PureComponent {
   }
 
   render() {
-    const { _onChangeText, props: { l10n, nightMode }, state: { searching, value } } = this;
+    const { _onChangeText, props: { l10n, nightMode }, state: { focus, searching, value } } = this;
 
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, focus && styles.focus]}>
         <Icon value={nightMode ? ASSETS.searchNightMode : ASSETS.search} style={styles.icon} />
         <TextInput
+          autoCorrect={false}
+          autoCapitalize="none"
           blurOnSubmit
+          onBlur={() => this.setState({ focus: false })}
           onChangeText={_onChangeText}
+          onFocus={() => this.setState({ focus: true })}
           placeholder={`${l10n.SEARCH}...`}
           placeholderTextColor={COLOR.TEXT_LIGHTEN}
           underlineColorAndroid="transparent"
