@@ -114,9 +114,11 @@ class Vault extends PureComponent {
                   ? (
                     <Fragment>
                       <Fragment>
-                        { values.map(item => <GroupTransactions key={item.timestamp} {...item} currency={currency} />) }
+                        { values.map(item => (
+                          <GroupTransactions key={`${item.timestamp}-${search}`} {...item} currency={currency} />))}
                       </Fragment>
-                      { !scrollQuery && <Activity size="large" color={COLOR.BASE} style={styles.activity} /> }
+                      { !search && !scrollQuery && (
+                        <Activity size="large" color={COLOR.BASE} style={styles.activity} />)}
                     </Fragment>
                   )
                   : (
