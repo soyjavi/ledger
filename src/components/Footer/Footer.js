@@ -4,7 +4,7 @@ import { View } from 'react-native';
 
 import ASSETS from '../../assets';
 import { C, onHardwareBackPress } from '../../common';
-import { Consumer, ConsumerEvents } from '../../context';
+import { Consumer } from '../../context';
 import { THEME } from '../../reactor/common';
 import { Button } from '../../reactor/components';
 import styles from './Footer.style';
