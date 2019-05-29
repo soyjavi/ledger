@@ -1,5 +1,4 @@
 import C from './constants';
-import cashflow from './cashflow';
 import exchange from './exchange';
 import getFingerprintAsync from './getFingerprintAsync';
 import getIconCategory from './getIconCategory';
@@ -20,7 +19,6 @@ import verboseTime from './verboseTime';
 
 export {
   C,
-  cashflow,
   exchange,
   getFingerprintAsync,
   getIconCategory,

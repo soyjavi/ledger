@@ -28,18 +28,15 @@ export default (props, query = {}) => {
   const rangeTxs = [];
 
   txs
-    // .filter(tx => vault.hash === tx.vault)
+    .filter(tx => vault.hash === undefined || vault.hash === tx.vault)
     .forEach((tx) => {
       const {
         category, location: { place } = {}, timestamp, type, value, title,
       } = tx;
 
-      if (vault.hash && vault.hash !== tx.vault) return true;
-
       const date = parseDate(timestamp);
       const dMonth = date.getMonth();
       const dYear = date.getFullYear();
-
       const month = date.getMonth() - lastYear.getMonth() + (12 * (date.getFullYear() - lastYear.getFullYear()));
       const index = date.getMonth() - lastYear.getMonth() + (12 * (date.getFullYear() - lastYear.getFullYear()));
 
@@ -56,7 +53,6 @@ export default (props, query = {}) => {
           if (query.month === dMonth && query.year === dYear) {
             const categoryKey = title ? title.toLowerCase() : 'Unknown';
 
-            // @TODO Aggregate by location
             if (place) {
               const parts = place.split(',');
               const city = parts[0].trim();
