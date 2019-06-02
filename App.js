@@ -6,7 +6,9 @@ import {
   Location,
   Permissions,
 } from 'expo';
-import { C, L10N, theme, themeDark } from './src/common';
+import {
+  C, L10N, theme, themeDark,
+} from './src/common';
 import { Provider } from './src/context';
 import { Storage } from './src/context/modules';
 import { THEME } from './src/reactor/common';

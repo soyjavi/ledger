@@ -97,7 +97,9 @@ class Vault extends PureComponent {
     } = this;
     const { currency, hash, title } = vault;
 
-    console.log('<Vault>', { visible, dialog, scroll, scrollQuery, search });
+    console.log('<Vault>', {
+      visible, dialog, scroll, scrollQuery, search,
+    });
 
     return (
       <Viewport {...inherit} scroll={false} visible={visible}>

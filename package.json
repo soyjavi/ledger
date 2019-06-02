@@ -1,7 +1,7 @@
 {
   "name": "voltvault-app",
   "description": "Cross-Device client for voltvault",
-  "version": "0.12.0",
+  "version": "0.13.0b1",
   "keywords": [
     "finance",
     "personal",
@@ -17,12 +17,12 @@
   "homepage": "https://github.com/soyjavi/voltvault-app",
   "bugs": "https://github.com/soyjavi/voltvault-app/issues",
   "dependencies": {
-    "expo": "30.0.1",
+    "expo": "^32.0.0",
     "prop-types": "15.7.2",
-    "react": "16.8.4",
-    "react-art": "16.8.4",
-    "react-dom": "16.8.4",
-    "react-native": "0.55.4",
+    "react": "16.8.6",
+    "react-art": "16.8.6",
+    "react-dom": "16.8.6",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
     "react-native-web": "0.11.1",
     "react-navigation": "3.0.9"
   },
@@ -39,7 +39,7 @@
     "jest": "23.6.0",
     "metro-react-native-babel-preset": "0.52.0",
     "react-scripts": "latest",
-    "react-test-renderer": "16.8.4"
+    "react-test-renderer": "16.8.6"
   },
   "scripts": {
     "start": "NODE_PATH=src/ react-scripts start",
