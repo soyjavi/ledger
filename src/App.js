@@ -31,22 +31,25 @@ export default () => (
     }) => (
       <LayoutView style={styles.container}>
         { console.log('<App>') }
-        <Session {...events} backward={current !== SESSION} visible={stack.includes(SESSION)} />
+        <Session {...events} backward={current !== SESSION} visible />
 
         { stack.includes(SESSION) && (
           <Fragment>
-            <StatusBar
-              backgroundColor={COLOR.BACKGROUND}
-              barStyle={nightMode ? 'light-content' : 'dark-content'}
-            />
+            <StatusBar backgroundColor={COLOR.BACKGROUND} barStyle={nightMode ? 'light-content' : 'dark-content'} />
             <Dashboard backward={current !== DASHBOARD} mask={mask} visible={stack.includes(DASHBOARD)} />
-            <Snackbar caption={error} button={l10n.CLOSE} visible={!!(error)} onPress={() => onError(undefined)} />
+            <Snackbar
+              button={l10n.CLOSE}
+              caption={error}
+              color={COLOR.ERROR}
+              onPress={() => onError(undefined)}
+              visible={!!(error)}
+            />
           </Fragment>
         )}
 
         { stack.includes(DASHBOARD) && (
           <Fragment>
-            <Settings backward={current !== SETTINGS} visible={stack.includes(SETTINGS)} />
+            <Settings visible={stack.includes(SETTINGS)} />
             <Vault
               backward={current !== VAULT}
               dataSource={stack.includes(VAULT) && params.Vault
@@ -56,7 +59,7 @@ export default () => (
               goBack={goBack}
               visible={stack.includes(VAULT)}
             />
-            <Stats {...store} backward={current !== STATS} vault={params.Vault} visible={stack.includes(STATS)} />
+            <Stats {...store} vault={params.Vault} visible={stack.includes(STATS)} />
             <DialogClone dataSource={store.tx} highlight={nightMode} visible={store.tx !== undefined} />
           </Fragment>
         )}

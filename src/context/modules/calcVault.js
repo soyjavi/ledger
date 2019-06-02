@@ -9,7 +9,7 @@ export default ({
   const now = new Date();
   const lastYear = new Date(now.getFullYear(), now.getMonth() - 11, 1);
   const { currency } = vault;
-  const exchangeProps = baseCurrency !== currency ? [currency, baseCurrency, rates] : undefined;
+  const exchangeProps = [currency, baseCurrency, rates];
   let { balance = 0 } = vault;
   let incomes = 0;
   let expenses = 0;
@@ -39,11 +39,16 @@ export default ({
   });
 
   return Object.assign({}, vault, {
+    chartBalance: new Array(12).fill(0).map((value, index) => {
+      const timestamp = new Date(lastYear.getFullYear(), lastYear.getMonth() + index, 15);
+      return exchange(vault.balance, currency, baseCurrency, rates, timestamp);
+    }),
     currentBalance: balance,
+    currentBalanceBase: exchange(balance, ...exchangeProps),
     currentMonth: {
-      expenses: exchangeProps ? exchange(expenses, ...exchangeProps) : expenses,
-      incomes: exchangeProps ? exchange(incomes, ...exchangeProps) : incomes,
-      progression: exchangeProps ? exchange(progression, ...exchangeProps) : progression,
+      expenses: exchange(expenses, ...exchangeProps),
+      incomes: exchange(incomes, ...exchangeProps),
+      progression: exchange(progression, ...exchangeProps),
       txs: currentMonthTxs,
     },
     txs: dataSource,

@@ -1,15 +1,14 @@
-import { AsyncStorage } from 'react-native';
-
-import { C } from '../../common';
+import { Storage } from '../../reactor/common';
 import { Fingerprint } from '../../reactor/context/Tracking/modules';
+import { C } from '../../common';
 
 const { NAME } = C;
 const KEY = `${NAME}:context:store`;
-const DEFAULT_STORAGE = JSON.stringify({});
+const DEFAULT_STORAGE = {};
 
 export default {
   async get() {
-    const { fingerprint, ...storage } = JSON.parse(await AsyncStorage.getItem(KEY) || DEFAULT_STORAGE);
+    const { fingerprint, ...storage } = await Storage.get(KEY) || DEFAULT_STORAGE;
 
     return {
       ...storage,
@@ -22,7 +21,7 @@ export default {
       baseCurrency, fingerprint, pin, rates = {}, settings, txs = [], vaults = [], version,
     } = value;
 
-    await AsyncStorage.setItem(KEY, JSON.stringify({
+    await Storage.set(KEY, {
       baseCurrency,
       fingerprint,
       pin,
@@ -35,6 +34,6 @@ export default {
         balance, currency, hash, title,
       })),
       version,
-    }));
+    });
   },
 };

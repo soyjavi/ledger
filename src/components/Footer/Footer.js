@@ -1,39 +1,32 @@
-import {
-  arrayOf, bool, func, string,
-} from 'prop-types';
-import React, { Fragment, PureComponent } from 'react';
+import { func } from 'prop-types';
+import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
-import ASSETS, { OPTIONS } from '../../assets';
+import ASSETS from '../../assets';
 import { C, onHardwareBackPress } from '../../common';
-import { Consumer, ConsumerEvents } from '../../context';
+import { Consumer } from '../../context';
 import { THEME } from '../../reactor/common';
-import { Button, Dialog } from '../../reactor/components';
-import CardOption from '../CardOption';
+import { Button } from '../../reactor/components';
 import styles from './Footer.style';
 
-const { SETTINGS: { NIGHT_MODE } } = C;
 const { COLOR } = THEME;
+const { SETTINGS: { NIGHT_MODE } } = C;
+
+const BUTTON = {
+  color: COLOR.TEXT, large: true, rounded: true, shadow: true, style: styles.button,
+};
 
 class Footer extends PureComponent {
   static propTypes = {
     onBack: func,
     onHardwareBack: func,
     onPress: func,
-    options: arrayOf(string),
-    scroll: bool,
   };
 
   static defaultProps = {
     onBack: undefined,
     onHardwareBack: func,
     onPress: undefined,
-    options: undefined,
-    scroll: false,
-  };
-
-  state = {
-    dialog: false,
   };
 
   componentWillReceiveProps({ onHardwareBack }) {
@@ -43,85 +36,33 @@ class Footer extends PureComponent {
     onHardwareBackPress(subscribe, onHardwareBack);
   }
 
-  _onOption = (option) => {
-    const { props: { onPress } } = this;
-
-    this.setState({ dialog: false });
-    onPress(option);
-  }
-
-  _onPress = () => {
-    const { props: { onPress, options }, state: { dialog } } = this;
-
-    if (!options) return onPress();
-    return this.setState({ dialog: !dialog });
-  }
-
   render() {
-    const {
-      _onOption, _onPress,
-      props: {
-        onBack, onPress, options, scroll, ...inherit
-      },
-      state: { dialog },
-    } = this;
+    const { onBack, onPress, ...inherit } = this.props;
 
     return (
-      <Fragment>
-        <View style={[styles.container, scroll && styles.scroll, inherit.style]}>
-          { onBack && (
-            <Button
-              color={COLOR.WHITE}
-              icon={ASSETS.back}
-              onPress={onBack}
-              shadow
-              style={onPress && styles.buttonBack}
-            />
-          )}
-
-          { onPress && (
-            <ConsumerEvents>
-              { ({ isConnected }) => (
-                isConnected && (
-                  <Button
-                    color={COLOR.PRIMARY}
-                    disabled={!isConnected}
-                    icon={ASSETS.add}
-                    onPress={onPress ? _onPress : undefined}
-                    shadow
-                  />
-                )
-              )}
-            </ConsumerEvents>
-          )}
-        </View>
-        { options && (
-          <Consumer>
-            { ({ l10n, store: { settings } }) => (
-              <Dialog
-                highlight={settings[NIGHT_MODE]}
-                onClose={() => this.setState({ dialog: false })}
-                style={styles.frame}
-                styleContainer={styles.dialog}
-                title={l10n.CHOOSE_TRANSACTION_TYPE}
-                visible={dialog}
-              >
-                <View style={styles.cards}>
-                  { options.map((option, index) => (
-                    <CardOption
-                      key={option}
-                      icon={OPTIONS[option.toLowerCase()]}
-                      onPress={() => _onOption(index)}
-                      style={[styles.card, index === 2 && styles.cardLast]}
-                      title={option}
-                    />
-                  ))}
-                </View>
-              </Dialog>
+      <Consumer>
+        { ({ events: { isConnected }, store: { settings: { [NIGHT_MODE]: nightMode } } }) => (
+          <View style={[styles.container, inherit.style]}>
+            { onBack && (
+              <Button
+                {...BUTTON}
+                icon={nightMode ? ASSETS.backNightMode : ASSETS.back}
+                large={onPress === undefined}
+                onPress={onBack}
+                small
+              />
             )}
-          </Consumer>
+            { onPress && isConnected && (
+              <Button
+                {...BUTTON}
+                disabled={!isConnected}
+                icon={nightMode ? ASSETS.addNightMode : ASSETS.add}
+                onPress={onPress}
+              />
+            )}
+          </View>
         )}
-      </Fragment>
+      </Consumer>
     );
   }
 }

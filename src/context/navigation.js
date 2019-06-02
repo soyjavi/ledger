@@ -42,9 +42,10 @@ class ProviderNavigation extends PureComponent {
   navigate = (screen, parameters = {}) => {
     const { props: { navigator }, state: { params, stack } } = this;
 
-    this.setState({ stack: [...stack, screen], params: { ...params, [screen]: parameters } });
-
-    if (navigator) navigator.navigate(screen, parameters);
+    if (!stack.includes(screen)) {
+      this.setState({ stack: [...stack, screen], params: { ...params, [screen]: parameters } });
+      if (navigator) navigator.navigate(screen, parameters);
+    }
   }
 
   render() {

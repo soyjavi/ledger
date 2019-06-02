@@ -7,7 +7,6 @@ import { Image, View } from 'react-native';
 import ASSETS from '../../assets';
 import { C, exchange } from '../../common';
 import { Consumer } from '../../context';
-import { THEME } from '../../reactor/common';
 import { Button, Text, Touchable } from '../../reactor/components';
 import Heading from '../Heading';
 import Percentage from '../Percentage';
@@ -15,7 +14,6 @@ import PriceFriendly from '../PriceFriendly';
 import styles from './Summary.style';
 
 const { CURRENCY, SCREEN } = C;
-const { COLOR } = THEME;
 
 const captionProps = {
   caption: true, level: 2, numberOfLines: 1,
@@ -93,7 +91,6 @@ class Summary extends Component {
 
             <Heading title={l10n.CURRENT_MONTH}>
               <Button
-                color={COLOR.PRIMARY}
                 outlined
                 small
                 title={l10n.ACTIVITY}

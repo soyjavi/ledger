@@ -93,7 +93,6 @@ class Dashboard extends PureComponent {
                   right={{ title: l10n.SETTINGS, onPress: () => navigation.navigate(SCREEN.SETTINGS) }}
                   title={l10n.OVERALL_BALANCE}
                 />
-                <Syncing scroll={scroll} />
                 <ScrollView onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.scroll}>
                   <Summary
                     {...overall}
@@ -104,12 +103,7 @@ class Dashboard extends PureComponent {
                   />
 
                   <Heading title={l10n.VAULTS} />
-                  <Slider
-                    itemWidth={VAULT_ITEM_WIDTH + SPACE.S}
-                    itemMargin={0}
-                    steps={1}
-                    style={styles.vaults}
-                  >
+                  <Slider itemWidth={VAULT_ITEM_WIDTH + SPACE.S} itemMargin={0} style={styles.vaults}>
                     { queryVaults({ settings, vaults }).map(vault => (
                       <VaultCard
                         {...vault}
@@ -122,7 +116,7 @@ class Dashboard extends PureComponent {
 
                   { queryLastTxs({ txs, vaults }).length > 0 && (
                     <Fragment>
-                      <Heading breakline subtitle={l10n.LAST_TRANSACTIONS} />
+                      <Heading breakline title={l10n.LAST_TRANSACTIONS} />
                       <View>
                         { queryLastTxs({ txs, vaults }).map(tx => (
                           <TransactionItem key={tx.hash} showDate {...tx} />
@@ -131,6 +125,8 @@ class Dashboard extends PureComponent {
                     </Fragment>
                   )}
                 </ScrollView>
+
+                <Syncing scroll={scroll} />
 
                 <Footer onPress={_onToggleDialog} />
 

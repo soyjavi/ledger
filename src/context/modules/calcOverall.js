@@ -6,9 +6,11 @@ export default ({ baseCurrency, rates, vaults = [] }) => {
   const currentMonth = { progression: 0, incomes: 0, expenses: 0 };
   let balance = 0;
   let currentBalance = 0;
+  const chartBalance = new Array(12).fill(0);
 
   vaults.forEach(({
     balance: vaultBalance,
+    chartBalance: vaultChartBalance,
     currentBalance: vaultCurrentBalance,
     currency,
     currentMonth: vaultLast30Days,
@@ -22,10 +24,15 @@ export default ({ baseCurrency, rates, vaults = [] }) => {
     KEYS.forEach((key) => {
       currentMonth[key] += vaultLast30Days[key];
     });
+
+    vaultChartBalance.forEach((value, index) => {
+      if (value) chartBalance[index] += vaultChartBalance[index];
+    });
   });
 
   return {
     balance,
+    chartBalance,
     currentBalance,
     currentMonth,
   };

@@ -1,4 +1,6 @@
-import { func, shape, string } from 'prop-types';
+import {
+  bool, func, shape, string,
+} from 'prop-types';
 import React, { PureComponent } from 'react';
 import { TextInput, View } from 'react-native';
 
@@ -13,17 +15,20 @@ let TIMEOUT;
 class Search extends PureComponent {
   static propTypes = {
     l10n: shape({}).isRequired,
+    nightMode: bool,
     onValue: func.isRequired,
     value: string,
   };
 
   static defaultProps = {
+    nightMode: false,
     value: undefined,
   };
 
   constructor(props) {
     super(props);
     this.state = {
+      focus: false,
       searching: false,
       value: props.value,
     };
@@ -43,14 +48,18 @@ class Search extends PureComponent {
   }
 
   render() {
-    const { _onChangeText, props: { l10n }, state: { searching, value } } = this;
+    const { _onChangeText, props: { l10n, nightMode }, state: { focus, searching, value } } = this;
 
     return (
-      <View style={styles.container}>
-        <Icon value={ASSETS.search} style={styles.icon} />
+      <View style={[styles.container, focus && styles.focus]}>
+        <Icon value={nightMode ? ASSETS.searchNightMode : ASSETS.search} style={styles.icon} />
         <TextInput
+          autoCorrect={false}
+          autoCapitalize="none"
           blurOnSubmit
+          onBlur={() => this.setState({ focus: false })}
           onChangeText={_onChangeText}
+          onFocus={() => this.setState({ focus: true })}
           placeholder={`${l10n.SEARCH}...`}
           placeholderTextColor={COLOR.TEXT_LIGHTEN}
           underlineColorAndroid="transparent"

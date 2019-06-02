@@ -1,10 +1,9 @@
 import { bool } from 'prop-types';
 import React from 'react';
+import { View } from 'react-native';
 
 import { Consumer } from '../../../../context';
-import {
-  Activity, Icon, Motion, Text,
-} from '../../../../reactor/components';
+import { Button, Motion } from '../../../../reactor/components';
 import { THEME } from '../../../../reactor/common';
 import styles from './Syncing.style';
 
@@ -12,17 +11,35 @@ const { COLOR } = THEME;
 
 const Syncing = ({ scroll }) => (
   <Consumer>
-    { ({ l10n, events: { isConnected }, store: { error, sync } }) => (
-      <Motion
-        style={styles.container}
-        timeline={[{ property: 'translateY', value: !error && !scroll && (!sync || !isConnected) ? 0 : -128 }]}
-      >
-        { !isConnected && <Icon value="errorOutline" style={styles.icon} /> }
-        <Text subtitle level={3} lighten>
-          {isConnected ? l10n.SYNC_BLOCKCHAIN : l10n.OFFLINE_MODE}
-        </Text>
-        { isConnected && <Activity color={COLOR.TEXT_LIGHTEN} /> }
-      </Motion>
+    { ({ l10n, events: { isConnected }, store: { onSync, sync } }) => (
+      <View>
+        <Motion
+          style={styles.container}
+          timeline={[{ property: 'translateY', value: !sync || !isConnected ? 0 : 128 }]}
+        >
+          <Button
+            activity={isConnected}
+            color={isConnected ? undefined : COLOR.ERROR}
+            _disabled={isConnected}
+            rounded
+            small
+            title={isConnected ? l10n.SYNCING : l10n.OFFLINE_MODE}
+          />
+        </Motion>
+
+        <Motion
+          style={styles.container}
+          timeline={[{ property: 'translateY', value: isConnected && sync && !scroll ? 0 : 128 }]}
+        >
+          <Button
+            color={COLOR.TEXT}
+            onPress={onSync}
+            rounded
+            small
+            title={l10n.TAP_TO_UPDATE}
+          />
+        </Motion>
+      </View>
     )}
   </Consumer>
 );

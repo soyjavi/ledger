@@ -11,6 +11,7 @@ const SCALE_WIDTH = SPACE.XL;
 export default StyleSheet.create({
   caption: {
     fontSize: UNIT,
+    height: UNIT,
     lineHeight: UNIT,
   },
 
@@ -26,11 +27,12 @@ export default StyleSheet.create({
     overflow: 'hidden',
   },
 
-  container: {
+  columnInverted: {
+    justifyContent: 'flex-start',
   },
 
-  containerInverted: {
-    top: -1,
+  container: {
+    marginTop: SPACE.XS,
   },
 
   content: {
@@ -40,11 +42,8 @@ export default StyleSheet.create({
     height: COLUMN_HEIGHT,
   },
 
-  inverted: {
-    justifyContent: 'flex-start',
-  },
-
-  item: {
+  bar: {
+    backgroundColor: COLOR.BACKGROUND,
     borderTopLeftRadius: COLUMN_WIDTH / 2,
     borderTopRightRadius: COLUMN_WIDTH / 2,
     maxHeight: '100%',
@@ -52,7 +51,12 @@ export default StyleSheet.create({
     width: COLUMN_WIDTH,
   },
 
-  itemInverted: {
+  barEmpty: {
+    backgroundColor: COLOR.BASE,
+    opacity: 0.8,
+  },
+
+  barInverted: {
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
     borderBottomLeftRadius: COLUMN_WIDTH / 2,
@@ -75,7 +79,6 @@ export default StyleSheet.create({
     right: 0,
     top: 0,
     bottom: 0,
-    display: 'flex',
   },
 
   scaleCaptions: {
@@ -86,7 +89,7 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     height: '100%',
-    opacity: 0.6,
+    opacity: 0.5,
   },
 
   scaleLine: {
@@ -95,9 +98,15 @@ export default StyleSheet.create({
     backgroundColor: COLOR.BASE,
   },
 
+  scaleLineEmpty: {
+    height: 0,
+  },
+
   scaleValues: {
+    position: 'absolute',
+    bottom: SPACE.XS,
     justifyContent: 'space-between',
+    top: -SPACE.S,
     width: SCALE_WIDTH,
-    height: '100%',
   },
 });

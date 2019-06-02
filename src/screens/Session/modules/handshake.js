@@ -16,8 +16,10 @@ export default async (component, { pin, store, navigation }) => {
   navigation.navigate(SCREEN.DASHBOARD);
 
   if (!isSignup && isConnected) {
-    await store.getHash(pin);
-    store.onSync();
+    const hash = await store.getHash(pin);
+
+    if (!hash) navigation.goBack();
+    else store.onSync();
   }
 
   component.setState({ busy: false, pin: '' });

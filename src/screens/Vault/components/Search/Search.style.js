@@ -13,10 +13,16 @@ export default StyleSheet.create({
   container: {
     ...LAYOUT.STYLE.ROW,
     backgroundColor: COLOR.BASE,
+    borderColor: COLOR.BASE,
     borderRadius: BORDER_RADIUS,
+    borderWidth: 1,
     marginHorizontal: SPACE.MEDIUM,
     marginBottom: SPACE.MEDIUM,
     paddingHorizontal: SPACE.MEDIUM,
+  },
+
+  focus: {
+    borderColor: COLOR.TEXT,
   },
 
   icon: {
@@ -28,10 +34,10 @@ export default StyleSheet.create({
 
   input: {
     ...FONT.INPUT,
-    fontSize: UNIT * 1.6,
     borderWidth: 0,
     color: COLOR.TEXT,
     flex: 1,
+    fontSize: UNIT * 1.6,
     height: INPUT_HEIGHT,
   },
 });

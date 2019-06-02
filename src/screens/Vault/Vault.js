@@ -1,23 +1,21 @@
 import { bool, func, shape } from 'prop-types';
-import React, { Fragment, Component } from 'react';
+import React, { createRef, Fragment, PureComponent } from 'react';
 import { ScrollView, View } from 'react-native';
 
 import { FLAGS } from '../../assets';
 import { C } from '../../common';
 import { Summary, Footer, Header } from '../../components';
 import { Consumer } from '../../context';
-import { THEME } from '../../reactor/common';
-import { Text, Viewport } from '../../reactor/components';
-import {
-  DialogTransaction, DialogTransfer, GroupTransactions, Search,
-} from './components';
+import { LAYOUT, THEME } from '../../reactor/common';
+import { Activity, Text, Viewport } from '../../reactor/components';
+import { DialogTransaction, GroupTransactions, Search } from './components';
 import query from './modules/query';
 import styles from './Vault.style';
 
-const { SETTINGS: { NIGHT_MODE }, TX: { TYPE: { EXPENSE, TRANSFER } } } = C;
-const { SPACE } = THEME;
+const { SETTINGS: { NIGHT_MODE } } = C;
+const { COLOR, SPACE } = THEME;
 
-class Vault extends Component {
+class Vault extends PureComponent {
   static propTypes = {
     backward: bool,
     dataSource: shape({}),
@@ -32,37 +30,27 @@ class Vault extends Component {
     visible: true,
   };
 
-  state = {
-    dialog: false,
-    scroll: false,
-    scrollQuery: false,
-    search: undefined,
-    type: EXPENSE,
-    values: [],
-  };
+  constructor(props) {
+    super(props);
+    this.scrollview = createRef();
+    this.state = {
+      dialog: false,
+      scroll: false,
+      scrollQuery: false,
+      search: undefined,
+      values: [],
+    };
+  }
 
   componentWillReceiveProps({ dataSource, visible, ...store }) {
-    const { props: { dataSource: { txs = [] } = {} } } = this;
+    const { props: { dataSource: { txs = [] } = {}, ...props } } = this;
 
     if (visible && dataSource && dataSource.txs.length !== txs.length) {
       const search = undefined;
-      this.setState({ scrollQuery: false, search, values: query(store, { ...dataSource, search }) });
-    }
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    const {
-      props: { visible },
-      state: {
-        dialog, scroll, search, scrollQuery,
-      },
-    } = this;
-
-    return (nextProps.visible !== visible)
-      || (nextState.dialog !== dialog)
-      || (nextState.scroll !== scroll)
-      || (nextState.search !== search)
-      || (nextState.scrollQuery !== scrollQuery);
+      this.setState({
+        scrollQuery: false, search, values: query(store, { ...dataSource, search }), vault: dataSource,
+      });
+    } else if (visible !== props.visible) this.scrollview.current.scrollTo({ y: 0, animated: false });
   }
 
   _onHardwareBack = (navigation) => {
@@ -79,7 +67,7 @@ class Vault extends Component {
     const scroll = y > SPACE.MEDIUM;
     if (scroll !== state.scroll) this.setState({ scroll });
 
-    if (y > SPACE.XXL && !state.scrollQuery) {
+    if (!state.scrollQuery && y > (LAYOUT.VIEWPORT.H / 2)) {
       const scrollQuery = true;
       this.setState({ scrollQuery, values: query(store, { ...dataSource, search }, scrollQuery) });
     }
@@ -99,38 +87,39 @@ class Vault extends Component {
     this.setState({ dialog: !dialog });
   }
 
-  _onTxType = type => this.setState({ dialog: type !== undefined, type });
-
   render() {
     const {
-      _onHardwareBack, _onScroll, _onSearch, _onToggleDialog, _onTxType,
-      props: { dataSource: vault = {}, visible, ...props },
+      _onHardwareBack, _onScroll, _onSearch, _onToggleDialog,
+      props: { visible, ...inherit },
       state: {
-        dialog, scroll, search, type, values = [],
+        dialog, scroll, scrollQuery, search, values = [], vault = {},
       },
     } = this;
     const { currency, hash, title } = vault;
 
-    console.log('<Vault>', {
-      visible, dialog, scroll, search,
-    });
+    console.log('<Vault>', { visible, dialog, scroll, scrollQuery, search });
 
     return (
-      <Viewport {...props} scroll={false} visible={visible}>
+      <Viewport {...inherit} scroll={false} visible={visible}>
         <Consumer>
-          { ({ navigation, l10n, store: { settings, vaults } }) => (
+          { ({ navigation, l10n, store: { settings: { [NIGHT_MODE]: nightMode } } }) => (
             <Fragment>
               <Header highlight={scroll} image={FLAGS[currency]} title={title} />
-              <ScrollView onScroll={_onScroll} scrollEventThrottle={40} style={styles.container}>
+              <ScrollView onScroll={_onScroll} ref={this.scrollview} scrollEventThrottle={40} style={styles.container}>
                 <Fragment>
                   <Summary {...vault} image={FLAGS[currency]} title={`${title} ${l10n.BALANCE}`} />
-                  <Search l10n={l10n} onValue={_onSearch} value={search} />
+                  <Search l10n={l10n} nightMode={nightMode} onValue={_onSearch} value={search} />
                 </Fragment>
-                { visible && values.length > 0
+                { values.length > 0
                   ? (
-                    <View>
-                      { values.map(item => <GroupTransactions key={item.timestamp} {...item} currency={currency} />) }
-                    </View>
+                    <Fragment>
+                      <Fragment>
+                        { values.map(item => (
+                          <GroupTransactions key={`${item.timestamp}-${search}`} {...item} currency={currency} />))}
+                      </Fragment>
+                      { !search && !scrollQuery && (
+                        <Activity size="large" color={COLOR.BASE} style={styles.activity} />)}
+                    </Fragment>
                   )
                   : (
                     <View style={[styles.content, styles.container]}>
@@ -142,29 +131,17 @@ class Vault extends Component {
               <Footer
                 onBack={navigation.goBack}
                 onHardwareBack={visible ? () => _onHardwareBack(navigation) : undefined}
-                onPress={_onTxType}
-                options={vaults.length === 1 ? [l10n.EXPENSE, l10n.INCOME] : [l10n.EXPENSE, l10n.INCOME, l10n.TRANSFER]}
+                onPress={_onToggleDialog}
               />
 
               { visible && (
-                <Fragment>
-                  <DialogTransaction
-                    currency={currency}
-                    highlight={settings[NIGHT_MODE]}
-                    type={type}
-                    vault={hash}
-                    onClose={_onToggleDialog}
-                    visible={dialog && type !== TRANSFER}
-                  />
-                  { vaults.length > 1 && (
-                    <DialogTransfer
-                      highlight={settings[NIGHT_MODE]}
-                      onClose={_onToggleDialog}
-                      vault={hash}
-                      visible={dialog && type === TRANSFER}
-                    />
-                  )}
-                </Fragment>
+                <DialogTransaction
+                  currency={currency}
+                  highlight={nightMode}
+                  onClose={_onToggleDialog}
+                  vault={hash}
+                  visible={dialog}
+                />
               )}
             </Fragment>
           )}

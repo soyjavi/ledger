@@ -4,8 +4,9 @@ import {
 import React, { Fragment, PureComponent } from 'react';
 import { View } from 'react-native';
 
-import { CATEGORIES } from '../../assets';
-import { C, exchange, verboseMonthShort } from '../../common';
+import {
+  C, exchange, getIconCategory, verboseMonthShort,
+} from '../../common';
 import { Consumer } from '../../context';
 import {
   Icon, Price, Text, Touchable,
@@ -47,7 +48,12 @@ class TransactionItem extends PureComponent {
 
     return (
       <Consumer>
-        { ({ l10n, store: { baseCurrency, onSelectTx, rates } }) => (
+        { ({
+          l10n,
+          store: {
+            baseCurrency, onSelectTx, rates, ...store
+          },
+        }) => (
           <Touchable rippleColor={COLOR.TEXT_LIGHTEN} onPress={() => onSelectTx(this.props)}>
             <View style={[styles.container, styles.row, isVaultTransfer && styles.containerHighlight]}>
               <View style={styles.icon}>
@@ -58,7 +64,7 @@ class TransactionItem extends PureComponent {
                       <Text lighten style={styles.month}>{verboseMonthShort(timestamp, l10n)}</Text>
                     </Fragment>
                   )
-                  : <Icon value={CATEGORIES[type][category]} /> }
+                  : <Icon value={getIconCategory({ type, category }, store)} /> }
               </View>
 
               <View style={[styles.content, styles.row]}>
@@ -74,9 +80,7 @@ class TransactionItem extends PureComponent {
                     fixed={FIXED[baseCurrency]}
                     operator={type === INCOME ? '+' : '-'}
                     symbol={SYMBOL[baseCurrency]}
-                    value={baseCurrency !== currency
-                      ? exchange(value, currency, baseCurrency, rates)
-                      : value}
+                    value={exchange(value, currency, baseCurrency, rates, timestamp)}
                   />
 
                   { baseCurrency !== currency && (
