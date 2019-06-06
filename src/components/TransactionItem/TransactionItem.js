@@ -3,21 +3,18 @@ import {
 } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
 import { View } from 'react-native';
+import { THEME } from '../../reactor/common';
+import { Icon, Text, Touchable } from '../../reactor/components';
 
 import {
   C, exchange, getIconCategory, verboseMonthShort,
 } from '../../common';
 import { Consumer } from '../../context';
-import {
-  Icon, Price, Text, Touchable,
-} from '../../reactor/components';
-import { THEME } from '../../reactor/common';
+import PriceFriendly from '../PriceFriendly';
 import { formatCaption } from './modules';
 import styles from './TransactionItem.style';
 
-const {
-  FIXED, SYMBOL, TX: { TYPE: { INCOME } }, VAULT_TRANSFER,
-} = C;
+const { VAULT_TRANSFER } = C;
 const { COLOR } = THEME;
 
 class TransactionItem extends PureComponent {
@@ -73,23 +70,21 @@ class TransactionItem extends PureComponent {
                   <Text caption lighten>{formatCaption(new Date(timestamp), location)}</Text>
                 </View>
                 <View style={styles.prices}>
-                  <Price
+                  <PriceFriendly
+                    currency={baseCurrency}
                     subtitle
                     level={2}
                     lighten={isVaultTransfer}
-                    fixed={FIXED[baseCurrency]}
-                    operator={type === INCOME ? '+' : '-'}
-                    symbol={SYMBOL[baseCurrency]}
+                    operator
                     value={exchange(value, currency, baseCurrency, rates, timestamp)}
                   />
 
                   { baseCurrency !== currency && (
-                    <Price
+                    <PriceFriendly
                       caption
+                      currency={currency}
                       lighten
-                      fixed={FIXED[currency]}
-                      operator={type === INCOME ? '+' : '-'}
-                      symbol={SYMBOL[currency]}
+                      operator
                       value={value}
                     />
                   )}

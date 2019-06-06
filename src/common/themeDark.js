@@ -1,4 +1,4 @@
-const BASE = '#222';
+const BASE = '#202020';
 
 export default {
   COLOR: {
@@ -7,6 +7,6 @@ export default {
     BACKGROUND_OPACITY: 'rgba(16,16,16,0.85)',
     BASE,
     TEXT: '#ffffff',
-    TEXT_LIGHTEN: '#888',
+    TEXT_LIGHTEN: '#555',
   },
 };

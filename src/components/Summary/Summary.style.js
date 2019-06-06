@@ -4,16 +4,27 @@ import { C } from '../../common';
 import { LAYOUT, THEME } from '../../reactor/common';
 
 const { STYLE } = C;
-const { COLOR, SPACE, UNIT } = THEME;
+const {
+  BORDER_RADIUS, COLOR, SPACE, UNIT,
+} = THEME;
 
 export default StyleSheet.create({
   card: {
     ...STYLE.CARD,
+    borderRadius: BORDER_RADIUS,
     backgroundColor: COLOR.BASE,
     flex: 1,
     justifyContent: 'space-between',
     marginRight: SPACE.S,
   },
+
+  // cardExpenses: {
+  //   backgroundColor: COLOR.EXPENSES,
+  // },
+
+  // cardIncomes: {
+  //   backgroundColor: COLOR.INCOMES,
+  // },
 
   cardLast: {
     marginRight: 0,

@@ -7,13 +7,14 @@ import { Image, View } from 'react-native';
 import ASSETS from '../../assets';
 import { C, exchange } from '../../common';
 import { Consumer } from '../../context';
+import { THEME } from '../../reactor/common';
 import { Button, Text, Touchable } from '../../reactor/components';
 import Heading from '../Heading';
-import Percentage from '../Percentage';
 import PriceFriendly from '../PriceFriendly';
 import styles from './Summary.style';
 
 const { CURRENCY, SCREEN } = C;
+const { COLOR } = THEME;
 
 const captionProps = {
   caption: true, level: 2, numberOfLines: 1,
@@ -91,6 +92,7 @@ class Summary extends Component {
 
             <Heading title={l10n.CURRENT_MONTH}>
               <Button
+                color={COLOR.WHITE}
                 outlined
                 small
                 title={l10n.ACTIVITY}
@@ -100,9 +102,9 @@ class Summary extends Component {
             <View style={[styles.row, styles.cards]}>
               <View style={styles.card}>
                 <Text {...captionProps}>{l10n.PROGRESSION.toUpperCase()}</Text>
-                <Percentage headline level={6} value={progressionPercentage} />
+                <PriceFriendly currency="%" icon headline level={6} value={progressionPercentage} />
               </View>
-              <View style={styles.card}>
+              <View style={[styles.card, styles.cardIncomes]}>
                 <Text {...captionProps}>{l10n.INCOMES.toUpperCase()}</Text>
                 <PriceFriendly
                   currency={baseCurrency}
@@ -113,7 +115,7 @@ class Summary extends Component {
                   value={incomes}
                 />
               </View>
-              <View style={[styles.card, styles.cardLast]}>
+              <View style={[styles.card, styles.cardExpenses, styles.cardLast]}>
                 <Text {...captionProps}>{l10n.EXPENSES.toUpperCase()}</Text>
                 <PriceFriendly
                   currency={baseCurrency}

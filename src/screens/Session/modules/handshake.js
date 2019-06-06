@@ -4,7 +4,6 @@ const { SCREEN } = C;
 
 export default async (component, { pin, store, navigation }) => {
   const { props: { isConnected } } = component;
-
   const isSignup = store.pin === undefined;
 
   component.setState({ busy: true });

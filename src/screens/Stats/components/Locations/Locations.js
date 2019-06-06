@@ -4,10 +4,13 @@ import {
 import React, { Fragment, PureComponent } from 'react';
 import { View } from 'react-native';
 
+import { THEME } from '../../../../reactor/common';
 import { Consumer } from '../../../../context';
 import { Heading, HeatMap, HorizontalChartItem } from '../../../../components';
 import { orderByAmount } from '../../modules';
 import styles, { MAP_HEIGHT, MAP_WIDTH } from './Locations.style';
+
+const { COLOR } = THEME;
 
 class Locations extends PureComponent {
   static propTypes = {
@@ -35,19 +38,21 @@ class Locations extends PureComponent {
       <Consumer>
         { ({ l10n }) => (
           <View>
-            <Heading breakline title={l10n.LOCATIONS} />
+            <Heading title={l10n.LOCATIONS} />
             <View>
               <HeatMap
+                color={COLOR.LOCATION}
                 points={points}
                 precission={precission}
                 height={MAP_HEIGHT}
                 width={MAP_WIDTH}
                 style={[styles.content, styles.map]}
               />
-              <Heading breakline title={l10n.CITIES} style={styles.heading} />
+              <Heading title={l10n.CITIES} style={styles.heading} />
               <View style={styles.content}>
                 { orderByAmount(cities).map(({ key, amount }) => (
                   <HorizontalChartItem
+                    color={COLOR.LOCATION}
                     key={key}
                     currency="x"
                     title={key}
@@ -59,10 +64,11 @@ class Locations extends PureComponent {
 
               { Object.keys(countries).length > 1 && (
                 <Fragment>
-                  <Heading breakline title={l10n.COUNTRIES} />
+                  <Heading title={l10n.COUNTRIES} />
                   <View style={styles.content}>
                     { orderByAmount(countries).map(({ key, amount }) => (
                       <HorizontalChartItem
+                        color={COLOR.LOCATION}
                         key={key}
                         currency="x"
                         title={key}

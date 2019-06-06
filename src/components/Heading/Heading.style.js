@@ -6,8 +6,7 @@ const { COLOR, UNIT, SPACE } = THEME;
 
 export default StyleSheet.create({
   breakline: {
-    borderBottomColor: COLOR.BASE,
-    borderBottomWidth: 1,
+    backgroundColor: COLOR.BASE,
   },
 
   container: {

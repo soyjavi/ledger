@@ -7,14 +7,24 @@ const FAMILY_BOLD = IS_WEB ? 'Product Sans' : 'product-sans-bold';
 const WEIGHT = { REGULAR: '400', BOLD: '700' };
 
 export default {
+  // BORDER_RADIUS: 4,
+
   COLOR: {
     BACKGROUND_OPACITY: 'rgba(255,255,255,0.9)',
     BASE: '#F0F0F0',
-    EXPENSES: '#FF6262',
-    INCOMES: '#17D0BC',
-    PRIMARY: '#7966FF',
     TEXT: '#333',
     TEXT_LIGHTEN: '#999',
+
+    PRIMARY: '#00AFFF',
+    ACCENT: '#4066EA',
+
+    EXPENSES: '#E9305C',
+    INCOMES: '#00C989',
+    TRANSFER: '#00AFFF',
+    LOCATION: '#7966FF',
+
+    WARNING: '#EDE622',
+    ERROR: '#F03301',
   },
 
   FONT: {

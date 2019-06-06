@@ -15,7 +15,8 @@ export default StyleSheet.create({
   },
 
   containerHighlight: {
-    backgroundColor: COLOR.BASE,
+    // backgroundColor: COLOR.BASE,
+    opacity: 0.66,
   },
 
   content: {

@@ -3,12 +3,12 @@ import { Platform } from 'react-native';
 import { LAYOUT, THEME } from '../reactor/common';
 import PKG from '../../package.json';
 
-const { BORDER_RADIUS, SPACE, UNIT } = THEME;
+const { SPACE, UNIT } = THEME;
 
 // const DEV = __DEV__ ? __DEV__ : { hello: 'world' }; // eslint-disable-line;
 // const isDev = packagerOpts && packagerOpts.dev;
 
-const IS_PRODUCTION = true;
+const IS_PRODUCTION = false;
 const IS_ANDROID = Platform.OS === 'android';
 const MS_IN_DAY = 1000 * 24 * 60 * 60;
 const MS_IN_WEEK = MS_IN_DAY * 7;
@@ -48,7 +48,6 @@ export default {
   },
   STYLE: {
     CARD: {
-      borderRadius: BORDER_RADIUS,
       overflow: 'hidden',
       padding: SPACE.MEDIUM,
     },

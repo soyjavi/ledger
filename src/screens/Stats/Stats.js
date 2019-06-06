@@ -122,7 +122,6 @@ class Stats extends Component {
                     styleContainer={[styles.chart, styles.chartMargin]}
                     style={styles.chartBalance}
                   />
-
                   <Heading subtitle={`${l10n.INCOMES} vs. ${l10n.EXPENSES}`} />
                   <Chart
                     color={COLOR.INCOMES}

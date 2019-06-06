@@ -2,7 +2,9 @@ import { StyleSheet } from 'react-native';
 
 import { LAYOUT, THEME } from '../../reactor/common';
 
-const { COLOR, UNIT, SPACE } = THEME;
+const {
+  COLOR, FONT, UNIT, SPACE,
+} = THEME;
 
 const COLUMN_HEIGHT = UNIT * 6.4;
 const COLUMN_WIDTH = UNIT * 1;
@@ -13,6 +15,11 @@ export default StyleSheet.create({
     fontSize: UNIT,
     height: UNIT,
     lineHeight: UNIT,
+  },
+
+  captionHighlight: {
+    color: COLOR.WHITE,
+    fontWeight: FONT.WEIGHT.BOLD,
   },
 
   captions: {
@@ -43,7 +50,7 @@ export default StyleSheet.create({
   },
 
   bar: {
-    backgroundColor: COLOR.BACKGROUND,
+    backgroundColor: COLOR.BASE,
     borderTopLeftRadius: COLUMN_WIDTH / 2,
     borderTopRightRadius: COLUMN_WIDTH / 2,
     maxHeight: '100%',
@@ -89,7 +96,7 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     height: '100%',
-    opacity: 0.5,
+    opacity: 0.66,
   },
 
   scaleLine: {

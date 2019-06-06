@@ -6,7 +6,7 @@ import { Image, View } from 'react-native';
 
 import { FLAGS } from '../../../../assets';
 import { C, exchange } from '../../../../common';
-import { Percentage, PriceFriendly } from '../../../../components';
+import { PriceFriendly } from '../../../../components';
 import { Consumer } from '../../../../context';
 import { Text, Touchable } from '../../../../reactor/components';
 import { THEME } from '../../../../reactor/common';
@@ -45,9 +45,12 @@ const VaultCard = (props) => {
               { progression
                 ? (
                   <Fragment>
-                    <Percentage
+                    <PriceFriendly
+                      currency="%"
+                      icon
                       subtitle
                       level={3}
+                      mask={mask}
                       value={currentBalance - progression > 0
                         ? (progression * 100) / (currentBalance - progression)
                         : progression}
@@ -59,6 +62,7 @@ const VaultCard = (props) => {
                       lighten
                       mask={mask}
                       subtitle
+                      mask={mask}
                       title={progression > 0 ? '+' : '-'}
                       value={progression}
                     />

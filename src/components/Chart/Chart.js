@@ -74,7 +74,7 @@ class Chart extends Component {
                   styles.bar,
                   inverted && styles.barInverted,
                   value !== 0
-                    ? { height: `${calcHeight(value, { min, max, avg })}%` }
+                    ? { backgroundColor: color, height: `${calcHeight(value, { min, max, avg })}%` }
                     : styles.barEmpty,
                 ]}
               >
@@ -97,9 +97,9 @@ class Chart extends Component {
         </View>
         { captions && (
           <View style={[styles.captions, styles.row, scale && styles.rowScale]}>
-            { captions.map(caption => (
+            { captions.map((caption, index) => (
               <View key={caption} style={styles.column}>
-                <Text caption level={2} lighten style={styles.caption}>
+                <Text lighten style={[styles.caption, highlight === index && styles.captionHighlight]}>
                   {caption.substring(0, 3).toUpperCase()}
                 </Text>
               </View>

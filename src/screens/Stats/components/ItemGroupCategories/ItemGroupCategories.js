@@ -46,7 +46,7 @@ class ItemGroupCategories extends PureComponent {
       <Consumer>
         { ({ store: { baseCurrency }, l10n }) => (
           <View>
-            <Heading breakline title={isExpense ? l10n.EXPENSES : l10n.INCOMES}>
+            <Heading title={isExpense ? l10n.EXPENSES : l10n.INCOMES}>
               <PriceFriendly currency={baseCurrency} subtitle level={3} value={total} />
             </Heading>
             <View style={styles.container}>
