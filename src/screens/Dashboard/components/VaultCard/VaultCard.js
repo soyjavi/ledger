@@ -48,9 +48,9 @@ const VaultCard = (props) => {
                     <PriceFriendly
                       currency="%"
                       icon
-                      subtitle
                       level={3}
                       mask={mask}
+                      subtitle
                       value={currentBalance - progression > 0
                         ? (progression * 100) / (currentBalance - progression)
                         : progression}
@@ -62,7 +62,6 @@ const VaultCard = (props) => {
                       lighten
                       mask={mask}
                       subtitle
-                      mask={mask}
                       title={progression > 0 ? '+' : '-'}
                       value={progression}
                     />

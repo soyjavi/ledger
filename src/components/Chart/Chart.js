@@ -56,7 +56,11 @@ class Chart extends Component {
               { scaleValues.map((value, index) => (
                 <View
                   key={`line-${index.toString()}`}
-                  style={[styles.scaleLine, value.length === 0 && styles.scaleLineEmpty]}
+                  style={[
+                    styles.scaleLine,
+                    index === 1 && { backgroundColor: color, opacity: 0.33 },
+                    value.length === 0 && styles.scaleLineEmpty,
+                  ]}
                 />
               ))}
             </View>

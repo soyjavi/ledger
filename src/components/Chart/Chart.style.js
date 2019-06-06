@@ -39,7 +39,7 @@ export default StyleSheet.create({
   },
 
   container: {
-    marginTop: SPACE.XS,
+    marginTop: SPACE.S,
   },
 
   content: {
@@ -96,13 +96,17 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     height: '100%',
-    opacity: 0.66,
   },
 
   scaleLine: {
     height: 1,
     width: '100%',
     backgroundColor: COLOR.BASE,
+    opacity: 0.66,
+  },
+
+  scaleLineAverage: {
+    opacity: 0.33,
   },
 
   scaleLineEmpty: {

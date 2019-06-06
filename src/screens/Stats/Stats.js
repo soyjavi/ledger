@@ -114,7 +114,7 @@ class Stats extends Component {
               >
                 <View style={styles.content}>
                   <Heading title={`${title}${l10n.ACTIVITY}`} image={ASSETS.logo} />
-                  <Heading subtitle={l10n.BALANCE} />
+                  <Heading caption={l10n.BALANCE} />
                   <Chart
                     captions={orderCaptions(l10n)}
                     highlight={slider.index}
@@ -122,7 +122,7 @@ class Stats extends Component {
                     styleContainer={[styles.chart, styles.chartMargin]}
                     style={styles.chartBalance}
                   />
-                  <Heading subtitle={`${l10n.INCOMES} vs. ${l10n.EXPENSES}`} />
+                  <Heading caption={`${l10n.INCOMES} vs. ${l10n.EXPENSES}`} />
                   <Chart
                     color={COLOR.INCOMES}
                     highlight={slider.index}

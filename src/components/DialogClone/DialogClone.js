@@ -1,22 +1,18 @@
 import { bool, shape } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
 import { View } from 'react-native';
+import { THEME } from '../../reactor/common';
+import { Button, Dialog, Text } from '../../reactor/components';
 
 import {
   C, exchange, verboseMonthShort, verboseTime,
 } from '../../common';
 import { Consumer } from '../../context';
-import { THEME } from '../../reactor/common';
-import {
-  Button, Dialog, Price, Text,
-} from '../../reactor/components';
 import HeatMap from '../HeatMap';
-
+import PriceFriendly from '../PriceFriendly';
 import styles from './DialogClone.style';
 
-const {
-  FIXED, SYMBOL, TX: { TYPE: { INCOME, EXPENSE } }, WIPE,
-} = C;
+const { TX: { TYPE: { INCOME, EXPENSE } }, WIPE } = C;
 const { COLOR } = THEME;
 
 class DialogClone extends PureComponent {
@@ -101,35 +97,27 @@ class DialogClone extends PureComponent {
                   </Text>
                 </View>
                 <View style={styles.prices}>
-                  <Price
-                    subtitle
+                  <PriceFriendly
+                    currency={baseCurrency}
                     level={2}
-                    fixed={FIXED[baseCurrency]}
-                    operator={type === INCOME ? '+' : '-'}
-                    symbol={SYMBOL[baseCurrency]}
+                    operator
+                    subtitle
                     value={baseCurrency !== currency
                       ? exchange(value, currency, baseCurrency, rates)
                       : value}
                   />
                   { currency !== baseCurrency && (
-                    <Price
-                      caption
-                      lighten
-                      fixed={FIXED[currency]}
-                      operator={type === INCOME ? '+' : '-'}
-                      symbol={SYMBOL[currency]}
-                      value={value}
-                    />
+                    <PriceFriendly caption currency={currency} lighten operator value={value} />
                   )}
                 </View>
               </View>
+
               { location && (
                 <Fragment>
                   <HeatMap color={color} points={[[location.longitude, location.latitude]]} />
-                  <Text caption lighten style={styles.place}>{location.place}</Text>
+                  <Text caption lighten style={styles.content}>{location.place}</Text>
                 </Fragment>
               )}
-
             </View>
 
             <View style={styles.row}>

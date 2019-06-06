@@ -1,13 +1,12 @@
 import { bool, func, string } from 'prop-types';
 import React, { PureComponent } from 'react';
 import { View } from 'react-native';
+import { THEME } from '../../../../reactor/common';
+import { Button, Dialog, Text } from '../../../../reactor/components';
 
 import { C } from '../../../../common';
 import { Consumer } from '../../../../context';
 import { CardOption, HeatMap } from '../../../../components';
-
-import { THEME } from '../../../../reactor/common';
-import { Button, Dialog, Text } from '../../../../reactor/components';
 import { FormTransaction, FormTransfer } from './components';
 import { getLocation, onTransaction, onTransfer } from './modules';
 

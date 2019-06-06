@@ -14,19 +14,18 @@ export default StyleSheet.create({
     minWidth: BAR_SIZE,
   },
 
+  barContainer: {
+  },
+
   barSmall: {
     borderRadius: BAR_SIZE_SMALL / 2,
     height: BAR_SIZE_SMALL,
     minWidth: BAR_SIZE_SMALL,
+    marginBottom: SPACE.XXS,
   },
 
-  barContainer: {
-    marginVertical: SPACE.XXS,
-  },
-
-  row: LAYOUT.STYLE.ROW,
-
-  title: {
-    flex: 1,
+  row: {
+    ...LAYOUT.STYLE.ROW,
+    justifyContent: 'space-between',
   },
 });

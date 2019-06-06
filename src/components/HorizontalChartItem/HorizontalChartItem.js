@@ -11,30 +11,24 @@ const { COLOR } = THEME;
 
 const HorizontalChartItem = ({
   color, currency, small, title, value, width, ...inherit
-}) => {
-  const textProps = {
-    caption: small, level: small ? 1 : 3, lighten: small, subtitle: !small,
-  };
-
-  return (
-    <View style={inherit.style}>
-      <View style={styles.row}>
-        <Text {...textProps} style={styles.title}>{title}</Text>
-        <PriceFriendly currency={currency} {...textProps} value={value} />
-      </View>
-
-      <View style={[styles.bar, styles.barContainer, small && styles.barSmall]}>
-        <View
-          style={[
-            styles.bar,
-            small && styles.barSmall,
-            { backgroundColor: color, width: `${width}%` },
-          ]}
-        />
-      </View>
+}) => (
+  <View style={inherit.style}>
+    <View style={styles.row}>
+      <Text caption lighten={small}>{title}</Text>
+      <PriceFriendly currency={currency} subtitle level={3} lighten={small} value={value} />
     </View>
-  );
-};
+
+    <View style={[styles.bar, styles.barContainer, small && styles.barSmall]}>
+      <View
+        style={[
+          styles.bar,
+          small && styles.barSmall,
+          { backgroundColor: color, width: `${width}%` },
+        ]}
+      />
+    </View>
+  </View>
+);
 
 HorizontalChartItem.propTypes = {
   color: string,
