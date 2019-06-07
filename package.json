@@ -1,7 +1,7 @@
 {
   "name": "voltvault-app",
   "description": "Cross-Device client for voltvault",
-  "version": "0.13.0b1",
+  "version": "0.13.0b3",
   "keywords": [
     "finance",
     "personal",
@@ -17,13 +17,13 @@
   "homepage": "https://github.com/soyjavi/voltvault-app",
   "bugs": "https://github.com/soyjavi/voltvault-app/issues",
   "dependencies": {
-    "expo": "^32.0.0",
+    "expo": "^31.0.4",
     "prop-types": "15.7.2",
     "react": "16.8.6",
     "react-art": "16.8.6",
     "react-dom": "16.8.6",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
-    "react-native-web": "0.11.1",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
+    "react-native-web": "0.11.4",
     "react-navigation": "3.0.9"
   },
   "devDependencies": {
@@ -31,7 +31,7 @@
     "@babel/core": "7.0.0",
     "babel-core": "7.0.0-bridge.0",
     "babel-plugin-file-loader": "1.1.1",
-    "babel-plugin-react-native-web": "0.11.1",
+    "babel-plugin-react-native-web": "0.11.4",
     "eslint-config-airbnb": "latest",
     "eslint-plugin-import": "2.16.0",
     "eslint-plugin-jsx-a11y": "6.2.1",
