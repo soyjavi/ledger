@@ -26,7 +26,7 @@ export default StyleSheet.create({
   },
 
   bulletActive: {
-    backgroundColor: COLOR.ACCENT,
+    backgroundColor: COLOR.PRIMARY,
   },
 
   container: {

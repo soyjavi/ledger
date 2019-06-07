@@ -17,7 +17,7 @@ const NumKeyboard = ({ onPress }) => (
         key={key}
         onPress={typeof key === 'number' ? () => onPress(key) : undefined}
         raised
-        rippleColor={COLOR.ACCENT}
+        rippleColor={COLOR.PRIMARY}
       >
         <View style={styles.touchable}>
           <Text style={styles.key}>{typeof key === 'number' ? key : ''}</Text>

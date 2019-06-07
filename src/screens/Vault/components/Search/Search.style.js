@@ -22,7 +22,7 @@ export default StyleSheet.create({
   },
 
   focus: {
-    borderColor: COLOR.TEXT,
+    borderColor: COLOR.PRIMARY,
   },
 
   icon: {

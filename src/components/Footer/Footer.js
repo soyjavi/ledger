@@ -3,14 +3,13 @@ import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 
 import ASSETS from '../../assets';
-import { C, onHardwareBackPress } from '../../common';
+import { onHardwareBackPress } from '../../common';
 import { Consumer } from '../../context';
 import { THEME } from '../../reactor/common';
 import { Button } from '../../reactor/components';
 import styles from './Footer.style';
 
 const { COLOR } = THEME;
-const { SETTINGS: { NIGHT_MODE } } = C;
 
 const BUTTON = {
   color: COLOR.TEXT, large: true, rounded: true, shadow: true, style: styles.button,
@@ -41,12 +40,12 @@ class Footer extends PureComponent {
 
     return (
       <Consumer>
-        { ({ events: { isConnected }, store: { settings: { [NIGHT_MODE]: nightMode } } }) => (
+        { ({ events: { isConnected } }) => (
           <View style={[styles.container, inherit.style]}>
             { onBack && (
               <Button
                 {...BUTTON}
-                icon={nightMode ? ASSETS.backNightMode : ASSETS.back}
+                icon={ASSETS.back}
                 large={onPress === undefined}
                 onPress={onBack}
                 small
@@ -56,7 +55,7 @@ class Footer extends PureComponent {
               <Button
                 {...BUTTON}
                 disabled={!isConnected}
-                icon={nightMode ? ASSETS.addNightMode : ASSETS.add}
+                icon={ASSETS.add}
                 onPress={onPress}
               />
             )}

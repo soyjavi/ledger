@@ -3,9 +3,11 @@ import {
 } from 'prop-types';
 import React, { PureComponent } from 'react';
 import { View } from 'react-native';
-
 import { THEME } from '../../../../reactor/common';
 import { Icon, Text, Touchable } from '../../../../reactor/components';
+
+import ASSETS from '../../../../assets';
+
 import styles from './OptionItem.style';
 
 const { COLOR } = THEME;
@@ -42,7 +44,7 @@ class OptionItem extends PureComponent {
           { children }
         </View>
         <View style={[styles.iconContainer, active && styles.iconActive]}>
-          { active && <Icon value="doneContrast" style={styles.icon} /> }
+          { active && <Icon value={ASSETS.checked} style={styles.icon} /> }
         </View>
       </Touchable>
     );

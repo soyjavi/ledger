@@ -10,20 +10,23 @@ export default {
   // BORDER_RADIUS: 4,
 
   COLOR: {
-    BACKGROUND_OPACITY: 'rgba(255,255,255,0.9)',
-    BASE: '#F0F0F0',
-    TEXT: '#333',
-    TEXT_LIGHTEN: '#999',
+    BACKGROUND: '#000',
+    BACKGROUND_INPUT: '#202020',
+    BACKGROUND_OPACITY: 'rgba(16, 16, 16, 0.85)',
+    BASE: '#202020',
+    TEXT: '#ffffff',
+    TEXT_LIGHTEN: '#808080',
 
+    // PRIMARY: '#4066EA',
     // PRIMARY: '#00AFFF',
-    PRIMARY: '#4066EA',
-    ACCENT: '#A6FE01',
+    // PRIMARY: '#38f9d7',
+    // INCOMES: '#00C989',
 
-    EXPENSES: '#E9305C',
-    INCOMES: '#00C989',
+    PRIMARY: '#A6FE01',
+    EXPENSE: '#E9305C',
+    INCOME: '#43e97b',
     TRANSFER: '#00AFFF',
     LOCATION: '#7966FF',
-
     WARNING: '#EDE622',
     ERROR: '#F03301',
   },

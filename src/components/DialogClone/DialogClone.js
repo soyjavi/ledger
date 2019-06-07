@@ -71,13 +71,14 @@ class DialogClone extends PureComponent {
       },
       state: { busyClone, busyWipe },
     } = this;
-    const color = type === EXPENSE ? COLOR.EXPENSES : COLOR.INCOMES;
+    const color = type === EXPENSE ? COLOR.EXPENSE : COLOR.INCOME;
 
     return (
       <Consumer>
         { ({ l10n, store: { baseCurrency, rates, ...store } }) => (
           <Dialog
             {...inherit}
+            highlight
             onClose={() => store.onSelectTx(undefined)}
             style={styles.frame}
             styleContainer={styles.dialog}

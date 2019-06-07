@@ -43,7 +43,6 @@ export default {
   },
   SETTINGS: {
     HIDE_OVERALL_BALANCE: 0,
-    NIGHT_MODE: 3,
     SHOW_VAULT_CURRENCY: 1,
   },
   STYLE: {

@@ -117,7 +117,6 @@ class Stats extends Component {
                   <Heading caption={l10n.BALANCE} />
                   <Chart
                     captions={orderCaptions(l10n)}
-                    color={COLOR.ACCENT}
                     highlight={slider.index}
                     values={chart.balance}
                     styleContainer={[styles.chart, styles.chartMargin]}
@@ -125,18 +124,18 @@ class Stats extends Component {
                   />
                   <Heading caption={`${l10n.INCOMES} vs. ${l10n.EXPENSES}`} />
                   <Chart
-                    color={COLOR.INCOMES}
+                    color={COLOR.INCOME}
                     highlight={slider.index}
                     styleContainer={styles.chart}
                     values={chart.incomes}
                   />
                   <Chart
                     captions={orderCaptions(l10n)}
+                    color={COLOR.EXPENSE}
                     highlight={slider.index}
                     inverted
-                    values={chart.expenses}
-                    color={COLOR.EXPENSES}
                     styleContainer={[styles.chart, styles.chartMargin]}
+                    values={chart.expenses}
                   />
                 </View>
 

@@ -19,7 +19,10 @@ const PriceFriendly = ({
   let color;
   let operator;
 
-  if (icon) color = value > 0 ? COLOR.INCOMES : COLOR.EXPENSES;
+  if (icon) {
+    if (value === 0) color = COLOR.TEXT_LIGHTEN;
+    else color = value > 0 ? COLOR.INCOME : COLOR.EXPENSE;
+  }
   if (inherit.operator && value > 0) operator = '+';
   else if (inherit.operator && value < 0) operator = '-';
 

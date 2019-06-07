@@ -2,13 +2,12 @@ import React, { PureComponent } from 'react';
 import { AppRegistry, View } from 'react-native';
 
 import {
-  C, getFingerprintAsync, getLocationAsync, L10N, theme, themeDark,
+  C, getFingerprintAsync, getLocationAsync, L10N, theme,
 } from './common';
 import { Provider } from './context';
-import { Storage } from './context/modules';
 import { THEME } from './reactor/common';
 
-const { LANGUAGE, SETTINGS: { NIGHT_MODE } } = C;
+const { LANGUAGE } = C;
 
 class BrowserApp extends PureComponent {
   state = {
@@ -16,14 +15,7 @@ class BrowserApp extends PureComponent {
   }
 
   async componentDidMount() {
-    const { settings = {} } = await Storage.get();
-    const nightMode = settings[NIGHT_MODE];
-
-    THEME.extend({
-      ...theme,
-      COLOR: { ...theme.COLOR, ...(nightMode ? themeDark.COLOR : {}) },
-    });
-
+    THEME.extend(theme);
     this.setState({ loaded: true });
   }
 

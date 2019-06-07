@@ -12,7 +12,7 @@ import styles from './Header.style';
 const Header = ({
   highlight, image, right, title, ...inherit
 }) => (
-  <View style={[styles.row, styles.container, highlight && styles.highlight, inherit.style]}>
+  <View style={[styles.row, styles.container, inherit.style]}>
     <View style={styles.content}>
       { title && (
         <Motion timeline={[{ property: 'opacity', value: highlight ? 1 : 0 }]} style={styles.row}>

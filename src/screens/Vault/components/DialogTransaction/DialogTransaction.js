@@ -79,8 +79,8 @@ class DialogTransaction extends PureComponent {
         busy, coords, location, place, type = EXPENSE, valid,
       },
     } = this;
-    let color;
-    if (type !== TRANSFER) color = type === EXPENSE ? COLOR.EXPENSES : COLOR.INCOMES;
+    let color = COLOR.TRANSFER;
+    if (type !== TRANSFER) color = type === EXPENSE ? COLOR.EXPENSE : COLOR.INCOME;
     const formProps = {
       ...this.props, ...this.state, color, onChange: _onChange,
     };
@@ -90,6 +90,7 @@ class DialogTransaction extends PureComponent {
         { ({ events: { getLocationAsync }, l10n, store }) => (
           <Dialog
             {...inherit}
+            highlight
             onClose={onClose}
             style={styles.frame}
             styleContainer={styles.dialog}

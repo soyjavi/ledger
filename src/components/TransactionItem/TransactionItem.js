@@ -45,12 +45,7 @@ class TransactionItem extends PureComponent {
 
     return (
       <Consumer>
-        { ({
-          l10n,
-          store: {
-            baseCurrency, onSelectTx, rates, ...store
-          },
-        }) => (
+        { ({ l10n, store: { baseCurrency, onSelectTx, rates } }) => (
           <Touchable rippleColor={COLOR.TEXT_LIGHTEN} onPress={() => onSelectTx(this.props)}>
             <View style={[styles.container, styles.row, isVaultTransfer && styles.containerHighlight]}>
               <View style={styles.icon}>
@@ -61,7 +56,7 @@ class TransactionItem extends PureComponent {
                       <Text lighten style={styles.month}>{verboseMonthShort(timestamp, l10n)}</Text>
                     </Fragment>
                   )
-                  : <Icon value={getIconCategory({ type, category }, store)} /> }
+                  : <Icon value={getIconCategory({ type, category, title })} /> }
               </View>
 
               <View style={[styles.content, styles.row]}>

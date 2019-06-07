@@ -53,7 +53,7 @@ class ItemGroupCategories extends PureComponent {
               { orderByAmount(totals).map(({ key, amount }) => (
                 <Touchable key={key} onPress={() => _onPress(key)} style={styles.content}>
                   <HorizontalChartItem
-                    color={isExpense ? COLOR.EXPENSES : COLOR.INCOMES}
+                    color={isExpense ? COLOR.EXPENSE : COLOR.INCOME}
                     currency={baseCurrency}
                     title={l10n.CATEGORIES[type][key]}
                     value={amount}

@@ -10,7 +10,6 @@ import objectToQueryString from './objectToQueryString';
 import onHardwareBackPress from './onHardwareBackPress';
 import setCurrency from './setCurrency';
 import theme from './theme';
-import themeDark from './themeDark';
 import translate from './translate';
 import verboseDate from './verboseDate';
 import verboseMonth from './verboseMonth';
@@ -30,7 +29,6 @@ export {
   onHardwareBackPress,
   setCurrency,
   theme,
-  themeDark,
   translate,
   verboseDate,
   verboseMonth,
