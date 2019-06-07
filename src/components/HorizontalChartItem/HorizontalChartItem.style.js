@@ -15,13 +15,13 @@ export default StyleSheet.create({
   },
 
   barContainer: {
+    marginVertical: SPACE.XXS,
   },
 
   barSmall: {
     borderRadius: BAR_SIZE_SMALL / 2,
     height: BAR_SIZE_SMALL,
     minWidth: BAR_SIZE_SMALL,
-    marginBottom: SPACE.XXS,
   },
 
   row: {

@@ -18,14 +18,6 @@ export default StyleSheet.create({
     marginRight: SPACE.S,
   },
 
-  // cardExpenses: {
-  //   backgroundColor: COLOR.EXPENSES,
-  // },
-
-  // cardIncomes: {
-  //   backgroundColor: COLOR.INCOMES,
-  // },
-
   cardLast: {
     marginRight: 0,
   },
@@ -43,10 +35,9 @@ export default StyleSheet.create({
     marginBottom: SPACE.MEDIUM,
   },
 
-  logo: {
+  image: {
     height: UNIT * 1.6,
-    width: UNIT * 2.2,
-    marginBottom: SPACE.XXS,
+    width: UNIT * 1.6,
     marginRight: SPACE.XXS,
   },
 

@@ -20,8 +20,8 @@ export default StyleSheet.create({
   },
 
   image: {
-    height: UNIT * 1.6,
-    width: UNIT * 2.2,
+    height: UNIT * 1.8,
+    width: UNIT * 1.8,
     marginRight: SPACE.XXS,
   },
 });

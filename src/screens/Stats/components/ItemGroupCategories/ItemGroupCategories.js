@@ -45,11 +45,11 @@ class ItemGroupCategories extends PureComponent {
     return (
       <Consumer>
         { ({ store: { baseCurrency }, l10n }) => (
-          <View>
+          <View style={styles.container}>
             <Heading title={isExpense ? l10n.EXPENSES : l10n.INCOMES}>
               <PriceFriendly currency={baseCurrency} subtitle level={3} value={total} />
             </Heading>
-            <View style={styles.container}>
+            <View>
               { orderByAmount(totals).map(({ key, amount }) => (
                 <Touchable key={key} onPress={() => _onPress(key)} style={styles.content}>
                   <HorizontalChartItem

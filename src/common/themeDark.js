@@ -7,6 +7,6 @@ export default {
     BACKGROUND_OPACITY: 'rgba(16,16,16,0.85)',
     BASE,
     TEXT: '#ffffff',
-    TEXT_LIGHTEN: '#555',
+    TEXT_LIGHTEN: '#808080',
   },
 };

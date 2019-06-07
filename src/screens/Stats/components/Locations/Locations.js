@@ -3,10 +3,11 @@ import {
 } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
 import { View } from 'react-native';
-
 import { THEME } from '../../../../reactor/common';
+import { Text } from '../../../../reactor/components';
+
 import { Consumer } from '../../../../context';
-import { Heading, HeatMap, HorizontalChartItem } from '../../../../components';
+import { HeatMap, HorizontalChartItem } from '../../../../components';
 import { orderByAmount } from '../../modules';
 import styles, { MAP_HEIGHT, MAP_WIDTH } from './Locations.style';
 
@@ -37,19 +38,22 @@ class Locations extends PureComponent {
     return (
       <Consumer>
         { ({ l10n }) => (
-          <View>
-            <Heading title={l10n.LOCATIONS} />
-            <View>
+          <View style={styles.container}>
+            <View style={styles.content}>
+              <Text headline level={6} style={styles.headline}>{l10n.LOCATIONS}</Text>
               <HeatMap
                 color={COLOR.LOCATION}
                 points={points}
                 precission={precission}
                 height={MAP_HEIGHT}
                 width={MAP_WIDTH}
-                style={[styles.content, styles.map]}
+                style={styles.map}
               />
-              <Heading title={l10n.CITIES} style={styles.heading} />
-              <View style={styles.content}>
+            </View>
+
+            <View style={styles.content}>
+              <Text headline level={6} style={styles.headline}>{l10n.CITIES}</Text>
+              <Fragment>
                 { orderByAmount(cities).map(({ key, amount }) => (
                   <HorizontalChartItem
                     color={COLOR.LOCATION}
@@ -60,26 +64,26 @@ class Locations extends PureComponent {
                     width={Math.floor((amount / citiesTxs) * 100)}
                   />
                 ))}
-              </View>
-
-              { Object.keys(countries).length > 1 && (
-                <Fragment>
-                  <Heading title={l10n.COUNTRIES} />
-                  <View style={styles.content}>
-                    { orderByAmount(countries).map(({ key, amount }) => (
-                      <HorizontalChartItem
-                        color={COLOR.LOCATION}
-                        key={key}
-                        currency="x"
-                        title={key}
-                        value={amount}
-                        width={Math.floor((amount / countriesTxs) * 100)}
-                      />
-                    ))}
-                  </View>
-                </Fragment>
-              )}
+              </Fragment>
             </View>
+
+            { Object.keys(countries).length > 1 && (
+              <View style={styles.content}>
+                <Text headline level={6} style={styles.headline}>{l10n.COUNTRIES}</Text>
+                <Fragment>
+                  { orderByAmount(countries).map(({ key, amount }) => (
+                    <HorizontalChartItem
+                      color={COLOR.LOCATION}
+                      key={key}
+                      currency="x"
+                      title={key}
+                      value={amount}
+                      width={Math.floor((amount / countriesTxs) * 100)}
+                    />
+                  ))}
+                </Fragment>
+              </View>
+            )}
           </View>
         )}
       </Consumer>

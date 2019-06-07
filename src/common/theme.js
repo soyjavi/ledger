@@ -15,8 +15,9 @@ export default {
     TEXT: '#333',
     TEXT_LIGHTEN: '#999',
 
-    PRIMARY: '#00AFFF',
-    ACCENT: '#4066EA',
+    // PRIMARY: '#00AFFF',
+    PRIMARY: '#4066EA',
+    ACCENT: '#A6FE01',
 
     EXPENSES: '#E9305C',
     INCOMES: '#00C989',

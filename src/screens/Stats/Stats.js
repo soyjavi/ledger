@@ -117,6 +117,7 @@ class Stats extends Component {
                   <Heading caption={l10n.BALANCE} />
                   <Chart
                     captions={orderCaptions(l10n)}
+                    color={COLOR.ACCENT}
                     highlight={slider.index}
                     values={chart.balance}
                     styleContainer={[styles.chart, styles.chartMargin]}

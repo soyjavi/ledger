@@ -64,7 +64,7 @@ class Summary extends Component {
           <View style={[styles.container, inherit.style]}>
             <Touchable onPress={onMask ? () => onMask(!mask) : undefined} style={styles.content}>
               <View style={styles.row}>
-                <Image source={image} resizeMode="contain" style={styles.logo} />
+                <Image source={image} resizeMode="contain" style={styles.image} />
                 <Text caption level={2} lighten>{title.toUpperCase()}</Text>
               </View>
               <PriceFriendly
