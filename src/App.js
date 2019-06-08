@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-import { StatusBar } from 'react-native';
 
 import { C } from './common';
 import { Consumer } from './context';

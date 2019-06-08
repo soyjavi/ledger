@@ -1,6 +1,4 @@
-import {
-  bool, func, shape, string,
-} from 'prop-types';
+import { func, shape, string } from 'prop-types';
 import React, { PureComponent } from 'react';
 import { TextInput, View } from 'react-native';
 

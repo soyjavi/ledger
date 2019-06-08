@@ -7,17 +7,15 @@ import { Image, View } from 'react-native';
 import ASSETS from '../../assets';
 import { C, exchange } from '../../common';
 import { Consumer } from '../../context';
-import { THEME } from '../../reactor/common';
 import { Button, Text, Touchable } from '../../reactor/components';
 import Heading from '../Heading';
 import PriceFriendly from '../PriceFriendly';
 import styles from './Summary.style';
 
 const { CURRENCY, SCREEN } = C;
-const { COLOR } = THEME;
 
 const captionProps = {
-  caption: true, level: 2, numberOfLines: 1,
+  caption: true, level: 2, lighten: true, numberOfLines: 1,
 };
 
 class Summary extends Component {
@@ -65,7 +63,7 @@ class Summary extends Component {
             <Touchable onPress={onMask ? () => onMask(!mask) : undefined} style={styles.content}>
               <View style={[styles.row, styles.title]}>
                 <Image source={image} resizeMode="contain" style={styles.image} />
-                <Text caption level={2} lighten>{title.toUpperCase()}</Text>
+                <Text {...captionProps}>{title.toUpperCase()}</Text>
               </View>
               <PriceFriendly
                 currency={baseCurrency}
@@ -92,7 +90,6 @@ class Summary extends Component {
 
             <Heading title={l10n.CURRENT_MONTH}>
               <Button
-                _color={COLOR.WHITE}
                 outlined
                 small
                 title={l10n.ACTIVITY}
