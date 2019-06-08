@@ -23,9 +23,7 @@ export default StyleSheet.create({
     backgroundColor: COLOR.BACKGROUND_OPACITY,
   },
 
-  frame: {
-    ...STYLE.DIALOG_FRAME,
-  },
+  frame: STYLE.DIALOG_FRAME,
 
   form: {
     marginVertical: SPACE.MEDIUM,

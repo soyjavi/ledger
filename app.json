@@ -31,7 +31,7 @@
     },
     "androidStatusBar": {
       "backgroundColor": "#000000",
-      "barStyle": "dark-content"
+      "barStyle": "light-content"
     },
     "githubUrl": "https://github.com/soyjavi/voltvault"
   }

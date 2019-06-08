@@ -36,9 +36,7 @@ export default StyleSheet.create({
     backgroundColor: COLOR.BACKGROUND_OPACITY,
   },
 
-  frame: {
-    ...DIALOG_FRAME,
-  },
+  frame: DIALOG_FRAME,
 
   icon: {
     display: 'flex',
