@@ -15,7 +15,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000000"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -30,7 +30,7 @@
       "package": "com.soyjavi.voltvault"
     },
     "androidStatusBar": {
-      "backgroundColor": "#ffffff",
+      "backgroundColor": "#000000",
       "barStyle": "dark-content"
     },
     "githubUrl": "https://github.com/soyjavi/voltvault"

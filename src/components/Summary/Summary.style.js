@@ -36,10 +36,14 @@ export default StyleSheet.create({
   },
 
   image: {
-    height: UNIT * 1.6,
-    width: UNIT * 1.6,
+    height: UNIT * 1.4,
+    width: UNIT * 1.4,
     marginRight: SPACE.XXS,
   },
 
   row: LAYOUT.STYLE.ROW,
+
+  title: {
+    // marginBottom: SPACE.XXS / 2,
+  },
 });

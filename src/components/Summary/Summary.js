@@ -63,7 +63,7 @@ class Summary extends Component {
         { ({ l10n, navigation, store: { baseCurrency, rates } }) => (
           <View style={[styles.container, inherit.style]}>
             <Touchable onPress={onMask ? () => onMask(!mask) : undefined} style={styles.content}>
-              <View style={styles.row}>
+              <View style={[styles.row, styles.title]}>
                 <Image source={image} resizeMode="contain" style={styles.image} />
                 <Text caption level={2} lighten>{title.toUpperCase()}</Text>
               </View>
