@@ -1,12 +1,12 @@
 import {
-  arrayOf, bool, number, string,
+  arrayOf, bool, number, shape, string,
 } from 'prop-types';
 import React, { Component } from 'react';
 import { View } from 'react-native';
-
 import { THEME } from '../../reactor/common';
 import { Text } from '../../reactor/components';
-import { calcHeight, calcRange, calcScaleValues } from './modules';
+
+import { calcHeight, calcRange } from './modules';
 import styles from './Chart.style';
 
 const { COLOR } = THEME;
@@ -17,7 +17,7 @@ class Chart extends Component {
     color: string,
     highlight: number,
     inverted: bool,
-    scale: bool,
+    scales: arrayOf(shape({})),
     values: arrayOf(number),
   };
 
@@ -26,7 +26,7 @@ class Chart extends Component {
     color: COLOR.PRIMARY,
     highlight: undefined,
     inverted: false,
-    scale: true,
+    scales: undefined,
     values: [],
   };
 
@@ -36,30 +36,36 @@ class Chart extends Component {
 
   render() {
     const {
-      captions, color, highlight, inverted, scale, values, ...inherit
+      captions, color, highlight, inverted, scales, values, ...inherit
     } = this.props;
     const { max, min, avg } = calcRange(values);
-    const scaleValues = scale && values.length > 0 ? calcScaleValues({ avg, max, inverted }) : [];
+    const avgProps = { backgroundColor: color };
 
     return (
       <View style={[!inverted && styles.container, inherit.styleContainer]}>
-        { scale && (
-          <View style={[styles.scale, captions && styles.scaleCaptions]}>
-            <View style={styles.scaleValues}>
-              { scaleValues.map((value, index) => (
-                <Text key={`scale-${index.toString()}`} lighten style={styles.caption}>
-                  {value}
-                </Text>
+        { scales && (
+          <View style={[styles.scales, captions && styles.scaleCaptions]}>
+            <View style={[styles.scaleValues, inverted && styles.scaleValuesInverted]}>
+              { scales.map((scale, index) => (
+                <View
+                  key={`scale-${index.toString()}`}
+                  style={[styles.tag, scale.highlight && avgProps]}
+                >
+                  { scale.value !== 0 && (
+                    <Text lighten style={[styles.legend, scale.highlight && styles.legendHighlight]}>
+                      {scale.value}
+                    </Text>
+                  )}
+                </View>
               ))}
             </View>
             <View style={styles.scaleLines}>
-              { scaleValues.map((value, index) => (
+              { scales.map((scale, index) => (
                 <View
                   key={`line-${index.toString()}`}
                   style={[
                     styles.scaleLine,
-                    index === 1 && { backgroundColor: color, opacity: 0.33 },
-                    value.length === 0 && styles.scaleLineEmpty,
+                    scale.highlight && [styles.scaleLineAverage, avgProps],
                   ]}
                 />
               ))}
@@ -67,7 +73,7 @@ class Chart extends Component {
           </View>
         )}
 
-        <View style={[styles.content, styles.row, scale && styles.rowScale, inherit.style]}>
+        <View style={[styles.content, styles.row, scales && styles.rowScale, inherit.style]}>
           { values.map((value, index) => (
             <View
               key={`${value}-${index.toString()}`}
@@ -100,10 +106,10 @@ class Chart extends Component {
           ))}
         </View>
         { captions && (
-          <View style={[styles.captions, styles.row, scale && styles.rowScale]}>
+          <View style={[styles.captions, styles.row, scales && styles.rowScale]}>
             { captions.map((caption, index) => (
               <View key={caption} style={styles.column}>
-                <Text lighten style={[styles.caption, highlight === index && styles.captionHighlight]}>
+                <Text lighten style={[styles.legend, highlight === index && styles.legendHighlight]}>
                   {caption.substring(0, 3).toUpperCase()}
                 </Text>
               </View>

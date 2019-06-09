@@ -11,44 +11,6 @@ const COLUMN_WIDTH = UNIT * 1;
 const SCALE_WIDTH = SPACE.XL;
 
 export default StyleSheet.create({
-  caption: {
-    fontSize: UNIT,
-    height: UNIT,
-    lineHeight: UNIT,
-  },
-
-  captionHighlight: {
-    color: COLOR.WHITE,
-    fontWeight: FONT.WEIGHT.BOLD,
-  },
-
-  captions: {
-    height: SPACE.REGULAR,
-  },
-
-  column: {
-    alignItems: 'center',
-    flex: 1,
-    height: '100%',
-    justifyContent: 'flex-end',
-    overflow: 'hidden',
-  },
-
-  columnInverted: {
-    justifyContent: 'flex-start',
-  },
-
-  container: {
-    marginTop: SPACE.S,
-  },
-
-  content: {
-    ...LAYOUT.STYLE.ROW,
-    alignItems: 'flex-end',
-    flex: 1,
-    height: COLUMN_HEIGHT,
-  },
-
   bar: {
     backgroundColor: COLOR.BASE,
     borderTopLeftRadius: COLUMN_WIDTH / 2,
@@ -70,6 +32,44 @@ export default StyleSheet.create({
     borderBottomRightRadius: COLUMN_WIDTH / 2,
   },
 
+  captions: {
+    height: SPACE.REGULAR,
+  },
+
+  column: {
+    alignItems: 'center',
+    flex: 1,
+    height: '100%',
+    justifyContent: 'flex-end',
+    overflow: 'hidden',
+  },
+
+  columnInverted: {
+    justifyContent: 'flex-start',
+  },
+
+  container: {
+  },
+
+  content: {
+    ...LAYOUT.STYLE.ROW,
+    alignItems: 'flex-end',
+    flex: 1,
+    height: COLUMN_HEIGHT,
+  },
+
+
+  legend: {
+    fontSize: UNIT,
+    height: UNIT,
+    lineHeight: UNIT,
+  },
+
+  legendHighlight: {
+    color: COLOR.WHITE,
+    fontWeight: FONT.WEIGHT.BOLD,
+  },
+
   row: {
     ...LAYOUT.STYLE.ROW,
     justifyContent: 'space-between',
@@ -79,8 +79,7 @@ export default StyleSheet.create({
     marginLeft: SCALE_WIDTH,
   },
 
-  scale: {
-    ...LAYOUT.STYLE.ROW,
+  scales: {
     position: 'absolute',
     left: 0,
     right: 0,
@@ -102,11 +101,11 @@ export default StyleSheet.create({
     height: 1,
     width: '100%',
     backgroundColor: COLOR.BASE,
-    opacity: 0.66,
   },
 
   scaleLineAverage: {
-    opacity: 0.33,
+    opacity: 0.5,
+    height: 2,
   },
 
   scaleLineEmpty: {
@@ -115,9 +114,22 @@ export default StyleSheet.create({
 
   scaleValues: {
     position: 'absolute',
-    bottom: SPACE.XS,
+    bottom: 0,
+    top: 0,
+    left: SPACE.XXS,
     justifyContent: 'space-between',
-    top: -SPACE.S,
-    width: SCALE_WIDTH,
+    zIndex: 1,
+  },
+
+  scaleValuesInverted: {
+    flexDirection: 'column-reverse',
+  },
+
+  tag: {
+    alignSelf: 'flex-start',
+    borderRadius: SPACE.S,
+    height: UNIT + (SPACE.XXS * 2),
+    paddingVertical: SPACE.XXS,
+    paddingHorizontal: SPACE.XS,
   },
 });
