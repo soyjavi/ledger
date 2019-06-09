@@ -23,13 +23,7 @@ const CardOption = ({
         { icon && <Icon value={icon} style={styles.icon} /> }
       </View>
     )}
-    <Text
-      caption
-      level={2}
-      lighten={color === COLOR.PRIMARY}
-      numberOfLines={1}
-      style={[styles.title, selected && styles.titleSelected]}
-    >
+    <Text caption level={2} lighten={color === COLOR.PRIMARY} numberOfLines={1} style={styles.title}>
       {title}
     </Text>
     { children }

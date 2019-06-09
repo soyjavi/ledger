@@ -40,7 +40,7 @@ const PriceFriendly = ({
       { icon && !mask && Math.abs(value) > 0 && (
         <Icon value={value > 0 ? ASSETS.income : ASSETS.expense} style={styles.icon} />
       )}
-      {mask ? <Text {...inherit}>{maskValue(props)}</Text> : <Price {...props} />}
+      {mask ? <Text color={color} {...inherit}>{maskValue(props)}</Text> : <Price {...props} />}
     </View>
   );
 };

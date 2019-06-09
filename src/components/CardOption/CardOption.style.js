@@ -6,7 +6,7 @@ import { THEME } from '../../reactor/common';
 const { STYLE } = C;
 
 const {
-  BORDER_RADIUS, COLOR, FONT, SPACE, UNIT,
+  BORDER_RADIUS, COLOR, SPACE, UNIT,
 } = THEME;
 
 const THUMBNAIL_SIZE = UNIT * 3.2;
@@ -45,9 +45,5 @@ export default StyleSheet.create({
 
   title: {
     textAlign: 'center',
-  },
-
-  titleSelected: {
-    fontWeight: FONT.WEIGHT.BOLD,
   },
 });

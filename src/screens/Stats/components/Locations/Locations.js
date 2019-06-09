@@ -42,7 +42,7 @@ class Locations extends PureComponent {
             <View style={styles.content}>
               <Text headline level={6} style={styles.headline}>{l10n.LOCATIONS}</Text>
               <HeatMap
-                color={COLOR.ACCENT}
+                color={COLOR.LOCATION}
                 points={points}
                 precission={precission}
                 height={MAP_HEIGHT}
@@ -56,7 +56,7 @@ class Locations extends PureComponent {
               <Fragment>
                 { orderByAmount(cities).map(({ key, amount }) => (
                   <HorizontalChartItem
-                    color={COLOR.ACCENT}
+                    color={COLOR.LOCATION}
                     key={key}
                     currency="x"
                     title={key}
@@ -73,7 +73,7 @@ class Locations extends PureComponent {
                 <Fragment>
                   { orderByAmount(countries).map(({ key, amount }) => (
                     <HorizontalChartItem
-                      color={COLOR.ACCENT}
+                      color={COLOR.LOCATION}
                       key={key}
                       currency="x"
                       title={key}

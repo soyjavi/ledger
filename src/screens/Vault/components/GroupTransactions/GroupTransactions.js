@@ -40,7 +40,7 @@ class GroupTransactions extends Component {
           <Fragment>
             <View style={[styles.row, styles.heading]}>
               <View style={styles.tag}>
-                <Text subtitle level={3} lighten>{verboseDate(timestamp, l10n)}</Text>
+                <Text subtitle level={3}>{verboseDate(timestamp, l10n)}</Text>
               </View>
               { value !== 0 && (
                 <View style={[styles.row, styles.tag]}>

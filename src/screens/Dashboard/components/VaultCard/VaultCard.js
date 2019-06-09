@@ -49,7 +49,6 @@ const VaultCard = (props) => {
                       currency="%"
                       icon
                       level={3}
-                      mask={mask}
                       subtitle
                       value={currentBalance - progression > 0
                         ? (progression * 100) / (currentBalance - progression)

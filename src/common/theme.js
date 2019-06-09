@@ -24,10 +24,11 @@ export default {
     // LOCATION: '#7966FF',
 
     PRIMARY: '#ffffff',
-    ACCENT: '#A6FE01',
+    ACCENT: '#7966FF',
     EXPENSE: '#E9305C',
     INCOME: '#43e97b',
     TRANSFER: '#4066EA',
+    LOCATION: '#A6FE01',
     WARNING: '#EDE622',
     ERROR: '#F03301',
   },

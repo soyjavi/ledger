@@ -103,9 +103,8 @@ export default StyleSheet.create({
     backgroundColor: COLOR.BASE,
   },
 
-  scaleLineAverage: {
+  scaleLineAVG: {
     opacity: 0.5,
-    height: 2,
   },
 
   scaleLineEmpty: {

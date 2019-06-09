@@ -63,10 +63,7 @@ class Chart extends Component {
               { scales.map((scale, index) => (
                 <View
                   key={`line-${index.toString()}`}
-                  style={[
-                    styles.scaleLine,
-                    scale.highlight && [styles.scaleLineAverage, avgProps],
-                  ]}
+                  style={[styles.scaleLine, scale.highlight && [styles.scaleLineAVG, avgProps]]}
                 />
               ))}
             </View>
