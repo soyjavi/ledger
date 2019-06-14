@@ -23,12 +23,12 @@ export default (values, store) => {
 
   if (max > 0) {
     min = Math.floor(Math.min(...values));
-    avg = Math.floor(values.reduce((a, b) => a + b) / values.filter(value => value > 0).length);
+    avg = Math.floor(values.reduce((a, b) => a + b) / (values.length - values.findIndex(value => value > 0)));
   }
 
   return [
     { value: formatScale(max, store) },
-    { value: formatScale(avg, store), highlight: true },
+    avg !== max && avg !== min ? { value: formatScale(avg, store), highlight: true } : {},
     { value: formatScale(min, store) },
   ];
 };
