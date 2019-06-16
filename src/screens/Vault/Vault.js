@@ -43,7 +43,7 @@ class Vault extends PureComponent {
   componentWillReceiveProps({ dataSource, visible, ...store }) {
     const { props: { dataSource: { txs = [] } = {}, ...props } } = this;
 
-    if (visible && dataSource && dataSource.txs.length !== txs.length) {
+    if (visible && dataSource && (dataSource.txs.length === 0 || dataSource.txs.length !== txs.length)) {
       const search = undefined;
       this.setState({
         scrollQuery: false, search, values: query(store, { ...dataSource, search }), vault: dataSource,
