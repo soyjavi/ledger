@@ -131,9 +131,9 @@ class Stats extends Component {
                 { (hasExpenses || hasIncomes)
                   ? (
                     <Fragment>
-                      { hasPoints && <Locations {...inherit} {...locations} /> }
                       { hasIncomes && <ItemGroupCategories type={INCOME} dataSource={incomes} /> }
                       { hasExpenses && <ItemGroupCategories type={EXPENSE} dataSource={expenses} /> }
+                      { hasPoints && <Locations {...inherit} {...locations} /> }
                     </Fragment>
                   )
                   : (
