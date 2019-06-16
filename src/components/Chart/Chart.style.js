@@ -21,8 +21,7 @@ export default StyleSheet.create({
   },
 
   barEmpty: {
-    backgroundColor: COLOR.BASE,
-    opacity: 0.8,
+    opacity: 0.5,
   },
 
   barInverted: {

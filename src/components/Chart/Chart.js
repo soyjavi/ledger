@@ -40,13 +40,15 @@ class Chart extends Component {
     } = this.props;
     const { max, min, avg } = calcRange(values);
     const avgProps = { backgroundColor: color };
+    let firstValueIndex = values.findIndex(value => value !== 0);
+    if (firstValueIndex === -1) firstValueIndex = undefined;
 
     return (
       <View style={[!inverted && styles.container, inherit.styleContainer]}>
         { scales && (
           <View style={[styles.scales, captions && styles.scaleCaptions]}>
             <View style={[styles.scaleValues, inverted && styles.scaleValuesInverted]}>
-              { scales.map((scale, index) => (
+              { firstValueIndex && scales.map((scale, index) => (
                 <View
                   key={`scale-${index.toString()}`}
                   style={[styles.tag, scale.highlight && avgProps]}
@@ -63,7 +65,7 @@ class Chart extends Component {
               { scales.map((scale, index) => (
                 <View
                   key={`line-${index.toString()}`}
-                  style={[styles.scaleLine, scale.highlight && [styles.scaleLineAVG, avgProps]]}
+                  style={[styles.scaleLine, firstValueIndex && scale.highlight && [styles.scaleLineAVG, avgProps]]}
                 />
               ))}
             </View>
@@ -80,9 +82,9 @@ class Chart extends Component {
                 style={[
                   styles.bar,
                   inverted && styles.barInverted,
-                  value !== 0
-                    ? { backgroundColor: color, height: `${calcHeight(value, { min, max, avg })}%` }
-                    : styles.barEmpty,
+                  (value !== 0 || index > firstValueIndex) && { backgroundColor: color },
+                  value !== 0 && { height: `${calcHeight(value, { min, max, avg })}%` },
+                  value === 0 && styles.barEmpty,
                 ]}
               >
                 { value !== 0 && (
