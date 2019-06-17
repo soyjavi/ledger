@@ -39,7 +39,9 @@ export default () => (
               button={l10n.CLOSE}
               caption={error}
               color={COLOR.ERROR}
+              highlight
               onPress={() => onError(undefined)}
+              style={styles.snackbar}
               visible={!!(error)}
             />
           </Fragment>
