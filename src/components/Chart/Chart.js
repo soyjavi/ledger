@@ -44,7 +44,7 @@ class Chart extends Component {
     if (firstValueIndex === -1) firstValueIndex = undefined;
 
     return (
-      <View style={[!inverted && styles.container, inherit.styleContainer]}>
+      <View style={[inverted ? styles.containerInverted : styles.container, inherit.styleContainer]}>
         { scales && (
           <View style={[styles.scales, captions && styles.scaleCaptions]}>
             <View style={[styles.scaleValues, inverted && styles.scaleValuesInverted]}>

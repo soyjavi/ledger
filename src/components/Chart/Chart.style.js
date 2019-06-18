@@ -21,7 +21,7 @@ export default StyleSheet.create({
   },
 
   barEmpty: {
-    opacity: 0.5,
+    opacity: 0.8,
   },
 
   barInverted: {
@@ -48,6 +48,10 @@ export default StyleSheet.create({
   },
 
   container: {
+  },
+
+  containerInverted: {
+    marginTop: -1,
   },
 
   content: {

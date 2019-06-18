@@ -78,11 +78,13 @@ class Stats extends Component {
       props: {
         vault, vaults, visible, ...inherit
       },
-      state: { slider, values },
+      state: {
+        slider,
+        values: {
+          chart = {}, expenses = {}, incomes = {}, locations = {},
+        } = {},
+      },
     } = this;
-    const {
-      chart = {}, [EXPENSE]: expenses = {}, [INCOME]: incomes = {}, locations = {},
-    } = values || {};
     const title = vault ? `${vault.title} ` : '';
     const hasExpenses = Object.keys(expenses).length > 0;
     const hasIncomes = Object.keys(incomes).length > 0;
@@ -125,6 +127,19 @@ class Stats extends Component {
                     styleContainer={[styles.chart, styles.chartMargin]}
                     values={chart.expenses}
                   />
+                  { !vault && (
+                    <Fragment>
+                      <Heading caption={l10n.TRANSFERS} />
+                      <Chart
+                        captions={orderCaptions(l10n)}
+                        color={COLOR.TRANSFER}
+                        highlight={slider.index}
+                        scales={calcScales(chart.transfers, store)}
+                        styleContainer={[styles.chart, styles.chartMargin]}
+                        values={chart.transfers}
+                      />
+                    </Fragment>
+                  )}
                 </View>
 
                 <SliderMonths {...slider} onChange={_onChangeSlider} style={styles.sliderMonths} />

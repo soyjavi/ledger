@@ -2,7 +2,7 @@ import { C, exchange } from '../../../common';
 
 import calcHeatmap from './calcHeatmap';
 
-const { TX: { TYPE: { EXPENSE, INCOME } }, VAULT_TRANSFER } = C;
+const { TX: { TYPE: { EXPENSE, INCOME, TRANSFER } }, VAULT_TRANSFER } = C;
 
 const parseDate = (date) => {
   const value = date ? new Date(date) : new Date();
@@ -19,10 +19,11 @@ export default (props, query = {}) => {
     balance: new Array(range).fill(0),
     expenses: new Array(range).fill(0),
     incomes: new Array(range).fill(0),
+    transfers: new Array(range).fill(0),
   };
   const cities = {};
   const countries = {};
-  const values = { [EXPENSE]: {}, [INCOME]: {} };
+  const values = { expenses: {}, incomes: {} };
   const now = parseDate();
   const lastYear = new Date(now.getFullYear(), now.getMonth() - 11, 1);
   const rangeTxs = [];
@@ -45,28 +46,34 @@ export default (props, query = {}) => {
         const valueExchange = exchange(value, currency, baseCurrency, rates, timestamp);
 
         chart.balance[index] += type === EXPENSE ? -(valueExchange) : valueExchange;
+        const isTransfer = category === VAULT_TRANSFER;
 
-        if (category !== VAULT_TRANSFER) {
-          if (type === EXPENSE) chart.expenses[index] += valueExchange;
-          else chart.incomes[index] += valueExchange;
 
-          if (query.month === dMonth && query.year === dYear) {
-            const categoryKey = title ? title.toLowerCase() : 'Unknown';
+        if (isTransfer && type === EXPENSE) chart.transfers[index] += valueExchange;
+        else if (!isTransfer && type === EXPENSE) chart.expenses[index] += valueExchange;
+        else if (!isTransfer) chart.incomes[index] += valueExchange;
 
-            if (place) {
-              const parts = place.split(',');
-              const city = parts[0].trim();
-              const country = parts[2].trim();
+        if (query.month === dMonth && query.year === dYear) {
+          const categoryKey = title ? title.toLowerCase() : 'Unknown';
 
-              cities[city] = cities[city] ? cities[city] + 1 : 1;
-              countries[country] = countries[country] ? countries[country] + 1 : 1;
-            }
+          if (!isTransfer && place) {
+            const parts = place.split(',');
+            const city = parts[0].trim();
+            const country = parts[2].trim();
 
-            values[type][category] = values[type][category] || {};
-            values[type][category][categoryKey] = (values[type][category][categoryKey] || 0) + valueExchange;
-
-            rangeTxs.push(tx);
+            cities[city] = cities[city] ? cities[city] + 1 : 1;
+            countries[country] = countries[country] ? countries[country] + 1 : 1;
           }
+
+
+          if (!isTransfer) {
+            const keyType = type === EXPENSE ? 'expenses' : 'incomes';
+
+            values[keyType][category] = values[keyType][category] || {};
+            values[keyType][category][categoryKey] = (values[keyType][category][categoryKey] || 0) + valueExchange;
+          }
+
+          rangeTxs.push(tx);
         }
       }
     });
