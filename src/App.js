@@ -36,12 +36,10 @@ export default () => (
           <Fragment>
             <Dashboard backward={current !== DASHBOARD} mask={mask} visible={stack.includes(DASHBOARD)} />
             <Snackbar
-              button={l10n.CLOSE}
+              button={l10n.CLOSE.toUpperCase()}
               caption={error}
               color={COLOR.ERROR}
-              highlight
               onPress={() => onError(undefined)}
-              style={styles.snackbar}
               visible={!!(error)}
             />
           </Fragment>

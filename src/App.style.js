@@ -8,8 +8,4 @@ export default StyleSheet.create({
   container: {
     backgroundColor: COLOR.BACKGROUND,
   },
-
-  snackbar: {
-    backgroundColor: COLOR.ERROR,
-  },
 });
