@@ -1,6 +1,6 @@
 import { Platform } from 'react-native';
 
-import { LAYOUT, THEME } from '../reactor/common';
+import { LAYOUT, THEME, ENV } from '../reactor/common';
 import PKG from '../../package.json';
 
 const { SPACE, UNIT } = THEME;
@@ -9,6 +9,11 @@ const { SPACE, UNIT } = THEME;
 // const isDev = packagerOpts && packagerOpts.dev;
 
 const IS_PRODUCTION = false;
+// console.log('::ENV::', {
+//   IS_PRODUCTION,
+//   EXPO: window.__DEV__,
+//   ENV,
+// });
 const IS_ANDROID = Platform.OS === 'android';
 const MS_IN_DAY = 1000 * 24 * 60 * 60;
 const MS_IN_WEEK = MS_IN_DAY * 7;
@@ -24,6 +29,8 @@ export default {
     JPY: 0,
     PLN: 0,
     THB: 0,
+    XAU: 0,
+    XAG: 0,
   },
 
   LANGUAGE: 'en-EN',
@@ -96,6 +103,8 @@ export default {
     // TRY: '',
     USD: '$',
     VND: '₫',
+    XAU: 'gr',
+    XAG: 'gr',
     // ZAR: 'R',
   },
 

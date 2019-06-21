@@ -12,7 +12,9 @@ import GBP from './united-kingdom.png';
 import RUB from './rusia.png';
 import USD from './united-states.png';
 import VND from './vietnam.png';
+import XAU from './gold.png';
+import XAG from './silver.png';
 
 export default {
-  AUD, BTC, CNY, EUR, HKD, JPY, KRW, MXN, MYR, THB, GBP, RUB, USD, VND,
+  AUD, BTC, CNY, EUR, HKD, JPY, KRW, MXN, MYR, THB, GBP, RUB, USD, VND, XAU, XAG,
 };
