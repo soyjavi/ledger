@@ -1,13 +1,12 @@
 import { bool, func, string } from 'prop-types';
 import React, { PureComponent } from 'react';
 import { View } from 'react-native';
+import { THEME } from '../../../../reactor/common';
+import { Button, Dialog, Text } from '../../../../reactor/components';
 
 import { C } from '../../../../common';
 import { Consumer } from '../../../../context';
 import { CardOption, HeatMap } from '../../../../components';
-
-import { THEME } from '../../../../reactor/common';
-import { Button, Dialog, Text } from '../../../../reactor/components';
 import { FormTransaction, FormTransfer } from './components';
 import { getLocation, onTransaction, onTransfer } from './modules';
 
@@ -80,8 +79,8 @@ class DialogTransaction extends PureComponent {
         busy, coords, location, place, type = EXPENSE, valid,
       },
     } = this;
-    let color;
-    if (type !== TRANSFER) color = type === EXPENSE ? COLOR.EXPENSES : COLOR.INCOMES;
+    let color = COLOR.TRANSFER;
+    if (type !== TRANSFER) color = type === EXPENSE ? COLOR.EXPENSE : COLOR.INCOME;
     const formProps = {
       ...this.props, ...this.state, color, onChange: _onChange,
     };
@@ -91,6 +90,7 @@ class DialogTransaction extends PureComponent {
         { ({ events: { getLocationAsync }, l10n, store }) => (
           <Dialog
             {...inherit}
+            highlight
             onClose={onClose}
             style={styles.frame}
             styleContainer={styles.dialog}

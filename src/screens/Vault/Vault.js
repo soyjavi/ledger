@@ -3,7 +3,6 @@ import React, { createRef, Fragment, PureComponent } from 'react';
 import { ScrollView, View } from 'react-native';
 
 import { FLAGS } from '../../assets';
-import { C } from '../../common';
 import { Summary, Footer, Header } from '../../components';
 import { Consumer } from '../../context';
 import { LAYOUT, THEME } from '../../reactor/common';
@@ -12,7 +11,6 @@ import { DialogTransaction, GroupTransactions, Search } from './components';
 import query from './modules/query';
 import styles from './Vault.style';
 
-const { SETTINGS: { NIGHT_MODE } } = C;
 const { COLOR, SPACE } = THEME;
 
 class Vault extends PureComponent {
@@ -45,7 +43,7 @@ class Vault extends PureComponent {
   componentWillReceiveProps({ dataSource, visible, ...store }) {
     const { props: { dataSource: { txs = [] } = {}, ...props } } = this;
 
-    if (visible && dataSource && dataSource.txs.length !== txs.length) {
+    if (visible && dataSource && (dataSource.txs.length === 0 || dataSource.txs.length !== txs.length)) {
       const search = undefined;
       this.setState({
         scrollQuery: false, search, values: query(store, { ...dataSource, search }), vault: dataSource,
@@ -97,18 +95,20 @@ class Vault extends PureComponent {
     } = this;
     const { currency, hash, title } = vault;
 
-    console.log('<Vault>', { visible, dialog, scroll, scrollQuery, search });
+    console.log('<Vault>', {
+      visible, dialog, scroll, scrollQuery, search,
+    });
 
     return (
       <Viewport {...inherit} scroll={false} visible={visible}>
         <Consumer>
-          { ({ navigation, l10n, store: { settings: { [NIGHT_MODE]: nightMode } } }) => (
+          { ({ navigation, l10n }) => (
             <Fragment>
               <Header highlight={scroll} image={FLAGS[currency]} title={title} />
               <ScrollView onScroll={_onScroll} ref={this.scrollview} scrollEventThrottle={40} style={styles.container}>
                 <Fragment>
                   <Summary {...vault} image={FLAGS[currency]} title={`${title} ${l10n.BALANCE}`} />
-                  <Search l10n={l10n} nightMode={nightMode} onValue={_onSearch} value={search} />
+                  <Search l10n={l10n} onValue={_onSearch} value={search} />
                 </Fragment>
                 { values.length > 0
                   ? (
@@ -137,7 +137,6 @@ class Vault extends PureComponent {
               { visible && (
                 <DialogTransaction
                   currency={currency}
-                  highlight={nightMode}
                   onClose={_onToggleDialog}
                   vault={hash}
                   visible={dialog}

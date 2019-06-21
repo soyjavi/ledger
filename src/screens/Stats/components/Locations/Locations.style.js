@@ -10,9 +10,12 @@ const MAP_WIDTH = Math.floor(W - (SPACE.MEDIUM * 2));
 export { MAP_HEIGHT, MAP_WIDTH };
 
 export default StyleSheet.create({
-  content: {
+  container: {
     marginHorizontal: SPACE.MEDIUM,
-    marginVertical: SPACE.XS,
+  },
+
+  content: {
+    marginBottom: SPACE.MEDIUM,
   },
 
   map: {
@@ -20,5 +23,9 @@ export default StyleSheet.create({
     borderRadius: BORDER_RADIUS,
     height: MAP_HEIGHT,
     width: MAP_WIDTH,
+  },
+
+  headline: {
+    marginBottom: SPACE.XXS,
   },
 });

@@ -1,14 +1,19 @@
 import { Platform } from 'react-native';
 
-import { LAYOUT, THEME } from '../reactor/common';
+import { LAYOUT, THEME, ENV } from '../reactor/common';
 import PKG from '../../package.json';
 
-const { BORDER_RADIUS, SPACE, UNIT } = THEME;
+const { SPACE, UNIT } = THEME;
 
 // const DEV = __DEV__ ? __DEV__ : { hello: 'world' }; // eslint-disable-line;
 // const isDev = packagerOpts && packagerOpts.dev;
 
-const IS_PRODUCTION = true;
+const IS_PRODUCTION = false;
+// console.log('::ENV::', {
+//   IS_PRODUCTION,
+//   EXPO: window.__DEV__,
+//   ENV,
+// });
 const IS_ANDROID = Platform.OS === 'android';
 const MS_IN_DAY = 1000 * 24 * 60 * 60;
 const MS_IN_WEEK = MS_IN_DAY * 7;
@@ -24,6 +29,8 @@ export default {
     JPY: 0,
     PLN: 0,
     THB: 0,
+    XAU: 0,
+    XAG: 0,
   },
 
   LANGUAGE: 'en-EN',
@@ -43,12 +50,10 @@ export default {
   },
   SETTINGS: {
     HIDE_OVERALL_BALANCE: 0,
-    NIGHT_MODE: 3,
     SHOW_VAULT_CURRENCY: 1,
   },
   STYLE: {
     CARD: {
-      borderRadius: BORDER_RADIUS,
       overflow: 'hidden',
       padding: SPACE.MEDIUM,
     },
@@ -58,6 +63,7 @@ export default {
     },
     DIALOG_FRAME: {
       margin: 0,
+      width: LAYOUT.VIEWPORT.W,
     },
     HEADER_HEIGHT: UNIT * 5.2,
     VAULT_ITEM_WIDTH: (LAYOUT.VIEWPORT.W / 2) - (SPACE.MEDIUM * 3),
@@ -97,6 +103,8 @@ export default {
     // TRY: '',
     USD: '$',
     VND: '₫',
+    XAU: 'gr',
+    XAG: 'gr',
     // ZAR: 'R',
   },
 

@@ -1,11 +1,9 @@
-import { Platform, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import { C } from '../../common';
 import { LAYOUT, ENV, THEME } from '../../reactor/common';
 
-const {
-  COLOR, ELEVATION, UNIT, SPACE,
-} = THEME;
+const { UNIT, SPACE } = THEME;
 const { STYLE: { HEADER_HEIGHT } } = C;
 
 export default StyleSheet.create({
@@ -15,7 +13,7 @@ export default StyleSheet.create({
 
   container: {
     ...LAYOUT.STYLE.ROW,
-    backgroundColor: COLOR.BACKGROUND,
+    backgroundColor: 'rgba(0, 0, 0, 0.9)',
     height: HEADER_HEIGHT,
     position: ENV.IS_WEB ? 'fixed' : 'absolute',
     top: 0,
@@ -25,17 +23,6 @@ export default StyleSheet.create({
 
   content: {
     flex: 1,
-  },
-
-  highlight: {
-    ...ELEVATION.SMALL,
-    ...Platform.select({
-      ios: {
-        borderBottomWidth: 1,
-        borderColor: COLOR.BASE,
-        shadowColor: 'transparent',
-      },
-    }),
   },
 
   logo: {

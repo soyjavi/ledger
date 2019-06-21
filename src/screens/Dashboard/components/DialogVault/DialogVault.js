@@ -75,6 +75,7 @@ class DialogVault extends PureComponent {
         { ({ l10n, store: { vaults = [], ...store } }) => (
           <Dialog
             {...inherit}
+            highlight
             onClose={vaults.length > 0 ? onClose : undefined}
             style={styles.frame}
             styleContainer={styles.dialog}

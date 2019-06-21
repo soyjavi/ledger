@@ -3,7 +3,7 @@ import C from './constants';
 
 const { SYMBOL } = C;
 
-export default (form, currency) => {
+export default (form = {}, currency) => {
   Object.keys(form).forEach((key) => {
     if (form[key].currency) {
       const value = currency || form[key].currency;

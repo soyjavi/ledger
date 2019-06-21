@@ -2,7 +2,6 @@ import { arrayOf, bool, shape } from 'prop-types';
 import React, { createRef, Fragment, Component } from 'react';
 import { ScrollView, View } from 'react-native';
 
-import ASSETS from '../../assets';
 import { C } from '../../common';
 import {
   Chart, Footer, Header, Heading, SliderMonths,
@@ -11,10 +10,10 @@ import { Consumer } from '../../context';
 import { THEME } from '../../reactor/common';
 import { Text, Viewport } from '../../reactor/components';
 import { ItemGroupCategories, Locations } from './components';
-import { orderCaptions, query } from './modules';
+import { calcScales, orderCaptions, query } from './modules';
 import styles from './Stats.style';
 
-const { COLOR, SPACE } = THEME;
+const { COLOR } = THEME;
 const { TX: { TYPE: { EXPENSE, INCOME } } } = C;
 
 class Stats extends Component {
@@ -38,7 +37,6 @@ class Stats extends Component {
     super(props);
     this.scrollview = createRef();
     this.state = {
-      scroll: false,
       slider: {},
       values: {},
     };
@@ -51,7 +49,7 @@ class Stats extends Component {
       const slider = { month: today.getMonth(), year: today.getFullYear(), index: 11 };
 
       if (visible !== props.visible) this.scrollview.current.scrollTo({ y: 0, animated: false });
-      this.setState({ scroll: false, slider, values: query(inherit, slider) });
+      this.setState({ slider, values: query(inherit, slider) });
     }
   }
 
@@ -74,25 +72,19 @@ class Stats extends Component {
     this.forceUpdate();
   }
 
-  _onScroll = ({ nativeEvent: { contentOffset: { y } } }) => {
-    const { state } = this;
-    const scroll = y > SPACE.MEDIUM;
-    if (scroll !== state.scroll) this.setState({ scroll });
-  }
-
   render() {
     const {
-      _onChangeSlider, _onHardwareBack, _onScroll,
+      _onChangeSlider, _onHardwareBack,
       props: {
         vault, vaults, visible, ...inherit
       },
       state: {
-        scroll, slider, values,
+        slider,
+        values: {
+          chart = {}, expenses = {}, incomes = {}, locations = {},
+        } = {},
       },
     } = this;
-    const {
-      chart = {}, [EXPENSE]: expenses = {}, [INCOME]: incomes = {}, locations = {},
-    } = values || {};
     const title = vault ? `${vault.title} ` : '';
     const hasExpenses = Object.keys(expenses).length > 0;
     const hasIncomes = Object.keys(incomes).length > 0;
@@ -103,50 +95,60 @@ class Stats extends Component {
     return (
       <Viewport {...inherit} scroll={false} visible={visible}>
         <Consumer>
-          { ({ l10n, navigation }) => (
+          { ({ l10n, navigation, store }) => (
             <Fragment>
-              <Header highlight={scroll} title={`${title}${l10n.ACTIVITY}`} />
-              <ScrollView
-                contentContainerStyle={styles.container}
-                onScroll={_onScroll}
-                ref={this.scrollview}
-                scrollEventThrottle={40}
-              >
+              <Header highlight title={`${title}${l10n.ACTIVITY}`} />
+              <ScrollView contentContainerStyle={styles.container} ref={this.scrollview}>
                 <View style={styles.content}>
-                  <Heading title={`${title}${l10n.ACTIVITY}`} image={ASSETS.logo} />
-                  <Heading subtitle={l10n.BALANCE} />
+                  <Heading caption={l10n.BALANCE} />
                   <Chart
                     captions={orderCaptions(l10n)}
+                    color={COLOR.ACCENT}
                     highlight={slider.index}
-                    values={chart.balance}
+                    scales={calcScales(chart.balance, store)}
                     styleContainer={[styles.chart, styles.chartMargin]}
                     style={styles.chartBalance}
+                    values={chart.balance}
                   />
-
-                  <Heading subtitle={`${l10n.INCOMES} vs. ${l10n.EXPENSES}`} />
+                  <Heading caption={`${l10n.INCOMES} vs. ${l10n.EXPENSES}`} />
                   <Chart
-                    color={COLOR.INCOMES}
+                    color={COLOR.INCOME}
                     highlight={slider.index}
+                    scales={calcScales(chart.incomes, store)}
                     styleContainer={styles.chart}
                     values={chart.incomes}
                   />
                   <Chart
                     captions={orderCaptions(l10n)}
+                    color={COLOR.EXPENSE}
                     highlight={slider.index}
                     inverted
-                    values={chart.expenses}
-                    color={COLOR.EXPENSES}
+                    scales={calcScales(chart.expenses, store)}
                     styleContainer={[styles.chart, styles.chartMargin]}
+                    values={chart.expenses}
                   />
+                  { !vault && (
+                    <Fragment>
+                      <Heading caption={l10n.TRANSFERS} />
+                      <Chart
+                        captions={orderCaptions(l10n)}
+                        color={COLOR.TRANSFER}
+                        highlight={slider.index}
+                        scales={calcScales(chart.transfers, store)}
+                        styleContainer={[styles.chart, styles.chartMargin]}
+                        values={chart.transfers}
+                      />
+                    </Fragment>
+                  )}
                 </View>
 
                 <SliderMonths {...slider} onChange={_onChangeSlider} style={styles.sliderMonths} />
                 { (hasExpenses || hasIncomes)
                   ? (
                     <Fragment>
-                      { hasPoints && <Locations {...inherit} {...locations} /> }
                       { hasIncomes && <ItemGroupCategories type={INCOME} dataSource={incomes} /> }
                       { hasExpenses && <ItemGroupCategories type={EXPENSE} dataSource={expenses} /> }
+                      { hasPoints && <Locations {...inherit} {...locations} /> }
                     </Fragment>
                   )
                   : (

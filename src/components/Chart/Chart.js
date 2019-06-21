@@ -1,12 +1,12 @@
 import {
-  arrayOf, bool, number, string,
+  arrayOf, bool, number, shape, string,
 } from 'prop-types';
 import React, { Component } from 'react';
 import { View } from 'react-native';
-
 import { THEME } from '../../reactor/common';
 import { Text } from '../../reactor/components';
-import { calcHeight, calcRange, calcScaleValues } from './modules';
+
+import { calcHeight, calcRange } from './modules';
 import styles from './Chart.style';
 
 const { COLOR } = THEME;
@@ -17,7 +17,7 @@ class Chart extends Component {
     color: string,
     highlight: number,
     inverted: bool,
-    scale: bool,
+    scales: arrayOf(shape({})),
     values: arrayOf(number),
   };
 
@@ -26,7 +26,7 @@ class Chart extends Component {
     color: COLOR.PRIMARY,
     highlight: undefined,
     inverted: false,
-    scale: true,
+    scales: undefined,
     values: [],
   };
 
@@ -36,34 +36,43 @@ class Chart extends Component {
 
   render() {
     const {
-      captions, color, highlight, inverted, scale, values, ...inherit
+      captions, color, highlight, inverted, scales, values, ...inherit
     } = this.props;
     const { max, min, avg } = calcRange(values);
-    const scaleValues = scale && values.length > 0 ? calcScaleValues({ avg, max, inverted }) : [];
+    const avgProps = { backgroundColor: color };
+    let firstValueIndex = values.findIndex(value => value !== 0);
+    if (firstValueIndex === -1) firstValueIndex = undefined;
 
     return (
-      <View style={[!inverted && styles.container, inherit.styleContainer]}>
-        { scale && (
-          <View style={[styles.scale, captions && styles.scaleCaptions]}>
-            <View style={styles.scaleValues}>
-              { scaleValues.map((value, index) => (
-                <Text key={`scale-${index.toString()}`} lighten style={styles.caption}>
-                  {value}
-                </Text>
+      <View style={[inverted ? styles.containerInverted : styles.container, inherit.styleContainer]}>
+        { scales && (
+          <View style={[styles.scales, captions && styles.scaleCaptions]}>
+            <View style={[styles.scaleValues, inverted && styles.scaleValuesInverted]}>
+              { firstValueIndex && scales.map((scale, index) => (
+                <View
+                  key={`scale-${index.toString()}`}
+                  style={[styles.tag, scale.highlight && avgProps]}
+                >
+                  { scale.value !== 0 && (
+                    <Text lighten style={[styles.legend, scale.highlight && styles.legendHighlight]}>
+                      {scale.value}
+                    </Text>
+                  )}
+                </View>
               ))}
             </View>
             <View style={styles.scaleLines}>
-              { scaleValues.map((value, index) => (
+              { scales.map((scale, index) => (
                 <View
                   key={`line-${index.toString()}`}
-                  style={[styles.scaleLine, value.length === 0 && styles.scaleLineEmpty]}
+                  style={[styles.scaleLine, firstValueIndex && scale.highlight && [styles.scaleLineAVG, avgProps]]}
                 />
               ))}
             </View>
           </View>
         )}
 
-        <View style={[styles.content, styles.row, scale && styles.rowScale, inherit.style]}>
+        <View style={[styles.content, styles.row, scales && styles.rowScale, inherit.style]}>
           { values.map((value, index) => (
             <View
               key={`${value}-${index.toString()}`}
@@ -73,9 +82,9 @@ class Chart extends Component {
                 style={[
                   styles.bar,
                   inverted && styles.barInverted,
-                  value !== 0
-                    ? { height: `${calcHeight(value, { min, max, avg })}%` }
-                    : styles.barEmpty,
+                  (value !== 0 || index > firstValueIndex) && { backgroundColor: color },
+                  value !== 0 && { height: `${calcHeight(value, { min, max, avg })}%` },
+                  value === 0 && styles.barEmpty,
                 ]}
               >
                 { value !== 0 && (
@@ -96,10 +105,10 @@ class Chart extends Component {
           ))}
         </View>
         { captions && (
-          <View style={[styles.captions, styles.row, scale && styles.rowScale]}>
-            { captions.map(caption => (
+          <View style={[styles.captions, styles.row, scales && styles.rowScale]}>
+            { captions.map((caption, index) => (
               <View key={caption} style={styles.column}>
-                <Text caption level={2} lighten style={styles.caption}>
+                <Text lighten style={[styles.legend, highlight === index && styles.legendHighlight]}>
                   {caption.substring(0, 3).toUpperCase()}
                 </Text>
               </View>

@@ -6,15 +6,13 @@ const { COLOR, UNIT, SPACE } = THEME;
 
 export default StyleSheet.create({
   breakline: {
-    borderBottomColor: COLOR.BASE,
-    borderBottomWidth: 1,
+    backgroundColor: COLOR.BASE,
   },
 
   container: {
     ...LAYOUT.STYLE.ROW,
-    paddingVertical: SPACE.XS,
-    marginLeft: SPACE.MEDIUM,
-    marginRight: SPACE.MEDIUM,
+    marginHorizontal: SPACE.MEDIUM,
+    marginVertical: SPACE.XXS,
   },
 
   content: {
@@ -23,8 +21,7 @@ export default StyleSheet.create({
 
   image: {
     height: UNIT * 1.6,
-    width: UNIT * 2.2,
-    marginBottom: SPACE.XXS / 2,
+    width: UNIT * 1.6,
     marginRight: SPACE.XXS,
   },
 });

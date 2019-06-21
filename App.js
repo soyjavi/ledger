@@ -6,14 +6,14 @@ import {
   Location,
   Permissions,
 } from 'expo';
-import { C, L10N, theme, themeDark } from './src/common';
+import { C, L10N, theme } from './src/common';
 import { Provider } from './src/context';
 import { Storage } from './src/context/modules';
 import { THEME } from './src/reactor/common';
 
 THEME.extend(theme);
 
-const { LANGUAGE, LOCATION_PROPS, SETTINGS: { NIGHT_MODE } } = C;
+const { LANGUAGE, LOCATION_PROPS } = C;
 const { UIManager: { setLayoutAnimationEnabledExperimental: setLayoutAnimation } } = NativeModules;
 if (setLayoutAnimation) setLayoutAnimation(true);
 
@@ -25,12 +25,8 @@ class App extends PureComponent {
 
   async componentDidMount() {
     const { settings = {} } = await Storage.get();
-    const nightMode = settings[NIGHT_MODE];
 
-    THEME.extend({
-      ...theme,
-      COLOR: { ...theme.COLOR, ...(nightMode ? themeDark.COLOR : {}) },
-    });
+    THEME.extend(theme);
 
     await Font.loadAsync({
       'product-sans': require('./assets/fonts/ProductSans-Regular.ttf'), // eslint-disable-line

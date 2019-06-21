@@ -5,9 +5,7 @@ import { LAYOUT, THEME } from '../../reactor/common';
 
 const { STYLE: { DIALOG, DIALOG_FRAME } } = C;
 
-const {
-  COLOR, ELEVATION, SPACE, UNIT,
-} = THEME;
+const { COLOR, SPACE, UNIT } = THEME;
 const ICON_SIZE = UNIT * 3.6;
 const DATE_FONT_SIZE = UNIT * 1.6;
 const MONTH_FONT_SIZE = UNIT * 0.9;
@@ -22,14 +20,10 @@ export default StyleSheet.create({
     width: SPACE.S,
   },
 
-  container: {
-    ...ELEVATION.SMALL,
-    marginTop: SPACE.XXS,
-    marginBottom: SPACE.MEDIUM,
-  },
+  container: {},
 
   content: {
-    padding: SPACE.S,
+    paddingVertical: SPACE.XS,
   },
 
   date: {
@@ -42,9 +36,7 @@ export default StyleSheet.create({
     backgroundColor: COLOR.BACKGROUND_OPACITY,
   },
 
-  frame: {
-    ...DIALOG_FRAME,
-  },
+  frame: DIALOG_FRAME,
 
   icon: {
     display: 'flex',
@@ -61,11 +53,6 @@ export default StyleSheet.create({
   month: {
     fontSize: MONTH_FONT_SIZE,
     lineHeight: MONTH_FONT_SIZE,
-  },
-
-  place: {
-    paddingHorizontal: SPACE.S,
-    paddingVertical: SPACE.XS,
   },
 
   prices: {

@@ -29,7 +29,6 @@ class ProviderStore extends Component {
     settings: {
       [SETTINGS.HIDE_OVERALL_BALANCE]: false,
       [SETTINGS.SHOW_VAULT_CURRENCY]: true,
-      [SETTINGS.NIGHT_MODE]: false,
     },
     txs: [],
     vaults: [],

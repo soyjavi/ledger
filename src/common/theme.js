@@ -7,14 +7,30 @@ const FAMILY_BOLD = IS_WEB ? 'Product Sans' : 'product-sans-bold';
 const WEIGHT = { REGULAR: '400', BOLD: '700' };
 
 export default {
+  // BORDER_RADIUS: 4,
+
   COLOR: {
-    BACKGROUND_OPACITY: 'rgba(255,255,255,0.9)',
-    BASE: '#F0F0F0',
-    EXPENSES: '#FF6262',
-    INCOMES: '#17D0BC',
-    PRIMARY: '#7966FF',
-    TEXT: '#333',
-    TEXT_LIGHTEN: '#999',
+    BACKGROUND: '#000',
+    BACKGROUND_INPUT: '#202020',
+    BACKGROUND_OPACITY: 'rgba(16, 16, 16, 0.85)',
+    BASE: '#202020',
+    TEXT: '#ffffff',
+    TEXT_LIGHTEN: '#808080',
+
+    // PRIMARY: '#4066EA',
+    // PRIMARY: '#00AFFF',
+    // PRIMARY: '#38f9d7',
+    // INCOMES: '#00C989',
+    // LOCATION: '#7966FF',
+
+    PRIMARY: '#ffffff',
+    ACCENT: '#7966FF',
+    EXPENSE: '#E9305C',
+    INCOME: '#43e97b',
+    TRANSFER: '#4066EA',
+    LOCATION: '#A6FE01',
+    WARNING: '#EDE622',
+    ERROR: '#F03301',
   },
 
   FONT: {

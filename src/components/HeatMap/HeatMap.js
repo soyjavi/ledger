@@ -4,12 +4,11 @@ import {
 import React, { PureComponent } from 'react';
 
 import { C, objectToQueryString } from '../../common';
-import { ConsumerStore } from '../../context';
 import { THEME } from '../../reactor/common';
 import { Image } from '../../reactor/components';
 import styles, { MAP_HEIGHT, MAP_WIDTH } from './HeatMap.style';
 
-const { ENDPOINT, SETTINGS: { NIGHT_MODE } } = C;
+const { ENDPOINT } = C;
 const { COLOR } = THEME;
 
 class HeatMap extends PureComponent {
@@ -44,17 +43,13 @@ class HeatMap extends PureComponent {
       : undefined;
 
     return (
-      <ConsumerStore>
-        { ({ settings: { [NIGHT_MODE]: nightMode } }) => (
-          <Image
-            resizeMode="cover"
-            source={queryString
-              ? { uri: `${ENDPOINT}/heatmap?${queryString}&style=${nightMode ? 'dark' : ''}` }
-              : undefined}
-            style={[styles.container, inherit.style]}
-          />
-        )}
-      </ConsumerStore>
+      <Image
+        resizeMode="cover"
+        source={queryString
+          ? { uri: `${ENDPOINT}/heatmap?${queryString}&style=dark` }
+          : undefined}
+        style={[styles.container, inherit.style]}
+      />
     );
   }
 }

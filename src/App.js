@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-import { StatusBar } from 'react-native';
 
 import { C } from './common';
 import { Consumer } from './context';
@@ -11,7 +10,7 @@ import {
 } from './screens';
 import styles from './App.style';
 
-const { SCREEN, SETTINGS: { HIDE_OVERALL_BALANCE, NIGHT_MODE } } = C;
+const { SCREEN, SETTINGS: { HIDE_OVERALL_BALANCE } } = C;
 const {
   SESSION, SETTINGS, STATS, DASHBOARD, VAULT,
 } = SCREEN;
@@ -26,7 +25,7 @@ export default () => (
         current, goBack, params, stack,
       },
       store: {
-        error, onError, settings: { [HIDE_OVERALL_BALANCE]: mask, [NIGHT_MODE]: nightMode }, ...store
+        error, onError, settings: { [HIDE_OVERALL_BALANCE]: mask }, ...store
       },
     }) => (
       <LayoutView style={styles.container}>
@@ -35,10 +34,9 @@ export default () => (
 
         { stack.includes(SESSION) && (
           <Fragment>
-            <StatusBar backgroundColor={COLOR.BACKGROUND} barStyle={nightMode ? 'light-content' : 'dark-content'} />
             <Dashboard backward={current !== DASHBOARD} mask={mask} visible={stack.includes(DASHBOARD)} />
             <Snackbar
-              button={l10n.CLOSE}
+              button={l10n.CLOSE.toUpperCase()}
               caption={error}
               color={COLOR.ERROR}
               onPress={() => onError(undefined)}
@@ -60,7 +58,7 @@ export default () => (
               visible={stack.includes(VAULT)}
             />
             <Stats {...store} vault={params.Vault} visible={stack.includes(STATS)} />
-            <DialogClone dataSource={store.tx} highlight={nightMode} visible={store.tx !== undefined} />
+            <DialogClone dataSource={store.tx} visible={store.tx !== undefined} />
           </Fragment>
         )}
       </LayoutView>

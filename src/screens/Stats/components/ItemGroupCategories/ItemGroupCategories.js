@@ -45,15 +45,15 @@ class ItemGroupCategories extends PureComponent {
     return (
       <Consumer>
         { ({ store: { baseCurrency }, l10n }) => (
-          <View>
-            <Heading breakline title={isExpense ? l10n.EXPENSES : l10n.INCOMES}>
+          <View style={styles.container}>
+            <Heading title={isExpense ? l10n.EXPENSES : l10n.INCOMES}>
               <PriceFriendly currency={baseCurrency} subtitle level={3} value={total} />
             </Heading>
-            <View style={styles.container}>
+            <View>
               { orderByAmount(totals).map(({ key, amount }) => (
                 <Touchable key={key} onPress={() => _onPress(key)} style={styles.content}>
                   <HorizontalChartItem
-                    color={isExpense ? COLOR.EXPENSES : COLOR.INCOMES}
+                    color={isExpense ? COLOR.EXPENSE : COLOR.INCOME}
                     currency={baseCurrency}
                     title={l10n.CATEGORIES[type][key]}
                     value={amount}

@@ -18,7 +18,7 @@ export default StyleSheet.create({
   },
 
   content: {
-    marginVertical: SPACE.MEDIUM,
+    marginVertical: SPACE.REGULAR,
   },
 
   optionFlag: {

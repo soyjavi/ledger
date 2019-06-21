@@ -16,6 +16,7 @@ const { COLOR, SPACE } = THEME;
 class FormTransaction extends PureComponent {
   static propTypes = {
     destination: string,
+    color: string.isRequired,
     form: shape({}).isRequired,
     onChange: func.isRequired,
     vault: string.isRequired,
@@ -63,7 +64,9 @@ class FormTransaction extends PureComponent {
   render() {
     const {
       _onChange, _onVault, _onValid,
-      props: { destination, form, vault },
+      props: {
+        color, destination, form, vault,
+      },
     } = this;
 
     return (
@@ -77,6 +80,7 @@ class FormTransaction extends PureComponent {
               }) => (
                 <CardOption
                   key={hash}
+                  color={color}
                   image={FLAGS[currency]}
                   onPress={() => _onVault(hash)}
                   selected={hash === destination}
@@ -95,6 +99,7 @@ class FormTransaction extends PureComponent {
             </Slider>
             <Form
               attributes={setCurrency(translate(hydrate(this, store), l10n))}
+              color={color}
               onValid={_onValid}
               onChange={value => _onChange(value, store)}
               value={form}

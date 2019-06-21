@@ -4,12 +4,15 @@ import { C } from '../../../../common';
 import { LAYOUT, THEME } from '../../../../reactor/common';
 
 const { STYLE } = C;
-const { COLOR, UNIT, SPACE } = THEME;
+const {
+  BORDER_RADIUS, COLOR, UNIT, SPACE,
+} = THEME;
 const THUMBNAIL_SIZE = UNIT * 3.2;
 
 export default StyleSheet.create({
   container: {
     ...STYLE.CARD,
+    borderRadius: BORDER_RADIUS,
     backgroundColor: COLOR.BASE,
     height: STYLE.VAULT_ITEM_WIDTH * 1.3,
     marginBottom: SPACE.MEDIUM,

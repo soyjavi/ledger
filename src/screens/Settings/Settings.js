@@ -13,7 +13,7 @@ import { OptionItem } from './components';
 import query from './modules/query';
 import styles from './Settings.style';
 
-const { SETTINGS: { HIDE_OVERALL_BALANCE, NIGHT_MODE, SHOW_VAULT_CURRENCY } } = C;
+const { SETTINGS: { HIDE_OVERALL_BALANCE, SHOW_VAULT_CURRENCY } } = C;
 
 class Settings extends PureComponent {
   static propTypes = {
@@ -60,7 +60,7 @@ class Settings extends PureComponent {
               <Header highlight={scroll} title={l10n.SETTINGS} />
               <ScrollView _onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.container}>
                 <View style={styles.content}>
-                  <Heading breakline title={l10n.DASHBOARD} />
+                  <Heading title={l10n.DASHBOARD} />
                   <OptionItem
                     active={settings[HIDE_OVERALL_BALANCE]}
                     caption={l10n.SETTING_1_CAPTION}
@@ -73,7 +73,10 @@ class Settings extends PureComponent {
                     title={l10n.SETTING_2_TITLE}
                     onChange={value => onSettings({ [SHOW_VAULT_CURRENCY]: value })}
                   />
-                  <Heading breakline lighten subtitle={`${l10n.VAULTS_VISIBILITY}`} />
+                </View>
+
+                <View style={styles.content}>
+                  <Heading title={`${l10n.VAULTS_VISIBILITY}`} />
                   { query(vaults).map(({
                     currency, currentBalance, hash, ...vault
                   }) => (
@@ -97,16 +100,6 @@ class Settings extends PureComponent {
                       </View>
                     </OptionItem>
                   ))}
-                </View>
-
-                <View style={styles.content}>
-                  <Heading breakline title={l10n.OTHERS} />
-                  <OptionItem
-                    active={settings[NIGHT_MODE]}
-                    caption={l10n.NIGHT_MODE}
-                    onChange={value => onSettings({ [NIGHT_MODE]: value })}
-                    title={l10n.NIGHT_MODE}
-                  />
                 </View>
               </ScrollView>
 

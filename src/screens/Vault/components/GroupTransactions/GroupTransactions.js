@@ -3,17 +3,12 @@ import {
 } from 'prop-types';
 import React, { Component, Fragment } from 'react';
 import { View } from 'react-native';
+import { Text } from '../../../../reactor/components';
 
-import ASSETS from '../../../../assets';
-import { C, exchange, verboseDate } from '../../../../common';
+import { exchange, verboseDate } from '../../../../common';
 import { Consumer } from '../../../../context';
-import { Heading, TransactionItem } from '../../../../components';
-import { Icon, Price } from '../../../../reactor/components';
-import { THEME } from '../../../../reactor/common';
+import { PriceFriendly, TransactionItem } from '../../../../components';
 import styles from './GroupTransactions.style';
-
-const { FIXED, SYMBOL } = C;
-const { COLOR } = THEME;
 
 class GroupTransactions extends Component {
   static propTypes = {
@@ -43,21 +38,22 @@ class GroupTransactions extends Component {
       <Consumer>
         { ({ store: { baseCurrency, rates }, l10n }) => (
           <Fragment>
-            <Heading breakline subtitle={verboseDate(timestamp, l10n)}>
+            <View style={[styles.row, styles.heading]}>
+              <View style={styles.tag}>
+                <Text subtitle level={3}>{verboseDate(timestamp, l10n)}</Text>
+              </View>
               { value !== 0 && (
-                <View style={styles.headingValues}>
-                  <Icon value={value > 0 ? ASSETS.income : ASSETS.expense} style={styles.icon} />
-                  <Price
-                    color={value > 0 ? COLOR.INCOMES : COLOR.EXPENSES}
+                <View style={[styles.row, styles.tag]}>
+                  <PriceFriendly
+                    currency={baseCurrency}
+                    icon
                     subtitle
                     level={3}
-                    fixed={FIXED[baseCurrency]}
-                    symbol={SYMBOL[baseCurrency]}
-                    value={exchange(Math.abs(value), currency, baseCurrency, rates, timestamp)}
+                    value={exchange(value, currency, baseCurrency, rates, timestamp)}
                   />
                 </View>
               )}
-            </Heading>
+            </View>
             { txs.map(tx => <TransactionItem key={tx.hash} {...tx} currency={currency} />)}
           </Fragment>
         )}

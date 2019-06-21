@@ -49,7 +49,7 @@ class FormTransaction extends PureComponent {
 
     return (
       <Consumer>
-        { ({ l10n, store }) => (
+        { ({ l10n }) => (
           <Fragment>
             <Text subtitle level={3}>{l10n.CATEGORY}</Text>
             <Slider itemMargin={0} itemWidth={CARD_WIDTH + SPACE.S} style={styles.cards}>
@@ -57,7 +57,7 @@ class FormTransaction extends PureComponent {
                 <CardOption
                   key={item.key}
                   color={color}
-                  icon={getIconCategory({ type, category: item.key }, store)}
+                  icon={getIconCategory({ type, category: item.key })}
                   onPress={() => _onChange({ category: item.key })}
                   selected={category === item.key}
                   style={styles.card}

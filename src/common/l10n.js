@@ -95,10 +95,7 @@ export default {
 
     NAME: 'Name',
     NEW: 'New',
-    NIGHT_MODE: 'Night mode',
-    NIGHT_MODE_CAPTION: 'Fits perfectly in OLED screens',
     NO_TRANSACTIONS: "You don't have any transaction.",
-
 
     OFFLINE_MODE: 'Offline mode',
     OTHERS: 'Others',

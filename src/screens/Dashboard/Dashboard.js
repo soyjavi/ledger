@@ -13,7 +13,7 @@ import { DialogVault, Syncing, VaultCard } from './components';
 import { queryLastTxs, queryVaults } from './modules';
 import styles from './Dashboard.style';
 
-const { SCREEN, STYLE: { VAULT_ITEM_WIDTH }, SETTINGS: { NIGHT_MODE } } = C;
+const { SCREEN, STYLE: { VAULT_ITEM_WIDTH } } = C;
 const { SPACE } = THEME;
 
 class Dashboard extends PureComponent {
@@ -116,7 +116,7 @@ class Dashboard extends PureComponent {
 
                   { queryLastTxs({ txs, vaults }).length > 0 && (
                     <Fragment>
-                      <Heading breakline title={l10n.LAST_TRANSACTIONS} />
+                      <Heading title={l10n.LAST_TRANSACTIONS} />
                       <View>
                         { queryLastTxs({ txs, vaults }).map(tx => (
                           <TransactionItem key={tx.hash} showDate {...tx} />
@@ -133,12 +133,7 @@ class Dashboard extends PureComponent {
                 { visible && isConnected && sync && (
                   <Fragment>
                     { vaults.length === 0 && !dialog && this.setState({ dialog: true }) }
-                    <DialogVault
-                      baseCurrency={baseCurrency}
-                      highlight={settings[NIGHT_MODE]}
-                      visible={dialog}
-                      onClose={_onToggleDialog}
-                    />
+                    <DialogVault baseCurrency={baseCurrency} visible={dialog} onClose={_onToggleDialog} />
                   </Fragment>
                 )}
               </Fragment>

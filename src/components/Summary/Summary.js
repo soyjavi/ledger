@@ -9,14 +9,13 @@ import { C, exchange } from '../../common';
 import { Consumer } from '../../context';
 import { Button, Text, Touchable } from '../../reactor/components';
 import Heading from '../Heading';
-import Percentage from '../Percentage';
 import PriceFriendly from '../PriceFriendly';
 import styles from './Summary.style';
 
 const { CURRENCY, SCREEN } = C;
 
 const captionProps = {
-  caption: true, level: 2, numberOfLines: 1,
+  caption: true, level: 2, lighten: true, numberOfLines: 1,
 };
 
 class Summary extends Component {
@@ -62,9 +61,9 @@ class Summary extends Component {
         { ({ l10n, navigation, store: { baseCurrency, rates } }) => (
           <View style={[styles.container, inherit.style]}>
             <Touchable onPress={onMask ? () => onMask(!mask) : undefined} style={styles.content}>
-              <View style={styles.row}>
-                <Image source={image} resizeMode="contain" style={styles.logo} />
-                <Text caption level={2} lighten>{title.toUpperCase()}</Text>
+              <View style={[styles.row, styles.title]}>
+                <Image source={image} resizeMode="contain" style={styles.image} />
+                <Text {...captionProps}>{title.toUpperCase()}</Text>
               </View>
               <PriceFriendly
                 currency={baseCurrency}
@@ -100,9 +99,9 @@ class Summary extends Component {
             <View style={[styles.row, styles.cards]}>
               <View style={styles.card}>
                 <Text {...captionProps}>{l10n.PROGRESSION.toUpperCase()}</Text>
-                <Percentage headline level={6} value={progressionPercentage} />
+                <PriceFriendly currency="%" icon headline level={6} value={progressionPercentage} />
               </View>
-              <View style={styles.card}>
+              <View style={[styles.card, styles.cardIncomes]}>
                 <Text {...captionProps}>{l10n.INCOMES.toUpperCase()}</Text>
                 <PriceFriendly
                   currency={baseCurrency}
@@ -113,7 +112,7 @@ class Summary extends Component {
                   value={incomes}
                 />
               </View>
-              <View style={[styles.card, styles.cardLast]}>
+              <View style={[styles.card, styles.cardExpenses, styles.cardLast]}>
                 <Text {...captionProps}>{l10n.EXPENSES.toUpperCase()}</Text>
                 <PriceFriendly
                   currency={baseCurrency}

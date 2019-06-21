@@ -20,7 +20,6 @@ const Syncing = ({ scroll }) => (
           <Button
             activity={isConnected}
             color={isConnected ? undefined : COLOR.ERROR}
-            _disabled={isConnected}
             rounded
             small
             title={isConnected ? l10n.SYNCING : l10n.OFFLINE_MODE}

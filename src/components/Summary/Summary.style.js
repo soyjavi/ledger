@@ -4,11 +4,14 @@ import { C } from '../../common';
 import { LAYOUT, THEME } from '../../reactor/common';
 
 const { STYLE } = C;
-const { COLOR, SPACE, UNIT } = THEME;
+const {
+  BORDER_RADIUS, COLOR, SPACE, UNIT,
+} = THEME;
 
 export default StyleSheet.create({
   card: {
     ...STYLE.CARD,
+    borderRadius: BORDER_RADIUS,
     backgroundColor: COLOR.BASE,
     flex: 1,
     justifyContent: 'space-between',
@@ -32,12 +35,15 @@ export default StyleSheet.create({
     marginBottom: SPACE.MEDIUM,
   },
 
-  logo: {
-    height: UNIT * 1.6,
-    width: UNIT * 2.2,
-    marginBottom: SPACE.XXS,
+  image: {
+    height: UNIT * 1.4,
+    width: UNIT * 1.4,
     marginRight: SPACE.XXS,
   },
 
   row: LAYOUT.STYLE.ROW,
+
+  title: {
+    // marginBottom: SPACE.XXS / 2,
+  },
 });
