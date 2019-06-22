@@ -1,13 +1,12 @@
 import { fetch } from '../../common';
 
-export default async (component, pin) => {
-  const { onError, state: { fingerprint, pin: storedPin } } = component;
+export default async (component) => {
+  const { onError, state: { fingerprint } } = component;
 
   const response = await fetch({
     method: 'POST',
-    service: storedPin ? 'signin' : 'signup',
+    service: 'signup',
     fingerprint,
-    pin,
   }).catch(onError);
 
   return response && response.hash ? response.hash : undefined;

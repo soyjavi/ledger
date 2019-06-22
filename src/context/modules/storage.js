@@ -8,24 +8,26 @@ const DEFAULT_STORAGE = {};
 
 export default {
   async get() {
-    const { fingerprint, ...storage } = await Storage.get(KEY) || DEFAULT_STORAGE;
+    const storage = await Storage.get(KEY) || DEFAULT_STORAGE;
 
-    return {
-      ...storage,
-      fingerprint: fingerprint || (await Fingerprint()).uuid,
-    };
+    if (storage.fingerprint) return storage;
+    const { uuid: secret, device_id: fingerprint } = await Fingerprint();
+
+    return { ...storage, fingerprint, secret };
   },
 
   async set(value) {
     const {
-      baseCurrency, fingerprint, pin, rates = {}, settings, txs = [], vaults = [], version,
+      authorization, baseCurrency, fingerprint, pin, rates = {}, secret, settings, txs = [], vaults = [], version,
     } = value;
 
     await Storage.set(KEY, {
+      authorization,
       baseCurrency,
       fingerprint,
       pin,
       rates,
+      secret,
       settings,
       txs,
       vaults: vaults.map(({
