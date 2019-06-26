@@ -4,7 +4,9 @@ import { C } from '../../common';
 import { LAYOUT, THEME } from '../../reactor/common';
 
 const { STYLE: { HEADER_HEIGHT } } = C;
-const { SPACE, UNIT } = THEME;
+const {
+  BORDER_RADIUS, COLOR, SPACE, UNIT,
+} = THEME;
 const FLAG_SIZE = UNIT * 1.6;
 
 export default StyleSheet.create({
@@ -19,6 +21,14 @@ export default StyleSheet.create({
 
   content: {
     marginVertical: SPACE.REGULAR,
+  },
+
+  frame: {
+    alignItems: 'center',
+    backgroundColor: COLOR.BASE,
+    borderRadius: BORDER_RADIUS,
+    marginHorizontal: SPACE.REGULAR,
+    padding: SPACE.REGULAR,
   },
 
   optionFlag: {
