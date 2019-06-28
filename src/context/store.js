@@ -4,7 +4,7 @@ import React, { Component, createContext } from 'react';
 import { C } from '../common';
 import { consolidate, Storage } from './modules';
 import {
-  createTx, createVault, getHash, getLocations, syncProfile,
+  createTx, createVault, getAuthorization, getLocations, syncProfile,
 } from './services';
 
 const { CURRENCY, NAME, SETTINGS } = C;
@@ -18,11 +18,11 @@ class ProviderStore extends Component {
   state = {
     error: undefined,
     fingerprint: undefined,
-    hash: undefined,
     overall: {},
     tx: undefined,
     sync: false,
     // -- STORAGE --------------------------------------------------------------
+    authorization: undefined,
     baseCurrency: CURRENCY,
     pin: undefined,
     rates: {},
@@ -39,17 +39,15 @@ class ProviderStore extends Component {
     this.setState({ ...consolidate(await Storage.get()), sync: false });
   }
 
-  getHash = async (pin) => {
-    const hash = await getHash(this, pin);
+  signup = async (pin) => {
+    const authorization = await getAuthorization(this);
 
-    if (hash) {
+    if (authorization) {
       const { _store } = this;
 
-      await _store({ pin });
-      this.setState({ pin, hash, sync: false });
+      await _store({ authorization, pin });
+      this.setState({ authorization, pin, sync: false });
     }
-
-    return hash;
   }
 
   getLocations = query => getLocations(this, query);

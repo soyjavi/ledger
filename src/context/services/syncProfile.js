@@ -3,11 +3,19 @@ import { C, fetch } from '../../common';
 const { VERSION } = C;
 
 export default async (component) => {
-  const { onError, state: { hash, txs = [], version } } = component;
-  const headers = { authorization: hash };
+  const {
+    onError,
+    state: {
+      authorization, secret, txs = [], version,
+    },
+  } = component;
+  const headers = { authorization, secret };
   let nextState;
 
-  const profile = await fetch({ service: 'profile', headers }).catch(onError);
+  const profile = await fetch({
+    service: 'profile',
+    headers,
+  }).catch(onError);
 
   if (profile) {
     const {
