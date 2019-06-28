@@ -1,11 +1,13 @@
 import { fetch } from '../../common';
 
 export default async (component, props) => {
-  const { onError, state: { hash } } = component;
-  const headers = { authorization: hash };
+  const { onError, state: { authorization, secret } } = component;
 
   const vault = await fetch({
-    method: 'POST', service: 'vault', headers, ...props,
+    method: 'POST',
+    service: 'vault',
+    headers: { authorization, secret },
+    ...props,
   }).catch(onError);
 
   return vault;

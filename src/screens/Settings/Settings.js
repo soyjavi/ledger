@@ -2,13 +2,14 @@ import { bool } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
 import { Image, ScrollView, View } from 'react-native';
 
+import PKG from '../../../package.json';
 import { FLAGS } from '../../assets';
 import {
   Footer, Header, Heading, PriceFriendly,
 } from '../../components';
 import { C, exchange } from '../../common';
 import { Consumer } from '../../context';
-import { Viewport } from '../../reactor/components';
+import { Text, Viewport } from '../../reactor/components';
 import { OptionItem } from './components';
 import query from './modules/query';
 import styles from './Settings.style';
@@ -53,7 +54,7 @@ class Settings extends PureComponent {
         <Consumer>
           { ({
             l10n, navigation, store: {
-              baseCurrency, onSettings, rates, settings, vaults,
+              baseCurrency, onSettings, rates, secret, settings, vaults,
             },
           }) => (
             <Fragment>
@@ -100,6 +101,11 @@ class Settings extends PureComponent {
                       </View>
                     </OptionItem>
                   ))}
+                </View>
+
+                <View style={[styles.content, styles.frame]}>
+                  <Text caption>v{PKG.version}</Text>
+                  <Text caption lighten>{secret}</Text>
                 </View>
               </ScrollView>
 
