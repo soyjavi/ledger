@@ -8,7 +8,7 @@ const { SPACE, UNIT } = THEME;
 // const DEV = __DEV__ ? __DEV__ : { hello: 'world' }; // eslint-disable-line;
 // const isDev = packagerOpts && packagerOpts.dev;
 
-const IS_PRODUCTION = false;
+const IS_PRODUCTION = true;
 // console.log('::ENV::', {
 //   IS_PRODUCTION,
 //   EXPO: window.__DEV__,
@@ -98,7 +98,7 @@ export default {
     // RON: '',
     RUB: '₽',
     // SEK: 'Kr',
-    // SGD: 'S$',
+    SGD: 'S$',
     THB: '฿',
     // TRY: '',
     USD: '$',

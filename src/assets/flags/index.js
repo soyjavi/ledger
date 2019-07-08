@@ -10,11 +10,12 @@ import MYR from './malaysia.png';
 import THB from './thailand.png';
 import GBP from './united-kingdom.png';
 import RUB from './rusia.png';
+import SGD from './singapore.png';
 import USD from './united-states.png';
 import VND from './vietnam.png';
 import XAU from './gold.png';
 import XAG from './silver.png';
 
 export default {
-  AUD, BTC, CNY, EUR, HKD, JPY, KRW, MXN, MYR, THB, GBP, RUB, USD, VND, XAU, XAG,
+  AUD, BTC, CNY, EUR, HKD, JPY, KRW, MXN, MYR, THB, GBP, RUB, SGD, USD, VND, XAU, XAG,
 };
