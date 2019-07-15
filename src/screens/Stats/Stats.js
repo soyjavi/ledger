@@ -138,6 +138,8 @@ class Stats extends Component {
                         styleContainer={[styles.chart, styles.chartMargin]}
                         values={chart.transfers}
                       />
+
+                      <Heading caption={l10n.ASSETS} />
                     </Fragment>
                   )}
                 </View>

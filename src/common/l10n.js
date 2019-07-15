@@ -4,6 +4,7 @@ export default {
     ACTIVE: 'Active',
     ACTIVITY: 'Activity',
     AMOUNT: 'Amount',
+    ASSETS: 'Assets',
 
     BALANCE: 'Balance',
 
