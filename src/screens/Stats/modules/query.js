@@ -27,6 +27,7 @@ export default (props, query = {}) => {
   const now = parseDate();
   const lastYear = new Date(now.getFullYear(), now.getMonth() - 11, 1);
   const rangeTxs = [];
+  const currencies = {};
 
   txs
     .filter(tx => vault.hash === undefined || vault.hash === tx.vault)
@@ -79,6 +80,13 @@ export default (props, query = {}) => {
     });
 
   let total = 0;
+  vaults.forEach(({ currency, currentBalance: balance, currentBalanceBase: base }) => {
+    let item = currencies[currency] || { balance: 0, base: 0 };
+    item = { balance: item.balance + balance, base: item.base + base };
+    item.weight = (item.base * 100) / overall.currentBalance;
+
+    currencies[currency] = item;
+  });
 
   return {
     chart: {
@@ -94,6 +102,7 @@ export default (props, query = {}) => {
         }),
     },
     ...values,
+    currencies,
     locations: {
       cities,
       countries,

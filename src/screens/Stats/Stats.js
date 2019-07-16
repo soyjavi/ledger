@@ -2,19 +2,22 @@ import { arrayOf, bool, shape } from 'prop-types';
 import React, { createRef, Fragment, Component } from 'react';
 import { ScrollView, View } from 'react-native';
 
-import { C } from '../../common';
-import {
-  Chart, Footer, Header, Heading, SliderMonths,
-} from '../../components';
-import { Consumer } from '../../context';
 import { THEME } from '../../reactor/common';
 import { Text, Viewport } from '../../reactor/components';
+import { format } from '../../reactor/components/Price/modules';
+
+import { FLAGS } from '../../assets';
+import { C } from '../../common';
+import {
+  Chart, Footer, Header, Heading, HorizontalChartItem, SliderMonths,
+} from '../../components';
+import { Consumer } from '../../context';
 import { ItemGroupCategories, Locations } from './components';
 import { calcScales, orderCaptions, query } from './modules';
 import styles from './Stats.style';
 
 const { COLOR } = THEME;
-const { TX: { TYPE: { EXPENSE, INCOME } } } = C;
+const { SYMBOL, TX: { TYPE: { EXPENSE, INCOME } } } = C;
 
 class Stats extends Component {
   static propTypes = {
@@ -81,7 +84,7 @@ class Stats extends Component {
       state: {
         slider,
         values: {
-          chart = {}, expenses = {}, incomes = {}, locations = {},
+          chart = {}, currencies = {}, expenses = {}, incomes = {}, locations = {},
         } = {},
       },
     } = this;
@@ -90,7 +93,7 @@ class Stats extends Component {
     const hasIncomes = Object.keys(incomes).length > 0;
     const hasPoints = locations.points && locations.points.length > 0;
 
-    console.log('<Stats>', { visible, title });
+    console.log('<Stats>', { visible, title, currencies });
 
     return (
       <Viewport {...inherit} scroll={false} visible={visible}>
@@ -139,7 +142,19 @@ class Stats extends Component {
                         values={chart.transfers}
                       />
 
-                      <Heading caption={l10n.ASSETS} />
+                      <Heading title={l10n.CURRENCIES} />
+                      { Object.keys(currencies).filter(currency => currencies[currency].base > 0).map(currency => (
+                        <HorizontalChartItem
+                          color={COLOR[currency]}
+                          key={currency}
+                          currency={store.baseCurrency}
+                          image={FLAGS[currency]}
+                          style={styles.chart}
+                          title={format({ symbol: SYMBOL[currency], value: currencies[currency].balance })}
+                          value={currencies[currency].base}
+                          width={currencies[currency].weight}
+                        />
+                      ))}
                     </Fragment>
                   )}
                 </View>

@@ -24,8 +24,20 @@ export default StyleSheet.create({
     minWidth: BAR_SIZE_SMALL,
   },
 
+  image: {
+    borderRadius: SPACE.REGULAR / 2,
+    height: SPACE.REGULAR,
+    marginTop: SPACE.XS,
+    marginRight: SPACE.XS,
+    width: SPACE.REGULAR,
+  },
+
   row: {
     ...LAYOUT.STYLE.ROW,
-    justifyContent: 'space-between',
+    alignItems: 'flex-end',
+  },
+
+  text: {
+    flex: 1,
   },
 });
