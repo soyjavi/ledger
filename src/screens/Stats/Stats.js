@@ -4,20 +4,18 @@ import { ScrollView, View } from 'react-native';
 
 import { THEME } from '../../reactor/common';
 import { Text, Viewport } from '../../reactor/components';
-import { format } from '../../reactor/components/Price/modules';
 
-import { FLAGS } from '../../assets';
 import { C } from '../../common';
 import {
-  Chart, Footer, Header, Heading, HorizontalChartItem, SliderMonths,
+  Chart, Footer, Header, Heading, SliderMonths,
 } from '../../components';
 import { Consumer } from '../../context';
-import { ItemGroupCategories, Locations } from './components';
+import { Currencies, ItemGroupCategories, Locations } from './components';
 import { calcScales, orderCaptions, query } from './modules';
 import styles from './Stats.style';
 
 const { COLOR } = THEME;
-const { SYMBOL, TX: { TYPE: { EXPENSE, INCOME } } } = C;
+const { TX: { TYPE: { EXPENSE, INCOME } } } = C;
 
 class Stats extends Component {
   static propTypes = {
@@ -142,19 +140,7 @@ class Stats extends Component {
                         values={chart.transfers}
                       />
 
-                      <Heading title={l10n.CURRENCIES} />
-                      { Object.keys(currencies).filter(currency => currencies[currency].base > 0).map(currency => (
-                        <HorizontalChartItem
-                          color={COLOR[currency]}
-                          key={currency}
-                          currency={store.baseCurrency}
-                          image={FLAGS[currency]}
-                          style={styles.chart}
-                          title={format({ symbol: SYMBOL[currency], value: currencies[currency].balance })}
-                          value={currencies[currency].base}
-                          width={currencies[currency].weight}
-                        />
-                      ))}
+                      <Currencies dataSource={currencies} l10n={l10n} baseCurrency={store.baseCurrency} />
                     </Fragment>
                   )}
                 </View>
