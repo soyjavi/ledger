@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { LAYOUT, THEME } from '../../../../reactor/common';
+import { LAYOUT, THEME } from '../../reactor/common';
 
 const { COLOR, SPACE, UNIT } = THEME;
 const ICON_CONTAINER_SIZE = UNIT * 2.2;

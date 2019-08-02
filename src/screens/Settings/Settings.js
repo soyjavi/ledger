@@ -1,17 +1,14 @@
 import { bool } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
-import { Image, ScrollView, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
 import PKG from '../../../package.json';
-import { FLAGS } from '../../assets';
 import {
-  Footer, Header, Heading, PriceFriendly,
+  Footer, Header, Heading, OptionItem,
 } from '../../components';
-import { C, exchange } from '../../common';
+import { C } from '../../common';
 import { Consumer } from '../../context';
 import { Text, Viewport } from '../../reactor/components';
-import { OptionItem } from './components';
-import query from './modules/query';
 import styles from './Settings.style';
 
 const { SETTINGS: { HIDE_OVERALL_BALANCE, SHOW_VAULT_CURRENCY } } = C;
@@ -53,9 +50,7 @@ class Settings extends PureComponent {
       <Viewport {...inherit} scroll={false} visible={visible}>
         <Consumer>
           { ({
-            l10n, navigation, store: {
-              baseCurrency, onSettings, rates, secret, settings, vaults,
-            },
+            l10n, navigation, store: { onSettings, secret, settings },
           }) => (
             <Fragment>
               <Header highlight={scroll} title={l10n.SETTINGS} />
@@ -74,33 +69,6 @@ class Settings extends PureComponent {
                     title={l10n.SETTING_2_TITLE}
                     onChange={value => onSettings({ [SHOW_VAULT_CURRENCY]: value })}
                   />
-                </View>
-
-                <View style={styles.content}>
-                  <Heading title={`${l10n.VAULTS_VISIBILITY}`} />
-                  { query(vaults).map(({
-                    currency, currentBalance, hash, ...vault
-                  }) => (
-                    <OptionItem
-                      key={hash}
-                      active={settings[hash]}
-                      onChange={value => onSettings({ [hash]: value })}
-                      {...vault}
-                    >
-                      <View style={styles.row}>
-                        <Image source={FLAGS[currency]} style={styles.optionFlag} />
-                        <PriceFriendly
-                          subtitle
-                          level={3}
-                          lighten
-                          currency={baseCurrency}
-                          value={baseCurrency !== currency
-                            ? exchange(Math.abs(currentBalance), currency, baseCurrency, rates)
-                            : Math.abs(currentBalance)}
-                        />
-                      </View>
-                    </OptionItem>
-                  ))}
                 </View>
 
                 <View style={[styles.content, styles.frame]}>
