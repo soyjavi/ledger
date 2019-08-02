@@ -14,9 +14,7 @@ export default async (component, { pin, store, navigation }) => {
 
   navigation.navigate(SCREEN.DASHBOARD);
 
-  if (!isSignup && isConnected) {
-    store.onSync();
-  }
+  if (!isSignup && isConnected) store.onSync();
 
   component.setState({ busy: false, pin: '' });
 };

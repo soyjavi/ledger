@@ -7,6 +7,11 @@ const { STYLE: { HEADER_HEIGHT } } = C;
 const { SPACE } = THEME;
 
 export default StyleSheet.create({
+  icon: {
+    height: SPACE.L,
+    width: SPACE.L,
+  },
+
   scroll: {
     paddingVertical: HEADER_HEIGHT,
   },

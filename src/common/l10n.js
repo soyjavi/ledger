@@ -129,8 +129,8 @@ export default {
     VAULT: 'Vault',
     VAULT_DESTINATION: 'Destination vault',
     VAULTS: 'Vaults',
-    VAULTS_VISIBILITY: 'Vaults visibility',
     VAULT_CAPTION: 'You can create as many vaults as you want. You can continue using your base currency or choose any other.', // eslint-disable-line
+    VISIBILITY: 'Visibility',
 
     WIPE: 'Wipe',
     WITHOUT_TXS: 'No transactions',

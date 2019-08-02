@@ -55,24 +55,22 @@ class Settings extends PureComponent {
             <Fragment>
               <Header highlight={scroll} title={l10n.SETTINGS} />
               <ScrollView _onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.container}>
-                <View style={styles.content}>
-                  <Heading title={l10n.DASHBOARD} />
-                  <OptionItem
-                    active={settings[HIDE_OVERALL_BALANCE]}
-                    caption={l10n.SETTING_1_CAPTION}
-                    title={l10n.SETTING_1_TITLE}
-                    onChange={value => onSettings({ [HIDE_OVERALL_BALANCE]: value })}
-                  />
-                  <OptionItem
-                    active={settings[SHOW_VAULT_CURRENCY]}
-                    caption={l10n.SETTING_2_CAPTION}
-                    title={l10n.SETTING_2_TITLE}
-                    onChange={value => onSettings({ [SHOW_VAULT_CURRENCY]: value })}
-                  />
-                </View>
+                <Heading title={l10n.DASHBOARD} />
+                <OptionItem
+                  active={settings[HIDE_OVERALL_BALANCE]}
+                  caption={l10n.SETTING_1_CAPTION}
+                  title={l10n.SETTING_1_TITLE}
+                  onChange={value => onSettings({ [HIDE_OVERALL_BALANCE]: value })}
+                />
+                <OptionItem
+                  active={settings[SHOW_VAULT_CURRENCY]}
+                  caption={l10n.SETTING_2_CAPTION}
+                  title={l10n.SETTING_2_TITLE}
+                  onChange={value => onSettings({ [SHOW_VAULT_CURRENCY]: value })}
+                />
 
-                <View style={[styles.content, styles.frame]}>
-                  <Text caption>v{PKG.version}</Text>
+                <View style={styles.frame}>
+                  <Text caption>{`v${PKG.version}`}</Text>
                   <Text caption lighten>{secret}</Text>
                 </View>
               </ScrollView>

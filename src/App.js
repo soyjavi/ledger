@@ -6,13 +6,13 @@ import { THEME } from './reactor/common';
 import { LayoutView, Snackbar } from './reactor/components';
 import { DialogClone } from './components';
 import {
-  Session, Settings, Stats, Dashboard, Vault,
+  Session, Settings, Stats, Dashboard, Vault, Vaults,
 } from './screens';
 import styles from './App.style';
 
 const { SCREEN, SETTINGS: { HIDE_OVERALL_BALANCE } } = C;
 const {
-  SESSION, SETTINGS, STATS, DASHBOARD, VAULT,
+  SESSION, SETTINGS, STATS, DASHBOARD, VAULT, VAULTS,
 } = SCREEN;
 const { COLOR } = THEME;
 
@@ -57,6 +57,7 @@ export default () => (
               goBack={goBack}
               visible={stack.includes(VAULT)}
             />
+            <Vaults {...store} visible={stack.includes(VAULTS)} />
             <Stats {...store} vault={params.Vault} visible={stack.includes(STATS)} />
             <DialogClone dataSource={store.tx} visible={store.tx !== undefined} />
           </Fragment>
