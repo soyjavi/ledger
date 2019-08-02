@@ -2,7 +2,7 @@ import { C, exchange } from '../../../common';
 
 import calcHeatmap from './calcHeatmap';
 
-const { TX: { TYPE: { EXPENSE, INCOME, TRANSFER } }, VAULT_TRANSFER } = C;
+const { TX: { TYPE: { EXPENSE } }, VAULT_TRANSFER } = C;
 
 const parseDate = (date) => {
   const value = date ? new Date(date) : new Date();
