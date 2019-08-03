@@ -17,9 +17,8 @@ export default StyleSheet.create({
     paddingVertical: HEADER_HEIGHT,
   },
 
-  currencies: {
+  horizontalChart: {
     marginHorizontal: SPACE.MEDIUM,
-    marginBottom: SPACE.REGULAR,
   },
 
   optionFlag: {

@@ -50,7 +50,7 @@ class Vaults extends PureComponent {
 
   render() {
     const {
-      _onHardwareBack, _onScroll, props: { visible, ...inherit }, state: { currencies = {}, scroll },
+      _onHardwareBack, _onScroll, props: { visible, ...inherit }, state: { currencies = [], scroll },
     } = this;
 
     console.log('<Vaults>', { visible });
@@ -68,43 +68,48 @@ class Vaults extends PureComponent {
               <ScrollView _onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.container}>
                 <Heading title={l10n.CURRENCIES} />
                 <View style={styles.currencies}>
-                  { Object.keys(currencies).filter(currency => currencies[currency].base > 0).map(currency => (
-                    <HorizontalChartItem
-                      color={COLOR[currency]}
-                      key={currency}
-                      currency={baseCurrency}
-                      image={FLAGS[currency]}
-                      title={format({ symbol: SYMBOL[currency], value: currencies[currency].balance })}
-                      value={currencies[currency].base}
-                      width={currencies[currency].weight}
-                    />
+                  { currencies.map(({
+                    balance, base, currency, weight,
+                  }) => (
+                    <Fragment key={currency}>
+                      <HorizontalChartItem
+                        color={COLOR[currency]}
+                        key={currency}
+                        currency={baseCurrency}
+                        image={FLAGS[currency]}
+                        style={styles.horizontalChart}
+                        _title={format({ symbol: SYMBOL[currency], value: balance })}
+                        title={currency}
+                        value={base}
+                        width={weight}
+                      />
+
+                      { sort(vaults, currency).map(({ currentBalance, hash, ...vault }) => (
+                        <OptionItem
+                          key={hash}
+                          active={settings[hash]}
+                          onChange={value => onSettings({ [hash]: value })}
+                          {...vault}
+                        >
+                          <View style={styles.row}>
+                            { 1 === 2 && <Image source={FLAGS[currency]} style={styles.optionFlag} /> }
+                            <PriceFriendly
+                              subtitle
+                              level={3}
+                              lighten
+                              currency={currency}
+                              value={currentBalance}
+                              _currency={baseCurrency}
+                              _value={baseCurrency !== currency
+                                ? exchange(Math.abs(currentBalance), currency, baseCurrency, rates)
+                                : Math.abs(currentBalance)}
+                            />
+                          </View>
+                        </OptionItem>
+                      ))}
+                    </Fragment>
                   ))}
                 </View>
-
-                <Heading title={`${l10n.VISIBILITY}`} />
-                { sort(vaults).map(({
-                  currency, currentBalance, hash, ...vault
-                }) => (
-                  <OptionItem
-                    key={hash}
-                    active={settings[hash]}
-                    onChange={value => onSettings({ [hash]: value })}
-                    {...vault}
-                  >
-                    <View style={styles.row}>
-                      <Image source={FLAGS[currency]} style={styles.optionFlag} />
-                      <PriceFriendly
-                        subtitle
-                        level={3}
-                        lighten
-                        currency={baseCurrency}
-                        value={baseCurrency !== currency
-                          ? exchange(Math.abs(currentBalance), currency, baseCurrency, rates)
-                          : Math.abs(currentBalance)}
-                      />
-                    </View>
-                  </OptionItem>
-                ))}
               </ScrollView>
 
               <Footer

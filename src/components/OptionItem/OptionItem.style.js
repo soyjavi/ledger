@@ -10,7 +10,7 @@ export default StyleSheet.create({
   container: {
     ...LAYOUT.STYLE.ROW,
     paddingHorizontal: SPACE.MEDIUM,
-    paddingVertical: SPACE.XS,
+    paddingVertical: SPACE.XXS,
   },
 
   content: {
