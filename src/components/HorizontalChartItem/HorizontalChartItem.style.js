@@ -5,6 +5,7 @@ import { LAYOUT, THEME } from '../../reactor/common';
 const { COLOR, SPACE, UNIT } = THEME;
 const BAR_SIZE = UNIT;
 const BAR_SIZE_SMALL = UNIT / 2;
+const IMAGE_SIZE = SPACE.MEDIUM;
 
 export default StyleSheet.create({
   bar: {
@@ -25,11 +26,10 @@ export default StyleSheet.create({
   },
 
   image: {
-    borderRadius: SPACE.REGULAR / 2,
-    height: SPACE.REGULAR,
-    marginTop: SPACE.XS,
-    marginRight: SPACE.XS,
-    width: SPACE.REGULAR,
+    height: IMAGE_SIZE,
+    marginBottom: SPACE.XXS / 2,
+    marginRight: SPACE.XXS,
+    width: IMAGE_SIZE,
   },
 
   row: {

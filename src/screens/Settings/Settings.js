@@ -2,16 +2,16 @@ import { bool } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
 import { ScrollView, View } from 'react-native';
 
-import PKG from '../../../package.json';
 import {
   Footer, Header, Heading, OptionItem,
 } from '../../components';
 import { C } from '../../common';
 import { Consumer } from '../../context';
-import { Text, Viewport } from '../../reactor/components';
+import { Button, Image, Viewport } from '../../reactor/components';
 import styles from './Settings.style';
 
 const { SETTINGS: { HIDE_OVERALL_BALANCE, SHOW_VAULT_CURRENCY } } = C;
+const QR_URI = 'https://chart.googleapis.com/chart?cht=qr&chs=512x512&chld=H|1&chl';
 
 class Settings extends PureComponent {
   static propTypes = {
@@ -56,23 +56,25 @@ class Settings extends PureComponent {
               <Header highlight={scroll} title={l10n.SETTINGS} />
               <ScrollView _onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.container}>
                 <Heading title={l10n.DASHBOARD} />
-                <OptionItem
-                  active={settings[HIDE_OVERALL_BALANCE]}
-                  caption={l10n.SETTING_1_CAPTION}
-                  title={l10n.SETTING_1_TITLE}
-                  onChange={value => onSettings({ [HIDE_OVERALL_BALANCE]: value })}
-                />
-                <OptionItem
-                  active={settings[SHOW_VAULT_CURRENCY]}
-                  caption={l10n.SETTING_2_CAPTION}
-                  title={l10n.SETTING_2_TITLE}
-                  onChange={value => onSettings({ [SHOW_VAULT_CURRENCY]: value })}
-                />
-
-                <View style={styles.frame}>
-                  <Text caption>{`v${PKG.version}`}</Text>
-                  <Text caption lighten>{secret}</Text>
+                <View style={styles.options}>
+                  <OptionItem
+                    active={settings[HIDE_OVERALL_BALANCE]}
+                    caption={l10n.SETTING_1_CAPTION}
+                    title={l10n.SETTING_1_TITLE}
+                    onChange={value => onSettings({ [HIDE_OVERALL_BALANCE]: value })}
+                  />
+                  <OptionItem
+                    active={settings[SHOW_VAULT_CURRENCY]}
+                    caption={l10n.SETTING_2_CAPTION}
+                    title={l10n.SETTING_2_TITLE}
+                    onChange={value => onSettings({ [SHOW_VAULT_CURRENCY]: value })}
+                  />
                 </View>
+
+                <Heading title={l10n.IMPORT_EXPORT_TITLE} caption={l10n.IMPORT_EXPORT_CAPTION} lighten />
+                <Image source={{ uri: `${QR_URI}=${secret}` }} style={styles.qr} />
+                <Button outlined title="$Import transactions" style={styles.button} />
+
               </ScrollView>
 
               <Footer

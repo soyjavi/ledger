@@ -30,4 +30,8 @@ export default StyleSheet.create({
   },
 
   row: LAYOUT.STYLE.ROW,
+
+  vaults: {
+    marginBottom: SPACE.MEDIUM,
+  },
 });

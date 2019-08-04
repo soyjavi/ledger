@@ -83,30 +83,31 @@ class Vaults extends PureComponent {
                         value={base}
                         width={weight}
                       />
-
-                      { sort(vaults, currency).map(({ currentBalance, hash, ...vault }) => (
-                        <OptionItem
-                          key={hash}
-                          active={settings[hash]}
-                          onChange={value => onSettings({ [hash]: value })}
-                          {...vault}
-                        >
-                          <View style={styles.row}>
-                            { 1 === 2 && <Image source={FLAGS[currency]} style={styles.optionFlag} /> }
-                            <PriceFriendly
-                              subtitle
-                              level={3}
-                              lighten
-                              currency={currency}
-                              value={currentBalance}
-                              _currency={baseCurrency}
-                              _value={baseCurrency !== currency
-                                ? exchange(Math.abs(currentBalance), currency, baseCurrency, rates)
-                                : Math.abs(currentBalance)}
-                            />
-                          </View>
-                        </OptionItem>
-                      ))}
+                      <View style={styles.vaults}>
+                        { sort(vaults, currency).map(({ currentBalance, hash, ...vault }) => (
+                          <OptionItem
+                            key={hash}
+                            active={settings[hash]}
+                            onChange={value => onSettings({ [hash]: value })}
+                            {...vault}
+                          >
+                            <View style={styles.row}>
+                              { 1 === 2 && <Image source={FLAGS[currency]} style={styles.optionFlag} /> }
+                              <PriceFriendly
+                                subtitle
+                                level={3}
+                                lighten
+                                currency={currency}
+                                value={currentBalance}
+                                _currency={baseCurrency}
+                                _value={baseCurrency !== currency
+                                  ? exchange(Math.abs(currentBalance), currency, baseCurrency, rates)
+                                  : Math.abs(currentBalance)}
+                              />
+                            </View>
+                          </OptionItem>
+                        ))}
+                      </View>
                     </Fragment>
                   ))}
                 </View>

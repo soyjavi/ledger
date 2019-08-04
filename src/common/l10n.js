@@ -83,6 +83,9 @@ export default {
     INCOME: 'Income',
     INCOMES: 'Incomes',
     INITIAL_BALANCE: 'Initial balance',
+    IMPORT_EXPORT_TITLE: 'Import or Export',
+    IMPORT_EXPORT_CAPTION: 'You can transfer your blockchain transactions to a new device.',
+
 
     LAST_TRANSACTIONS: 'Last transactions',
     LOADING_PLACE: 'Wait a moment, loading place.',
