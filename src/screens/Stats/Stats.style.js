@@ -24,10 +24,6 @@ export default StyleSheet.create({
     paddingTop: HEADER_HEIGHT,
   },
 
-  content: {
-    marginBottom: SPACE.S,
-  },
-
   contentEmpty: {
     padding: SPACE.MEDIUM,
     alignItems: 'center',

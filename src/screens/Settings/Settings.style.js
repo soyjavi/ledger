@@ -4,14 +4,12 @@ import { C } from '../../common';
 import { LAYOUT, THEME } from '../../reactor/common';
 
 const { STYLE: { HEADER_HEIGHT } } = C;
-const {
-  BORDER_RADIUS, COLOR, SPACE, UNIT,
-} = THEME;
-const FLAG_SIZE = UNIT * 1.6;
+const { VIEWPORT: { W } } = LAYOUT;
+const { SPACE } = THEME;
+const QR_SIZE = W - (SPACE.MEDIUM * 2);
 
 export default StyleSheet.create({
-  caption: {
-    marginVertical: SPACE.XXS,
+  button: {
     marginHorizontal: SPACE.MEDIUM,
   },
 
@@ -19,25 +17,15 @@ export default StyleSheet.create({
     paddingVertical: HEADER_HEIGHT,
   },
 
-  content: {
-    marginVertical: SPACE.REGULAR,
+  options: {
+    marginBottom: SPACE.MEDIUM,
   },
 
-  frame: {
-    alignItems: 'center',
-    backgroundColor: COLOR.BASE,
-    borderRadius: BORDER_RADIUS,
-    marginHorizontal: SPACE.REGULAR,
-    padding: SPACE.REGULAR,
+  qr: {
+    alignSelf: 'center',
+    height: QR_SIZE,
+    marginTop: SPACE.S,
+    marginBottom: SPACE.MEDIUM,
+    width: QR_SIZE,
   },
-
-  optionFlag: {
-    borderRadius: FLAG_SIZE / 2,
-    height: FLAG_SIZE,
-    width: FLAG_SIZE,
-    marginBottom: SPACE.XXS / 2,
-    marginRight: SPACE.XXS,
-  },
-
-  row: LAYOUT.STYLE.ROW,
 });

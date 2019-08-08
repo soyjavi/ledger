@@ -3,10 +3,10 @@ import {
 } from 'prop-types';
 import React, { PureComponent } from 'react';
 import { View } from 'react-native';
-import { THEME } from '../../../../reactor/common';
-import { Icon, Text, Touchable } from '../../../../reactor/components';
 
-import ASSETS from '../../../../assets';
+import { THEME } from '../../reactor/common';
+import { Icon, Text, Touchable } from '../../reactor/components';
+import ASSETS from '../../assets';
 
 import styles from './OptionItem.style';
 

@@ -1,20 +1,17 @@
 import { bool } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
-import { Image, ScrollView, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
-import PKG from '../../../package.json';
-import { FLAGS } from '../../assets';
 import {
-  Footer, Header, Heading, PriceFriendly,
+  Footer, Header, Heading, OptionItem,
 } from '../../components';
-import { C, exchange } from '../../common';
+import { C } from '../../common';
 import { Consumer } from '../../context';
-import { Text, Viewport } from '../../reactor/components';
-import { OptionItem } from './components';
-import query from './modules/query';
+import { Button, Image, Viewport } from '../../reactor/components';
 import styles from './Settings.style';
 
 const { SETTINGS: { HIDE_OVERALL_BALANCE, SHOW_VAULT_CURRENCY } } = C;
+const QR_URI = 'https://chart.googleapis.com/chart?cht=qr&chs=512x512&chld=H|1&chl';
 
 class Settings extends PureComponent {
   static propTypes = {
@@ -53,15 +50,13 @@ class Settings extends PureComponent {
       <Viewport {...inherit} scroll={false} visible={visible}>
         <Consumer>
           { ({
-            l10n, navigation, store: {
-              baseCurrency, onSettings, rates, secret, settings, vaults,
-            },
+            l10n, navigation, store: { onSettings, secret, settings },
           }) => (
             <Fragment>
               <Header highlight={scroll} title={l10n.SETTINGS} />
               <ScrollView _onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.container}>
-                <View style={styles.content}>
-                  <Heading title={l10n.DASHBOARD} />
+                <Heading title={l10n.DASHBOARD} />
+                <View style={styles.options}>
                   <OptionItem
                     active={settings[HIDE_OVERALL_BALANCE]}
                     caption={l10n.SETTING_1_CAPTION}
@@ -76,37 +71,10 @@ class Settings extends PureComponent {
                   />
                 </View>
 
-                <View style={styles.content}>
-                  <Heading title={`${l10n.VAULTS_VISIBILITY}`} />
-                  { query(vaults).map(({
-                    currency, currentBalance, hash, ...vault
-                  }) => (
-                    <OptionItem
-                      key={hash}
-                      active={settings[hash]}
-                      onChange={value => onSettings({ [hash]: value })}
-                      {...vault}
-                    >
-                      <View style={styles.row}>
-                        <Image source={FLAGS[currency]} style={styles.optionFlag} />
-                        <PriceFriendly
-                          subtitle
-                          level={3}
-                          lighten
-                          currency={baseCurrency}
-                          value={baseCurrency !== currency
-                            ? exchange(Math.abs(currentBalance), currency, baseCurrency, rates)
-                            : Math.abs(currentBalance)}
-                        />
-                      </View>
-                    </OptionItem>
-                  ))}
-                </View>
+                <Heading title={l10n.IMPORT_EXPORT_TITLE} caption={l10n.IMPORT_EXPORT_CAPTION} lighten />
+                <Image source={{ uri: `${QR_URI}=${secret}` }} style={styles.qr} />
+                <Button outlined title="$Import transactions" style={styles.button} />
 
-                <View style={[styles.content, styles.frame]}>
-                  <Text caption>v{PKG.version}</Text>
-                  <Text caption lighten>{secret}</Text>
-                </View>
               </ScrollView>
 
               <Footer

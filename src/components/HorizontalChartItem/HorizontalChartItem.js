@@ -1,6 +1,6 @@
 import { bool, number, string } from 'prop-types';
 import React from 'react';
-import { View } from 'react-native';
+import { Image, View } from 'react-native';
 
 import { Text } from '../../reactor/components';
 import { THEME } from '../../reactor/common';
@@ -10,11 +10,12 @@ import styles from './HorizontalChartItem.style';
 const { COLOR } = THEME;
 
 const HorizontalChartItem = ({
-  color, currency, small, title, value, width, ...inherit
+  color, currency, image, small, title, value, width, ...inherit
 }) => (
   <View style={inherit.style}>
     <View style={styles.row}>
-      <Text caption lighten={small}>{title}</Text>
+      { image && <Image source={image} style={styles.image} />}
+      <Text caption lighten={small} style={styles.text}>{title}</Text>
       <PriceFriendly currency={currency} subtitle level={3} lighten={small} value={value} />
     </View>
 
@@ -33,6 +34,7 @@ const HorizontalChartItem = ({
 HorizontalChartItem.propTypes = {
   color: string,
   currency: string.isRequired,
+  image: string,
   small: bool,
   title: string.isRequired,
   value: number.isRequired,
@@ -41,6 +43,7 @@ HorizontalChartItem.propTypes = {
 
 HorizontalChartItem.defaultProps = {
   color: COLOR.PRIMARY,
+  image: undefined,
   small: false,
   width: 100,
 };

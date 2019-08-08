@@ -83,6 +83,9 @@ export default {
     INCOME: 'Income',
     INCOMES: 'Incomes',
     INITIAL_BALANCE: 'Initial balance',
+    IMPORT_EXPORT_TITLE: 'Import or Export',
+    IMPORT_EXPORT_CAPTION: 'You can transfer your blockchain transactions to a new device.',
+
 
     LAST_TRANSACTIONS: 'Last transactions',
     LOADING_PLACE: 'Wait a moment, loading place.',
@@ -129,8 +132,8 @@ export default {
     VAULT: 'Vault',
     VAULT_DESTINATION: 'Destination vault',
     VAULTS: 'Vaults',
-    VAULTS_VISIBILITY: 'Vaults visibility',
     VAULT_CAPTION: 'You can create as many vaults as you want. You can continue using your base currency or choose any other.', // eslint-disable-line
+    VISIBILITY: 'Visibility',
 
     WIPE: 'Wipe',
     WITHOUT_TXS: 'No transactions',

@@ -1,19 +1,11 @@
 import { Platform } from 'react-native';
 
-import { LAYOUT, THEME, ENV } from '../reactor/common';
+import { LAYOUT, THEME } from '../reactor/common';
 import PKG from '../../package.json';
 
 const { SPACE, UNIT } = THEME;
 
-// const DEV = __DEV__ ? __DEV__ : { hello: 'world' }; // eslint-disable-line;
-// const isDev = packagerOpts && packagerOpts.dev;
-
 const IS_PRODUCTION = true;
-// console.log('::ENV::', {
-//   IS_PRODUCTION,
-//   EXPO: window.__DEV__,
-//   ENV,
-// });
 const IS_ANDROID = Platform.OS === 'android';
 const MS_IN_DAY = 1000 * 24 * 60 * 60;
 const MS_IN_WEEK = MS_IN_DAY * 7;
@@ -47,6 +39,7 @@ export default {
     SETTINGS: 'Settings',
     STATS: 'Stats',
     VAULT: 'Vault',
+    VAULTS: 'Vaults',
   },
   SETTINGS: {
     HIDE_OVERALL_BALANCE: 0,

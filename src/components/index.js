@@ -6,6 +6,7 @@ import Header from './Header';
 import Heading from './Heading';
 import HeatMap from './HeatMap';
 import HorizontalChartItem from './HorizontalChartItem';
+import OptionItem from './OptionItem';
 import PriceFriendly from './PriceFriendly';
 import SliderMonths from './SliderMonths';
 import Summary from './Summary';
@@ -20,6 +21,7 @@ export {
   Heading,
   HeatMap,
   HorizontalChartItem,
+  OptionItem,
   PriceFriendly,
   SliderMonths,
   Summary,

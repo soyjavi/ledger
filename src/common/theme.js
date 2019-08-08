@@ -31,6 +31,12 @@ export default {
     LOCATION: '#A6FE01',
     WARNING: '#EDE622',
     ERROR: '#F03301',
+
+    BTC: '#f4b659',
+    EUR: '#0251b5',
+    USD: '#d90122',
+    XAU: '#FFD700',
+    XAG: '#c0c0c0',
   },
 
   FONT: {
