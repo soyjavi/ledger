@@ -41,7 +41,7 @@ class SliderMonths extends Component {
 
   _scrollTo = (index, animated = true) => {
     const { slider: { current: { scrollview } } } = this;
-    scrollview.current.scrollTo({ x: (index - 1) * ITEM_WIDTH, animated });
+    scrollview.current.scrollTo({ x: (index - 3) * ITEM_WIDTH, animated });
   }
 
   _onPress = (item) => {
@@ -59,18 +59,17 @@ class SliderMonths extends Component {
             ref={this.slider}
             itemWidth={ITEM_WIDTH}
             itemMargin={0}
-            style={[styles.container, inherit.style]}
+            style={[styles.slider, inherit.style]}
           >
             { getLastMonths(l10n.MONTHS).map(({ month, year }, i) => (
               <Touchable
                 key={month}
                 onPress={() => _onPress({ index: i, month, year })}
                 rippleColor={COLOR.WHITE}
-                style={styles.item}
+                style={[styles.item, index === i && styles.itemSelected]}
               >
-                <Text subtitle={i === index} level={i === index ? 3 : 2} lighten={i !== index}>
-                  {`${l10n.MONTHS[month]} ${year}`}
-                </Text>
+                <Text subtitle level={2} lighten={index !== i}>{l10n.MONTHS[month].substr(0, 3)}</Text>
+                <Text caption level={2} lighten={index !== i} style={styles.year}>{year}</Text>
               </Touchable>
             ))}
           </Slider>

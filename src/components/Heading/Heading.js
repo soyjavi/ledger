@@ -26,11 +26,11 @@ class Heading extends PureComponent {
 
   render() {
     const {
-      breakline, children, image, subtitle, title,
+      breakline, children, image, subtitle, title, ...inherit
     } = this.props;
 
     return (
-      <View style={[styles.container, breakline && styles.breakline]}>
+      <View style={[styles.container, breakline && styles.breakline, inherit.style]}>
         { image && <Image source={image} resizeMode="contain" style={styles.image} /> }
         <View style={styles.content}>
           { title && <Text headline level={6}>{title}</Text> }

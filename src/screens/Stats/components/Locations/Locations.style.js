@@ -18,14 +18,14 @@ export default StyleSheet.create({
     marginBottom: SPACE.MEDIUM,
   },
 
+  heading: {
+    marginHorizontal: 0,
+  },
+
   map: {
     backgroundColor: COLOR.BASE,
     borderRadius: BORDER_RADIUS,
     height: MAP_HEIGHT,
     width: MAP_WIDTH,
-  },
-
-  headline: {
-    marginBottom: SPACE.XXS,
   },
 });

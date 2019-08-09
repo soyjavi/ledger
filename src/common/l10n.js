@@ -64,7 +64,7 @@ export default {
     COUNTRIES: 'Countries',
     CURRENCY: 'Currency',
     CURRENCIES: 'Currencies',
-    CURRENT_MONTH: 'This month',
+    CURRENT_MONTH: 'Activity this month',
 
     DASHBOARD: 'Dashboard',
     DAY: 'day',

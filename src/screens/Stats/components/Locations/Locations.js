@@ -4,10 +4,9 @@ import {
 import React, { Fragment, PureComponent } from 'react';
 import { View } from 'react-native';
 import { THEME } from '../../../../reactor/common';
-import { Text } from '../../../../reactor/components';
 
 import { Consumer } from '../../../../context';
-import { HeatMap, HorizontalChartItem } from '../../../../components';
+import { HeatMap, Heading, HorizontalChartItem } from '../../../../components';
 import { orderByAmount } from '../../modules';
 import styles, { MAP_HEIGHT, MAP_WIDTH } from './Locations.style';
 
@@ -40,7 +39,7 @@ class Locations extends PureComponent {
         { ({ l10n }) => (
           <View style={styles.container}>
             <View style={styles.content}>
-              <Text headline level={6} style={styles.headline}>{l10n.LOCATIONS}</Text>
+              <Heading subtitle={l10n.LOCATIONS} style={styles.heading} />
               <HeatMap
                 color={COLOR.LOCATION}
                 points={points}
@@ -52,7 +51,7 @@ class Locations extends PureComponent {
             </View>
 
             <View style={styles.content}>
-              <Text headline level={6} style={styles.headline}>{l10n.CITIES}</Text>
+              <Heading subtitle={l10n.CITIES} style={styles.heading} />
               <Fragment>
                 { orderByAmount(cities).map(({ key, amount }) => (
                   <HorizontalChartItem
@@ -69,7 +68,7 @@ class Locations extends PureComponent {
 
             { Object.keys(countries).length > 1 && (
               <View style={styles.content}>
-                <Text headline level={6} style={styles.headline}>{l10n.COUNTRIES}</Text>
+                <Heading subtitle={l10n.COUNTRIES} style={styles.heading} />
                 <Fragment>
                   { orderByAmount(countries).map(({ key, amount }) => (
                     <HorizontalChartItem

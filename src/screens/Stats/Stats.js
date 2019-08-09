@@ -99,8 +99,11 @@ class Stats extends Component {
           { ({ l10n, navigation, store }) => (
             <Fragment>
               <Header highlight title={`${title}${l10n.ACTIVITY}`} />
-              <ScrollView contentContainerStyle={styles.container} ref={this.scrollview}>
-                <Heading subtitle={l10n.BALANCE} />
+
+              <SliderMonths {...slider} onChange={_onChangeSlider} style={styles.sliderMonths} />
+
+              <ScrollView contentContainerStyle={styles.scrollView} ref={this.scrollview}>
+                <Heading subtitle={l10n.OVERALL_BALANCE} />
                 <Chart
                   captions={orderCaptions(l10n)}
                   color={COLOR.ACCENT}
@@ -140,8 +143,6 @@ class Stats extends Component {
                     />
                   </Fragment>
                 )}
-
-                <SliderMonths {...slider} onChange={_onChangeSlider} style={styles.sliderMonths} />
 
                 { (hasExpenses || hasIncomes)
                   ? (
