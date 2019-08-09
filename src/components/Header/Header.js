@@ -4,23 +4,21 @@ import {
 import React from 'react';
 import { View } from 'react-native';
 
+import { Motion } from '../../reactor/components';
+
 import ASSETS from '../../assets';
-import { Button, Motion } from '../../reactor/components';
+import ButtonMore from '../ButtonMore';
 import Heading from '../Heading';
 import styles from './Header.style';
 
 const Header = ({
-  highlight, image, right, title, ...inherit
+  highlight, image, right, title,
 }) => (
-  <View style={[styles.row, styles.container, inherit.style]}>
-    <View style={styles.content}>
-      { title && (
-        <Motion timeline={[{ property: 'opacity', value: highlight ? 1 : 0 }]} style={styles.row}>
-          <Heading title={title} image={image} />
-        </Motion>
-      )}
-    </View>
-    { right && <Button contained={false} small {...right} style={styles.button} /> }
+  <View style={[styles.container, styles.row]}>
+    <Motion timeline={[{ property: 'opacity', value: highlight ? 1 : 0 }]} style={styles.content}>
+      { title && <Heading title={title} image={image} /> }
+    </Motion>
+    { right && <ButtonMore {...right} /> }
   </View>
 );
 
