@@ -4,10 +4,12 @@ import {
 import React, { Component } from 'react';
 import { Image, View } from 'react-native';
 
+import { Text, Touchable } from '../../reactor/components';
+
 import ASSETS from '../../assets';
 import { C, exchange } from '../../common';
 import { Consumer } from '../../context';
-import { Button, Text, Touchable } from '../../reactor/components';
+import ButtonMore from '../ButtonMore';
 import Heading from '../Heading';
 import PriceFriendly from '../PriceFriendly';
 import styles from './Summary.style';
@@ -88,11 +90,9 @@ class Summary extends Component {
               </View>
             </Touchable>
 
-            <Heading title={l10n.CURRENT_MONTH}>
-              <Button
-                outlined
-                small
-                title={l10n.ACTIVITY}
+            <Heading subtitle={l10n.CURRENT_MONTH}>
+              <ButtonMore
+                title={l10n.MORE}
                 onPress={() => navigation.navigate(SCREEN.STATS)}
               />
             </Heading>

@@ -100,7 +100,7 @@ class Stats extends Component {
             <Fragment>
               <Header highlight title={`${title}${l10n.ACTIVITY}`} />
               <ScrollView contentContainerStyle={styles.container} ref={this.scrollview}>
-                <Heading caption={l10n.BALANCE} />
+                <Heading subtitle={l10n.BALANCE} />
                 <Chart
                   captions={orderCaptions(l10n)}
                   color={COLOR.ACCENT}
@@ -110,7 +110,7 @@ class Stats extends Component {
                   style={styles.chartBalance}
                   values={chart.balance}
                 />
-                <Heading caption={`${l10n.INCOMES} vs. ${l10n.EXPENSES}`} />
+                <Heading subtitle={`${l10n.INCOMES} vs. ${l10n.EXPENSES}`} />
                 <Chart
                   color={COLOR.INCOME}
                   highlight={slider.index}
@@ -129,7 +129,7 @@ class Stats extends Component {
                 />
                 { !vault && (
                   <Fragment>
-                    <Heading caption={l10n.TRANSFERS} />
+                    <Heading subtitle={l10n.TRANSFERS} />
                     <Chart
                       captions={orderCaptions(l10n)}
                       color={COLOR.TRANSFER}

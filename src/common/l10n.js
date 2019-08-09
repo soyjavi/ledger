@@ -95,6 +95,7 @@ export default {
       'January', 'February', 'March', 'April', 'May', 'June',
       'July', 'August', 'September', 'October', 'November', 'December',
     ],
+    MORE: 'More',
 
     NAME: 'Name',
     NEW: 'New',

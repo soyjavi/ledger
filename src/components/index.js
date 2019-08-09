@@ -1,3 +1,4 @@
+import ButtonMore from './ButtonMore';
 import CardOption from './CardOption';
 import Chart from './Chart';
 import DialogClone from './DialogClone';
@@ -13,6 +14,7 @@ import Summary from './Summary';
 import TransactionItem from './TransactionItem';
 
 export {
+  ButtonMore,
   CardOption,
   Chart,
   DialogClone,
