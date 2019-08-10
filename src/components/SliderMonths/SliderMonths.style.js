@@ -27,7 +27,7 @@ export default StyleSheet.create({
   },
 
   itemSelected: {
-    backgroundColor: COLOR.ACCENT,
+    backgroundColor: COLOR.PRIMARY,
     borderRadius: BORDER_RADIUS,
     height: ITEM_HEIGHT_ACTIVE,
   },

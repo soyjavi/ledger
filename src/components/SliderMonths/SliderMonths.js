@@ -68,8 +68,12 @@ class SliderMonths extends Component {
                 rippleColor={COLOR.WHITE}
                 style={[styles.item, index === i && styles.itemSelected]}
               >
-                <Text subtitle level={2} lighten={index !== i}>{l10n.MONTHS[month].substr(0, 3)}</Text>
-                <Text caption level={2} lighten={index !== i} style={styles.year}>{year}</Text>
+                <Text subtitle level={2} lighten color={index === i && COLOR.BACKGROUND}>
+                  {l10n.MONTHS[month].substr(0, 3)}
+                </Text>
+                <Text caption level={2} lighten color={index === i && COLOR.BACKGROUND} style={styles.year}>
+                  {year}
+                </Text>
               </Touchable>
             ))}
           </Slider>
