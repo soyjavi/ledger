@@ -9,6 +9,10 @@ const {
 } = THEME;
 
 export default StyleSheet.create({
+  breakLine: {
+    flex: 1,
+  },
+
   card: {
     ...STYLE.CARD,
     borderRadius: BORDER_RADIUS,
@@ -27,12 +31,14 @@ export default StyleSheet.create({
   },
 
   container: {
-    paddingBottom: SPACE.MEDIUM,
+    marginBottom: SPACE.XS,
   },
 
   content: {
-    paddingHorizontal: SPACE.MEDIUM,
-    marginBottom: SPACE.MEDIUM,
+    justifyContent: 'flex-start',
+    minHeight: UNIT * 16,
+    marginBottom: SPACE.XS,
+    marginHorizontal: SPACE.MEDIUM,
   },
 
   image: {

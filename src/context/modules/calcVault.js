@@ -8,13 +8,15 @@ export default ({
 }) => {
   const now = new Date();
   const lastYear = new Date(now.getFullYear(), now.getMonth() - 11, 1);
+  const currentDay = now.getDate();
   const { currency } = vault;
   const exchangeProps = [currency, baseCurrency, rates];
   let { balance = 0 } = vault;
-  let incomes = 0;
-  let expenses = 0;
-  let progression = 0;
   let currentMonthTxs = 0;
+  let expenses = 0;
+  let incomes = 0;
+  let progression = 0;
+  let today = 0;
 
   const dataSource = txs.filter(tx => tx.vault === vault.hash);
   dataSource.forEach(({
@@ -33,6 +35,8 @@ export default ({
           if (isExpense) expenses += value;
           else incomes += value;
           progression += isExpense ? -(value) : value;
+
+          if (date.getDate() === currentDay) today += isExpense ? -(value) : value;
         }
       }
     }
@@ -49,6 +53,7 @@ export default ({
       expenses: exchange(expenses, ...exchangeProps),
       incomes: exchange(incomes, ...exchangeProps),
       progression: exchange(progression, ...exchangeProps),
+      today: exchange(today, ...exchangeProps),
       txs: currentMonthTxs,
     },
     txs: dataSource,
