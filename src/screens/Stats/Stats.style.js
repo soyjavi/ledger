@@ -4,7 +4,7 @@ import { C } from '../../common';
 import { THEME } from '../../reactor/common';
 
 const { STYLE: { HEADER_HEIGHT } } = C;
-const { SPACE } = THEME;
+const { SPACE, UNIT } = THEME;
 
 export default StyleSheet.create({
   chart: {
@@ -16,12 +16,7 @@ export default StyleSheet.create({
   },
 
   chartBalance: {
-    height: 128,
-  },
-
-  container: {
-    paddingBottom: HEADER_HEIGHT,
-    paddingTop: HEADER_HEIGHT,
+    height: UNIT * 9.6,
   },
 
   contentEmpty: {
@@ -29,7 +24,11 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
 
+  scrollView: {
+    paddingBottom: HEADER_HEIGHT,
+  },
+
   sliderMonths: {
-    marginBottom: SPACE.S,
+    marginTop: HEADER_HEIGHT,
   },
 });

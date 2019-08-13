@@ -61,7 +61,7 @@ class TransactionItem extends PureComponent {
 
               <View style={[styles.content, styles.row]}>
                 <View style={styles.texts}>
-                  { title && <Text subtitle level={2} lighten={isVaultTransfer} numberOfLines={1}>{title}</Text> }
+                  { title && <Text subtitle level={3} lighten={isVaultTransfer} numberOfLines={1}>{title}</Text> }
                   <Text caption lighten>{formatCaption(new Date(timestamp), location)}</Text>
                 </View>
                 <View style={styles.prices}>

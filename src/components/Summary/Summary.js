@@ -4,10 +4,12 @@ import {
 import React, { Component } from 'react';
 import { Image, View } from 'react-native';
 
+import { Text, Touchable } from '../../reactor/components';
+
 import ASSETS from '../../assets';
 import { C, exchange } from '../../common';
 import { Consumer } from '../../context';
-import { Button, Text, Touchable } from '../../reactor/components';
+import ButtonMore from '../ButtonMore';
 import Heading from '../Heading';
 import PriceFriendly from '../PriceFriendly';
 import styles from './Summary.style';
@@ -51,7 +53,9 @@ class Summary extends Component {
       },
     } = this;
 
-    const { progression = 0, incomes = 0, expenses = 0 } = currentMonth;
+    const {
+      expenses = 0, incomes = 0, progression = 0, today = 0,
+    } = currentMonth;
     const progressionPercentage = currentBalance - progression > 0
       ? (progression * 100) / (currentBalance - progression)
       : progression;
@@ -60,10 +64,10 @@ class Summary extends Component {
       <Consumer>
         { ({ l10n, navigation, store: { baseCurrency, rates } }) => (
           <View style={[styles.container, inherit.style]}>
-            <Touchable onPress={onMask ? () => onMask(!mask) : undefined} style={styles.content}>
+            <Touchable onPress={onMask ? () => onMask(!mask) : undefined} style={[styles.card, styles.content]}>
               <View style={[styles.row, styles.title]}>
                 <Image source={image} resizeMode="contain" style={styles.image} />
-                <Text {...captionProps}>{title.toUpperCase()}</Text>
+                <Text caption level={2}>{title.toUpperCase()}</Text>
               </View>
               <PriceFriendly
                 currency={baseCurrency}
@@ -86,21 +90,22 @@ class Summary extends Component {
                   />
                 )}
               </View>
+              <View style={styles.breakLine} />
+              <View style={styles.row}>
+                <View>
+                  <Text {...captionProps}>{l10n.PROGRESSION.toUpperCase()}</Text>
+                  <PriceFriendly currency="%" icon subtitle level={3} value={progressionPercentage} />
+                </View>
+              </View>
             </Touchable>
 
-            <Heading title={l10n.CURRENT_MONTH}>
-              <Button
-                outlined
-                small
-                title={l10n.ACTIVITY}
+            <Heading subtitle={l10n.ACTIVITY}>
+              <ButtonMore
+                title={l10n.MORE}
                 onPress={() => navigation.navigate(SCREEN.STATS)}
               />
             </Heading>
             <View style={[styles.row, styles.cards]}>
-              <View style={styles.card}>
-                <Text {...captionProps}>{l10n.PROGRESSION.toUpperCase()}</Text>
-                <PriceFriendly currency="%" icon headline level={6} value={progressionPercentage} />
-              </View>
               <View style={[styles.card, styles.cardIncomes]}>
                 <Text {...captionProps}>{l10n.INCOMES.toUpperCase()}</Text>
                 <PriceFriendly
@@ -112,7 +117,7 @@ class Summary extends Component {
                   value={incomes}
                 />
               </View>
-              <View style={[styles.card, styles.cardExpenses, styles.cardLast]}>
+              <View style={[styles.card, styles.cardExpenses]}>
                 <Text {...captionProps}>{l10n.EXPENSES.toUpperCase()}</Text>
                 <PriceFriendly
                   currency={baseCurrency}
@@ -121,6 +126,17 @@ class Summary extends Component {
                   lighten={expenses === 0}
                   mask={mask}
                   value={expenses}
+                />
+              </View>
+              <View style={[styles.card, styles.cardLast]}>
+                <Text {...captionProps}>{l10n.TODAY.toUpperCase()}</Text>
+                <PriceFriendly
+                  currency={baseCurrency}
+                  headline
+                  level={6}
+                  mask={mask}
+                  operator
+                  value={today}
                 />
               </View>
             </View>

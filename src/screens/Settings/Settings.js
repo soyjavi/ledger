@@ -55,7 +55,7 @@ class Settings extends PureComponent {
             <Fragment>
               <Header highlight={scroll} title={l10n.SETTINGS} />
               <ScrollView _onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.container}>
-                <Heading title={l10n.DASHBOARD} />
+                <Heading subtitle={l10n.DASHBOARD} />
                 <View style={styles.options}>
                   <OptionItem
                     active={settings[HIDE_OVERALL_BALANCE]}
@@ -71,7 +71,7 @@ class Settings extends PureComponent {
                   />
                 </View>
 
-                <Heading title={l10n.IMPORT_EXPORT_TITLE} caption={l10n.IMPORT_EXPORT_CAPTION} lighten />
+                <Heading subtitle={l10n.IMPORT_EXPORT_TITLE} caption={l10n.IMPORT_EXPORT_CAPTION} lighten />
                 <Image source={{ uri: `${QR_URI}=${secret}` }} style={styles.qr} />
                 <Button outlined title="$Import transactions" style={styles.button} />
 

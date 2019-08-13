@@ -24,4 +24,8 @@ export default StyleSheet.create({
     width: UNIT * 1.6,
     marginRight: SPACE.XXS,
   },
+
+  subtitle: {
+    fontSize: UNIT * 1.6,
+  },
 });

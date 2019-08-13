@@ -13,7 +13,6 @@ export default async (component, { pin, store, navigation }) => {
   }
 
   navigation.navigate(SCREEN.DASHBOARD);
-  // navigation.navigate(SCREEN.VAULTS);
 
   if (!isSignup && isConnected) store.onSync();
 

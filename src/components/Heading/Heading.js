@@ -10,7 +10,6 @@ import styles from './Heading.style';
 class Heading extends PureComponent {
   static propTypes = {
     breakline: bool,
-    caption: string,
     children: node,
     image: oneOfType([number, string]),
     subtitle: string,
@@ -19,7 +18,6 @@ class Heading extends PureComponent {
 
   static defaultProps = {
     breakline: false,
-    caption: undefined,
     children: undefined,
     image: undefined,
     subtitle: undefined,
@@ -28,16 +26,15 @@ class Heading extends PureComponent {
 
   render() {
     const {
-      breakline, caption, children, image, subtitle, title, ...inherit
+      breakline, children, image, subtitle, title, ...inherit
     } = this.props;
 
     return (
-      <View style={[styles.container, breakline && styles.breakline]}>
+      <View style={[styles.container, breakline && styles.breakline, inherit.style]}>
         { image && <Image source={image} resizeMode="contain" style={styles.image} /> }
         <View style={styles.content}>
           { title && <Text headline level={6}>{title}</Text> }
-          { subtitle && <Text subtitle level={3} {...inherit}>{subtitle}</Text> }
-          { caption && <Text caption {...inherit}>{caption}</Text> }
+          { subtitle && <Text subtitle style={styles.subtitle}>{subtitle}</Text> }
         </View>
         { children }
       </View>

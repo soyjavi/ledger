@@ -3,13 +3,10 @@ import React, { Fragment, PureComponent } from 'react';
 import { ScrollView, View } from 'react-native';
 
 import { THEME } from '../../reactor/common';
-import {
-  Icon, Slider, Touchable, Viewport,
-} from '../../reactor/components';
-import ASSETS from '../../assets';
+import { Slider, Viewport } from '../../reactor/components';
 import { C, onHardwareBackPress } from '../../common';
 import {
-  Footer, Header, Heading, Summary, TransactionItem,
+  ButtonMore, Footer, Header, Heading, Summary, TransactionItem,
 } from '../../components';
 import { Consumer } from '../../context';
 import { DialogVault, Syncing, VaultCard } from './components';
@@ -105,10 +102,8 @@ class Dashboard extends PureComponent {
                     title={l10n.OVERALL_BALANCE}
                   />
 
-                  <Heading title={l10n.VAULTS}>
-                    <Touchable onPress={() => navigation.navigate(SCREEN.VAULTS)}>
-                      <Icon style={styles.icon} value={ASSETS.more} />
-                    </Touchable>
+                  <Heading subtitle={l10n.VAULTS}>
+                    <ButtonMore title={l10n.MORE} onPress={() => navigation.navigate(SCREEN.VAULTS)} />
                   </Heading>
                   <Slider itemWidth={VAULT_ITEM_WIDTH + SPACE.S} itemMargin={0} style={styles.vaults}>
                     { queryVaults({ settings, vaults }).map(vault => (
@@ -123,7 +118,7 @@ class Dashboard extends PureComponent {
 
                   { queryLastTxs({ txs, vaults }).length > 0 && (
                     <Fragment>
-                      <Heading title={l10n.LAST_TRANSACTIONS} />
+                      <Heading subtitle={l10n.LAST_TRANSACTIONS} />
                       <View>
                         { queryLastTxs({ txs, vaults }).map(tx => (
                           <TransactionItem key={tx.hash} showDate {...tx} />

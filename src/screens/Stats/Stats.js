@@ -99,8 +99,11 @@ class Stats extends Component {
           { ({ l10n, navigation, store }) => (
             <Fragment>
               <Header highlight title={`${title}${l10n.ACTIVITY}`} />
-              <ScrollView contentContainerStyle={styles.container} ref={this.scrollview}>
-                <Heading caption={l10n.BALANCE} />
+
+              <SliderMonths {...slider} onChange={_onChangeSlider} style={styles.sliderMonths} />
+
+              <ScrollView contentContainerStyle={styles.scrollView} ref={this.scrollview}>
+                <Heading subtitle={l10n.OVERALL_BALANCE} />
                 <Chart
                   captions={orderCaptions(l10n)}
                   color={COLOR.ACCENT}
@@ -110,7 +113,7 @@ class Stats extends Component {
                   style={styles.chartBalance}
                   values={chart.balance}
                 />
-                <Heading caption={`${l10n.INCOMES} vs. ${l10n.EXPENSES}`} />
+                <Heading subtitle={`${l10n.INCOMES} vs. ${l10n.EXPENSES}`} />
                 <Chart
                   color={COLOR.INCOME}
                   highlight={slider.index}
@@ -129,7 +132,7 @@ class Stats extends Component {
                 />
                 { !vault && (
                   <Fragment>
-                    <Heading caption={l10n.TRANSFERS} />
+                    <Heading subtitle={l10n.TRANSFERS} />
                     <Chart
                       captions={orderCaptions(l10n)}
                       color={COLOR.TRANSFER}
@@ -140,8 +143,6 @@ class Stats extends Component {
                     />
                   </Fragment>
                 )}
-
-                <SliderMonths {...slider} onChange={_onChangeSlider} style={styles.sliderMonths} />
 
                 { (hasExpenses || hasIncomes)
                   ? (

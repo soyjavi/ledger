@@ -66,7 +66,7 @@ class Vaults extends PureComponent {
             <Fragment>
               <Header highlight={scroll} title={l10n.VAULTS} />
               <ScrollView _onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.container}>
-                <Heading title={l10n.CURRENCIES} />
+                <Heading subtitle={l10n.CURRENCIES} />
                 <View style={styles.currencies}>
                   { currencies.map(({
                     balance, base, currency, weight,

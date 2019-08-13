@@ -2,7 +2,9 @@ import { StyleSheet } from 'react-native';
 
 import { LAYOUT, THEME } from '../../reactor/common';
 
-const { COLOR, OFFSET, UNIT } = THEME;
+const {
+  BORDER_RADIUS, COLOR, OFFSET, UNIT,
+} = THEME;
 
 const ICON_SIZE = UNIT * 3.6;
 const DATE_FONT_SIZE = UNIT * 1.6;
@@ -15,7 +17,6 @@ export default StyleSheet.create({
   },
 
   containerHighlight: {
-    // backgroundColor: COLOR.BASE,
     opacity: 0.66,
   },
 
@@ -34,7 +35,7 @@ export default StyleSheet.create({
     alignContent: 'center',
     alignItems: 'center',
     backgroundColor: COLOR.BASE,
-    borderRadius: ICON_SIZE / 2,
+    borderRadius: BORDER_RADIUS,
     height: ICON_SIZE,
     justifyContent: 'center',
     marginRight: UNIT,

@@ -64,7 +64,6 @@ export default {
     COUNTRIES: 'Countries',
     CURRENCY: 'Currency',
     CURRENCIES: 'Currencies',
-    CURRENT_MONTH: 'This month',
 
     DASHBOARD: 'Dashboard',
     DAY: 'day',
@@ -95,6 +94,7 @@ export default {
       'January', 'February', 'March', 'April', 'May', 'June',
       'July', 'August', 'September', 'October', 'November', 'December',
     ],
+    MORE: 'More',
 
     NAME: 'Name',
     NEW: 'New',

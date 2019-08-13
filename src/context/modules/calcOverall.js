@@ -1,9 +1,11 @@
 import { exchange } from '../../common';
 
-const KEYS = ['progression', 'incomes', 'expenses'];
+const KEYS = ['expenses', 'incomes', 'progression', 'today'];
 
 export default ({ baseCurrency, rates, vaults = [] }) => {
-  const currentMonth = { progression: 0, incomes: 0, expenses: 0 };
+  const currentMonth = {
+    expenses: 0, incomes: 0, progression: 0, today: 0,
+  };
   let balance = 0;
   let currentBalance = 0;
   const chartBalance = new Array(12).fill(0);
