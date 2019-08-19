@@ -12,7 +12,7 @@ import styles from './Footer.style';
 const { COLOR } = THEME;
 
 const BUTTON = {
-  color: COLOR.TEXT, large: true, rounded: true, shadow: true, style: styles.button,
+  color: COLOR.PRIMARY, large: true, rounded: true, shadow: true, style: styles.button,
 };
 
 class Footer extends PureComponent {
