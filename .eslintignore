@@ -1,5 +1,2 @@
-**/*.html
+src/reactor/**
 **/*.test.js
-**/*.mock.js
-**/reactor/
-node_modules/

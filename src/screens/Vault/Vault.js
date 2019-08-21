@@ -46,7 +46,9 @@ class Vault extends PureComponent {
     if (visible && dataSource && (dataSource.txs.length === 0 || dataSource.txs.length !== txs.length)) {
       const search = undefined;
       const values = query(store, { ...dataSource, search });
-      const totalTxs = Object.values(values).map(value => value.txs.length).reduce((a, b) => a += b);
+      const totalTxs = Object.values(values).length > 0
+        ? Object.values(values).map(value => value.txs.length).reduce((a, b) => a += b)
+        : 0;
 
       this.setState({
         scrollQuery: totalTxs !== 16, search, values, vault: dataSource,
