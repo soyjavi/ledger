@@ -101,7 +101,7 @@ class FormTransaction extends PureComponent {
               attributes={setCurrency(translate(hydrate(this, store), l10n))}
               color={color}
               onValid={_onValid}
-              onChange={value => _onChange(value, store)}
+              onChange={(value) => _onChange(value, store)}
               value={form}
             />
           </Fragment>

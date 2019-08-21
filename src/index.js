@@ -10,8 +10,9 @@ import { THEME } from './reactor/common';
 const { LANGUAGE } = C;
 
 class BrowserApp extends PureComponent {
-  state = {
-    loaded: false,
+  constructor(props) {
+    super(props);
+    this.state = { loaded: false };
   }
 
   async componentDidMount() {

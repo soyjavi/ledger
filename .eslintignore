@@ -1,2 +1,2 @@
-src/reactor/**
+src/reactor/**/*.js
 **/*.test.js

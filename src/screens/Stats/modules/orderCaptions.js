@@ -4,6 +4,6 @@ export default ({ MONTHS }) => {
 
   return [
     ...values,
-    ...MONTHS.filter(value => !values.includes(value)),
+    ...MONTHS.filter((value) => !values.includes(value)),
   ];
 };

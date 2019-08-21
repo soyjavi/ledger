@@ -47,7 +47,7 @@ class Vault extends PureComponent {
       const search = undefined;
       const values = query(store, { ...dataSource, search });
       const totalTxs = Object.values(values).length > 0
-        ? Object.values(values).map(value => value.txs.length).reduce((a, b) => a += b)
+        ? Object.values(values).map((value) => value.txs.length).reduce((a, b) => a += b)
         : 0;
 
       this.setState({
@@ -119,7 +119,7 @@ class Vault extends PureComponent {
                   ? (
                     <Fragment>
                       <Fragment>
-                        { values.map(item => (
+                        { values.map((item) => (
                           <GroupTransactions key={`${item.timestamp}-${search}`} {...item} currency={currency} />))}
                       </Fragment>
                       { !search && !scrollQuery && (

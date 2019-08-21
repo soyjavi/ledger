@@ -19,16 +19,17 @@ class ProviderEvents extends PureComponent {
     getLocationAsync: undefined,
   };
 
-  state = {
-    isConnected: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = { isConnected: false };
+  }
 
   componentWillMount() {
-    NetInfo.isConnected.fetch().then(isConnected => this.setState({ isConnected }));
+    NetInfo.isConnected.fetch().then((isConnected) => this.setState({ isConnected }));
   }
 
   componentDidMount() {
-    NetInfo.isConnected.addEventListener('connectionChange', isConnected => this.setState({ isConnected }));
+    NetInfo.isConnected.addEventListener('connectionChange', (isConnected) => this.setState({ isConnected }));
   }
 
   componentWillUnmount() {

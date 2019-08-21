@@ -30,7 +30,7 @@ export default (props, query = {}) => {
   const currencies = {};
 
   txs
-    .filter(tx => vault.hash === undefined || vault.hash === tx.vault)
+    .filter((tx) => vault.hash === undefined || vault.hash === tx.vault)
     .forEach((tx) => {
       const {
         category, location: { place } = {}, timestamp, type, value, title,

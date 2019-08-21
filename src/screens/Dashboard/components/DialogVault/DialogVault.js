@@ -43,14 +43,14 @@ class DialogVault extends PureComponent {
     if (visible === true && visible !== props.visible) this.setState({ currency, form: { balance: '0' } });
   }
 
-  _onChange = form => this.setState({ form });
+  _onChange = (form) => this.setState({ form });
 
   _onCurrency = (currency) => {
     const { state: { form } } = this;
     this.setState({ currency, form: { ...form, value: 0 } });
   }
 
-  _onValid = valid => this.setState({ valid })
+  _onValid = (valid) => this.setState({ valid })
 
   _onSubmit = async ({ onVault }) => {
     const { props: { onClose }, state: { currency, form } } = this;
@@ -88,7 +88,7 @@ class DialogVault extends PureComponent {
             <View style={styles.form}>
               <Text subtitle level={3}>{l10n.CURRENCIES}</Text>
               <Slider itemMargin={0} itemWidth={CARD_WIDTH + SPACE.S} style={styles.currencies}>
-                { queryCurrencies(store).map(item => (
+                { queryCurrencies(store).map((item) => (
                   <CardOption
                     image={FLAGS[item]}
                     key={item}

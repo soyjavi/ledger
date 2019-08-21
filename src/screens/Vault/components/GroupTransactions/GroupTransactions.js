@@ -54,7 +54,7 @@ class GroupTransactions extends Component {
                 </View>
               )}
             </View>
-            { txs.map(tx => <TransactionItem key={tx.hash} {...tx} currency={currency} />)}
+            { txs.map((tx) => <TransactionItem key={tx.hash} {...tx} currency={currency} />)}
           </Fragment>
         )}
       </Consumer>

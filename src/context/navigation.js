@@ -17,9 +17,9 @@ class ProviderNavigation extends PureComponent {
     navigator: undefined,
   };
 
-  state = {
-    params: {},
-    stack: [SESSION],
+  constructor(props) {
+    super(props);
+    this.state = { params: {}, stack: [SESSION] };
   }
 
   get current() {

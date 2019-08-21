@@ -27,10 +27,13 @@ class Session extends PureComponent {
     visible: true,
   };
 
-  state = {
-    busy: false,
-    askFingerprint: false,
-    pin: '',
+  constructor(props) {
+    super(props);
+    this.state = {
+      busy: false,
+      askFingerprint: false,
+      pin: '',
+    };
   }
 
   _onFingerprint = async ({ navigation, store }) => {
@@ -82,7 +85,7 @@ class Session extends PureComponent {
                 <View style={styles.pin}>
                   { busy
                     ? <Activity size="large" style={styles.activity} />
-                    : [1, 2, 3, 4].map(number => (
+                    : [1, 2, 3, 4].map((number) => (
                       <Motion
                         key={number}
                         style={[styles.bullet, pin.length >= number && styles.bulletActive]}
@@ -97,7 +100,7 @@ class Session extends PureComponent {
 
               { store.pin && !busy && getFingerprintAsync && (
                 <Image source={ASSETS.fingerprint} style={styles.fingerprint} />)}
-              <NumKeyboard onPress={number => _onNumber({ number, store, navigation })} />
+              <NumKeyboard onPress={(number) => _onNumber({ number, store, navigation })} />
               <Text lighten caption level={3} style={styles.text}>{`v${VERSION}`}</Text>
             </View>
           )}

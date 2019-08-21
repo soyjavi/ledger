@@ -40,7 +40,7 @@ class Chart extends Component {
     } = this.props;
     const { max, min, avg } = calcRange(values);
     const avgProps = { backgroundColor: color };
-    let firstValueIndex = values.findIndex(value => value !== 0);
+    let firstValueIndex = values.findIndex((value) => value !== 0);
     if (firstValueIndex === -1) firstValueIndex = undefined;
 
     return (

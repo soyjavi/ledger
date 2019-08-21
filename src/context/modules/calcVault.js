@@ -18,7 +18,7 @@ export default ({
   let progression = 0;
   let today = 0;
 
-  const dataSource = txs.filter(tx => tx.vault === vault.hash);
+  const dataSource = txs.filter((tx) => tx.vault === vault.hash);
   dataSource.forEach(({
     category, timestamp, type, value,
   }) => {
@@ -42,7 +42,8 @@ export default ({
     }
   });
 
-  return Object.assign({}, vault, {
+  return {
+    ...vault,
     chartBalance: new Array(12).fill(0).map((value, index) => {
       const timestamp = new Date(lastYear.getFullYear(), lastYear.getMonth() + index, 15);
       return exchange(vault.balance, currency, baseCurrency, rates, timestamp);
@@ -57,5 +58,5 @@ export default ({
       txs: currentMonthTxs,
     },
     txs: dataSource,
-  });
+  };
 };

@@ -24,9 +24,10 @@ class Settings extends PureComponent {
     visible: true,
   };
 
-  state = {
-    scroll: true,
-  };
+  constructor(props) {
+    super(props);
+    this.state = { scroll: true };
+  }
 
   _onHardwareBack = (navigation) => {
     navigation.goBack();
@@ -61,13 +62,13 @@ class Settings extends PureComponent {
                     active={settings[HIDE_OVERALL_BALANCE]}
                     caption={l10n.SETTING_1_CAPTION}
                     title={l10n.SETTING_1_TITLE}
-                    onChange={value => onSettings({ [HIDE_OVERALL_BALANCE]: value })}
+                    onChange={(value) => onSettings({ [HIDE_OVERALL_BALANCE]: value })}
                   />
                   <OptionItem
                     active={settings[SHOW_VAULT_CURRENCY]}
                     caption={l10n.SETTING_2_CAPTION}
                     title={l10n.SETTING_2_TITLE}
-                    onChange={value => onSettings({ [SHOW_VAULT_CURRENCY]: value })}
+                    onChange={(value) => onSettings({ [SHOW_VAULT_CURRENCY]: value })}
                   />
                 </View>
 

@@ -7,9 +7,9 @@ export default (component, store) => {
   const { currency } = store.vaults.find(({ hash }) => hash === vault);
   const { currency: destinationCurrency = currency } = store.vaults.find(({ hash }) => hash === destination) || {};
 
-  return Object.assign({}, TRANSFER,
-    {
-      value: { ...TRANSFER.value, currency },
-      exchange: { ...TRANSFER.exchange, currency: destinationCurrency },
-    });
+  return {
+    ...TRANSFER,
+    value: { ...TRANSFER.value, currency },
+    exchange: { ...TRANSFER.exchange, currency: destinationCurrency },
+  };
 };

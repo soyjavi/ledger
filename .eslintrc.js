@@ -25,6 +25,7 @@ module.exports = {
   rules: {
     'max-len': [1, 120, { 'tabWidth': 2, 'ignoreComments': true }],
     'react/jsx-filename-extension': [1, { 'extensions': ['.js', '.jsx'] }],
+    'react/jsx-fragments': [0],
     'react/jsx-props-no-spreading': [1],
     'react/static-property-placement': [0],
   },
