@@ -11,7 +11,7 @@ import styles from './PriceFriendly.style';
 
 const { COLOR } = THEME;
 const { FIXED, SYMBOL } = C;
-const maskValue = props => format({ ...props, operator: undefined }).replace(/[0-9]/gi, '*');
+const maskValue = (props) => format({ ...props, operator: undefined }).replace(/[0-9]/gi, '*');
 
 const PriceFriendly = ({
   currency, icon, mask, value = 0, ...inherit

@@ -68,8 +68,7 @@ const VaultCard = (props) => {
                     />
                   </Fragment>
                 )
-                : <Text caption lighten>{l10n.WITHOUT_TXS}</Text>
-              }
+                : <Text caption lighten>{l10n.WITHOUT_TXS}</Text>}
             </View>
           </View>
         </Touchable>

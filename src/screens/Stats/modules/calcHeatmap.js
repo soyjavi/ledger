@@ -23,6 +23,6 @@ export default (txs = [], cities = [], countries = []) => {
 
   return {
     precission,
-    points: Object.keys(points).map(point => [...point.split(',').map(value => parseFloat(value, 10)), points[point]]),
+    points: Object.keys(points).map((point) => [...point.split(',').map((value) => parseFloat(value, 10)), points[point]]),
   };
 };

@@ -9,12 +9,28 @@ const { SPACE } = THEME;
 const QR_SIZE = W - (SPACE.MEDIUM * 2);
 
 export default StyleSheet.create({
+  activity: {
+    height: 28,
+  },
+
   button: {
-    marginHorizontal: SPACE.MEDIUM,
+    marginRight: -SPACE.XS,
+  },
+
+  cameraViewport: {
+    flex: 1,
+  },
+
+  caption: {
+    textAlign: 'center',
   },
 
   container: {
     paddingVertical: HEADER_HEIGHT,
+  },
+
+  content: {
+    marginHorizontal: SPACE.MEDIUM,
   },
 
   options: {
@@ -24,8 +40,8 @@ export default StyleSheet.create({
   qr: {
     alignSelf: 'center',
     height: QR_SIZE,
-    marginTop: SPACE.S,
-    marginBottom: SPACE.MEDIUM,
+    marginTop: SPACE.XXS,
+    marginBottom: SPACE.XS,
     width: QR_SIZE,
   },
 });

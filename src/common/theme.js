@@ -2,12 +2,12 @@ import { ENV } from '../reactor/common';
 
 const { IS_WEB } = ENV;
 
-const FAMILY = IS_WEB ? 'Product Sans' : 'product-sans';
-const FAMILY_BOLD = IS_WEB ? 'Product Sans' : 'product-sans-bold';
+const FAMILY = 'product-sans';
+const FAMILY_BOLD = 'product-sans-bold';
 const WEIGHT = { REGULAR: '400', BOLD: '700' };
 
 export default {
-  // BORDER_RADIUS: 4,
+  BORDER_RADIUS: 6,
 
   COLOR: {
     BACKGROUND: '#000',
@@ -24,7 +24,7 @@ export default {
     TRANSFER: '#4066EA',
     LOCATION: '#A6FE01',
     WARNING: '#EDE622',
-    ERROR: '#F03301',
+    ERROR: '#E9305C',
 
     BTC: '#f4b659',
     EUR: '#0251b5',

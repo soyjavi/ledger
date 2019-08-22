@@ -39,9 +39,10 @@ class DialogTransaction extends PureComponent {
     visible: false,
   };
 
-  state = {
-    ...DEFAULTS,
-  };
+  constructor(props) {
+    super(props);
+    this.state = { ...DEFAULTS };
+  }
 
   componentWillReceiveProps({ visible }) {
     const { props } = this;
@@ -53,9 +54,9 @@ class DialogTransaction extends PureComponent {
     getLocation(this, getLocationAsync);
   }
 
-  _onChange = value => this.setState(value);
+  _onChange = (value) => this.setState(value);
 
-  _onType = type => this.setState({
+  _onType = (type) => this.setState({
     category: undefined, form: {}, type, valid: false,
   });
 

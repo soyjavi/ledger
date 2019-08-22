@@ -29,9 +29,10 @@ class Vaults extends PureComponent {
     visible: true,
   };
 
-  state = {
-    scroll: true,
-  };
+  constructor(props) {
+    super(props);
+    this.state = { scroll: true };
+  }
 
   componentWillReceiveProps({ visible, ...inherit }) {
     if (visible) this.setState(query(inherit));
@@ -88,7 +89,7 @@ class Vaults extends PureComponent {
                           <OptionItem
                             key={hash}
                             active={settings[hash]}
-                            onChange={value => onSettings({ [hash]: value })}
+                            onChange={(value) => onSettings({ [hash]: value })}
                             {...vault}
                           >
                             <View style={styles.row}>

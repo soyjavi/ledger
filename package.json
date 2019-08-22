@@ -2,61 +2,45 @@
   "name": "voltvault-app",
   "description": "Cross-Device client for voltvault",
   "version": "0.16.0",
-  "keywords": [
-    "finance",
-    "personal",
-    "fintech",
-    "nomad",
-    "digital"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/soyjavi/voltvault-app.git"
-  },
+  "license": "LGPL-3.0",
   "main": "node_modules/expo/AppEntry.js",
-  "homepage": "https://github.com/soyjavi/voltvault-app",
-  "bugs": "https://github.com/soyjavi/voltvault-app/issues",
-  "dependencies": {
-    "expo": "^33.0.0",
-    "prop-types": "15.7.2",
-    "react": "16.8.3",
-    "react-art": "16.8.3",
-    "react-dom": "16.8.3",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
-    "react-native-web": "0.11.5",
-    "react-navigation": "3.0.9"
-  },
-  "devDependencies": {
-    "@babel/cli": "7.0.0",
-    "@babel/core": "7.0.0",
-    "babel-core": "7.0.0-bridge.0",
-    "babel-plugin-file-loader": "1.1.1",
-    "babel-plugin-react-native-web": "0.11.4",
-    "eslint-config-airbnb": "latest",
-    "eslint-plugin-import": "2.16.0",
-    "eslint-plugin-jsx-a11y": "6.2.1",
-    "eslint-plugin-react": "7.12.4",
-    "jest": "23.6.0",
-    "metro-react-native-babel-preset": "0.52.0",
-    "react-scripts": "latest",
-    "react-test-renderer": "16.8.3"
-  },
   "scripts": {
-    "start": "NODE_PATH=src/ react-scripts start",
-    "start:native": "expo start",
-    "start:android": "expo start --android",
-    "start:ios": "expo start --ios",
+    "start": "expo start",
     "build:android": "NODE_ENV=production expo build:android",
-    "test": "jest",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "test": "node_modules/.bin/jest",
+    "test:debug": "node --inspect-brk node_modules/jest/bin/jest.js --runInBand",
     "lint": "eslint src"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "dependencies": {
+    "expo": "^34.0.1",
+    "expo-barcode-scanner": "~6.0.0",
+    "expo-camera": "~6.0.0",
+    "expo-font": "~6.0.1",
+    "expo-local-authentication": "~6.0.0",
+    "expo-location": "~6.0.0",
+    "expo-permissions": "~6.0.0",
+    "prop-types": "15.7.2",
+    "react": "16.8.3",
+    "react-dom": "^16.8.6",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-34.0.0.tar.gz",
+    "react-native-web": "^0.11.4"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  "devDependencies": {
+    "babel-eslint": "^10.0.2",
+    "babel-preset-expo": "^6.0.0",
+    "eslint": "^6.2.1",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "eslint-plugin-react-native": "^3.7.0",
+    "jest-expo": "^34.0.1"
+  },
+  "jest": {
+    "preset": "jest-expo"
+  }
 }

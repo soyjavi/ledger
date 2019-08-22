@@ -11,7 +11,7 @@ const KEYS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 0, 'b'];
 
 const NumKeyboard = ({ onPress }) => (
   <View style={styles.container}>
-    { KEYS.map(key => (
+    { KEYS.map((key) => (
       <Touchable
         containerBorderRadius={KEY_HEIGHT / 2}
         key={key}

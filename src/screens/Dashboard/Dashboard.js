@@ -55,7 +55,7 @@ class Dashboard extends PureComponent {
     if (scroll !== state.scroll) this.setState({ scroll });
   }
 
-  _onSwitchMask = mask => this.setState({ mask });
+  _onSwitchMask = (mask) => this.setState({ mask });
 
   _onToggleDialog = () => {
     const { state: { dialog } } = this;
@@ -106,7 +106,7 @@ class Dashboard extends PureComponent {
                     <ButtonMore title={l10n.MORE} onPress={() => navigation.navigate(SCREEN.VAULTS)} />
                   </Heading>
                   <Slider itemWidth={VAULT_ITEM_WIDTH + SPACE.S} itemMargin={0} style={styles.vaults}>
-                    { queryVaults({ settings, vaults }).map(vault => (
+                    { queryVaults({ settings, vaults }).map((vault) => (
                       <VaultCard
                         {...vault}
                         key={vault.hash}
@@ -120,7 +120,7 @@ class Dashboard extends PureComponent {
                     <Fragment>
                       <Heading subtitle={l10n.LAST_TRANSACTIONS} />
                       <View>
-                        { queryLastTxs({ txs, vaults }).map(tx => (
+                        { queryLastTxs({ txs, vaults }).map((tx) => (
                           <TransactionItem key={tx.hash} showDate {...tx} />
                         ))}
                       </View>

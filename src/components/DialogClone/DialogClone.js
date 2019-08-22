@@ -26,10 +26,10 @@ class DialogClone extends PureComponent {
     visible: false,
   };
 
-  state = {
-    busyClone: false,
-    busyWipe: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = { busyClone: false, busyWipe: false };
+  }
 
   _onSubmit = async ({ onTx, onSelectTx }, wipe = false) => {
     const { props: { dataSource } } = this;

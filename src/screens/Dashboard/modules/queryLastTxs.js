@@ -6,7 +6,7 @@ export default ({ txs = [], vaults = [] }) => txs
   .slice(-16)
   .filter(({ category, vault }) => category !== VAULT_TRANSFER && category !== WIPE && vault !== undefined)
   .map((tx) => {
-    const { currency = CURRENCY } = vaults.find(vault => vault.hash === tx.vault) || {};
+    const { currency = CURRENCY } = vaults.find((vault) => vault.hash === tx.vault) || {};
     return { currency, ...tx };
   })
   .sort((a, b) => {

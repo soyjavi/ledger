@@ -53,7 +53,7 @@ class FormTransaction extends PureComponent {
           <Fragment>
             <Text subtitle level={3}>{l10n.CATEGORY}</Text>
             <Slider itemMargin={0} itemWidth={CARD_WIDTH + SPACE.S} style={styles.cards}>
-              { queryCategories({ l10n, type }).map(item => (
+              { queryCategories({ l10n, type }).map((item) => (
                 <CardOption
                   key={item.key}
                   color={color}
@@ -69,7 +69,7 @@ class FormTransaction extends PureComponent {
             <Form
               attributes={setCurrency(translate(FORM.TRANSACTION, l10n), inherit.currency)}
               color={color}
-              onChange={value => _onChange({ form: value })}
+              onChange={(value) => _onChange({ form: value })}
               value={form}
             />
           </Fragment>

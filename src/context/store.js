@@ -15,24 +15,27 @@ class ProviderStore extends Component {
     children: node.isRequired,
   };
 
-  state = {
-    error: undefined,
-    fingerprint: undefined,
-    overall: {},
-    tx: undefined,
-    sync: false,
-    // -- STORAGE --------------------------------------------------------------
-    authorization: undefined,
-    baseCurrency: CURRENCY,
-    pin: undefined,
-    rates: {},
-    settings: {
-      [SETTINGS.HIDE_OVERALL_BALANCE]: false,
-      [SETTINGS.SHOW_VAULT_CURRENCY]: true,
-    },
-    txs: [],
-    vaults: [],
-    version: undefined,
+  constructor(props) {
+    super(props);
+    this.state = {
+      error: undefined,
+      fingerprint: undefined,
+      overall: {},
+      tx: undefined,
+      sync: false,
+      // -- STORAGE --------------------------------------------------------------
+      authorization: undefined,
+      baseCurrency: CURRENCY,
+      pin: undefined,
+      rates: {},
+      settings: {
+        [SETTINGS.HIDE_OVERALL_BALANCE]: false,
+        [SETTINGS.SHOW_VAULT_CURRENCY]: true,
+      },
+      txs: [],
+      vaults: [],
+      version: undefined,
+    };
   }
 
   async componentWillMount() {
@@ -50,9 +53,9 @@ class ProviderStore extends Component {
     }
   }
 
-  getLocations = query => getLocations(this, query);
+  getLocations = (query) => getLocations(this, query);
 
-  onError = error => this.setState({ error: error ? error.message : undefined });
+  onError = (error) => this.setState({ error: error ? error.message : undefined });
 
   onSettings = async (value) => {
     const { _store, state: { settings = {} } } = this;
@@ -119,7 +122,7 @@ class ProviderStore extends Component {
     return vault;
   }
 
-  _store = nextState => Storage.set({ ...this.state, ...nextState });
+  _store = (nextState) => Storage.set({ ...this.state, ...nextState });
 
   render() {
     const { props: { children }, state, ...events } = this;

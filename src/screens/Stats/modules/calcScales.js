@@ -23,7 +23,7 @@ export default (values, store) => {
 
   if (max > 0) {
     min = Math.floor(Math.min(...values));
-    avg = Math.floor(values.reduce((a, b) => a + b) / (values.length - values.findIndex(value => value > 0)));
+    avg = Math.floor(values.reduce((a, b) => a + b) / (values.length - values.findIndex((value) => value > 0)));
   }
 
   return [

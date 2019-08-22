@@ -52,8 +52,7 @@ export default () => (
               backward={current !== VAULT}
               dataSource={stack.includes(VAULT) && params.Vault
                 ? store.vaults.find(({ hash }) => hash === params.Vault.hash)
-                : undefined
-              }
+                : undefined}
               goBack={goBack}
               visible={stack.includes(VAULT)}
             />

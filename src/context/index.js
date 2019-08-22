@@ -12,11 +12,11 @@ const Consumer = ({ children }) => (
   <ConsumerL10N>
     { ({ l10n }) => (
       <ConsumerNavigation>
-        { navigation => (
+        { (navigation) => (
           <ConsumerEvents>
-            { events => (
+            { (events) => (
               <ConsumerStore>
-                { store => children({
+                { (store) => children({
                   l10n, navigation, events, store,
                 })}
               </ConsumerStore>

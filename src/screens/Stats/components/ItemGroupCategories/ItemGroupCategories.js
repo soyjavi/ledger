@@ -20,9 +20,10 @@ class ItemGroupCategories extends PureComponent {
 
   static defaultProps = {};
 
-  state = {
-    expand: undefined,
-  };
+  constructor(props) {
+    super(props);
+    this.state = { expand: undefined };
+  }
 
   _onPress = (category) => {
     const { state: { expand } } = this;
@@ -62,7 +63,7 @@ class ItemGroupCategories extends PureComponent {
 
                   { expand === key && (
                     <View style={styles.expand}>
-                      { orderByAmount(dataSource[key]).map(item => (
+                      { orderByAmount(dataSource[key]).map((item) => (
                         <HorizontalChartItem
                           key={`${key}-${item.key}`}
                           color={COLOR.TEXT_LIGHTEN}
