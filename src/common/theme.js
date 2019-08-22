@@ -24,7 +24,7 @@ export default {
     TRANSFER: '#4066EA',
     LOCATION: '#A6FE01',
     WARNING: '#EDE622',
-    ERROR: '#F03301',
+    ERROR: '#E9305C',
 
     BTC: '#f4b659',
     EUR: '#0251b5',
