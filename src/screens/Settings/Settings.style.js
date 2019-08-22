@@ -9,8 +9,17 @@ const { SPACE } = THEME;
 const QR_SIZE = W - (SPACE.MEDIUM * 2);
 
 export default StyleSheet.create({
+  activity: {
+    alignSelf: 'center',
+    marginTop: SPACE.MEDIUM,
+  },
+
   button: {
     marginHorizontal: SPACE.MEDIUM,
+  },
+
+  cameraViewport: {
+    flex: 1,
   },
 
   container: {

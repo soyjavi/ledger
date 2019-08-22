@@ -16,6 +16,8 @@
   },
   "dependencies": {
     "expo": "^34.0.1",
+    "expo-barcode-scanner": "~6.0.0",
+    "expo-camera": "~6.0.0",
     "expo-font": "~6.0.1",
     "expo-local-authentication": "~6.0.0",
     "expo-location": "~6.0.0",

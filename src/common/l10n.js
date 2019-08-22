@@ -106,6 +106,8 @@ export default {
 
     PROGRESSION: 'Progression',
 
+    QR_READER: 'Open QR Reader',
+
     SAVE: 'Save',
     SAVE_LOCATION: 'Save location',
     SEARCH: 'Search',

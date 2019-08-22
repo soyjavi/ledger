@@ -1,17 +1,26 @@
 import { bool } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
 import { ScrollView, View } from 'react-native';
+import * as Permissions from 'expo-permissions';
+import { Camera } from 'expo-camera';
+import { BarCodeScanner } from 'expo-barcode-scanner';
 
 import {
   Footer, Header, Heading, OptionItem,
 } from '../../components';
 import { C } from '../../common';
 import { Consumer } from '../../context';
-import { Button, Image, Viewport } from '../../reactor/components';
+import {
+  Activity, Button, Image, Viewport,
+} from '../../reactor/components';
 import styles from './Settings.style';
 
 const { SETTINGS: { HIDE_OVERALL_BALANCE, SHOW_VAULT_CURRENCY } } = C;
 const QR_URI = 'https://chart.googleapis.com/chart?cht=qr&chs=512x512&chld=H|1&chl';
+const CAMERA_PROPS = {
+  barCodeScannerSettings: { barCodeTypes: [BarCodeScanner.Constants.BarCodeType.qr] },
+  type: Camera.Constants.Type.back,
+};
 
 class Settings extends PureComponent {
   static propTypes = {
@@ -26,12 +35,32 @@ class Settings extends PureComponent {
 
   constructor(props) {
     super(props);
-    this.state = { scroll: true };
+    this.state = {
+      hasCamera: undefined,
+      showCamera: false,
+      scroll: true,
+
+    };
+  }
+
+  async componentDidMount() {
+    const { status } = await Permissions.askAsync(Permissions.CAMERA);
+    this.setState({ hasCamera: status === 'granted' });
+  }
+
+  componentWillReceiveProps({ visible: nextVisible }) {
+    const { props: { visible } } = this;
+
+    if (!nextVisible && visible) this.setState({ showCamera: false });
   }
 
   _onHardwareBack = (navigation) => {
     navigation.goBack();
     this.forceUpdate();
+  }
+
+  _onQR = (output) => {
+    console.log('::onQR::', output);
   }
 
   _onScroll = ({ nativeEvent: { contentOffset: { y } } }) => {
@@ -40,12 +69,16 @@ class Settings extends PureComponent {
     if (scroll !== state.scroll) this.setState({ scroll });
   }
 
+  _onToggleCamera = () => this.setState({ showCamera: !this.state.showCamera })
+
   render() {
     const {
-      _onHardwareBack, _onScroll, props: { visible, ...inherit }, state: { scroll },
+      _onHardwareBack, _onQR, _onScroll, _onToggleCamera,
+      props: { visible, ...inherit },
+      state: { hasCamera, showCamera, scroll },
     } = this;
 
-    console.log('<Settings>', { visible });
+    console.log('<Settings>', { visible, hasCamera });
 
     return (
       <Viewport {...inherit} scroll={false} visible={visible}>
@@ -55,6 +88,7 @@ class Settings extends PureComponent {
           }) => (
             <Fragment>
               <Header highlight={scroll} title={l10n.SETTINGS} />
+
               <ScrollView _onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.container}>
                 <Heading subtitle={l10n.DASHBOARD} />
                 <View style={styles.options}>
@@ -73,9 +107,24 @@ class Settings extends PureComponent {
                 </View>
 
                 <Heading subtitle={l10n.IMPORT_EXPORT_TITLE} caption={l10n.IMPORT_EXPORT_CAPTION} lighten />
-                <Image source={{ uri: `${QR_URI}=${secret}` }} style={styles.qr} />
-                <Button outlined title="$Import transactions" style={styles.button} />
+                { !showCamera
+                  ? <Image source={{ uri: `${QR_URI}=${secret}` }} style={styles.qr} />
+                  : (
+                    <Camera {...CAMERA_PROPS} onBarCodeScanned={_onQR} style={styles.qr}>
+                      <View style={styles.cameraViewport} />
+                    </Camera>
+                  )}
 
+                { hasCamera && (
+                  <Button
+                    outlined
+                    onPress={_onToggleCamera}
+                    title={!showCamera ? l10n.QR_READER : l10n.CLOSE}
+                    style={styles.button}
+                  />
+                )}
+
+                { hasCamera === undefined && <Activity color="white" size="large" style={styles.activity} /> }
               </ScrollView>
 
               <Footer

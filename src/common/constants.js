@@ -5,7 +5,7 @@ import PKG from '../../package.json';
 
 const { SPACE, UNIT } = THEME;
 
-const IS_PRODUCTION = true;
+const IS_PRODUCTION = false;
 const IS_ANDROID = Platform.OS === 'android';
 const MS_IN_DAY = 1000 * 24 * 60 * 60;
 const MS_IN_WEEK = MS_IN_DAY * 7;
@@ -24,6 +24,9 @@ export default {
     XAU: 0,
     XAG: 0,
   },
+
+  IS_DEV: !IS_PRODUCTION,
+  IS_PRODUCTION,
 
   LANGUAGE: 'en-EN',
   LOCATION_PROPS: { enableHighAccuracy: true },
