@@ -5,13 +5,15 @@ import * as LocalAuthentication from 'expo-local-authentication';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 
-import { C, L10N, theme } from './src/common';
+import {
+  C, getFingerprintAsync, L10N, theme,
+} from './src/common';
 import { Provider } from './src/context';
 import { THEME } from './src/reactor/common';
 
 THEME.extend(theme);
 
-const { LANGUAGE, LOCATION_PROPS } = C;
+const { IS_DEV, LANGUAGE, LOCATION_PROPS } = C;
 const { UIManager: { setLayoutAnimationEnabledExperimental: setLayoutAnimation } } = NativeModules;
 if (setLayoutAnimation) setLayoutAnimation(true);
 
@@ -47,12 +49,15 @@ class App extends PureComponent {
   render() {
     const { _getLocationAsync, state: { fingerprint, loaded } } = this;
     const App = loaded ? require('./src/App').default : View; // eslint-disable-line
+    let callback;
 
-    console.log({ fingerprint });
+    if (fingerprint) callback = LocalAuthentication.authenticateAsync;
+    else if (IS_DEV) callback = getFingerprintAsync;
+
     return (
       <Provider
         dictionary={L10N}
-        getFingerprintAsync={fingerprint ? LocalAuthentication.authenticateAsync : undefined}
+        getFingerprintAsync={callback}
         getLocationAsync={_getLocationAsync}
         language={LANGUAGE}
       >
