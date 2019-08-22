@@ -3,6 +3,7 @@ import FLAGS from './flags';
 
 import add from './icon-add.png';
 import back from './icon-back.png';
+import camera from './icon-camera.png';
 import checked from './icon-checked.png';
 import expense from './icon-expense.png';
 import fingerprint from './icon-fingerprint.png';
@@ -16,6 +17,7 @@ export { CATEGORIES, FLAGS };
 export default {
   add,
   back,
+  camera,
   checked,
   expense,
   fingerprint,

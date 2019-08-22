@@ -5,14 +5,16 @@ import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 
+import ASSETS from '../../assets';
 import {
-  Footer, Header, Heading, OptionItem,
+  ButtonMore, Footer, Header, Heading, OptionItem,
 } from '../../components';
 import { C } from '../../common';
 import { Consumer } from '../../context';
 import {
-  Activity, Button, Image, Viewport,
+  Activity, Button, Image, Text, Viewport,
 } from '../../reactor/components';
+import { DialogFork } from './components';
 import styles from './Settings.style';
 
 const { SETTINGS: { HIDE_OVERALL_BALANCE, SHOW_VAULT_CURRENCY } } = C;
@@ -36,7 +38,9 @@ class Settings extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
+      dialog: false,
       hasCamera: undefined,
+      qr: undefined,
       showCamera: false,
       scroll: true,
 
@@ -51,8 +55,10 @@ class Settings extends PureComponent {
   componentWillReceiveProps({ visible: nextVisible }) {
     const { props: { visible } } = this;
 
-    if (!nextVisible && visible) this.setState({ showCamera: false });
+    if (!nextVisible && visible) this.setState({ qr: undefined, showCamera: false });
   }
+
+  _onCloseDialog = () => this.setState({ dialog: false })
 
   _onHardwareBack = (navigation) => {
     navigation.goBack();
@@ -60,6 +66,7 @@ class Settings extends PureComponent {
   }
 
   _onQR = (output) => {
+    this.setState({ dialog: true });
     console.log('::onQR::', output);
   }
 
@@ -73,9 +80,11 @@ class Settings extends PureComponent {
 
   render() {
     const {
-      _onHardwareBack, _onQR, _onScroll, _onToggleCamera,
+      _onCloseDialog, _onHardwareBack, _onQR, _onScroll, _onToggleCamera,
       props: { visible, ...inherit },
-      state: { hasCamera, showCamera, scroll },
+      state: {
+        dialog, hasCamera, qr, showCamera, scroll,
+      },
     } = this;
 
     console.log('<Settings>', { visible, hasCamera });
@@ -84,7 +93,10 @@ class Settings extends PureComponent {
       <Viewport {...inherit} scroll={false} visible={visible}>
         <Consumer>
           { ({
-            l10n, navigation, store: { onSettings, secret, settings },
+            l10n, navigation,
+            store: {
+              authorization, onSettings, secret, settings,
+            },
           }) => (
             <Fragment>
               <Header highlight={scroll} title={l10n.SETTINGS} />
@@ -106,31 +118,39 @@ class Settings extends PureComponent {
                   />
                 </View>
 
-                <Heading subtitle={l10n.IMPORT_EXPORT_TITLE} caption={l10n.IMPORT_EXPORT_CAPTION} lighten />
-                { !showCamera
-                  ? <Image source={{ uri: `${QR_URI}=${secret}` }} style={styles.qr} />
-                  : (
-                    <Camera {...CAMERA_PROPS} onBarCodeScanned={_onQR} style={styles.qr}>
-                      <View style={styles.cameraViewport} />
-                    </Camera>
+                <Heading subtitle={l10n.TRANSFER_TXS} caption={l10n.IMPORT_EXPORT_CAPTION} lighten>
+                  { hasCamera === undefined && <Activity color="white" style={styles.activity} /> }
+                  { hasCamera && (
+                    <Button
+                      contained={false}
+                      icon={!showCamera ? ASSETS.camera : undefined}
+                      onPress={_onToggleCamera}
+                      small
+                      style={styles.button}
+                      title={!showCamera ? l10n.QR_READER : l10n.CLOSE}
+                    />
                   )}
-
-                { hasCamera && (
-                  <Button
-                    outlined
-                    onPress={_onToggleCamera}
-                    title={!showCamera ? l10n.QR_READER : l10n.CLOSE}
-                    style={styles.button}
-                  />
-                )}
-
-                { hasCamera === undefined && <Activity color="white" size="large" style={styles.activity} /> }
+                </Heading>
+                <View style={styles.content}>
+                  { !showCamera
+                    ? <Image source={{ uri: `${QR_URI}=${secret}|${authorization}` }} style={styles.qr} />
+                    : (
+                      <Camera {...CAMERA_PROPS} onBarCodeScanned={_onQR} style={styles.qr}>
+                        <View style={styles.cameraViewport} />
+                      </Camera>
+                    )}
+                  <Text caption lighten style={styles.caption}>
+                    {showCamera ? l10n.TRANSFER_TXS_CAMERA : l10n.TRANSFER_TXS_CAPTION}
+                  </Text>
+                </View>
               </ScrollView>
 
               <Footer
                 onBack={navigation.goBack}
                 onHardwareBack={visible ? () => _onHardwareBack(navigation) : undefined}
               />
+
+              <DialogFork onClose={_onCloseDialog} visible={dialog} />
             </Fragment>
           )}
         </Consumer>

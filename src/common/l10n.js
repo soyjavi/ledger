@@ -82,9 +82,6 @@ export default {
     INCOME: 'Income',
     INCOMES: 'Incomes',
     INITIAL_BALANCE: 'Initial balance',
-    IMPORT_EXPORT_TITLE: 'Import or Export',
-    IMPORT_EXPORT_CAPTION: 'You can transfer your blockchain transactions to a new device.',
-
 
     LAST_TRANSACTIONS: 'Last transactions',
     LOADING_PLACE: 'Wait a moment, loading place.',
@@ -106,7 +103,7 @@ export default {
 
     PROGRESSION: 'Progression',
 
-    QR_READER: 'Open QR Reader',
+    QR_READER: 'Open camera',
 
     SAVE: 'Save',
     SAVE_LOCATION: 'Save location',
@@ -128,6 +125,9 @@ export default {
     TRANSACTION: 'Transaction',
     TRANSFER: 'Transfer',
     TRANSFERS: 'Transfers',
+    TRANSFER_TXS: 'Transfer transactions',
+    TRANSFER_TXS_CAPTION: 'Transfer all your transactions and vaults from this device to a new one just reading this QR in the new device.',
+    TRANSFER_TXS_CAMERA: 'Read the QR code from the device you want get all its transactions and vaults.',
     TRANSFER_CAPTION: 'Transfer any amount to another of your vaults.',
     TYPE: 'Type',
 
