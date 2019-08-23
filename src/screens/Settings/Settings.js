@@ -60,14 +60,22 @@ class Settings extends PureComponent {
 
   _onCloseDialog = () => this.setState({ dialog: false })
 
+  _onForked = (navigation) => {
+    const { _onCloseDialog } = this;
+
+    _onCloseDialog();
+    navigation.goBack();
+  }
+
   _onHardwareBack = (navigation) => {
     navigation.goBack();
     this.forceUpdate();
   }
 
-  _onQR = (output) => {
-    this.setState({ dialog: true });
-    console.log('::onQR::', output);
+  _onQR = ({ data = '' } = {}) => {
+    const [secure, file] = data.split('|');
+
+    this.setState({ dialog: secure !== undefined && file !== undefined, qr: data });
   }
 
   _onScroll = ({ nativeEvent: { contentOffset: { y } } }) => {
@@ -80,7 +88,7 @@ class Settings extends PureComponent {
 
   render() {
     const {
-      _onCloseDialog, _onHardwareBack, _onQR, _onScroll, _onToggleCamera,
+      _onCloseDialog, _onForked, _onHardwareBack, _onQR, _onScroll, _onToggleCamera,
       props: { visible, ...inherit },
       state: {
         dialog, hasCamera, qr, showCamera, scroll,
@@ -150,7 +158,12 @@ class Settings extends PureComponent {
                 onHardwareBack={visible ? () => _onHardwareBack(navigation) : undefined}
               />
 
-              <DialogFork onClose={_onCloseDialog} visible={dialog} />
+              <DialogFork
+                onClose={_onCloseDialog}
+                onForked={() => _onForked(navigation)}
+                query={qr}
+                visible={dialog}
+              />
             </Fragment>
           )}
         </Consumer>
