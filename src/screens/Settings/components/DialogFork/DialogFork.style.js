@@ -4,18 +4,12 @@ import { C } from '../../../../common';
 import { THEME } from '../../../../reactor/common';
 
 const { STYLE } = C;
-const { COLOR, SPACE, UNIT } = THEME;
-const CARD_WIDTH = UNIT * 7.2;
-
-export { CARD_WIDTH };
+const { COLOR, SPACE } = THEME;
 
 export default StyleSheet.create({
   button: {
+    marginTop: SPACE.S,
     flex: 1,
-  },
-
-  card: {
-    width: CARD_WIDTH,
   },
 
   dialog: {
@@ -26,14 +20,5 @@ export default StyleSheet.create({
   frame: {
     ...STYLE.DIALOG_FRAME,
     backgroundColor: COLOR.EXPENSE,
-  },
-
-  form: {
-    marginVertical: SPACE.MEDIUM,
-  },
-
-  currencies: {
-    marginBottom: SPACE.REGULAR,
-    marginTop: SPACE.XS,
   },
 });

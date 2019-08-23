@@ -1,6 +1,5 @@
-import { bool, func } from 'prop-types';
+import { bool, func, string } from 'prop-types';
 import React, { PureComponent } from 'react';
-import { View } from 'react-native';
 
 import { Consumer } from '../../../../context';
 import { THEME } from '../../../../reactor/common';
@@ -12,10 +11,13 @@ const { COLOR } = THEME;
 class DialogFork extends PureComponent {
   static propTypes = {
     onClose: func.isRequired,
+    onForked: func.isRequired,
+    query: string,
     visible: bool,
   };
 
   static defaultProps = {
+    query: undefined,
     visible: false,
   };
 
@@ -25,8 +27,15 @@ class DialogFork extends PureComponent {
     this.state = { busy: false };
   }
 
-  _onSubmit = () => {
+  _onSubmit = async ({ onFork }) => {
+    const { props: { onClose, onForked, query } } = this;
 
+    this.setState({ busy: true });
+    const fork = await onFork(query);
+    this.setState({ busy: false });
+
+    if (fork) onForked();
+    else onClose();
   }
 
   render() {
@@ -43,15 +52,10 @@ class DialogFork extends PureComponent {
             onClose={onClose}
             style={styles.frame}
             styleContainer={styles.dialog}
-            title={`${l10n.NEW} ${l10n.VAULT}`}
+            title={l10n.WARNING}
             visible={visible}
           >
-            <Text _lighten level={2}>
-              { l10n.FIRST_VAULT_CAPTION }
-            </Text>
-            <View style={styles.form}>
-
-            </View>
+            <Text level={2}>{l10n.TRANSFER_TXS_IMPORT}</Text>
             <Button
               activity={busy}
               color={COLOR.PRIMARY}
@@ -59,7 +63,7 @@ class DialogFork extends PureComponent {
               onPress={() => _onSubmit(store)}
               shadow
               style={styles.button}
-              title={!busy ? l10n.SAVE : undefined}
+              title={!busy ? l10n.IMPORT : undefined}
             />
           </Dialog>
         )}

@@ -79,6 +79,7 @@ export default {
 
     GET: 'Get',
 
+    IMPORT: 'Import',
     INCOME: 'Income',
     INCOMES: 'Incomes',
     INITIAL_BALANCE: 'Initial balance',
@@ -128,6 +129,7 @@ export default {
     TRANSFER_TXS: 'Transfer transactions',
     TRANSFER_TXS_CAPTION: 'Transfer all your transactions and vaults from this device to a new one just reading this QR in the new device.',
     TRANSFER_TXS_CAMERA: 'Read the QR code from the device you want get all its transactions and vaults.',
+    TRANSFER_TXS_IMPORT: 'You are about to import all transactions and vaults from another device. Keep in mind that all your current data will be deleted from this device.',
     TRANSFER_CAPTION: 'Transfer any amount to another of your vaults.',
     TYPE: 'Type',
 
@@ -137,6 +139,7 @@ export default {
     VAULT_CAPTION: 'You can create as many vaults as you want. You can continue using your base currency or choose any other.', // eslint-disable-line
     VISIBILITY: 'Visibility',
 
+    WARNING: 'Warning',
     WIPE: 'Wipe',
     WITHOUT_TXS: 'No transactions',
 

@@ -4,7 +4,7 @@ import React, { Component, createContext } from 'react';
 import { C } from '../common';
 import { consolidate, Storage } from './modules';
 import {
-  createTx, createVault, getAuthorization, getLocations, syncProfile,
+  createTx, createVault, fork, getAuthorization, getLocations, syncProfile,
 } from './services';
 
 const { CURRENCY, NAME, SETTINGS } = C;
@@ -51,6 +51,13 @@ class ProviderStore extends Component {
       await _store({ authorization, pin });
       this.setState({ authorization, pin, sync: false });
     }
+  }
+
+  onFork = async (query) => {
+    const response = await fork(this, query);
+
+    if (response) await this.onSync();
+    return response;
   }
 
   getLocations = (query) => getLocations(this, query);
