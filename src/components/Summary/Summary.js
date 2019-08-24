@@ -3,8 +3,7 @@ import {
 } from 'prop-types';
 import React, { Component } from 'react';
 import { Image, View } from 'react-native';
-
-import { Text, Touchable } from '../../reactor/components';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import ASSETS from '../../assets';
 import { C, exchange } from '../../common';
@@ -12,9 +11,10 @@ import { Consumer } from '../../context';
 import ButtonMore from '../ButtonMore';
 import Heading from '../Heading';
 import PriceFriendly from '../PriceFriendly';
+import { Text, Touchable } from '../../reactor/components';
 import styles from './Summary.style';
 
-const { CURRENCY, SCREEN } = C;
+const { CURRENCY, SCREEN, STYLE: { CARD_GRADIENT } } = C;
 
 const captionProps = {
   caption: true, level: 2, lighten: true, numberOfLines: 1,
@@ -65,38 +65,40 @@ class Summary extends Component {
         { ({ l10n, navigation, store: { baseCurrency, rates } }) => (
           <View style={[styles.container, inherit.style]}>
             <Touchable onPress={onMask ? () => onMask(!mask) : undefined} style={[styles.card, styles.content]}>
-              <View style={[styles.row, styles.title]}>
-                <Image source={image} resizeMode="contain" style={styles.image} />
-                <Text caption level={2}>{title.toUpperCase()}</Text>
-              </View>
-              <PriceFriendly
-                currency={baseCurrency}
-                headline
-                mask={mask}
-                level={4}
-                value={baseCurrency !== currency
-                  ? exchange(Math.abs(currentBalance), currency, baseCurrency, rates)
-                  : Math.abs(currentBalance)}
-              />
-              <View style={styles.row}>
-                { baseCurrency !== currency && (
-                  <PriceFriendly
-                    currency={currency}
-                    mask={mask}
-                    subtitle
-                    level={2}
-                    lighten
-                    value={currentBalance}
-                  />
-                )}
-              </View>
-              <View style={styles.breakLine} />
-              <View style={styles.row}>
-                <View>
-                  <Text {...captionProps}>{l10n.PROGRESSION.toUpperCase()}</Text>
-                  <PriceFriendly currency="%" icon subtitle level={3} value={progressionPercentage} />
+              <LinearGradient {...CARD_GRADIENT} style={styles.cardGradient}>
+                <View style={[styles.row, styles.title]}>
+                  <Image source={image} resizeMode="contain" style={styles.image} />
+                  <Text caption level={2}>{title.toUpperCase()}</Text>
                 </View>
-              </View>
+                <PriceFriendly
+                  currency={baseCurrency}
+                  headline
+                  mask={mask}
+                  level={4}
+                  value={baseCurrency !== currency
+                    ? exchange(Math.abs(currentBalance), currency, baseCurrency, rates)
+                    : Math.abs(currentBalance)}
+                />
+                <View style={styles.row}>
+                  { baseCurrency !== currency && (
+                    <PriceFriendly
+                      currency={currency}
+                      mask={mask}
+                      subtitle
+                      level={2}
+                      lighten
+                      value={currentBalance}
+                    />
+                  )}
+                </View>
+                <View style={styles.breakLine} />
+                <View style={styles.row}>
+                  <View>
+                    <Text {...captionProps}>{l10n.PROGRESSION.toUpperCase()}</Text>
+                    <PriceFriendly currency="%" icon subtitle level={3} value={progressionPercentage} />
+                  </View>
+                </View>
+              </LinearGradient>
             </Touchable>
 
             <Heading subtitle={l10n.ACTIVITY}>
@@ -106,7 +108,7 @@ class Summary extends Component {
               />
             </Heading>
             <View style={[styles.row, styles.cards]}>
-              <View style={[styles.card, styles.cardIncomes]}>
+              <LinearGradient {...CARD_GRADIENT} style={[styles.card, styles.cardGradient]}>
                 <Text {...captionProps}>{l10n.INCOMES.toUpperCase()}</Text>
                 <PriceFriendly
                   currency={baseCurrency}
@@ -116,8 +118,8 @@ class Summary extends Component {
                   mask={mask}
                   value={incomes}
                 />
-              </View>
-              <View style={[styles.card, styles.cardExpenses]}>
+              </LinearGradient>
+              <LinearGradient {...CARD_GRADIENT} style={[styles.card, styles.cardGradient]}>
                 <Text {...captionProps}>{l10n.EXPENSES.toUpperCase()}</Text>
                 <PriceFriendly
                   currency={baseCurrency}
@@ -127,8 +129,8 @@ class Summary extends Component {
                   mask={mask}
                   value={expenses}
                 />
-              </View>
-              <View style={[styles.card, styles.cardLast]}>
+              </LinearGradient>
+              <LinearGradient {...CARD_GRADIENT} style={[styles.card, styles.cardGradient, styles.cardLast]}>
                 <Text {...captionProps}>{l10n.TODAY.toUpperCase()}</Text>
                 <PriceFriendly
                   currency={baseCurrency}
@@ -138,7 +140,7 @@ class Summary extends Component {
                   operator
                   value={today}
                 />
-              </View>
+              </LinearGradient>
             </View>
           </View>
         )}

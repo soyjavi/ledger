@@ -14,12 +14,15 @@ export default StyleSheet.create({
   },
 
   card: {
-    ...STYLE.CARD,
-    borderRadius: BORDER_RADIUS,
-    backgroundColor: COLOR.BASE,
     flex: 1,
-    justifyContent: 'space-between',
     marginRight: SPACE.S,
+  },
+
+  cardGradient: {
+    ...STYLE.CARD,
+    backgroundColor: COLOR.BASE,
+    borderRadius: BORDER_RADIUS,
+    flex: 1,
   },
 
   cardLast: {
