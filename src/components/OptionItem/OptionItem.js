@@ -19,6 +19,7 @@ class OptionItem extends PureComponent {
     children: node,
     disabled: bool,
     onChange: func.isRequired,
+    onPress: func,
     title: string.isRequired,
   };
 
@@ -27,25 +28,28 @@ class OptionItem extends PureComponent {
     caption: undefined,
     children: undefined,
     disabled: false,
+    onPress: undefined,
   };
 
   render() {
     const {
       props: {
-        active, caption, children, disabled, onChange, title,
+        active, caption, children, disabled, onChange, onPress, title,
       },
     } = this;
 
     return (
-      <Touchable onPress={() => onChange(!active)} rippleColor={COLOR.TEXT_LIGHTEN} style={styles.container}>
+      <Touchable onPress={onPress} rippleColor={COLOR.TEXT_LIGHTEN} style={styles.container}>
         <View style={styles.content}>
           <Text subtitle level={2} numberOfLines={1} lighten={disabled}>{title}</Text>
           { caption && <Text caption lighten>{caption}</Text> }
           { children }
         </View>
-        <View style={[styles.iconContainer, active && styles.iconActive]}>
-          { active && <Icon value={ASSETS.checked} style={styles.icon} /> }
-        </View>
+        <Touchable onPress={() => onChange(!active)}>
+          <View style={[styles.iconContainer, active && styles.iconActive]}>
+            { active && <Icon value={ASSETS.checked} style={styles.icon} /> }
+          </View>
+        </Touchable>
       </Touchable>
     );
   }
