@@ -2,9 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import { LAYOUT, THEME } from '../../reactor/common';
 
-const {
-  BORDER_RADIUS, COLOR, UNIT,
-} = THEME;
+const { BORDER_RADIUS, COLOR, UNIT } = THEME;
 const ITEM_HEIGHT = UNIT * 4.8;
 const ITEM_HEIGHT_ACTIVE = UNIT * 6.4;
 const ITEM_WIDTH = LAYOUT.VIEWPORT.W / 7;
