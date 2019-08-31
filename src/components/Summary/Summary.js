@@ -9,7 +9,6 @@ import ASSETS from '../../assets';
 import { C, exchange } from '../../common';
 import { Consumer } from '../../context';
 import ButtonMore from '../ButtonMore';
-import Heading from '../Heading';
 import PriceFriendly from '../PriceFriendly';
 import { Text, Touchable } from '../../reactor/components';
 import styles from './Summary.style';
@@ -64,12 +63,17 @@ class Summary extends Component {
       <Consumer>
         { ({ l10n, navigation, store: { baseCurrency, rates } }) => (
           <View style={[styles.container, inherit.style]}>
-            <Touchable onPress={onMask ? () => onMask(!mask) : undefined} style={[styles.card, styles.content]}>
-              <LinearGradient {...CARD_GRADIENT} style={styles.cardGradient}>
-                <View style={[styles.row, styles.title]}>
-                  <Image source={image} resizeMode="contain" style={styles.image} />
-                  <Text caption level={2}>{title.toUpperCase()}</Text>
-                </View>
+            <LinearGradient {...CARD_GRADIENT} style={styles.card}>
+              <View style={[styles.row, styles.rowHeading]}>
+                <Image source={image} resizeMode="contain" style={styles.image} />
+                <Text caption level={2} style={styles.expand}>{title.toUpperCase()}</Text>
+
+                <ButtonMore
+                  title={l10n.ACTIVITY}
+                  onPress={() => navigation.navigate(SCREEN.STATS)}
+                />
+              </View>
+              <Touchable onPress={onMask ? () => onMask(!mask) : undefined}>
                 <PriceFriendly
                   currency={baseCurrency}
                   headline
@@ -79,69 +83,42 @@ class Summary extends Component {
                     ? exchange(Math.abs(currentBalance), currency, baseCurrency, rates)
                     : Math.abs(currentBalance)}
                 />
-                <View style={styles.row}>
-                  { baseCurrency !== currency && (
-                    <PriceFriendly
-                      currency={currency}
-                      mask={mask}
-                      subtitle
-                      level={2}
-                      lighten
-                      value={currentBalance}
-                    />
-                  )}
-                </View>
-                <View style={styles.breakLine} />
-                <View style={styles.row}>
-                  <View>
-                    <Text {...captionProps}>{l10n.PROGRESSION.toUpperCase()}</Text>
-                    <PriceFriendly currency="%" icon subtitle level={3} value={progressionPercentage} />
-                  </View>
-                </View>
-              </LinearGradient>
-            </Touchable>
+              </Touchable>
+              { baseCurrency !== currency && (
+                <PriceFriendly
+                  currency={currency}
+                  mask={mask}
+                  subtitle
+                  level={2}
+                  lighten
+                  value={currentBalance}
+                />
+              )}
 
-            <Heading subtitle={l10n.ACTIVITY}>
-              <ButtonMore
-                title={l10n.MORE}
-                onPress={() => navigation.navigate(SCREEN.STATS)}
-              />
-            </Heading>
-            <View style={[styles.row, styles.cards]}>
-              <LinearGradient {...CARD_GRADIENT} style={[styles.card, styles.cardGradient]}>
-                <Text {...captionProps}>{l10n.INCOMES.toUpperCase()}</Text>
-                <PriceFriendly
-                  currency={baseCurrency}
-                  headline
-                  level={6}
-                  lighten={incomes === 0}
-                  mask={mask}
-                  value={incomes}
-                />
-              </LinearGradient>
-              <LinearGradient {...CARD_GRADIENT} style={[styles.card, styles.cardGradient]}>
-                <Text {...captionProps}>{l10n.EXPENSES.toUpperCase()}</Text>
-                <PriceFriendly
-                  currency={baseCurrency}
-                  headline
-                  level={6}
-                  lighten={expenses === 0}
-                  mask={mask}
-                  value={expenses}
-                />
-              </LinearGradient>
-              <LinearGradient {...CARD_GRADIENT} style={[styles.card, styles.cardGradient, styles.cardLast]}>
-                <Text {...captionProps}>{l10n.TODAY.toUpperCase()}</Text>
-                <PriceFriendly
-                  currency={baseCurrency}
-                  headline
-                  level={6}
-                  mask={mask}
-                  operator
-                  value={today}
-                />
-              </LinearGradient>
-            </View>
+              <View style={styles.expand} />
+              <View style={styles.row}>
+                <View style={styles.rowItem}>
+                  <Text {...captionProps}>{l10n.PROGRESSION.toUpperCase()}</Text>
+                  <PriceFriendly currency="%" icon subtitle level={3} value={progressionPercentage} />
+                </View>
+
+                <View style={styles.rowItem}>
+                  <Text {...captionProps}>{l10n.INCOMES.toUpperCase()}</Text>
+                  <PriceFriendly currency={baseCurrency} subtitle level={3} mask={mask} value={incomes} />
+                </View>
+
+                <View style={[styles.rowItem, styles.rowItemExpanded]}>
+                  <Text {...captionProps}>{l10n.EXPENSES.toUpperCase()}</Text>
+                  <PriceFriendly currency={baseCurrency} subtitle level={3} mask={mask} value={expenses} />
+                </View>
+
+                <View>
+                  <Text {...captionProps}>{l10n.TODAY.toUpperCase()}</Text>
+                  <PriceFriendly currency={baseCurrency} subtitle level={3} mask={mask} operator value={today} />
+                </View>
+
+              </View>
+            </LinearGradient>
           </View>
         )}
       </Consumer>

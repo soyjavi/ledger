@@ -9,38 +9,21 @@ const {
 } = THEME;
 
 export default StyleSheet.create({
-  breakLine: {
+  expand: {
     flex: 1,
   },
 
   card: {
-    flex: 1,
-    marginRight: SPACE.S,
-  },
-
-  cardGradient: {
     ...STYLE.CARD,
     backgroundColor: COLOR.BASE,
     borderRadius: BORDER_RADIUS,
     flex: 1,
   },
 
-  cardLast: {
-    marginRight: 0,
-  },
-
-  cards: {
-    paddingHorizontal: SPACE.MEDIUM,
-  },
-
   container: {
-    marginBottom: SPACE.XS,
-  },
-
-  content: {
     justifyContent: 'flex-start',
     minHeight: UNIT * 16,
-    marginBottom: SPACE.XS,
+    marginBottom: SPACE.S,
     marginHorizontal: SPACE.MEDIUM,
   },
 
@@ -52,7 +35,15 @@ export default StyleSheet.create({
 
   row: LAYOUT.STYLE.ROW,
 
-  title: {
-    // marginBottom: SPACE.XXS / 2,
+  rowHeading: {
+    marginVertical: -SPACE.XXS,
+  },
+
+  rowItem: {
+    marginRight: SPACE.MEDIUM,
+  },
+
+  rowItemExpanded: {
+    flex: 2,
   },
 });
