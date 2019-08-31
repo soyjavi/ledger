@@ -46,33 +46,21 @@ const VaultCard = (props) => {
               />
               { currency !== baseCurrency && settings[SHOW_VAULT_CURRENCY] && (
                 <PriceFriendly currency={currency} subtitle level={3} lighten mask={mask} value={currentBalance} />)}
-              <View style={styles.separator} />
+              <View style={styles.expand} />
 
 
               <View style={styles.row}>
                 { progression
                   ? (
-                    <Fragment>
-                      <PriceFriendly
-                        currency="%"
-                        icon
-                        level={3}
-                        subtitle
-                        value={currentBalance - progression > 0
-                          ? (progression * 100) / (currentBalance - progression)
-                          : progression}
-                      />
-                      <View style={styles.separator} />
-                      <PriceFriendly
-                        currency={baseCurrency}
-                        level={3}
-                        lighten
-                        mask={mask}
-                        subtitle
-                        title={progression > 0 ? '+' : '-'}
-                        value={progression}
-                      />
-                    </Fragment>
+                    <PriceFriendly
+                      currency="%"
+                      icon
+                      level={3}
+                      subtitle
+                      value={currentBalance - progression > 0
+                        ? (progression * 100) / (currentBalance - progression)
+                        : progression}
+                    />
                   )
                   : <Text caption lighten>{l10n.WITHOUT_TXS}</Text>}
               </View>

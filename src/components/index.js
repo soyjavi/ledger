@@ -9,7 +9,6 @@ import HeatMap from './HeatMap';
 import HorizontalChartItem from './HorizontalChartItem';
 import OptionItem from './OptionItem';
 import PriceFriendly from './PriceFriendly';
-import SliderMonths from './SliderMonths';
 import Summary from './Summary';
 import TransactionItem from './TransactionItem';
 
@@ -25,7 +24,6 @@ export {
   HorizontalChartItem,
   OptionItem,
   PriceFriendly,
-  SliderMonths,
   Summary,
   TransactionItem,
 };

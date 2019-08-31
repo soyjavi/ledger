@@ -1,9 +1,9 @@
 import { number, func } from 'prop-types';
 import React, { createRef, Component } from 'react';
 
-import { Consumer } from '../../context';
-import { THEME } from '../../reactor/common';
-import { Text, Touchable, Slider } from '../../reactor/components';
+import { Consumer } from '../../../../context';
+import { THEME } from '../../../../reactor/common';
+import { Text, Touchable, Slider } from '../../../../reactor/components';
 import styles, { ITEM_WIDTH } from './SliderMonths.style';
 import getLastMonths from './modules/getLastMonths';
 
@@ -55,12 +55,7 @@ class SliderMonths extends Component {
     return (
       <Consumer>
         { ({ l10n }) => (
-          <Slider
-            ref={this.slider}
-            itemWidth={ITEM_WIDTH}
-            itemMargin={0}
-            style={[styles.slider, inherit.style]}
-          >
+          <Slider ref={this.slider} itemWidth={ITEM_WIDTH} itemMargin={0} style={inherit.style}>
             { getLastMonths(l10n.MONTHS).map(({ month, year }, i) => (
               <Touchable
                 key={month}

@@ -28,7 +28,7 @@ export default StyleSheet.create({
 
   row: LAYOUT.STYLE.ROW,
 
-  separator: {
+  expand: {
     flex: 1,
   },
 
