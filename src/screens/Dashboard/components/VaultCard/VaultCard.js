@@ -3,6 +3,7 @@ import {
 } from 'prop-types';
 import React, { Fragment } from 'react';
 import { Image, View } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import { FLAGS } from '../../../../assets';
 import { C, exchange } from '../../../../common';
@@ -14,7 +15,7 @@ import styles from './VaultCard.style';
 
 const { COLOR } = THEME;
 
-const { SETTINGS: { SHOW_VAULT_CURRENCY } } = C;
+const { SETTINGS: { SHOW_VAULT_CURRENCY }, STYLE: { CARD_GRADIENT } } = C;
 
 const VaultCard = (props) => {
   const {
@@ -25,28 +26,32 @@ const VaultCard = (props) => {
     <Consumer>
       { ({ l10n, store: { baseCurrency, rates, settings } }) => (
         <Touchable onPress={onPress} rippleColor={COLOR.TEXT_LIGHTEN} style={styles.container}>
-          <View style={styles.content}>
-            <View style={styles.row}>
-              <Image source={FLAGS[currency]} style={styles.thumbnail} />
-              <Text caption level={2} numberOfLines={1}>{title.toUpperCase()}</Text>
-            </View>
-            <PriceFriendly
-              currency={baseCurrency}
-              headline
-              level={5}
-              mask={mask}
-              value={baseCurrency !== currency
-                ? exchange(Math.abs(currentBalance), currency, baseCurrency, rates)
-                : Math.abs(currentBalance)}
-            />
-            { currency !== baseCurrency && settings[SHOW_VAULT_CURRENCY] && (
-              <PriceFriendly currency={currency} subtitle level={3} lighten mask={mask} value={currentBalance} />)}
-            <View style={styles.separator} />
+          <LinearGradient
+            {...CARD_GRADIENT}
+            style={styles.containerGradient}
+          >
+            <View style={styles.content}>
+              <View style={styles.row}>
+                <Image source={FLAGS[currency]} style={styles.thumbnail} />
+                <Text caption level={2} numberOfLines={1}>{title.toUpperCase()}</Text>
+              </View>
+              <PriceFriendly
+                currency={baseCurrency}
+                headline
+                level={5}
+                mask={mask}
+                value={baseCurrency !== currency
+                  ? exchange(Math.abs(currentBalance), currency, baseCurrency, rates)
+                  : Math.abs(currentBalance)}
+              />
+              { currency !== baseCurrency && settings[SHOW_VAULT_CURRENCY] && (
+                <PriceFriendly currency={currency} subtitle level={3} lighten mask={mask} value={currentBalance} />)}
+              <View style={styles.expand} />
 
-            <View style={styles.row}>
-              { progression
-                ? (
-                  <Fragment>
+
+              <View style={styles.row}>
+                { progression
+                  ? (
                     <PriceFriendly
                       currency="%"
                       icon
@@ -56,21 +61,11 @@ const VaultCard = (props) => {
                         ? (progression * 100) / (currentBalance - progression)
                         : progression}
                     />
-                    <View style={styles.separator} />
-                    <PriceFriendly
-                      currency={baseCurrency}
-                      level={3}
-                      lighten
-                      mask={mask}
-                      subtitle
-                      title={progression > 0 ? '+' : '-'}
-                      value={progression}
-                    />
-                  </Fragment>
-                )
-                : <Text caption lighten>{l10n.WITHOUT_TXS}</Text>}
+                  )
+                  : <Text caption lighten>{l10n.WITHOUT_TXS}</Text>}
+              </View>
             </View>
-          </View>
+          </LinearGradient>
         </Touchable>
       )}
     </Consumer>

@@ -53,6 +53,11 @@ export default {
       overflow: 'hidden',
       padding: SPACE.MEDIUM,
     },
+    CARD_GRADIENT: {
+      colors: ['#444', '#202020', '#202020'],
+      start: [0, 0],
+      end: [1, 1],
+    },
     DIALOG: {
       justifyContent: 'flex-end',
       zIndex: 2,

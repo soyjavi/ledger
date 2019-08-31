@@ -8,13 +8,18 @@ const { BORDER_RADIUS, COLOR, SPACE } = THEME;
 
 export default StyleSheet.create({
   container: {
-    ...STYLE.CARD,
-    borderRadius: BORDER_RADIUS,
-    backgroundColor: COLOR.BASE,
     height: STYLE.VAULT_ITEM_WIDTH * 0.85,
     marginBottom: SPACE.S,
     marginLeft: SPACE.S,
     width: STYLE.VAULT_ITEM_WIDTH,
+  },
+
+  containerGradient: {
+    ...STYLE.CARD,
+    backgroundColor: COLOR.BASE,
+    borderRadius: BORDER_RADIUS,
+    height: '100%',
+    width: '100%',
   },
 
   content: {
@@ -23,7 +28,7 @@ export default StyleSheet.create({
 
   row: LAYOUT.STYLE.ROW,
 
-  separator: {
+  expand: {
     flex: 1,
   },
 

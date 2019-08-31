@@ -34,7 +34,7 @@ class Session extends PureComponent {
       askFingerprint: false,
       pin: '',
     };
-    props.getFingerprintAsync();
+    if (props.getFingerprintAsync) props.getFingerprintAsync();
   }
 
   _onFingerprint = async ({ navigation, store }) => {

@@ -1,22 +1,21 @@
 import { bool } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
-import { Image, ScrollView, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
 import { THEME } from '../../reactor/common';
 import { Viewport } from '../../reactor/components';
-import { format } from '../../reactor/components/Price/modules';
 
 import { FLAGS } from '../../assets';
+import { C } from '../../common';
 import {
   Footer, Header, Heading, HorizontalChartItem, OptionItem, PriceFriendly,
 } from '../../components';
-import { C, exchange } from '../../common';
 import { Consumer } from '../../context';
 import { query, sort } from './modules';
 import styles from './Vaults.style';
 
+const { SCREEN } = C;
 const { COLOR } = THEME;
-const { SYMBOL } = C;
 
 class Vaults extends PureComponent {
   static propTypes = {
@@ -49,9 +48,13 @@ class Vaults extends PureComponent {
     if (scroll !== state.scroll) this.setState({ scroll });
   }
 
+  _onVault = (vault, { navigation }) => {
+    navigation.navigate(SCREEN.VAULT, vault);
+  }
+
   render() {
     const {
-      _onHardwareBack, _onScroll, props: { visible, ...inherit }, state: { currencies = [], scroll },
+      _onHardwareBack, _onScroll, _onVault, props: { visible, ...inherit }, state: { currencies = [], scroll },
     } = this;
 
     console.log('<Vaults>', { visible });
@@ -61,7 +64,7 @@ class Vaults extends PureComponent {
         <Consumer>
           { ({
             l10n, navigation, store: {
-              baseCurrency, onSettings, rates, settings, vaults,
+              baseCurrency, onSettings, settings, vaults,
             },
           }) => (
             <Fragment>
@@ -69,9 +72,7 @@ class Vaults extends PureComponent {
               <ScrollView _onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.container}>
                 <Heading subtitle={l10n.CURRENCIES} />
                 <View style={styles.currencies}>
-                  { currencies.map(({
-                    balance, base, currency, weight,
-                  }) => (
+                  { currencies.map(({ base, currency, weight }) => (
                     <Fragment key={currency}>
                       <HorizontalChartItem
                         color={COLOR[currency]}
@@ -79,31 +80,26 @@ class Vaults extends PureComponent {
                         currency={baseCurrency}
                         image={FLAGS[currency]}
                         style={styles.horizontalChart}
-                        _title={format({ symbol: SYMBOL[currency], value: balance })}
                         title={currency}
                         value={base}
                         width={weight}
                       />
                       <View style={styles.vaults}>
-                        { sort(vaults, currency).map(({ currentBalance, hash, ...vault }) => (
+                        { sort(vaults, currency).map((vault) => (
                           <OptionItem
-                            key={hash}
-                            active={settings[hash]}
-                            onChange={(value) => onSettings({ [hash]: value })}
+                            key={vault.hash}
+                            active={settings[vault.hash]}
+                            onChange={(value) => onSettings({ [vault.hash]: value })}
+                            onPress={() => _onVault(vault, { navigation })}
                             {...vault}
                           >
                             <View style={styles.row}>
-                              { 1 === 2 && <Image source={FLAGS[currency]} style={styles.optionFlag} /> }
                               <PriceFriendly
                                 subtitle
                                 level={3}
                                 lighten
                                 currency={currency}
-                                value={currentBalance}
-                                _currency={baseCurrency}
-                                _value={baseCurrency !== currency
-                                  ? exchange(Math.abs(currentBalance), currency, baseCurrency, rates)
-                                  : Math.abs(currentBalance)}
+                                value={vault.currentBalance}
                               />
                             </View>
                           </OptionItem>

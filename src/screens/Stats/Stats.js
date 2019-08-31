@@ -7,10 +7,10 @@ import { Text, Viewport } from '../../reactor/components';
 
 import { C } from '../../common';
 import {
-  Chart, Footer, Header, Heading, SliderMonths,
+  Chart, Footer, Header, Heading,
 } from '../../components';
 import { Consumer } from '../../context';
-import { ItemGroupCategories, Locations } from './components';
+import { ItemGroupCategories, Locations, SliderMonths } from './components';
 import { calcScales, orderCaptions, query } from './modules';
 import styles from './Stats.style';
 

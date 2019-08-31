@@ -7,7 +7,7 @@ import { BarCodeScanner } from 'expo-barcode-scanner';
 
 import ASSETS from '../../assets';
 import {
-  ButtonMore, Footer, Header, Heading, OptionItem,
+  Footer, Header, Heading, OptionItem,
 } from '../../components';
 import { C } from '../../common';
 import { Consumer } from '../../context';
@@ -84,7 +84,10 @@ class Settings extends PureComponent {
     if (scroll !== state.scroll) this.setState({ scroll });
   }
 
-  _onToggleCamera = () => this.setState({ showCamera: !this.state.showCamera })
+  _onToggleCamera = () => {
+    const { state: { showCamera } } = this;
+    this.setState({ showCamera: !showCamera });
+  }
 
   render() {
     const {
