@@ -51,7 +51,6 @@ class Session extends PureComponent {
 
   _onNumber = ({ number, store, navigation }) => {
     let { state: { pin } } = this;
-
     pin = `${pin}${number}`;
     this.setState({ pin });
 
@@ -59,6 +58,7 @@ class Session extends PureComponent {
       setTimeout(() => {
         if (store.pin === undefined || store.pin === pin) handshake(this, { pin, store, navigation });
         else this.setState({ pin: '' });
+
       }, DURATION / 2);
     }
   }
@@ -83,8 +83,10 @@ class Session extends PureComponent {
                 ? _onFingerprint({ store, navigation }) && <Fragment />
                 : undefined }
               <View style={styles.content}>
-                <Image source={ASSETS.logo} resizeMode="contain" style={styles.logo} />
-                <Text headline level={4} style={styles.text}>voltvault</Text>
+                <View style={styles.row}>
+                  <Image source={ASSETS.logo} resizeMode="contain" style={styles.logo} />
+                  <Text headline level={2} style={styles.text}>volt.</Text>
+                </View>
                 <View style={styles.pin}>
                   { busy
                     ? <Activity size="large" style={styles.activity} />

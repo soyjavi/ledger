@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Voltvault",
+    "name": "Volt.",
     "description": "A new expanded and private finance experience running on the blockchain.",
     "slug": "voltvault",
     "privacy": "public",
@@ -10,7 +10,7 @@
       "android",
       "web"
     ],
-    "version": "0.16.0",
+    "version": "0.17.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {

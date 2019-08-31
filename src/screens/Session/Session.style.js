@@ -1,12 +1,13 @@
 import { StyleSheet } from 'react-native';
 
-import { THEME } from '../../reactor/common';
+import { LAYOUT, THEME } from '../../reactor/common';
 
 const {
-  COLOR, FONT, OFFSET, UNIT,
+  COLOR, FONT, UNIT, SPACE,
 } = THEME;
 
 const BULLET_SIZE = UNIT * 2;
+const LOGO_SIZE = UNIT * 6.4;
 
 export default StyleSheet.create({
   activity: {
@@ -32,7 +33,7 @@ export default StyleSheet.create({
   container: {
     alignSelf: 'center',
     height: '100%',
-    paddingHorizontal: OFFSET,
+    paddingHorizontal: SPACE.REGULAR,
     maxWidth: UNIT * 40,
     minWidth: UNIT * 32,
   },
@@ -40,7 +41,7 @@ export default StyleSheet.create({
   content: {
     flex: 1,
     justifyContent: 'center',
-    paddingHorizontal: OFFSET,
+    alignItems: 'center',
   },
 
   fingerprint: {
@@ -51,17 +52,21 @@ export default StyleSheet.create({
   },
 
   logo: {
-    alignSelf: 'center',
-    width: UNIT * 9.6,
-    height: UNIT * 6.4,
-    marginBottom: OFFSET / 2,
+    width: LOGO_SIZE,
+    height: LOGO_SIZE,
+    marginTop: SPACE.S,
+    marginRight: SPACE.XS,
   },
 
   pin: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: OFFSET * 3,
+    marginTop: SPACE.REGULAR,
+  },
+
+  row: {
+    ...LAYOUT.STYLE.ROW,
   },
 
   text: {

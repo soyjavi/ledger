@@ -6,7 +6,7 @@ import { Image, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import ASSETS from '../../assets';
-import { C, exchange } from '../../common';
+import { C, exchange, verboseMonth } from '../../common';
 import { Consumer } from '../../context';
 import ButtonMore from '../ButtonMore';
 import PriceFriendly from '../PriceFriendly';
@@ -98,7 +98,7 @@ class Summary extends Component {
               <View style={styles.expand} />
               <View style={styles.row}>
                 <View style={styles.rowItem}>
-                  <Text {...captionProps}>{l10n.PROGRESSION.toUpperCase()}</Text>
+                  <Text {...captionProps}>{verboseMonth(new Date(), l10n).toUpperCase()}</Text>
                   <PriceFriendly currency="%" icon subtitle level={3} value={progressionPercentage} />
                 </View>
 
