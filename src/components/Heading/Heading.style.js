@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 import { LAYOUT, THEME } from '../../reactor/common';
 
 const { COLOR, UNIT, SPACE } = THEME;
+const IMAGE_SIZE = UNIT * 1.8;
 
 export default StyleSheet.create({
   breakline: {
@@ -20,8 +21,8 @@ export default StyleSheet.create({
   },
 
   image: {
-    height: UNIT * 1.6,
-    width: UNIT * 1.6,
+    height: IMAGE_SIZE,
+    width: IMAGE_SIZE,
     marginRight: SPACE.XXS,
   },
 
