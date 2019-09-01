@@ -2,9 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import { LAYOUT, THEME } from '../../reactor/common';
 
-const {
-  COLOR, FONT, UNIT, SPACE,
-} = THEME;
+const { COLOR, UNIT, SPACE } = THEME;
 
 const BULLET_SIZE = UNIT * 2;
 const LOGO_SIZE = UNIT * 6.4;
@@ -27,7 +25,7 @@ export default StyleSheet.create({
   },
 
   bulletActive: {
-    backgroundColor: COLOR.PRIMARY,
+    backgroundColor: COLOR.ACCENT,
   },
 
   container: {
@@ -54,7 +52,7 @@ export default StyleSheet.create({
   logo: {
     width: LOGO_SIZE,
     height: LOGO_SIZE,
-    marginTop: SPACE.S,
+    marginTop: SPACE.XS,
     marginRight: SPACE.XS,
   },
 
@@ -69,11 +67,11 @@ export default StyleSheet.create({
     ...LAYOUT.STYLE.ROW,
   },
 
-  text: {
-    alignSelf: 'center',
-    maxWidth: '90%',
-    textAlign: 'center',
+  textName: {
+    fontSize: LOGO_SIZE,
   },
 
-  textSlogan: FONT.HEADLINE,
+  textVersion: {
+    alignSelf: 'center',
+  },
 });

@@ -58,7 +58,6 @@ class Session extends PureComponent {
       setTimeout(() => {
         if (store.pin === undefined || store.pin === pin) handshake(this, { pin, store, navigation });
         else this.setState({ pin: '' });
-
       }, DURATION / 2);
     }
   }
@@ -85,7 +84,7 @@ class Session extends PureComponent {
               <View style={styles.content}>
                 <View style={styles.row}>
                   <Image source={ASSETS.logo} resizeMode="contain" style={styles.logo} />
-                  <Text headline level={2} style={styles.text}>volt.</Text>
+                  <Text headline style={styles.textName}>volt.</Text>
                 </View>
                 <View style={styles.pin}>
                   { busy
@@ -98,7 +97,7 @@ class Session extends PureComponent {
                       />
                     ))}
                 </View>
-                <Text level={2} lighten style={styles.text}>
+                <Text level={2} lighten>
                   { store.pin && getFingerprintAsync ? l10n.ENTER_PIN_OR_FINGERPRINT : l10n.ENTER_PIN }
                 </Text>
               </View>
@@ -106,7 +105,7 @@ class Session extends PureComponent {
               { store.pin && !busy && getFingerprintAsync && (
                 <Image source={ASSETS.fingerprint} style={styles.fingerprint} />)}
               <NumKeyboard onPress={(number) => _onNumber({ number, store, navigation })} />
-              <Text lighten caption level={3} style={styles.text}>{`v${VERSION}`}</Text>
+              <Text lighten caption level={3} style={styles.textVersion}>{`v${VERSION}`}</Text>
             </View>
           )}
         </Consumer>
