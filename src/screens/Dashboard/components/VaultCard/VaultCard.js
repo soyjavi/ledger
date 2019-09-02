@@ -1,7 +1,7 @@
 import {
   bool, func, number, shape, string,
 } from 'prop-types';
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Image, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
