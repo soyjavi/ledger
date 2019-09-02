@@ -54,7 +54,7 @@ export default {
       padding: SPACE.MEDIUM,
     },
     CARD_GRADIENT: {
-      colors: ['#444', '#202020', '#202020'],
+      colors: ['#333', '#202020', '#202020'],
       start: [0, 0],
       end: [1, 1],
     },

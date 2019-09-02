@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { THEME } from '../../../../reactor/common';
+import { LAYOUT, THEME } from '../../../../reactor/common';
 
 const { OFFSET, UNIT } = THEME;
 const KEY_HEIGHT = UNIT * 5.6;
@@ -22,7 +22,7 @@ export default StyleSheet.create({
     alignContent: 'center',
     height: KEY_HEIGHT,
     justifyContent: 'center',
-    minWidth: UNIT * 10,
+    minWidth: LAYOUT.VIEWPORT.W / 3.5,
   },
 
   key: {

@@ -18,11 +18,19 @@ export default {
     TEXT_LIGHTEN: '#808080',
 
     PRIMARY: '#ffffff',
-    ACCENT: '#7966FF',
-    EXPENSE: '#E9305C',
+
+    // ACCENT: '#7966FF',
+    // EXPENSE: '#E9305C',
     INCOME: '#43e97b',
-    TRANSFER: '#4066EA',
-    LOCATION: '#A6FE01',
+    // TRANSFER: '#4066EA',
+    // LOCATION: '#A6FE01',
+
+    ACCENT: '#FFC700',
+    EXPENSE: '#FF3986',
+    // INCOME: '#24F2AD',
+    TRANSFER: '#7218FF',
+    LOCATION: '#2F9BFF',
+
     WARNING: '#EDE622',
     ERROR: '#E9305C',
 

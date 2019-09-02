@@ -51,7 +51,6 @@ class Session extends PureComponent {
 
   _onNumber = ({ number, store, navigation }) => {
     let { state: { pin } } = this;
-
     pin = `${pin}${number}`;
     this.setState({ pin });
 
@@ -83,8 +82,10 @@ class Session extends PureComponent {
                 ? _onFingerprint({ store, navigation }) && <Fragment />
                 : undefined }
               <View style={styles.content}>
-                <Image source={ASSETS.logo} resizeMode="contain" style={styles.logo} />
-                <Text headline level={4} style={styles.text}>voltvault</Text>
+                <View style={styles.row}>
+                  <Image source={ASSETS.logo} resizeMode="contain" style={styles.logo} />
+                  <Text headline style={styles.textName}>volt.</Text>
+                </View>
                 <View style={styles.pin}>
                   { busy
                     ? <Activity size="large" style={styles.activity} />
@@ -96,7 +97,7 @@ class Session extends PureComponent {
                       />
                     ))}
                 </View>
-                <Text level={2} lighten style={styles.text}>
+                <Text level={2} lighten>
                   { store.pin && getFingerprintAsync ? l10n.ENTER_PIN_OR_FINGERPRINT : l10n.ENTER_PIN }
                 </Text>
               </View>
@@ -104,7 +105,7 @@ class Session extends PureComponent {
               { store.pin && !busy && getFingerprintAsync && (
                 <Image source={ASSETS.fingerprint} style={styles.fingerprint} />)}
               <NumKeyboard onPress={(number) => _onNumber({ number, store, navigation })} />
-              <Text lighten caption level={3} style={styles.text}>{`v${VERSION}`}</Text>
+              <Text lighten caption level={3} style={styles.textVersion}>{`v${VERSION}`}</Text>
             </View>
           )}
         </Consumer>

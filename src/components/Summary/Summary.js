@@ -6,7 +6,7 @@ import { Image, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import ASSETS from '../../assets';
-import { C, exchange } from '../../common';
+import { C, exchange, verboseMonth } from '../../common';
 import { Consumer } from '../../context';
 import ButtonMore from '../ButtonMore';
 import PriceFriendly from '../PriceFriendly';
@@ -18,6 +18,10 @@ const { CURRENCY, SCREEN, STYLE: { CARD_GRADIENT } } = C;
 const captionProps = {
   caption: true, level: 2, lighten: true, numberOfLines: 1,
 };
+
+const PriceSmall = ({ value = 0, ...inherit }) => (
+  <PriceFriendly {...inherit} subtitle level={2} lighten={value === 0} value={value} />
+);
 
 class Summary extends Component {
   static propTypes = {
@@ -98,25 +102,24 @@ class Summary extends Component {
               <View style={styles.expand} />
               <View style={styles.row}>
                 <View style={styles.rowItem}>
-                  <Text {...captionProps}>{l10n.PROGRESSION.toUpperCase()}</Text>
-                  <PriceFriendly currency="%" icon subtitle level={3} value={progressionPercentage} />
+                  <Text {...captionProps}>{verboseMonth(new Date(), l10n).toUpperCase()}</Text>
+                  <PriceSmall currency="%" icon mask={mask} value={progressionPercentage} />
                 </View>
 
                 <View style={styles.rowItem}>
                   <Text {...captionProps}>{l10n.INCOMES.toUpperCase()}</Text>
-                  <PriceFriendly currency={baseCurrency} subtitle level={3} mask={mask} value={incomes} />
+                  <PriceSmall currency={baseCurrency} mask={mask} value={incomes} />
                 </View>
 
                 <View style={[styles.rowItem, styles.rowItemExpanded]}>
                   <Text {...captionProps}>{l10n.EXPENSES.toUpperCase()}</Text>
-                  <PriceFriendly currency={baseCurrency} subtitle level={3} mask={mask} value={expenses} />
+                  <PriceSmall currency={baseCurrency} mask={mask} value={expenses} />
                 </View>
 
                 <View>
                   <Text {...captionProps}>{l10n.TODAY.toUpperCase()}</Text>
-                  <PriceFriendly currency={baseCurrency} subtitle level={3} mask={mask} operator value={today} />
+                  <PriceSmall currency={baseCurrency} mask={mask} value={today} />
                 </View>
-
               </View>
             </LinearGradient>
           </View>

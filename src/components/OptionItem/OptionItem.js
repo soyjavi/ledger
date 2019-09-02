@@ -39,18 +39,18 @@ class OptionItem extends PureComponent {
     } = this;
 
     return (
-      <Touchable onPress={onPress} rippleColor={COLOR.TEXT_LIGHTEN} style={styles.container}>
-        <View style={styles.content}>
+      <View style={styles.container}>
+        <Touchable onPress={onPress} rippleColor={COLOR.PRIMARY} style={styles.content}>
           <Text subtitle level={2} numberOfLines={1} lighten={disabled}>{title}</Text>
           { caption && <Text caption lighten>{caption}</Text> }
           { children }
-        </View>
-        <Touchable onPress={() => onChange(!active)}>
+        </Touchable>
+        <Touchable onPress={() => onChange(!active)} rippleColor={COLOR.ACCENT}>
           <View style={[styles.iconContainer, active && styles.iconActive]}>
             { active && <Icon value={ASSETS.checked} style={styles.icon} /> }
           </View>
         </Touchable>
-      </Touchable>
+      </View>
     );
   }
 }

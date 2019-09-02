@@ -20,7 +20,7 @@ const NumKeyboard = ({ onPress }) => (
         rippleColor={COLOR.PRIMARY}
       >
         <View style={styles.touchable}>
-          <Text style={styles.key}>{typeof key === 'number' ? key : ''}</Text>
+          { typeof key === 'number' && <Text style={styles.key}>{key}</Text> }
         </View>
       </Touchable>
     ))}

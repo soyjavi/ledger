@@ -28,7 +28,7 @@ export default StyleSheet.create({
   },
 
   iconActive: {
-    backgroundColor: COLOR.PRIMARY,
+    backgroundColor: COLOR.ACCENT,
     opacity: 1,
   },
 
