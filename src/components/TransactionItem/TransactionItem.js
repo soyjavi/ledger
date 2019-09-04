@@ -6,6 +6,7 @@ import { Icon, Text, Touchable } from '../../reactor/components';
 
 import { C, exchange, getIconCategory } from '../../common';
 import { Consumer } from '../../context';
+import Box from '../Box';
 import PriceFriendly from '../PriceFriendly';
 import { formatCaption } from './modules';
 import styles from './TransactionItem.style';
@@ -42,9 +43,9 @@ class TransactionItem extends PureComponent {
         { ({ store: { baseCurrency, onSelectTx, rates } }) => (
           <Touchable rippleColor={COLOR.TEXT_LIGHTEN} onPress={() => onSelectTx(this.props)}>
             <View style={[styles.container, styles.row, isVaultTransfer && styles.containerHighlight]}>
-              <View style={styles.icon}>
+              <Box style={styles.icon}>
                 <Icon value={getIconCategory({ type, category, title })} />
-              </View>
+              </Box>
 
               <View style={[styles.content, styles.row]}>
                 <View style={styles.texts}>

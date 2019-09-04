@@ -8,7 +8,6 @@ export default StyleSheet.create({
   heading: {
     marginTop: SPACE.REGULAR,
     paddingHorizontal: SPACE.MEDIUM,
-    // justifyContent: 'space-between',
   },
 
   icon: {
@@ -24,5 +23,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     marginRight: SPACE.XS,
     paddingHorizontal: SPACE.XS,
+    paddingVertical: 0,
+    width: 'auto',
   },
 });

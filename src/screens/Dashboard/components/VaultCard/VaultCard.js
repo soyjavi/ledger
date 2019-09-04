@@ -3,11 +3,10 @@ import {
 } from 'prop-types';
 import React from 'react';
 import { Image, View } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 
 import { FLAGS } from '../../../../assets';
 import { C, exchange } from '../../../../common';
-import { PriceFriendly } from '../../../../components';
+import { Box, PriceFriendly } from '../../../../components';
 import { Consumer } from '../../../../context';
 import { Text, Touchable } from '../../../../reactor/components';
 import { THEME } from '../../../../reactor/common';
@@ -15,7 +14,7 @@ import styles from './VaultCard.style';
 
 const { COLOR } = THEME;
 
-const { SETTINGS: { SHOW_VAULT_CURRENCY }, STYLE: { CARD_GRADIENT } } = C;
+const { SETTINGS: { SHOW_VAULT_CURRENCY } } = C;
 
 const VaultCard = (props) => {
   const {
@@ -26,10 +25,7 @@ const VaultCard = (props) => {
     <Consumer>
       { ({ l10n, store: { baseCurrency, rates, settings } }) => (
         <Touchable onPress={onPress} rippleColor={COLOR.TEXT_LIGHTEN} style={styles.container}>
-          <LinearGradient
-            {...CARD_GRADIENT}
-            style={styles.containerGradient}
-          >
+          <Box style={styles.containerGradient}>
             <View style={styles.content}>
               <View style={styles.row}>
                 <Image source={FLAGS[currency]} style={styles.thumbnail} />
@@ -48,7 +44,6 @@ const VaultCard = (props) => {
                 <PriceFriendly currency={currency} subtitle level={3} lighten mask={mask} value={currentBalance} />)}
               <View style={styles.expand} />
 
-
               <View style={styles.row}>
                 { progression
                   ? (
@@ -65,7 +60,7 @@ const VaultCard = (props) => {
                   : <Text caption lighten>{l10n.WITHOUT_TXS}</Text>}
               </View>
             </View>
-          </LinearGradient>
+          </Box>
         </Touchable>
       )}
     </Consumer>

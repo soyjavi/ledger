@@ -3,17 +3,17 @@ import {
 } from 'prop-types';
 import React, { Component } from 'react';
 import { Image, View } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 
 import ASSETS from '../../assets';
 import { C, exchange, verboseMonth } from '../../common';
 import { Consumer } from '../../context';
+import Box from '../Box';
 import ButtonMore from '../ButtonMore';
 import PriceFriendly from '../PriceFriendly';
 import { Text, Touchable } from '../../reactor/components';
 import styles from './Summary.style';
 
-const { CURRENCY, SCREEN, STYLE: { CARD_GRADIENT } } = C;
+const { CURRENCY, SCREEN } = C;
 
 const captionProps = {
   caption: true, level: 2, lighten: true, numberOfLines: 1,
@@ -67,7 +67,7 @@ class Summary extends Component {
       <Consumer>
         { ({ l10n, navigation, store: { baseCurrency, rates } }) => (
           <View style={[styles.container, inherit.style]}>
-            <LinearGradient {...CARD_GRADIENT} style={styles.card}>
+            <Box style={styles.card}>
               <View style={[styles.row, styles.rowHeading]}>
                 <Image source={image} resizeMode="contain" style={styles.image} />
                 <Text caption level={2} style={styles.expand}>{title.toUpperCase()}</Text>
@@ -121,7 +121,7 @@ class Summary extends Component {
                   <PriceSmall currency={baseCurrency} mask={mask} value={today} />
                 </View>
               </View>
-            </LinearGradient>
+            </Box>
           </View>
         )}
       </Consumer>

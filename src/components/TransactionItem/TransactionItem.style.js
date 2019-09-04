@@ -2,13 +2,8 @@ import { StyleSheet } from 'react-native';
 
 import { LAYOUT, THEME } from '../../reactor/common';
 
-const {
-  BORDER_RADIUS, COLOR, OFFSET, UNIT,
-} = THEME;
-
+const { OFFSET, UNIT } = THEME;
 const ICON_SIZE = UNIT * 3.6;
-const DATE_FONT_SIZE = UNIT * 1.6;
-const MONTH_FONT_SIZE = UNIT * 0.9;
 
 export default StyleSheet.create({
   container: {
@@ -29,8 +24,6 @@ export default StyleSheet.create({
     display: 'flex',
     alignContent: 'center',
     alignItems: 'center',
-    backgroundColor: COLOR.BASE,
-    borderRadius: BORDER_RADIUS,
     height: ICON_SIZE,
     justifyContent: 'center',
     marginRight: UNIT,

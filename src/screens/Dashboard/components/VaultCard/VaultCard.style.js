@@ -15,11 +15,11 @@ export default StyleSheet.create({
   },
 
   containerGradient: {
-    ...STYLE.CARD,
-    backgroundColor: COLOR.BASE,
-    borderRadius: BORDER_RADIUS,
-    height: '100%',
-    width: '100%',
+    // ...STYLE.CARD,
+    // backgroundColor: COLOR.BASE,
+    // borderRadius: BORDER_RADIUS,
+    // height: '100%',
+    // width: '100%',
   },
 
   content: {

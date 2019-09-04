@@ -6,6 +6,7 @@ import { Image, View } from 'react-native';
 
 import { Icon, Text, Touchable } from '../../reactor/components';
 import { THEME } from '../../reactor/common';
+import Box from '../Box';
 import styles from './CardOption.style';
 
 const { COLOR } = THEME;
@@ -13,21 +14,24 @@ const { COLOR } = THEME;
 const CardOption = ({
   children, color, icon, image, onPress, selected, title, ...inherit
 }) => (
-  <Touchable
-    onPress={onPress}
-    style={[styles.container, selected && { backgroundColor: color }, inherit.style]}
-  >
-    { (image || icon) && (
-      <View style={[styles.thumbnail, selected && styles.thumbnailHighlight]}>
-        { image && <Image source={image} style={styles.image} /> }
-        { icon && <Icon value={icon} style={styles.icon} /> }
-      </View>
-    )}
-    <Text caption level={2} lighten={color === COLOR.PRIMARY} numberOfLines={1} style={styles.title}>
-      {title}
-    </Text>
-    { children }
-  </Touchable>
+  <Box style={[styles.box, inherit.style]}>
+    <Touchable
+      onPress={onPress}
+      rippleColor={COLOR.PRIMARY}
+      style={[styles.container, selected && { backgroundColor: color }]}
+    >
+      { (image || icon) && (
+        <View style={[styles.thumbnail, selected && styles.thumbnailHighlight]}>
+          { image && <Image source={image} style={styles.image} /> }
+          { icon && <Icon value={icon} style={styles.icon} /> }
+        </View>
+      )}
+      <Text caption level={2} lighten={color === COLOR.PRIMARY} numberOfLines={1} style={styles.title}>
+        {title}
+      </Text>
+      { children }
+    </Touchable>
+  </Box>
 );
 
 CardOption.propTypes = {

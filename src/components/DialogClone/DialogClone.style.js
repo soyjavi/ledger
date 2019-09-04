@@ -44,8 +44,6 @@ export default StyleSheet.create({
     display: 'flex',
     alignContent: 'center',
     alignItems: 'center',
-    backgroundColor: COLOR.BASE,
-    borderRadius: BORDER_RADIUS,
     height: ICON_SIZE,
     justifyContent: 'center',
     marginRight: UNIT,

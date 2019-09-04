@@ -8,6 +8,7 @@ import {
   C, exchange, verboseMonthShort, verboseTime,
 } from '../../common';
 import { Consumer } from '../../context';
+import Box from '../Box';
 import HeatMap from '../HeatMap';
 import PriceFriendly from '../PriceFriendly';
 import styles from './DialogClone.style';
@@ -87,10 +88,10 @@ class DialogClone extends PureComponent {
           >
             <View style={styles.container}>
               <View style={[styles.content, styles.row]}>
-                <View style={styles.icon}>
+                <Box style={styles.icon}>
                   <Text style={styles.date}>{(new Date(timestamp || null)).getDate()}</Text>
                   <Text lighten style={styles.month}>{verboseMonthShort(timestamp, l10n)}</Text>
-                </View>
+                </Box>
                 <View style={styles.texts}>
                   <Text subtitle level={2} style={styles.title}>{title}</Text>
                   <Text caption lighten numberOfLines={1}>

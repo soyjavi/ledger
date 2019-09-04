@@ -1,3 +1,4 @@
+import Box from './Box';
 import ButtonMore from './ButtonMore';
 import CardOption from './CardOption';
 import Chart from './Chart';
@@ -13,6 +14,7 @@ import Summary from './Summary';
 import TransactionItem from './TransactionItem';
 
 export {
+  Box,
   ButtonMore,
   CardOption,
   Chart,

@@ -6,6 +6,7 @@ import { View } from 'react-native';
 import { Text } from '../../../../reactor/components';
 
 import { exchange, verboseDate } from '../../../../common';
+import { Box } from '../../../../components';
 import { Consumer } from '../../../../context';
 import { PriceFriendly, TransactionItem } from '../../../../components';
 import styles from './GroupTransactions.style';
@@ -39,11 +40,11 @@ class GroupTransactions extends Component {
         { ({ store: { baseCurrency, rates }, l10n }) => (
           <Fragment>
             <View style={[styles.row, styles.heading]}>
-              <View style={styles.tag}>
+              <Box style={styles.tag}>
                 <Text subtitle level={3}>{verboseDate(timestamp, l10n)}</Text>
-              </View>
+              </Box>
               { value !== 0 && (
-                <View style={[styles.row, styles.tag]}>
+                <View style={styles.tag}>
                   <PriceFriendly
                     currency={baseCurrency}
                     icon
