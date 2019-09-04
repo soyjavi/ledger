@@ -25,11 +25,6 @@ export default StyleSheet.create({
     flex: 1,
   },
 
-  date: {
-    fontSize: DATE_FONT_SIZE,
-    lineHeight: DATE_FONT_SIZE,
-  },
-
   icon: {
     display: 'flex',
     alignContent: 'center',
@@ -40,11 +35,6 @@ export default StyleSheet.create({
     justifyContent: 'center',
     marginRight: UNIT,
     width: ICON_SIZE,
-  },
-
-  month: {
-    fontSize: MONTH_FONT_SIZE,
-    lineHeight: MONTH_FONT_SIZE,
   },
 
   prices: {
