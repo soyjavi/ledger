@@ -1,6 +1,6 @@
 import { format } from '../../../reactor/components/Price/modules';
 
-import { C } from '../../../common';
+import { C, median } from '../../../common';
 
 const { SYMBOL } = C;
 
@@ -19,16 +19,16 @@ export default (values, store) => {
 
   const max = Math.floor(Math.max(...values));
   let min = 0;
-  let avg = 0;
+  let med = 0;
 
   if (max > 0) {
     min = Math.floor(Math.min(...values));
-    avg = Math.floor(values.reduce((a, b) => a + b) / (values.length - values.findIndex((value) => value > 0)));
+    med = median(values);
   }
 
   return [
     { value: formatScale(max, store) },
-    avg !== max && avg !== min ? { value: formatScale(avg, store), highlight: true } : {},
+    med !== max && med !== min ? { value: formatScale(med, store), highlight: true } : {},
     { value: formatScale(min, store) },
   ];
 };

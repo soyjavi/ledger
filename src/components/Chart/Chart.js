@@ -38,7 +38,7 @@ class Chart extends Component {
     const {
       captions, color, highlight, inverted, scales, values, ...inherit
     } = this.props;
-    const { max, min, avg } = calcRange(values);
+    const { max, min, med: avg } = calcRange(values);
     const avgProps = { backgroundColor: color };
     let firstValueIndex = values.findIndex((value) => value !== 0);
     if (firstValueIndex === -1) firstValueIndex = undefined;
