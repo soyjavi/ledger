@@ -6,7 +6,7 @@ import { THEME } from '../../reactor/common';
 import { Slider, Viewport } from '../../reactor/components';
 import { C, onHardwareBackPress } from '../../common';
 import {
-  ButtonMore, Footer, Header, Heading, Summary, TransactionItem,
+  ButtonMore, Footer, GroupTransactions, Header, Heading, Summary, TransactionItem,
 } from '../../components';
 import { Consumer } from '../../context';
 import { DialogVault, Syncing, VaultCard } from './components';
@@ -116,16 +116,9 @@ class Dashboard extends PureComponent {
                     ))}
                   </Slider>
 
-                  { queryLastTxs({ txs, vaults }).length > 0 && (
-                    <Fragment>
-                      <Heading subtitle={l10n.LAST_TRANSACTIONS} />
-                      <View>
-                        { queryLastTxs({ txs, vaults }).map((tx) => (
-                          <TransactionItem key={tx.hash} {...tx} />
-                        ))}
-                      </View>
-                    </Fragment>
-                  )}
+                  <Heading subtitle={l10n.LAST_TRANSACTIONS} />
+                  { queryLastTxs({ txs, vaults }).map((item) => (
+                    <GroupTransactions key={`${item.timestamp}`} {...item} currency={baseCurrency} />))}
                 </ScrollView>
 
                 <Syncing scroll={scroll} />

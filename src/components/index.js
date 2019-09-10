@@ -4,6 +4,7 @@ import CardOption from './CardOption';
 import Chart from './Chart';
 import DialogClone from './DialogClone';
 import Footer from './Footer';
+import GroupTransactions from './GroupTransactions';
 import Header from './Header';
 import Heading from './Heading';
 import HeatMap from './HeatMap';
@@ -20,6 +21,7 @@ export {
   Chart,
   DialogClone,
   Footer,
+  GroupTransactions,
   Header,
   Heading,
   HeatMap,

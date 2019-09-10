@@ -3,11 +3,13 @@ import React, { createRef, Fragment, PureComponent } from 'react';
 import { ScrollView, View } from 'react-native';
 
 import { FLAGS } from '../../assets';
-import { Summary, Footer, Header } from '../../components';
+import {
+  Footer, GroupTransactions, Header, Summary,
+} from '../../components';
 import { Consumer } from '../../context';
 import { LAYOUT, THEME } from '../../reactor/common';
 import { Activity, Text, Viewport } from '../../reactor/components';
-import { DialogTransaction, GroupTransactions, Search } from './components';
+import { DialogTransaction, Search } from './components';
 import query from './modules/query';
 import styles from './Vault.style';
 
