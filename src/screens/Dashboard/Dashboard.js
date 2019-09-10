@@ -102,7 +102,7 @@ class Dashboard extends PureComponent {
                     title={l10n.OVERALL_BALANCE}
                   />
 
-                  <Heading title={l10n.VAULTS}>
+                  <Heading subtitle={l10n.VAULTS}>
                     <ButtonMore title={l10n.MORE} onPress={() => navigation.navigate(SCREEN.VAULTS)} />
                   </Heading>
                   <Slider itemWidth={VAULT_ITEM_WIDTH + SPACE.S} itemMargin={0} style={styles.vaults}>
@@ -118,7 +118,7 @@ class Dashboard extends PureComponent {
 
                   { queryLastTxs({ txs, vaults }).length > 0 && (
                     <Fragment>
-                      <Heading title={l10n.LAST_TRANSACTIONS} />
+                      <Heading subtitle={l10n.LAST_TRANSACTIONS} />
                       <View>
                         { queryLastTxs({ txs, vaults }).map((tx) => (
                           <TransactionItem key={tx.hash} {...tx} />

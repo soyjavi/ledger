@@ -11,7 +11,7 @@ import PriceFriendly from '../PriceFriendly';
 import { formatCaption } from './modules';
 import styles from './TransactionItem.style';
 
-const { VAULT_TRANSFER } = C;
+const { VAULT_TRANSFER, TX: { TYPE: { EXPENSE, TRANSFER } } } = C;
 const { COLOR } = THEME;
 
 class TransactionItem extends PureComponent {
@@ -37,6 +37,7 @@ class TransactionItem extends PureComponent {
       },
     } = this;
     const isVaultTransfer = category === VAULT_TRANSFER;
+    const operator = type === EXPENSE ? -1 : 1;
 
     return (
       <Consumer>
@@ -49,26 +50,30 @@ class TransactionItem extends PureComponent {
 
               <View style={[styles.content, styles.row]}>
                 <View style={styles.texts}>
-                  { title && <Text subtitle level={3} lighten={isVaultTransfer} numberOfLines={1}>{title}</Text> }
-                  <Text caption lighten>{formatCaption(new Date(timestamp), location)}</Text>
+                  { title && <Text subtitle level={2} lighten={isVaultTransfer} numberOfLines={1}>{title}</Text> }
+                  <Text caption level={2} lighten style={styles.caption}>
+                    {formatCaption(new Date(timestamp), location)}
+                  </Text>
                 </View>
                 <View style={styles.prices}>
                   <PriceFriendly
                     currency={baseCurrency}
                     subtitle
-                    level={2}
+                    level={3}
                     lighten={isVaultTransfer}
-                    operator
-                    value={exchange(value, currency, baseCurrency, rates, timestamp)}
+                    operator={type !== TRANSFER}
+                    value={exchange(value, currency, baseCurrency, rates, timestamp) * operator}
                   />
 
                   { baseCurrency !== currency && (
                     <PriceFriendly
                       caption
                       currency={currency}
+                      level={2}
                       lighten
-                      operator
-                      value={value}
+                      operator={type !== TRANSFER}
+                      value={value * operator}
+                      style={styles.caption}
                     />
                   )}
                 </View>

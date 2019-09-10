@@ -2,13 +2,17 @@ import { StyleSheet } from 'react-native';
 
 import { LAYOUT, THEME } from '../../reactor/common';
 
-const { OFFSET, UNIT } = THEME;
+const { UNIT, SPACE } = THEME;
 const ICON_SIZE = UNIT * 3.6;
 
 export default StyleSheet.create({
+  caption: {
+    marginTop: SPACE.XXS,
+  },
+
   container: {
-    paddingVertical: OFFSET / 1.5,
-    paddingHorizontal: OFFSET,
+    paddingVertical: SPACE.XS,
+    paddingHorizontal: SPACE.REGULAR,
   },
 
   containerHighlight: {
@@ -31,6 +35,7 @@ export default StyleSheet.create({
   },
 
   prices: {
+    alignSelf: 'flex-start',
     alignItems: 'flex-end',
   },
 
@@ -39,4 +44,6 @@ export default StyleSheet.create({
   texts: {
     flex: 1,
   },
+
+
 });
