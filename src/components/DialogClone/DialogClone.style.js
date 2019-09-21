@@ -5,9 +5,7 @@ import { LAYOUT, THEME } from '../../reactor/common';
 
 const { STYLE: { DIALOG, DIALOG_FRAME } } = C;
 
-const {
-  BORDER_RADIUS, COLOR, SPACE, UNIT,
-} = THEME;
+const { COLOR, SPACE, UNIT } = THEME;
 const ICON_SIZE = UNIT * 3.6;
 const DATE_FONT_SIZE = UNIT * 1.6;
 const MONTH_FONT_SIZE = UNIT * 0.9;
@@ -48,6 +46,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     marginRight: UNIT,
     width: ICON_SIZE,
+    paddingHorizontal: 0,
   },
 
   month: {

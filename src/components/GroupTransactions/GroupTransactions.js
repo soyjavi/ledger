@@ -1,7 +1,7 @@
 import {
   arrayOf, number, shape, string,
 } from 'prop-types';
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { View } from 'react-native';
 import { Text } from '../../reactor/components';
 

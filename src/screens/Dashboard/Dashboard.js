@@ -1,12 +1,12 @@
 import { bool } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
-import { ScrollView, View } from 'react-native';
+import { ScrollView } from 'react-native';
 
 import { THEME } from '../../reactor/common';
 import { Slider, Viewport } from '../../reactor/components';
 import { C, onHardwareBackPress } from '../../common';
 import {
-  ButtonMore, Footer, GroupTransactions, Header, Heading, Summary, TransactionItem,
+  ButtonMore, Footer, GroupTransactions, Header, Heading, Summary,
 } from '../../components';
 import { Consumer } from '../../context';
 import { DialogVault, Syncing, VaultCard } from './components';

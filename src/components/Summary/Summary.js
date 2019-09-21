@@ -20,7 +20,7 @@ const captionProps = {
 };
 
 const PriceSmall = ({ value = 0, ...inherit }) => (
-  <PriceFriendly {...inherit} subtitle level={2} lighten={value === 0} value={value} />
+  <PriceFriendly {...inherit} subtitle level={3} lighten={value === 0} value={value} />
 );
 
 class Summary extends Component {
@@ -93,7 +93,7 @@ class Summary extends Component {
                   currency={currency}
                   mask={mask}
                   subtitle
-                  level={2}
+                  level={3}
                   lighten
                   value={currentBalance}
                 />
