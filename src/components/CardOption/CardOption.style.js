@@ -1,23 +1,20 @@
 import { StyleSheet } from 'react-native';
 
-import { C } from '../../common';
 import { THEME } from '../../reactor/common';
 
-const { STYLE } = C;
-
-const {
-  BORDER_RADIUS, COLOR, SPACE, UNIT,
-} = THEME;
-
+const { BORDER_RADIUS, SPACE, UNIT } = THEME;
 const THUMBNAIL_SIZE = UNIT * 3.2;
 
 export default StyleSheet.create({
+  box: {
+    padding: 0,
+    marginRight: SPACE.S,
+  },
+
   container: {
-    ...STYLE.CARD,
     borderRadius: BORDER_RADIUS,
     alignItems: 'center',
-    backgroundColor: COLOR.BASE,
-    marginRight: SPACE.S,
+    padding: SPACE.MEDIUM,
   },
 
   icon: {

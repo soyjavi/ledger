@@ -69,6 +69,7 @@ export default StyleSheet.create({
 
   textName: {
     fontSize: LOGO_SIZE,
+    zIndex: 1,
   },
 
   textVersion: {

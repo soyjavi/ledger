@@ -1,5 +1,5 @@
 import DialogFork from './DialogFork';
 
 export {
-  DialogFork,
+  DialogFork, // eslint-disable-line
 };

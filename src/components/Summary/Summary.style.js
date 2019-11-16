@@ -1,12 +1,8 @@
 import { StyleSheet } from 'react-native';
 
-import { C } from '../../common';
 import { LAYOUT, THEME } from '../../reactor/common';
 
-const { STYLE } = C;
-const {
-  BORDER_RADIUS, COLOR, SPACE, UNIT,
-} = THEME;
+const { SPACE, UNIT } = THEME;
 
 export default StyleSheet.create({
   expand: {
@@ -14,9 +10,6 @@ export default StyleSheet.create({
   },
 
   card: {
-    ...STYLE.CARD,
-    backgroundColor: COLOR.BASE,
-    borderRadius: BORDER_RADIUS,
     flex: 1,
   },
 

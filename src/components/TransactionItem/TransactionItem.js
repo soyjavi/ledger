@@ -1,20 +1,17 @@
-import {
-  bool, number, shape, string,
-} from 'prop-types';
-import React, { Fragment, PureComponent } from 'react';
+import { number, shape, string } from 'prop-types';
+import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 import { THEME } from '../../reactor/common';
 import { Icon, Text, Touchable } from '../../reactor/components';
 
-import {
-  C, exchange, getIconCategory, verboseMonthShort,
-} from '../../common';
+import { C, exchange, getIconCategory } from '../../common';
 import { Consumer } from '../../context';
+import Box from '../Box';
 import PriceFriendly from '../PriceFriendly';
 import { formatCaption } from './modules';
 import styles from './TransactionItem.style';
 
-const { VAULT_TRANSFER } = C;
+const { VAULT_TRANSFER, TX: { TYPE: { EXPENSE, TRANSFER } } } = C;
 const { COLOR } = THEME;
 
 class TransactionItem extends PureComponent {
@@ -22,7 +19,6 @@ class TransactionItem extends PureComponent {
     category: number.isRequired,
     currency: string.isRequired,
     location: shape({}),
-    showDate: bool,
     timestamp: string.isRequired,
     title: string,
     type: number.isRequired,
@@ -31,56 +27,53 @@ class TransactionItem extends PureComponent {
 
   static defaultProps = {
     location: undefined,
-    showDate: false,
     title: undefined,
   };
 
   render() {
     const {
       props: {
-        category, currency, location, showDate, timestamp, title, type, value,
+        category, currency, location, timestamp, title, type, value,
       },
     } = this;
     const isVaultTransfer = category === VAULT_TRANSFER;
+    const operator = type === EXPENSE ? -1 : 1;
 
     return (
       <Consumer>
-        { ({ l10n, store: { baseCurrency, onSelectTx, rates } }) => (
+        { ({ store: { baseCurrency, onSelectTx, rates } }) => (
           <Touchable rippleColor={COLOR.TEXT_LIGHTEN} onPress={() => onSelectTx(this.props)}>
             <View style={[styles.container, styles.row, isVaultTransfer && styles.containerHighlight]}>
-              <View style={styles.icon}>
-                { showDate
-                  ? (
-                    <Fragment>
-                      <Text style={styles.date}>{(new Date(timestamp)).getDate()}</Text>
-                      <Text lighten style={styles.month}>{verboseMonthShort(timestamp, l10n)}</Text>
-                    </Fragment>
-                  )
-                  : <Icon value={getIconCategory({ type, category, title })} /> }
-              </View>
+              <Box style={styles.icon}>
+                <Icon value={getIconCategory({ type, category, title })} />
+              </Box>
 
               <View style={[styles.content, styles.row]}>
                 <View style={styles.texts}>
                   { title && <Text subtitle level={3} lighten={isVaultTransfer} numberOfLines={1}>{title}</Text> }
-                  <Text caption lighten>{formatCaption(new Date(timestamp), location)}</Text>
+                  <Text caption level={2} lighten style={styles.caption}>
+                    {formatCaption(new Date(timestamp), location)}
+                  </Text>
                 </View>
                 <View style={styles.prices}>
                   <PriceFriendly
                     currency={baseCurrency}
                     subtitle
-                    level={2}
+                    level={3}
                     lighten={isVaultTransfer}
-                    operator
-                    value={exchange(value, currency, baseCurrency, rates, timestamp)}
+                    operator={type !== TRANSFER}
+                    value={exchange(value, currency, baseCurrency, rates, timestamp) * operator}
                   />
 
                   { baseCurrency !== currency && (
                     <PriceFriendly
                       caption
                       currency={currency}
+                      level={2}
                       lighten
-                      operator
-                      value={value}
+                      operator={type !== TRANSFER}
+                      value={value * operator}
+                      style={styles.caption}
                     />
                   )}
                 </View>

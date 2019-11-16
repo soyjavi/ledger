@@ -4,7 +4,7 @@ import { C } from '../../../../common';
 import { LAYOUT, THEME } from '../../../../reactor/common';
 
 const { STYLE } = C;
-const { BORDER_RADIUS, COLOR, SPACE } = THEME;
+const { SPACE } = THEME;
 
 export default StyleSheet.create({
   container: {
@@ -12,14 +12,6 @@ export default StyleSheet.create({
     marginBottom: SPACE.S,
     marginLeft: SPACE.S,
     width: STYLE.VAULT_ITEM_WIDTH,
-  },
-
-  containerGradient: {
-    ...STYLE.CARD,
-    backgroundColor: COLOR.BASE,
-    borderRadius: BORDER_RADIUS,
-    height: '100%',
-    width: '100%',
   },
 
   content: {

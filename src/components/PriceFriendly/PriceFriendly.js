@@ -57,7 +57,7 @@ PriceFriendly.defaultProps = {
   currency: undefined,
   icon: false,
   mask: false,
-  operator: undefined,
+  operator: false,
   value: 0,
 };
 

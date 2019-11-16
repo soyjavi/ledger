@@ -128,10 +128,11 @@ export default StyleSheet.create({
   },
 
   tag: {
+    display: 'flex',
     alignSelf: 'flex-start',
     borderRadius: SPACE.S,
-    height: UNIT + (SPACE.XXS * 2),
-    paddingVertical: SPACE.XXS,
+    height: SPACE.MEDIUM,
+    justifyContent: 'center',
     paddingHorizontal: SPACE.XS,
   },
 });

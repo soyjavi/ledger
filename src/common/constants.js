@@ -49,15 +49,6 @@ export default {
     SHOW_VAULT_CURRENCY: 1,
   },
   STYLE: {
-    CARD: {
-      overflow: 'hidden',
-      padding: SPACE.MEDIUM,
-    },
-    CARD_GRADIENT: {
-      colors: ['#333', '#202020', '#202020'],
-      start: [0, 0],
-      end: [1, 1],
-    },
     DIALOG: {
       justifyContent: 'flex-end',
       zIndex: 2,

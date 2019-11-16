@@ -58,9 +58,12 @@ class Stats extends Component {
     const { props, state } = this;
 
     return visible !== props.visible
-      || scroll !== state.scroll
-      || slider.index !== state.slider.index
-      || typeQuery !== state.typeQuery;
+      || (
+        visible && (
+          scroll !== state.scroll
+          || slider.index !== state.slider.index
+          || typeQuery !== state.typeQuery)
+      );
   }
 
   _onChangeSlider = (slider) => {

@@ -42,12 +42,11 @@ export default StyleSheet.create({
     display: 'flex',
     alignContent: 'center',
     alignItems: 'center',
-    backgroundColor: COLOR.BASE,
-    borderRadius: ICON_SIZE / 2,
     height: ICON_SIZE,
     justifyContent: 'center',
     marginRight: UNIT,
     width: ICON_SIZE,
+    paddingHorizontal: 0,
   },
 
   month: {
