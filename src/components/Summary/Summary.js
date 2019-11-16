@@ -23,6 +23,10 @@ const PriceSmall = ({ value = 0, ...inherit }) => (
   <PriceFriendly {...inherit} subtitle level={3} lighten={value === 0} value={value} />
 );
 
+PriceSmall.propTypes = {
+  value: number.isRequired,
+};
+
 class Summary extends Component {
   static propTypes = {
     currency: string,

@@ -25,7 +25,7 @@ const VaultCard = (props) => {
     <Consumer>
       { ({ l10n, store: { baseCurrency, rates, settings } }) => (
         <Touchable onPress={onPress} rippleColor={COLOR.TEXT_LIGHTEN} style={styles.container}>
-          <Box style={styles.containerGradient}>
+          <Box>
             <View style={styles.content}>
               <View style={styles.row}>
                 <Image source={FLAGS[currency]} style={styles.thumbnail} />
