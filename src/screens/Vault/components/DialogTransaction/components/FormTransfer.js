@@ -2,7 +2,7 @@ import { func, shape, string } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
 
 import { FLAGS } from '../../../../../assets';
-import { setCurrency, translate } from '../../../../../common';
+import { currencyDecimals, setCurrency, translate } from '../../../../../common';
 import { CardOption, PriceFriendly } from '../../../../../components';
 import { Consumer } from '../../../../../context';
 import { Form, Slider, Text } from '../../../../../reactor/components';
@@ -43,7 +43,8 @@ class FormTransaction extends PureComponent {
       else if (from.currency === baseCurrency) exchange = value * lastRates[to.currency];
       else if (to.currency === baseCurrency) exchange = value / lastRates[from.currency];
       else exchange = (value / lastRates[from.currency]) * lastRates[to.currency];
-      exchange = parseFloat(exchange, 10).toFixed(2);
+
+      exchange = parseFloat(exchange, 10).toFixed(currencyDecimals(exchange, to.currency));
     }
 
     onChange({
@@ -68,6 +69,8 @@ class FormTransaction extends PureComponent {
         color, destination, form, vault,
       },
     } = this;
+
+    console.log({ form });
 
     return (
       <Consumer>
