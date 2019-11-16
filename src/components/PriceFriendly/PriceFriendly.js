@@ -6,11 +6,11 @@ import { Icon, Price, Text } from '../../reactor/components';
 import { format } from '../../reactor/components/Price/modules';
 
 import ASSETS from '../../assets';
-import { C } from '../../common';
+import { C, currencyDecimals } from '../../common';
 import styles from './PriceFriendly.style';
 
 const { COLOR } = THEME;
-const { FIXED, SYMBOL } = C;
+const { SYMBOL } = C;
 const maskValue = (props) => format({ ...props, operator: undefined }).replace(/[0-9]/gi, '*');
 
 const PriceFriendly = ({
@@ -29,7 +29,7 @@ const PriceFriendly = ({
   const props = {
     ...inherit,
     color,
-    fixed: value < 1000 ? FIXED[currency] || 2 : 0,
+    fixed: currencyDecimals(value, currency),
     operator,
     symbol: SYMBOL[currency] || currency,
     value: Math.abs(value),

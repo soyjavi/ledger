@@ -1,4 +1,5 @@
 import C from './constants';
+import currencyDecimals from './currencyDecimals';
 import exchange from './exchange';
 import fetch from './fetch';
 import FORM from './forms';
@@ -19,6 +20,7 @@ import verboseTime from './verboseTime';
 
 export {
   C,
+  currencyDecimals,
   exchange,
   fetch,
   FORM,
