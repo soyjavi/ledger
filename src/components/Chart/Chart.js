@@ -48,7 +48,7 @@ class Chart extends Component {
         { scales && (
           <View style={[styles.scales, captions && styles.scaleCaptions]}>
             <View style={[styles.scaleValues, inverted && styles.scaleValuesInverted]}>
-              { firstValueIndex && scales.map((scale, index) => (
+              { firstValueIndex !== undefined && scales.map((scale, index) => (
                 <View
                   key={`scale-${index.toString()}`}
                   style={[styles.tag, scale.highlight && avgProps]}
@@ -61,6 +61,7 @@ class Chart extends Component {
                 </View>
               ))}
             </View>
+
             <View style={styles.scaleLines}>
               { scales.map((scale, index) => (
                 <View
