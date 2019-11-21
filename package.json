@@ -1,7 +1,7 @@
 {
   "name": "voltvault-app",
   "description": "Cross-Device client for voltvault",
-  "version": "0.17.2",
+  "version": "0.17.4",
   "license": "LGPL-3.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
@@ -15,31 +15,33 @@
     "lint": "eslint src"
   },
   "dependencies": {
-    "expo": "^34.0.1",
-    "expo-barcode-scanner": "~6.0.0",
-    "expo-camera": "~6.0.0",
-    "expo-font": "~6.0.1",
-    "expo-linear-gradient": "~6.0.0",
-    "expo-local-authentication": "~6.0.0",
-    "expo-location": "~6.0.0",
-    "expo-permissions": "~6.0.0",
+    "expo": "^35.0.1",
+    "expo-barcode-scanner": "~7.0.0",
+    "expo-camera": "~7.0.0",
+    "expo-cli": "^3.8.0",
+    "expo-font": "~7.0.0",
+    "expo-linear-gradient": "~7.0.1",
+    "expo-local-authentication": "~7.0.0",
+    "expo-location": "~7.0.0",
+    "expo-permissions": "~7.0.0",
+    "global": "^4.4.0",
     "prop-types": "15.7.2",
     "react": "16.8.3",
     "react-dom": "^16.8.6",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-34.0.0.tar.gz",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",
     "react-native-web": "^0.11.4"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.2",
-    "babel-preset-expo": "^6.0.0",
+    "babel-preset-expo": "^7.1.0",
     "eslint": "^6.2.1",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.14.3",
-    "eslint-plugin-react-hooks": "^1.7.0",
+    "eslint-plugin-react-hooks": "^2.3.0",
     "eslint-plugin-react-native": "^3.7.0",
-    "jest-expo": "^34.0.1"
+    "jest-expo": "^35.0.0"
   },
   "jest": {
     "preset": "jest-expo"
