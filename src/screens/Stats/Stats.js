@@ -99,52 +99,54 @@ class Stats extends Component {
     return (
       <Viewport {...inherit} scroll={false} visible={visible}>
         <Consumer>
-          { ({ l10n, navigation, store }) => (
+          { ({ l10n, navigation, store: { baseCurrency: currency } }) => (
             <Fragment>
               <Header highlight title={`${title}${l10n.ACTIVITY}`} />
 
               <SliderMonths {...slider} onChange={_onChangeSlider} style={styles.sliderMonths} />
 
               <ScrollView contentContainerStyle={styles.scrollView} ref={this.scrollview}>
-                <Heading subtitle={l10n.OVERALL_BALANCE} />
                 <Chart
+                  {...calcScales(chart.balance)}
                   captions={orderCaptions(l10n)}
                   color={COLOR.ACCENT}
+                  currency={currency}
                   highlight={slider.index}
-                  scales={calcScales(chart.balance, store)}
                   styleContainer={[styles.chart, styles.chartMargin]}
                   style={styles.chartBalance}
+                  title={l10n.OVERALL_BALANCE}
                   values={chart.balance}
                 />
-                <Heading subtitle={`${l10n.INCOMES} vs. ${l10n.EXPENSES}`} />
                 <Chart
+                  {...calcScales(chart.incomes)}
                   color={COLOR.INCOME}
+                  currency={currency}
                   highlight={slider.index}
-                  scales={calcScales(chart.incomes, store)}
                   styleContainer={styles.chart}
+                  title={`${l10n.INCOMES} vs. ${l10n.EXPENSES}`}
                   values={chart.incomes}
                 />
                 <Chart
+                  {...calcScales(chart.expenses)}
                   captions={orderCaptions(l10n)}
+                  currency={currency}
                   color={COLOR.EXPENSE}
                   highlight={slider.index}
                   inverted
-                  scales={calcScales(chart.expenses, store)}
                   styleContainer={[styles.chart, styles.chartMargin]}
                   values={chart.expenses}
                 />
                 { !vault && (
-                  <Fragment>
-                    <Heading subtitle={l10n.TRANSFERS} />
-                    <Chart
-                      captions={orderCaptions(l10n)}
-                      color={COLOR.TRANSFER}
-                      highlight={slider.index}
-                      scales={calcScales(chart.transfers, store)}
-                      styleContainer={[styles.chart, styles.chartMargin]}
-                      values={chart.transfers}
-                    />
-                  </Fragment>
+                  <Chart
+                    {...calcScales(chart.transfers)}
+                    captions={orderCaptions(l10n)}
+                    color={COLOR.TRANSFER}
+                    currency={currency}
+                    highlight={slider.index}
+                    styleContainer={[styles.chart, styles.chartMargin]}
+                    title={l10n.TRANSFERS}
+                    values={chart.transfers}
+                  />
                 )}
 
                 { (hasExpenses || hasIncomes)

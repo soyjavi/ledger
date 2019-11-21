@@ -47,9 +47,6 @@ export default StyleSheet.create({
     justifyContent: 'flex-start',
   },
 
-  container: {
-  },
-
   containerInverted: {
     marginTop: -1,
   },
@@ -60,7 +57,6 @@ export default StyleSheet.create({
     flex: 1,
     height: COLUMN_HEIGHT,
   },
-
 
   legend: {
     fontSize: UNIT,
@@ -88,43 +84,28 @@ export default StyleSheet.create({
     right: 0,
     top: 0,
     bottom: 0,
+    // zIndex: 1,
+
+    // backgroundColor: 'rgba(0,255,0, 0.25)',
+    borderColor: COLOR.BASE,
+    borderBottomWidth: 1,
+    borderTopWidth: 1,
+  },
+
+  scalesInverted: {
+    borderTopWidth: 0,
   },
 
   scaleCaptions: {
     bottom: SPACE.REGULAR,
   },
 
-  scaleLines: {
-    flex: 1,
-    justifyContent: 'space-between',
-    height: '100%',
-  },
-
   scaleLine: {
-    height: 1,
-    width: '100%',
     backgroundColor: COLOR.BASE,
-  },
-
-  scaleLineAVG: {
-    opacity: 0.5,
-  },
-
-  scaleLineEmpty: {
-    height: 0,
-  },
-
-  scaleValues: {
-    position: 'absolute',
-    bottom: 0,
-    top: 0,
-    left: SPACE.XXS,
-    justifyContent: 'space-between',
-    zIndex: 1,
-  },
-
-  scaleValuesInverted: {
-    flexDirection: 'column-reverse',
+    height: 1,
+    opacity: 0.38,
+    width: '100%',
+    top: '50%',
   },
 
   tag: {
