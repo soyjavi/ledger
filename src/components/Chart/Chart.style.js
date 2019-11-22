@@ -84,9 +84,6 @@ export default StyleSheet.create({
     right: 0,
     top: 0,
     bottom: 0,
-    // zIndex: 1,
-
-    // backgroundColor: 'rgba(0,255,0, 0.25)',
     borderColor: COLOR.BASE,
     borderBottomWidth: 1,
     borderTopWidth: 1,

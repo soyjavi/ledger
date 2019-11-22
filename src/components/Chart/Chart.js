@@ -52,7 +52,7 @@ class Chart extends Component {
         <View style={[inverted && styles.containerInverted, inherit.styleContainer]}>
           { avg > 0 && (
             <View style={[styles.scales, inverted && styles.scalesInverted, captions && styles.scaleCaptions]}>
-              <View style={{ top: '50%' }}>
+              <View style={{ marginTop: -10, top: `${100 - parseInt(((avg - min) * 100) / (max - min), 10)}%` }}>
                 <View style={[styles.scaleLine, { backgroundColor: color }]} />
                 <View style={[styles.tag, { backgroundColor: color }]}>
                   <PriceFriendly currency={currency} value={avg} lighten style={[styles.legend, styles.legendHighlight]} />
