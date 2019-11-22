@@ -1,9 +1,6 @@
 import { C } from '../../../common';
 
-const {
-  CURRENCY, VAULT_TRANSFER, WIPE, TX: { TYPE: { INCOME } },
-} = C;
-
+const { CURRENCY, VAULT_TRANSFER, WIPE } = C;
 const MAX_DAYS = 3;
 
 export default ({ txs = [], vaults = [] }) => {
@@ -25,16 +22,12 @@ export default ({ txs = [], vaults = [] }) => {
         days += 1;
         date = txDate;
         dateIndex = dataSource.length;
-        dataSource.push({ value: 0, timestamp: tx.timestamp, txs: [] });
-      }
-
-      if (tx.category !== VAULT_TRANSFER) {
-        dataSource[dateIndex].value += tx.type === INCOME ? tx.value : -(tx.value);
+        dataSource.push({ timestamp: tx.timestamp, txs: [] });
       }
 
       dataSource[dateIndex].txs.push({ currency, ...tx });
 
-      return days === MAX_DAYS;
+      return days > MAX_DAYS;
     });
 
   return dataSource;
