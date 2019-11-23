@@ -12,7 +12,7 @@ export default StyleSheet.create({
   },
 
   chartMargin: {
-    marginBottom: SPACE.REGULAR,
+    marginBottom: SPACE.L,
   },
 
   chartBalance: {

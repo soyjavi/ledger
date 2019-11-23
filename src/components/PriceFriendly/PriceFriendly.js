@@ -14,7 +14,7 @@ const { SYMBOL } = C;
 const maskValue = (props) => format({ ...props, operator: undefined }).replace(/[0-9]/gi, '*');
 
 const PriceFriendly = ({
-  currency, icon, mask, value = 0, ...inherit
+  caption, currency, icon, mask, value = 0, ...inherit
 }) => {
   let color;
   let operator;
@@ -37,6 +37,7 @@ const PriceFriendly = ({
 
   return (
     <View style={styles.container}>
+      { caption && <Text color={color} {...inherit}>{caption}</Text> }
       { icon && !mask && Math.abs(value) > 0 && (
         <Icon value={value > 0 ? ASSETS.income : ASSETS.expense} style={styles.icon} />
       )}
@@ -46,6 +47,7 @@ const PriceFriendly = ({
 };
 
 PriceFriendly.propTypes = {
+  caption: string,
   currency: string,
   icon: bool,
   mask: bool,
@@ -54,6 +56,7 @@ PriceFriendly.propTypes = {
 };
 
 PriceFriendly.defaultProps = {
+  caption: undefined,
   currency: undefined,
   icon: false,
   mask: false,
