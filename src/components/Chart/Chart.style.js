@@ -8,7 +8,6 @@ const {
 
 const COLUMN_HEIGHT = UNIT * 6.4;
 const COLUMN_WIDTH = UNIT * 1;
-const SCALE_WIDTH = SPACE.XL;
 
 export default StyleSheet.create({
   bar: {
@@ -20,10 +19,6 @@ export default StyleSheet.create({
     width: COLUMN_WIDTH,
   },
 
-  barEmpty: {
-    opacity: 0.8,
-  },
-
   barInverted: {
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
@@ -32,7 +27,10 @@ export default StyleSheet.create({
   },
 
   captions: {
-    height: SPACE.REGULAR,
+    position: 'absolute',
+    height: SPACE.MEDIUM,
+    bottom: -SPACE.MEDIUM,
+    width: '100%',
   },
 
   column: {
@@ -48,9 +46,13 @@ export default StyleSheet.create({
   },
 
   container: {
+    borderColor: COLOR.BASE,
+    borderBottomWidth: 1,
+    borderTopWidth: 1,
   },
 
   containerInverted: {
+    borderTopWidth: 0,
     marginTop: -1,
   },
 
@@ -60,7 +62,6 @@ export default StyleSheet.create({
     flex: 1,
     height: COLUMN_HEIGHT,
   },
-
 
   legend: {
     fontSize: UNIT,
@@ -78,53 +79,26 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
   },
 
-  rowScale: {
-    marginLeft: SCALE_WIDTH,
-  },
-
   scales: {
     position: 'absolute',
     left: 0,
     right: 0,
     top: 0,
     bottom: 0,
-  },
-
-  scaleCaptions: {
-    bottom: SPACE.REGULAR,
-  },
-
-  scaleLines: {
-    flex: 1,
-    justifyContent: 'space-between',
-    height: '100%',
-  },
-
-  scaleLine: {
-    height: 1,
-    width: '100%',
-    backgroundColor: COLOR.BASE,
-  },
-
-  scaleLineAVG: {
-    opacity: 0.5,
-  },
-
-  scaleLineEmpty: {
-    height: 0,
-  },
-
-  scaleValues: {
-    position: 'absolute',
-    bottom: 0,
-    top: 0,
-    left: SPACE.XXS,
-    justifyContent: 'space-between',
     zIndex: 1,
   },
 
-  scaleValuesInverted: {
-    flexDirection: 'column-reverse',
+  scaleAvg: {
+    marginTop: -UNIT,
+    top: '100%',
+  },
+
+  scaleLine: {
+    backgroundColor: COLOR.BASE,
+    height: 1,
+    opacity: 0.31,
+    width: '100%',
+    top: '50%',
   },
 
   tag: {

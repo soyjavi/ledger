@@ -1,12 +1,14 @@
 import {
-  arrayOf, bool, number, shape, string,
+  arrayOf, bool, number, string,
 } from 'prop-types';
-import React, { Component } from 'react';
+import React, { Fragment, Component } from 'react';
 import { View } from 'react-native';
 import { THEME } from '../../reactor/common';
 import { Text } from '../../reactor/components';
+import Heading from '../Heading';
+import PriceFriendly from '../PriceFriendly';
 
-import { calcHeight, calcRange } from './modules';
+import { calcHeight } from './modules';
 import styles from './Chart.style';
 
 const { COLOR } = THEME;
@@ -15,18 +17,20 @@ class Chart extends Component {
   static propTypes = {
     captions: arrayOf(string),
     color: string,
+    currency: string,
     highlight: number,
     inverted: bool,
-    scales: arrayOf(shape({})),
+    title: string,
     values: arrayOf(number),
   };
 
   static defaultProps = {
     captions: undefined,
     color: COLOR.PRIMARY,
+    currency: undefined,
     highlight: undefined,
     inverted: false,
-    scales: undefined,
+    title: undefined,
     values: [],
   };
 
@@ -36,87 +40,69 @@ class Chart extends Component {
 
   render() {
     const {
-      captions, color, highlight, inverted, scales, values, ...inherit
+      captions, color, currency, highlight, inverted, title, values, ...inherit
     } = this.props;
-    const { max, min, med: avg } = calcRange(values);
-    const avgProps = { backgroundColor: color };
+    const { max, min, med: avg } = inherit;
     let firstValueIndex = values.findIndex((value) => value !== 0);
     if (firstValueIndex === -1) firstValueIndex = undefined;
+    const rangeProps = { currency, lighten: true, style: styles.legend };
 
     return (
-      <View style={[inverted ? styles.containerInverted : styles.container, inherit.styleContainer]}>
-        { scales && (
-          <View style={[styles.scales, captions && styles.scaleCaptions]}>
-            <View style={[styles.scaleValues, inverted && styles.scaleValuesInverted]}>
-              { firstValueIndex !== undefined && scales.map((scale, index) => (
-                <View
-                  key={`scale-${index.toString()}`}
-                  style={[styles.tag, scale.highlight && avgProps]}
-                >
-                  { scale.value !== 0 && (
-                    <Text lighten style={[styles.legend, scale.highlight && styles.legendHighlight]}>
-                      {scale.value}
-                    </Text>
-                  )}
-                </View>
-              ))}
+      <Fragment>
+        { title && (
+          <Heading subtitle={title}>
+            <View style={styles.row}>
+              { max > 0 && <PriceFriendly caption="   MAX. " value={max} {...rangeProps} />}
+              { min > 0 && <PriceFriendly caption="   MIN. " value={min} {...rangeProps} />}
             </View>
-
-            <View style={styles.scaleLines}>
-              { scales.map((scale, index) => (
-                <View
-                  key={`line-${index.toString()}`}
-                  style={[styles.scaleLine, firstValueIndex && scale.highlight && [styles.scaleLineAVG, avgProps]]}
-                />
-              ))}
-            </View>
-          </View>
+          </Heading>
         )}
-
-        <View style={[styles.content, styles.row, scales && styles.rowScale, inherit.style]}>
-          { values.map((value, index) => (
-            <View
-              key={`${value}-${index.toString()}`}
-              style={[styles.column, inverted && styles.columnInverted]}
-            >
-              <View
-                style={[
-                  styles.bar,
-                  inverted && styles.barInverted,
-                  (value !== 0 || index > firstValueIndex) && { backgroundColor: color },
-                  value !== 0 && { height: `${calcHeight(value, { min, max, avg })}%` },
-                  value === 0 && styles.barEmpty,
-                ]}
-              >
-                { value !== 0 && (
-                  <View
-                    style={[
-                      styles.bar,
-                      inverted && styles.barInverted,
-                      value !== 0 && {
-                        backgroundColor: color,
-                        height: '100%',
-                        opacity: (highlight && highlight === index) ? 1 : 0.33,
-                      },
-                    ]}
-                  />
-                )}
+        <View style={[styles.container, inverted && styles.containerInverted, inherit.styleContainer]}>
+          { avg > 0 && (
+            <View style={styles.scales}>
+              <View style={[styles.scaleAvg, { top: `${100 - parseInt(((avg - min) * 100) / (max - min), 10)}%` }]}>
+                <View style={[styles.scaleLine, { backgroundColor: color }]} />
+                <View style={[styles.tag, { backgroundColor: color }]}>
+                  <PriceFriendly currency={currency} value={avg} lighten style={[styles.legend, styles.legendHighlight]} />
+                </View>
               </View>
             </View>
-          ))}
-        </View>
-        { captions && (
-          <View style={[styles.captions, styles.row, scales && styles.rowScale]}>
-            { captions.map((caption, index) => (
-              <View key={caption} style={styles.column}>
-                <Text lighten style={[styles.legend, highlight === index && styles.legendHighlight]}>
-                  {caption.substring(0, 3).toUpperCase()}
-                </Text>
+          )}
+
+          <View style={[styles.content, styles.row, inherit.style]}>
+            { values.map((value, index) => (
+              <View
+                key={`${value}-${index.toString()}`}
+                style={[styles.column, inverted && styles.columnInverted]}
+              >
+                <View
+                  style={[
+                    styles.bar,
+                    inverted && styles.barInverted,
+                    // (value !== 0 || index > firstValueIndex) && { backgroundColor: color },
+                    value !== 0 && { height: `${calcHeight(value, { min, max, avg })}%` },
+                    {
+                      backgroundColor: color,
+                      opacity: (highlight && highlight === index) ? 1 : 0.68,
+                    },
+                  ]}
+                />
               </View>
             ))}
           </View>
-        )}
-      </View>
+          { captions && (
+            <View style={[styles.captions, styles.row]}>
+              { captions.map((caption, index) => (
+                <View key={caption} style={styles.column}>
+                  <Text lighten style={[styles.legend, highlight === index && styles.legendHighlight]}>
+                    {caption.substring(0, 3).toUpperCase()}
+                  </Text>
+                </View>
+              ))}
+            </View>
+          )}
+        </View>
+      </Fragment>
     );
   }
 }
