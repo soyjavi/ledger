@@ -6,9 +6,7 @@ import { THEME } from '../../reactor/common';
 import { Text, Viewport } from '../../reactor/components';
 
 import { C } from '../../common';
-import {
-  Chart, Footer, Header, Heading,
-} from '../../components';
+import { Chart, Footer, Header } from '../../components';
 import { Consumer } from '../../context';
 import { ItemGroupCategories, Locations, SliderMonths } from './components';
 import { calcScales, orderCaptions, query } from './modules';

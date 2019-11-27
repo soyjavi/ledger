@@ -18,7 +18,7 @@
     "expo": "^35.0.1",
     "expo-barcode-scanner": "~7.0.0",
     "expo-camera": "~7.0.0",
-    "expo-cli": "^3.8.0",
+    "expo-cli": "^3.9.1",
     "expo-font": "~7.0.0",
     "expo-linear-gradient": "~7.0.1",
     "expo-local-authentication": "~7.0.0",
@@ -34,7 +34,7 @@
   "devDependencies": {
     "babel-eslint": "^10.0.2",
     "babel-preset-expo": "^7.1.0",
-    "eslint": "^6.2.1",
+    "eslint": "^6.7.1",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",

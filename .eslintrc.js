@@ -20,10 +20,13 @@ module.exports = {
   },
   plugins: [
     'react',
+    'react-hooks',
     'react-native',
   ],
   rules: {
     'max-len': [1, 120, { 'tabWidth': 2, 'ignoreComments': true }],
+    'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
+    'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies
     'react/jsx-filename-extension': [1, { 'extensions': ['.js', '.jsx'] }],
     'react/jsx-fragments': [0],
     'react/jsx-props-no-spreading': [0],

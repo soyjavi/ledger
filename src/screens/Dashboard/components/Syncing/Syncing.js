@@ -11,24 +11,24 @@ const { COLOR } = THEME;
 
 const Syncing = ({ scroll }) => (
   <Consumer>
-    { ({ l10n, events: { isConnected }, store: { onSync, sync } }) => (
+    { ({ l10n, events: { connected }, store: { onSync, sync } }) => (
       <View>
         <Motion
           style={styles.container}
-          timeline={[{ property: 'translateY', value: !sync || !isConnected ? 0 : 128 }]}
+          timeline={[{ property: 'translateY', value: !sync || !connected ? 0 : 128 }]}
         >
           <Button
-            activity={isConnected}
-            color={isConnected ? undefined : COLOR.ERROR}
+            activity={connected}
+            color={connected ? undefined : COLOR.ERROR}
             rounded
             small
-            title={isConnected ? l10n.SYNCING : l10n.OFFLINE_MODE}
+            title={connected ? l10n.SYNCING : l10n.OFFLINE_MODE}
           />
         </Motion>
 
         <Motion
           style={styles.container}
-          timeline={[{ property: 'translateY', value: isConnected && sync && !scroll ? 0 : 128 }]}
+          timeline={[{ property: 'translateY', value: connected && sync && !scroll ? 0 : 128 }]}
         >
           <Button
             color={COLOR.TEXT}

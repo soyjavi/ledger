@@ -3,7 +3,7 @@ import { C } from '../../../common';
 const { SCREEN } = C;
 
 export default async (component, { pin, store, navigation }) => {
-  const { props: { isConnected } } = component;
+  const { props: { connected } } = component;
   const isSignup = store.pin === undefined;
 
   component.setState({ busy: true });
@@ -14,7 +14,7 @@ export default async (component, { pin, store, navigation }) => {
 
   navigation.navigate(SCREEN.DASHBOARD);
 
-  if (!isSignup && isConnected) store.onSync();
+  if (!isSignup && connected) store.onSync();
 
   component.setState({ busy: false, pin: '' });
 };
