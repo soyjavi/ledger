@@ -16,57 +16,52 @@ const { COLOR } = THEME;
 
 const { SETTINGS: { SHOW_VAULT_CURRENCY } } = C;
 
-const VaultCard = (props) => {
-  const {
-    currency, onPress, currentBalance, currentMonth: { progression }, mask, title,
-  } = props;
-
-  return (
-    <Consumer>
-      { ({ l10n, store: { baseCurrency, rates, settings } }) => (
-        <Touchable onPress={onPress} rippleColor={COLOR.TEXT_LIGHTEN} style={styles.container}>
-          <Box>
-            <View style={styles.content}>
-              <View style={styles.row}>
-                <Image source={FLAGS[currency]} style={styles.thumbnail} />
-                <Text caption level={2} numberOfLines={1}>{title.toUpperCase()}</Text>
-              </View>
-              <PriceFriendly
-                currency={baseCurrency}
-                headline
-                level={5}
-                mask={mask}
-                value={baseCurrency !== currency
-                  ? exchange(Math.abs(currentBalance), currency, baseCurrency, rates)
-                  : Math.abs(currentBalance)}
-              />
-              { currency !== baseCurrency && settings[SHOW_VAULT_CURRENCY] && (
-                <PriceFriendly currency={currency} subtitle level={3} lighten mask={mask} value={currentBalance} />)}
-              <View style={styles.expand} />
-
-              <View style={styles.row}>
-                { progression
-                  ? (
-                    <PriceFriendly
-                      currency="%"
-                      icon
-                      level={3}
-                      subtitle
-                      value={currentBalance - progression > 0
-                        ? (progression * 100) / (currentBalance - progression)
-                        : progression}
-                    />
-                  )
-                  : <Text caption lighten>{l10n.WITHOUT_TXS}</Text>}
-              </View>
+const VaultCard = ({
+  currency, onPress, currentBalance, currentMonth: { progression }, mask, title,
+}) => (
+  <Consumer>
+    { ({ l10n, store: { baseCurrency, rates, settings } }) => (
+      <Touchable onPress={onPress} rippleColor={COLOR.TEXT_LIGHTEN} style={styles.container}>
+        <Box>
+          <View style={styles.content}>
+            <View style={styles.row}>
+              <Image source={FLAGS[currency]} style={styles.thumbnail} />
+              <Text caption level={2} numberOfLines={1}>{title.toUpperCase()}</Text>
             </View>
-          </Box>
-        </Touchable>
-      )}
-    </Consumer>
+            <PriceFriendly
+              currency={baseCurrency}
+              headline
+              level={5}
+              mask={mask}
+              value={baseCurrency !== currency
+                ? exchange(Math.abs(currentBalance), currency, baseCurrency, rates)
+                : Math.abs(currentBalance)}
+            />
+            { currency !== baseCurrency && settings[SHOW_VAULT_CURRENCY] && (
+              <PriceFriendly currency={currency} subtitle level={3} lighten mask={mask} value={currentBalance} />)}
+            <View style={styles.expand} />
 
-  );
-};
+            <View style={styles.row}>
+              { progression
+                ? (
+                  <PriceFriendly
+                    currency="%"
+                    icon
+                    level={3}
+                    subtitle
+                    value={currentBalance - progression > 0
+                      ? (progression * 100) / (currentBalance - progression)
+                      : progression}
+                  />
+                )
+                : <Text caption lighten>{l10n.WITHOUT_TXS}</Text>}
+            </View>
+          </View>
+        </Box>
+      </Touchable>
+    )}
+  </Consumer>
+);
 
 VaultCard.propTypes = {
   currency: string.isRequired,
