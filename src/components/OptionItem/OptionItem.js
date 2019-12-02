@@ -17,7 +17,7 @@ const OptionItem = ({
 }) => (
   <View style={styles.container}>
     <Touchable onPress={onPress} rippleColor={COLOR.PRIMARY} style={styles.content}>
-      <Text subtitle level={2} numberOfLines={1} lighten={disabled}>{title}</Text>
+      <Text subtitle numberOfLines={1} lighten={disabled}>{title}</Text>
       { caption && <Text caption lighten>{caption}</Text> }
       { children }
     </Touchable>

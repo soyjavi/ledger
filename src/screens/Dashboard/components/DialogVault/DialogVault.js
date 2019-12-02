@@ -82,11 +82,11 @@ class DialogVault extends PureComponent {
             title={`${l10n.NEW} ${l10n.VAULT}`}
             visible={visible}
           >
-            <Text lighten level={2}>
+            <Text lighten>
               { vaults.length === 0 ? l10n.FIRST_VAULT_CAPTION : l10n.VAULT_CAPTION }
             </Text>
             <View style={styles.form}>
-              <Text subtitle level={3}>{l10n.CURRENCIES}</Text>
+              <Text subtitle>{l10n.CURRENCIES}</Text>
               <Slider itemMargin={0} itemWidth={CARD_WIDTH + SPACE.S} style={styles.currencies}>
                 { queryCurrencies(store).map((item) => (
                   <CardOption

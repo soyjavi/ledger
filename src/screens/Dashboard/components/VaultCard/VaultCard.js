@@ -1,5 +1,5 @@
 import {
-  bool, func, number, shape, string,
+  func, number, shape, string,
 } from 'prop-types';
 import React from 'react';
 import { Image, View } from 'react-native';
@@ -17,7 +17,7 @@ const { COLOR } = THEME;
 const { SETTINGS: { SHOW_VAULT_CURRENCY } } = C;
 
 const VaultCard = ({
-  currency, onPress, currentBalance, currentMonth: { progression }, mask, title,
+  currency, onPress, currentBalance, currentMonth: { progression }, title,
 }) => (
   <Consumer>
     { ({ l10n, store: { baseCurrency, rates, settings } }) => (
@@ -26,19 +26,17 @@ const VaultCard = ({
           <View style={styles.content}>
             <View style={styles.row}>
               <Image source={FLAGS[currency]} style={styles.thumbnail} />
-              <Text caption level={2} numberOfLines={1}>{title.toUpperCase()}</Text>
+              <Text caption numberOfLines={1}>{title.toUpperCase()}</Text>
             </View>
             <PriceFriendly
               currency={baseCurrency}
               headline
-              level={5}
-              mask={mask}
               value={baseCurrency !== currency
                 ? exchange(Math.abs(currentBalance), currency, baseCurrency, rates)
                 : Math.abs(currentBalance)}
             />
             { currency !== baseCurrency && settings[SHOW_VAULT_CURRENCY] && (
-              <PriceFriendly currency={currency} subtitle level={3} lighten mask={mask} value={currentBalance} />)}
+              <PriceFriendly currency={currency} subtitle lighten value={currentBalance} />)}
             <View style={styles.expand} />
 
             <View style={styles.row}>
@@ -47,7 +45,6 @@ const VaultCard = ({
                   <PriceFriendly
                     currency="%"
                     icon
-                    level={3}
                     subtitle
                     value={currentBalance - progression > 0
                       ? (progression * 100) / (currentBalance - progression)
@@ -68,13 +65,11 @@ VaultCard.propTypes = {
   onPress: func.isRequired,
   currentBalance: number.isRequired,
   currentMonth: shape({}),
-  mask: bool,
   title: string,
 };
 
 VaultCard.defaultProps = {
   currentMonth: {},
-  mask: false,
   title: '',
 };
 

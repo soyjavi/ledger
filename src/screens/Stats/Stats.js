@@ -157,7 +157,7 @@ class Stats extends Component {
                   )
                   : (
                     <View style={styles.contentEmpty}>
-                      <Text level={2} lighten>{l10n.NO_TRANSACTIONS}</Text>
+                      <Text lighten>{l10n.NO_TRANSACTIONS}</Text>
                     </View>
                   )}
               </ScrollView>

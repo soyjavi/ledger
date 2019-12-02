@@ -93,7 +93,7 @@ class DialogClone extends PureComponent {
                   <Text lighten style={styles.month}>{verboseMonthShort(timestamp, l10n)}</Text>
                 </Box>
                 <View style={styles.texts}>
-                  <Text subtitle level={2} style={styles.title}>{title}</Text>
+                  <Text subtitle style={styles.title}>{title}</Text>
                   <Text caption lighten numberOfLines={1}>
                     {`${verboseTime(new Date(timestamp))} - ${l10n.CATEGORIES[type][category]}`}
                   </Text>
@@ -101,7 +101,6 @@ class DialogClone extends PureComponent {
                 <View style={styles.prices}>
                   <PriceFriendly
                     currency={baseCurrency}
-                    level={2}
                     operator
                     subtitle
                     value={baseCurrency !== currency
@@ -109,7 +108,7 @@ class DialogClone extends PureComponent {
                       : value}
                   />
                   { currency !== baseCurrency && (
-                    <PriceFriendly caption currency={currency} lighten operator value={value} />
+                    <PriceFriendly currency={currency} lighten operator value={value} />
                   )}
                 </View>
               </View>

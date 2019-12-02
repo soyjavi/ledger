@@ -11,8 +11,7 @@ const ProviderEvents = ({ children, ...props }) => {
   useEffect(() => {
     NetInfo.isConnected.fetch().then(setConnected);
     NetInfo.isConnected.addEventListener('connectionChange', setConnected);
-    // @TODO: Unsubscribe
-    // return () => { NetInfo.isConnected.removeEventListener('connectionChange'); };
+    // return () => NetInfo.isConnected.removeEventListener('connectionChange');
   }, []);
 
   return (

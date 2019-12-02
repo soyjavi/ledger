@@ -20,15 +20,15 @@ const GroupTransactions = React.memo(({
       <View style={styles.container}>
         <View style={[styles.row, styles.heading]}>
           <Box style={styles.tag}>
-            <Text subtitle level={3}>{verboseDate(timestamp, l10n)}</Text>
+            <Text caption bold>{verboseDate(timestamp, l10n)}</Text>
           </Box>
           { value !== 0 && (
             <View style={styles.tag}>
               <PriceFriendly
+                bold
+                caption
                 currency={baseCurrency}
                 icon
-                subtitle
-                level={3}
                 value={exchange(value, currency, baseCurrency, rates, timestamp)}
               />
             </View>

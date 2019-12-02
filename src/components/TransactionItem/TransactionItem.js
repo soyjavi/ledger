@@ -14,16 +14,17 @@ import styles from './TransactionItem.style';
 const { VAULT_TRANSFER, TX: { TYPE: { EXPENSE, TRANSFER } } } = C;
 const { COLOR } = THEME;
 
-const TransactionItem = ({
-  category, currency, location, timestamp, title, type, value,
-}) => {
+const TransactionItem = (props) => {
+  const {
+    category, currency, location, timestamp, title, type, value,
+  } = props;
   const isVaultTransfer = category === VAULT_TRANSFER;
   const operator = type === EXPENSE ? -1 : 1;
 
   return (
     <Consumer>
       { ({ store: { baseCurrency, onSelectTx, rates } }) => (
-        <Touchable rippleColor={COLOR.TEXT_LIGHTEN} onPress={() => onSelectTx(this.props)}>
+        <Touchable rippleColor={COLOR.TEXT_LIGHTEN} onPress={() => onSelectTx(props)}>
           <View style={[styles.container, styles.row, isVaultTransfer && styles.containerHighlight]}>
             <Box style={styles.icon}>
               <Icon value={getIconCategory({ type, category, title })} />
@@ -31,16 +32,15 @@ const TransactionItem = ({
 
             <View style={[styles.content, styles.row]}>
               <View style={styles.texts}>
-                { title && <Text subtitle level={3} lighten={isVaultTransfer} numberOfLines={1}>{title}</Text> }
-                <Text caption level={2} lighten style={styles.caption}>
+                { title && <Text bold lighten={isVaultTransfer} numberOfLines={1}>{title}</Text> }
+                <Text caption lighten style={styles.caption}>
                   {formatCaption(new Date(timestamp), location)}
                 </Text>
               </View>
               <View style={styles.prices}>
                 <PriceFriendly
+                  bold
                   currency={baseCurrency}
-                  subtitle
-                  level={3}
                   lighten={isVaultTransfer}
                   operator={type !== TRANSFER}
                   value={exchange(value, currency, baseCurrency, rates, timestamp) * operator}
@@ -50,7 +50,6 @@ const TransactionItem = ({
                   <PriceFriendly
                     caption
                     currency={currency}
-                    level={2}
                     lighten
                     operator={type !== TRANSFER}
                     value={value * operator}

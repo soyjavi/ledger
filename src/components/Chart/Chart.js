@@ -26,8 +26,8 @@ const Chart = React.memo(({
       { title && (
         <Heading subtitle={title}>
           <View style={styles.row}>
-            { max > 0 && <PriceFriendly caption="   MAX. " value={max} {...rangeProps} />}
-            { min > 0 && <PriceFriendly caption="   MIN. " value={min} {...rangeProps} />}
+            { max > 0 && <PriceFriendly label="   MAX. " value={max} {...rangeProps} />}
+            { min > 0 && <PriceFriendly label="   MIN. " value={min} {...rangeProps} />}
           </View>
         </Heading>
       )}

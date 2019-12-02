@@ -97,7 +97,7 @@ class Session extends PureComponent {
                       />
                     ))}
                 </View>
-                <Text level={2} lighten>
+                <Text lighten>
                   { store.pin && getFingerprintAsync ? l10n.ENTER_PIN_OR_FINGERPRINT : l10n.ENTER_PIN }
                 </Text>
               </View>
@@ -105,7 +105,7 @@ class Session extends PureComponent {
               { store.pin && !busy && getFingerprintAsync && (
                 <Image source={ASSETS.fingerprint} style={styles.fingerprint} />)}
               <NumKeyboard onPress={(number) => _onNumber({ number, store, navigation })} />
-              <Text lighten caption level={3} style={styles.textVersion}>{`v${VERSION}`}</Text>
+              <Text lighten caption style={styles.textVersion}>{`v${VERSION}`}</Text>
             </View>
           )}
         </Consumer>

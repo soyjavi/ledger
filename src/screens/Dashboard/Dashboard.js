@@ -19,13 +19,11 @@ const { SPACE } = THEME;
 class Dashboard extends PureComponent {
   static propTypes = {
     backward: bool,
-    mask: bool,
     visible: bool,
   };
 
   static defaultProps = {
     backward: false,
-    mask: false,
     visible: true,
   };
 
@@ -33,16 +31,11 @@ class Dashboard extends PureComponent {
     super(props);
     this.state = {
       dialog: false,
-      mask: props.mask,
       scroll: false,
     };
   }
 
-  componentWillReceiveProps({ backward, mask }) {
-    const { props } = this;
-
-    if (mask !== props.mask) this.setState({ mask });
-
+  componentWillReceiveProps({ backward }) {
     onHardwareBackPress(!backward, () => {
       const { state: { dialog } } = this;
       if (dialog) this.setState({ dialog: false });
@@ -55,8 +48,6 @@ class Dashboard extends PureComponent {
     if (scroll !== state.scroll) this.setState({ scroll });
   }
 
-  _onSwitchMask = (mask) => this.setState({ mask });
-
   _onToggleDialog = () => {
     const { state: { dialog } } = this;
     this.setState({ dialog: !dialog });
@@ -68,9 +59,9 @@ class Dashboard extends PureComponent {
 
   render() {
     const {
-      _onScroll, _onSwitchMask, _onToggleDialog, _onVault,
+      _onScroll, _onToggleDialog, _onVault,
       props: { visible, ...inherit },
-      state: { dialog, mask, scroll },
+      state: { dialog, scroll },
     } = this;
 
     console.log('<Dashboard>', { visible, dialog, scroll });
@@ -97,8 +88,6 @@ class Dashboard extends PureComponent {
                   <Summary
                     {...overall}
                     currency={baseCurrency}
-                    onMask={_onSwitchMask}
-                    mask={mask}
                     title={l10n.OVERALL_BALANCE}
                   />
 
@@ -110,7 +99,6 @@ class Dashboard extends PureComponent {
                       <VaultCard
                         {...vault}
                         key={vault.hash}
-                        mask={mask}
                         onPress={() => _onVault({ navigation, vault })}
                       />
                     ))}

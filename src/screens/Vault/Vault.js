@@ -130,7 +130,7 @@ class Vault extends PureComponent {
                   )
                   : (
                     <View style={[styles.content, styles.container]}>
-                      <Text level={2} lighten>{l10n.NO_TRANSACTIONS}</Text>
+                      <Text lighten>{l10n.NO_TRANSACTIONS}</Text>
                     </View>
                   )}
               </ScrollView>

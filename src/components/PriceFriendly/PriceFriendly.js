@@ -7,14 +7,15 @@ import { format } from '../../reactor/components/Price/modules';
 
 import ASSETS from '../../assets';
 import { C, currencyDecimals } from '../../common';
+import { Consumer } from '../../context';
 import styles from './PriceFriendly.style';
 
 const { COLOR } = THEME;
-const { SYMBOL } = C;
-const maskValue = (props) => format({ ...props, operator: undefined }).replace(/[0-9]/gi, '*');
+const { SYMBOL, SETTINGS: { HIDE_OVERALL_BALANCE } } = C;
+const maskValue = (props) => format({ ...props, operator: undefined }).replace(/[0-9]/gi, '#');
 
 const PriceFriendly = ({
-  caption, currency, icon, mask, value = 0, ...inherit
+  currency, icon, label, value = 0, ...inherit
 }) => {
   let color;
   let operator;
@@ -36,30 +37,34 @@ const PriceFriendly = ({
   };
 
   return (
-    <View style={styles.container}>
-      { caption && <Text color={color} {...inherit}>{caption}</Text> }
-      { icon && !mask && Math.abs(value) > 0 && (
-        <Icon value={value > 0 ? ASSETS.income : ASSETS.expense} style={styles.icon} />
+    <Consumer>
+      { ({
+        store: { settings: { [HIDE_OVERALL_BALANCE]: mask } },
+      }) => (
+        <View style={styles.container}>
+          { label && <Text color={color} {...inherit}>{label}</Text> }
+          { icon && !mask && Math.abs(value) > 0 && (
+            <Icon value={value > 0 ? ASSETS.income : ASSETS.expense} style={styles.icon} />
+          )}
+          {mask ? <Text color={color} {...inherit}>{maskValue(props)}</Text> : <Price {...props} />}
+        </View>
       )}
-      {mask ? <Text color={color} {...inherit}>{maskValue(props)}</Text> : <Price {...props} />}
-    </View>
+    </Consumer>
   );
 };
 
 PriceFriendly.propTypes = {
-  caption: string,
   currency: string,
   icon: bool,
-  mask: bool,
+  label: string,
   operator: bool,
   value: number,
 };
 
 PriceFriendly.defaultProps = {
-  caption: undefined,
   currency: undefined,
   icon: false,
-  mask: false,
+  label: undefined,
   operator: false,
   value: 0,
 };

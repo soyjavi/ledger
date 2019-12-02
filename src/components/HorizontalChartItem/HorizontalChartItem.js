@@ -16,7 +16,7 @@ const HorizontalChartItem = ({
     <View style={styles.row}>
       { image && <Image source={image} style={styles.image} />}
       <Text caption lighten={small} style={styles.text}>{title}</Text>
-      <PriceFriendly currency={currency} subtitle level={3} lighten={small} value={value} />
+      <PriceFriendly currency={currency} bold caption lighten={small} value={value} />
     </View>
 
     <View style={[styles.bar, styles.barContainer, small && styles.barSmall]}>
