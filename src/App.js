@@ -10,7 +10,7 @@ import {
 } from './screens';
 import styles from './App.style';
 
-const { SCREEN, SETTINGS: { HIDE_OVERALL_BALANCE } } = C;
+const { SCREEN } = C;
 const {
   SESSION, SETTINGS, STATS, DASHBOARD, VAULT, VAULTS,
 } = SCREEN;
@@ -24,9 +24,7 @@ export default () => (
       navigation: {
         current, goBack, params, stack,
       },
-      store: {
-        error, onError, settings: { [HIDE_OVERALL_BALANCE]: mask }, ...store
-      },
+      store: { error, onError, ...store },
     }) => (
       <LayoutView style={styles.container}>
         { console.log('<App>') }
@@ -34,7 +32,7 @@ export default () => (
 
         { stack.includes(SESSION) && (
           <Fragment>
-            <Dashboard backward={current !== DASHBOARD} mask={mask} visible={stack.includes(DASHBOARD)} />
+            <Dashboard backward={current !== DASHBOARD} visible={stack.includes(DASHBOARD)} />
             <Snackbar
               button={l10n.CLOSE.toUpperCase()}
               caption={error}

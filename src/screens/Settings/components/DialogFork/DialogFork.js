@@ -55,7 +55,7 @@ class DialogFork extends PureComponent {
             title={l10n.WARNING}
             visible={visible}
           >
-            <Text level={2}>{l10n.TRANSFER_TXS_IMPORT}</Text>
+            <Text>{l10n.TRANSFER_TXS_IMPORT}</Text>
             <Button
               activity={busy}
               color={COLOR.PRIMARY}

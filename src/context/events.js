@@ -1,50 +1,35 @@
 import { func, node } from 'prop-types';
-import React, { PureComponent, createContext } from 'react';
+import React, { useEffect, useState, createContext } from 'react';
 import { NetInfo } from 'react-native';
 
 import { C } from '../common';
 
 const { Provider, Consumer: ConsumerEvents } = createContext(`${C.NAME}:context:events`);
 
-class ProviderEvents extends PureComponent {
-  static propTypes = {
-    children: node,
-    getFingerprintAsync: func,
-    getLocationAsync: func,
-  };
+const ProviderEvents = ({ children, ...props }) => {
+  const [connected, setConnected] = useState(false);
+  useEffect(() => {
+    NetInfo.isConnected.fetch().then(setConnected);
+    NetInfo.isConnected.addEventListener('connectionChange', setConnected);
+    // return () => NetInfo.isConnected.removeEventListener('connectionChange');
+  }, []);
 
-  static defaultProps = {
-    children: undefined,
-    getFingerprintAsync: undefined,
-    getLocationAsync: undefined,
-  };
+  return (
+    <Provider value={{ connected, ...props }}>
+      { children }
+    </Provider>
+  );
+};
 
-  constructor(props) {
-    super(props);
-    this.state = { isConnected: false };
-  }
+ProviderEvents.propTypes = {
+  children: node.isRequired,
+  getFingerprintAsync: func,
+  getLocationAsync: func,
+};
 
-  componentWillMount() {
-    NetInfo.isConnected.fetch().then((isConnected) => this.setState({ isConnected }));
-  }
-
-  componentDidMount() {
-    NetInfo.isConnected.addEventListener('connectionChange', (isConnected) => this.setState({ isConnected }));
-  }
-
-  componentWillUnmount() {
-    NetInfo.isConnected.removeEventListener('connectionChange');
-  }
-
-  render() {
-    const { props: { children, ...props }, state } = this;
-
-    return (
-      <Provider value={{ ...state, ...props }}>
-        { children }
-      </Provider>
-    );
-  }
-}
+ProviderEvents.defaultProps = {
+  getFingerprintAsync: undefined,
+  getLocationAsync: undefined,
+};
 
 export { ConsumerEvents, ProviderEvents };

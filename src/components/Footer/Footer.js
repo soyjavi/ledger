@@ -40,7 +40,7 @@ class Footer extends PureComponent {
 
     return (
       <Consumer>
-        { ({ events: { isConnected } }) => (
+        { ({ events: { connected } }) => (
           <View style={[styles.container, inherit.style]}>
             { onBack && (
               <Button
@@ -51,10 +51,10 @@ class Footer extends PureComponent {
                 small
               />
             )}
-            { onPress && isConnected && (
+            { onPress && connected && (
               <Button
                 {...BUTTON}
-                disabled={!isConnected}
+                disabled={!connected}
                 icon={ASSETS.add}
                 onPress={onPress}
               />

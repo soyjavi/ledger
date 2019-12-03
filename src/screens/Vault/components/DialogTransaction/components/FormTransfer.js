@@ -76,7 +76,7 @@ class FormTransaction extends PureComponent {
       <Consumer>
         { ({ l10n, store }) => (
           <Fragment>
-            <Text subtitle level={3}>{l10n.VAULT_DESTINATION}</Text>
+            <Text subtitle>{l10n.VAULT_DESTINATION}</Text>
             <Slider itemMargin={0} itemWidth={CARD_WIDTH + SPACE.S} style={styles.cards}>
               { queryAvailableVaults(store, vault).map(({
                 currency, currentBalance, hash, title,
@@ -93,7 +93,6 @@ class FormTransaction extends PureComponent {
                   <PriceFriendly
                     caption
                     color={hash === destination ? COLOR.WHITE : COLOR.TEXT_LIGHTEN}
-                    level={3}
                     value={currentBalance}
                     currency={currency}
                   />

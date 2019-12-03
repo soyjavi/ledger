@@ -1,28 +1,22 @@
 import { arrayOf, node, string } from 'prop-types';
-import React, { PureComponent } from 'react';
+import React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import styles from './Box.style';
 
-class Box extends PureComponent {
-  static propTypes = {
-    children: node.isRequired,
-    colors: arrayOf(string),
-  };
+const Box = ({ children, colors, ...inherit }) => (
+  <LinearGradient colors={colors} start={[0, 0]} end={[1, 1]} style={[styles.container, inherit.style]}>
+    {children}
+  </LinearGradient>
+);
 
-  static defaultProps = {
-    colors: ['#333', '#202020', '#202020'],
-  };
+Box.propTypes = {
+  children: node.isRequired,
+  colors: arrayOf(string),
+};
 
-  render() {
-    const { children, colors, ...inherit } = this.props;
-
-    return (
-      <LinearGradient colors={colors} start={[0, 0]} end={[1, 1]} style={[styles.container, inherit.style]}>
-        {children}
-      </LinearGradient>
-    );
-  }
-}
+Box.defaultProps = {
+  colors: ['#333', '#202020', '#202020'],
+};
 
 export default Box;

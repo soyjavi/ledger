@@ -1,7 +1,7 @@
 import {
   array, arrayOf, number, shape,
 } from 'prop-types';
-import React, { Fragment, PureComponent } from 'react';
+import React, { Fragment } from 'react';
 import { View } from 'react-native';
 import { THEME } from '../../../../reactor/common';
 
@@ -12,82 +12,79 @@ import styles, { MAP_HEIGHT, MAP_WIDTH } from './Locations.style';
 
 const { COLOR } = THEME;
 
-class Locations extends PureComponent {
-  static propTypes = {
-    cities: shape({}),
-    countries: shape({}),
-    points: arrayOf(array),
-    precission: number,
-  };
+const Locations = ({
+  cities, countries, points, precission,
+}) => {
+  const citiesTxs = Object.values(cities).length > 0 ? Object.values(cities).reduce((a, b) => a + b) : 1;
+  const countriesTxs = Object.values(countries).length > 1 ? Object.values(countries).reduce((a, b) => a + b) : 1;
 
-  static defaultProps = {
-    cities: {},
-    countries: {},
-    points: [],
-    precission: 0.001,
-  };
+  return (
+    <Consumer>
+      { ({ l10n }) => (
+        <View style={styles.container}>
+          <View style={styles.content}>
+            <Heading subtitle={l10n.LOCATIONS} style={styles.heading} />
+            <HeatMap
+              color={COLOR.LOCATION}
+              points={points}
+              precission={precission}
+              height={MAP_HEIGHT}
+              width={MAP_WIDTH}
+              style={styles.map}
+            />
+          </View>
 
-  render() {
-    const {
-      cities, countries, points, precission,
-    } = this.props;
-    const citiesTxs = Object.values(cities).length > 0 ? Object.values(cities).reduce((a, b) => a + b) : 1;
-    const countriesTxs = Object.values(countries).length > 1 ? Object.values(countries).reduce((a, b) => a + b) : 1;
+          <View style={styles.content}>
+            <Heading subtitle={l10n.CITIES} style={styles.heading} />
+            <Fragment>
+              { orderByAmount(cities).map(({ key, amount }) => (
+                <HorizontalChartItem
+                  color={COLOR.LOCATION}
+                  key={key}
+                  currency="x"
+                  title={key}
+                  value={amount}
+                  width={Math.floor((amount / citiesTxs) * 100)}
+                />
+              ))}
+            </Fragment>
+          </View>
 
-    return (
-      <Consumer>
-        { ({ l10n }) => (
-          <View style={styles.container}>
+          { Object.keys(countries).length > 1 && (
             <View style={styles.content}>
-              <Heading subtitle={l10n.LOCATIONS} style={styles.heading} />
-              <HeatMap
-                color={COLOR.LOCATION}
-                points={points}
-                precission={precission}
-                height={MAP_HEIGHT}
-                width={MAP_WIDTH}
-                style={styles.map}
-              />
-            </View>
-
-            <View style={styles.content}>
-              <Heading subtitle={l10n.CITIES} style={styles.heading} />
+              <Heading subtitle={l10n.COUNTRIES} style={styles.heading} />
               <Fragment>
-                { orderByAmount(cities).map(({ key, amount }) => (
+                { orderByAmount(countries).map(({ key, amount }) => (
                   <HorizontalChartItem
                     color={COLOR.LOCATION}
                     key={key}
                     currency="x"
                     title={key}
                     value={amount}
-                    width={Math.floor((amount / citiesTxs) * 100)}
+                    width={Math.floor((amount / countriesTxs) * 100)}
                   />
                 ))}
               </Fragment>
             </View>
+          )}
+        </View>
+      )}
+    </Consumer>
+  );
+};
 
-            { Object.keys(countries).length > 1 && (
-              <View style={styles.content}>
-                <Heading subtitle={l10n.COUNTRIES} style={styles.heading} />
-                <Fragment>
-                  { orderByAmount(countries).map(({ key, amount }) => (
-                    <HorizontalChartItem
-                      color={COLOR.LOCATION}
-                      key={key}
-                      currency="x"
-                      title={key}
-                      value={amount}
-                      width={Math.floor((amount / countriesTxs) * 100)}
-                    />
-                  ))}
-                </Fragment>
-              </View>
-            )}
-          </View>
-        )}
-      </Consumer>
-    );
-  }
-}
+Locations.propTypes = {
+  cities: shape({}),
+  countries: shape({}),
+  points: arrayOf(array),
+  precission: number,
+};
+
+Locations.defaultProps = {
+  cities: {},
+  countries: {},
+  points: [],
+  precission: 0.001,
+};
 
 export default Locations;

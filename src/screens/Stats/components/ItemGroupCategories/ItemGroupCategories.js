@@ -48,7 +48,7 @@ class ItemGroupCategories extends PureComponent {
         { ({ store: { baseCurrency }, l10n }) => (
           <View style={styles.container}>
             <Heading subtitle={isExpense ? l10n.EXPENSES : l10n.INCOMES}>
-              <PriceFriendly currency={baseCurrency} subtitle level={3} value={total} />
+              <PriceFriendly currency={baseCurrency} bold value={total} />
             </Heading>
             <View>
               { orderByAmount(totals).map(({ key, amount }) => (

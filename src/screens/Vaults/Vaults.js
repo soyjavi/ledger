@@ -93,15 +93,7 @@ class Vaults extends PureComponent {
                             onPress={() => _onVault(vault, { navigation })}
                             {...vault}
                           >
-                            <View style={styles.row}>
-                              <PriceFriendly
-                                subtitle
-                                level={3}
-                                lighten
-                                currency={currency}
-                                value={vault.currentBalance}
-                              />
-                            </View>
+                            <PriceFriendly lighten currency={currency} value={vault.currentBalance} />
                           </OptionItem>
                         ))}
                       </View>

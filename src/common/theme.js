@@ -5,6 +5,7 @@ const { IS_WEB } = ENV;
 const FAMILY = 'product-sans';
 const FAMILY_BOLD = 'product-sans-bold';
 const WEIGHT = { REGULAR: '400', BOLD: '700' };
+const UNIT = 10;
 
 export default {
   BORDER_RADIUS: 6,
@@ -56,14 +57,13 @@ export default {
       fontWeight: IS_WEB ? WEIGHT.BOLD : WEIGHT.REGULAR,
       letterSpacing: -0.1,
     },
-    CAPTION: {},
+    CAPTION: {
+      // fontSize: UNIT * 1.3,
+    },
     BUTTON: {
       fontFamily: FAMILY_BOLD,
       fontWeight: IS_WEB ? WEIGHT.BOLD : WEIGHT.REGULAR,
     },
-    INPUT: {
-      fontFamily: FAMILY,
-      fontWeight: WEIGHT.REGULAR,
-    },
+    INPUT: {},
   },
 };

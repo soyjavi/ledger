@@ -98,7 +98,7 @@ class DialogTransaction extends PureComponent {
             title={`${l10n.NEW} ${l10n.TRANSACTION}`}
             visible={visible}
           >
-            <Text subtitle level={3}>{l10n.TYPE}</Text>
+            <Text subtitle>{l10n.TYPE}</Text>
             <View style={styles.cards}>
               { [l10n.EXPENSE, l10n.INCOME, l10n.TRANSFER].map((option, index) => (
                 <CardOption
@@ -118,7 +118,7 @@ class DialogTransaction extends PureComponent {
                 <View>
                   { visible && location === false && _getLocation(getLocationAsync) }
                   <HeatMap color={color} points={coords ? [[coords.longitude, coords.latitude]] : undefined} />
-                  <Text level={2} lighten>{place || l10n.LOADING_PLACE}</Text>
+                  <Text lighten>{place || l10n.LOADING_PLACE}</Text>
                 </View>
               )}
             </View>

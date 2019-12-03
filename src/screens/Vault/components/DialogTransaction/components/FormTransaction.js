@@ -51,7 +51,7 @@ class FormTransaction extends PureComponent {
       <Consumer>
         { ({ l10n }) => (
           <Fragment>
-            <Text subtitle level={3}>{l10n.CATEGORY}</Text>
+            <Text subtitle>{l10n.CATEGORY}</Text>
             <Slider itemMargin={0} itemWidth={CARD_WIDTH + SPACE.S} style={styles.cards}>
               { queryCategories({ l10n, type }).map((item) => (
                 <CardOption
