@@ -15,15 +15,7 @@ import styles from './Summary.style';
 
 const { CURRENCY, SCREEN, SETTINGS: { HIDE_OVERALL_BALANCE } } = C;
 
-const captionProps = { caption: true, lighten: true, numberOfLines: 1 };
-
-const PriceSmall = ({ value = 0, ...inherit }) => (
-  <PriceFriendly {...inherit} subtitle lighten={value === 0} value={value} />
-);
-
-PriceSmall.propTypes = {
-  value: number.isRequired,
-};
+const CAPTION_PROPS = { caption: true, lighten: true, numberOfLines: 1 };
 
 const Summary = React.memo(({
   currency, currentBalance, currentMonth, image, onMask, title, ...inherit
@@ -37,7 +29,11 @@ const Summary = React.memo(({
 
   return (
     <Consumer>
-      { ({ l10n, navigation, store: { baseCurrency, rates } }) => (
+      { ({
+        l10n, navigation, store: {
+          baseCurrency, onSettings, rates, settings: { [HIDE_OVERALL_BALANCE]: mask },
+        },
+      }) => (
         <View style={[styles.container, inherit.style]}>
           <Box style={styles.card}>
             <View style={[styles.row, styles.rowHeading]}>
@@ -49,9 +45,7 @@ const Summary = React.memo(({
                 onPress={() => navigation.navigate(SCREEN.STATS)}
               />
             </View>
-            <Touchable onPress={() => {
-              console.log('mask');
-            }}>
+            <Touchable onPress={() => onSettings({ [HIDE_OVERALL_BALANCE]: !mask })}>
               <PriceFriendly
                 currency={baseCurrency}
                 headline
@@ -61,34 +55,34 @@ const Summary = React.memo(({
               />
             </Touchable>
             { baseCurrency !== currency && (
-              <PriceFriendly
-                currency={currency}
-                subtitle
-                lighten
-                value={currentBalance}
-              />
+            <PriceFriendly
+              currency={currency}
+              subtitle
+              lighten
+              value={currentBalance}
+            />
             )}
 
             <View style={styles.expand} />
             <View style={styles.row}>
               <View style={styles.rowItem}>
-                <Text {...captionProps}>{verboseMonth(new Date(), l10n).toUpperCase()}</Text>
-                <PriceSmall currency="%" icon value={progressionPercentage} />
+                <Text {...CAPTION_PROPS}>{verboseMonth(new Date(), l10n).toUpperCase()}</Text>
+                <PriceFriendly caption bold lighten={progressionPercentage === 0} currency="%" icon value={progressionPercentage} />
               </View>
 
               <View style={styles.rowItem}>
-                <Text {...captionProps}>{l10n.INCOMES.toUpperCase()}</Text>
-                <PriceSmall currency={baseCurrency} value={incomes} />
+                <Text {...CAPTION_PROPS}>{l10n.INCOMES.toUpperCase()}</Text>
+                <PriceFriendly caption bold lighten={incomes === 0} currency={baseCurrency} value={incomes} />
               </View>
 
               <View style={[styles.rowItem, styles.rowItemExpanded]}>
-                <Text {...captionProps}>{l10n.EXPENSES.toUpperCase()}</Text>
-                <PriceSmall currency={baseCurrency} value={expenses} />
+                <Text {...CAPTION_PROPS}>{l10n.EXPENSES.toUpperCase()}</Text>
+                <PriceFriendly caption bold lighten={expenses === 0} currency={baseCurrency} value={expenses} />
               </View>
 
               <View>
-                <Text {...captionProps}>{l10n.TODAY.toUpperCase()}</Text>
-                <PriceSmall currency={baseCurrency} value={today} />
+                <Text {...CAPTION_PROPS}>{l10n.TODAY.toUpperCase()}</Text>
+                <PriceFriendly caption bold lighten={today === 0} currency={baseCurrency} value={today} />
               </View>
             </View>
           </Box>

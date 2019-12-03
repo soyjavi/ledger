@@ -7,7 +7,7 @@ import { format } from '../../reactor/components/Price/modules';
 
 import ASSETS from '../../assets';
 import { C, currencyDecimals } from '../../common';
-import { Consumer } from '../../context';
+import { ConsumerStore } from '../../context';
 import styles from './PriceFriendly.style';
 
 const { COLOR } = THEME;
@@ -37,10 +37,8 @@ const PriceFriendly = ({
   };
 
   return (
-    <Consumer>
-      { ({
-        store: { settings: { [HIDE_OVERALL_BALANCE]: mask } },
-      }) => (
+    <ConsumerStore>
+      { ({ settings: { [HIDE_OVERALL_BALANCE]: mask } }) => (
         <View style={styles.container}>
           { label && <Text color={color} {...inherit}>{label}</Text> }
           { icon && !mask && Math.abs(value) > 0 && (
@@ -49,7 +47,7 @@ const PriceFriendly = ({
           {mask ? <Text color={color} {...inherit}>{maskValue(props)}</Text> : <Price {...props} />}
         </View>
       )}
-    </Consumer>
+    </ConsumerStore>
   );
 };
 

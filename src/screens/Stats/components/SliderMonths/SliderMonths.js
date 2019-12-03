@@ -40,8 +40,8 @@ class SliderMonths extends Component {
   }
 
   _scrollTo = (index, animated = true) => {
-    // const { slider: { current: { scrollview } } } = this;
-    // scrollview.current.scrollTo({ x: (index - 3) * ITEM_WIDTH, animated });
+    const { slider: { current: { scrollview } } } = this;
+    scrollview.current.scrollTo({ x: (index - 3) * ITEM_WIDTH, animated });
   }
 
   _onPress = (item) => {

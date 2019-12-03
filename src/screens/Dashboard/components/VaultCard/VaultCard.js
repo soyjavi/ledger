@@ -36,16 +36,17 @@ const VaultCard = ({
                 : Math.abs(currentBalance)}
             />
             { currency !== baseCurrency && settings[SHOW_VAULT_CURRENCY] && (
-              <PriceFriendly currency={currency} subtitle lighten value={currentBalance} />)}
+              <PriceFriendly currency={currency} bold lighten value={currentBalance} />)}
             <View style={styles.expand} />
 
             <View style={styles.row}>
               { progression
                 ? (
                   <PriceFriendly
+                    bold
+                    caption
                     currency="%"
                     icon
-                    subtitle
                     value={currentBalance - progression > 0
                       ? (progression * 100) / (currentBalance - progression)
                       : progression}
