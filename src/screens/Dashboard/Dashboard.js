@@ -71,7 +71,6 @@ class Dashboard extends PureComponent {
         { visible && (
           <Consumer>
             { ({
-              events: { connected },
               l10n,
               navigation,
               store: {
@@ -113,7 +112,7 @@ class Dashboard extends PureComponent {
 
                 <Footer onPress={_onToggleDialog} />
 
-                { visible && connected && sync && (
+                { visible && sync && (
                   <Fragment>
                     { vaults.length === 0 && !dialog && this.setState({ dialog: true }) }
                     <DialogVault baseCurrency={baseCurrency} visible={dialog} onClose={_onToggleDialog} />
