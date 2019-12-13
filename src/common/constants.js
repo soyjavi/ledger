@@ -29,7 +29,6 @@ export default {
   IS_PRODUCTION,
 
   LANGUAGE: 'en-EN',
-  LOCATION_PROPS: { enableHighAccuracy: true },
 
   MS_IN_DAY,
   MS_IN_WEEK,

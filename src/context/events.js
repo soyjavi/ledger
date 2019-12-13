@@ -24,12 +24,10 @@ const ProviderEvents = ({ children, ...props }) => {
 ProviderEvents.propTypes = {
   children: node.isRequired,
   getFingerprintAsync: func,
-  getLocationAsync: func,
 };
 
 ProviderEvents.defaultProps = {
   getFingerprintAsync: undefined,
-  getLocationAsync: undefined,
 };
 
 export { ConsumerEvents, ProviderEvents };
