@@ -113,8 +113,6 @@ export default {
     SETTINGS: 'Settings',
     SETTING_1_TITLE: 'Hide overall balance on startup',
     SETTING_1_CAPTION: 'Switch visibility just touching it',
-    SETTING_2_TITLE: 'Show vault currency',
-    SETTING_2_CAPTION: 'If it is different from the base currency.',
     SYNCING: 'Syncing',
     SLOGAN: 'Your private accounting on the blockchain.',
     STATS: 'Stats',

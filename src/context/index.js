@@ -5,6 +5,7 @@ import React from 'react';
 
 import { ConsumerL10N, ProviderL10N } from '../reactor/context/L10N';
 import { ConnectionProvider, useConnection } from './connection';
+import { SettingsProvider, useSettings } from './settings';
 import { ConsumerStore, ProviderStore } from './store';
 import { ConsumerNavigation, ProviderNavigation } from './navigation';
 
@@ -31,7 +32,9 @@ const Provider = ({ children, dictionary, language }) => (
     <ProviderNavigation>
       <ConnectionProvider>
         <ProviderStore>
-          {children}
+          <SettingsProvider>
+            {children}
+          </SettingsProvider>
         </ProviderStore>
       </ConnectionProvider>
     </ProviderNavigation>
@@ -53,5 +56,8 @@ export {
   ProviderNavigation,
 
   ConnectionProvider,
+  SettingsProvider,
+
   useConnection,
+  useSettings,
 };

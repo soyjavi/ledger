@@ -43,10 +43,6 @@ export default {
     VAULT: 'Vault',
     VAULTS: 'Vaults',
   },
-  SETTINGS: {
-    HIDE_OVERALL_BALANCE: 0,
-    SHOW_VAULT_CURRENCY: 1,
-  },
   STYLE: {
     DIALOG: {
       justifyContent: 'flex-end',

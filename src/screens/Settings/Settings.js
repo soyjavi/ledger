@@ -9,15 +9,13 @@ import ASSETS from '../../assets';
 import {
   Footer, Header, Heading, OptionItem,
 } from '../../components';
-import { C } from '../../common';
-import { Consumer } from '../../context';
+import { Consumer, useSettings } from '../../context';
 import {
   Activity, Button, Image, Text, Viewport,
 } from '../../reactor/components';
 import { DialogFork } from './components';
 import styles from './Settings.style';
 
-const { SETTINGS: { HIDE_OVERALL_BALANCE, SHOW_VAULT_CURRENCY } } = C;
 const QR_URI = 'https://chart.googleapis.com/chart?cht=qr&chs=512x512&chld=H|1&chl';
 const CAMERA_PROPS = {
   barCodeScannerSettings: { barCodeTypes: [BarCodeScanner.Constants.BarCodeType.qr] },
@@ -43,7 +41,6 @@ class Settings extends PureComponent {
       qr: undefined,
       showCamera: false,
       scroll: true,
-
     };
   }
 
@@ -97,18 +94,15 @@ class Settings extends PureComponent {
         dialog, hasCamera, qr, showCamera, scroll,
       },
     } = this;
+    // @TODO
+    // const { state: { maskAmount }, dispatch } = useSettings();
 
     console.log('<Settings>', { visible, hasCamera });
 
     return (
       <Viewport {...inherit} scroll={false} visible={visible}>
         <Consumer>
-          { ({
-            l10n, navigation,
-            store: {
-              authorization, onSettings, secret, settings,
-            },
-          }) => (
+          { ({ l10n, navigation, store: { authorization, secret } }) => (
             <Fragment>
               <Header highlight={scroll} title={l10n.SETTINGS} />
 
@@ -116,16 +110,10 @@ class Settings extends PureComponent {
                 <Heading subtitle={l10n.DASHBOARD} />
                 <View style={styles.options}>
                   <OptionItem
-                    active={settings[HIDE_OVERALL_BALANCE]}
+                    active={undefined}
                     caption={l10n.SETTING_1_CAPTION}
                     title={l10n.SETTING_1_TITLE}
-                    onChange={(value) => onSettings({ [HIDE_OVERALL_BALANCE]: value })}
-                  />
-                  <OptionItem
-                    active={settings[SHOW_VAULT_CURRENCY]}
-                    caption={l10n.SETTING_2_CAPTION}
-                    title={l10n.SETTING_2_TITLE}
-                    onChange={(value) => onSettings({ [SHOW_VAULT_CURRENCY]: value })}
+                    onChange={(value) => console.log(value)}
                   />
                 </View>
 
