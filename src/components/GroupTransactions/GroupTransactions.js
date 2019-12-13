@@ -1,5 +1,5 @@
 import {
-  arrayOf, number, shape, string,
+  arrayOf, number, oneOfType, shape, string,
 } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
@@ -42,7 +42,7 @@ const GroupTransactions = React.memo(({
 
 GroupTransactions.propTypes = {
   currency: string.isRequired,
-  timestamp: string.isRequired,
+  timestamp: oneOfType([string, number]).isRequired,
   txs: arrayOf(shape()).isRequired,
   value: number,
 };
