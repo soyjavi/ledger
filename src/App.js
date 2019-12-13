@@ -19,7 +19,6 @@ const { COLOR } = THEME;
 export default () => (
   <Consumer>
     { ({
-      events,
       l10n,
       navigation: {
         current, goBack, params, stack,
@@ -28,7 +27,7 @@ export default () => (
     }) => (
       <LayoutView style={styles.container}>
         { console.log('<App>') }
-        <Session {...events} backward={current !== SESSION} visible />
+        <Session backward={current !== SESSION} visible />
 
         { stack.includes(SESSION) && (
           <Fragment>

@@ -1,4 +1,4 @@
-import { func, node } from 'prop-types';
+import { node } from 'prop-types';
 import React, { useEffect, useState, createContext } from 'react';
 import { NetInfo } from 'react-native';
 
@@ -8,6 +8,7 @@ const { Provider, Consumer: ConsumerEvents } = createContext(`${C.NAME}:context:
 
 const ProviderEvents = ({ children, ...props }) => {
   const [connected, setConnected] = useState(false);
+
   useEffect(() => {
     NetInfo.isConnected.fetch().then(setConnected);
     NetInfo.isConnected.addEventListener('connectionChange', setConnected);
@@ -23,11 +24,6 @@ const ProviderEvents = ({ children, ...props }) => {
 
 ProviderEvents.propTypes = {
   children: node.isRequired,
-  getFingerprintAsync: func,
-};
-
-ProviderEvents.defaultProps = {
-  getFingerprintAsync: undefined,
 };
 
 export { ConsumerEvents, ProviderEvents };

@@ -1,4 +1,5 @@
-import { bool, func } from 'prop-types';
+import * as LocalAuthentication from 'expo-local-authentication';
+import { bool } from 'prop-types';
 import React, { Fragment, PureComponent } from 'react';
 import { Image, View } from 'react-native';
 
@@ -13,40 +14,43 @@ import { NumKeyboard } from './components';
 import handshake from './modules/handshake';
 import styles from './Session.style';
 
-const { VERSION } = C;
+const { IS_DEV, VERSION } = C;
 const { MOTION: { DURATION } } = THEME;
 
 class Session extends PureComponent {
   static propTypes = {
-    getFingerprintAsync: func,
     visible: bool,
   };
 
   static defaultProps = {
-    getFingerprintAsync: undefined,
     visible: true,
   };
 
   constructor(props) {
     super(props);
-    this.state = {
-      busy: false,
-      askFingerprint: false,
-      pin: '',
-    };
-    if (props.getFingerprintAsync) props.getFingerprintAsync();
+    this.state = { fingerprint: false, pin: '' };
+  }
+
+  async componentDidMount() {
+    this.setState({
+      fingerprint: IS_DEV
+        || (await LocalAuthentication.hasHardwareAsync() && await LocalAuthentication.isEnrolledAsync()),
+    });
   }
 
   _onFingerprint = async ({ navigation, store }) => {
-    const { props: { getFingerprintAsync }, state: { askFingerprint, busy } } = this;
+    this.setState({ fingerprint: undefined });
+    let needHandshake = false;
 
-    if (!busy && !askFingerprint && getFingerprintAsync) {
-      this.setState({ askFingerprint: true });
-      const { error, success } = await getFingerprintAsync();
-
-      if (success) handshake(this, { pin: store.pin, store, navigation });
-      else if (!error) this.setState({ askFingerprint: false });
+    try {
+      const { error, success } = await LocalAuthentication.authenticateAsync();
+      if (success) needHandshake = true;
+      else if (error) this.setState({ fingerprint: true });
+    } catch (error) {
+      if (IS_DEV) needHandshake = true;
     }
+
+    if (needHandshake) handshake(this, { pin: store.pin, store, navigation });
   }
 
   _onNumber = ({ number, store, navigation }) => {
@@ -64,13 +68,11 @@ class Session extends PureComponent {
 
   render() {
     const {
-      _onFingerprint, _onNumber,
-      props: { getFingerprintAsync, visible, ...inherit },
-      state: { askFingerprint, busy, pin },
+      _onFingerprint, _onNumber, props: { visible, ...inherit }, state: { fingerprint, busy, pin },
     } = this;
 
     console.log('<Session>', {
-      askFingerprint, visible, busy, pin,
+      fingerprint, visible, busy, pin,
     });
 
     return (
@@ -78,7 +80,7 @@ class Session extends PureComponent {
         <Consumer>
           { ({ l10n, store, navigation }) => (
             <View style={styles.container}>
-              { visible && getFingerprintAsync && !askFingerprint && store.pin
+              { visible && fingerprint && store.pin
                 ? _onFingerprint({ store, navigation }) && <Fragment />
                 : undefined }
               <View style={styles.content}>
@@ -98,12 +100,12 @@ class Session extends PureComponent {
                     ))}
                 </View>
                 <Text lighten>
-                  { store.pin && getFingerprintAsync ? l10n.ENTER_PIN_OR_FINGERPRINT : l10n.ENTER_PIN }
+                  { store.pin && fingerprint ? l10n.ENTER_PIN_OR_FINGERPRINT : l10n.ENTER_PIN }
                 </Text>
               </View>
 
-              { store.pin && !busy && getFingerprintAsync && (
-                <Image source={ASSETS.fingerprint} style={styles.fingerprint} />)}
+              { store.pin && !busy && fingerprint && <Image source={ASSETS.fingerprint} style={styles.fingerprint} /> }
+
               <NumKeyboard onPress={(number) => _onNumber({ number, store, navigation })} />
               <Text lighten caption style={styles.textVersion}>{`v${VERSION}`}</Text>
             </View>
