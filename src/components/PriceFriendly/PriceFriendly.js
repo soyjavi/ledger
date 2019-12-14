@@ -7,47 +7,45 @@ import { format } from '../../reactor/components/Price/modules';
 
 import ASSETS from '../../assets';
 import { C, currencyDecimals } from '../../common';
-import { ConsumerStore } from '../../context';
+import { useSettings } from '../../context';
 import styles from './PriceFriendly.style';
 
 const { COLOR } = THEME;
-const { SYMBOL, SETTINGS: { HIDE_OVERALL_BALANCE } } = C;
+const { SYMBOL } = C;
 const maskValue = (props) => format({ ...props, operator: undefined }).replace(/[0-9]/gi, '#');
 
 const PriceFriendly = ({
-  currency, icon, label, value = 0, ...inherit
+  currency, icon, label, operator, value = 0, ...inherit
 }) => {
+  const { state: { maskAmount } } = useSettings();
   let color;
-  let operator;
+  let operatorEnhanced;
 
   if (icon) {
     if (value === 0) color = COLOR.TEXT_LIGHTEN;
     else color = value > 0 ? COLOR.INCOME : COLOR.EXPENSE;
   }
-  if (inherit.operator && value > 0) operator = '+';
-  else if (inherit.operator && value < 0) operator = '-';
+  if (operator && value > 0) operatorEnhanced = '+';
+  else if (operator && value < 0) operatorEnhanced = '-';
 
   const props = {
     ...inherit,
     color,
     fixed: currencyDecimals(value, currency),
-    operator,
+    numberOfLines: 1,
+    operator: operatorEnhanced,
     symbol: SYMBOL[currency] || currency,
     value: Math.abs(value),
   };
 
   return (
-    <ConsumerStore>
-      { ({ settings: { [HIDE_OVERALL_BALANCE]: mask } }) => (
-        <View style={styles.container}>
-          { label && <Text color={color} {...inherit}>{label}</Text> }
-          { icon && !mask && Math.abs(value) > 0 && (
-            <Icon value={value > 0 ? ASSETS.income : ASSETS.expense} style={styles.icon} />
-          )}
-          {mask ? <Text color={color} {...inherit}>{maskValue(props)}</Text> : <Price {...props} />}
-        </View>
+    <View style={styles.container}>
+      { label && <Text color={color} {...inherit}>{label}</Text> }
+      { icon && !maskAmount && Math.abs(value) > 0 && (
+        <Icon value={value > 0 ? ASSETS.income : ASSETS.expense} style={styles.icon} />
       )}
-    </ConsumerStore>
+      {maskAmount ? <Text color={color} {...inherit}>{maskValue(props)}</Text> : <Price {...props} />}
+    </View>
   );
 };
 

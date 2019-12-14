@@ -50,8 +50,8 @@ class DialogTransaction extends PureComponent {
     if (visible && visible !== props.visible) this.setState(DEFAULTS);
   }
 
-  _getLocation = (getLocationAsync) => {
-    getLocation(this, getLocationAsync);
+  _getLocation = () => {
+    getLocation(this);
   }
 
   _onChange = (value) => this.setState(value);
@@ -88,7 +88,7 @@ class DialogTransaction extends PureComponent {
 
     return (
       <Consumer>
-        { ({ events: { getLocationAsync }, l10n, store }) => (
+        { ({ l10n, store }) => (
           <Dialog
             {...inherit}
             highlight
@@ -114,13 +114,11 @@ class DialogTransaction extends PureComponent {
             <View style={styles.form}>
               { type !== TRANSFER ? <FormTransaction {...formProps} /> : <FormTransfer {...formProps} /> }
 
-              { getLocationAsync && (
-                <View>
-                  { visible && location === false && _getLocation(getLocationAsync) }
-                  <HeatMap color={color} points={coords ? [[coords.longitude, coords.latitude]] : undefined} />
-                  <Text lighten>{place || l10n.LOADING_PLACE}</Text>
-                </View>
-              )}
+              <View>
+                { visible && location === false && _getLocation() }
+                <HeatMap color={color} points={coords ? [[coords.longitude, coords.latitude]] : undefined} />
+                <Text lighten>{place || l10n.LOADING_PLACE}</Text>
+              </View>
             </View>
 
             <Button

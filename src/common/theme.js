@@ -5,7 +5,6 @@ const { IS_WEB } = ENV;
 const FAMILY = 'product-sans';
 const FAMILY_BOLD = 'product-sans-bold';
 const WEIGHT = { REGULAR: '400', BOLD: '700' };
-const UNIT = 10;
 
 export default {
   BORDER_RADIUS: 6,

@@ -1,4 +1,6 @@
-import { number, shape, string } from 'prop-types';
+import {
+  number, oneOfType, shape, string,
+} from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 import { THEME } from '../../reactor/common';
@@ -69,7 +71,7 @@ TransactionItem.propTypes = {
   category: number.isRequired,
   currency: string.isRequired,
   location: shape({}),
-  timestamp: string.isRequired,
+  timestamp: oneOfType([string, number]).isRequired,
   title: string,
   type: number.isRequired,
   value: number.isRequired,

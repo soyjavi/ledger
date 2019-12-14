@@ -3,9 +3,7 @@ import currencyDecimals from './currencyDecimals';
 import exchange from './exchange';
 import fetch from './fetch';
 import FORM from './forms';
-import getFingerprintAsync from './getFingerprintAsync';
 import getIconCategory from './getIconCategory';
-import getLocationAsync from './getLocationAsync';
 import L10N from './l10n';
 import median from './median';
 import objectToQueryString from './objectToQueryString';
@@ -24,9 +22,7 @@ export {
   exchange,
   fetch,
   FORM,
-  getFingerprintAsync,
   getIconCategory,
-  getLocationAsync,
   L10N,
   median,
   objectToQueryString,
