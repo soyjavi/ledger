@@ -1,70 +1,60 @@
 import { node, shape } from 'prop-types';
-import React, { PureComponent, createContext } from 'react';
+import React, { useContext, useState, createContext } from 'react';
 
 import { C } from '../common';
 
-const { Provider, Consumer: ConsumerNavigation } = createContext(`${C.NAME}:context:navigation`);
 const { SCREEN: { SESSION } } = C;
+const NavigationContext = createContext(`${C.NAME}:context:navigation`);
 
-class ProviderNavigation extends PureComponent {
-  static propTypes = {
-    children: node,
-    navigator: shape({}),
-  };
+const NavigationProvider = ({ children, navigator }) => {
+  const [params, setParams] = useState({});
+  const [stack, setStack] = useState([SESSION]);
+  const [, setState] = useState();
 
-  static defaultProps = {
-    children: undefined,
-    navigator: undefined,
-  };
-
-  constructor(props) {
-    super(props);
-    this.state = { params: {}, stack: [SESSION] };
-  }
-
-  get current() {
-    const { state: { stack } } = this;
-
-    return stack[stack.length - 1];
-  }
-
-  goBack = () => {
-    const { props: { navigator }, state: { params, stack } } = this;
-
-    delete params[this.current];
+  const goBack = () => {
+    delete params[stack[stack.length - 1]];
     stack.pop();
     if (stack.length === 0) stack.push(SESSION);
-    this.setState({ params, stack });
-    this.forceUpdate();
+
+    setParams(params);
+    setStack(stack);
     if (navigator && navigator.goBack) navigator.goBack();
-  }
+    setState({});
+  };
 
-  navigate = (screen, parameters = {}) => {
-    const { props: { navigator }, state: { params, stack } } = this;
-
+  const navigate = (screen, parameters = {}) => {
     if (!stack.includes(screen)) {
-      this.setState({ stack: [...stack, screen], params: { ...params, [screen]: parameters } });
+      setParams({ ...params, [screen]: parameters });
+      setStack([...stack, screen]);
       if (navigator) navigator.navigate(screen, parameters);
     }
-  }
+  };
 
-  render() {
-    const {
-      current, goBack, navigate,
-      props: { children },
-      state: { params, stack },
-    } = this;
+  return (
+    <NavigationContext.Provider
+      value={{
+        current: stack[stack.length - 1],
+        goBack,
+        navigate,
+        params,
+        stack,
+      }}
+    >
+      { children }
+    </NavigationContext.Provider>
+  );
+};
 
-    return (
-      <Provider
-        value={{
-          current, goBack, navigate, params, stack,
-        }}
-      >
-        { children }
-      </Provider>
-    );
-  }
-}
+NavigationProvider.propTypes = {
+  children: node,
+  navigator: shape({}),
+};
 
-export { ConsumerNavigation, ProviderNavigation };
+NavigationProvider.defaultProps = {
+  children: undefined,
+  navigator: undefined,
+};
+
+export { NavigationProvider };
+
+export const useNavigation = () => useContext(NavigationContext);

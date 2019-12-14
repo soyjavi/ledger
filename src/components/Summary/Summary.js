@@ -6,7 +6,7 @@ import { Image, View } from 'react-native';
 
 import ASSETS from '../../assets';
 import { C, exchange, verboseMonth } from '../../common';
-import { Consumer, useSettings } from '../../context';
+import { Consumer, useNavigation, useSettings } from '../../context';
 import Box from '../Box';
 import ButtonMore from '../ButtonMore';
 import PriceFriendly from '../PriceFriendly';
@@ -20,6 +20,7 @@ const CAPTION_PROPS = { caption: true, lighten: true, numberOfLines: 1 };
 const Summary = React.memo(({
   currency, currentBalance, currentMonth, image, onMask, title, ...inherit
 }) => {
+  const navigation = useNavigation();
   const { state: { maskAmount }, dispatch } = useSettings();
 
   const {
@@ -31,7 +32,7 @@ const Summary = React.memo(({
 
   return (
     <Consumer>
-      { ({ l10n, navigation, store: { baseCurrency, rates } }) => (
+      { ({ l10n, store: { baseCurrency, rates } }) => (
         <View style={[styles.container, inherit.style]}>
           <Box style={styles.card}>
             <View style={[styles.row, styles.rowHeading]}>

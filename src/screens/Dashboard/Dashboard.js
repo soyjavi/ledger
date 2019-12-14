@@ -8,7 +8,7 @@ import { C, onHardwareBackPress } from '../../common';
 import {
   ButtonMore, Footer, GroupTransactions, Header, Heading, Summary,
 } from '../../components';
-import { Consumer, useSettings } from '../../context';
+import { Consumer, useNavigation, useSettings } from '../../context';
 import { DialogVault, Syncing, VaultCard } from './components';
 import { queryLastTxs, queryVaults } from './modules';
 import styles from './Dashboard.style';
@@ -20,6 +20,7 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
   const [dialog, setDialog] = useState(false);
   const [scroll, setScroll] = useState(false);
   const { state: settings } = useSettings();
+  const navigation = useNavigation();
 
   useEffect(() => {
     onHardwareBackPress(!backward, () => { if (dialog) setDialog(false); });
@@ -31,7 +32,6 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
         <Consumer>
           { ({
             l10n,
-            navigation,
             store: {
               baseCurrency, overall, sync, txs, vaults,
             },

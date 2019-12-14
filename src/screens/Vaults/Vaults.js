@@ -10,7 +10,7 @@ import { C } from '../../common';
 import {
   Footer, Header, HorizontalChartItem, OptionItem, PriceFriendly,
 } from '../../components';
-import { Consumer, useSettings } from '../../context';
+import { Consumer, useNavigation, useSettings } from '../../context';
 import { query, sort } from './modules';
 import styles from './Vaults.style';
 
@@ -18,23 +18,16 @@ const { SCREEN } = C;
 const { COLOR } = THEME;
 
 const Vaults = ({ visible, ...inherit }) => {
+  const navigation = useNavigation();
   const { state, dispatch } = useSettings();
   const currencies = visible ? query(inherit) : [];
-
-  const onHardwareBack = (navigation) => {
-    navigation.goBack();
-  };
-
-  const onVault = (vault, { navigation }) => {
-    navigation.navigate(SCREEN.VAULT, vault);
-  };
 
   console.log('<Vaults>', { visible });
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
       <Consumer>
-        { ({ l10n, navigation, store: { baseCurrency, vaults } }) => (
+        { ({ l10n, store: { baseCurrency, vaults } }) => (
           <Fragment>
             <Header highlight title={l10n.VAULTS} />
             <ScrollView contentContainerStyle={styles.container}>
@@ -57,7 +50,7 @@ const Vaults = ({ visible, ...inherit }) => {
                           key={vault.hash}
                           active={state[vault.hash]}
                           onChange={(value) => dispatch({ type: 'VAULT_VISIBLE', vault: vault.hash, value })}
-                          onPress={() => onVault(vault, { navigation })}
+                          onPress={() => navigation.navigate(SCREEN.VAULT, vault)}
                           {...vault}
                         >
                           <PriceFriendly lighten currency={currency} value={vault.currentBalance} />
@@ -71,12 +64,11 @@ const Vaults = ({ visible, ...inherit }) => {
 
             <Footer
               onBack={navigation.goBack}
-              onHardwareBack={visible ? () => onHardwareBack(navigation) : undefined}
+              onHardwareBack={visible ? navigation.goBack : undefined}
             />
           </Fragment>
         )}
       </Consumer>
-
     </Viewport>
   );
 };

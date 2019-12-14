@@ -4,21 +4,19 @@ import {
 import React from 'react';
 
 import { ConsumerL10N, ProviderL10N } from '../reactor/context/L10N';
+
 import { ConnectionProvider, useConnection } from './connection';
+import { NavigationProvider, useNavigation } from './navigation';
 import { SettingsProvider, useSettings } from './settings';
+
 import { ConsumerStore, ProviderStore } from './store';
-import { ConsumerNavigation, ProviderNavigation } from './navigation';
 
 const Consumer = ({ children }) => (
   <ConsumerL10N>
     { ({ l10n }) => (
-      <ConsumerNavigation>
-        { (navigation) => (
-          <ConsumerStore>
-            { (store) => children({ l10n, navigation, store })}
-          </ConsumerStore>
-        )}
-      </ConsumerNavigation>
+      <ConsumerStore>
+        { (store) => children({ l10n, store })}
+      </ConsumerStore>
     )}
   </ConsumerL10N>
 );
@@ -29,15 +27,15 @@ Consumer.propTypes = {
 
 const Provider = ({ children, dictionary, language }) => (
   <ProviderL10N dictionary={dictionary} language={language}>
-    <ProviderNavigation>
-      <ConnectionProvider>
+    <ConnectionProvider>
+      <NavigationProvider>
         <ProviderStore>
           <SettingsProvider>
             {children}
           </SettingsProvider>
         </ProviderStore>
-      </ConnectionProvider>
-    </ProviderNavigation>
+      </NavigationProvider>
+    </ConnectionProvider>
   </ProviderL10N>
 );
 
@@ -52,12 +50,12 @@ export {
   Provider,
   ConsumerStore,
   ProviderStore,
-  ConsumerNavigation,
-  ProviderNavigation,
 
   ConnectionProvider,
+  NavigationProvider,
   SettingsProvider,
 
   useConnection,
+  useNavigation,
   useSettings,
 };

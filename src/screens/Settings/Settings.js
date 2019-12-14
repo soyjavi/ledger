@@ -9,7 +9,7 @@ import ASSETS from '../../assets';
 import {
   Footer, Header, Heading, OptionItem,
 } from '../../components';
-import { Consumer, useSettings } from '../../context';
+import { Consumer, useNavigation, useSettings } from '../../context';
 import {
   Activity, Button, Image, Text, Viewport,
 } from '../../reactor/components';
@@ -24,6 +24,7 @@ const CAMERA_PROPS = {
 
 const Settings = ({ visible, ...inherit }) => {
   const { state: { maskAmount } = {}, dispatch } = useSettings();
+  const navigation = useNavigation();
   const [dialog, setDialog] = useState(false);
   const [hasCamera, setHasCamera] = useState(undefined);
   const [camera, setCamera] = useState(false);
@@ -44,7 +45,7 @@ const Settings = ({ visible, ...inherit }) => {
     setQr(data);
   };
 
-  const onForked = (navigation) => {
+  const onForked = () => {
     setDialog(false);
     navigation.goBack();
   };
@@ -52,7 +53,7 @@ const Settings = ({ visible, ...inherit }) => {
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
       <Consumer>
-        { ({ l10n, navigation, store: { authorization, secret } }) => (
+        { ({ l10n, store: { authorization, secret } }) => (
           <Fragment>
             <Header highlight title={l10n.SETTINGS} />
 
@@ -99,12 +100,7 @@ const Settings = ({ visible, ...inherit }) => {
               onHardwareBack={visible ? () => navigation.goBack() : undefined}
             />
 
-            <DialogFork
-              onClose={() => setDialog(false)}
-              onForked={() => onForked(navigation)}
-              query={qr}
-              visible={dialog}
-            />
+            <DialogFork onClose={() => setDialog(false)} onForked={onForked} query={qr} visible={dialog} />
           </Fragment>
         )}
       </Consumer>
