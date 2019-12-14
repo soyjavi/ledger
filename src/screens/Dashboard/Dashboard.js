@@ -8,7 +8,7 @@ import { C, onHardwareBackPress } from '../../common';
 import {
   ButtonMore, Footer, GroupTransactions, Header, Heading, Summary,
 } from '../../components';
-import { Consumer } from '../../context';
+import { Consumer, useSettings } from '../../context';
 import { DialogVault, Syncing, VaultCard } from './components';
 import { queryLastTxs, queryVaults } from './modules';
 import styles from './Dashboard.style';
@@ -19,6 +19,7 @@ const { SPACE } = THEME;
 const Dashboard = ({ backward, visible, ...inherit }) => {
   const [dialog, setDialog] = useState(false);
   const [scroll, setScroll] = useState(false);
+  const { state: settings } = useSettings();
 
   useEffect(() => {
     onHardwareBackPress(!backward, () => { if (dialog) setDialog(false); });
@@ -56,7 +57,7 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
                   <ButtonMore title={l10n.MORE} onPress={() => navigation.navigate(SCREEN.VAULTS)} />
                 </Heading>
                 <Slider itemWidth={VAULT_ITEM_WIDTH + SPACE.S} itemMargin={0} style={styles.vaults}>
-                  { queryVaults({ undefined, vaults }).map((vault) => (
+                  { queryVaults({ settings, vaults }).map((vault) => (
                     <VaultCard {...vault} key={vault.hash} onPress={() => navigation.navigate(SCREEN.VAULT, vault)} />
                   ))}
                 </Slider>

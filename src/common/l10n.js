@@ -111,7 +111,7 @@ export default {
     SEARCH: 'Search',
     SEND: 'Send',
     SETTINGS: 'Settings',
-    SETTING_1_TITLE: 'Hide overall balance on startup',
+    SETTING_1_TITLE: 'Hide amounts',
     SETTING_1_CAPTION: 'Switch visibility just touching it',
     SYNCING: 'Syncing',
     SLOGAN: 'Your private accounting on the blockchain.',

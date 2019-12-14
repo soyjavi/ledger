@@ -1,5 +1,5 @@
 import { bool } from 'prop-types';
-import React, { Fragment, PureComponent } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
@@ -22,146 +22,102 @@ const CAMERA_PROPS = {
   type: Camera.Constants.Type.back,
 };
 
-class Settings extends PureComponent {
-  static propTypes = {
-    backward: bool,
-    visible: bool,
-  };
+const Settings = ({ visible, ...inherit }) => {
+  const { state: { maskAmount } = {}, dispatch } = useSettings();
+  const [dialog, setDialog] = useState(false);
+  const [hasCamera, setHasCamera] = useState(undefined);
+  const [camera, setCamera] = useState(false);
+  const [qr, setQr] = useState(undefined);
 
-  static defaultProps = {
-    backward: false,
-    visible: true,
-  };
+  useEffect(() => {
+    async function askCamera() {
+      const { status } = await Permissions.askAsync(Permissions.CAMERA);
+      setHasCamera(status === 'granted');
+    }
+    if (hasCamera === undefined) askCamera();
+  }, [hasCamera]);
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      dialog: false,
-      hasCamera: undefined,
-      qr: undefined,
-      showCamera: false,
-      scroll: true,
-    };
-  }
-
-  async componentDidMount() {
-    const { status } = await Permissions.askAsync(Permissions.CAMERA);
-    this.setState({ hasCamera: status === 'granted' });
-  }
-
-  componentWillReceiveProps({ visible: nextVisible }) {
-    const { props: { visible } } = this;
-
-    if (!nextVisible && visible) this.setState({ qr: undefined, showCamera: false });
-  }
-
-  _onCloseDialog = () => this.setState({ dialog: false })
-
-  _onForked = (navigation) => {
-    const { _onCloseDialog } = this;
-
-    _onCloseDialog();
-    navigation.goBack();
-  }
-
-  _onHardwareBack = (navigation) => {
-    navigation.goBack();
-    this.forceUpdate();
-  }
-
-  _onQR = ({ data = '' } = {}) => {
+  const onQR = ({ data = '' } = {}) => {
     const [secure, file] = data.split('|');
 
-    this.setState({ dialog: secure !== undefined && file !== undefined, qr: data });
-  }
+    setDialog(secure !== undefined && file !== undefined);
+    setQr(data);
+  };
 
-  _onScroll = ({ nativeEvent: { contentOffset: { y } } }) => {
-    const { state } = this;
-    const scroll = y > 58;
-    if (scroll !== state.scroll) this.setState({ scroll });
-  }
+  const onForked = (navigation) => {
+    setDialog(false);
+    navigation.goBack();
+  };
 
-  _onToggleCamera = () => {
-    const { state: { showCamera } } = this;
-    this.setState({ showCamera: !showCamera });
-  }
+  return (
+    <Viewport {...inherit} scroll={false} visible={visible}>
+      <Consumer>
+        { ({ l10n, navigation, store: { authorization, secret } }) => (
+          <Fragment>
+            <Header highlight title={l10n.SETTINGS} />
 
-  render() {
-    const {
-      _onCloseDialog, _onForked, _onHardwareBack, _onQR, _onScroll, _onToggleCamera,
-      props: { visible, ...inherit },
-      state: {
-        dialog, hasCamera, qr, showCamera, scroll,
-      },
-    } = this;
-    // @TODO
-    // const { state: { maskAmount }, dispatch } = useSettings();
+            <ScrollView contentContainerStyle={styles.container}>
+              <Heading subtitle={l10n.DASHBOARD} />
+              <View style={styles.options}>
+                <OptionItem
+                  active={maskAmount}
+                  caption={l10n.SETTING_1_CAPTION}
+                  title={l10n.SETTING_1_TITLE}
+                  onChange={(value) => dispatch({ type: 'MASK_AMOUNT', value })}
+                />
+              </View>
 
-    console.log('<Settings>', { visible, hasCamera });
-
-    return (
-      <Viewport {...inherit} scroll={false} visible={visible}>
-        <Consumer>
-          { ({ l10n, navigation, store: { authorization, secret } }) => (
-            <Fragment>
-              <Header highlight={scroll} title={l10n.SETTINGS} />
-
-              <ScrollView _onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.container}>
-                <Heading subtitle={l10n.DASHBOARD} />
-                <View style={styles.options}>
-                  <OptionItem
-                    active={undefined}
-                    caption={l10n.SETTING_1_CAPTION}
-                    title={l10n.SETTING_1_TITLE}
-                    onChange={(value) => console.log(value)}
+              <Heading subtitle={l10n.TRANSFER_TXS} caption={l10n.IMPORT_EXPORT_CAPTION} lighten>
+                { hasCamera === undefined && <Activity color="white" style={styles.activity} /> }
+                { hasCamera && (
+                  <Button
+                    contained={false}
+                    icon={camera ? undefined : ASSETS.camera}
+                    onPress={() => setCamera(!camera)}
+                    small
+                    style={styles.button}
+                    title={camera ? l10n.CLOSE : l10n.QR_READER}
                   />
-                </View>
-
-                <Heading subtitle={l10n.TRANSFER_TXS} caption={l10n.IMPORT_EXPORT_CAPTION} lighten>
-                  { hasCamera === undefined && <Activity color="white" style={styles.activity} /> }
-                  { hasCamera && (
-                    <Button
-                      contained={false}
-                      icon={!showCamera ? ASSETS.camera : undefined}
-                      onPress={_onToggleCamera}
-                      small
-                      style={styles.button}
-                      title={!showCamera ? l10n.QR_READER : l10n.CLOSE}
-                    />
+                )}
+              </Heading>
+              <View style={styles.content}>
+                { !camera
+                  ? <Image source={{ uri: `${QR_URI}=${secret}|${authorization}` }} style={styles.qr} />
+                  : (
+                    <Camera {...CAMERA_PROPS} onBarCodeScanned={onQR} style={styles.qr}>
+                      <View style={styles.cameraViewport} />
+                    </Camera>
                   )}
-                </Heading>
-                <View style={styles.content}>
-                  { !showCamera
-                    ? <Image source={{ uri: `${QR_URI}=${secret}|${authorization}` }} style={styles.qr} />
-                    : (
-                      <Camera {...CAMERA_PROPS} onBarCodeScanned={_onQR} style={styles.qr}>
-                        <View style={styles.cameraViewport} />
-                      </Camera>
-                    )}
-                  <Text caption lighten style={styles.caption}>
-                    {showCamera ? l10n.TRANSFER_TXS_CAMERA : l10n.TRANSFER_TXS_CAPTION}
-                  </Text>
-                </View>
-              </ScrollView>
+                <Text caption lighten style={styles.caption}>
+                  {camera ? l10n.TRANSFER_TXS_CAMERA : l10n.TRANSFER_TXS_CAPTION}
+                </Text>
+              </View>
+            </ScrollView>
 
-              <Footer
-                onBack={navigation.goBack}
-                onHardwareBack={visible ? () => _onHardwareBack(navigation) : undefined}
-              />
+            <Footer
+              onBack={navigation.goBack}
+              onHardwareBack={visible ? () => navigation.goBack() : undefined}
+            />
 
-              <DialogFork
-                onClose={_onCloseDialog}
-                onForked={() => _onForked(navigation)}
-                query={qr}
-                visible={dialog}
-              />
-            </Fragment>
-          )}
-        </Consumer>
+            <DialogFork
+              onClose={() => setDialog(false)}
+              onForked={() => onForked(navigation)}
+              query={qr}
+              visible={dialog}
+            />
+          </Fragment>
+        )}
+      </Consumer>
+    </Viewport>
+  );
+};
 
-      </Viewport>
-    );
-  }
-}
+Settings.propTypes = {
+  visible: bool,
+};
+
+Settings.defaultProps = {
+  visible: true,
+};
 
 export default Settings;
