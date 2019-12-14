@@ -7,7 +7,7 @@ import {
   createTx, createVault, fork, getAuthorization, getLocations, syncProfile,
 } from './services';
 
-const { CURRENCY, NAME, SETTINGS } = C;
+const { CURRENCY, NAME } = C;
 const { Provider, Consumer: ConsumerStore } = createContext(`${NAME}:context:store`);
 
 class ProviderStore extends Component {
@@ -28,10 +28,6 @@ class ProviderStore extends Component {
       baseCurrency: CURRENCY,
       pin: undefined,
       rates: {},
-      settings: {
-        [SETTINGS.HIDE_OVERALL_BALANCE]: false,
-        [SETTINGS.SHOW_VAULT_CURRENCY]: true,
-      },
       txs: [],
       vaults: [],
       version: undefined,
@@ -63,14 +59,6 @@ class ProviderStore extends Component {
   getLocations = (query) => getLocations(this, query);
 
   onError = (error) => this.setState({ error: error ? error.message : undefined });
-
-  onSettings = async (value) => {
-    const { _store, state: { settings = {} } } = this;
-    const nextState = { settings: { ...settings, ...value } };
-
-    this.setState(nextState);
-    _store(nextState);
-  }
 
   onSelectTx = (tx) => {
     const { state: { vaults } } = this;

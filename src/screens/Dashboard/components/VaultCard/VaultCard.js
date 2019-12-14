@@ -5,7 +5,7 @@ import React from 'react';
 import { Image, View } from 'react-native';
 
 import { FLAGS } from '../../../../assets';
-import { C, exchange } from '../../../../common';
+import { exchange } from '../../../../common';
 import { Box, PriceFriendly } from '../../../../components';
 import { Consumer } from '../../../../context';
 import { Text, Touchable } from '../../../../reactor/components';
@@ -14,13 +14,11 @@ import styles from './VaultCard.style';
 
 const { COLOR } = THEME;
 
-const { SETTINGS: { SHOW_VAULT_CURRENCY } } = C;
-
 const VaultCard = ({
   currency, onPress, currentBalance, currentMonth: { progression }, title,
 }) => (
   <Consumer>
-    { ({ l10n, store: { baseCurrency, rates, settings } }) => (
+    { ({ l10n, store: { baseCurrency, rates } }) => (
       <Touchable onPress={onPress} rippleColor={COLOR.TEXT_LIGHTEN} style={styles.container}>
         <Box>
           <View style={styles.content}>
@@ -35,7 +33,7 @@ const VaultCard = ({
                 ? exchange(Math.abs(currentBalance), currency, baseCurrency, rates)
                 : Math.abs(currentBalance)}
             />
-            { currency !== baseCurrency && settings[SHOW_VAULT_CURRENCY] && (
+            { currency !== baseCurrency && (
               <PriceFriendly currency={currency} bold lighten value={currentBalance} />)}
             <View style={styles.expand} />
 

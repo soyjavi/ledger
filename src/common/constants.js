@@ -29,7 +29,6 @@ export default {
   IS_PRODUCTION,
 
   LANGUAGE: 'en-EN',
-  LOCATION_PROPS: { enableHighAccuracy: true },
 
   MS_IN_DAY,
   MS_IN_WEEK,
@@ -43,10 +42,6 @@ export default {
     STATS: 'Stats',
     VAULT: 'Vault',
     VAULTS: 'Vaults',
-  },
-  SETTINGS: {
-    HIDE_OVERALL_BALANCE: 0,
-    SHOW_VAULT_CURRENCY: 1,
   },
   STYLE: {
     DIALOG: {

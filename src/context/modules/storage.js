@@ -18,7 +18,7 @@ export default {
 
   async set(value) {
     const {
-      authorization, baseCurrency, fingerprint, pin, rates = {}, secret, settings, txs = [], vaults = [], version,
+      authorization, baseCurrency, fingerprint, pin, rates = {}, secret, txs = [], vaults = [], version,
     } = value;
 
     await Storage.set(KEY, {
@@ -28,7 +28,6 @@ export default {
       pin,
       rates,
       secret,
-      settings,
       txs,
       vaults: vaults.map(({
         balance, currency, hash, title,

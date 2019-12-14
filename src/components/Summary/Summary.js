@@ -6,20 +6,23 @@ import { Image, View } from 'react-native';
 
 import ASSETS from '../../assets';
 import { C, exchange, verboseMonth } from '../../common';
-import { Consumer } from '../../context';
+import { Consumer, useNavigation, useSettings } from '../../context';
 import Box from '../Box';
 import ButtonMore from '../ButtonMore';
 import PriceFriendly from '../PriceFriendly';
 import { Text, Touchable } from '../../reactor/components';
 import styles from './Summary.style';
 
-const { CURRENCY, SCREEN, SETTINGS: { HIDE_OVERALL_BALANCE } } = C;
+const { CURRENCY, SCREEN } = C;
 
 const CAPTION_PROPS = { caption: true, lighten: true, numberOfLines: 1 };
 
 const Summary = React.memo(({
   currency, currentBalance, currentMonth, image, onMask, title, ...inherit
 }) => {
+  const navigation = useNavigation();
+  const { state: { maskAmount }, dispatch } = useSettings();
+
   const {
     expenses = 0, incomes = 0, progression = 0, today = 0,
   } = currentMonth;
@@ -29,11 +32,7 @@ const Summary = React.memo(({
 
   return (
     <Consumer>
-      { ({
-        l10n, navigation, store: {
-          baseCurrency, onSettings, rates, settings: { [HIDE_OVERALL_BALANCE]: mask },
-        },
-      }) => (
+      { ({ l10n, store: { baseCurrency, rates } }) => (
         <View style={[styles.container, inherit.style]}>
           <Box style={styles.card}>
             <View style={[styles.row, styles.rowHeading]}>
@@ -45,7 +44,7 @@ const Summary = React.memo(({
                 onPress={() => navigation.navigate(SCREEN.STATS)}
               />
             </View>
-            <Touchable onPress={() => onSettings({ [HIDE_OVERALL_BALANCE]: !mask })}>
+            <Touchable onPress={() => dispatch({ type: 'MASK_AMOUNT', value: !maskAmount })}>
               <PriceFriendly
                 currency={baseCurrency}
                 headline
@@ -55,12 +54,12 @@ const Summary = React.memo(({
               />
             </Touchable>
             { baseCurrency !== currency && (
-            <PriceFriendly
-              currency={currency}
-              subtitle
-              lighten
-              value={currentBalance}
-            />
+              <PriceFriendly
+                currency={currency}
+                subtitle
+                lighten
+                value={currentBalance}
+              />
             )}
 
             <View style={styles.expand} />

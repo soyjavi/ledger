@@ -1,12 +1,14 @@
 import { bool, func, shape } from 'prop-types';
-import React, { createRef, Fragment, PureComponent } from 'react';
+import React, {
+  Fragment, useEffect, useRef, useState,
+} from 'react';
 import { ScrollView, View } from 'react-native';
 
 import { FLAGS } from '../../assets';
 import {
   Footer, GroupTransactions, Header, Summary,
 } from '../../components';
-import { Consumer } from '../../context';
+import { Consumer, useNavigation } from '../../context';
 import { LAYOUT, THEME } from '../../reactor/common';
 import { Activity, Text, Viewport } from '../../reactor/components';
 import { DialogTransaction, Search } from './components';
@@ -15,146 +17,124 @@ import styles from './Vault.style';
 
 const { COLOR, SPACE } = THEME;
 
-class Vault extends PureComponent {
-  static propTypes = {
-    backward: bool,
-    dataSource: shape({}),
-    goBack: func,
-    visible: bool,
-  };
+const Vault = (props) => {
+  const {
+    dataSource, goBack, visible, ...inherit
+  } = props;
+  const navigation = useNavigation();
+  const [dialog, setDialog] = useState(false);
+  const [scroll, setScroll] = useState(false);
+  const [scrollQuery, setScrollQuery] = useState(false);
+  const [search, setSearch] = useState(undefined);
+  const [values, setValues] = useState([]);
+  const [vault, setVault] = useState(undefined);
+  const scrollview = useRef(null);
 
-  static defaultProps = {
-    backward: false,
-    dataSource: undefined,
-    goBack() {},
-    visible: true,
-  };
+  useEffect(() => {
+    const { txs = [] } = dataSource || {};
 
-  constructor(props) {
-    super(props);
-    this.scrollview = createRef();
-    this.state = {
-      dialog: false,
-      scroll: false,
-      scrollQuery: false,
-      search: undefined,
-      values: [],
-    };
-  }
-
-  componentWillReceiveProps({ dataSource, visible, ...store }) {
-    const { props: { dataSource: { txs = [] } = {}, ...props } } = this;
-
-    if (visible && dataSource && (dataSource.txs.length === 0 || dataSource.txs.length !== txs.length)) {
-      const search = undefined;
-      const values = query(store, { ...dataSource, search });
-      const totalTxs = Object.values(values).length > 0
-        ? Object.values(values).map((value) => value.txs.length).reduce((a, b) => a += b)
+    if (visible && txs.length > 0) {
+      const nextValues = query(props, { ...dataSource, search: undefined });
+      const totalTxs = Object.values(nextValues).length > 0
+        ? Object.values(nextValues).map((value) => value.txs.length).reduce((a, b) => a += b)
         : 0;
 
-      this.setState({
-        scrollQuery: totalTxs !== 16, search, values, vault: dataSource,
-      });
-    } else if (visible !== props.visible) this.scrollview.current.scrollTo({ y: 0, animated: false });
-  }
+      setScrollQuery(totalTxs !== 16);
+      setSearch(undefined);
+      setValues(nextValues);
+      setVault(dataSource);
+    } else if (!visible) scrollview.current.scrollTo({ y: 0, animated: false });
+  }, [visible, dataSource, props]);
 
-  _onHardwareBack = (navigation) => {
-    const { state: { dialog } } = this;
-    if (dialog) this.setState({ dialog: false });
-    else {
-      navigation.goBack();
-      this.forceUpdate();
+  const onHardwareBack = () => {
+    if (dialog) setDialog(false);
+    else navigation.goBack();
+  };
+
+  const onScroll = ({ nativeEvent: { contentOffset: { y } } }) => {
+    const nextScroll = y > SPACE.MEDIUM;
+    if (nextScroll !== scroll) setScroll(nextScroll);
+
+    if (!scrollQuery && y > (LAYOUT.VIEWPORT.H / 2)) {
+      const nextscrollQuery = true;
+      setScrollQuery(nextscrollQuery);
+      setValues(query(props, { ...dataSource, search }, nextscrollQuery));
     }
-  }
+  };
 
-  _onScroll = ({ nativeEvent: { contentOffset: { y } } }) => {
-    const { props: { dataSource, ...store }, state: { search, ...state } } = this;
-    const scroll = y > SPACE.MEDIUM;
-    if (scroll !== state.scroll) this.setState({ scroll });
+  const onSearch = (value) => {
+    setSearch(value);
+    setValues(query(props, { ...dataSource, search: value.toLowerCase().trim() }, scrollQuery));
+  };
 
-    if (!state.scrollQuery && y > (LAYOUT.VIEWPORT.H / 2)) {
-      const scrollQuery = true;
-      this.setState({ scrollQuery, values: query(store, { ...dataSource, search }, scrollQuery) });
-    }
-  }
+  const { currency, hash, title } = vault || {};
 
-  _onSearch = (search) => {
-    const { props: { dataSource, ...inherit }, state: { scrollQuery } } = this;
+  console.log('<Vault>', {
+    visible, dialog, scroll, scrollQuery, search,
+  });
 
-    this.setState({
-      search,
-      values: query(inherit, { ...dataSource, search: search.toLowerCase().trim() }, scrollQuery),
-    });
-  }
-
-  _onToggleDialog = () => {
-    const { state: { dialog } } = this;
-    this.setState({ dialog: !dialog });
-  }
-
-  render() {
-    const {
-      _onHardwareBack, _onScroll, _onSearch, _onToggleDialog,
-      props: { visible, ...inherit },
-      state: {
-        dialog, scroll, scrollQuery, search, values = [], vault = {},
-      },
-    } = this;
-    const { currency, hash, title } = vault;
-
-    console.log('<Vault>', {
-      visible, dialog, scroll, scrollQuery, search,
-    });
-
-    return (
-      <Viewport {...inherit} scroll={false} visible={visible}>
-        <Consumer>
-          { ({ navigation, l10n }) => (
-            <Fragment>
-              <Header highlight={scroll} image={FLAGS[currency]} title={title} />
-              <ScrollView onScroll={_onScroll} ref={this.scrollview} scrollEventThrottle={40} style={styles.container}>
-                <Fragment>
-                  <Summary {...vault} image={FLAGS[currency]} title={`${title} ${l10n.BALANCE}`} />
-                  <Search l10n={l10n} onValue={_onSearch} value={search} />
-                </Fragment>
-                { values.length > 0
-                  ? (
+  return (
+    <Viewport {...inherit} scroll={false} visible={visible}>
+      <Consumer>
+        { ({ l10n }) => (
+          <Fragment>
+            <Header highlight={scroll} image={FLAGS[currency]} title={title} />
+            <ScrollView onScroll={onScroll} ref={scrollview} scrollEventThrottle={40} style={styles.container}>
+              <Fragment>
+                <Summary {...vault} image={FLAGS[currency]} title={`${title} ${l10n.BALANCE}`} />
+                <Search l10n={l10n} onValue={onSearch} value={search} />
+              </Fragment>
+              { values.length > 0
+                ? (
+                  <Fragment>
                     <Fragment>
-                      <Fragment>
-                        { values.map((item) => (
-                          <GroupTransactions key={`${item.timestamp}-${search}`} {...item} currency={currency} />))}
-                      </Fragment>
-                      { !search && !scrollQuery && (
-                        <Activity size="large" color={COLOR.BASE} style={styles.activity} />)}
+                      { values.map((item) => (
+                        <GroupTransactions key={`${item.timestamp}-${search}`} {...item} currency={currency} />))}
                     </Fragment>
-                  )
-                  : (
-                    <View style={[styles.content, styles.container]}>
-                      <Text lighten>{l10n.NO_TRANSACTIONS}</Text>
-                    </View>
-                  )}
-              </ScrollView>
+                    { !search && !scrollQuery && (
+                      <Activity size="large" color={COLOR.BASE} style={styles.activity} />)}
+                  </Fragment>
+                )
+                : (
+                  <View style={[styles.content, styles.container]}>
+                    <Text lighten>{l10n.NO_TRANSACTIONS}</Text>
+                  </View>
+                )}
+            </ScrollView>
 
-              <Footer
-                onBack={navigation.goBack}
-                onHardwareBack={visible ? () => _onHardwareBack(navigation) : undefined}
-                onPress={_onToggleDialog}
+            <Footer
+              onBack={navigation.goBack}
+              onHardwareBack={visible ? onHardwareBack : undefined}
+              onPress={() => setDialog(true)}
+            />
+
+            { visible && (
+              <DialogTransaction
+                currency={currency}
+                onClose={() => setDialog(false)}
+                vault={hash}
+                visible={dialog}
               />
+            )}
+          </Fragment>
+        )}
+      </Consumer>
+    </Viewport>
+  );
+};
 
-              { visible && (
-                <DialogTransaction
-                  currency={currency}
-                  onClose={_onToggleDialog}
-                  vault={hash}
-                  visible={dialog}
-                />
-              )}
-            </Fragment>
-          )}
-        </Consumer>
-      </Viewport>
-    );
-  }
-}
+Vault.propTypes = {
+  backward: bool,
+  dataSource: shape({}),
+  goBack: func,
+  visible: bool,
+};
+
+Vault.defaultProps = {
+  backward: false,
+  dataSource: undefined,
+  goBack() {},
+  visible: true,
+};
 
 export default Vault;
