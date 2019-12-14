@@ -23,7 +23,7 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
 
   useEffect(() => {
     onHardwareBackPress(!backward, () => { if (dialog) setDialog(false); });
-  }, [backward]);
+  }, [backward, dialog]);
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
@@ -46,7 +46,7 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
                 onScroll={({ nativeEvent: { contentOffset } }) => setScroll(contentOffset.y > SPACE.MEDIUM)}
                 scrollEventThrottle={40}
                 contentContainerStyle={styles.scroll}
-               >
+              >
                 <Summary
                   {...overall}
                   currency={baseCurrency}

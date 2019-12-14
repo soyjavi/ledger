@@ -15,24 +15,25 @@ const { SYMBOL } = C;
 const maskValue = (props) => format({ ...props, operator: undefined }).replace(/[0-9]/gi, '#');
 
 const PriceFriendly = ({
-  currency, icon, label, value = 0, ...inherit
+  currency, icon, label, operator, value = 0, ...inherit
 }) => {
   const { state: { maskAmount } } = useSettings();
   let color;
-  let operator;
+  let operatorEnhanced;
 
   if (icon) {
     if (value === 0) color = COLOR.TEXT_LIGHTEN;
     else color = value > 0 ? COLOR.INCOME : COLOR.EXPENSE;
   }
-  if (inherit.operator && value > 0) operator = '+';
-  else if (inherit.operator && value < 0) operator = '-';
+  if (operator && value > 0) operatorEnhanced = '+';
+  else if (operator && value < 0) operatorEnhanced = '-';
 
   const props = {
     ...inherit,
     color,
     fixed: currencyDecimals(value, currency),
-    operator,
+    numberOfLines: 1,
+    operator: operatorEnhanced,
     symbol: SYMBOL[currency] || currency,
     value: Math.abs(value),
   };
