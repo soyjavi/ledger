@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NativeModules, View } from 'react-native';
 import * as Font from 'expo-font';
 
@@ -12,33 +12,27 @@ const { LANGUAGE } = C;
 const { UIManager: { setLayoutAnimationEnabledExperimental: setLayoutAnimation } } = NativeModules;
 if (setLayoutAnimation) setLayoutAnimation(true);
 
-class App extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = { loaded: false };
-  }
+const App = () => {
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => {
+    async function loadFonts() {
+      await Font.loadAsync({
+        'product-sans': require('./assets/fonts/ProductSans-Regular.ttf'), // eslint-disable-line
+        'product-sans-bold': require('./assets/fonts/ProductSans-Bold.ttf'), // eslint-disable-line
+      });
+      setLoaded(true);
+    }
 
-  async componentDidMount() {
-    THEME.extend(theme);
+    if (!loaded) loadFonts();
+  }, [loaded]);
 
-    await Font.loadAsync({
-      'product-sans': require('./assets/fonts/ProductSans-Regular.ttf'), // eslint-disable-line
-      'product-sans-bold': require('./assets/fonts/ProductSans-Bold.ttf'), // eslint-disable-line
-    });
+  const App = loaded ? require('./src/App').default : View; // eslint-disable-line
 
-    this.setState({ loaded: true });
-  }
-
-  render() {
-    const { loaded } = this.state;
-    const App = loaded ? require('./src/App').default : View; // eslint-disable-line
-
-    return (
-      <Provider dictionary={L10N} language={LANGUAGE}>
-        <App />
-      </Provider>
-    );
-  }
-}
+  return (
+    <Provider dictionary={L10N} language={LANGUAGE}>
+      <App />
+    </Provider>
+  );
+};
 
 export default App;
