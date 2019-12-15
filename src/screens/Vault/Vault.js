@@ -8,7 +8,7 @@ import { FLAGS } from '../../assets';
 import {
   Footer, GroupTransactions, Header, Summary,
 } from '../../components';
-import { Consumer, useNavigation } from '../../context';
+import { useL10N, useNavigation } from '../../context';
 import { LAYOUT, THEME } from '../../reactor/common';
 import { Activity, Text, Viewport } from '../../reactor/components';
 import { DialogTransaction, Search } from './components';
@@ -21,6 +21,7 @@ const Vault = (props) => {
   const {
     dataSource, back, visible, ...inherit
   } = props;
+  const l10n = useL10N();
   const navigation = useNavigation();
   const [dialog, setDialog] = useState(false);
   const [scroll, setScroll] = useState(false);
@@ -75,50 +76,44 @@ const Vault = (props) => {
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
-      <Consumer>
-        { ({ l10n }) => (
-          <Fragment>
-            <Header highlight={scroll} image={FLAGS[currency]} title={title} />
-            <ScrollView onScroll={onScroll} ref={scrollview} scrollEventThrottle={40} style={styles.container}>
+      <Header highlight={scroll} image={FLAGS[currency]} title={title} />
+      <ScrollView onScroll={onScroll} ref={scrollview} scrollEventThrottle={40} style={styles.container}>
+        <Fragment>
+          <Summary {...vault} image={FLAGS[currency]} title={`${title} ${l10n.BALANCE}`} />
+          <Search l10n={l10n} onValue={onSearch} value={search} />
+        </Fragment>
+        { values.length > 0
+          ? (
+            <Fragment>
               <Fragment>
-                <Summary {...vault} image={FLAGS[currency]} title={`${title} ${l10n.BALANCE}`} />
-                <Search l10n={l10n} onValue={onSearch} value={search} />
+                { values.map((item) => (
+                  <GroupTransactions key={`${item.timestamp}-${search}`} {...item} currency={currency} />))}
               </Fragment>
-              { values.length > 0
-                ? (
-                  <Fragment>
-                    <Fragment>
-                      { values.map((item) => (
-                        <GroupTransactions key={`${item.timestamp}-${search}`} {...item} currency={currency} />))}
-                    </Fragment>
-                    { !search && !scrollQuery && (
-                      <Activity size="large" color={COLOR.BASE} style={styles.activity} />)}
-                  </Fragment>
-                )
-                : (
-                  <View style={[styles.content, styles.container]}>
-                    <Text lighten>{l10n.NO_TRANSACTIONS}</Text>
-                  </View>
-                )}
-            </ScrollView>
+              { !search && !scrollQuery && (
+                <Activity size="large" color={COLOR.BASE} style={styles.activity} />)}
+            </Fragment>
+          )
+          : (
+            <View style={[styles.content, styles.container]}>
+              <Text lighten>{l10n.NO_TRANSACTIONS}</Text>
+            </View>
+          )}
+      </ScrollView>
 
-            <Footer
-              onBack={navigation.back}
-              onHardwareBack={visible ? onHardwareBack : undefined}
-              onPress={() => setDialog(true)}
-            />
+      <Footer
+        onBack={navigation.back}
+        onHardwareBack={visible ? onHardwareBack : undefined}
+        onPress={() => setDialog(true)}
+      />
 
-            { visible && (
-              <DialogTransaction
-                currency={currency}
-                onClose={() => setDialog(false)}
-                vault={hash}
-                visible={dialog}
-              />
-            )}
-          </Fragment>
-        )}
-      </Consumer>
+      { visible && (
+        <DialogTransaction
+          currency={currency}
+          onClose={() => setDialog(false)}
+          vault={hash}
+          visible={dialog}
+        />
+      )}
     </Viewport>
   );
 };

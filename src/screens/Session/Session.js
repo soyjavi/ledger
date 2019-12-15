@@ -4,7 +4,7 @@ import { Image, View } from 'react-native';
 
 import ASSETS from '../../assets';
 import { C } from '../../common';
-import { Consumer, useNavigation } from '../../context';
+import { useL10N, useNavigation, useStore } from '../../context';
 import { THEME } from '../../reactor/common';
 import {
   Activity, Motion, Text, Viewport,
@@ -16,7 +16,9 @@ const { IS_DEV, SCREEN, VERSION } = C;
 const { MOTION: { DURATION } } = THEME;
 
 const Session = (props) => {
+  const l10n = useL10N();
   const navigation = useNavigation();
+  const store = useStore();
   const [fingerprint, setFingerprint] = useState(undefined);
   const [pin, setPin] = useState('');
   const [busy, setBusy] = useState(false);
@@ -31,7 +33,7 @@ const Session = (props) => {
   }, [fingerprint]);
 
 
-  const onHandshake = async (store) => {
+  const onHandshake = async () => {
     const isSignup = store.pin === undefined;
 
     setBusy(true);
@@ -47,7 +49,7 @@ const Session = (props) => {
     setPin('');
   };
 
-  const onFingerprint = async (store) => {
+  const onFingerprint = async () => {
     setFingerprint(false);
     let needHandshake = false;
 
@@ -62,7 +64,7 @@ const Session = (props) => {
     if (needHandshake) onHandshake(store);
   };
 
-  const onPin = (next, store) => {
+  const onPin = (next) => {
     setPin(next);
     if (next.length === 4) {
       setTimeout(() => {
@@ -72,47 +74,38 @@ const Session = (props) => {
     }
   };
 
-
-  console.log('<Session>', {
-    fingerprint, busy, pin,
-  });
+  console.log('<Session>', { fingerprint, busy, pin });
 
   return (
     <Viewport {...props} scroll={false} visible>
-      <Consumer>
-        { ({ l10n, store }) => (
-          <View style={styles.container}>
-            { fingerprint && store.pin
-              ? onFingerprint(store) && <Fragment />
-              : undefined }
-            <View style={styles.content}>
-              <View style={styles.row}>
-                <Image source={ASSETS.logo} resizeMode="contain" style={styles.logo} />
-                <Text headline style={styles.textName}>volt.</Text>
-              </View>
-              <View style={styles.pin}>
-                { busy
-                  ? <Activity size="large" style={styles.activity} />
-                  : [1, 2, 3, 4].map((number) => (
-                    <Motion
-                      key={number}
-                      style={[styles.bullet, pin.length >= number && styles.bulletActive]}
-                      timeline={[{ property: 'scale', value: pin.length >= number ? 1 : 0.8 }]}
-                    />
-                  ))}
-              </View>
-              <Text lighten>
-                { store.pin && fingerprint ? l10n.ENTER_PIN_OR_FINGERPRINT : l10n.ENTER_PIN }
-              </Text>
-            </View>
-
-            { store.pin && !busy && fingerprint && <Image source={ASSETS.fingerprint} style={styles.fingerprint} /> }
-
-            <NumKeyboard onPress={(number) => onPin(`${pin}${number}`, store)} />
-            <Text lighten caption style={styles.textVersion}>{`v${VERSION}`}</Text>
+      <View style={styles.container}>
+        { fingerprint && store.pin ? (onFingerprint() && <Fragment />) : undefined }
+        <View style={styles.content}>
+          <View style={styles.row}>
+            <Image source={ASSETS.logo} resizeMode="contain" style={styles.logo} />
+            <Text headline style={styles.textName}>volt.</Text>
           </View>
-        )}
-      </Consumer>
+          <View style={styles.pin}>
+            { busy
+              ? <Activity size="large" style={styles.activity} />
+              : [1, 2, 3, 4].map((number) => (
+                <Motion
+                  key={number}
+                  style={[styles.bullet, pin.length >= number && styles.bulletActive]}
+                  timeline={[{ property: 'scale', value: pin.length >= number ? 1 : 0.8 }]}
+                />
+              ))}
+          </View>
+          <Text lighten>
+            { store.pin && fingerprint ? l10n.ENTER_PIN_OR_FINGERPRINT : l10n.ENTER_PIN }
+          </Text>
+        </View>
+
+        { store.pin && !busy && fingerprint && <Image source={ASSETS.fingerprint} style={styles.fingerprint} /> }
+
+        <NumKeyboard onPress={(number) => onPin(`${pin}${number}`)} />
+        <Text lighten caption style={styles.textVersion}>{`v${VERSION}`}</Text>
+      </View>
     </Viewport>
   );
 };

@@ -10,7 +10,9 @@ import { C } from '../../common';
 import {
   Footer, Header, HorizontalChartItem, OptionItem, PriceFriendly,
 } from '../../components';
-import { Consumer, useNavigation, useSettings } from '../../context';
+import {
+  useL10N, useNavigation, useSettings, useStore,
+} from '../../context';
 import { query, sort } from './modules';
 import styles from './Vaults.style';
 
@@ -19,56 +21,53 @@ const { COLOR } = THEME;
 
 const Vaults = ({ visible, ...inherit }) => {
   const navigation = useNavigation();
+  const l10n = useL10N();
+  const { baseCurrency, vaults } = useStore();
   const { state, dispatch } = useSettings();
+
   const currencies = visible ? query(inherit) : [];
 
   console.log('<Vaults>', { visible });
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
-      <Consumer>
-        { ({ l10n, store: { baseCurrency, vaults } }) => (
-          <Fragment>
-            <Header highlight title={l10n.VAULTS} />
-            <ScrollView contentContainerStyle={styles.container}>
-              <View style={styles.currencies}>
-                { currencies.map(({ base, currency, weight }) => (
-                  <Fragment key={currency}>
-                    <HorizontalChartItem
-                      color={COLOR[currency]}
-                      key={currency}
-                      currency={baseCurrency}
-                      image={FLAGS[currency]}
-                      style={styles.horizontalChart}
-                      title={currency}
-                      value={base}
-                      width={weight}
-                    />
-                    <View style={styles.vaults}>
-                      { sort(vaults, currency).map((vault) => (
-                        <OptionItem
-                          key={vault.hash}
-                          active={state[vault.hash]}
-                          onChange={(value) => dispatch({ type: 'VAULT_VISIBLE', vault: vault.hash, value })}
-                          onPress={() => navigation.go(SCREEN.VAULT, vault)}
-                          {...vault}
-                        >
-                          <PriceFriendly lighten currency={currency} value={vault.currentBalance} />
-                        </OptionItem>
-                      ))}
-                    </View>
-                  </Fragment>
+      <Header highlight title={l10n.VAULTS} />
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.currencies}>
+          { currencies.map(({ base, currency, weight }) => (
+            <Fragment key={currency}>
+              <HorizontalChartItem
+                color={COLOR[currency]}
+                key={currency}
+                currency={baseCurrency}
+                image={FLAGS[currency]}
+                style={styles.horizontalChart}
+                title={currency}
+                value={base}
+                width={weight}
+              />
+              <View style={styles.vaults}>
+                { sort(vaults, currency).map((vault) => (
+                  <OptionItem
+                    key={vault.hash}
+                    active={state[vault.hash]}
+                    onChange={(value) => dispatch({ type: 'VAULT_VISIBLE', vault: vault.hash, value })}
+                    onPress={() => navigation.go(SCREEN.VAULT, vault)}
+                    {...vault}
+                  >
+                    <PriceFriendly lighten currency={currency} value={vault.currentBalance} />
+                  </OptionItem>
                 ))}
               </View>
-            </ScrollView>
+            </Fragment>
+          ))}
+        </View>
+      </ScrollView>
 
-            <Footer
-              onBack={navigation.back}
-              onHardwareBack={visible ? navigation.back : undefined}
-            />
-          </Fragment>
-        )}
-      </Consumer>
+      <Footer
+        onBack={navigation.back}
+        onHardwareBack={visible ? navigation.back : undefined}
+      />
     </Viewport>
   );
 };

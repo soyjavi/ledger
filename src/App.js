@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 
 import { C } from './common';
-import { Consumer, useNavigation } from './context';
+import { useL10N, useNavigation, useStore } from './context';
 import { THEME } from './reactor/common';
 import { LayoutView, Snackbar } from './reactor/components';
 import { DialogClone } from './components';
@@ -20,45 +20,45 @@ export default () => {
   const {
     current, back, params, stack,
   } = useNavigation();
+  const l10n = useL10N();
+  const store = useStore();
+  const { error, onError } = store;
+
+  console.log('<App>');
 
   return (
-    <Consumer>
-      { ({ l10n, store: { error, onError, ...store } }) => (
-        <LayoutView style={styles.container}>
-          { console.log('<App>') }
-          <Session backward={current !== SESSION} visible />
+    <LayoutView style={styles.container}>
+      <Session backward={current !== SESSION} visible />
 
-          { stack.includes(SESSION) && (
-            <Fragment>
-              <Dashboard backward={current !== DASHBOARD} visible={stack.includes(DASHBOARD)} />
-              <Snackbar
-                button={l10n.CLOSE.toUpperCase()}
-                caption={error}
-                color={COLOR.ERROR}
-                onPress={() => onError(undefined)}
-                visible={!!(error)}
-              />
-            </Fragment>
-          )}
-
-          { stack.includes(DASHBOARD) && (
-            <Fragment>
-              <Settings visible={stack.includes(SETTINGS)} />
-              <Vaults {...store} visible={stack.includes(VAULTS)} />
-              <Vault
-                backward={current !== VAULT}
-                dataSource={stack.includes(VAULT) && params.Vault
-                  ? store.vaults.find(({ hash }) => hash === params.Vault.hash)
-                  : undefined}
-                back={back}
-                visible={stack.includes(VAULT)}
-              />
-              <Stats {...store} vault={params.Vault} visible={stack.includes(STATS)} />
-              <DialogClone dataSource={store.tx} visible={store.tx !== undefined} />
-            </Fragment>
-          )}
-        </LayoutView>
+      { stack.includes(SESSION) && (
+        <Fragment>
+          <Dashboard backward={current !== DASHBOARD} visible={stack.includes(DASHBOARD)} />
+          <Snackbar
+            button={l10n.CLOSE.toUpperCase()}
+            caption={error}
+            color={COLOR.ERROR}
+            onPress={() => onError(undefined)}
+            visible={!!(error)}
+          />
+        </Fragment>
       )}
-    </Consumer>
+
+      { stack.includes(DASHBOARD) && (
+        <Fragment>
+          <Settings visible={stack.includes(SETTINGS)} />
+          <Vaults {...store} visible={stack.includes(VAULTS)} />
+          <Vault
+            backward={current !== VAULT}
+            dataSource={stack.includes(VAULT) && params.Vault
+              ? store.vaults.find(({ hash }) => hash === params.Vault.hash)
+              : undefined}
+            back={back}
+            visible={stack.includes(VAULT)}
+          />
+          <Stats {...store} vault={params.Vault} visible={stack.includes(STATS)} />
+          <DialogClone dataSource={store.tx} visible={store.tx !== undefined} />
+        </Fragment>
+      )}
+    </LayoutView>
   );
 };

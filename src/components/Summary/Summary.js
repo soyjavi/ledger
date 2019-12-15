@@ -6,7 +6,9 @@ import { Image, View } from 'react-native';
 
 import ASSETS from '../../assets';
 import { C, exchange, verboseMonth } from '../../common';
-import { Consumer, useNavigation, useSettings } from '../../context';
+import {
+  useL10N, useNavigation, useSettings, useStore,
+} from '../../context';
 import Box from '../Box';
 import ButtonMore from '../ButtonMore';
 import PriceFriendly from '../PriceFriendly';
@@ -20,6 +22,8 @@ const CAPTION_PROPS = { caption: true, lighten: true, numberOfLines: 1 };
 const Summary = React.memo(({
   currency, currentBalance, currentMonth, image, onMask, title, ...inherit
 }) => {
+  const l10n = useL10N();
+  const { baseCurrency, rates } = useStore();
   const navigation = useNavigation();
   const { state: { maskAmount }, dispatch } = useSettings();
 
@@ -31,63 +35,59 @@ const Summary = React.memo(({
     : progression;
 
   return (
-    <Consumer>
-      { ({ l10n, store: { baseCurrency, rates } }) => (
-        <View style={[styles.container, inherit.style]}>
-          <Box style={styles.card}>
-            <View style={[styles.row, styles.rowHeading]}>
-              <Image source={image} resizeMode="contain" style={styles.image} />
-              <Text caption style={styles.expand}>{title.toUpperCase()}</Text>
+    <View style={[styles.container, inherit.style]}>
+      <Box style={styles.card}>
+        <View style={[styles.row, styles.rowHeading]}>
+          <Image source={image} resizeMode="contain" style={styles.image} />
+          <Text caption style={styles.expand}>{title.toUpperCase()}</Text>
 
-              <ButtonMore
-                title={l10n.ACTIVITY}
-                onPress={() => navigation.go(SCREEN.STATS)}
-              />
-            </View>
-            <Touchable onPress={() => dispatch({ type: 'MASK_AMOUNT', value: !maskAmount })}>
-              <PriceFriendly
-                currency={baseCurrency}
-                headline
-                value={baseCurrency !== currency
-                  ? exchange(Math.abs(currentBalance), currency, baseCurrency, rates)
-                  : Math.abs(currentBalance)}
-              />
-            </Touchable>
-            { baseCurrency !== currency && (
-              <PriceFriendly
-                currency={currency}
-                subtitle
-                lighten
-                value={currentBalance}
-              />
-            )}
-
-            <View style={styles.expand} />
-            <View style={styles.row}>
-              <View style={styles.rowItem}>
-                <Text {...CAPTION_PROPS}>{verboseMonth(new Date(), l10n).toUpperCase()}</Text>
-                <PriceFriendly caption bold lighten={progressionPercentage === 0} currency="%" icon value={progressionPercentage} />
-              </View>
-
-              <View style={styles.rowItem}>
-                <Text {...CAPTION_PROPS}>{l10n.INCOMES.toUpperCase()}</Text>
-                <PriceFriendly caption bold lighten={incomes === 0} currency={baseCurrency} value={incomes} />
-              </View>
-
-              <View style={[styles.rowItem, styles.rowItemExpanded]}>
-                <Text {...CAPTION_PROPS}>{l10n.EXPENSES.toUpperCase()}</Text>
-                <PriceFriendly caption bold lighten={expenses === 0} currency={baseCurrency} value={expenses} />
-              </View>
-
-              <View>
-                <Text {...CAPTION_PROPS}>{l10n.TODAY.toUpperCase()}</Text>
-                <PriceFriendly caption bold lighten={today === 0} currency={baseCurrency} value={today} />
-              </View>
-            </View>
-          </Box>
+          <ButtonMore
+            title={l10n.ACTIVITY}
+            onPress={() => navigation.go(SCREEN.STATS)}
+          />
         </View>
-      )}
-    </Consumer>
+        <Touchable onPress={() => dispatch({ type: 'MASK_AMOUNT', value: !maskAmount })}>
+          <PriceFriendly
+            currency={baseCurrency}
+            headline
+            value={baseCurrency !== currency
+              ? exchange(Math.abs(currentBalance), currency, baseCurrency, rates)
+              : Math.abs(currentBalance)}
+          />
+        </Touchable>
+        { baseCurrency !== currency && (
+          <PriceFriendly
+            currency={currency}
+            subtitle
+            lighten
+            value={currentBalance}
+          />
+        )}
+
+        <View style={styles.expand} />
+        <View style={styles.row}>
+          <View style={styles.rowItem}>
+            <Text {...CAPTION_PROPS}>{verboseMonth(new Date(), l10n).toUpperCase()}</Text>
+            <PriceFriendly caption bold lighten={progressionPercentage === 0} currency="%" icon value={progressionPercentage} />
+          </View>
+
+          <View style={styles.rowItem}>
+            <Text {...CAPTION_PROPS}>{l10n.INCOMES.toUpperCase()}</Text>
+            <PriceFriendly caption bold lighten={incomes === 0} currency={baseCurrency} value={incomes} />
+          </View>
+
+          <View style={[styles.rowItem, styles.rowItemExpanded]}>
+            <Text {...CAPTION_PROPS}>{l10n.EXPENSES.toUpperCase()}</Text>
+            <PriceFriendly caption bold lighten={expenses === 0} currency={baseCurrency} value={expenses} />
+          </View>
+
+          <View>
+            <Text {...CAPTION_PROPS}>{l10n.TODAY.toUpperCase()}</Text>
+            <PriceFriendly caption bold lighten={today === 0} currency={baseCurrency} value={today} />
+          </View>
+        </View>
+      </Box>
+    </View>
   );
 });
 

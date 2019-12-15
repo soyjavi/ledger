@@ -1,5 +1,5 @@
 import { node } from 'prop-types';
-import React, { Component, createContext } from 'react';
+import React, { Component, createContext, useContext } from 'react';
 
 import { C } from '../common';
 import { consolidate, Storage } from './modules';
@@ -8,9 +8,9 @@ import {
 } from './services';
 
 const { CURRENCY, NAME } = C;
-const { Provider, Consumer: ConsumerStore } = createContext(`${NAME}:context:store`);
+const StoreContext = createContext(`${NAME}:context:store`);
 
-class ProviderStore extends Component {
+class StoreProvider extends Component {
   static propTypes = {
     children: node.isRequired,
   };
@@ -123,11 +123,18 @@ class ProviderStore extends Component {
     const { props: { children }, state, ...events } = this;
 
     return (
-      <Provider value={{ ...events, ...state }}>
+      <StoreContext.Provider value={{ ...events, ...state }}>
         { children }
-      </Provider>
+      </StoreContext.Provider>
     );
   }
 }
 
-export { ConsumerStore, ProviderStore };
+const useStore = () => useContext(StoreContext);
+const { Consumer: StoreConsumer } = StoreContext;
+
+export {
+  StoreConsumer,
+  StoreProvider,
+  useStore,
+};
