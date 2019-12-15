@@ -18,7 +18,7 @@ const { COLOR } = THEME;
 
 export default () => {
   const {
-    current, goBack, params, stack,
+    current, back, params, stack,
   } = useNavigation();
 
   return (
@@ -50,7 +50,7 @@ export default () => {
                 dataSource={stack.includes(VAULT) && params.Vault
                   ? store.vaults.find(({ hash }) => hash === params.Vault.hash)
                   : undefined}
-                goBack={goBack}
+                back={back}
                 visible={stack.includes(VAULT)}
               />
               <Stats {...store} vault={params.Vault} visible={stack.includes(STATS)} />

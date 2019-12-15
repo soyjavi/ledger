@@ -19,7 +19,7 @@ const { COLOR, SPACE } = THEME;
 
 const Vault = (props) => {
   const {
-    dataSource, goBack, visible, ...inherit
+    dataSource, back, visible, ...inherit
   } = props;
   const navigation = useNavigation();
   const [dialog, setDialog] = useState(false);
@@ -48,7 +48,7 @@ const Vault = (props) => {
 
   const onHardwareBack = () => {
     if (dialog) setDialog(false);
-    else navigation.goBack();
+    else navigation.back();
   };
 
   const onScroll = ({ nativeEvent: { contentOffset: { y } } }) => {
@@ -103,7 +103,7 @@ const Vault = (props) => {
             </ScrollView>
 
             <Footer
-              onBack={navigation.goBack}
+              onBack={navigation.back}
               onHardwareBack={visible ? onHardwareBack : undefined}
               onPress={() => setDialog(true)}
             />
@@ -126,14 +126,14 @@ const Vault = (props) => {
 Vault.propTypes = {
   backward: bool,
   dataSource: shape({}),
-  goBack: func,
+  back: func,
   visible: bool,
 };
 
 Vault.defaultProps = {
   backward: false,
   dataSource: undefined,
-  goBack() {},
+  back() {},
   visible: true,
 };
 

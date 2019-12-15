@@ -120,8 +120,8 @@ const Stats = (props) => {
                 )}
             </ScrollView>
             <Footer
-              onBack={navigation.goBack}
-              onHardwareBack={visible ? () => navigation.goBack : undefined}
+              onBack={navigation.back}
+              onHardwareBack={visible ? () => navigation.back : undefined}
             />
           </Fragment>
         )}

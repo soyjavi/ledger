@@ -50,7 +50,7 @@ const Vaults = ({ visible, ...inherit }) => {
                           key={vault.hash}
                           active={state[vault.hash]}
                           onChange={(value) => dispatch({ type: 'VAULT_VISIBLE', vault: vault.hash, value })}
-                          onPress={() => navigation.navigate(SCREEN.VAULT, vault)}
+                          onPress={() => navigation.go(SCREEN.VAULT, vault)}
                           {...vault}
                         >
                           <PriceFriendly lighten currency={currency} value={vault.currentBalance} />
@@ -63,8 +63,8 @@ const Vaults = ({ visible, ...inherit }) => {
             </ScrollView>
 
             <Footer
-              onBack={navigation.goBack}
-              onHardwareBack={visible ? navigation.goBack : undefined}
+              onBack={navigation.back}
+              onHardwareBack={visible ? navigation.back : undefined}
             />
           </Fragment>
         )}

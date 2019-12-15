@@ -47,7 +47,7 @@ const Settings = ({ visible, ...inherit }) => {
 
   const onForked = () => {
     setDialog(false);
-    navigation.goBack();
+    navigation.back();
   };
 
   return (
@@ -96,8 +96,8 @@ const Settings = ({ visible, ...inherit }) => {
             </ScrollView>
 
             <Footer
-              onBack={navigation.goBack}
-              onHardwareBack={visible ? () => navigation.goBack() : undefined}
+              onBack={navigation.back}
+              onHardwareBack={visible ? () => navigation.back() : undefined}
             />
 
             <DialogFork onClose={() => setDialog(false)} onForked={onForked} query={qr} visible={dialog} />

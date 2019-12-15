@@ -39,7 +39,7 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
             <Fragment>
               <Header
                 highlight={scroll}
-                right={{ title: l10n.SETTINGS, onPress: () => navigation.navigate(SCREEN.SETTINGS) }}
+                right={{ title: l10n.SETTINGS, onPress: () => navigation.go(SCREEN.SETTINGS) }}
                 title={l10n.OVERALL_BALANCE}
               />
               <ScrollView
@@ -54,11 +54,11 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
                 />
 
                 <Heading subtitle={l10n.VAULTS}>
-                  <ButtonMore title={l10n.MORE} onPress={() => navigation.navigate(SCREEN.VAULTS)} />
+                  <ButtonMore title={l10n.MORE} onPress={() => navigation.go(SCREEN.VAULTS)} />
                 </Heading>
                 <Slider itemWidth={VAULT_ITEM_WIDTH + SPACE.S} itemMargin={0} style={styles.vaults}>
                   { queryVaults({ settings, vaults }).map((vault) => (
-                    <VaultCard {...vault} key={vault.hash} onPress={() => navigation.navigate(SCREEN.VAULT, vault)} />
+                    <VaultCard {...vault} key={vault.hash} onPress={() => navigation.go(SCREEN.VAULT, vault)} />
                   ))}
                 </Slider>
 

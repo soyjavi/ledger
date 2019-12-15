@@ -40,7 +40,7 @@ const Session = (props) => {
       await store.onSync();
     }
 
-    navigation.navigate(SCREEN.DASHBOARD);
+    navigation.go(SCREEN.DASHBOARD);
     if (!isSignup) store.onSync();
 
     setBusy(false);

@@ -41,7 +41,7 @@ const Summary = React.memo(({
 
               <ButtonMore
                 title={l10n.ACTIVITY}
-                onPress={() => navigation.navigate(SCREEN.STATS)}
+                onPress={() => navigation.go(SCREEN.STATS)}
               />
             </View>
             <Touchable onPress={() => dispatch({ type: 'MASK_AMOUNT', value: !maskAmount })}>
