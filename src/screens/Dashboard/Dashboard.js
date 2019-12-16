@@ -45,11 +45,7 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
         scrollEventThrottle={40}
         contentContainerStyle={styles.scroll}
       >
-        <Summary
-          {...overall}
-          currency={baseCurrency}
-          title={l10n.OVERALL_BALANCE}
-        />
+        <Summary {...overall} currency={baseCurrency} title={l10n.OVERALL_BALANCE} />
 
         <Heading subtitle={l10n.VAULTS}>
           <ButtonMore title={l10n.MORE} onPress={() => navigation.go(SCREEN.VAULTS)} />
@@ -72,7 +68,7 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
       { visible && sync && (
         <Fragment>
           { vaults.length === 0 && !dialog && setDialog(true) }
-          <DialogVault baseCurrency={baseCurrency} visible={dialog} onClose={() => setDialog(false)} />
+          <DialogVault visible={dialog} onClose={() => setDialog(false)} />
         </Fragment>
       )}
 
