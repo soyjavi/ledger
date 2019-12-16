@@ -71,7 +71,7 @@ const Vault = (props) => {
   const { currency, hash, title } = vault || {};
 
   console.log('<Vault>', {
-    visible, dialog, scroll, scrollQuery, search,
+    visible, dialog, scroll, scrollQuery, search, currency,
   });
 
   return (

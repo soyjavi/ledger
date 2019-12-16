@@ -130,11 +130,6 @@ class StoreProvider extends Component {
   }
 }
 
-const useStore = () => useContext(StoreContext);
-const { Consumer: StoreConsumer } = StoreContext;
+export { StoreProvider };
 
-export {
-  StoreConsumer,
-  StoreProvider,
-  useStore,
-};
+export const useStore = () => useContext(StoreContext);

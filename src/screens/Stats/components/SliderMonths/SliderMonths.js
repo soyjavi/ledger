@@ -1,7 +1,7 @@
 import { number, func } from 'prop-types';
-import React, { createRef, Component } from 'react';
+import React, { useEffect, useRef } from 'react';
 
-import { Consumer } from '../../../../context';
+import { useL10N } from '../../../../context';
 import { THEME } from '../../../../reactor/common';
 import { Text, Touchable, Slider } from '../../../../reactor/components';
 import styles, { ITEM_WIDTH } from './SliderMonths.style';
@@ -9,73 +9,49 @@ import getLastMonths from './modules/getLastMonths';
 
 const { COLOR } = THEME;
 
-class SliderMonths extends Component {
-  static propTypes = {
-    index: number,
-    month: number,
-    onChange: func,
-    year: number,
-  };
+const SliderMonths = ({
+  index, onChange, ...inherit
+}) => {
+  const l10n = useL10N();
+  const slider = useRef(null);
+  useEffect(() => {
+    const { current: { scrollview } } = slider;
+    scrollview.current.scrollTo({ x: (index - 3) * ITEM_WIDTH, animated: true });
+  }, [index]);
 
-  static defaultProps = {
-    index: 11,
-    month: 0,
-    onChange: undefined,
-    year: 0,
-  };
+  return (
+    <Slider ref={slider} itemWidth={ITEM_WIDTH} itemMargin={0} style={inherit.style}>
+      { getLastMonths(l10n.MONTHS).map(({ month, year }, i) => (
+        <Touchable
+          key={month}
+          onPress={() => onChange({ index: i, month, year })}
+          rippleColor={COLOR.WHITE}
+          style={[styles.item, index === i && styles.itemSelected]}
+        >
+          <Text bold lighten color={index === i ? COLOR.BACKGROUND : undefined}>
+            {l10n.MONTHS[month].substr(0, 3)}
+          </Text>
+          <Text caption lighten color={index === i ? COLOR.BACKGROUND : undefined} style={styles.year}>
+            {year}
+          </Text>
+        </Touchable>
+      ))}
+    </Slider>
+  );
+};
 
-  constructor(props) {
-    super(props);
-    this.slider = createRef();
-  }
+SliderMonths.propTypes = {
+  index: number,
+  month: number,
+  onChange: func,
+  year: number,
+};
 
-  componentDidMount() {
-    const { _scrollTo, props: { index } } = this;
-    _scrollTo(index, false);
-  }
-
-  componentWillReceiveProps({ index }) {
-    const { _scrollTo } = this;
-    _scrollTo(index);
-  }
-
-  _scrollTo = (index, animated = true) => {
-    const { slider: { current: { scrollview } } } = this;
-    scrollview.current.scrollTo({ x: (index - 3) * ITEM_WIDTH, animated });
-  }
-
-  _onPress = (item) => {
-    const { props: { onChange } } = this;
-    onChange(item);
-  }
-
-  render() {
-    const { _onPress, props: { index, ...inherit } } = this;
-
-    return (
-      <Consumer>
-        { ({ l10n }) => (
-          <Slider ref={this.slider} itemWidth={ITEM_WIDTH} itemMargin={0} style={inherit.style}>
-            { getLastMonths(l10n.MONTHS).map(({ month, year }, i) => (
-              <Touchable
-                key={month}
-                onPress={() => _onPress({ index: i, month, year })}
-                rippleColor={COLOR.WHITE}
-                style={[styles.item, index === i && styles.itemSelected]}
-              >
-                <Text bold lighten color={index === i ? COLOR.BACKGROUND : undefined}>
-                  {l10n.MONTHS[month].substr(0, 3)}
-                </Text>
-                <Text caption lighten color={index === i ? COLOR.BACKGROUND : undefined} style={styles.year}>
-                  {year}
-                </Text>
-              </Touchable>
-            ))}
-          </Slider>
-        )}
-      </Consumer>
-    );
-  }
-}
+SliderMonths.defaultProps = {
+  index: 11,
+  month: 0,
+  onChange: undefined,
+  year: 0,
+};
 
 export default SliderMonths;

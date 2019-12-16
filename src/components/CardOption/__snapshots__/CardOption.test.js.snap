@@ -42,6 +42,8 @@ exports[`<CardOption> renders 1`] = `
 >
   <View
     accessible={true}
+    focusable={false}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}

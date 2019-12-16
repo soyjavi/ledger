@@ -18,16 +18,17 @@ const { SPACE } = THEME;
 
 const FormTransaction = (props) => {
   const {
-    color, form, type, ...inherit
+    color, form, onChange, type, ...inherit
   } = props;
 
   const l10n = useL10N();
 
-  const onChange = (values = {}) => {
+  const handleChange = (values = {}) => {
     const { category, form: { title = '', value } } = { ...props, ...values };
 
-    props.onChange({
+    onChange({
       ...values,
+      type,
       valid: category !== undefined && title !== '' && value > 0,
     });
   };
@@ -41,7 +42,7 @@ const FormTransaction = (props) => {
             key={item.key}
             color={color}
             icon={getIconCategory({ type, category: item.key })}
-            onPress={() => onChange({ category: item.key })}
+            onPress={() => handleChange({ category: item.key })}
             selected={props.category === item.key}
             style={styles.card}
             title={item.caption}
@@ -52,7 +53,7 @@ const FormTransaction = (props) => {
       <Form
         attributes={setCurrency(translate(FORM.TRANSACTION, l10n), inherit.currency)}
         color={color}
-        onChange={(value) => onChange({ form: value })}
+        onChange={(value) => handleChange({ form: value })}
         value={form}
       />
     </Fragment>
