@@ -34,7 +34,7 @@ const Vault = (props) => {
   useEffect(() => {
     const { txs = [] } = dataSource || {};
 
-    if (visible && txs.length > 0) {
+    if (visible) {
       const nextValues = query(props, { ...dataSource, search: undefined });
       const totalTxs = Object.values(nextValues).length > 0
         ? Object.values(nextValues).map((value) => value.txs.length).reduce((a, b) => a += b)

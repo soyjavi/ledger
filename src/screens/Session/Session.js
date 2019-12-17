@@ -33,12 +33,12 @@ const Session = (props) => {
   }, [fingerprint]);
 
 
-  const onHandshake = async () => {
+  const onHandshake = async (usedPin) => {
     const isSignup = store.pin === undefined;
 
     setBusy(true);
     if (isSignup) {
-      await store.signup(pin);
+      await store.signup(usedPin);
       await store.onSync();
     }
 
@@ -61,14 +61,16 @@ const Session = (props) => {
       if (IS_DEV) needHandshake = true;
     }
 
-    if (needHandshake) onHandshake(store);
+    if (needHandshake) onHandshake(store.pin);
   };
 
   const onPin = (next) => {
     setPin(next);
+
     if (next.length === 4) {
       setTimeout(() => {
-        if (store.pin === undefined || store.pin === next) onHandshake(store);
+        console.log('onPin()', { next, store: store.pin });
+        if (store.pin === undefined || store.pin === next) onHandshake(next);
         else setPin('');
       }, DURATION / 2);
     }

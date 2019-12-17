@@ -1,134 +1,129 @@
 import { node } from 'prop-types';
-import React, { Component, createContext, useContext } from 'react';
+import React, {
+  createContext, useContext, useState, useEffect,
+} from 'react';
 
 import { C } from '../common';
 import { consolidate, Storage } from './modules';
 import {
-  createTx, createVault, fork, getAuthorization, getLocations, syncProfile,
+  createTx, createVault, fork, getAuthorization, syncProfile,
 } from './services';
 
 const { CURRENCY, NAME } = C;
 const StoreContext = createContext(`${NAME}:context:store`);
 
-class StoreProvider extends Component {
-  static propTypes = {
-    children: node.isRequired,
-  };
+const INITIAL_STATE = {
+  error: undefined,
+  fingerprint: undefined,
+  overall: {},
+  tx: undefined,
+  sync: false,
+  // -- STORAGE --------------------------------------------------------------
+  authorization: undefined,
+  baseCurrency: CURRENCY,
+  pin: undefined,
+  rates: {},
+  txs: [],
+  vaults: [],
+  version: undefined,
+};
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      error: undefined,
-      fingerprint: undefined,
-      overall: {},
-      tx: undefined,
-      sync: false,
-      // -- STORAGE --------------------------------------------------------------
-      authorization: undefined,
-      baseCurrency: CURRENCY,
-      pin: undefined,
-      rates: {},
-      txs: [],
-      vaults: [],
-      version: undefined,
+const StoreProvider = ({ children }) => {
+  const [state, setState] = useState(undefined);
+  useEffect(() => {
+    const load = async () => {
+      setState({ ...INITIAL_STATE, ...consolidate(await Storage.get()) });
     };
-  }
+    if (!state) load();
+  }, [state]);
 
-  async componentWillMount() {
-    this.setState({ ...consolidate(await Storage.get()), sync: false });
-  }
+  const store = (nextState) => Storage.set({ ...state, ...nextState });
 
-  signup = async (pin) => {
-    const authorization = await getAuthorization(this);
+  const onError = (error) => setState({ ...state, error: error ? error.message : undefined });
 
-    if (authorization) {
-      const { _store } = this;
-
-      await _store({ authorization, pin });
-      this.setState({ authorization, pin, sync: false });
-    }
-  }
-
-  onFork = async (query) => {
-    const response = await fork(this, query);
-
-    if (response) await this.onSync();
-    return response;
-  }
-
-  getLocations = (query) => getLocations(this, query);
-
-  onError = (error) => this.setState({ error: error ? error.message : undefined });
-
-  onSelectTx = (tx) => {
-    const { state: { vaults } } = this;
-    const { currency } = tx ? vaults.find(({ hash }) => hash === tx.vault) : {};
-
-    this.setState({ tx: tx ? { ...tx, currency } : undefined });
-  }
-
-  onSync = async () => {
-    const { _store } = this;
-
-    this.setState({ sync: false });
-    let nextState = await syncProfile(this);
+  const onSync = async () => {
+    setState({ ...state, sync: false });
+    let nextState = await syncProfile({ onError, state });
     if (nextState) {
       nextState = consolidate(nextState);
-      await _store(nextState);
+      await store(nextState);
     }
 
-    this.setState({ ...nextState, sync: true });
+    setState({ ...state, ...nextState, sync: true });
     return nextState;
-  }
+  };
 
-  onTx = async (props) => {
-    const { _store, state: { txs = [], ...state } } = this;
-    const tx = await createTx(this, props);
+  const signup = async (pin) => {
+    const authorization = await getAuthorization({ onError, state });
+
+    if (authorization) {
+      await store({ authorization, pin });
+      setState({
+        ...state, authorization, pin, sync: false,
+      });
+    }
+  };
+
+  const onFork = async (query) => {
+    const response = await fork({ onError, state }, query);
+
+    if (response) await onSync();
+    return response;
+  };
+
+  const onSelectTx = (tx) => {
+    const { state: { vaults } } = { onError, state };
+    const { currency } = tx ? vaults.find(({ hash }) => hash === tx.vault) : {};
+
+    setState({ ...state, tx: tx ? { ...tx, currency } : undefined });
+  };
+
+  const onTx = async (props) => {
+    const tx = await createTx({ onError, state }, props);
 
     if (tx) {
-      const nextState = consolidate({ ...state, txs: [...txs, tx] });
+      const nextState = consolidate({ ...state, txs: [...state.txs, tx] });
 
-      await _store(nextState);
-      this.setState(nextState);
+      await store(nextState);
+      setState({ ...state, ...nextState });
     }
-
     return tx;
-  }
+  };
 
-  onVault = async (props) => {
-    const { _store, state: { rates, ...state } } = this;
-
-    const vault = await createVault(this, props);
+  const onVault = async (props) => {
+    const vault = await createVault({ onError, state }, props);
 
     if (vault) {
       const vaults = [...state.vaults, vault];
-      let nextState = { ...state, rates, vaults };
+      let nextState = { ...state, rates: state.rates, vaults };
 
       if (vaults.length === 1) {
         nextState.baseCurrency = vault.currency;
-        delete rates[vault.currency];
+        delete state.rates[vault.currency];
       }
-      nextState = consolidate({ ...this.state, ...nextState });
+      nextState = consolidate({ ...state, ...nextState });
 
-      await _store(nextState);
-      this.setState(nextState);
+      await store(nextState);
+      setState({ ...state, ...nextState });
     }
 
     return vault;
-  }
+  };
 
-  _store = (nextState) => Storage.set({ ...this.state, ...nextState });
+  return (
+    <StoreContext.Provider
+      value={{
+        onError, onSync, onFork, onTx, onSelectTx, onVault, signup, ...state
+      }}
+    >
+      { children }
+    </StoreContext.Provider>
+  );
+};
 
-  render() {
-    const { props: { children }, state, ...events } = this;
-
-    return (
-      <StoreContext.Provider value={{ ...events, ...state }}>
-        { children }
-      </StoreContext.Provider>
-    );
-  }
-}
+StoreProvider.propTypes = {
+  children: node.isRequired,
+};
 
 export { StoreProvider };
 
