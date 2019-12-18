@@ -14,15 +14,16 @@ const StoreContext = createContext(`${NAME}:context:store`);
 
 const INITIAL_STATE = {
   error: undefined,
-  fingerprint: undefined,
   overall: {},
   tx: undefined,
   sync: false,
   // -- STORAGE --------------------------------------------------------------
   authorization: undefined,
   baseCurrency: CURRENCY,
+  fingerprint: undefined,
   pin: undefined,
   rates: {},
+  secret: undefined,
   txs: [],
   vaults: [],
   version: undefined,
@@ -72,20 +73,22 @@ const StoreProvider = ({ children }) => {
   };
 
   const onSelectTx = (tx) => {
-    const { state: { vaults } } = { onError, state };
-    const { currency } = tx ? vaults.find(({ hash }) => hash === tx.vault) : {};
-
-    setState({ ...state, tx: tx ? { ...tx, currency } : undefined });
+    let next;
+    if (tx) {
+      const { state: { vaults } } = { onError, state };
+      const { currency } = tx ? vaults.find(({ hash }) => hash === tx.vault) : {};
+      next = { ...tx, currency };
+    }
+    setState({ ...state, tx: next });
   };
 
   const onTx = async (props) => {
     const tx = await createTx({ onError, state }, props);
 
     if (tx) {
-      const nextState = consolidate({ ...state, txs: [...state.txs, tx] });
-
+      const nextState = consolidate({ ...state, tx: undefined, txs: [...state.txs, tx] });
       await store(nextState);
-      setState({ ...state, ...nextState });
+      setState(nextState);
     }
     return tx;
   };
@@ -113,7 +116,7 @@ const StoreProvider = ({ children }) => {
   return (
     <StoreContext.Provider
       value={{
-        onError, onSync, onFork, onTx, onSelectTx, onVault, signup, ...state
+        onError, onSync, onFork, onTx, onSelectTx, onVault, signup, ...state,
       }}
     >
       { children }

@@ -32,8 +32,6 @@ const Vault = (props) => {
   const scrollview = useRef(null);
 
   useEffect(() => {
-    const { txs = [] } = dataSource || {};
-
     if (visible) {
       const nextValues = query(props, { ...dataSource, search: undefined });
       const totalTxs = Object.values(nextValues).length > 0
@@ -71,7 +69,7 @@ const Vault = (props) => {
   const { currency, hash, title } = vault || {};
 
   console.log('<Vault>', {
-    visible, dialog, scroll, scrollQuery, search, currency,
+    visible, dialog, scroll, scrollQuery, search, values,
   });
 
   return (

@@ -31,25 +31,15 @@ const DialogClone = ({
 
   const onSubmit = async (wipe = false) => {
     setBusy(true);
-    let props = {
-      vault, category, value, title, type,
-    };
-
-    if (wipe) {
-      props = {
-        ...props,
-        category: WIPE,
-        tx: hash,
-        type: type === EXPENSE ? INCOME : EXPENSE,
-      };
-    } else {
-      props = { ...props, ...location };
-    }
-
-    const tx = await onTx(props);
+    await onTx({
+      vault,
+      category,
+      value,
+      title,
+      type,
+      ...(wipe ? { category: WIPE, tx: hash, type: type === EXPENSE ? INCOME : EXPENSE } : { location }),
+    });
     setBusy(false);
-
-    if (tx) onSelectTx(undefined);
   };
 
   const color = type === EXPENSE ? COLOR.EXPENSE : COLOR.INCOME;

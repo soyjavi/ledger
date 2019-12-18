@@ -23,25 +23,13 @@ export default () => {
   const l10n = useL10N();
   const store = useStore();
   const { error, onError } = store;
-
   console.log('<App>');
 
   return (
     <LayoutView style={styles.container}>
       <Session backward={current !== SESSION} visible />
 
-      { stack.includes(SESSION) && (
-        <Fragment>
-          <Dashboard backward={current !== DASHBOARD} visible={stack.includes(DASHBOARD)} />
-          <Snackbar
-            button={l10n.CLOSE.toUpperCase()}
-            caption={error}
-            color={COLOR.ERROR}
-            onPress={() => onError(undefined)}
-            visible={!!(error)}
-          />
-        </Fragment>
-      )}
+      { stack.includes(SESSION) && <Dashboard backward={current !== DASHBOARD} visible={stack.includes(DASHBOARD)} /> }
 
       { stack.includes(DASHBOARD) && (
         <Fragment>
@@ -59,6 +47,14 @@ export default () => {
           <DialogClone dataSource={store.tx} visible={store.tx !== undefined} />
         </Fragment>
       )}
+
+      <Snackbar
+        button={l10n.CLOSE.toUpperCase()}
+        caption={error}
+        color={COLOR.ERROR}
+        onPress={() => onError(undefined)}
+        visible={!!(error)}
+      />
     </LayoutView>
   );
 };

@@ -33,6 +33,8 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
     onHardwareBackPress(!backward, () => { if (dialog) setDialog(false); });
   }, [backward, dialog]);
 
+  console.log('<Dashboard>');
+
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
       <Header
