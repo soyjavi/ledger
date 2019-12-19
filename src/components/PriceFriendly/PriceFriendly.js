@@ -18,7 +18,7 @@ const PriceFriendly = ({
   currency, icon, label, operator, value = 0, ...inherit
 }) => {
   const { state: { maskAmount } } = useSettings();
-  let color;
+  let { color } = inherit;
   let operatorEnhanced;
 
   if (icon) {
@@ -44,7 +44,9 @@ const PriceFriendly = ({
       { icon && !maskAmount && Math.abs(value) > 0 && (
         <Icon value={value > 0 ? ASSETS.income : ASSETS.expense} style={styles.icon} />
       )}
-      {maskAmount ? <Text color={color} {...inherit}>{maskValue(props)}</Text> : <Price {...props} />}
+      {maskAmount
+       ? <Text {...inherit} color={color}>{maskValue(props)}</Text>
+       : <Price {...props} />}
     </View>
   );
 };

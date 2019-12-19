@@ -63,6 +63,10 @@ export default StyleSheet.create({
     height: COLUMN_HEIGHT,
   },
 
+  heading: {
+    marginHorizontal: 0,
+  },
+
   legend: {
     fontSize: UNIT,
     height: UNIT,

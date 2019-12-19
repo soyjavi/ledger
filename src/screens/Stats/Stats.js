@@ -54,6 +54,11 @@ const Stats = (props) => {
 
   console.log('<Stats>', { visible, title, currencies });
 
+  const common = {
+    currency,
+    highlight: slider.index,
+  };
+
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
       <Header highlight title={`${title}${l10n.ACTIVITY}`} />
@@ -63,10 +68,9 @@ const Stats = (props) => {
       <ScrollView contentContainerStyle={styles.scrollView} ref={scrollview}>
         <Chart
           {...calcScales(chart.balance)}
+          {...common}
           captions={orderCaptions(l10n)}
           color={COLOR.ACCENT}
-          currency={currency}
-          highlight={slider.index}
           styleContainer={[styles.chart, styles.chartMargin]}
           style={styles.chartBalance}
           title={l10n.OVERALL_BALANCE}
@@ -74,19 +78,17 @@ const Stats = (props) => {
         />
         <Chart
           {...calcScales(chart.incomes)}
+          {...common}
           color={COLOR.INCOME}
-          currency={currency}
-          highlight={slider.index}
           styleContainer={styles.chart}
-          title={`${l10n.INCOMES} vs. ${l10n.EXPENSES}`}
+          title={`${l10n.INCOMES} & ${l10n.EXPENSES}`}
           values={chart.incomes}
         />
         <Chart
           {...calcScales(chart.expenses)}
+          {...common}
           captions={orderCaptions(l10n)}
-          currency={currency}
           color={COLOR.EXPENSE}
-          highlight={slider.index}
           inverted
           styleContainer={[styles.chart, styles.chartMargin]}
           values={chart.expenses}
@@ -96,8 +98,6 @@ const Stats = (props) => {
             {...calcScales(chart.transfers)}
             captions={orderCaptions(l10n)}
             color={COLOR.TRANSFER}
-            currency={currency}
-            highlight={slider.index}
             styleContainer={[styles.chart, styles.chartMargin]}
             title={l10n.TRANSFERS}
             values={chart.transfers}

@@ -1,7 +1,7 @@
 import {
   arrayOf, bool, number, string,
 } from 'prop-types';
-import React, { Fragment } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 import { THEME } from '../../reactor/common';
 import { Text } from '../../reactor/components';
@@ -13,31 +13,54 @@ import styles from './Chart.style';
 
 const { COLOR } = THEME;
 
+
+const A = ({
+  title, max, min, ...inherit
+}) => (
+  <Heading subtitle={title} style={styles.heading}>
+    <View style={styles.row}>
+      { max > 0 && <PriceFriendly {...inherit} label="max " value={max} style={styles.legend} />}
+      { min > 0 && <PriceFriendly {...inherit} label="    min " value={min} style={styles.legend} />}
+    </View>
+  </Heading>
+);
+
+A.propTypes = {
+  title: string,
+  max: number,
+  min: number,
+};
+
+A.defaultProps = {
+  title: undefined,
+  max: undefined,
+  min: undefined,
+};
+
 const Chart = React.memo(({
-  captions, color, currency, highlight, inverted, title, values, ...inherit
+  captions, highlight, inverted, values, styleContainer, ...inherit
 }) => {
-  const { max, min, med: avg } = inherit;
+  const {
+    color, currency, max, min, med: avg,
+  } = inherit;
   let firstValueIndex = values.findIndex((value) => value !== 0);
   if (firstValueIndex === -1) firstValueIndex = undefined;
-  const rangeProps = { currency, lighten: true, style: styles.legend };
 
   return (
-    <Fragment>
-      { title && (
-        <Heading subtitle={title}>
-          <View style={styles.row}>
-            { max > 0 && <PriceFriendly label="   MAX. " value={max} {...rangeProps} />}
-            { min > 0 && <PriceFriendly label="   MIN. " value={min} {...rangeProps} />}
-          </View>
-        </Heading>
-      )}
-      <View style={[styles.container, inverted && styles.containerInverted, inherit.styleContainer]}>
+    <View style={styleContainer}>
+      { !inverted && <A {...inherit} /> }
+      <View style={[styles.container, inverted && styles.containerInverted]}>
         { avg > 0 && (
           <View style={styles.scales}>
             <View style={[styles.scaleAvg, { top: `${100 - parseInt(((avg - min) * 100) / (max - min), 10)}%` }]}>
               <View style={[styles.scaleLine, { backgroundColor: color }]} />
               <View style={[styles.tag, { backgroundColor: color }]}>
-                <PriceFriendly currency={currency} value={avg} lighten style={[styles.legend, styles.legendHighlight]} />
+                <PriceFriendly
+                  currency={currency}
+                  value={avg}
+                  lighten
+                  style={[styles.legend, styles.legendHighlight]}
+                />
               </View>
             </View>
           </View>
@@ -53,7 +76,6 @@ const Chart = React.memo(({
                 style={[
                   styles.bar,
                   inverted && styles.barInverted,
-                  // (value !== 0 || index > firstValueIndex) && { backgroundColor: color },
                   value !== 0 && { height: `${calcHeight(value, { min, max, avg })}%` },
                   {
                     backgroundColor: color,
@@ -64,6 +86,9 @@ const Chart = React.memo(({
             </View>
           ))}
         </View>
+
+        { inverted && <A {...inherit} /> }
+
         { captions && (
           <View style={[styles.captions, styles.row]}>
             { captions.map((caption, index) => (
@@ -76,7 +101,7 @@ const Chart = React.memo(({
           </View>
         )}
       </View>
-    </Fragment>
+    </View>
   );
 });
 
