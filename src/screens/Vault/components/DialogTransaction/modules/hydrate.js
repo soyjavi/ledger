@@ -2,10 +2,9 @@ import { FORM } from '../../../../../common';
 
 const { TRANSFER } = FORM;
 
-export default (component, store) => {
-  const { props: { destination, vault } } = component;
-  const { currency } = store.vaults.find(({ hash }) => hash === vault);
-  const { currency: destinationCurrency = currency } = store.vaults.find(({ hash }) => hash === destination) || {};
+export default ({ destination, vault }, vaults = []) => {
+  const { currency } = vaults.find(({ hash }) => hash === vault);
+  const { currency: destinationCurrency = currency } = vaults.find(({ hash }) => hash === destination) || {};
 
   return {
     ...TRANSFER,

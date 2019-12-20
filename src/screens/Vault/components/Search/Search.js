@@ -1,71 +1,55 @@
+import { FontAwesome } from '@expo/vector-icons';
 import { func, shape, string } from 'prop-types';
-import React, { PureComponent } from 'react';
+import React, { useState } from 'react';
 import { TextInput, View } from 'react-native';
 
-import ASSETS from '../../../../assets';
 import { THEME } from '../../../../reactor/common';
-import { Activity, Icon } from '../../../../reactor/components';
+import { Activity } from '../../../../reactor/components';
 import styles from './Search.style';
 
 const { COLOR } = THEME;
 let TIMEOUT;
 
-class Search extends PureComponent {
-  static propTypes = {
-    l10n: shape({}).isRequired,
-    onValue: func.isRequired,
-    value: string,
-  };
+const Search = ({ l10n, onValue, value }) => {
+  const [focus, setFocus] = useState(false);
+  const [busy, setBusy] = useState(false);
 
-  static defaultProps = {
-    value: undefined,
-  };
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      focus: false,
-      searching: false,
-      value: props.value,
-    };
-  }
-
-  componentWillReceiveProps({ value }) {
-    this.setState({ value });
-  }
-
-  _onChangeText = (value) => {
-    const { props: { onValue } } = this;
-
-    this.setState({ searching: value.length > 0, value });
+  const onChangeText = (next) => {
+    setBusy(next.length > 0);
     clearTimeout(TIMEOUT);
-    TIMEOUT = setTimeout(() => onValue(value), 300);
-    setTimeout(() => this.setState({ searching: false }), 1000);
-  }
+    TIMEOUT = setTimeout(() => onValue(next), 300);
+    setTimeout(() => setBusy(false), 1000);
+  };
 
-  render() {
-    const { _onChangeText, props: { l10n }, state: { focus, searching, value } } = this;
+  return (
+    <View style={[styles.container, focus && styles.focus]}>
+      <FontAwesome name="search" color={COLOR.TEXT} size={16} style={styles.icon} />
+      <TextInput
+        autoCorrect={false}
+        autoCapitalize="none"
+        blurOnSubmit
+        onBlur={() => setFocus(false)}
+        onChangeText={onChangeText}
+        onFocus={() => setFocus(true)}
+        placeholder={`${l10n.SEARCH}...`}
+        placeholderTextColor={COLOR.TEXT_LIGHTEN}
+        underlineColorAndroid="transparent"
+        defaultValue={value}
+        style={styles.input}
+      />
+      { busy && <Activity color={COLOR.TEXT_LIGHTEN} /> }
+    </View>
+  );
+};
 
-    return (
-      <View style={[styles.container, focus && styles.focus]}>
-        <Icon value={ASSETS.search} style={styles.icon} />
-        <TextInput
-          autoCorrect={false}
-          autoCapitalize="none"
-          blurOnSubmit
-          onBlur={() => this.setState({ focus: false })}
-          onChangeText={_onChangeText}
-          onFocus={() => this.setState({ focus: true })}
-          placeholder={`${l10n.SEARCH}...`}
-          placeholderTextColor={COLOR.TEXT_LIGHTEN}
-          underlineColorAndroid="transparent"
-          defaultValue={value}
-          style={styles.input}
-        />
-        { searching && <Activity color={COLOR.TEXT_LIGHTEN} /> }
-      </View>
-    );
-  }
-}
+Search.propTypes = {
+  l10n: shape({}).isRequired,
+  onValue: func.isRequired,
+  value: string,
+};
+
+Search.defaultProps = {
+  value: undefined,
+};
 
 export default Search;

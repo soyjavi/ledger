@@ -15,9 +15,10 @@ export default {
     BACKGROUND_OPACITY: 'rgba(16, 16, 16, 0.85)',
     BASE: '#202020',
     TEXT: '#ffffff',
+    TEXT_CONTRAST: '#111',
     TEXT_LIGHTEN: '#808080',
 
-    PRIMARY: '#ffffff',
+    PRIMARY: '#fff',
 
     // ACCENT: '#7966FF',
     // EXPENSE: '#E9305C',
@@ -48,16 +49,20 @@ export default {
       fontWeight: WEIGHT.REGULAR,
     },
     HEADLINE: {
+      // fontSize: 32,
       fontFamily: FAMILY_BOLD,
       fontWeight: IS_WEB ? WEIGHT.BOLD : WEIGHT.REGULAR,
     },
     SUBTITLE: {
+      fontSize: 20,
       fontFamily: FAMILY_BOLD,
       fontWeight: IS_WEB ? WEIGHT.BOLD : WEIGHT.REGULAR,
-      letterSpacing: -0.1,
+      letterSpacing: -0.2,
+    },
+    BODY: {
     },
     CAPTION: {
-      // fontSize: UNIT * 1.3,
+      fontSize: 12,
     },
     BUTTON: {
       fontFamily: FAMILY_BOLD,

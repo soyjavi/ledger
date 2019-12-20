@@ -1,22 +1,36 @@
-import { arrayOf, node, string } from 'prop-types';
+import {
+  bool, node, number, string,
+} from 'prop-types';
 import React from 'react';
-import { LinearGradient } from 'expo-linear-gradient';
+import { View } from 'react-native';
 
+import { THEME } from '../../reactor/common';
 import styles from './Box.style';
 
-const Box = ({ children, colors, ...inherit }) => (
-  <LinearGradient colors={colors} start={[0, 0]} end={[1, 1]} style={[styles.container, inherit.style]}>
-    {children}
-  </LinearGradient>
+const { COLOR } = THEME;
+
+const Box = ({
+  children, color, opacity, small, ...inherit
+}) => (
+  <View style={[styles.container, small && styles.small, inherit.style]}>
+    <View style={[styles.frame, { backgroundColor: color, opacity }]} />
+    <View style={styles.content}>
+      {children}
+    </View>
+  </View>
 );
 
 Box.propTypes = {
   children: node.isRequired,
-  colors: arrayOf(string),
+  color: string,
+  opacity: number,
+  small: bool,
 };
 
 Box.defaultProps = {
-  colors: ['#333', '#202020', '#202020'],
+  color: COLOR.BASE,
+  opacity: 0.68,
+  small: false,
 };
 
 export default Box;

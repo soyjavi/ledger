@@ -3,12 +3,16 @@ import { StyleSheet } from 'react-native';
 import { C } from '../../common';
 import { THEME } from '../../reactor/common';
 
-const { STYLE: { HEADER_HEIGHT } } = C;
-const { SPACE, UNIT } = THEME;
+const { STYLE: { CONTENT, HEADER_HEIGHT } } = C;
+const { COLOR, SPACE, UNIT } = THEME;
 
 export default StyleSheet.create({
   chart: {
     marginHorizontal: SPACE.MEDIUM,
+  },
+
+  charts: {
+    backgroundColor: COLOR.CONTRAST,
   },
 
   chartMargin: {
@@ -17,6 +21,10 @@ export default StyleSheet.create({
 
   chartBalance: {
     height: UNIT * 9.6,
+  },
+
+  content: {
+    ...CONTENT,
   },
 
   contentEmpty: {
@@ -30,5 +38,6 @@ export default StyleSheet.create({
 
   sliderMonths: {
     marginTop: HEADER_HEIGHT,
+    paddingBottom: SPACE.S,
   },
 });

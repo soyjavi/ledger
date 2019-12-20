@@ -1,11 +1,11 @@
-import { bool, func, string } from 'prop-types';
-import React, { PureComponent } from 'react';
+import { bool, func } from 'prop-types';
+import React, { useState } from 'react';
 import { View } from 'react-native';
 
 import { FLAGS } from '../../../../assets';
 import { FORM, setCurrency, translate } from '../../../../common';
 import { CardOption } from '../../../../components';
-import { Consumer } from '../../../../context';
+import { useL10N, useStore } from '../../../../context';
 import { THEME } from '../../../../reactor/common';
 import {
   Button, Dialog, Form, Slider, Text,
@@ -14,112 +14,76 @@ import queryCurrencies from './modules/queryCurrencies';
 import styles, { CARD_WIDTH } from './DialogVault.style';
 
 const { COLOR, SPACE } = THEME;
+const INITIAL_STATE = { busy: false, form: { title: '', balance: '0' } };
 
-class DialogVault extends PureComponent {
-  static propTypes = {
-    baseCurrency: string,
-    onClose: func.isRequired,
-    visible: bool,
-  };
+const DialogVault = ({ onClose, visible }) => {
+  const l10n = useL10N();
+  const store = useStore();
+  const { baseCurrency, vaults = [] } = store;
 
-  static defaultProps = {
-    baseCurrency: undefined,
-    visible: false,
-  };
+  const [state, setState] = useState({ currency: baseCurrency, ...INITIAL_STATE });
 
-  constructor(props) {
-    super(props);
+  const onSubmit = async () => {
+    const { currency, form } = state;
 
-    this.state = {
-      busy: false,
-      currency: props.baseCurrency,
-      form: {},
-      valid: false,
-    };
-  }
-
-  componentWillReceiveProps({ baseCurrency: currency, visible }) {
-    const { props } = this;
-    if (visible === true && visible !== props.visible) this.setState({ currency, form: { balance: '0' } });
-  }
-
-  _onChange = (form) => this.setState({ form });
-
-  _onCurrency = (currency) => {
-    const { state: { form } } = this;
-    this.setState({ currency, form: { ...form, value: 0 } });
-  }
-
-  _onValid = (valid) => this.setState({ valid })
-
-  _onSubmit = async ({ onVault }) => {
-    const { props: { onClose }, state: { currency, form } } = this;
-
-    this.setState({ busy: true });
-    const vault = await onVault({ currency, ...form });
+    setState({ ...state, busy: true });
+    const vault = await store.onVault({ currency, ...form });
     if (vault) onClose();
-    this.setState({ busy: false });
-  }
+    setState({ currency: baseCurrency, ...INITIAL_STATE });
+  };
 
-  render() {
-    const {
-      _onChange, _onCurrency, _onSubmit, _onValid,
-      props: { onClose, visible, ...inherit },
-      state: {
-        busy, currency, form, valid,
-      },
-    } = this;
-
-    return (
-      <Consumer>
-        { ({ l10n, store: { vaults = [], ...store } }) => (
-          <Dialog
-            {...inherit}
-            highlight
-            onClose={vaults.length > 0 ? onClose : undefined}
-            style={styles.frame}
-            styleContainer={styles.dialog}
-            title={`${l10n.NEW} ${l10n.VAULT}`}
-            visible={visible}
-          >
-            <Text lighten>
-              { vaults.length === 0 ? l10n.FIRST_VAULT_CAPTION : l10n.VAULT_CAPTION }
-            </Text>
-            <View style={styles.form}>
-              <Text subtitle>{l10n.CURRENCIES}</Text>
-              <Slider itemMargin={0} itemWidth={CARD_WIDTH + SPACE.S} style={styles.currencies}>
-                { queryCurrencies(store).map((item) => (
-                  <CardOption
-                    image={FLAGS[item]}
-                    key={item}
-                    onPress={() => _onCurrency(item)}
-                    selected={currency === item}
-                    style={styles.card}
-                    title={item}
-                  />
-                ))}
-              </Slider>
-              <Form
-                attributes={setCurrency(translate(FORM.VAULT, l10n), currency)}
-                onValid={_onValid}
-                onChange={_onChange}
-                value={form}
-              />
-            </View>
-            <Button
-              activity={busy}
-              color={COLOR.PRIMARY}
-              disabled={busy || !valid}
-              onPress={() => _onSubmit(store)}
-              shadow
-              style={styles.button}
-              title={!busy ? l10n.SAVE : undefined}
+  return (
+    <Dialog
+      highlight
+      onClose={vaults.length > 0 ? onClose : undefined}
+      style={styles.frame}
+      styleContainer={styles.dialog}
+      title={`${l10n.NEW} ${l10n.VAULT}`}
+      visible={visible}
+    >
+      <Text lighten>
+        { vaults.length === 0 ? l10n.FIRST_VAULT_CAPTION : l10n.VAULT_CAPTION }
+      </Text>
+      <View style={styles.form}>
+        <Text subtitle>{l10n.CURRENCIES}</Text>
+        <Slider itemMargin={0} itemWidth={CARD_WIDTH + SPACE.S} style={styles.currencies}>
+          { queryCurrencies(store).map((item) => (
+            <CardOption
+              image={FLAGS[item]}
+              key={item}
+              onPress={() => setState({ currency: item, ...INITIAL_STATE })}
+              selected={state.currency === item}
+              style={styles.card}
+              title={item}
             />
-          </Dialog>
-        )}
-      </Consumer>
-    );
-  }
-}
+          ))}
+        </Slider>
+        <Form
+          attributes={setCurrency(translate(FORM.VAULT, l10n), state.currency)}
+          onChange={(form) => setState({ ...state, form })}
+          value={state.form}
+        />
+      </View>
+      <Button
+        activity={state.busy}
+        color={COLOR.PRIMARY}
+        disabled={state.busy || state.form.title.trim().length === 0}
+        onPress={onSubmit}
+        shadow
+        style={styles.button}
+        title={!state.busy ? l10n.SAVE : undefined}
+      />
+    </Dialog>
+  );
+};
+
+DialogVault.propTypes = {
+  onClose: func.isRequired,
+  visible: bool,
+};
+
+DialogVault.defaultProps = {
+  visible: false,
+};
 
 export default DialogVault;

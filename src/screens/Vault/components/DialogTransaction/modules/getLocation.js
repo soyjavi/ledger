@@ -3,17 +3,17 @@ import * as Permissions from 'expo-permissions';
 
 import { fetch } from '../../../../../common';
 
-export default async (component) => {
+export default async (setState) => {
   const { status } = await Permissions.askAsync(Permissions.LOCATION);
 
   if (status === 'granted') {
     const { coords } = await Location.getCurrentPositionAsync({ enableHighAccuracy: true });
     const { latitude, longitude } = coords;
 
-    component.setState({ coords: undefined, location: true, place: undefined });
+    setState({ coords: undefined, location: true, place: undefined });
     if (coords) {
       const { place } = await fetch({ service: `place?latitude=${latitude}&longitude=${longitude}` });
-      component.setState({ coords, place });
+      setState({ coords, place });
     }
   }
 };

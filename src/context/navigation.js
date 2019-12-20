@@ -1,43 +1,45 @@
-import { node, shape } from 'prop-types';
-import React, { useContext, useState, createContext } from 'react';
+import { node } from 'prop-types';
+import React, { useContext, useReducer, createContext } from 'react';
 
 import { C } from '../common';
 
 const { SCREEN: { SESSION } } = C;
 const NavigationContext = createContext(`${C.NAME}:context:navigation`);
 
-const NavigationProvider = ({ children, navigator }) => {
-  const [params, setParams] = useState({});
-  const [stack, setStack] = useState([SESSION]);
-  const [, setState] = useState();
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'GO':
+      return state.stack.includes(action.value)
+        ? state
+        : {
+          stack: [...state.stack, action.value],
+          params: { ...state.params, [action.value]: action.params },
+        };
 
-  const goBack = () => {
-    delete params[stack[stack.length - 1]];
-    stack.pop();
-    if (stack.length === 0) stack.push(SESSION);
+    case 'BACK': {
+      const current = state.stack[state.stack.length - 1];
 
-    setParams(params);
-    setStack(stack);
-    if (navigator && navigator.goBack) navigator.goBack();
-    setState({});
-  };
-
-  const navigate = (screen, parameters = {}) => {
-    if (!stack.includes(screen)) {
-      setParams({ ...params, [screen]: parameters });
-      setStack([...stack, screen]);
-      if (navigator) navigator.navigate(screen, parameters);
+      return {
+        stack: state.stack.slice(0, -1),
+        params: { ...state.params, [current]: undefined },
+      };
     }
-  };
+
+    default:
+      throw new Error(`Unhandled action type: ${action.type}`);
+  }
+};
+
+const NavigationProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(reducer, { params: {}, stack: [SESSION] });
 
   return (
     <NavigationContext.Provider
       value={{
-        current: stack[stack.length - 1],
-        goBack,
-        navigate,
-        params,
-        stack,
+        ...state,
+        current: state.stack[state.stack.length - 1],
+        back: () => dispatch({ type: 'BACK' }),
+        go: (value, params = {}) => dispatch({ type: 'GO', value, params }),
       }}
     >
       { children }
@@ -47,12 +49,10 @@ const NavigationProvider = ({ children, navigator }) => {
 
 NavigationProvider.propTypes = {
   children: node,
-  navigator: shape({}),
 };
 
 NavigationProvider.defaultProps = {
   children: undefined,
-  navigator: undefined,
 };
 
 export { NavigationProvider };

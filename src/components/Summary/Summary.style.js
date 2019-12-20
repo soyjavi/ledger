@@ -5,19 +5,19 @@ import { LAYOUT, THEME } from '../../reactor/common';
 const { SPACE, UNIT } = THEME;
 
 export default StyleSheet.create({
-  expand: {
-    flex: 1,
-  },
-
-  card: {
-    flex: 1,
+  balance: {
+    fontSize: UNIT * 3.6,
   },
 
   container: {
     justifyContent: 'flex-start',
     minHeight: UNIT * 16,
-    marginBottom: SPACE.S,
-    marginHorizontal: SPACE.MEDIUM,
+    paddingHorizontal: SPACE.MEDIUM,
+    marginBottom: SPACE.MEDIUM,
+  },
+
+  expand: {
+    flex: 1,
   },
 
   image: {
@@ -28,15 +28,7 @@ export default StyleSheet.create({
 
   row: LAYOUT.STYLE.ROW,
 
-  rowHeading: {
-    marginVertical: -SPACE.XXS,
-  },
-
-  rowItem: {
-    marginRight: SPACE.MEDIUM,
-  },
-
-  rowItemExpanded: {
-    flex: 2,
+  spaceBetween: {
+    justifyContent: 'space-between',
   },
 });

@@ -25,8 +25,4 @@ export default StyleSheet.create({
     width: IMAGE_SIZE,
     marginRight: SPACE.XXS,
   },
-
-  subtitle: {
-    fontSize: UNIT * 1.6,
-  },
 });

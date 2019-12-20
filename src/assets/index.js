@@ -1,28 +1,25 @@
-import CATEGORIES from './categories';
-import FLAGS from './flags';
+import LOGO from './logo.png';
 
-import add from './icon-add.png';
-import back from './icon-back.png';
-import camera from './icon-camera.png';
-import checked from './icon-checked.png';
-import expense from './icon-expense.png';
-import fingerprint from './icon-fingerprint.png';
-import income from './icon-income.png';
-import more from './icon-more.png';
-import logo from './logo.png';
-import search from './icon-search.png';
+import AUD from './flags/australia.png';
+import BTC from './flags/bitcoin.png';
+import CNY from './flags/china.png';
+import EUR from './flags/europe.png';
+import HKD from './flags/hong-kong.png';
+import JPY from './flags/japan.png';
+import KRW from './flags/south-korea.png';
+import MXN from './flags/mexico.png';
+import MYR from './flags/malaysia.png';
+import THB from './flags/thailand.png';
+import GBP from './flags/united-kingdom.png';
+import RUB from './flags/rusia.png';
+import SGD from './flags/singapore.png';
+import USD from './flags/united-states.png';
+import VND from './flags/vietnam.png';
+import XAU from './flags/gold.png';
+import XAG from './flags/silver.png';
 
-export { CATEGORIES, FLAGS };
-
-export default {
-  add,
-  back,
-  camera,
-  checked,
-  expense,
-  fingerprint,
-  income,
-  more,
-  logo,
-  search,
+const FLAGS = {
+  AUD, BTC, CNY, EUR, HKD, JPY, KRW, MXN, MYR, THB, GBP, RUB, SGD, USD, VND, XAU, XAG,
 };
+
+export { LOGO, FLAGS };

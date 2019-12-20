@@ -6,17 +6,9 @@ const { UNIT, SPACE } = THEME;
 const ICON_SIZE = UNIT * 3.6;
 
 export default StyleSheet.create({
-  caption: {
-    marginTop: SPACE.XXS,
-  },
-
   container: {
     paddingVertical: SPACE.XS,
-    paddingHorizontal: SPACE.REGULAR,
-  },
-
-  containerHighlight: {
-    opacity: 0.66,
+    paddingHorizontal: SPACE.MEDIUM,
   },
 
   content: {
@@ -31,6 +23,7 @@ export default StyleSheet.create({
     height: ICON_SIZE,
     justifyContent: 'center',
     marginRight: UNIT,
+    paddingTop: SPACE.XS,
     width: ICON_SIZE,
   },
 
@@ -44,6 +37,4 @@ export default StyleSheet.create({
   texts: {
     flex: 1,
   },
-
-
 });

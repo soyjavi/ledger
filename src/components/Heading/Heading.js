@@ -13,8 +13,8 @@ const Heading = ({
   <View style={[styles.container, breakline && styles.breakline, inherit.style]}>
     { image && <Image source={image} resizeMode="contain" style={styles.image} /> }
     <View style={styles.content}>
-      { title && <Text headline>{title}</Text> }
-      { subtitle && <Text subtitle style={styles.subtitle}>{subtitle}</Text> }
+      { title && <Text color={inherit.color} headline>{title}</Text> }
+      { subtitle && <Text color={inherit.color} subtitle>{subtitle}</Text> }
     </View>
     { children }
   </View>

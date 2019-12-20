@@ -1,38 +1,37 @@
 import {
-  bool, number, oneOfType, shape, string,
+  bool, node, number, oneOfType, string,
 } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 
 import { Motion } from '../../reactor/components';
 
-import ASSETS from '../../assets';
-import ButtonMore from '../ButtonMore';
+import { LOGO } from '../../assets';
 import Heading from '../Heading';
 import styles from './Header.style';
 
 const Header = ({
-  highlight, image, right, title,
+  children, highlight, image, title,
 }) => (
-  <View style={[styles.container, styles.row]}>
+  <View style={styles.container}>
     <Motion timeline={[{ property: 'opacity', value: highlight ? 1 : 0 }]} style={styles.content}>
       { title && <Heading title={title} image={image} /> }
     </Motion>
-    { right && <ButtonMore {...right} /> }
+    <View>{children}</View>
   </View>
 );
 
 Header.propTypes = {
-  image: oneOfType([number, string]),
+  children: node,
   highlight: bool,
-  right: shape({}),
+  image: oneOfType([number, string]),
   title: string,
 };
 
 Header.defaultProps = {
-  image: ASSETS.logo,
+  children: undefined,
   highlight: false,
-  right: undefined,
+  image: LOGO,
   title: undefined,
 };
 

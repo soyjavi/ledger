@@ -2,7 +2,7 @@ import { node } from 'prop-types';
 import React, {
   useContext, useEffect, useState, createContext,
 } from 'react';
-import { NetInfo } from 'react-native';
+import NetInfo from '@react-native-community/netinfo';
 
 import { C } from '../common';
 

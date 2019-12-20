@@ -6,39 +6,35 @@ import { View } from 'react-native';
 import { Text } from '../../reactor/components';
 
 import { exchange, verboseDate } from '../../common';
-import { Consumer } from '../../context';
-import Box from '../Box';
+import { useL10N, useStore } from '../../context';
 import PriceFriendly from '../PriceFriendly';
 import TransactionItem from '../TransactionItem';
 import styles from './GroupTransactions.style';
 
 const GroupTransactions = React.memo(({
   currency, timestamp, txs = [], value,
-}) => (
-  <Consumer>
-    { ({ store: { baseCurrency, rates }, l10n }) => (
-      <View style={styles.container}>
-        <View style={[styles.row, styles.heading]}>
-          <Box style={styles.tag}>
-            <Text caption bold>{verboseDate(timestamp, l10n)}</Text>
-          </Box>
-          { value !== 0 && (
-            <View style={styles.tag}>
-              <PriceFriendly
-                bold
-                caption
-                currency={baseCurrency}
-                icon
-                value={exchange(value, currency, baseCurrency, rates, timestamp)}
-              />
-            </View>
-          )}
-        </View>
-        { txs.map((tx) => <TransactionItem key={tx.hash} currency={currency} {...tx} />)}
+}) => {
+  const l10n = useL10N();
+  const { baseCurrency, rates } = useStore();
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.heading}>
+        <Text lighten caption>{verboseDate(timestamp, l10n)}</Text>
+        { value !== 0 && (
+          <PriceFriendly
+            bold
+            caption
+            currency={baseCurrency}
+            operator
+            value={exchange(value, currency, baseCurrency, rates, timestamp)}
+          />
+        )}
       </View>
-    )}
-  </Consumer>
-));
+      { txs.map((tx) => <TransactionItem key={tx.hash} currency={currency} {...tx} />)}
+    </View>
+  );
+});
 
 GroupTransactions.propTypes = {
   currency: string.isRequired,

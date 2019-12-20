@@ -1,4 +1,4 @@
-export default ({ overall, vaults }) => {
+export default (overall, vaults) => {
   const currencies = {};
 
   vaults.forEach(({ currency, currentBalance: balance, currentBalanceBase: base }) => {
