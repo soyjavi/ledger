@@ -37,9 +37,7 @@ const TransactionItem = (props) => {
         <View style={[styles.content, styles.row]}>
           <View style={styles.texts}>
             { title && <Text color={COLOR.TEXT_CONTRAST} bold numberOfLines={1}>{title}</Text> }
-            <Text caption lighten style={styles.caption}>
-              {formatCaption(new Date(timestamp), location)}
-            </Text>
+            <Text caption lighten>{formatCaption(new Date(timestamp), location)}</Text>
           </View>
           <View style={styles.prices}>
             <PriceFriendly

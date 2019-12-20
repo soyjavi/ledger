@@ -43,6 +43,7 @@ const DialogClone = ({
   };
 
   const color = type === EXPENSE ? COLOR.EXPENSE : COLOR.INCOME;
+  const operator = type === EXPENSE ? -1 : 1;
 
   return (
     <Dialog
@@ -56,12 +57,12 @@ const DialogClone = ({
     >
       <View style={styles.container}>
         <View style={[styles.content, styles.row]}>
-          <Box style={styles.icon}>
-            <Text style={styles.date}>{(new Date(timestamp || null)).getDate()}</Text>
-            <Text lighten style={styles.month}>{verboseMonthShort(timestamp, l10n)}</Text>
+          <Box color={color} style={styles.icon} opacity={0.1} small>
+            <Text bold color={color} style={styles.date}>{(new Date(timestamp || null)).getDate()}</Text>
+            <Text style={styles.month}>{verboseMonthShort(timestamp, l10n)}</Text>
           </Box>
           <View style={styles.texts}>
-            <Text subtitle style={styles.title}>{title}</Text>
+            <Text bold numberOfLines={1} style={styles.title}>{title}</Text>
             <Text caption lighten numberOfLines={1}>
               {`${verboseTime(new Date(timestamp))} - ${l10n.CATEGORIES[type][category]}`}
             </Text>
@@ -70,13 +71,13 @@ const DialogClone = ({
             <PriceFriendly
               currency={baseCurrency}
               operator
-              subtitle
+              bold
               value={baseCurrency !== currency
-                ? exchange(value, currency, baseCurrency, rates)
-                : value}
+                ? exchange(value * operator, currency, baseCurrency, rates)
+                : value * operator}
             />
             { currency !== baseCurrency && (
-              <PriceFriendly currency={currency} lighten operator value={value} />
+              <PriceFriendly caption color={COLOR.TEXT_LIGHTEN} currency={currency} operator value={value * operator} />
             )}
           </View>
         </View>

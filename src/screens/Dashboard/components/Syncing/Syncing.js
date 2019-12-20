@@ -34,7 +34,7 @@ const Syncing = ({ scroll }) => {
         timeline={[{ property: 'translateY', value: connected && sync && !scroll ? 0 : 128 }]}
       >
         <Button
-          color={COLOR.TEXT}
+          color={COLOR.BACKGROUND}
           onPress={onSync}
           rounded
           small

@@ -60,8 +60,6 @@ export default {
       letterSpacing: -0.2,
     },
     BODY: {
-      fontSize: 16,
-      lineHeight: 16,
     },
     CAPTION: {
       fontSize: 12,

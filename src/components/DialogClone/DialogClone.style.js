@@ -44,9 +44,9 @@ export default StyleSheet.create({
     alignItems: 'center',
     height: ICON_SIZE,
     justifyContent: 'center',
+    paddingTop: SPACE.XXS,
     marginRight: UNIT,
     width: ICON_SIZE,
-    paddingHorizontal: 0,
   },
 
   month: {

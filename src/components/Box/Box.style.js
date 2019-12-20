@@ -2,14 +2,18 @@ import { StyleSheet } from 'react-native';
 
 import { THEME } from '../../reactor/common';
 
-const { BORDER_RADIUS, COLOR, SPACE } = THEME;
+const { BORDER_RADIUS, SPACE } = THEME;
 
 export default StyleSheet.create({
   container: {
     height: '100%',
     overflow: 'hidden',
     padding: SPACE.MEDIUM,
-    // width: '100%',
+  },
+
+  content: {
+    height: '100%',
+    zIndex: 1,
   },
 
   frame: {
@@ -22,8 +26,7 @@ export default StyleSheet.create({
     zIndex: 0,
   },
 
-  content: {
-    height: '100%',
-    zIndex: 1,
+  small: {
+    padding: 0,
   },
 });
