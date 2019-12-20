@@ -1,70 +1,60 @@
-import { node, shape } from 'prop-types';
-import React, { PureComponent, createContext } from 'react';
+import { node } from 'prop-types';
+import React, { useContext, useReducer, createContext } from 'react';
 
 import { C } from '../common';
 
-const { Provider, Consumer: ConsumerNavigation } = createContext(`${C.NAME}:context:navigation`);
 const { SCREEN: { SESSION } } = C;
+const NavigationContext = createContext(`${C.NAME}:context:navigation`);
 
-class ProviderNavigation extends PureComponent {
-  static propTypes = {
-    children: node,
-    navigator: shape({}),
-  };
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'GO':
+      return state.stack.includes(action.value)
+        ? state
+        : {
+          stack: [...state.stack, action.value],
+          params: { ...state.params, [action.value]: action.params },
+        };
 
-  static defaultProps = {
-    children: undefined,
-    navigator: undefined,
-  };
+    case 'BACK': {
+      const current = state.stack[state.stack.length - 1];
 
-  constructor(props) {
-    super(props);
-    this.state = { params: {}, stack: [SESSION] };
-  }
-
-  get current() {
-    const { state: { stack } } = this;
-
-    return stack[stack.length - 1];
-  }
-
-  goBack = () => {
-    const { props: { navigator }, state: { params, stack } } = this;
-
-    delete params[this.current];
-    stack.pop();
-    if (stack.length === 0) stack.push(SESSION);
-    this.setState({ params, stack });
-    this.forceUpdate();
-    if (navigator && navigator.goBack) navigator.goBack();
-  }
-
-  navigate = (screen, parameters = {}) => {
-    const { props: { navigator }, state: { params, stack } } = this;
-
-    if (!stack.includes(screen)) {
-      this.setState({ stack: [...stack, screen], params: { ...params, [screen]: parameters } });
-      if (navigator) navigator.navigate(screen, parameters);
+      return {
+        stack: state.stack.slice(0, -1),
+        params: { ...state.params, [current]: undefined },
+      };
     }
+
+    default:
+      throw new Error(`Unhandled action type: ${action.type}`);
   }
+};
 
-  render() {
-    const {
-      current, goBack, navigate,
-      props: { children },
-      state: { params, stack },
-    } = this;
+const NavigationProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(reducer, { params: {}, stack: [SESSION] });
 
-    return (
-      <Provider
-        value={{
-          current, goBack, navigate, params, stack,
-        }}
-      >
-        { children }
-      </Provider>
-    );
-  }
-}
+  return (
+    <NavigationContext.Provider
+      value={{
+        ...state,
+        current: state.stack[state.stack.length - 1],
+        back: () => dispatch({ type: 'BACK' }),
+        go: (value, params = {}) => dispatch({ type: 'GO', value, params }),
+      }}
+    >
+      { children }
+    </NavigationContext.Provider>
+  );
+};
 
-export { ConsumerNavigation, ProviderNavigation };
+NavigationProvider.propTypes = {
+  children: node,
+};
+
+NavigationProvider.defaultProps = {
+  children: undefined,
+};
+
+export { NavigationProvider };
+
+export const useNavigation = () => useContext(NavigationContext);

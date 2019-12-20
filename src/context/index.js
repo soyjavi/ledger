@@ -1,49 +1,25 @@
-import {
-  func, node, shape, string,
-} from 'prop-types';
+import { node, shape, string } from 'prop-types';
 import React from 'react';
 
-import { ConsumerL10N, ProviderL10N } from '../reactor/context/L10N';
-import { ConsumerEvents, ProviderEvents } from './events';
-import { ConsumerStore, ProviderStore } from './store';
-import { ConsumerNavigation, ProviderNavigation } from './navigation';
+import { L10NProvider, useL10N } from '../reactor/context/L10N';
 
-const Consumer = ({ children }) => (
-  <ConsumerL10N>
-    { ({ l10n }) => (
-      <ConsumerNavigation>
-        { (navigation) => (
-          <ConsumerEvents>
-            { (events) => (
-              <ConsumerStore>
-                { (store) => children({
-                  l10n, navigation, events, store,
-                })}
-              </ConsumerStore>
-            )}
-          </ConsumerEvents>
-        )}
-      </ConsumerNavigation>
-    )}
-  </ConsumerL10N>
-);
+import { ConnectionProvider, useConnection } from './connection';
+import { NavigationProvider, useNavigation } from './navigation';
+import { SettingsProvider, useSettings } from './settings';
+import { StoreProvider, useStore } from './store';
 
-Consumer.propTypes = {
-  children: func.isRequired,
-};
-
-const Provider = ({
-  children, dictionary, language, ...events
-}) => (
-  <ProviderL10N dictionary={dictionary} language={language}>
-    <ProviderNavigation>
-      <ProviderEvents {...events}>
-        <ProviderStore>
-          {children}
-        </ProviderStore>
-      </ProviderEvents>
-    </ProviderNavigation>
-  </ProviderL10N>
+const Provider = ({ children, dictionary, language }) => (
+  <L10NProvider dictionary={dictionary} language={language}>
+    <ConnectionProvider>
+      <NavigationProvider>
+        <StoreProvider>
+          <SettingsProvider>
+            {children}
+          </SettingsProvider>
+        </StoreProvider>
+      </NavigationProvider>
+    </ConnectionProvider>
+  </L10NProvider>
 );
 
 Provider.propTypes = {
@@ -53,12 +29,11 @@ Provider.propTypes = {
 };
 
 export {
-  Consumer,
   Provider,
-  ConsumerEvents,
-  ProviderEvents,
-  ConsumerStore,
-  ProviderStore,
-  ConsumerNavigation,
-  ProviderNavigation,
+
+  useConnection,
+  useL10N,
+  useNavigation,
+  useSettings,
+  useStore,
 };

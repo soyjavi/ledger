@@ -1,132 +1,89 @@
 import { bool } from 'prop-types';
-import React, { Fragment, PureComponent } from 'react';
-import { ScrollView } from 'react-native';
+import React, { Fragment, useEffect, useState } from 'react';
+import { View, ScrollView } from 'react-native';
 
 import { THEME } from '../../reactor/common';
-import { Slider, Viewport } from '../../reactor/components';
+import { Button, Slider, Viewport } from '../../reactor/components';
 import { C, onHardwareBackPress } from '../../common';
 import {
-  ButtonMore, Footer, GroupTransactions, Header, Heading, Summary,
+  Footer, GroupTransactions, Header, Heading, Summary,
 } from '../../components';
-import { Consumer } from '../../context';
+import {
+  useL10N, useNavigation, useSettings, useStore,
+} from '../../context';
 import { DialogVault, Syncing, VaultCard } from './components';
 import { queryLastTxs, queryVaults } from './modules';
 import styles from './Dashboard.style';
 
 const { SCREEN, STYLE: { VAULT_ITEM_WIDTH } } = C;
-const { SPACE } = THEME;
+const { COLOR, SPACE } = THEME;
 
-class Dashboard extends PureComponent {
-  static propTypes = {
-    backward: bool,
-    visible: bool,
-  };
+const Dashboard = ({ backward, visible, ...inherit }) => {
+  const { state: settings } = useSettings();
+  const l10n = useL10N();
+  const navigation = useNavigation();
+  const {
+    baseCurrency, overall, sync, txs, vaults,
+  } = useStore();
 
-  static defaultProps = {
-    backward: false,
-    visible: true,
-  };
+  const [dialog, setDialog] = useState(false);
+  const [scroll, setScroll] = useState(false);
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      dialog: false,
-      scroll: false,
-    };
-  }
+  useEffect(() => {
+    onHardwareBackPress(!backward, () => { if (dialog) setDialog(false); });
+  }, [backward, dialog]);
 
-  componentWillReceiveProps({ backward }) {
-    onHardwareBackPress(!backward, () => {
-      const { state: { dialog } } = this;
-      if (dialog) this.setState({ dialog: false });
-    });
-  }
+  console.log('<Dashboard>');
 
-  _onScroll = ({ nativeEvent: { contentOffset: { y } } }) => {
-    const { state } = this;
-    const scroll = y > SPACE.MEDIUM;
-    if (scroll !== state.scroll) this.setState({ scroll });
-  }
+  return (
+    <Viewport {...inherit} scroll={false} visible={visible}>
+      <Header highlight={scroll} title={l10n.OVERALL_BALANCE}>
+        <Button color={COLOR.BASE} rounded icon={l10n.SETTINGS} onPress={() => navigation.go(SCREEN.SETTINGS)} />
+      </Header>
+      <ScrollView
+        onScroll={({ nativeEvent: { contentOffset } }) => setScroll(contentOffset.y > SPACE.MEDIUM)}
+        scrollEventThrottle={40}
+        contentContainerStyle={styles.scroll}
+      >
+        <Summary {...overall} currency={baseCurrency} title={l10n.OVERALL_BALANCE} />
 
-  _onToggleDialog = () => {
-    const { state: { dialog } } = this;
-    this.setState({ dialog: !dialog });
-  }
+        <View style={styles.content}>
+          <Heading color={COLOR.TEXT_CONTRAST} subtitle={l10n.VAULTS} />
+          <Slider itemWidth={VAULT_ITEM_WIDTH + SPACE.S} itemMargin={0} style={styles.vaults}>
+            { queryVaults({ settings, vaults }).map((vault) => (
+              <VaultCard {...vault} key={vault.hash} onPress={() => navigation.go(SCREEN.VAULT, vault)} />
+            ))}
+          </Slider>
 
-  _onVault = ({ navigation, vault }) => {
-    navigation.navigate(SCREEN.VAULT, vault);
-  }
+          <Heading color={COLOR.TEXT_CONTRAST} subtitle={l10n.LAST_TRANSACTIONS} />
+          { queryLastTxs({ txs, vaults }).map((item) => (
+            <GroupTransactions key={`${item.timestamp}`} {...item} currency={baseCurrency} />))}
+        </View>
+      </ScrollView>
 
-  render() {
-    const {
-      _onScroll, _onToggleDialog, _onVault,
-      props: { visible, ...inherit },
-      state: { dialog, scroll },
-    } = this;
+      <Syncing scroll={scroll} />
 
-    console.log('<Dashboard>', { visible, dialog, scroll });
+      <Footer onPress={() => setDialog(true)} />
 
-    return (
-      <Viewport {...inherit} scroll={false} visible={visible}>
-        { visible && (
-          <Consumer>
-            { ({
-              events: { connected },
-              l10n,
-              navigation,
-              store: {
-                baseCurrency, overall, settings, sync, txs, vaults,
-              },
-            }) => (
-              <Fragment>
-                <Header
-                  highlight={scroll}
-                  right={{ title: l10n.SETTINGS, onPress: () => navigation.navigate(SCREEN.SETTINGS) }}
-                  title={l10n.OVERALL_BALANCE}
-                />
-                <ScrollView onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.scroll}>
-                  <Summary
-                    {...overall}
-                    currency={baseCurrency}
-                    title={l10n.OVERALL_BALANCE}
-                  />
+      { visible && sync && (
+        <Fragment>
+          { vaults.length === 0 && !dialog && setDialog(true) }
+          <DialogVault visible={dialog} onClose={() => setDialog(false)} />
+        </Fragment>
+      )}
 
-                  <Heading subtitle={l10n.VAULTS}>
-                    <ButtonMore title={l10n.MORE} onPress={() => navigation.navigate(SCREEN.VAULTS)} />
-                  </Heading>
-                  <Slider itemWidth={VAULT_ITEM_WIDTH + SPACE.S} itemMargin={0} style={styles.vaults}>
-                    { queryVaults({ settings, vaults }).map((vault) => (
-                      <VaultCard
-                        {...vault}
-                        key={vault.hash}
-                        onPress={() => _onVault({ navigation, vault })}
-                      />
-                    ))}
-                  </Slider>
+    </Viewport>
+  );
+};
 
-                  <Heading subtitle={l10n.LAST_TRANSACTIONS} />
-                  { queryLastTxs({ txs, vaults }).map((item) => (
-                    <GroupTransactions key={`${item.timestamp}`} {...item} currency={baseCurrency} />))}
-                </ScrollView>
+Dashboard.propTypes = {
+  backward: bool,
+  visible: bool,
+};
 
-                <Syncing scroll={scroll} />
-
-                <Footer onPress={_onToggleDialog} />
-
-                { visible && connected && sync && (
-                  <Fragment>
-                    { vaults.length === 0 && !dialog && this.setState({ dialog: true }) }
-                    <DialogVault baseCurrency={baseCurrency} visible={dialog} onClose={_onToggleDialog} />
-                  </Fragment>
-                )}
-              </Fragment>
-            )}
-          </Consumer>
-        )}
-
-      </Viewport>
-    );
-  }
-}
+Dashboard.defaultProps = {
+  backward: false,
+  visible: true,
+};
 
 export default Dashboard;

@@ -11,6 +11,10 @@ const ITEM_WIDTH = ITEM_SIZE + (SPACE.XXS * 2);
 export { ITEM_WIDTH };
 
 export default StyleSheet.create({
+  container: {
+    backgroundColor: COLOR.CONTRAST,
+  },
+
   item: {
     alignContent: 'center',
     alignItems: 'center',

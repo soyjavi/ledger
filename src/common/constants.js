@@ -3,7 +3,7 @@ import { Platform } from 'react-native';
 import { LAYOUT, THEME } from '../reactor/common';
 import PKG from '../../package.json';
 
-const { SPACE, UNIT } = THEME;
+const { COLOR, SPACE, UNIT } = THEME;
 
 const IS_PRODUCTION = false;
 const IS_ANDROID = Platform.OS === 'android';
@@ -29,7 +29,6 @@ export default {
   IS_PRODUCTION,
 
   LANGUAGE: 'en-EN',
-  LOCATION_PROPS: { enableHighAccuracy: true },
 
   MS_IN_DAY,
   MS_IN_WEEK,
@@ -42,18 +41,21 @@ export default {
     SETTINGS: 'Settings',
     STATS: 'Stats',
     VAULT: 'Vault',
-    VAULTS: 'Vaults',
-  },
-  SETTINGS: {
-    HIDE_OVERALL_BALANCE: 0,
-    SHOW_VAULT_CURRENCY: 1,
   },
   STYLE: {
+    CONTENT: {
+      backgroundColor: COLOR.WHITE,
+      borderRadius: SPACE.MEDIUM,
+      marginTop: SPACE.XS,
+      paddingTop: SPACE.S,
+    },
     DIALOG: {
       justifyContent: 'flex-end',
       zIndex: 2,
     },
     DIALOG_FRAME: {
+      borderTopLeftRadius: SPACE.MEDIUM,
+      borderTopRightRadius: SPACE.MEDIUM,
       margin: 0,
       width: LAYOUT.VIEWPORT.W,
     },

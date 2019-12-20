@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { C } from '../../common';
 import { LAYOUT, THEME } from '../../reactor/common';
 
-const { STYLE: { HEADER_HEIGHT } } = C;
+const { STYLE: { CONTENT, HEADER_HEIGHT } } = C;
 const { SPACE } = THEME;
 
 export default StyleSheet.create({
@@ -12,13 +12,17 @@ export default StyleSheet.create({
     marginTop: SPACE.MEDIUM,
   },
 
+  centered: {
+    ...LAYOUT.STYLE.CENTERED,
+    padding: SPACE.MEDIUM,
+  },
+
   container: {
     paddingBottom: HEADER_HEIGHT,
     paddingTop: HEADER_HEIGHT,
   },
 
   content: {
-    ...LAYOUT.STYLE.CENTERED,
-    padding: SPACE.MEDIUM,
+    ...CONTENT,
   },
 });

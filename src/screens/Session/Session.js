@@ -1,117 +1,115 @@
-import { bool, func } from 'prop-types';
-import React, { Fragment, PureComponent } from 'react';
+import * as LocalAuthentication from 'expo-local-authentication';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Image, View } from 'react-native';
 
 import ASSETS from '../../assets';
 import { C } from '../../common';
-import { Consumer } from '../../context';
+import { useL10N, useNavigation, useStore } from '../../context';
 import { THEME } from '../../reactor/common';
 import {
   Activity, Motion, Text, Viewport,
 } from '../../reactor/components';
 import { NumKeyboard } from './components';
-import handshake from './modules/handshake';
 import styles from './Session.style';
 
-const { VERSION } = C;
+const { IS_DEV, SCREEN, VERSION } = C;
 const { MOTION: { DURATION } } = THEME;
 
-class Session extends PureComponent {
-  static propTypes = {
-    getFingerprintAsync: func,
-    visible: bool,
-  };
+const Session = (props) => {
+  const l10n = useL10N();
+  const navigation = useNavigation();
+  const store = useStore();
+  const [fingerprint, setFingerprint] = useState(undefined);
+  const [pin, setPin] = useState('');
+  const [busy, setBusy] = useState(false);
 
-  static defaultProps = {
-    getFingerprintAsync: undefined,
-    visible: true,
-  };
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      busy: false,
-      askFingerprint: false,
-      pin: '',
-    };
-    if (props.getFingerprintAsync) props.getFingerprintAsync();
-  }
-
-  _onFingerprint = async ({ navigation, store }) => {
-    const { props: { getFingerprintAsync }, state: { askFingerprint, busy } } = this;
-
-    if (!busy && !askFingerprint && getFingerprintAsync) {
-      this.setState({ askFingerprint: true });
-      const { error, success } = await getFingerprintAsync();
-
-      if (success) handshake(this, { pin: store.pin, store, navigation });
-      else if (!error) this.setState({ askFingerprint: false });
+  useEffect(() => {
+    async function askFingerprint() {
+      setFingerprint(
+        IS_DEV || (await LocalAuthentication.hasHardwareAsync() && await LocalAuthentication.isEnrolledAsync()),
+      );
     }
-  }
+    if (fingerprint === undefined) askFingerprint();
+  }, [fingerprint]);
 
-  _onNumber = ({ number, store, navigation }) => {
-    let { state: { pin } } = this;
-    pin = `${pin}${number}`;
-    this.setState({ pin });
 
-    if (pin.length === 4) {
+  const onHandshake = async (usedPin) => {
+    const isSignup = store.pin === undefined;
+
+    setBusy(true);
+    if (isSignup) {
+      await store.signup(usedPin);
+      await store.onSync();
+    }
+
+    navigation.go(SCREEN.DASHBOARD);
+    if (!isSignup) store.onSync();
+
+    setBusy(false);
+    setPin('');
+  };
+
+  const onFingerprint = async () => {
+    setFingerprint(false);
+    let needHandshake = false;
+
+    try {
+      const { error, success } = await LocalAuthentication.authenticateAsync();
+      if (success) needHandshake = true;
+      else if (error) setFingerprint(true);
+    } catch (error) {
+      if (IS_DEV) needHandshake = true;
+    }
+
+    if (needHandshake) onHandshake(store.pin);
+  };
+
+  const onPin = (next) => {
+    setPin(next);
+
+    if (next.length === 4) {
       setTimeout(() => {
-        if (store.pin === undefined || store.pin === pin) handshake(this, { pin, store, navigation });
-        else this.setState({ pin: '' });
+        console.log('onPin()', { next, store: store.pin });
+        if (store.pin === undefined || store.pin === next) onHandshake(next);
+        else setPin('');
       }, DURATION / 2);
     }
-  }
+  };
 
-  render() {
-    const {
-      _onFingerprint, _onNumber,
-      props: { getFingerprintAsync, visible, ...inherit },
-      state: { askFingerprint, busy, pin },
-    } = this;
+  console.log('<Session>', { fingerprint, busy, pin });
 
-    console.log('<Session>', {
-      askFingerprint, visible, busy, pin,
-    });
+  return (
+    <Viewport {...props} scroll={false} visible>
+      <View style={styles.container}>
+        { fingerprint && store.pin ? (onFingerprint() && <Fragment />) : undefined }
+        <View style={styles.content}>
+          <View style={styles.row}>
+            <Image source={ASSETS.logo} resizeMode="contain" style={styles.logo} />
+            <Text headline style={styles.textName}>volt.</Text>
+          </View>
+          <View style={styles.pin}>
+            { busy
+              ? <Activity size="large" style={styles.activity} />
+              : [1, 2, 3, 4].map((number) => (
+                <Motion
+                  key={number}
+                  style={[styles.bullet, pin.length >= number && styles.bulletActive]}
+                  timeline={[{ property: 'scale', value: pin.length >= number ? 1 : 0.8 }]}
+                />
+              ))}
+          </View>
+          <Text lighten>
+            { store.pin && fingerprint ? l10n.ENTER_PIN_OR_FINGERPRINT : l10n.ENTER_PIN }
+          </Text>
+        </View>
 
-    return (
-      <Viewport {...inherit} scroll={false} visible={visible}>
-        <Consumer>
-          { ({ l10n, store, navigation }) => (
-            <View style={styles.container}>
-              { visible && getFingerprintAsync && !askFingerprint && store.pin
-                ? _onFingerprint({ store, navigation }) && <Fragment />
-                : undefined }
-              <View style={styles.content}>
-                <View style={styles.row}>
-                  <Image source={ASSETS.logo} resizeMode="contain" style={styles.logo} />
-                  <Text headline style={styles.textName}>volt.</Text>
-                </View>
-                <View style={styles.pin}>
-                  { busy
-                    ? <Activity size="large" style={styles.activity} />
-                    : [1, 2, 3, 4].map((number) => (
-                      <Motion
-                        key={number}
-                        style={[styles.bullet, pin.length >= number && styles.bulletActive]}
-                        timeline={[{ property: 'scale', value: pin.length >= number ? 1 : 0.8 }]}
-                      />
-                    ))}
-                </View>
-                <Text lighten>
-                  { store.pin && getFingerprintAsync ? l10n.ENTER_PIN_OR_FINGERPRINT : l10n.ENTER_PIN }
-                </Text>
-              </View>
+        { store.pin && !busy && fingerprint && <Image source={ASSETS.fingerprint} style={styles.fingerprint} /> }
 
-              { store.pin && !busy && getFingerprintAsync && (
-                <Image source={ASSETS.fingerprint} style={styles.fingerprint} />)}
-              <NumKeyboard onPress={(number) => _onNumber({ number, store, navigation })} />
-              <Text lighten caption style={styles.textVersion}>{`v${VERSION}`}</Text>
-            </View>
-          )}
-        </Consumer>
-      </Viewport>
-    );
-  }
-}
+        <NumKeyboard onPress={(number) => onPin(`${pin}${number}`)} />
+        <Text lighten caption style={styles.textVersion}>{`v${VERSION}`}</Text>
+      </View>
+    </Viewport>
+  );
+};
 
 export default Session;

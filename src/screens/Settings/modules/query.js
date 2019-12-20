@@ -1,4 +1,4 @@
-export default ({ overall, vaults }) => {
+export default (overall, vaults) => {
   const currencies = {};
 
   vaults.forEach(({ currency, currentBalance: balance, currentBalanceBase: base }) => {
@@ -9,11 +9,9 @@ export default ({ overall, vaults }) => {
     currencies[currency] = item;
   });
 
-  return {
-    currencies: Object.values(currencies).sort((a, b) => {
-      if (a.weight < b.weight) return 1;
-      if (a.weight > b.weight) return -1;
-      return 0;
-    }),
-  };
+  return Object.values(currencies).sort((a, b) => {
+    if (a.weight < b.weight) return 1;
+    if (a.weight > b.weight) return -1;
+    return 0;
+  });
 };

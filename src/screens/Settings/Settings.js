@@ -1,179 +1,151 @@
 import { bool } from 'prop-types';
-import React, { Fragment, PureComponent } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 
-import ASSETS from '../../assets';
-import {
-  Footer, Header, Heading, OptionItem,
-} from '../../components';
-import { C } from '../../common';
-import { Consumer } from '../../context';
+import { THEME } from '../../reactor/common';
 import {
   Activity, Button, Image, Text, Viewport,
 } from '../../reactor/components';
+
+import ASSETS, { FLAGS } from '../../assets';
+import { C } from '../../common';
+import {
+  Footer, Header, Heading, HorizontalChartItem, OptionItem, PriceFriendly,
+} from '../../components';
+import {
+  useL10N, useNavigation, useSettings, useStore,
+} from '../../context';
 import { DialogFork } from './components';
+import { query, sort } from './modules';
 import styles from './Settings.style';
 
-const { SETTINGS: { HIDE_OVERALL_BALANCE, SHOW_VAULT_CURRENCY } } = C;
+const { SCREEN } = C;
+const { COLOR } = THEME;
+
 const QR_URI = 'https://chart.googleapis.com/chart?cht=qr&chs=512x512&chld=H|1&chl';
 const CAMERA_PROPS = {
   barCodeScannerSettings: { barCodeTypes: [BarCodeScanner.Constants.BarCodeType.qr] },
   type: Camera.Constants.Type.back,
 };
 
-class Settings extends PureComponent {
-  static propTypes = {
-    backward: bool,
-    visible: bool,
-  };
+const Settings = ({ visible, ...inherit }) => {
+  const { state = {}, dispatch } = useSettings();
+  const navigation = useNavigation();
+  const l10n = useL10N();
+  const {
+    authorization, baseCurrency, overall, secret, vaults,
+  } = useStore();
 
-  static defaultProps = {
-    backward: false,
-    visible: true,
-  };
+  const [dialog, setDialog] = useState(false);
+  const [hasCamera, setHasCamera] = useState(undefined);
+  const [camera, setCamera] = useState(false);
+  const [qr, setQr] = useState(undefined);
+  const currencies = visible ? query(overall, vaults) : [];
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      dialog: false,
-      hasCamera: undefined,
-      qr: undefined,
-      showCamera: false,
-      scroll: true,
+  useEffect(() => {
+    async function askCamera() {
+      const { status } = await Permissions.askAsync(Permissions.CAMERA);
+      setHasCamera(status === 'granted');
+    }
+    if (hasCamera === undefined) askCamera();
+  }, [hasCamera]);
 
-    };
-  }
-
-  async componentDidMount() {
-    const { status } = await Permissions.askAsync(Permissions.CAMERA);
-    this.setState({ hasCamera: status === 'granted' });
-  }
-
-  componentWillReceiveProps({ visible: nextVisible }) {
-    const { props: { visible } } = this;
-
-    if (!nextVisible && visible) this.setState({ qr: undefined, showCamera: false });
-  }
-
-  _onCloseDialog = () => this.setState({ dialog: false })
-
-  _onForked = (navigation) => {
-    const { _onCloseDialog } = this;
-
-    _onCloseDialog();
-    navigation.goBack();
-  }
-
-  _onHardwareBack = (navigation) => {
-    navigation.goBack();
-    this.forceUpdate();
-  }
-
-  _onQR = ({ data = '' } = {}) => {
+  const onQR = ({ data = '' } = {}) => {
     const [secure, file] = data.split('|');
 
-    this.setState({ dialog: secure !== undefined && file !== undefined, qr: data });
-  }
+    setDialog(secure !== undefined && file !== undefined);
+    setQr(data);
+  };
 
-  _onScroll = ({ nativeEvent: { contentOffset: { y } } }) => {
-    const { state } = this;
-    const scroll = y > 58;
-    if (scroll !== state.scroll) this.setState({ scroll });
-  }
+  const onForked = () => {
+    setDialog(false);
+    navigation.back();
+  };
 
-  _onToggleCamera = () => {
-    const { state: { showCamera } } = this;
-    this.setState({ showCamera: !showCamera });
-  }
+  console.log({ currencies });
 
-  render() {
-    const {
-      _onCloseDialog, _onForked, _onHardwareBack, _onQR, _onScroll, _onToggleCamera,
-      props: { visible, ...inherit },
-      state: {
-        dialog, hasCamera, qr, showCamera, scroll,
-      },
-    } = this;
+  return (
+    <Viewport {...inherit} scroll={false} visible={visible}>
+      <Header highlight title={l10n.SETTINGS} />
 
-    console.log('<Settings>', { visible, hasCamera });
-
-    return (
-      <Viewport {...inherit} scroll={false} visible={visible}>
-        <Consumer>
-          { ({
-            l10n, navigation,
-            store: {
-              authorization, onSettings, secret, settings,
-            },
-          }) => (
-            <Fragment>
-              <Header highlight={scroll} title={l10n.SETTINGS} />
-
-              <ScrollView _onScroll={_onScroll} scrollEventThrottle={40} contentContainerStyle={styles.container}>
-                <Heading subtitle={l10n.DASHBOARD} />
-                <View style={styles.options}>
-                  <OptionItem
-                    active={settings[HIDE_OVERALL_BALANCE]}
-                    caption={l10n.SETTING_1_CAPTION}
-                    title={l10n.SETTING_1_TITLE}
-                    onChange={(value) => onSettings({ [HIDE_OVERALL_BALANCE]: value })}
-                  />
-                  <OptionItem
-                    active={settings[SHOW_VAULT_CURRENCY]}
-                    caption={l10n.SETTING_2_CAPTION}
-                    title={l10n.SETTING_2_TITLE}
-                    onChange={(value) => onSettings({ [SHOW_VAULT_CURRENCY]: value })}
-                  />
-                </View>
-
-                <Heading subtitle={l10n.TRANSFER_TXS} caption={l10n.IMPORT_EXPORT_CAPTION} lighten>
-                  { hasCamera === undefined && <Activity color="white" style={styles.activity} /> }
-                  { hasCamera && (
-                    <Button
-                      contained={false}
-                      icon={!showCamera ? ASSETS.camera : undefined}
-                      onPress={_onToggleCamera}
-                      small
-                      style={styles.button}
-                      title={!showCamera ? l10n.QR_READER : l10n.CLOSE}
-                    />
-                  )}
-                </Heading>
-                <View style={styles.content}>
-                  { !showCamera
-                    ? <Image source={{ uri: `${QR_URI}=${secret}|${authorization}` }} style={styles.qr} />
-                    : (
-                      <Camera {...CAMERA_PROPS} onBarCodeScanned={_onQR} style={styles.qr}>
-                        <View style={styles.cameraViewport} />
-                      </Camera>
-                    )}
-                  <Text caption lighten style={styles.caption}>
-                    {showCamera ? l10n.TRANSFER_TXS_CAMERA : l10n.TRANSFER_TXS_CAPTION}
-                  </Text>
-                </View>
-              </ScrollView>
-
-              <Footer
-                onBack={navigation.goBack}
-                onHardwareBack={visible ? () => _onHardwareBack(navigation) : undefined}
+      <ScrollView contentContainerStyle={styles.container}>
+        <Heading subtitle={l10n.VAULTS} />
+        <View style={styles.currencies}>
+          { currencies.map(({ base, currency, weight }) => (
+            <Fragment key={currency}>
+              <HorizontalChartItem
+                color={COLOR[currency]}
+                key={currency}
+                currency={baseCurrency}
+                image={FLAGS[currency]}
+                style={styles.horizontalChart}
+                title={currency}
+                value={base}
+                width={weight}
               />
-
-              <DialogFork
-                onClose={_onCloseDialog}
-                onForked={() => _onForked(navigation)}
-                query={qr}
-                visible={dialog}
-              />
+                <View style={styles.vaults}>
+                  { sort(vaults, currency).map((vault) => (
+                    <OptionItem
+                      key={vault.hash}
+                      active={state[vault.hash]}
+                      onChange={(value) => dispatch({ type: 'VAULT_VISIBLE', vault: vault.hash, value })}
+                      onPress={() => navigation.go(SCREEN.VAULT, vault)}
+                      {...vault}
+                    >
+                      <PriceFriendly lighten currency={currency} value={vault.currentBalance} />
+                    </OptionItem>
+                  ))}
+                </View>
             </Fragment>
-          )}
-        </Consumer>
+          ))}
+        </View>
 
-      </Viewport>
-    );
-  }
-}
+        <Heading subtitle={l10n.TRANSFER_TXS} caption={l10n.IMPORT_EXPORT_CAPTION} lighten>
+          { hasCamera === undefined && <Activity color="white" style={styles.activity} /> }
+          { hasCamera && (
+            <Button
+              contained={false}
+              icon={camera ? undefined : ASSETS.camera}
+              onPress={() => setCamera(!camera)}
+              small
+              style={styles.button}
+              title={camera ? l10n.CLOSE : l10n.QR_READER}
+            />
+          )}
+        </Heading>
+        <View style={styles.content}>
+          { !camera
+            ? <Image source={{ uri: `${QR_URI}=${secret}|${authorization}` }} style={styles.qr} />
+            : (
+              <Camera {...CAMERA_PROPS} onBarCodeScanned={onQR} style={styles.qr}>
+                <View style={styles.cameraViewport} />
+              </Camera>
+            )}
+          <Text caption lighten style={styles.caption}>
+            {camera ? l10n.TRANSFER_TXS_CAMERA : l10n.TRANSFER_TXS_CAPTION}
+          </Text>
+        </View>
+      </ScrollView>
+
+      <Footer
+        onBack={navigation.back}
+        onHardwareBack={visible ? () => navigation.back() : undefined}
+      />
+
+      <DialogFork onClose={() => setDialog(false)} onForked={onForked} query={qr} visible={dialog} />
+    </Viewport>
+  );
+};
+
+Settings.propTypes = {
+  visible: bool,
+};
+
+Settings.defaultProps = {
+  visible: true,
+};
 
 export default Settings;
