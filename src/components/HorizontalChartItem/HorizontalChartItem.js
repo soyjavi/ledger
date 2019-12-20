@@ -15,8 +15,10 @@ const HorizontalChartItem = ({
   <View style={inherit.style}>
     <View style={styles.row}>
       { image && <Image source={image} style={styles.image} />}
-      <Text caption lighten={small} style={styles.text}>{title}</Text>
-      <PriceFriendly currency={currency} bold caption lighten={small} value={value} />
+      <Text caption color={COLOR.TEXT_CONTRAST} bold={!small} style={styles.text}>
+        {title}
+      </Text>
+      <PriceFriendly caption color={COLOR.TEXT_CONTRAST} currency={currency} bold={!small} value={value} />
     </View>
 
     <View style={[styles.bar, styles.barContainer, small && styles.barSmall]}>

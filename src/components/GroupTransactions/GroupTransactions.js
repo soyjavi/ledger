@@ -7,7 +7,6 @@ import { Text } from '../../reactor/components';
 
 import { exchange, verboseDate } from '../../common';
 import { useL10N, useStore } from '../../context';
-import Box from '../Box';
 import PriceFriendly from '../PriceFriendly';
 import TransactionItem from '../TransactionItem';
 import styles from './GroupTransactions.style';
@@ -20,20 +19,16 @@ const GroupTransactions = React.memo(({
 
   return (
     <View style={styles.container}>
-      <View style={[styles.row, styles.heading]}>
-        <Box style={styles.tag}>
-          <Text caption bold>{verboseDate(timestamp, l10n)}</Text>
-        </Box>
+      <View style={styles.heading}>
+        <Text lighten caption>{verboseDate(timestamp, l10n)}</Text>
         { value !== 0 && (
-          <View style={styles.tag}>
-            <PriceFriendly
-              bold
-              caption
-              currency={baseCurrency}
-              icon
-              value={exchange(value, currency, baseCurrency, rates, timestamp)}
-            />
-          </View>
+          <PriceFriendly
+            bold
+            caption
+            currency={baseCurrency}
+            icon
+            value={exchange(value, currency, baseCurrency, rates, timestamp)}
+          />
         )}
       </View>
       { txs.map((tx) => <TransactionItem key={tx.hash} currency={currency} {...tx} />)}

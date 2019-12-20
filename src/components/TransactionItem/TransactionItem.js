@@ -13,7 +13,7 @@ import PriceFriendly from '../PriceFriendly';
 import { formatCaption } from './modules';
 import styles from './TransactionItem.style';
 
-const { VAULT_TRANSFER, TX: { TYPE: { EXPENSE, TRANSFER } } } = C;
+const { VAULT_TRANSFER, TX: { TYPE: { INCOME, EXPENSE, TRANSFER } } } = C;
 const { COLOR } = THEME;
 
 const TransactionItem = (props) => {
@@ -33,7 +33,7 @@ const TransactionItem = (props) => {
 
         <View style={[styles.content, styles.row]}>
           <View style={styles.texts}>
-            { title && <Text bold lighten={isVaultTransfer} numberOfLines={1}>{title}</Text> }
+            { title && <Text color={COLOR.TEXT_CONTRAST} bold numberOfLines={1}>{title}</Text> }
             <Text caption lighten style={styles.caption}>
               {formatCaption(new Date(timestamp), location)}
             </Text>
@@ -41,9 +41,9 @@ const TransactionItem = (props) => {
           <View style={styles.prices}>
             <PriceFriendly
               bold
+              color={COLOR.TEXT_CONTRAST}
               currency={baseCurrency}
-              lighten={isVaultTransfer}
-              operator={type !== TRANSFER}
+              operator={type === INCOME}
               value={exchange(value, currency, baseCurrency, rates, timestamp) * operator}
             />
 
@@ -52,7 +52,7 @@ const TransactionItem = (props) => {
                 caption
                 currency={currency}
                 lighten
-                operator={type !== TRANSFER}
+                operator={type === INCOME}
                 value={value * operator}
                 style={styles.caption}
               />

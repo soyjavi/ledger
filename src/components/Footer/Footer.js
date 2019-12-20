@@ -12,7 +12,7 @@ import styles from './Footer.style';
 const { COLOR } = THEME;
 
 const BUTTON = {
-  color: COLOR.PRIMARY, large: true, rounded: true, shadow: true, style: styles.button,
+  color: COLOR.ACCENT, large: true, rounded: true, shadow: true, style: styles.button,
 };
 
 const Footer = ({

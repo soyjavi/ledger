@@ -1,5 +1,4 @@
 import Box from './Box';
-import ButtonMore from './ButtonMore';
 import CardOption from './CardOption';
 import Chart from './Chart';
 import DialogClone from './DialogClone';
@@ -16,7 +15,6 @@ import TransactionItem from './TransactionItem';
 
 export {
   Box,
-  ButtonMore,
   CardOption,
   Chart,
   DialogClone,
