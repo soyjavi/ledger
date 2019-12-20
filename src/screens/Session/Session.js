@@ -2,7 +2,7 @@ import * as LocalAuthentication from 'expo-local-authentication';
 import React, { Fragment, useEffect, useState } from 'react';
 import { Image, View } from 'react-native';
 
-import ASSETS from '../../assets';
+import { LOGO } from '../../assets';
 import { C } from '../../common';
 import { useL10N, useNavigation, useStore } from '../../context';
 import { THEME } from '../../reactor/common';
@@ -84,7 +84,7 @@ const Session = (props) => {
         { fingerprint && store.pin ? (onFingerprint() && <Fragment />) : undefined }
         <View style={styles.content}>
           <View style={styles.row}>
-            <Image source={ASSETS.logo} resizeMode="contain" style={styles.logo} />
+            <Image source={LOGO} resizeMode="contain" style={styles.logo} />
             <Text headline style={styles.textName}>volt.</Text>
           </View>
           <View style={styles.pin}>
@@ -102,8 +102,6 @@ const Session = (props) => {
             { store.pin && fingerprint ? l10n.ENTER_PIN_OR_FINGERPRINT : l10n.ENTER_PIN }
           </Text>
         </View>
-
-        { store.pin && !busy && fingerprint && <Image source={ASSETS.fingerprint} style={styles.fingerprint} /> }
 
         <NumKeyboard onPress={(number) => onPin(`${pin}${number}`)} />
         <Text lighten caption style={styles.textVersion}>{`v${VERSION}`}</Text>

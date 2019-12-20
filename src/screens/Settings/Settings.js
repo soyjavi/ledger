@@ -10,7 +10,7 @@ import {
   Activity, Button, Image, Text, Viewport,
 } from '../../reactor/components';
 
-import ASSETS, { FLAGS } from '../../assets';
+import { FLAGS } from '../../assets';
 import { C } from '../../common';
 import {
   Footer, Header, Heading, HorizontalChartItem, OptionItem, PriceFriendly,
@@ -86,19 +86,19 @@ const Settings = ({ visible, ...inherit }) => {
                 value={base}
                 width={weight}
               />
-                <View style={styles.vaults}>
-                  { sort(vaults, currency).map((vault) => (
-                    <OptionItem
-                      key={vault.hash}
-                      active={state[vault.hash]}
-                      onChange={(value) => dispatch({ type: 'VAULT_VISIBLE', vault: vault.hash, value })}
-                      onPress={() => navigation.go(SCREEN.VAULT, vault)}
-                      {...vault}
-                    >
-                      <PriceFriendly lighten currency={currency} value={vault.currentBalance} />
-                    </OptionItem>
-                  ))}
-                </View>
+              <View style={styles.vaults}>
+                { sort(vaults, currency).map((vault) => (
+                  <OptionItem
+                    key={vault.hash}
+                    active={state[vault.hash]}
+                    onChange={(value) => dispatch({ type: 'VAULT_VISIBLE', vault: vault.hash, value })}
+                    onPress={() => navigation.go(SCREEN.VAULT, vault)}
+                    {...vault}
+                  >
+                    <PriceFriendly lighten currency={currency} value={vault.currentBalance} />
+                  </OptionItem>
+                ))}
+              </View>
             </Fragment>
           ))}
         </View>
@@ -108,7 +108,6 @@ const Settings = ({ visible, ...inherit }) => {
           { hasCamera && (
             <Button
               contained={false}
-              icon={camera ? undefined : ASSETS.camera}
               onPress={() => setCamera(!camera)}
               small
               style={styles.button}

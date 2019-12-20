@@ -1,10 +1,10 @@
+import { FontAwesome } from '@expo/vector-icons';
 import { func, shape, string } from 'prop-types';
 import React, { useState } from 'react';
 import { TextInput, View } from 'react-native';
 
-import ASSETS from '../../../../assets';
 import { THEME } from '../../../../reactor/common';
-import { Activity, Icon } from '../../../../reactor/components';
+import { Activity } from '../../../../reactor/components';
 import styles from './Search.style';
 
 const { COLOR } = THEME;
@@ -23,7 +23,7 @@ const Search = ({ l10n, onValue, value }) => {
 
   return (
     <View style={[styles.container, focus && styles.focus]}>
-      <Icon value={ASSETS.search} style={styles.icon} />
+      <FontAwesome name="search" color={COLOR.TEXT} size={16} style={styles.icon} />
       <TextInput
         autoCorrect={false}
         autoCapitalize="none"

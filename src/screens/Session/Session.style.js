@@ -42,13 +42,6 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
 
-  fingerprint: {
-    alignSelf: 'center',
-    width: BULLET_SIZE * 2,
-    height: BULLET_SIZE * 2,
-    marginBottom: UNIT * 2.4,
-  },
-
   logo: {
     width: LOGO_SIZE,
     height: LOGO_SIZE,

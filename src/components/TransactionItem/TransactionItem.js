@@ -1,10 +1,11 @@
+import { FontAwesome } from '@expo/vector-icons';
 import {
   number, oneOfType, shape, string,
 } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 import { THEME } from '../../reactor/common';
-import { Icon, Text, Touchable } from '../../reactor/components';
+import { Text, Touchable } from '../../reactor/components';
 
 import { C, exchange, getIconCategory } from '../../common';
 import { useStore } from '../../context';
@@ -21,14 +22,16 @@ const TransactionItem = (props) => {
   const {
     category, currency, location, timestamp, title, type, value,
   } = props;
-  const isVaultTransfer = category === VAULT_TRANSFER;
   const operator = type === EXPENSE ? -1 : 1;
+
+  let color = type === EXPENSE ? COLOR.EXPENSE : COLOR.INCOME;
+  if (category === VAULT_TRANSFER) color = COLOR.TRANSFER;
 
   return (
     <Touchable rippleColor={COLOR.TEXT_LIGHTEN} onPress={() => onSelectTx(props)}>
-      <View style={[styles.container, styles.row, isVaultTransfer && styles.containerHighlight]}>
-        <Box style={styles.icon}>
-          <Icon value={getIconCategory({ type, category, title })} />
+      <View style={[styles.container, styles.row]}>
+        <Box color={color} opacity={0.25} small style={styles.icon}>
+          <FontAwesome name={getIconCategory({ type, category, title })} color={color} size={16} />
         </Box>
 
         <View style={[styles.content, styles.row]}>

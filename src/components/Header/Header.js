@@ -6,7 +6,7 @@ import { View } from 'react-native';
 
 import { Motion } from '../../reactor/components';
 
-import ASSETS from '../../assets';
+import { LOGO } from '../../assets';
 import Heading from '../Heading';
 import styles from './Header.style';
 
@@ -31,7 +31,7 @@ Header.propTypes = {
 Header.defaultProps = {
   children: undefined,
   highlight: false,
-  image: ASSETS.logo,
+  image: LOGO,
   title: undefined,
 };
 

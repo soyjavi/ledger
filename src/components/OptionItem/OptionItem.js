@@ -1,3 +1,4 @@
+import { FontAwesome } from '@expo/vector-icons';
 import {
   bool, func, node, string,
 } from 'prop-types';
@@ -5,8 +6,7 @@ import React from 'react';
 import { View } from 'react-native';
 
 import { THEME } from '../../reactor/common';
-import { Icon, Text, Touchable } from '../../reactor/components';
-import ASSETS from '../../assets';
+import { Text, Touchable } from '../../reactor/components';
 
 import styles from './OptionItem.style';
 
@@ -23,7 +23,7 @@ const OptionItem = ({
     </Touchable>
     <Touchable onPress={() => onChange(!active)} rippleColor={COLOR.ACCENT}>
       <View style={[styles.iconContainer, active && styles.iconActive]}>
-        { active && <Icon value={ASSETS.checked} style={styles.icon} /> }
+        { active && <FontAwesome name="check" color={COLOR.BACKGROUND} size={16} /> }
       </View>
     </Touchable>
   </View>

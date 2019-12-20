@@ -7,7 +7,6 @@ const {
 } = THEME;
 
 const INPUT_HEIGHT = UNIT * 4.4;
-const ICON_HEIGHT = INPUT_HEIGHT / 3;
 
 export default StyleSheet.create({
   container: {
@@ -26,10 +25,8 @@ export default StyleSheet.create({
   },
 
   icon: {
-    height: ICON_HEIGHT,
     marginRight: SPACE.MEDIUM,
     opacity: 0.65,
-    width: ICON_HEIGHT,
   },
 
   input: {

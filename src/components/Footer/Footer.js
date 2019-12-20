@@ -3,7 +3,6 @@ import { func } from 'prop-types';
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
 
-import ASSETS from '../../assets';
 import { onHardwareBackPress } from '../../common';
 import { useConnection } from '../../context';
 import { THEME } from '../../reactor/common';
@@ -29,22 +28,13 @@ const Footer = ({
   return (
     <View style={[styles.container, inherit.style]}>
       { onBack && (
-        <Button
-          {...BUTTON}
-          icon={ASSETS.back}
-          large={onPress === undefined}
-          onPress={onBack}
-          small
-        />
+        <Button {...BUTTON} large={onPress === undefined} onPress={onBack} small>
+          <FontAwesome name="arrow-left" color={COLOR.BASE} size={16} />
+        </Button>
       )}
       { onPress && connected && (
-        <Button
-          {...BUTTON}
-          disabled={!connected}
-          icon={ASSETS.add}
-          onPress={onPress}
-        >
-          <FontAwesome name="plus" color={COLOR.BASE} size="36" />
+        <Button {...BUTTON} small disabled={!connected} onPress={onPress}>
+          <FontAwesome name="plus" color={COLOR.BASE} size={20} />
         </Button>
       )}
     </View>
@@ -55,6 +45,12 @@ Footer.propTypes = {
   onBack: func,
   onHardwareBack: func,
   onPress: func,
+};
+
+Footer.defaultProps = {
+  onBack: undefined,
+  onHardwareBack: undefined,
+  onPress: undefined,
 };
 
 export default Footer;

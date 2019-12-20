@@ -1,3 +1,4 @@
+import { FontAwesome } from '@expo/vector-icons';
 import { bool } from 'prop-types';
 import React, { Fragment, useEffect, useState } from 'react';
 import { View, ScrollView } from 'react-native';
@@ -38,7 +39,9 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
       <Header highlight={scroll} title={l10n.OVERALL_BALANCE}>
-        <Button color={COLOR.BASE} rounded icon={l10n.SETTINGS} onPress={() => navigation.go(SCREEN.SETTINGS)} />
+        <Button onPress={() => navigation.go(SCREEN.SETTINGS)}>
+          <FontAwesome name="cog" color={COLOR.PRIMARY} size={20} />
+        </Button>
       </Header>
       <ScrollView
         onScroll={({ nativeEvent: { contentOffset } }) => setScroll(contentOffset.y > SPACE.MEDIUM)}

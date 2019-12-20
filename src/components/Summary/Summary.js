@@ -2,7 +2,7 @@ import { shape, number, string } from 'prop-types';
 import React from 'react';
 import { Image, View } from 'react-native';
 
-import ASSETS from '../../assets';
+import { LOGO } from '../../assets';
 import { C, exchange, verboseMonth } from '../../common';
 import {
   useL10N, useNavigation, useSettings, useStore,
@@ -103,7 +103,7 @@ Summary.defaultProps = {
   currency: CURRENCY,
   currentBalance: undefined,
   currentMonth: {},
-  image: ASSETS.logo,
+  image: LOGO,
   title: '',
 };
 

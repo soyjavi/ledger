@@ -15,10 +15,6 @@ export default StyleSheet.create({
     paddingHorizontal: SPACE.REGULAR,
   },
 
-  containerHighlight: {
-    opacity: 0.66,
-  },
-
   content: {
     alignItems: 'flex-start',
     flex: 1,
