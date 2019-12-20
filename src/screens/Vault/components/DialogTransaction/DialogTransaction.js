@@ -91,7 +91,7 @@ const DialogTransaction = (props) => {
         <View>
           { visible && location === false && onLocation(this) }
           <HeatMap color={color} points={coords ? [[coords.longitude, coords.latitude]] : undefined} />
-          <Text lighten>{place || l10n.LOADING_PLACE}</Text>
+          <Text caption lighten>{place || l10n.LOADING_PLACE}</Text>
         </View>
       </View>
 

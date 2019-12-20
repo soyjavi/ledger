@@ -8,7 +8,7 @@ const ICON_SIZE = UNIT * 3.6;
 export default StyleSheet.create({
   container: {
     paddingVertical: SPACE.XS,
-    paddingHorizontal: SPACE.REGULAR,
+    paddingHorizontal: SPACE.MEDIUM,
   },
 
   content: {
@@ -23,6 +23,7 @@ export default StyleSheet.create({
     height: ICON_SIZE,
     justifyContent: 'center',
     marginRight: UNIT,
+    paddingTop: SPACE.XS,
     width: ICON_SIZE,
   },
 
