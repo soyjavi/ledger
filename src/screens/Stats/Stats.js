@@ -106,11 +106,11 @@ const Stats = (props) => {
 
         { (hasExpenses || hasIncomes)
           ? (
-            <Fragment>
+            <View style={styles.content}>
               { hasIncomes && <ItemGroupCategories type={INCOME} dataSource={incomes} /> }
               { hasExpenses && <ItemGroupCategories type={EXPENSE} dataSource={expenses} /> }
               { hasPoints && <Locations {...inherit} {...locations} /> }
-            </Fragment>
+            </View>
           )
           : (
             <View style={styles.contentEmpty}>

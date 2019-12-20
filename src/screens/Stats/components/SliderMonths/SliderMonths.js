@@ -20,7 +20,7 @@ const SliderMonths = ({
   }, [index]);
 
   return (
-    <Slider ref={slider} itemWidth={ITEM_WIDTH} itemMargin={0} style={inherit.style}>
+    <Slider ref={slider} itemWidth={ITEM_WIDTH} itemMargin={0} style={[styles.container, inherit.style]}>
       { getLastMonths(l10n.MONTHS).map(({ month, year }, i) => (
         <Touchable
           key={month}

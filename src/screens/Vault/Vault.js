@@ -74,28 +74,30 @@ const Vault = (props) => {
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
-      <Header highlight={scroll} image={FLAGS[currency]} title={title} />
+      <Header highlight={scroll} image={FLAGS[currency]} title={`${title} ${l10n.BALANCE}`} />
       <ScrollView onScroll={onScroll} ref={scrollview} scrollEventThrottle={40} style={styles.container}>
         <Fragment>
           <Summary {...vault} image={FLAGS[currency]} title={`${title} ${l10n.BALANCE}`} />
           <Search l10n={l10n} onValue={onSearch} value={search} />
         </Fragment>
-        { values.length > 0
-          ? (
-            <Fragment>
+        <View style={styles.content}>
+          { values.length > 0
+            ? (
               <Fragment>
-                { values.map((item) => (
-                  <GroupTransactions key={`${item.timestamp}-${search}`} {...item} currency={currency} />))}
+                <Fragment>
+                  { values.map((item) => (
+                    <GroupTransactions key={`${item.timestamp}-${search}`} {...item} currency={currency} />))}
+                </Fragment>
+                { !search && !scrollQuery && (
+                  <Activity size="large" color={COLOR.BASE} style={styles.activity} />)}
               </Fragment>
-              { !search && !scrollQuery && (
-                <Activity size="large" color={COLOR.BASE} style={styles.activity} />)}
-            </Fragment>
-          )
-          : (
-            <View style={[styles.content, styles.container]}>
-              <Text lighten>{l10n.NO_TRANSACTIONS}</Text>
-            </View>
-          )}
+            )
+            : (
+              <View style={[styles.centered, styles.container]}>
+                <Text lighten>{l10n.NO_TRANSACTIONS}</Text>
+              </View>
+            )}
+        </View>
       </ScrollView>
 
       <Footer

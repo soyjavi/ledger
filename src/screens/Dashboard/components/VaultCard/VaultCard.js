@@ -20,9 +20,9 @@ const VaultCard = ({
   const l10n = useL10N();
   const { baseCurrency, rates } = useStore();
 
-  return (
+  return React.useCallback((
     <Touchable onPress={onPress} rippleColor={COLOR.TEXT_LIGHTEN} style={styles.container}>
-      <Box>
+      <Box color={COLOR[currency]}>
         <View style={styles.content}>
           <View style={styles.row}>
             <Image source={FLAGS[currency]} style={styles.thumbnail} />
@@ -30,13 +30,15 @@ const VaultCard = ({
           </View>
           <PriceFriendly
             currency={baseCurrency}
-            headline
+            subtitle
             value={baseCurrency !== currency
               ? exchange(Math.abs(currentBalance), currency, baseCurrency, rates)
               : Math.abs(currentBalance)}
+
+            style={styles.balance}
           />
-          { currency !== baseCurrency && (
-            <PriceFriendly currency={currency} bold lighten value={currentBalance} />)}
+          { currency !== baseCurrency && <PriceFriendly currency={currency} caption value={currentBalance} /> }
+
           <View style={styles.expand} />
 
           <View style={styles.row}>
@@ -52,12 +54,12 @@ const VaultCard = ({
                     : progression}
                 />
               )
-              : <Text caption lighten>{l10n.WITHOUT_TXS}</Text>}
+              : <Text caption>{l10n.WITHOUT_TXS}</Text>}
           </View>
         </View>
       </Box>
     </Touchable>
-  );
+  ), [currency, currentBalance, progression]);
 };
 
 VaultCard.propTypes = {
