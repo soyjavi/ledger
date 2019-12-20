@@ -13,7 +13,7 @@ import PriceFriendly from '../PriceFriendly';
 import { formatCaption } from './modules';
 import styles from './TransactionItem.style';
 
-const { VAULT_TRANSFER, TX: { TYPE: { INCOME, EXPENSE, TRANSFER } } } = C;
+const { VAULT_TRANSFER, TX: { TYPE: { INCOME, EXPENSE } } } = C;
 const { COLOR } = THEME;
 
 const TransactionItem = (props) => {
@@ -50,8 +50,8 @@ const TransactionItem = (props) => {
             { baseCurrency !== currency && (
               <PriceFriendly
                 caption
+                color={COLOR.TEXT_LIGHTEN}
                 currency={currency}
-                lighten
                 operator={type === INCOME}
                 value={value * operator}
                 style={styles.caption}

@@ -14,16 +14,21 @@ import styles from './Summary.style';
 
 const { CURRENCY, SCREEN } = C;
 
-const BoxSummary = ({ caption, currency, value }) => (
+const BoxSummary = ({ caption, value, ...inherit }) => (
   <Box opacity={1}>
     <Text caption lighten={value === 0}>{caption.toUpperCase()}</Text>
-    <PriceFriendly caption bold lighten={value === 0} currency={currency} icon value={value} />
+    <PriceFriendly
+      {...inherit}
+      caption
+      bold
+      lighten={value === 0}
+      value={value}
+    />
   </Box>
 );
 
 BoxSummary.propTypes = {
   caption: string.isRequired,
-  currency: string.isRequired,
   value: number.isRequired,
 };
 
@@ -77,10 +82,10 @@ const Summary = React.memo(({
       <View style={styles.expand} />
 
       <View style={[styles.row, styles.spaceBetween]}>
-        <BoxSummary caption={verboseMonth(new Date(), l10n)} currency="%" value={progressionPercentage} />
+        <BoxSummary caption={verboseMonth(new Date(), l10n)} currency="%" operator value={progressionPercentage} />
         <BoxSummary caption={l10n.INCOMES} currency={baseCurrency} value={incomes} />
         <BoxSummary caption={l10n.EXPENSES} currency={baseCurrency} value={expenses} />
-        <BoxSummary caption={l10n.TODAY} currency={baseCurrency} value={today} />
+        <BoxSummary caption={l10n.TODAY} currency={baseCurrency} operator value={today} />
       </View>
     </View>
   );

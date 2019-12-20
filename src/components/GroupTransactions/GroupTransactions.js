@@ -26,7 +26,7 @@ const GroupTransactions = React.memo(({
             bold
             caption
             currency={baseCurrency}
-            icon
+            operator
             value={exchange(value, currency, baseCurrency, rates, timestamp)}
           />
         )}

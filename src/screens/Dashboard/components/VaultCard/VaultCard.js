@@ -48,7 +48,7 @@ const VaultCard = ({
                   bold
                   caption
                   currency="%"
-                  icon
+                  operator
                   value={currentBalance - progression > 0
                     ? (progression * 100) / (currentBalance - progression)
                     : progression}
