@@ -18,10 +18,7 @@ export default StyleSheet.create({
     width: CARD_WIDTH,
   },
 
-  dialog: {
-    ...STYLE.DIALOG,
-    backgroundColor: COLOR.BACKGROUND_OPACITY,
-  },
+  dialog: STYLE.DIALOG,
 
   frame: STYLE.DIALOG_FRAME,
 

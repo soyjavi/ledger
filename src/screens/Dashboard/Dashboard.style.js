@@ -7,9 +7,7 @@ const { STYLE: { CONTENT, HEADER_HEIGHT } } = C;
 const { COLOR, SPACE } = THEME;
 
 export default StyleSheet.create({
-  content: {
-    ...CONTENT,
-  },
+  content: CONTENT,
 
   icon: {
     height: SPACE.L,

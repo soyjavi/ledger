@@ -1,30 +1,35 @@
-// {
-//     0: wipe,
-//     1: foodAndDrinks,
-//     3: travel,
-//     4: debt,
-//     5: investment,
-//     6: entertainment,
-//     7: shopping,
-//     8: utilities,
-//     9: healthcare,
-//     10: personal,
-//     11: services,
-//     12: transfer,
-//     13: others,
-//     99: vaultTransfer,
-//   },
-//   {
-//     0: wipe,
-//     1: salary,
-//     2: investment,
-//     3: pasives,
-//     4: transfer,
-//     5: others,
-//     99: vaultTransfer,
-//   },
+const CATEGORIES = [{
+  0: 'trash-can-outline',
+  1: 'silverware-fork-knife',
+  3: 'airplane',
+  4: 'office-building',
+  5: 'resize',
+  6: 'cards-playing-outline',
+  7: 'store',
+  8: 'lightbulb-outline',
+  9: 'medical-bag',
+  10: 'account',
+  11: 'taxi',
+  12: 'arrow-left-bold-outline',
+  13: 'cloud-question',
+  99: 'arrow-left-right-bold-outline',
+},
+{
+  0: 'trash-can-outline',
+  1: 'bank',
+  2: 'expand-all-outline',
+  3: 'timer-sand',
+  4: 'arrow-right-bold-outline',
+  5: 'cloud-question',
+  99: 'arrow-left-right-bold-outline',
+}];
 
-export default ({ type, category, title = '' } = {}) => (
-  'question-circle'
-  // CATEGORIES[type][title.toLowerCase()] || CATEGORIES[type][category]
-);
+export default ({ type, category, title = '' } = {}) => {
+  let value;
+
+  if (title === 'coffee') value = 'coffee';
+  else if (title === 'beer') value = 'beer';
+  else value = CATEGORIES[type][category];
+
+  return value;
+};

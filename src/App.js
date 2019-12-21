@@ -21,8 +21,9 @@ export default () => {
     current, back, params, stack,
   } = useNavigation();
   const l10n = useL10N();
-  const store = useStore();
-  const { error, onError } = store;
+  const {
+    error, onError, sync, vaults = [], tx, txs = [],
+  } = useStore();
   console.log('<App>');
 
   return (
@@ -31,19 +32,19 @@ export default () => {
 
       { stack.includes(SESSION) && <Dashboard backward={current !== DASHBOARD} visible={stack.includes(DASHBOARD)} /> }
 
-      { stack.includes(DASHBOARD) && (
+      { sync && stack.includes(DASHBOARD) && (
         <Fragment>
-          <Settings {...store} visible={stack.includes(SETTINGS)} />
+          <Settings visible={stack.includes(SETTINGS)} />
           <Vault
             backward={current !== VAULT}
             dataSource={stack.includes(VAULT) && params.Vault
-              ? store.vaults.find(({ hash }) => hash === params.Vault.hash)
+              ? vaults.find(({ hash }) => hash === params.Vault.hash)
               : undefined}
             back={back}
             visible={stack.includes(VAULT)}
           />
-          <Stats {...store} vault={params.Vault} visible={stack.includes(STATS)} />
-          <DialogClone dataSource={store.tx} visible={store.tx !== undefined} />
+          <Stats vault={params.Vault} visible={stack.includes(STATS)} />
+          <DialogClone dataSource={tx} visible={tx !== undefined} />
         </Fragment>
       )}
 

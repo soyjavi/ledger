@@ -10,11 +10,11 @@ const parseDate = (date) => {
   return new Date(value.getFullYear(), value.getMonth(), value.getDate(), 0, 0, 0);
 };
 
-export default (props, query = {}) => {
+export default (vault = {}, store, query = {}) => {
   const range = 12;
   const {
-    baseCurrency, overall, rates, txs, vault = {}, vaults,
-  } = props;
+    baseCurrency, overall, rates, txs, vaults,
+  } = store;
   const chart = {
     balance: new Array(range).fill(0),
     expenses: new Array(range).fill(0),

@@ -16,7 +16,6 @@ const INITIAL_STATE = {
   error: undefined,
   overall: {},
   tx: undefined,
-  sync: false,
   // -- STORAGE --------------------------------------------------------------
   authorization: undefined,
   baseCurrency: CURRENCY,
@@ -31,6 +30,7 @@ const INITIAL_STATE = {
 
 const StoreProvider = ({ children }) => {
   const [state, setState] = useState(undefined);
+  const [sync, setSync] = useState(false);
   useEffect(() => {
     const load = async () => {
       setState({ ...INITIAL_STATE, ...consolidate(await Storage.get()) });
@@ -42,16 +42,15 @@ const StoreProvider = ({ children }) => {
 
   const onError = (error) => setState({ ...state, error: error ? error.message : undefined });
 
-  const onSync = async () => {
-    setState({ ...state, sync: false });
-    let nextState = await syncProfile({ onError, state });
-    if (nextState) {
-      nextState = consolidate(nextState);
-      await store(nextState);
-    }
-
-    setState({ ...state, ...nextState, sync: true });
-    return nextState;
+  const onSync = async ({ authorization, pin } = {}) => {
+    const baseState = authorization ? { ...state, authorization, pin } : state;
+    const nextState = consolidate({
+      ...baseState,
+      ...(await syncProfile({ onError, state: baseState })),
+    });
+    await store(nextState);
+    setState(nextState);
+    setSync(true);
   };
 
   const signup = async (pin) => {
@@ -59,9 +58,7 @@ const StoreProvider = ({ children }) => {
 
     if (authorization) {
       await store({ authorization, pin });
-      setState({
-        ...state, authorization, pin, sync: false,
-      });
+      await onSync({ authorization, pin });
     }
   };
 
@@ -116,7 +113,7 @@ const StoreProvider = ({ children }) => {
   return (
     <StoreContext.Provider
       value={{
-        onError, onSync, onFork, onTx, onSelectTx, onVault, signup, ...state,
+        onError, onSync, onFork, onTx, onSelectTx, onVault, signup, ...state, sync,
       }}
     >
       { children }

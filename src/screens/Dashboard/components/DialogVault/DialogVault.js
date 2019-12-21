@@ -14,22 +14,25 @@ import queryCurrencies from './modules/queryCurrencies';
 import styles, { CARD_WIDTH } from './DialogVault.style';
 
 const { COLOR, SPACE } = THEME;
-const INITIAL_STATE = { busy: false, form: { title: '', balance: '0' } };
+const INITIAL_STATE = { title: '', balance: '0' };
 
 const DialogVault = ({ onClose, visible }) => {
   const l10n = useL10N();
-  const store = useStore();
-  const { baseCurrency, vaults = [] } = store;
+  const { baseCurrency, onVault, rates, vaults = [] } = useStore();
 
-  const [state, setState] = useState({ currency: baseCurrency, ...INITIAL_STATE });
+  const [busy, setBusy] = useState(false);
+  const [currency, setVaultCurrency] = useState(baseCurrency);
+  const [form, setForm] = useState({ ...INITIAL_STATE });
 
   const onSubmit = async () => {
-    const { currency, form } = state;
-
-    setState({ ...state, busy: true });
-    const vault = await store.onVault({ currency, ...form });
-    if (vault) onClose();
-    setState({ currency: baseCurrency, ...INITIAL_STATE });
+    setBusy(true);
+    const vault = await onVault({ currency, ...form });
+    if (vault) {
+      onClose();
+      setVaultCurrency(baseCurrency);
+      setForm({ ...INITIAL_STATE });
+    }
+    setBusy(false);
   };
 
   return (
@@ -47,31 +50,31 @@ const DialogVault = ({ onClose, visible }) => {
       <View style={styles.form}>
         <Text subtitle>{l10n.CURRENCIES}</Text>
         <Slider itemMargin={0} itemWidth={CARD_WIDTH + SPACE.S} style={styles.currencies}>
-          { queryCurrencies(store).map((item) => (
+          { queryCurrencies(baseCurrency, rates).map((item) => (
             <CardOption
               image={FLAGS[item]}
               key={item}
-              onPress={() => setState({ currency: item, ...INITIAL_STATE })}
-              selected={state.currency === item}
+              onPress={() => setVaultCurrency(item)}
+              selected={currency === item}
               style={styles.card}
               title={item}
             />
           ))}
         </Slider>
         <Form
-          attributes={setCurrency(translate(FORM.VAULT, l10n), state.currency)}
-          onChange={(form) => setState({ ...state, form })}
-          value={state.form}
+          attributes={setCurrency(translate(FORM.VAULT, l10n), currency)}
+          onChange={setForm}
+          value={form}
         />
       </View>
       <Button
-        activity={state.busy}
-        color={COLOR.PRIMARY}
-        disabled={state.busy || state.form.title.trim().length === 0}
+        activity={busy}
+        color={COLOR.ACCENT}
+        disabled={busy || form.title.trim().length === 0}
         onPress={onSubmit}
         shadow
         style={styles.button}
-        title={!state.busy ? l10n.SAVE : undefined}
+        title={!busy ? l10n.SAVE : undefined}
       />
     </Dialog>
   );
