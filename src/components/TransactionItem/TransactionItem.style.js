@@ -23,7 +23,7 @@ export default StyleSheet.create({
     height: ICON_SIZE,
     justifyContent: 'center',
     marginRight: UNIT,
-    paddingTop: SPACE.XS,
+    paddingTop: UNIT * 0.6,
     width: ICON_SIZE,
   },
 

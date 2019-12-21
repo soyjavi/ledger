@@ -64,7 +64,6 @@ const Session = (props) => {
 
     if (next.length === 4) {
       setTimeout(() => {
-        console.log('onPin()', { next, store: store.pin });
         if (store.pin === undefined || store.pin === next) onHandshake(next);
         else setPin('');
       }, DURATION / 2);

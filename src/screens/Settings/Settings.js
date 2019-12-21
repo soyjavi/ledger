@@ -65,7 +65,7 @@ const Settings = ({ visible, ...inherit }) => {
     navigation.back();
   };
 
-  console.log({ currencies });
+  console.log('<Settings>', { visible });
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>

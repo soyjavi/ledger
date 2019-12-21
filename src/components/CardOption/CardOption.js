@@ -1,3 +1,4 @@
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import {
   bool, func, node, number, oneOfType, string,
 } from 'prop-types';
@@ -23,7 +24,8 @@ const CardOption = ({
       { (image || icon) && (
         <View style={[styles.thumbnail, selected && styles.thumbnailHighlight]}>
           { image && <Image source={image} style={styles.image} /> }
-          { icon && <Icon value={icon} style={styles.icon} /> }
+
+          { icon && <MaterialCommunityIcons name={icon} color={COLOR.TEXT} size={20} /> }
         </View>
       )}
       <Text caption lighten={color === COLOR.PRIMARY} numberOfLines={1} style={styles.title}>
