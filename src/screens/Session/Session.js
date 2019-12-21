@@ -37,14 +37,9 @@ const Session = (props) => {
     const isSignup = store.pin === undefined;
 
     setBusy(true);
-    if (isSignup) {
-      await store.signup(usedPin);
-      await store.onSync();
-    }
-
+    if (isSignup) await store.signup(usedPin);
     navigation.go(SCREEN.DASHBOARD);
     if (!isSignup) store.onSync();
-
     setBusy(false);
     setPin('');
   };
@@ -77,11 +72,11 @@ const Session = (props) => {
   };
 
   console.log('<Session>', { fingerprint, busy, pin });
+  if (!busy && fingerprint && store.pin) onFingerprint();
 
   return (
     <Viewport {...props} scroll={false} visible>
       <View style={styles.container}>
-        { fingerprint && store.pin ? (onFingerprint() && <Fragment />) : undefined }
         <View style={styles.content}>
           <View style={styles.row}>
             <Image source={LOGO} resizeMode="contain" style={styles.logo} />

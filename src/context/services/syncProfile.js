@@ -2,13 +2,12 @@ import { C, fetch } from '../../common';
 
 const { VERSION } = C;
 
-export default async (component) => {
-  const {
+export default async ({
     onError,
     state: {
       authorization, secret, txs = [], version,
     },
-  } = component;
+  }) => {
   const headers = { authorization, secret };
   let nextState;
 

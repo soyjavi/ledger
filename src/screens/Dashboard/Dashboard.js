@@ -34,7 +34,17 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
     onHardwareBackPress(!backward, () => { if (dialog) setDialog(false); });
   }, [backward, dialog]);
 
-  console.log('<Dashboard>');
+  console.log('<Dashboard>', {
+    visible,
+    sync,
+    vaults,
+    txs,
+    baseCurrency,
+  });
+
+  const isInitialized = vaults.length > 0;
+  const lastTxs = queryLastTxs({ txs, vaults });
+  if (!isInitialized && !dialog) setDialog(true);
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
@@ -50,31 +60,30 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
       >
         <Summary {...overall} currency={baseCurrency} title={l10n.OVERALL_BALANCE} />
 
-        <View style={styles.content}>
-          <Heading color={COLOR.TEXT_CONTRAST} subtitle={l10n.VAULTS} />
-          <Slider itemWidth={VAULT_ITEM_WIDTH + SPACE.S} itemMargin={0} style={styles.vaults}>
-            { queryVaults({ settings, vaults }).map((vault) => (
-              <VaultCard {...vault} key={vault.hash} onPress={() => navigation.go(SCREEN.VAULT, vault)} />
-            ))}
-          </Slider>
+        { isInitialized && (
+          <View style={styles.content}>
+            <Heading color={COLOR.TEXT_CONTRAST} subtitle={l10n.VAULTS} />
+            <Slider itemWidth={VAULT_ITEM_WIDTH + SPACE.S} itemMargin={0} style={styles.vaults}>
+              { queryVaults({ settings, vaults }).map((vault) => (
+                <VaultCard {...vault} key={vault.hash} onPress={() => navigation.go(SCREEN.VAULT, vault)} />
+              ))}
+            </Slider>
 
-          <Heading color={COLOR.TEXT_CONTRAST} subtitle={l10n.LAST_TRANSACTIONS} />
-          { queryLastTxs({ txs, vaults }).map((item) => (
-            <GroupTransactions key={`${item.timestamp}`} {...item} currency={baseCurrency} />))}
-        </View>
+            { lastTxs.length > 0 && (
+              <Fragment>
+                <Heading color={COLOR.TEXT_CONTRAST} subtitle={l10n.LAST_TRANSACTIONS} />
+                { lastTxs.map((item) => (
+                  <GroupTransactions key={`${item.timestamp}`} {...item} currency={baseCurrency} />))}
+              </Fragment>
+            )}
+
+          </View>
+        )}
       </ScrollView>
 
       <Syncing scroll={scroll} />
-
       <Footer onPress={() => setDialog(true)} />
-
-      { visible && sync && (
-        <Fragment>
-          { vaults.length === 0 && !dialog && setDialog(true) }
-          <DialogVault visible={dialog} onClose={() => setDialog(false)} />
-        </Fragment>
-      )}
-
+      { visible && sync && <DialogVault visible={dialog} onClose={() => setDialog(false)} /> }
     </Viewport>
   );
 };

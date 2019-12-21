@@ -26,7 +26,8 @@ const Stats = (props) => {
   const scrollview = useRef(null);
   const navigation = useNavigation();
   const l10n = useL10N();
-  const { baseCurrency: currency } = useStore();
+  const store = useStore();
+  const { baseCurrency: currency } = store;
 
   useEffect(() => {
     if (visible) {
@@ -35,13 +36,13 @@ const Stats = (props) => {
 
       scrollview.current.scrollTo({ y: 0, animated: false });
       setSlider(nextSlider);
-      setValues(query(props, nextSlider));
+      setValues(query(vault, store, nextSlider));
     }
-  }, [props, visible]); // @TODO: What this warning means?
+  }, [vault, visible]); // @TODO: What this warning means?
 
   const onChangeSlider = (value) => {
     setSlider(value);
-    setValues(query(props, value));
+    setValues(query(vault, store, value));
   };
 
   const {
