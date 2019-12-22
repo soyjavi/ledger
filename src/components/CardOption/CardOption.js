@@ -15,16 +15,15 @@ const { COLOR } = THEME;
 const CardOption = ({
   children, color, icon, image, onPress, selected, title, ...inherit
 }) => (
-  <Box style={[styles.box, inherit.style]}>
+  <Box small style={[styles.box, inherit.style]}>
     <Touchable
       onPress={onPress}
       rippleColor={COLOR.PRIMARY}
       style={[styles.container, selected && { backgroundColor: color }]}
     >
       { (image || icon) && (
-        <View style={[styles.thumbnail, selected && styles.thumbnailHighlight]}>
+        <View style={styles.thumbnail}>
           { image && <Image source={image} style={styles.image} /> }
-
           { icon && <MaterialCommunityIcons name={icon} color={COLOR.TEXT} size={20} /> }
         </View>
       )}

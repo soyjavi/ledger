@@ -7,14 +7,13 @@ const THUMBNAIL_SIZE = UNIT * 3.2;
 
 export default StyleSheet.create({
   box: {
-    padding: 0,
     marginRight: SPACE.S,
   },
 
   container: {
-    borderRadius: BORDER_RADIUS,
     alignItems: 'center',
-    padding: SPACE.MEDIUM,
+    borderRadius: BORDER_RADIUS,
+    paddingVertical: SPACE.MEDIUM,
   },
 
   icon: {
@@ -28,7 +27,7 @@ export default StyleSheet.create({
 
   thumbnail: {
     alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.05)',
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
     borderRadius: THUMBNAIL_SIZE / 2,
     height: THUMBNAIL_SIZE,
     justifyContent: 'center',
@@ -36,11 +35,8 @@ export default StyleSheet.create({
     width: THUMBNAIL_SIZE,
   },
 
-  thumbnailHighlight: {
-    backgroundColor: 'rgba(255,255,255,0.05)',
-  },
-
   title: {
     textAlign: 'center',
+    paddingHorizontal: SPACE.XS,
   },
 });
