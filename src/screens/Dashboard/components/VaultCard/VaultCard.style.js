@@ -7,10 +7,6 @@ const { STYLE } = C;
 const { SPACE } = THEME;
 
 export default StyleSheet.create({
-  balance: {
-    marginTop: SPACE.XXS,
-  },
-
   container: {
     height: STYLE.VAULT_ITEM_WIDTH * 0.85,
     marginBottom: SPACE.S,
@@ -30,7 +26,6 @@ export default StyleSheet.create({
 
   thumbnail: {
     height: SPACE.MEDIUM,
-    // marginBottom: SPACE.XXS,
     marginRight: SPACE.XXS,
     width: SPACE.MEDIUM,
   },

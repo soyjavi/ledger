@@ -3,22 +3,26 @@ import {
   bool, func, node, string,
 } from 'prop-types';
 import React from 'react';
-import { View } from 'react-native';
+import { Image, View } from 'react-native';
 
-import { THEME } from '../../reactor/common';
-import { Text, Touchable } from '../../reactor/components';
+import { THEME } from '../../../../reactor/common';
+import { Text, Touchable } from '../../../../reactor/components';
 
+import { Box } from '../../../../components';
 import styles from './OptionItem.style';
 
 const { COLOR } = THEME;
 
 const OptionItem = ({
-  active, caption, children, disabled, onChange, onPress, title,
+  active, caption, children, onChange, onPress, title, color, image
 }) => (
   <View style={styles.container}>
+    <Box small color={(active ? color : undefined)}>
+      <Image source={image} style={[styles.image, !active && styles.imageDisabled]} />
+    </Box>
     <Touchable onPress={onPress} rippleColor={COLOR.PRIMARY} style={styles.content}>
-      <Text subtitle numberOfLines={1} lighten={disabled}>{title}</Text>
-      { caption && <Text caption lighten>{caption}</Text> }
+      <Text bold numberOfLines={1} lighten={!active}>{title}</Text>
+      { caption && <Text bold caption lighten>{caption}</Text> }
       { children }
     </Touchable>
     <Touchable onPress={() => onChange(!active)} rippleColor={COLOR.ACCENT}>
@@ -33,7 +37,6 @@ OptionItem.propTypes = {
   active: bool,
   caption: string,
   children: node,
-  disabled: bool,
   onChange: func.isRequired,
   onPress: func,
   title: string.isRequired,
@@ -43,7 +46,6 @@ OptionItem.defaultProps = {
   active: true,
   caption: undefined,
   children: undefined,
-  disabled: false,
   onPress: undefined,
 };
 

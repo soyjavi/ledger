@@ -6,6 +6,10 @@ const { UNIT, SPACE } = THEME;
 const ICON_SIZE = UNIT * 3.6;
 
 export default StyleSheet.create({
+  box: {
+    marginRight: UNIT,
+  },
+
   container: {
     paddingVertical: SPACE.XS,
     paddingHorizontal: SPACE.MEDIUM,
@@ -17,14 +21,8 @@ export default StyleSheet.create({
   },
 
   icon: {
-    display: 'flex',
-    alignContent: 'center',
-    alignItems: 'center',
-    height: ICON_SIZE,
-    justifyContent: 'center',
-    marginRight: UNIT,
-    paddingTop: UNIT * 0.6,
-    width: ICON_SIZE,
+    alignSelf: 'center',
+    marginTop: UNIT * 0.5,
   },
 
   prices: {

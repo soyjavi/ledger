@@ -1,10 +1,11 @@
 import { StyleSheet } from 'react-native';
 
-import { LAYOUT, THEME } from '../../reactor/common';
+import { LAYOUT, THEME } from '../../../../reactor/common';
 
 const { COLOR, SPACE, UNIT } = THEME;
 const ICON_CONTAINER_SIZE = UNIT * 2.2;
 const ICON_SIZE = UNIT * 1.4;
+const THUMBNAIL_SIZE = UNIT * 3.2;
 
 export default StyleSheet.create({
   container: {
@@ -15,6 +16,7 @@ export default StyleSheet.create({
 
   content: {
     flex: 1,
+    marginLeft: UNIT,
   },
 
   iconContainer: {
@@ -35,5 +37,15 @@ export default StyleSheet.create({
   icon: {
     height: ICON_SIZE,
     width: ICON_SIZE,
+  },
+
+  image: {
+    height: ICON_CONTAINER_SIZE,
+    width: ICON_CONTAINER_SIZE,
+    margin: SPACE.XS,
+  },
+
+  imageDisabled: {
+    opacity: 0.5,
   },
 });

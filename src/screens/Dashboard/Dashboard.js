@@ -1,4 +1,4 @@
-import { FontAwesome } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { bool } from 'prop-types';
 import React, { Fragment, useEffect, useState } from 'react';
 import { View, ScrollView } from 'react-native';
@@ -49,8 +49,8 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
       <Header highlight={scroll} title={l10n.OVERALL_BALANCE}>
-        <Button onPress={() => navigation.go(SCREEN.SETTINGS)}>
-          <FontAwesome name="cog" color={COLOR.PRIMARY} size={20} />
+        <Button small contained={false} onPress={() => navigation.go(SCREEN.SETTINGS)}>
+          <MaterialCommunityIcons name="settings-outline" color={COLOR.TEXT} size={24} />
         </Button>
       </Header>
       <ScrollView
@@ -61,22 +61,21 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
         <Summary {...overall} currency={baseCurrency} title={l10n.OVERALL_BALANCE} />
 
         { isInitialized && (
-          <View style={styles.content}>
-            <Heading color={COLOR.TEXT_CONTRAST} subtitle={l10n.VAULTS} />
+          <Fragment>
+            <Heading subtitle={l10n.VAULTS} />
             <Slider itemWidth={VAULT_ITEM_WIDTH + SPACE.S} itemMargin={0} style={styles.vaults}>
               { queryVaults({ settings, vaults }).map((vault) => (
                 <VaultCard {...vault} key={vault.hash} onPress={() => navigation.go(SCREEN.VAULT, vault)} />
               ))}
             </Slider>
+          </Fragment>
+        )}
 
-            { lastTxs.length > 0 && (
-              <Fragment>
-                <Heading color={COLOR.TEXT_CONTRAST} subtitle={l10n.LAST_TRANSACTIONS} />
-                { lastTxs.map((item) => (
-                  <GroupTransactions key={`${item.timestamp}`} {...item} currency={baseCurrency} />))}
-              </Fragment>
-            )}
-
+        { isInitialized && lastTxs.length > 0 && (
+          <View style={styles.content}>
+            <Heading color={COLOR.TEXT_CONTRAST} subtitle={l10n.LAST_TRANSACTIONS} />
+            { lastTxs.map((item) => (
+              <GroupTransactions key={`${item.timestamp}`} {...item} currency={baseCurrency} />))}
           </View>
         )}
       </ScrollView>

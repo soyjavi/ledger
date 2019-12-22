@@ -30,8 +30,13 @@ const TransactionItem = (props) => {
   return (
     <Touchable rippleColor={COLOR.TEXT_LIGHTEN} onPress={() => onSelectTx(props)}>
       <View style={[styles.container, styles.row]}>
-        <Box color={color} opacity={0.25} small style={styles.icon}>
-          <MaterialCommunityIcons name={getIconCategory({ type, category, title })} color={color} size={22} />
+        <Box color={color} opacity={0.25} small style={styles.box}>
+          <MaterialCommunityIcons
+            name={getIconCategory({ type, category, title })}
+            color={color}
+            size={24}
+            style={styles.icon}
+          />
         </Box>
 
         <View style={[styles.content, styles.row]}>

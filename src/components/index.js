@@ -8,7 +8,6 @@ import Header from './Header';
 import Heading from './Heading';
 import HeatMap from './HeatMap';
 import HorizontalChartItem from './HorizontalChartItem';
-import OptionItem from './OptionItem';
 import PriceFriendly from './PriceFriendly';
 import Summary from './Summary';
 import TransactionItem from './TransactionItem';
@@ -24,7 +23,6 @@ export {
   Heading,
   HeatMap,
   HorizontalChartItem,
-  OptionItem,
   PriceFriendly,
   Summary,
   TransactionItem,

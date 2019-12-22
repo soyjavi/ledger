@@ -13,12 +13,12 @@ import {
 import { FLAGS } from '../../assets';
 import { C } from '../../common';
 import {
-  Footer, Header, Heading, HorizontalChartItem, OptionItem, PriceFriendly,
+  Footer, Header, Heading, HorizontalChartItem, PriceFriendly,
 } from '../../components';
 import {
   useL10N, useNavigation, useSettings, useStore,
 } from '../../context';
-import { DialogFork } from './components';
+import { DialogFork, OptionItem } from './components';
 import { query, sort } from './modules';
 import styles from './Settings.style';
 
@@ -75,47 +75,37 @@ const Settings = ({ visible, ...inherit }) => {
         <Heading subtitle={l10n.VAULTS} />
         <View style={styles.currencies}>
           { currencies.map(({ base, currency, weight }) => (
-            <Fragment key={currency}>
-              <HorizontalChartItem
-                color={COLOR[currency]}
-                key={currency}
-                currency={baseCurrency}
-                image={FLAGS[currency]}
-                style={styles.horizontalChart}
-                title={currency}
-                value={base}
-                width={weight}
-              />
-              <View style={styles.vaults}>
-                { sort(vaults, currency).map((vault) => (
-                  <OptionItem
-                    key={vault.hash}
-                    active={state[vault.hash]}
-                    onChange={(value) => dispatch({ type: 'VAULT_VISIBLE', vault: vault.hash, value })}
-                    onPress={() => navigation.go(SCREEN.VAULT, vault)}
-                    {...vault}
-                  >
-                    <PriceFriendly lighten currency={currency} value={vault.currentBalance} />
-                  </OptionItem>
-                ))}
-              </View>
-            </Fragment>
+            <View style={styles.vaults}>
+              { sort(vaults, currency).map((vault) => (
+                <OptionItem
+                  key={vault.hash}
+                  active={state[vault.hash]}
+                  color={COLOR[currency]}
+                  image={FLAGS[currency]}
+                  onChange={(value) => dispatch({ type: 'VAULT_VISIBLE', vault: vault.hash, value })}
+                  onPress={() => navigation.go(SCREEN.VAULT, vault)}
+                  {...vault}
+                >
+                  <PriceFriendly caption lighten currency={currency} value={vault.currentBalance} />
+                </OptionItem>
+              ))}
+            </View>
           ))}
         </View>
 
-        <Heading subtitle={l10n.TRANSFER_TXS} caption={l10n.IMPORT_EXPORT_CAPTION} lighten>
-          { hasCamera === undefined && <Activity color="white" style={styles.activity} /> }
-          { hasCamera && (
-            <Button
-              contained={false}
-              onPress={() => setCamera(!camera)}
-              small
-              style={styles.button}
-              title={camera ? l10n.CLOSE : l10n.QR_READER}
-            />
-          )}
-        </Heading>
         <View style={styles.content}>
+          <Heading color={COLOR.TEXT_CONTRAST} subtitle={l10n.TRANSFER_TXS} caption={l10n.IMPORT_EXPORT_CAPTION}>
+            { hasCamera === undefined && <Activity color="white" style={styles.activity} /> }
+            { hasCamera && (
+              <Button
+                contained={false}
+                onPress={() => setCamera(!camera)}
+                small
+                style={styles.button}
+                title={camera ? l10n.CLOSE : l10n.QR_READER}
+              />
+            )}
+          </Heading>
           { !camera
             ? <Image source={{ uri: `${QR_URI}=${secret}|${authorization}` }} style={styles.qr} />
             : (
