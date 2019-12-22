@@ -7,14 +7,14 @@ import { View } from 'react-native';
 import { THEME } from '../../reactor/common';
 import styles from './Box.style';
 
-const { COLOR } = THEME;
+const { COLOR, BORDER_RADIUS } = THEME;
 
 const Box = ({
   children, color, opacity, small, ...inherit
 }) => (
-  <View style={[styles.container, small && styles.small, inherit.style]}>
+  <View style={[styles.container, inherit.style]}>
     <View style={[styles.frame, { backgroundColor: color, opacity }]} />
-    <View style={styles.content}>
+    <View style={[styles.content, small && styles.small]}>
       {children}
     </View>
   </View>

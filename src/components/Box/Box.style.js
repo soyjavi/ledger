@@ -2,17 +2,19 @@ import { StyleSheet } from 'react-native';
 
 import { THEME } from '../../reactor/common';
 
-const { BORDER_RADIUS, SPACE } = THEME;
+const { BORDER_RADIUS, SPACE, UNIT } = THEME;
 
 export default StyleSheet.create({
   container: {
     height: '100%',
-    overflow: 'hidden',
-    padding: SPACE.MEDIUM,
+    minHeight: UNIT * 3.6,
+    minWidth: UNIT * 3.6,
   },
 
   content: {
-    height: '100%',
+    flex: 1,
+    padding: SPACE.MEDIUM,
+    width: '100%',
     zIndex: 1,
   },
 
