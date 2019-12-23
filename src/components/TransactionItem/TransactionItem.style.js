@@ -3,7 +3,6 @@ import { StyleSheet } from 'react-native';
 import { LAYOUT, THEME } from '../../reactor/common';
 
 const { UNIT, SPACE } = THEME;
-const ICON_SIZE = UNIT * 3.6;
 
 export default StyleSheet.create({
   box: {

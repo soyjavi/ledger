@@ -38,7 +38,7 @@ A.defaultProps = {
 };
 
 const Chart = React.memo(({
-  captions, highlight, inverted, values, styleContainer, ...inherit
+  captions, highlight, inverted, values, ...inherit
 }) => {
   const {
     color, currency, max, min, med: avg,
@@ -47,7 +47,7 @@ const Chart = React.memo(({
   if (firstValueIndex === -1) firstValueIndex = undefined;
 
   return (
-    <View style={styleContainer}>
+    <View style={inherit.styleContainer}>
       { !inverted && <A {...inherit} /> }
       <View style={[styles.container, inverted && styles.containerInverted]}>
         { avg > 0 && (

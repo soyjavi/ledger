@@ -7,15 +7,15 @@ import { THEME } from '../../../../reactor/common';
 import styles, { KEY_HEIGHT } from './NumKeyboard.style';
 
 const { COLOR } = THEME;
-const KEYS = [1, 2, 3, 4, 5, 6, 7, 8, 9, undefined, 0, undefined];
+const KEYS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 0, 'b'];
 
-interface Props {
+interface NumKeyboardProps {
   onPress: Function;
 };
 
-const NumKeyboard: React.FC<Props> = ({ onPress }) => (
+const NumKeyboard: React.FC<NumKeyboardProps> = ({ onPress }) => (
   <View style={styles.container}>
-    { KEYS.map((key) => (
+    { KEYS.map((key: any) => (
       <Touchable
         containerBorderRadius={KEY_HEIGHT / 2}
         key={key}

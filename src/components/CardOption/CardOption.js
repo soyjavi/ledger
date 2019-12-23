@@ -5,7 +5,7 @@ import {
 import React from 'react';
 import { Image, View } from 'react-native';
 
-import { Icon, Text, Touchable } from '../../reactor/components';
+import { Text, Touchable } from '../../reactor/components';
 import { THEME } from '../../reactor/common';
 import Box from '../Box';
 import styles from './CardOption.style';

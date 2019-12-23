@@ -18,7 +18,9 @@ const INITIAL_STATE = { title: '', balance: '0' };
 
 const DialogVault = ({ onClose, visible }) => {
   const l10n = useL10N();
-  const { baseCurrency, onVault, rates, vaults = [] } = useStore();
+  const {
+    baseCurrency, onVault, rates, vaults = [],
+  } = useStore();
 
   const [busy, setBusy] = useState(false);
   const [currency, setVaultCurrency] = useState(baseCurrency);

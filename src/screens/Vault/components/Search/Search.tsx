@@ -8,13 +8,19 @@ import { Activity } from '../../../../reactor/components';
 import styles from './Search.style';
 
 const { COLOR } = THEME;
-let TIMEOUT;
+let TIMEOUT: number;
 
-const Search = ({ l10n, onValue, value }) => {
+interface SearchProps {
+  l10n: any,
+  onValue: Function,
+  value?: String,
+};
+
+const Search: React.FC<SearchProps> = ({ l10n, onValue, value }) => {
   const [focus, setFocus] = useState(false);
   const [busy, setBusy] = useState(false);
 
-  const onChangeText = (next) => {
+  const onChangeText = (next: string) => {
     setBusy(next.length > 0);
     clearTimeout(TIMEOUT);
     TIMEOUT = setTimeout(() => onValue(next), 300);
@@ -28,9 +34,9 @@ const Search = ({ l10n, onValue, value }) => {
         autoCorrect={false}
         autoCapitalize="none"
         blurOnSubmit
-        onBlur={() => setFocus(false)}
+        onBlur={(): void => setFocus(false)}
         onChangeText={onChangeText}
-        onFocus={() => setFocus(true)}
+        onFocus={(): void => setFocus(true)}
         placeholder={`${l10n.SEARCH}...`}
         placeholderTextColor={COLOR.TEXT_LIGHTEN}
         underlineColorAndroid="transparent"
@@ -40,16 +46,6 @@ const Search = ({ l10n, onValue, value }) => {
       { busy && <Activity color={COLOR.TEXT_LIGHTEN} /> }
     </View>
   );
-};
-
-Search.propTypes = {
-  l10n: shape({}).isRequired,
-  onValue: func.isRequired,
-  value: string,
-};
-
-Search.defaultProps = {
-  value: undefined,
 };
 
 export default Search;
