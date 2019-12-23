@@ -21,7 +21,6 @@
     "expo-barcode-scanner": "~8.0.0",
     "expo-camera": "~8.0.0",
     "expo-font": "~8.0.0",
-    "expo-linear-gradient": "~8.0.0",
     "expo-local-authentication": "~8.0.0",
     "expo-location": "~8.0.0",
     "expo-permissions": "~8.0.0",
@@ -34,6 +33,9 @@
     "react-native-webview": "7.4.3"
   },
   "devDependencies": {
+    "@types/react": "~16.9.0",
+    "@types/react-native": "~0.60.23",
+    "@babel/core": "^7.0.0",
     "babel-eslint": "~10.0.3",
     "babel-preset-expo": "~8.0.0",
     "eslint": "~6.7.2",
@@ -43,7 +45,8 @@
     "eslint-plugin-react": "~7.17.0",
     "eslint-plugin-react-hooks": "~2.3.0",
     "eslint-plugin-react-native": "~3.8.1",
-    "jest-expo": "~36.0.1"
+    "jest-expo": "~36.0.1",
+    "typescript": "~3.6.3"
   },
   "jest": {
     "preset": "jest-expo",
