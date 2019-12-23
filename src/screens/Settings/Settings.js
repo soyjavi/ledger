@@ -1,5 +1,6 @@
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { bool } from 'prop-types';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
@@ -10,16 +11,13 @@ import {
   Activity, Button, Image, Text, Viewport,
 } from '../../reactor/components';
 
-import { FLAGS } from '../../assets';
 import { C } from '../../common';
-import {
-  Footer, Header, Heading, HorizontalChartItem, PriceFriendly,
-} from '../../components';
+import { Footer, Header, Heading } from '../../components';
 import {
   useL10N, useNavigation, useSettings, useStore,
 } from '../../context';
-import { DialogFork, OptionItem } from './components';
-import { query, sort } from './modules';
+import { DialogFork, VaultItem } from './components';
+import { sort } from './modules';
 import styles from './Settings.style';
 
 const { SCREEN } = C;
@@ -35,15 +33,13 @@ const Settings = ({ visible, ...inherit }) => {
   const { state = {}, dispatch } = useSettings();
   const navigation = useNavigation();
   const l10n = useL10N();
-  const {
-    authorization, baseCurrency, overall, secret, vaults,
-  } = useStore();
+  const { authorization, secret, vaults } = useStore();
 
   const [dialog, setDialog] = useState(false);
   const [hasCamera, setHasCamera] = useState(undefined);
   const [camera, setCamera] = useState(false);
   const [qr, setQr] = useState(undefined);
-  const currencies = visible ? query(overall, vaults) : [];
+  const [order, setOrder] = useState(true);
 
   useEffect(() => {
     async function askCamera() {
@@ -72,24 +68,24 @@ const Settings = ({ visible, ...inherit }) => {
       <Header highlight title={l10n.SETTINGS} />
 
       <ScrollView contentContainerStyle={styles.container}>
-        <Heading subtitle={l10n.VAULTS} />
+        <Heading subtitle={`${l10n.VAULTS} ${l10n.VISIBILITY}`}>
+          <Button contained={false} small onPress={() => setOrder(!order)}>
+            <MaterialCommunityIcons
+              name={order ? 'sort-descending' : 'sort-ascending'}
+              color={COLOR.TEXT}
+              size={20}
+            />
+          </Button>
+        </Heading>
         <View style={styles.currencies}>
-          { currencies.map(({ base, currency, weight }) => (
-            <View style={styles.vaults}>
-              { sort(vaults, currency).map((vault) => (
-                <OptionItem
-                  key={vault.hash}
-                  active={state[vault.hash]}
-                  color={COLOR[currency]}
-                  image={FLAGS[currency]}
-                  onChange={(value) => dispatch({ type: 'VAULT_VISIBLE', vault: vault.hash, value })}
-                  onPress={() => navigation.go(SCREEN.VAULT, vault)}
-                  {...vault}
-                >
-                  <PriceFriendly caption lighten currency={currency} value={vault.currentBalance} />
-                </OptionItem>
-              ))}
-            </View>
+          { sort(vaults, order).map((vault) => (
+            <VaultItem
+              key={vault.hash}
+              active={state[vault.hash]}
+              dataSource={vault}
+              onChange={(value) => dispatch({ type: 'VAULT_VISIBLE', vault: vault.hash, value })}
+              onPress={() => navigation.go(SCREEN.VAULT, vault)}
+            />
           ))}
         </View>
 

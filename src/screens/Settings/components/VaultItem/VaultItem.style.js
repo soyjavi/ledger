@@ -5,9 +5,12 @@ import { LAYOUT, THEME } from '../../../../reactor/common';
 const { COLOR, SPACE, UNIT } = THEME;
 const ICON_CONTAINER_SIZE = UNIT * 2.2;
 const ICON_SIZE = UNIT * 1.4;
-const THUMBNAIL_SIZE = UNIT * 3.2;
 
 export default StyleSheet.create({
+  balance: {
+    marginRight: SPACE.XXS,
+  },
+
   container: {
     ...LAYOUT.STYLE.ROW,
     paddingHorizontal: SPACE.MEDIUM,
@@ -48,4 +51,6 @@ export default StyleSheet.create({
   imageDisabled: {
     opacity: 0.5,
   },
+
+  row: LAYOUT.STYLE.ROW,
 });

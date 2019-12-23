@@ -84,6 +84,8 @@ exports[`<DialogFork> renders 1`] = `
               },
               Object {
                 "backgroundColor": undefined,
+                "borderTopLeftRadius": 16,
+                "borderTopRightRadius": 16,
                 "margin": 0,
                 "width": 750,
               },
