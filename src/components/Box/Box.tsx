@@ -25,4 +25,4 @@ const Box: React.FC<BoxProps> = ({
   </View>
 );
 
-export default Box;
+export {Box};

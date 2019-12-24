@@ -36,4 +36,4 @@ Heading.defaultProps = {
   title: undefined,
 };
 
-export default Heading;
+export { Heading };

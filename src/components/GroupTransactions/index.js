@@ -1,1 +1,1 @@
-export { default } from './GroupTransactions';
+export * from './GroupTransactions';

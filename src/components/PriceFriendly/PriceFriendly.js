@@ -59,4 +59,4 @@ PriceFriendly.defaultProps = {
   value: 0,
 };
 
-export default PriceFriendly;
+export { PriceFriendly };

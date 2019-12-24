@@ -107,4 +107,4 @@ Summary.defaultProps = {
   title: '',
 };
 
-export default Summary;
+export { Summary };

@@ -85,4 +85,4 @@ TransactionItem.defaultProps = {
   title: undefined,
 };
 
-export default TransactionItem;
+export { TransactionItem };

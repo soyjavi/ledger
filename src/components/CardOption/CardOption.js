@@ -53,4 +53,4 @@ CardOption.defaultProps = {
   selected: false,
 };
 
-export default CardOption;
+export { CardOption };

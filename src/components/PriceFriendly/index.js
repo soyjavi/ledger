@@ -1,1 +1,1 @@
-export { default } from './PriceFriendly';
+export * from './PriceFriendly';

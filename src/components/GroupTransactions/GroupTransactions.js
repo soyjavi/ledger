@@ -47,4 +47,4 @@ GroupTransactions.defaultProps = {
   value: 0,
 };
 
-export default GroupTransactions;
+  export { GroupTransactions };

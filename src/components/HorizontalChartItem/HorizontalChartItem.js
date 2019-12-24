@@ -50,4 +50,4 @@ HorizontalChartItem.defaultProps = {
   width: 100,
 };
 
-export default HorizontalChartItem;
+export { HorizontalChartItem };

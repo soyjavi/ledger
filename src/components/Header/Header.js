@@ -35,4 +35,4 @@ Header.defaultProps = {
   title: undefined,
 };
 
-export default Header;
+export { Header };

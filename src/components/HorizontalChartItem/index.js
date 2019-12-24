@@ -1,1 +1,1 @@
-export { default } from './HorizontalChartItem';
+export * from './HorizontalChartItem';

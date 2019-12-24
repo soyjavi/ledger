@@ -128,4 +128,4 @@ DialogClone.defaultProps = {
   visible: false,
 };
 
-export default DialogClone;
+export { DialogClone };
