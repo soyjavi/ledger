@@ -9,8 +9,8 @@ import { Text, Touchable } from '../../reactor/components';
 
 import { C, exchange, getIconCategory } from '../../common';
 import { useStore } from '../../context';
-import Box from '../Box';
-import PriceFriendly from '../PriceFriendly';
+import { Box } from '../Box';
+import { PriceFriendly } from '../PriceFriendly';
 import { formatCaption } from './modules';
 import styles from './TransactionItem.style';
 

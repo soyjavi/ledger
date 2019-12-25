@@ -4,7 +4,7 @@ import { Image, View } from 'react-native';
 
 import { Text } from '../../reactor/components';
 import { THEME } from '../../reactor/common';
-import PriceFriendly from '../PriceFriendly';
+import { PriceFriendly } from '../PriceFriendly';
 import styles from './HorizontalChartItem.style';
 
 const { COLOR } = THEME;

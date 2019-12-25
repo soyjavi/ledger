@@ -8,9 +8,9 @@ const { COLOR } = THEME;
 
 interface BoxProps {
   children: React.ReactNode,
-  color?: String,
-  opacity?: Number,
-  small?: Boolean,
+  color?: string,
+  opacity?: number,
+  small?: boolean,
   style?: any,
 };
 

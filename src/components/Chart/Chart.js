@@ -5,8 +5,8 @@ import React from 'react';
 import { View } from 'react-native';
 import { THEME } from '../../reactor/common';
 import { Text } from '../../reactor/components';
-import Heading from '../Heading';
-import PriceFriendly from '../PriceFriendly';
+import { Heading } from '../Heading';
+import { PriceFriendly } from '../PriceFriendly';
 
 import { calcHeight } from './modules';
 import styles from './Chart.style';

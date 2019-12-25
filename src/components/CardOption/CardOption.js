@@ -7,7 +7,7 @@ import { Image, View } from 'react-native';
 
 import { Text, Touchable } from '../../reactor/components';
 import { THEME } from '../../reactor/common';
-import Box from '../Box';
+import { Box } from '../Box';
 import styles from './CardOption.style';
 
 const { COLOR } = THEME;

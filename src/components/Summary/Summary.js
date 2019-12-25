@@ -7,8 +7,8 @@ import { C, exchange, verboseMonth } from '../../common';
 import {
   useL10N, useNavigation, useSettings, useStore,
 } from '../../context';
-import Box from '../Box';
-import PriceFriendly from '../PriceFriendly';
+import { Box } from '../Box';
+import { PriceFriendly } from '../PriceFriendly';
 import { Button, Text, Touchable } from '../../reactor/components';
 import styles from './Summary.style';
 

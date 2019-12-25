@@ -8,9 +8,9 @@ import {
   C, exchange, verboseMonthShort, verboseTime,
 } from '../../common';
 import { useL10N, useStore } from '../../context';
-import Box from '../Box';
-import HeatMap from '../HeatMap';
-import PriceFriendly from '../PriceFriendly';
+import { Box } from '../Box';
+import { HeatMap } from '../HeatMap';
+import { PriceFriendly } from '../PriceFriendly';
 import styles from './DialogClone.style';
 
 const { TX: { TYPE: { INCOME, EXPENSE } }, WIPE } = C;
