@@ -1,5 +1,5 @@
 import calcHeight from './calcHeight';
 
 export {
-  calcHeight,
+  calcHeight, // eslint-disable-line
 };

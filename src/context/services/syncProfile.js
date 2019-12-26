@@ -3,11 +3,11 @@ import { C, fetch } from '../../common';
 const { VERSION } = C;
 
 export default async ({
-    onError,
-    state: {
-      authorization, secret, txs = [], version,
-    },
-  }) => {
+  onError,
+  state: {
+    authorization, secret, txs = [], version,
+  },
+}) => {
   const headers = { authorization, secret };
   let nextState;
 

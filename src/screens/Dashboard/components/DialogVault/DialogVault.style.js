@@ -4,7 +4,7 @@ import { C } from '../../../../common';
 import { THEME } from '../../../../reactor/common';
 
 const { STYLE } = C;
-const { COLOR, SPACE, UNIT } = THEME;
+const { SPACE, UNIT } = THEME;
 const CARD_WIDTH = UNIT * 7.2;
 
 export { CARD_WIDTH };

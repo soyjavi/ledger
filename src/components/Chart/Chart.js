@@ -5,8 +5,8 @@ import React from 'react';
 import { View } from 'react-native';
 import { THEME } from '../../reactor/common';
 import { Text } from '../../reactor/components';
-import Heading from '../Heading';
-import PriceFriendly from '../PriceFriendly';
+import { Heading } from '../Heading';
+import { PriceFriendly } from '../PriceFriendly';
 
 import { calcHeight } from './modules';
 import styles from './Chart.style';
@@ -20,7 +20,7 @@ const A = ({
   <Heading subtitle={title} style={styles.heading}>
     <View style={styles.row}>
       { max > 0 && <PriceFriendly {...inherit} label="max " value={max} style={styles.legend} />}
-      { min > 0 && <PriceFriendly {...inherit} label="    min " value={min} style={styles.legend} />}
+      { min > 0 && <PriceFriendly {...inherit} label="  min " value={min} style={styles.legend} />}
     </View>
   </Heading>
 );
@@ -38,7 +38,7 @@ A.defaultProps = {
 };
 
 const Chart = React.memo(({
-  captions, highlight, inverted, values, styleContainer, ...inherit
+  captions, highlight, inverted, values, ...inherit
 }) => {
   const {
     color, currency, max, min, med: avg,
@@ -47,7 +47,7 @@ const Chart = React.memo(({
   if (firstValueIndex === -1) firstValueIndex = undefined;
 
   return (
-    <View style={styleContainer}>
+    <View style={inherit.styleContainer}>
       { !inverted && <A {...inherit} /> }
       <View style={[styles.container, inverted && styles.containerInverted]}>
         { avg > 0 && (
@@ -126,4 +126,4 @@ Chart.defaultProps = {
 };
 
 
-export default Chart;
+export { Chart };

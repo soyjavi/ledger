@@ -7,7 +7,7 @@ import { View } from 'react-native';
 import { Motion } from '../../reactor/components';
 
 import { LOGO } from '../../assets';
-import Heading from '../Heading';
+import { Heading } from '../Heading';
 import styles from './Header.style';
 
 const Header = ({
@@ -35,4 +35,4 @@ Header.defaultProps = {
   title: undefined,
 };
 
-export default Header;
+export { Header };

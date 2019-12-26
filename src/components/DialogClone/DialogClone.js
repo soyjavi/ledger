@@ -8,9 +8,9 @@ import {
   C, exchange, verboseMonthShort, verboseTime,
 } from '../../common';
 import { useL10N, useStore } from '../../context';
-import Box from '../Box';
-import HeatMap from '../HeatMap';
-import PriceFriendly from '../PriceFriendly';
+import { Box } from '../Box';
+import { HeatMap } from '../HeatMap';
+import { PriceFriendly } from '../PriceFriendly';
 import styles from './DialogClone.style';
 
 const { TX: { TYPE: { INCOME, EXPENSE } }, WIPE } = C;
@@ -57,9 +57,11 @@ const DialogClone = ({
     >
       <View style={styles.container}>
         <View style={[styles.content, styles.row]}>
-          <Box color={color} style={styles.icon} opacity={0.15} small>
-            <Text bold color={color} style={styles.date}>{(new Date(timestamp || null)).getDate()}</Text>
-            <Text style={styles.month}>{verboseMonthShort(timestamp, l10n)}</Text>
+          <Box color={color} style={styles.box} opacity={0.3} small>
+            <View style={styles.boxContent}>
+              <Text bold color={color}>{(new Date(timestamp || null)).getDate()}</Text>
+              <Text style={styles.month}>{verboseMonthShort(timestamp, l10n)}</Text>
+            </View>
           </Box>
           <View style={styles.texts}>
             <Text bold numberOfLines={1} style={styles.title}>{title}</Text>
@@ -71,7 +73,6 @@ const DialogClone = ({
             <PriceFriendly
               currency={baseCurrency}
               operator
-              bold
               value={baseCurrency !== currency
                 ? exchange(value * operator, currency, baseCurrency, rates)
                 : value * operator}
@@ -126,4 +127,4 @@ DialogClone.defaultProps = {
   visible: false,
 };
 
-export default DialogClone;
+export { DialogClone };

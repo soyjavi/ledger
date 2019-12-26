@@ -1,5 +1,7 @@
 import DialogFork from './DialogFork';
+import VaultItem from './VaultItem';
 
 export {
-  DialogFork, // eslint-disable-line
+  DialogFork,
+  VaultItem,
 };

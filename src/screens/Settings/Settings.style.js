@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { C } from '../../common';
 import { LAYOUT, THEME } from '../../reactor/common';
 
-const { STYLE: { HEADER_HEIGHT } } = C;
+const { STYLE: { CONTENT, HEADER_HEIGHT } } = C;
 const { VIEWPORT: { W } } = LAYOUT;
 const { SPACE } = THEME;
 const QR_SIZE = W - (SPACE.MEDIUM * 2);
@@ -30,7 +30,8 @@ export default StyleSheet.create({
   },
 
   content: {
-    marginHorizontal: SPACE.MEDIUM,
+    ...CONTENT,
+    // marginHorizontal: SPACE.MEDIUM,
   },
 
   options: {

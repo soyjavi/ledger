@@ -1,39 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<CardOption> renders 1`] = `
-<ViewManagerAdapter_ExpoLinearGradient
-  proxiedProperties={
-    Object {
-      "colors": Array [
-        4281545523,
-        4280295456,
-        4280295456,
-      ],
-      "endPoint": Array [
-        1,
-        1,
-      ],
-      "locations": undefined,
-      "startPoint": Array [
-        0,
-        0,
-      ],
-    }
-  }
+<View
   style={
     Array [
       Object {
-        "backgroundColor": "#cdd2d4",
-        "borderRadius": 3,
         "height": "100%",
-        "overflow": "hidden",
-        "padding": 16,
-        "width": "100%",
+        "minHeight": 36,
+        "minWidth": 36,
       },
       Array [
         Object {
           "marginRight": 12,
-          "padding": 0,
         },
         undefined,
       ],
@@ -41,81 +19,117 @@ exports[`<CardOption> renders 1`] = `
   }
 >
   <View
-    accessible={true}
-    focusable={false}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    pointerEvents="none"
     style={
       Array [
-        undefined,
-        Array [
-          Object {
-            "alignItems": "center",
-            "borderRadius": 3,
-            "padding": 16,
-          },
-          false,
-        ],
+        Object {
+          "borderRadius": 3,
+          "height": "100%",
+          "left": 0,
+          "position": "absolute",
+          "top": 0,
+          "width": "100%",
+          "zIndex": 0,
+        },
+        Object {
+          "backgroundColor": "#cdd2d4",
+          "opacity": 0.68,
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      Array [
+        Object {
+          "flex": 1,
+          "padding": 16,
+          "width": "100%",
+          "zIndex": 1,
+        },
+        Object {
+          "padding": 0,
+        },
       ]
     }
   >
-    <Text
-      numberOfLines={1}
-      style={
-        Array [
-          Object {
-            "color": "#4a4a4a",
-            "fontFamily": undefined,
-            "fontWeight": "400",
-            "textAlignVertical": "center",
-          },
-          Object {
-            "fontSize": 14,
-          },
-          Object {
-            "color": "#707070",
-          },
-          Object {
-            "textAlign": "center",
-          },
-        ]
-      }
-    />
     <View
+      accessible={true}
+      focusable={false}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      pointerEvents="none"
       style={
         Array [
-          Object {
-            "backgroundColor": "transparent",
-            "borderRadius": 3,
-            "bottom": 0,
-            "left": 0,
-            "overflow": "hidden",
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-          },
           undefined,
+          Array [
+            Object {
+              "alignItems": "center",
+              "borderRadius": 3,
+              "paddingVertical": 16,
+            },
+            false,
+          ],
         ]
       }
     >
-      <View
+      <Text
+        numberOfLines={1}
         style={
-          Object {
-            "backgroundColor": "#10c0bc",
-            "height": 0,
-            "opacity": 0,
-            "width": 0,
-            "zIndex": 0,
-          }
+          Array [
+            Object {
+              "color": "#4a4a4a",
+              "fontFamily": undefined,
+              "fontWeight": "400",
+              "textAlignVertical": "center",
+            },
+            Object {
+              "fontSize": 14,
+            },
+            Object {
+              "color": "#707070",
+            },
+            Object {
+              "paddingHorizontal": 8,
+              "textAlign": "center",
+            },
+          ]
         }
       />
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+              "borderRadius": 3,
+              "bottom": 0,
+              "left": 0,
+              "overflow": "hidden",
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            },
+            undefined,
+          ]
+        }
+      >
+        <View
+          style={
+            Object {
+              "backgroundColor": "#10c0bc",
+              "height": 0,
+              "opacity": 0,
+              "width": 0,
+              "zIndex": 0,
+            }
+          }
+        />
+      </View>
     </View>
   </View>
-</ViewManagerAdapter_ExpoLinearGradient>
+</View>
 `;

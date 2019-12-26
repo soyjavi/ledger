@@ -7,8 +7,8 @@ import { Text } from '../../reactor/components';
 
 import { exchange, verboseDate } from '../../common';
 import { useL10N, useStore } from '../../context';
-import PriceFriendly from '../PriceFriendly';
-import TransactionItem from '../TransactionItem';
+import { PriceFriendly } from '../PriceFriendly';
+import { TransactionItem } from '../TransactionItem';
 import styles from './GroupTransactions.style';
 
 const GroupTransactions = React.memo(({
@@ -23,7 +23,6 @@ const GroupTransactions = React.memo(({
         <Text lighten caption>{verboseDate(timestamp, l10n)}</Text>
         { value !== 0 && (
           <PriceFriendly
-            bold
             caption
             currency={baseCurrency}
             operator
@@ -47,4 +46,4 @@ GroupTransactions.defaultProps = {
   value: 0,
 };
 
-export default GroupTransactions;
+export { GroupTransactions };

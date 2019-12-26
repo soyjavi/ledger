@@ -1,7 +1,5 @@
 import { arrayOf, bool, shape } from 'prop-types';
-import React, {
-  Fragment, useEffect, useRef, useState,
-} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 
 import { THEME } from '../../reactor/common';
@@ -38,7 +36,7 @@ const Stats = (props) => {
       setSlider(nextSlider);
       setValues(query(vault, store, nextSlider));
     }
-  }, [vault, visible]); // @TODO: What this warning means?
+  }, [store, vault, visible]); // @TODO: What this warning means?
 
   const onChangeSlider = (value) => {
     setSlider(value);

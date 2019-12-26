@@ -50,4 +50,4 @@ HeatMap.defaultProps = {
   width: MAP_WIDTH,
 };
 
-export default HeatMap;
+export { HeatMap };

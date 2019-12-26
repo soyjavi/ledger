@@ -37,7 +37,8 @@ const VaultCard = ({
 
             style={styles.balance}
           />
-          { currency !== baseCurrency && <PriceFriendly currency={currency} caption value={currentBalance} /> }
+          { currency !== baseCurrency && (
+            <PriceFriendly currency={currency} caption value={currentBalance} style={styles.currentBalance} />)}
 
           <View style={styles.expand} />
 
@@ -45,7 +46,6 @@ const VaultCard = ({
             { progression
               ? (
                 <PriceFriendly
-                  bold
                   caption
                   currency="%"
                   operator

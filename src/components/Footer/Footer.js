@@ -53,4 +53,4 @@ Footer.defaultProps = {
   onPress: undefined,
 };
 
-export default Footer;
+export { Footer };

@@ -9,8 +9,8 @@ import { Text, Touchable } from '../../reactor/components';
 
 import { C, exchange, getIconCategory } from '../../common';
 import { useStore } from '../../context';
-import Box from '../Box';
-import PriceFriendly from '../PriceFriendly';
+import { Box } from '../Box';
+import { PriceFriendly } from '../PriceFriendly';
 import { formatCaption } from './modules';
 import styles from './TransactionItem.style';
 
@@ -30,8 +30,13 @@ const TransactionItem = (props) => {
   return (
     <Touchable rippleColor={COLOR.TEXT_LIGHTEN} onPress={() => onSelectTx(props)}>
       <View style={[styles.container, styles.row]}>
-        <Box color={color} opacity={0.25} small style={styles.icon}>
-          <MaterialCommunityIcons name={getIconCategory({ type, category, title })} color={color} size={22} />
+        <Box color={color} opacity={0.25} small style={styles.box}>
+          <MaterialCommunityIcons
+            name={getIconCategory({ type, category, title })}
+            color={color}
+            size={20}
+            style={styles.icon}
+          />
         </Box>
 
         <View style={[styles.content, styles.row]}>
@@ -41,7 +46,6 @@ const TransactionItem = (props) => {
           </View>
           <View style={styles.prices}>
             <PriceFriendly
-              bold
               color={COLOR.TEXT_CONTRAST}
               currency={baseCurrency}
               operator={type === INCOME}
@@ -80,4 +84,4 @@ TransactionItem.defaultProps = {
   title: undefined,
 };
 
-export default TransactionItem;
+export { TransactionItem };

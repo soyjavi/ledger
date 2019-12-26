@@ -6,7 +6,8 @@ const { SPACE, UNIT } = THEME;
 
 export default StyleSheet.create({
   balance: {
-    fontSize: UNIT * 3.6,
+    fontSize: UNIT * 3.2,
+    lineHeight: UNIT * 3.2,
   },
 
   container: {

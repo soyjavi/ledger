@@ -53,7 +53,7 @@ const StoreProvider = ({ children }) => {
     setSync(true);
   };
 
-  const signup = async (pin) => {
+  const signup = async (pin: String) => {
     const authorization = await getAuthorization({ onError, state });
 
     if (authorization) {

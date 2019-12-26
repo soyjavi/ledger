@@ -37,10 +37,15 @@ const PriceFriendly = ({
     value: Math.abs(value),
   };
 
+  const style = [styles.font, inherit.style];
+
   return (
     <View style={styles.container}>
-      { label && <Text color={color} {...inherit}>{label}</Text> }
-      { maskAmount ? <Text {...inherit} color={color}>{maskValue(props)}</Text> : <Price {...props} /> }
+      { label && <Text color={color} {...inherit} >{label}</Text> }
+      { maskAmount
+        ? <Text {...inherit} color={color} style={style}>{maskValue(props)}</Text>
+        : <Price {...props} style={style} />
+      }
     </View>
   );
 };
@@ -59,4 +64,4 @@ PriceFriendly.defaultProps = {
   value: 0,
 };
 
-export default PriceFriendly;
+export { PriceFriendly };

@@ -1,5 +1,5 @@
 import * as LocalAuthentication from 'expo-local-authentication';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, View } from 'react-native';
 
 import { LOGO } from '../../assets';

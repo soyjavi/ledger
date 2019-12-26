@@ -22,7 +22,7 @@ export default () => {
   } = useNavigation();
   const l10n = useL10N();
   const {
-    error, onError, sync, vaults = [], tx, txs = [],
+    error, onError, sync, vaults = [], tx,
   } = useStore();
   console.log('<App>');
 

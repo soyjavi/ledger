@@ -4,7 +4,8 @@ module.exports = {
     es6: true,
   },
   extends: [
-    'airbnb',
+    'airbnb-typescript',
+    'plugin:@typescript-eslint/recommended',
   ],
   globals: {
     Atomics: 'readonly',
@@ -22,6 +23,7 @@ module.exports = {
     'react',
     'react-hooks',
     'react-native',
+    '@typescript-eslint',
   ],
   rules: {
     'max-len': [1, 120, { 'tabWidth': 2, 'ignoreComments': true }],

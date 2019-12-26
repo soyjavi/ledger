@@ -1,1 +1,1 @@
-export { default } from './DialogClone';
+export * from './DialogClone';

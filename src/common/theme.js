@@ -2,8 +2,8 @@ import { ENV } from '../reactor/common';
 
 const { IS_WEB } = ENV;
 
-const FAMILY = 'product-sans';
-const FAMILY_BOLD = 'product-sans-bold';
+const FAMILY = 'font-family';
+const FAMILY_BOLD = 'font-family-bold';
 const WEIGHT = { REGULAR: '400', BOLD: '700' };
 
 export default {
@@ -44,29 +44,30 @@ export default {
 
   FONT: {
     FAMILY,
+    FAMILY_BOLD,
     DEFAULT: {
       fontFamily: FAMILY,
       fontWeight: WEIGHT.REGULAR,
     },
     HEADLINE: {
-      // fontSize: 32,
       fontFamily: FAMILY_BOLD,
-      fontWeight: IS_WEB ? WEIGHT.BOLD : WEIGHT.REGULAR,
+      letterSpacing: -1,
     },
     SUBTITLE: {
-      fontSize: 20,
       fontFamily: FAMILY_BOLD,
-      fontWeight: IS_WEB ? WEIGHT.BOLD : WEIGHT.REGULAR,
-      letterSpacing: -0.2,
+      letterSpacing: -1,
     },
     BODY: {
+      fontSize: 14,
+      letterSpacing: -0.5,
+      lineHeight: (14) * 1.5,
     },
     CAPTION: {
-      fontSize: 12,
+      fontSize: 11,
     },
     BUTTON: {
       fontFamily: FAMILY_BOLD,
-      fontWeight: IS_WEB ? WEIGHT.BOLD : WEIGHT.REGULAR,
+      letterSpacing: -1,
     },
     INPUT: {},
   },
