@@ -20,7 +20,7 @@ const A = ({
   <Heading subtitle={title} style={styles.heading}>
     <View style={styles.row}>
       { max > 0 && <PriceFriendly {...inherit} label="max " value={max} style={styles.legend} />}
-      { min > 0 && <PriceFriendly {...inherit} label="    min " value={min} style={styles.legend} />}
+      { min > 0 && <PriceFriendly {...inherit} label="  min " value={min} style={styles.legend} />}
     </View>
   </Heading>
 );

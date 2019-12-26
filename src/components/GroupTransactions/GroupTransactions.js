@@ -23,7 +23,6 @@ const GroupTransactions = React.memo(({
         <Text lighten caption>{verboseDate(timestamp, l10n)}</Text>
         { value !== 0 && (
           <PriceFriendly
-            bold
             caption
             currency={baseCurrency}
             operator

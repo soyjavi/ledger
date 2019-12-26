@@ -17,8 +17,8 @@ const App = () => {
   useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
-        'product-sans': require('./assets/fonts/ProductSans-Regular.ttf'), // eslint-disable-line
-        'product-sans-bold': require('./assets/fonts/ProductSans-Bold.ttf'), // eslint-disable-line
+        'font-family': require('./assets/fonts/IBMPlexMono-Regular.ttf'), // eslint-disable-line
+        'font-family-bold': require('./assets/fonts/IBMPlexMono-Bold.ttf'), // eslint-disable-line
       });
       setLoaded(true);
     }

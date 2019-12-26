@@ -20,7 +20,6 @@ const BoxSummary = ({ caption, value, ...inherit }) => (
     <PriceFriendly
       {...inherit}
       caption
-      bold
       lighten={value === 0}
       value={value}
     />

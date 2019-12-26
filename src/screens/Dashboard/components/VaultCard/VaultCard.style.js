@@ -18,6 +18,10 @@ export default StyleSheet.create({
     flex: 1,
   },
 
+  currentBalance: {
+    opacity: 0.68,
+  },
+
   row: LAYOUT.STYLE.ROW,
 
   expand: {

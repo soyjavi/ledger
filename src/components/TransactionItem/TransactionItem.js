@@ -34,7 +34,7 @@ const TransactionItem = (props) => {
           <MaterialCommunityIcons
             name={getIconCategory({ type, category, title })}
             color={color}
-            size={24}
+            size={20}
             style={styles.icon}
           />
         </Box>
@@ -46,7 +46,6 @@ const TransactionItem = (props) => {
           </View>
           <View style={styles.prices}>
             <PriceFriendly
-              bold
               color={COLOR.TEXT_CONTRAST}
               currency={baseCurrency}
               operator={type === INCOME}

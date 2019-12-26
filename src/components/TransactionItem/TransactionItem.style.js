@@ -21,7 +21,7 @@ export default StyleSheet.create({
 
   icon: {
     alignSelf: 'center',
-    marginTop: UNIT * 0.5,
+    marginTop: UNIT * 0.6,
   },
 
   prices: {

@@ -41,7 +41,6 @@ const OptionItem: React.FC<OptionItemProps> = ({
         <Text bold numberOfLines={1} lighten={disabled}>{title}</Text>
         <View style={styles.row}>
           <PriceFriendly
-            bold
             caption
             lighten={disabled}
             currency={baseCurrency}

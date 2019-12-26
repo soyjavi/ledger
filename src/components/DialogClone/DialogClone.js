@@ -73,7 +73,6 @@ const DialogClone = ({
             <PriceFriendly
               currency={baseCurrency}
               operator
-              bold
               value={baseCurrency !== currency
                 ? exchange(value * operator, currency, baseCurrency, rates)
                 : value * operator}

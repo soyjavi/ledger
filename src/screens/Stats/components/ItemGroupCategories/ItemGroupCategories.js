@@ -2,11 +2,10 @@ import { shape, number } from 'prop-types';
 import React, { useState } from 'react';
 import { View } from 'react-native';
 
-import { HorizontalChartItem, PriceFriendly } from '../../../../components';
+import { Heading, HorizontalChartItem, PriceFriendly } from '../../../../components';
 import { useL10N, useStore } from '../../../../context';
 import { THEME } from '../../../../reactor/common';
 import { Touchable } from '../../../../reactor/components';
-import Heading from '../../../../components/Heading';
 import { orderByAmount } from '../../modules';
 import styles from './ItemGroupCategories.style';
 
@@ -30,7 +29,7 @@ const ItemGroupCategories = ({ dataSource, type }) => {
   return (
     <View style={styles.container}>
       <Heading color={COLOR.TEXT_CONTRAST} subtitle={isExpense ? l10n.EXPENSES : l10n.INCOMES}>
-        <PriceFriendly color={COLOR.TEXT_CONTRAST} currency={baseCurrency} bold value={total} />
+        <PriceFriendly color={COLOR.TEXT_CONTRAST} currency={baseCurrency} value={total} />
       </Heading>
       <View>
         { orderByAmount(totals).map(({ key, amount }) => (
