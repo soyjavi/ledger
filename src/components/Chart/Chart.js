@@ -17,7 +17,7 @@ const { COLOR } = THEME;
 const A = ({
   title, max, min, ...inherit
 }) => (
-  <Heading subtitle={title} style={styles.heading}>
+  <Heading value={title} style={styles.heading}>
     <View style={styles.row}>
       { max > 0 && <PriceFriendly {...inherit} label="max " value={max} style={styles.legend} />}
       { min > 0 && <PriceFriendly {...inherit} label="  min " value={min} style={styles.legend} />}

@@ -62,7 +62,7 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
 
         { isInitialized && (
           <Fragment>
-            <Heading subtitle={l10n.VAULTS} />
+            <Heading value={l10n.VAULTS} />
             <Slider itemWidth={VAULT_ITEM_WIDTH + SPACE.S} itemMargin={0} style={styles.vaults}>
               { queryVaults({ settings, vaults }).map((vault) => (
                 <VaultCard {...vault} key={vault.hash} onPress={() => navigation.go(SCREEN.VAULT, vault)} />
@@ -73,7 +73,7 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
 
         { isInitialized && lastTxs.length > 0 && (
           <View style={styles.content}>
-            <Heading color={COLOR.TEXT_CONTRAST} subtitle={l10n.LAST_TRANSACTIONS} />
+            <Heading color={COLOR.TEXT_CONTRAST} value={l10n.LAST_TRANSACTIONS} />
             { lastTxs.map((item) => (
               <GroupTransactions key={`${item.timestamp}`} {...item} currency={baseCurrency} />))}
           </View>
