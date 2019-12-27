@@ -8,12 +8,13 @@ const {
 
 const COLUMN_HEIGHT = UNIT * 6.4;
 const COLUMN_WIDTH = UNIT * 1;
+const COLUMN_BORDER = 0;
 
 export default StyleSheet.create({
   bar: {
     backgroundColor: COLOR.BASE,
-    borderTopLeftRadius: COLUMN_WIDTH / 2,
-    borderTopRightRadius: COLUMN_WIDTH / 2,
+    borderTopLeftRadius: COLUMN_BORDER,
+    borderTopRightRadius: COLUMN_BORDER,
     maxHeight: '100%',
     minHeight: COLUMN_WIDTH,
     width: COLUMN_WIDTH,
@@ -22,8 +23,8 @@ export default StyleSheet.create({
   barInverted: {
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
-    borderBottomLeftRadius: COLUMN_WIDTH / 2,
-    borderBottomRightRadius: COLUMN_WIDTH / 2,
+    borderBottomLeftRadius: COLUMN_BORDER,
+    borderBottomRightRadius: COLUMN_BORDER,
   },
 
   captions: {
