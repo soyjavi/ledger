@@ -68,7 +68,7 @@ const Settings = ({ visible, ...inherit }) => {
       <Header highlight title={l10n.SETTINGS} />
 
       <ScrollView contentContainerStyle={styles.container}>
-        <Heading subtitle={`${l10n.VAULTS} ${l10n.VISIBILITY}`}>
+        <Heading value={`${l10n.VAULTS} ${l10n.VISIBILITY}`}>
           <Button contained={false} small onPress={() => setOrder(!order)}>
             <MaterialCommunityIcons
               name={order ? 'sort-descending' : 'sort-ascending'}
@@ -90,7 +90,7 @@ const Settings = ({ visible, ...inherit }) => {
         </View>
 
         <View style={styles.content}>
-          <Heading color={COLOR.TEXT_CONTRAST} subtitle={l10n.TRANSFER_TXS} caption={l10n.IMPORT_EXPORT_CAPTION}>
+          <Heading color={COLOR.TEXT_CONTRAST} value={l10n.TRANSFER_TXS} caption={l10n.IMPORT_EXPORT_CAPTION}>
             { hasCamera === undefined && <Activity color="white" style={styles.activity} /> }
             { hasCamera && (
               <Button

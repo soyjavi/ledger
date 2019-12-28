@@ -7,7 +7,8 @@ import { Button, Dialog, Text } from '../../reactor/components';
 import {
   C, exchange, verboseMonthShort, verboseTime,
 } from '../../common';
-import { useL10N, useStore } from '../../context';
+import { useNavigation, useL10N, useStore } from '../../context';
+import { createTx } from '../../services';
 import { Box } from '../Box';
 import { HeatMap } from '../HeatMap';
 import { PriceFriendly } from '../PriceFriendly';
@@ -24,14 +25,14 @@ const DialogClone = ({
   ...inherit
 }) => {
   const l10n = useL10N();
-  const {
-    baseCurrency, onTx, onSelectTx, rates,
-  } = useStore();
+  const store = useStore();
+  const { baseCurrency, rates, txs } = store;
+  const { showTx } = useNavigation();
   const [busy, setBusy] = useState(false);
 
   const onSubmit = async (wipe = false) => {
     setBusy(true);
-    await onTx({
+    const value = await createTx(store, {
       vault,
       category,
       value,
@@ -40,6 +41,7 @@ const DialogClone = ({
       ...(wipe ? { category: WIPE, tx: hash, type: type === EXPENSE ? INCOME : EXPENSE } : { location }),
     });
     setBusy(false);
+    if (value) showTx();
   };
 
   const color = type === EXPENSE ? COLOR.EXPENSE : COLOR.INCOME;
@@ -49,7 +51,7 @@ const DialogClone = ({
     <Dialog
       {...inherit}
       highlight
-      onClose={() => onSelectTx(undefined)}
+      onClose={() => showTx(undefined)}
       style={styles.frame}
       styleContainer={styles.dialog}
       title={type === EXPENSE ? l10n.EXPENSE : l10n.INCOME}
@@ -60,7 +62,7 @@ const DialogClone = ({
           <Box color={color} style={styles.box} opacity={0.3} small>
             <View style={styles.boxContent}>
               <Text bold color={color}>{(new Date(timestamp || null)).getDate()}</Text>
-              <Text style={styles.month}>{verboseMonthShort(timestamp, l10n)}</Text>
+              <Text bold style={styles.month}>{verboseMonthShort(timestamp, l10n)}</Text>
             </View>
           </Box>
           <View style={styles.texts}>

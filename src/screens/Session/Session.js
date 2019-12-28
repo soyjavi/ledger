@@ -2,13 +2,13 @@ import * as LocalAuthentication from 'expo-local-authentication';
 import React, { useEffect, useState } from 'react';
 import { Image, View } from 'react-native';
 
+import { THEME } from '../../reactor/common';
+import { Activity, Text, Viewport } from '../../reactor/components';
+
 import { LOGO } from '../../assets';
 import { C } from '../../common';
 import { useL10N, useNavigation, useStore } from '../../context';
-import { THEME } from '../../reactor/common';
-import {
-  Activity, Motion, Text, Viewport,
-} from '../../reactor/components';
+import { getAuthorization, getProfile } from '../../services';
 import { NumKeyboard } from './components';
 import styles from './Session.style';
 
@@ -33,13 +33,18 @@ const Session = (props) => {
   }, [fingerprint]);
 
 
-  const onHandshake = async (usedPin) => {
+  const onHandshake = async (pin) => {
     const isSignup = store.pin === undefined;
 
     setBusy(true);
-    if (isSignup) await store.signup(usedPin);
-    navigation.go(SCREEN.DASHBOARD);
-    if (!isSignup) store.onSync();
+    if (isSignup) {
+      const authorization = await getAuthorization(store, pin);
+      await getProfile(store, authorization);
+      navigation.go(SCREEN.DASHBOARD);
+    } else {
+      navigation.go(SCREEN.DASHBOARD);
+      await getProfile(store);
+    }
     setBusy(false);
     setPin('');
   };
@@ -74,31 +79,25 @@ const Session = (props) => {
   if (!busy && fingerprint && store.pin) onFingerprint();
 
   return (
-    <Viewport {...props} scroll={false} visible>
+    <Viewport {...props} scroll={false} visible style={{ margin: 0, padding: 0 }}>
       <View style={styles.container}>
         <View style={styles.content}>
           <View style={styles.row}>
             <Image source={LOGO} resizeMode="contain" style={styles.logo} />
-            <Text headline style={styles.textName}>volt.</Text>
+            { ['v', 'o', 'l', 't'].map((letter, index) => (
+              <Text key={letter} headline style={[styles.name, pin.length > index && styles.active]}>{letter}</Text>
+            ))}
           </View>
-          <View style={styles.pin}>
-            { busy
-              ? <Activity size="large" style={styles.activity} />
-              : [1, 2, 3, 4].map((number) => (
-                <Motion
-                  key={number}
-                  style={[styles.bullet, pin.length >= number && styles.bulletActive]}
-                  timeline={[{ property: 'scale', value: pin.length >= number ? 1 : 0.8 }]}
-                />
-              ))}
+          <View style={styles.row}>
+            { busy && <Activity size="large" style={styles.activity} /> }
           </View>
-          <Text lighten>
-            { store.pin && fingerprint ? l10n.ENTER_PIN_OR_FINGERPRINT : l10n.ENTER_PIN }
-          </Text>
         </View>
 
+        <Text caption lighten style={styles.textCenter}>
+          { store.pin && fingerprint ? l10n.ENTER_PIN_OR_FINGERPRINT : l10n.ENTER_PIN }
+        </Text>
         <NumKeyboard onPress={(number) => onPin(`${pin}${number}`)} />
-        <Text lighten caption style={styles.textVersion}>{`v${VERSION}`}</Text>
+        <Text lighten caption style={styles.textCenter}>{`v${VERSION}`}</Text>
       </View>
     </Viewport>
   );

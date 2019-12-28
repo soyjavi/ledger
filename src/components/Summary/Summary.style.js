@@ -11,14 +11,13 @@ export default StyleSheet.create({
   },
 
   container: {
-    justifyContent: 'flex-start',
-    minHeight: UNIT * 16,
     paddingHorizontal: SPACE.MEDIUM,
-    marginBottom: SPACE.MEDIUM,
+    marginBottom: SPACE.L,
   },
 
-  expand: {
-    flex: 1,
+  content: {
+    alignItems: 'flex-start',
+    marginBottom: SPACE.MEDIUM,
   },
 
   image: {

@@ -28,7 +28,7 @@ const ItemGroupCategories = ({ dataSource, type }) => {
 
   return (
     <View style={styles.container}>
-      <Heading color={COLOR.TEXT_CONTRAST} subtitle={isExpense ? l10n.EXPENSES : l10n.INCOMES}>
+      <Heading color={COLOR.TEXT_CONTRAST} value={isExpense ? l10n.EXPENSES : l10n.INCOMES}>
         <PriceFriendly color={COLOR.TEXT_CONTRAST} currency={baseCurrency} value={total} />
       </Heading>
       <View>

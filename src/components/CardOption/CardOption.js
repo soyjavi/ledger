@@ -21,13 +21,15 @@ const CardOption = ({
       rippleColor={COLOR.PRIMARY}
       style={[styles.container, selected && { backgroundColor: color }]}
     >
-      { (image || icon) && (
-        <View style={styles.thumbnail}>
-          { image && <Image source={image} style={styles.image} /> }
-          { icon && <MaterialCommunityIcons name={icon} color={COLOR.TEXT} size={20} /> }
+      { icon && (
+        <View style={styles.icon}>
+          <MaterialCommunityIcons name={icon} color={COLOR.TEXT} size={28} />
         </View>
       )}
-      <Text caption lighten={color === COLOR.PRIMARY} numberOfLines={1} style={styles.title}>
+
+      { image && <Image source={image} style={styles.image} /> }
+
+      <Text caption lighten={selected && color === COLOR.PRIMARY} numberOfLines={1} style={styles.title}>
         {title}
       </Text>
       { children }

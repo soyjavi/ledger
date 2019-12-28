@@ -41,11 +41,10 @@ const PriceFriendly = ({
 
   return (
     <View style={styles.container}>
-      { label && <Text color={color} {...inherit} >{label}</Text> }
+      { label && <Text color={color} {...inherit}>{label}</Text> }
       { maskAmount
         ? <Text {...inherit} color={color} style={style}>{maskValue(props)}</Text>
-        : <Price {...props} style={style} />
-      }
+        : <Price {...props} style={style} />}
     </View>
   );
 };

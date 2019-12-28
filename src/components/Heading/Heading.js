@@ -8,32 +8,27 @@ import { Text } from '../../reactor/components';
 import styles from './Heading.style';
 
 const Heading = ({
-  breakline, children, image, subtitle, title, ...inherit
+  children, image, value, ...inherit
 }) => (
-  <View style={[styles.container, breakline && styles.breakline, inherit.style]}>
+  <View style={[styles.container, inherit.style]}>
     { image && <Image source={image} resizeMode="contain" style={styles.image} /> }
     <View style={styles.content}>
-      { title && <Text color={inherit.color} headline>{title.toUpperCase()}</Text> }
-      { subtitle && <Text color={inherit.color} subtitle>{subtitle.toUpperCase()}</Text> }
+      { value && <Text color={inherit.color} subtitle>{value.toUpperCase()}</Text> }
     </View>
     { children }
   </View>
 );
 
 Heading.propTypes = {
-  breakline: bool,
   children: node,
   image: oneOfType([number, string]),
-  subtitle: string,
-  title: string,
+  value: string,
 };
 
 Heading.defaultProps = {
-  breakline: false,
   children: undefined,
   image: undefined,
-  subtitle: undefined,
-  title: undefined,
+  value: undefined,
 };
 
 export { Heading };

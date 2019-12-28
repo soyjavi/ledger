@@ -5,6 +5,11 @@ import { C } from '../common';
 
 const { SCREEN: { SESSION } } = C;
 const NavigationContext = createContext(`${C.NAME}:context:navigation`);
+const INITIAL_STATE = {
+  params: {},
+  stack: [SESSION],
+  tx: undefined,
+};
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -25,6 +30,10 @@ const reducer = (state, action) => {
       };
     }
 
+    case 'TX': {
+      return { ...state, tx: action.value };
+    }
+
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }
@@ -40,6 +49,7 @@ const NavigationProvider = ({ children }) => {
         current: state.stack[state.stack.length - 1],
         back: () => dispatch({ type: 'BACK' }),
         go: (value, params = {}) => dispatch({ type: 'GO', value, params }),
+        showTx: (value) => dispatch({ type: 'TX', value }),
       }}
     >
       { children }

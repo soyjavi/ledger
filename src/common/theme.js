@@ -1,14 +1,8 @@
-import { ENV } from '../reactor/common';
-
-const { IS_WEB } = ENV;
-
 const FAMILY = 'font-family';
 const FAMILY_BOLD = 'font-family-bold';
 const WEIGHT = { REGULAR: '400', BOLD: '700' };
 
 export default {
-  BORDER_RADIUS: 6,
-
   COLOR: {
     BACKGROUND: '#000',
     BACKGROUND_INPUT: '#202020',
@@ -18,7 +12,7 @@ export default {
     TEXT_CONTRAST: '#111',
     TEXT_LIGHTEN: '#808080',
 
-    PRIMARY: '#fff',
+    PRIMARY: '#ffffff',
 
     // ACCENT: '#7966FF',
     // EXPENSE: '#E9305C',
@@ -45,6 +39,7 @@ export default {
   FONT: {
     FAMILY,
     FAMILY_BOLD,
+
     DEFAULT: {
       fontFamily: FAMILY,
       fontWeight: WEIGHT.REGULAR,
@@ -60,14 +55,19 @@ export default {
     BODY: {
       fontSize: 14,
       letterSpacing: -0.5,
-      lineHeight: (14) * 1.5,
+      lineHeight: 14 * 1.5,
     },
     CAPTION: {
       fontSize: 11,
+      letterSpacing: -0.25,
     },
     BUTTON: {
+      fontSize: 15,
       fontFamily: FAMILY_BOLD,
-      letterSpacing: -1,
+    },
+    BUTTON_SMALL: {
+      fontSize: 12,
+      letterSpacing: -0.25,
     },
     INPUT: {},
   },

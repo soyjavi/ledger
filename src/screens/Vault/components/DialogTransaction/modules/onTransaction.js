@@ -1,10 +1,12 @@
-export default async ({
+import { createTx } from '../../../../../services';
+
+export default ({
   props: { vault },
   state: {
     category, coords = {}, form: { value, title = '' }, place, type,
   },
-  store: { onTx },
-}) => onTx({
+  store,
+}) => createTx(store, {
   category,
   title,
   type,

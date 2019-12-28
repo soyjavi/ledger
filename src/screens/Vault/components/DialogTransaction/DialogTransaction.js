@@ -35,13 +35,13 @@ const DialogTransaction = (props) => {
   const [busy, setBusy] = useState(false);
   const [state, setState] = useState(INITIAL_STATE);
 
-  const onLocation = () => { getLocation(setState); };
+  const onLocation = () => { getLocation(state, setState); };
 
   const onSubmit = async () => {
     setBusy(true);
     const method = state.type === TRANSFER ? onTransfer : onTransaction;
-    const tx = await method({ props, state, store });
-    if (tx) onClose();
+    const value = await method({ props, state, store });
+    if (value) onClose();
     setBusy(false);
     setState(INITIAL_STATE);
   };
@@ -60,6 +60,8 @@ const DialogTransaction = (props) => {
     onChange: (value) => setState({ ...state, ...value }),
   };
 
+  const options = store.vaults.length === 1 ? [l10n.EXPENSE, l10n.INCOME] : [l10n.EXPENSE, l10n.INCOME, l10n.TRANSFER];
+
   return (
     <Dialog
       {...inherit}
@@ -72,7 +74,7 @@ const DialogTransaction = (props) => {
     >
       <Text subtitle>{l10n.TYPE}</Text>
       <View style={styles.cards}>
-        { [l10n.EXPENSE, l10n.INCOME, l10n.TRANSFER].map((option, index) => (
+        { options.map((option, index) => (
           <CardOption
             key={option}
             color={color}
@@ -80,7 +82,7 @@ const DialogTransaction = (props) => {
               ...state, category: undefined, form: {}, type: index, valid: false,
             })}
             selected={type === index}
-            style={[styles.cardOption, index === 2 && styles.cardLast]}
+            style={[styles.cardOption, index === (options.length - 1) && styles.cardLast]}
             title={option}
           />
         ))}

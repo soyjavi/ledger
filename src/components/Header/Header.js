@@ -10,12 +10,12 @@ import { LOGO } from '../../assets';
 import { Heading } from '../Heading';
 import styles from './Header.style';
 
-const Header = ({
+export const Header = ({
   children, highlight, image, title,
 }) => (
   <View style={styles.container}>
     <Motion timeline={[{ property: 'opacity', value: highlight ? 1 : 0 }]} style={styles.content}>
-      { title && <Heading title={title} image={image} /> }
+      <Heading value={title} image={image} />
     </Motion>
     <View>{children}</View>
   </View>
@@ -34,5 +34,3 @@ Header.defaultProps = {
   image: LOGO,
   title: undefined,
 };
-
-export { Header };

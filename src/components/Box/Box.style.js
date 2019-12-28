@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import { THEME } from '../../reactor/common';
 
-const { BORDER_RADIUS, SPACE, UNIT } = THEME;
+const { SPACE, UNIT } = THEME;
 
 export default StyleSheet.create({
   container: {
@@ -19,7 +19,6 @@ export default StyleSheet.create({
   },
 
   frame: {
-    borderRadius: BORDER_RADIUS,
     height: '100%',
     left: 0,
     position: 'absolute',

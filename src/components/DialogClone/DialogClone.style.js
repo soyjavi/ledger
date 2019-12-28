@@ -15,7 +15,8 @@ export default StyleSheet.create({
 
   boxContent: {
     alignItems: 'center',
-    marginTop: UNIT * 0.25,
+    justifyContent: 'center',
+    marginTop: UNIT * 0.2,
   },
 
   button: {
@@ -43,6 +44,7 @@ export default StyleSheet.create({
   month: {
     fontSize: MONTH_FONT_SIZE,
     lineHeight: MONTH_FONT_SIZE,
+    letterSpacing: -0.25,
   },
 
   prices: {
