@@ -43,7 +43,6 @@ const Session = (props) => {
   };
 
   const onFingerprint = async () => {
-    return;
     setFingerprint(false);
     let needHandshake = false;
 

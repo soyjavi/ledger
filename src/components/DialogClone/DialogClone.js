@@ -7,7 +7,7 @@ import { Button, Dialog, Text } from '../../reactor/components';
 import {
   C, exchange, verboseMonthShort, verboseTime,
 } from '../../common';
-import { useL10N, useStore } from '../../context';
+import { useNavigation, useL10N, useStore } from '../../context';
 import { Box } from '../Box';
 import { HeatMap } from '../HeatMap';
 import { PriceFriendly } from '../PriceFriendly';
@@ -24,9 +24,8 @@ const DialogClone = ({
   ...inherit
 }) => {
   const l10n = useL10N();
-  const {
-    baseCurrency, onTx, onSelectTx, rates,
-  } = useStore();
+  const { baseCurrency, onTx, rates } = useStore();
+  const { showTx } = useNavigation();
   const [busy, setBusy] = useState(false);
 
   const onSubmit = async (wipe = false) => {
@@ -40,6 +39,7 @@ const DialogClone = ({
       ...(wipe ? { category: WIPE, tx: hash, type: type === EXPENSE ? INCOME : EXPENSE } : { location }),
     });
     setBusy(false);
+    showTx();
   };
 
   const color = type === EXPENSE ? COLOR.EXPENSE : COLOR.INCOME;
@@ -49,7 +49,7 @@ const DialogClone = ({
     <Dialog
       {...inherit}
       highlight
-      onClose={() => onSelectTx(undefined)}
+      onClose={() => showTx(undefined)}
       style={styles.frame}
       styleContainer={styles.dialog}
       title={type === EXPENSE ? l10n.EXPENSE : l10n.INCOME}

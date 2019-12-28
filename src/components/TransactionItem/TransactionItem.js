@@ -8,7 +8,7 @@ import { THEME } from '../../reactor/common';
 import { Text, Touchable } from '../../reactor/components';
 
 import { C, exchange, getIconCategory } from '../../common';
-import { useStore } from '../../context';
+import { useNavigation, useStore } from '../../context';
 import { Box } from '../Box';
 import { PriceFriendly } from '../PriceFriendly';
 import { formatCaption } from './modules';
@@ -18,7 +18,8 @@ const { VAULT_TRANSFER, TX: { TYPE: { INCOME, EXPENSE } } } = C;
 const { COLOR } = THEME;
 
 const TransactionItem = (props) => {
-  const { baseCurrency, onSelectTx, rates } = useStore();
+  const { baseCurrency, rates } = useStore();
+  const { showTx } = useNavigation();
   const {
     category, currency, location, timestamp, title, type, value,
   } = props;
@@ -28,7 +29,7 @@ const TransactionItem = (props) => {
   if (category === VAULT_TRANSFER) color = COLOR.TRANSFER;
 
   return (
-    <Touchable rippleColor={COLOR.TEXT_LIGHTEN} onPress={() => onSelectTx(props)}>
+    <Touchable rippleColor={COLOR.TEXT_LIGHTEN} onPress={() => showTx(props)}>
       <View style={[styles.container, styles.row]}>
         <Box color={color} opacity={0.25} small style={styles.box}>
           <MaterialCommunityIcons
