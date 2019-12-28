@@ -23,7 +23,6 @@ const Syncing = ({ scroll }) => {
         <Button
           activity={connected}
           color={connected ? undefined : COLOR.ERROR}
-          rounded
           small
           title={connected ? l10n.SYNCING : l10n.OFFLINE_MODE}
         />
@@ -36,7 +35,6 @@ const Syncing = ({ scroll }) => {
         <Button
           color={COLOR.BACKGROUND}
           onPress={onSync}
-          rounded
           small
           title={l10n.TAP_TO_UPDATE}
         />

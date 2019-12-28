@@ -2,6 +2,8 @@ import { shape, number, string } from 'prop-types';
 import React from 'react';
 import { Image, View } from 'react-native';
 
+import { THEME } from '../../reactor/common';
+import { Button, Text, Touchable } from '../../reactor/components';
 import { LOGO } from '../../assets';
 import { C, exchange, verboseMonth } from '../../common';
 import {
@@ -9,13 +11,13 @@ import {
 } from '../../context';
 import { Box } from '../Box';
 import { PriceFriendly } from '../PriceFriendly';
-import { Button, Text, Touchable } from '../../reactor/components';
 import styles from './Summary.style';
 
 const { CURRENCY, SCREEN } = C;
+const { COLOR } = THEME;
 
 const BoxSummary = ({ caption, value, ...inherit }) => (
-  <Box opacity={1}>
+  <Box>
     <Text caption lighten={value === 0}>{caption.toUpperCase()}</Text>
     <PriceFriendly
       {...inherit}
@@ -48,7 +50,7 @@ const Summary = React.memo(({
 
   return (
     <View style={styles.container}>
-      <View style={[styles.row, styles.spaceBetween]}>
+      <View style={[styles.row, styles.content, styles.spaceBetween]}>
         <View>
           <View style={styles.row}>
             <Image source={image} resizeMode="contain" style={styles.image} />
@@ -64,21 +66,16 @@ const Summary = React.memo(({
                 : Math.abs(currentBalance)}
             />
           </Touchable>
-          { baseCurrency !== currency && (
-            <PriceFriendly currency={currency} subtitle lighten value={currentBalance} />
-          )}
+          { baseCurrency !== currency && <PriceFriendly currency={currency} subtitle lighten value={currentBalance} /> }
         </View>
 
         <Button
+          onPress={() => navigation.go(SCREEN.STATS)}
           outlined
           small
           title={l10n.ACTIVITY}
-          onPress={() => navigation.go(SCREEN.STATS)}
         />
-
       </View>
-
-      <View style={styles.expand} />
 
       <View style={[styles.row, styles.spaceBetween]}>
         <BoxSummary caption={verboseMonth(new Date(), l10n)} currency="%" operator value={progressionPercentage} />

@@ -60,7 +60,7 @@ const DialogClone = ({
           <Box color={color} style={styles.box} opacity={0.3} small>
             <View style={styles.boxContent}>
               <Text bold color={color}>{(new Date(timestamp || null)).getDate()}</Text>
-              <Text style={styles.month}>{verboseMonthShort(timestamp, l10n)}</Text>
+              <Text bold style={styles.month}>{verboseMonthShort(timestamp, l10n)}</Text>
             </View>
           </Box>
           <View style={styles.texts}>

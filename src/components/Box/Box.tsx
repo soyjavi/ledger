@@ -4,9 +4,10 @@ import { View } from 'react-native';
 import { THEME } from '../../reactor/common';
 import styles from './Box.style';
 
-const { COLOR } = THEME;
+const { BORDER_RADIUS, COLOR } = THEME;
 
 interface BoxProps {
+  borderRadius?: number,
   children: React.ReactNode,
   color?: string,
   opacity?: number,
@@ -15,10 +16,10 @@ interface BoxProps {
 };
 
 const Box: React.FC<BoxProps> = ({
-  children, color = COLOR.BASE, opacity = 0.68, small = false, style
+  borderRadius = BORDER_RADIUS, children, color = COLOR.BASE, opacity = 0.68, small = false, style
 }) => (
   <View style={[styles.container, style]}>
-    <View style={[styles.frame, { backgroundColor: color, opacity }]} />
+    <View style={[styles.frame, { backgroundColor: color, borderRadius, opacity }]} />
     <View style={[styles.content, small && styles.small]}>
       {children}
     </View>

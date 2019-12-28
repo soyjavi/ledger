@@ -29,7 +29,7 @@ const CardOption = ({
 
       { image && <Image source={image} style={styles.image} /> }
 
-      <Text caption lighten={color === COLOR.PRIMARY} numberOfLines={1} style={styles.title}>
+      <Text caption lighten={selected && color === COLOR.PRIMARY} numberOfLines={1} style={styles.title}>
         {title}
       </Text>
       { children }

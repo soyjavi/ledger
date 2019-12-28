@@ -1,4 +1,4 @@
-import { FontAwesome } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { func } from 'prop-types';
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
@@ -10,9 +10,8 @@ import { Button } from '../../reactor/components';
 import styles from './Footer.style';
 
 const { COLOR } = THEME;
-
 const BUTTON = {
-  color: COLOR.ACCENT, large: true, rounded: true, shadow: true, style: styles.button,
+  large: true, small: true, shadow: true, style: styles.button,
 };
 
 const Footer = ({
@@ -28,13 +27,13 @@ const Footer = ({
   return (
     <View style={[styles.container, inherit.style]}>
       { onBack && (
-        <Button {...BUTTON} large={onPress === undefined} onPress={onBack} small>
-          <FontAwesome name="arrow-left" color={COLOR.BASE} size={16} />
+        <Button {...BUTTON} color={COLOR.BACKGROUND} onPress={onBack}>
+          <MaterialCommunityIcons name="arrow-left" color={COLOR.TEXT} size={24} />
         </Button>
       )}
       { onPress && connected && (
-        <Button {...BUTTON} small disabled={!connected} onPress={onPress}>
-          <FontAwesome name="plus" color={COLOR.BASE} size={20} />
+        <Button {...BUTTON} color={COLOR.ACCENT} disabled={!connected} onPress={onPress}>
+          <MaterialCommunityIcons name="plus" color={COLOR.BASE} size={24} />
         </Button>
       )}
     </View>

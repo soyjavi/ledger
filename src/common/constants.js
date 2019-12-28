@@ -60,7 +60,7 @@ export default {
       width: LAYOUT.VIEWPORT.W,
     },
     HEADER_HEIGHT: UNIT * 5.2,
-    VAULT_ITEM_WIDTH: (LAYOUT.VIEWPORT.W / 2) - (SPACE.MEDIUM * 3),
+    VAULT_ITEM_WIDTH: (LAYOUT.VIEWPORT.W / 2) - SPACE.XL,
   },
   SYMBOL: {
     AUD: 'AU$',

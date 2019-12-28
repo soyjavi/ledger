@@ -62,7 +62,11 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
 
         { isInitialized && (
           <Fragment>
-            <Heading value={l10n.VAULTS} />
+            <Heading value={l10n.VAULTS}>
+              <Button small contained={false} onPress={() => navigation.go(SCREEN.SETTINGS)}>
+                <MaterialCommunityIcons name="table-of-contents" color={COLOR.TEXT} size={24} />
+              </Button>
+            </Heading>
             <Slider itemWidth={VAULT_ITEM_WIDTH + SPACE.S} itemMargin={0} style={styles.vaults}>
               { queryVaults({ settings, vaults }).map((vault) => (
                 <VaultCard {...vault} key={vault.hash} onPress={() => navigation.go(SCREEN.VAULT, vault)} />

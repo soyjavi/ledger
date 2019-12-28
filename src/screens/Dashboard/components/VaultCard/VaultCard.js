@@ -12,7 +12,7 @@ import { Text, Touchable } from '../../../../reactor/components';
 import { THEME } from '../../../../reactor/common';
 import styles from './VaultCard.style';
 
-const { COLOR } = THEME;
+const { COLOR, SPACE } = THEME;
 
 const VaultCard = ({
   currency, onPress, currentBalance, currentMonth: { progression }, title,
@@ -22,7 +22,7 @@ const VaultCard = ({
 
   return React.useCallback((
     <Touchable onPress={onPress} rippleColor={COLOR.TEXT_LIGHTEN} style={styles.container}>
-      <Box color={COLOR[currency]}>
+      <Box borderRadius={SPACE.S} color={COLOR[currency]}>
         <View style={styles.content}>
           <View style={styles.row}>
             <Image source={FLAGS[currency]} style={styles.thumbnail} />
@@ -34,28 +34,24 @@ const VaultCard = ({
             value={baseCurrency !== currency
               ? exchange(Math.abs(currentBalance), currency, baseCurrency, rates)
               : Math.abs(currentBalance)}
-
-            style={styles.balance}
           />
           { currency !== baseCurrency && (
-            <PriceFriendly currency={currency} caption value={currentBalance} style={styles.currentBalance} />)}
+            <PriceFriendly currency={currency} caption value={currentBalance} style={styles.balance} />)}
 
           <View style={styles.expand} />
 
-          <View style={styles.row}>
-            { progression
-              ? (
-                <PriceFriendly
-                  caption
-                  currency="%"
-                  operator
-                  value={currentBalance - progression > 0
-                    ? (progression * 100) / (currentBalance - progression)
-                    : progression}
-                />
-              )
-              : <Text caption>{l10n.WITHOUT_TXS}</Text>}
-          </View>
+          { progression
+            ? (
+              <PriceFriendly
+                caption
+                currency="%"
+                operator
+                value={currentBalance - progression > 0
+                  ? (progression * 100) / (currentBalance - progression)
+                  : progression}
+              />
+            )
+            : <Text caption>{l10n.WITHOUT_TXS}</Text>}
         </View>
       </Box>
     </Touchable>

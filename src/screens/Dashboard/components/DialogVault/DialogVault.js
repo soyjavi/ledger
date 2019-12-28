@@ -55,6 +55,7 @@ const DialogVault = ({ onClose, visible }) => {
           { queryCurrencies(baseCurrency, rates).map((item) => (
             <CardOption
               image={FLAGS[item]}
+              color={COLOR[currency]}
               key={item}
               onPress={() => setVaultCurrency(item)}
               selected={currency === item}

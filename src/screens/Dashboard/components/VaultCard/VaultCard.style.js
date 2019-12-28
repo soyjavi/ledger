@@ -4,11 +4,11 @@ import { C } from '../../../../common';
 import { LAYOUT, THEME } from '../../../../reactor/common';
 
 const { STYLE } = C;
-const { SPACE } = THEME;
+const { SPACE, UNIT } = THEME;
 
 export default StyleSheet.create({
   container: {
-    height: STYLE.VAULT_ITEM_WIDTH * 0.85,
+    height: UNIT * 12.8,
     marginBottom: SPACE.S,
     marginLeft: SPACE.S,
     width: STYLE.VAULT_ITEM_WIDTH,
@@ -18,7 +18,7 @@ export default StyleSheet.create({
     flex: 1,
   },
 
-  currentBalance: {
+  balance: {
     opacity: 0.68,
   },
 
