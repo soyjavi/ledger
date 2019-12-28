@@ -2,9 +2,10 @@ import { bool } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 
-import { useConnection, useL10N, useStore } from '../../../../context';
 import { Button, Motion } from '../../../../reactor/components';
 import { THEME } from '../../../../reactor/common';
+import { useConnection, useL10N, useStore } from '../../../../context';
+import { getProfile } from '../../../../services';
 import styles from './Syncing.style';
 
 const { COLOR } = THEME;
@@ -12,7 +13,14 @@ const { COLOR } = THEME;
 const Syncing = ({ scroll }) => {
   const { connected } = useConnection();
   const l10n = useL10N();
-  const { onSync, sync } = useStore();
+  const store = useStore();
+  const { setSync, sync } = store;
+
+  const handleSync = async () => {
+    setSync(false);
+    await getProfile(store);
+    setSync(true);
+  };
 
   return (
     <View>
@@ -24,7 +32,7 @@ const Syncing = ({ scroll }) => {
           activity={connected}
           color={connected ? undefined : COLOR.ERROR}
           small
-          title={connected ? l10n.SYNCING : l10n.OFFLINE_MODE}
+          title={connected ? undefined : l10n.OFFLINE_MODE}
         />
       </Motion>
 
@@ -34,7 +42,7 @@ const Syncing = ({ scroll }) => {
       >
         <Button
           color={COLOR.BACKGROUND}
-          onPress={onSync}
+          onPress={handleSync}
           small
           title={l10n.TAP_TO_UPDATE}
         />
