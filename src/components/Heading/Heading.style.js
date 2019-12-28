@@ -8,8 +8,7 @@ const IMAGE_SIZE = UNIT * 1.8;
 export default StyleSheet.create({
   container: {
     ...LAYOUT.STYLE.ROW,
-    marginLeft: SPACE.MEDIUM,
-    marginRight: SPACE.XXS,
+    marginHorizontal: SPACE.MEDIUM,
     marginVertical: SPACE.XXS,
   },
 
