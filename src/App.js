@@ -18,11 +18,11 @@ const { COLOR } = THEME;
 
 export default () => {
   const {
-    current, back, params, stack,
+    current, back, params, stack, tx,
   } = useNavigation();
   const l10n = useL10N();
   const {
-    error, onError, sync, vaults = [], tx,
+    error, onError, sync, vaults = [],
   } = useStore();
   console.log('<App>');
 

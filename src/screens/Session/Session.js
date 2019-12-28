@@ -2,11 +2,13 @@ import * as LocalAuthentication from 'expo-local-authentication';
 import React, { useEffect, useState } from 'react';
 import { Image, View } from 'react-native';
 
+import { THEME } from '../../reactor/common';
+import { Activity, Text, Viewport } from '../../reactor/components';
+
 import { LOGO } from '../../assets';
 import { C } from '../../common';
 import { useL10N, useNavigation, useStore } from '../../context';
-import { THEME } from '../../reactor/common';
-import { Activity, Text, Viewport } from '../../reactor/components';
+import { getAuthorization, getProfile } from '../../services';
 import { NumKeyboard } from './components';
 import styles from './Session.style';
 
@@ -31,13 +33,18 @@ const Session = (props) => {
   }, [fingerprint]);
 
 
-  const onHandshake = async (usedPin) => {
+  const onHandshake = async (pin) => {
     const isSignup = store.pin === undefined;
 
     setBusy(true);
-    if (isSignup) await store.signup(usedPin);
-    navigation.go(SCREEN.DASHBOARD);
-    if (!isSignup) store.onSync();
+    if (isSignup) {
+      const authorization = await getAuthorization(store, pin);
+      await getProfile(store, authorization);
+      navigation.go(SCREEN.DASHBOARD);
+    } else {
+      navigation.go(SCREEN.DASHBOARD);
+      await getProfile(store);
+    }
     setBusy(false);
     setPin('');
   };

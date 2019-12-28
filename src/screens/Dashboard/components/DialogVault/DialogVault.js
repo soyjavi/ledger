@@ -6,6 +6,7 @@ import { FLAGS } from '../../../../assets';
 import { FORM, setCurrency, translate } from '../../../../common';
 import { CardOption } from '../../../../components';
 import { useL10N, useStore } from '../../../../context';
+import { createVault } from '../../../../services';
 import { THEME } from '../../../../reactor/common';
 import {
   Button, Dialog, Form, Slider, Text,
@@ -18,9 +19,8 @@ const INITIAL_STATE = { title: '', balance: '0' };
 
 const DialogVault = ({ onClose, visible }) => {
   const l10n = useL10N();
-  const {
-    baseCurrency, onVault, rates, vaults = [],
-  } = useStore();
+  const store = useStore();
+  const { baseCurrency, rates, vaults = [] } = store;
 
   const [busy, setBusy] = useState(false);
   const [currency, setVaultCurrency] = useState(baseCurrency);
@@ -28,10 +28,10 @@ const DialogVault = ({ onClose, visible }) => {
 
   const onSubmit = async () => {
     setBusy(true);
-    const vault = await onVault({ currency, ...form });
+    const vault = await createVault(store, { currency, ...form });
     if (vault) {
       onClose();
-      setVaultCurrency(baseCurrency);
+      setVaultCurrency(vault.currency);
       setForm({ ...INITIAL_STATE });
     }
     setBusy(false);

@@ -8,6 +8,7 @@ import {
   C, exchange, verboseMonthShort, verboseTime,
 } from '../../common';
 import { useNavigation, useL10N, useStore } from '../../context';
+import { createTx } from '../../services';
 import { Box } from '../Box';
 import { HeatMap } from '../HeatMap';
 import { PriceFriendly } from '../PriceFriendly';
@@ -24,13 +25,14 @@ const DialogClone = ({
   ...inherit
 }) => {
   const l10n = useL10N();
-  const { baseCurrency, onTx, rates } = useStore();
+  const store = useStore();
+  const { baseCurrency, rates, txs } = store;
   const { showTx } = useNavigation();
   const [busy, setBusy] = useState(false);
 
   const onSubmit = async (wipe = false) => {
     setBusy(true);
-    await onTx({
+    const value = await createTx(store, {
       vault,
       category,
       value,
@@ -39,7 +41,7 @@ const DialogClone = ({
       ...(wipe ? { category: WIPE, tx: hash, type: type === EXPENSE ? INCOME : EXPENSE } : { location }),
     });
     setBusy(false);
-    showTx();
+    if (value) showTx();
   };
 
   const color = type === EXPENSE ? COLOR.EXPENSE : COLOR.INCOME;

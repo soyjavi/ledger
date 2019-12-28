@@ -1,6 +1,6 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { bool } from 'prop-types';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, ScrollView } from 'react-native';
 
 import { THEME } from '../../reactor/common';
@@ -61,7 +61,7 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
         <Summary {...overall} currency={baseCurrency} title={l10n.OVERALL_BALANCE} />
 
         { isInitialized && (
-          <Fragment>
+          <>
             <Heading value={l10n.VAULTS}>
               <Button small contained={false} onPress={() => navigation.go(SCREEN.SETTINGS)}>
                 <MaterialCommunityIcons name="table-of-contents" color={COLOR.TEXT} size={24} />
@@ -72,7 +72,7 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
                 <VaultCard {...vault} key={vault.hash} onPress={() => navigation.go(SCREEN.VAULT, vault)} />
               ))}
             </Slider>
-          </Fragment>
+          </>
         )}
 
         { isInitialized && lastTxs.length > 0 && (
