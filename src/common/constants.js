@@ -41,6 +41,7 @@ export default {
     SETTINGS: 'Settings',
     STATS: 'Stats',
     VAULT: 'Vault',
+    VAULTS: 'Vaults',
   },
   STYLE: {
     CONTENT: {
