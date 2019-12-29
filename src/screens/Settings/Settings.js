@@ -11,16 +11,11 @@ import {
   Activity, Button, Image, Text, Viewport,
 } from '../../reactor/components';
 
-import { C } from '../../common';
 import { Footer, Header, Heading } from '../../components';
-import {
-  useL10N, useNavigation, useSettings, useStore,
-} from '../../context';
-import { DialogFork, VaultItem } from './components';
-import { sort } from './modules';
+import { useL10N, useNavigation, useStore } from '../../context';
+import { DialogFork } from './components';
 import styles from './Settings.style';
 
-const { SCREEN } = C;
 const { COLOR } = THEME;
 
 const QR_URI = 'https://chart.googleapis.com/chart?cht=qr&chs=512x512&chld=H|1&chl';
@@ -30,16 +25,14 @@ const CAMERA_PROPS = {
 };
 
 const Settings = ({ visible, ...inherit }) => {
-  const { state = {}, dispatch } = useSettings();
   const navigation = useNavigation();
   const l10n = useL10N();
-  const { authorization, secret, vaults } = useStore();
+  const { authorization, secret } = useStore();
 
   const [dialog, setDialog] = useState(false);
   const [hasCamera, setHasCamera] = useState(undefined);
   const [camera, setCamera] = useState(false);
   const [qr, setQr] = useState(undefined);
-  const [order, setOrder] = useState(true);
 
   useEffect(() => {
     async function askCamera() {
@@ -68,27 +61,6 @@ const Settings = ({ visible, ...inherit }) => {
       <Header highlight title={l10n.SETTINGS} />
 
       <ScrollView contentContainerStyle={styles.container}>
-        <Heading value={`${l10n.VAULTS} ${l10n.VISIBILITY}`}>
-          <Button contained={false} small onPress={() => setOrder(!order)}>
-            <MaterialCommunityIcons
-              name={order ? 'sort-descending' : 'sort-ascending'}
-              color={COLOR.TEXT}
-              size={20}
-            />
-          </Button>
-        </Heading>
-        <View style={styles.currencies}>
-          { sort(vaults, order).map((vault) => (
-            <VaultItem
-              key={vault.hash}
-              active={state[vault.hash]}
-              dataSource={vault}
-              onChange={(value) => dispatch({ type: 'VAULT_VISIBLE', vault: vault.hash, value })}
-              onPress={() => navigation.go(SCREEN.VAULT, vault)}
-            />
-          ))}
-        </View>
-
         <View style={styles.content}>
           <Heading color={COLOR.TEXT_CONTRAST} value={l10n.TRANSFER_TXS} caption={l10n.IMPORT_EXPORT_CAPTION}>
             { hasCamera === undefined && <Activity color="white" style={styles.activity} /> }

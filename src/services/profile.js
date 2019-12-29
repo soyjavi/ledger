@@ -42,5 +42,4 @@ const fork = async (store, query = '') => {
   return response;
 };
 
-
 export { getProfile, fork };

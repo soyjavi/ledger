@@ -1,7 +1,7 @@
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 
-import { fetch } from '../../../../../common';
+import { getPlace } from '../../../../../services';
 
 export default async (state, setState) => {
   const { status } = await Permissions.askAsync(Permissions.LOCATION);
@@ -11,9 +11,11 @@ export default async (state, setState) => {
     const { latitude, longitude } = coords;
 
 
-    setState({ coords: undefined, location: true, place: undefined });
+    setState({
+      ...state, coords: undefined, location: true, place: undefined,
+    });
     if (coords) {
-      const { place } = await fetch({ service: `place?latitude=${latitude}&longitude=${longitude}` });
+      const place = await getPlace({ latitude, longitude });
       setState({
         ...state, location: true, coords, place,
       });

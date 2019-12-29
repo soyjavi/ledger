@@ -113,7 +113,6 @@ export default {
     SETTINGS: 'Settings',
     SETTING_1_TITLE: 'Hide amounts',
     SETTING_1_CAPTION: 'Switch visibility just touching it',
-    SYNCING: 'Syncing',
     SLOGAN: 'Your private accounting on the blockchain.',
     STATS: 'Stats',
     STATS_CAPTION: 'In this summary you can see a breakdown of your operations in the selected category.',

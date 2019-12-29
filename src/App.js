@@ -6,13 +6,13 @@ import { THEME } from './reactor/common';
 import { LayoutView, Snackbar } from './reactor/components';
 import { DialogClone } from './components';
 import {
-  Session, Settings, Stats, Dashboard, Vault,
+  Session, Settings, Stats, Dashboard, Vault, Vaults,
 } from './screens';
 import styles from './App.style';
 
 const { SCREEN } = C;
 const {
-  SESSION, SETTINGS, STATS, DASHBOARD, VAULT,
+  SESSION, SETTINGS, STATS, DASHBOARD, VAULT, VAULTS,
 } = SCREEN;
 const { COLOR } = THEME;
 
@@ -43,6 +43,7 @@ export default () => {
             back={back}
             visible={stack.includes(VAULT)}
           />
+          <Vaults visible={stack.includes(VAULTS)} />
           <Stats vault={params.Vault} visible={stack.includes(STATS)} />
           <DialogClone dataSource={tx} visible={tx !== undefined} />
         </Fragment>

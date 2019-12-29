@@ -9,6 +9,10 @@ const { SPACE } = THEME;
 export default StyleSheet.create({
   content: CONTENT,
 
+  headingVaults: {
+    marginRight: SPACE.XS,
+  },
+
   icon: {
     height: SPACE.L,
     width: SPACE.L,

@@ -16,8 +16,10 @@ import styles from './Summary.style';
 const { CURRENCY, SCREEN } = C;
 const { COLOR } = THEME;
 
-const BoxSummary = ({ caption, value, ...inherit }) => (
-  <Box>
+const BoxSummary = ({
+  caption, value, style = styles.box, ...inherit
+}) => (
+  <Box style={style}>
     <Text caption lighten={value === 0}>{caption.toUpperCase()}</Text>
     <PriceFriendly
       {...inherit}
@@ -81,7 +83,7 @@ const Summary = React.memo(({
         <BoxSummary caption={verboseMonth(new Date(), l10n)} currency="%" operator value={progressionPercentage} />
         <BoxSummary caption={l10n.INCOMES} currency={baseCurrency} value={incomes} />
         <BoxSummary caption={l10n.EXPENSES} currency={baseCurrency} value={expenses} />
-        <BoxSummary caption={l10n.TODAY} currency={baseCurrency} operator value={today} />
+        <BoxSummary caption={l10n.TODAY} currency={baseCurrency} operator value={today} style={null} />
       </View>
     </View>
   );

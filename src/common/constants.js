@@ -41,13 +41,14 @@ export default {
     SETTINGS: 'Settings',
     STATS: 'Stats',
     VAULT: 'Vault',
+    VAULTS: 'Vaults',
   },
   STYLE: {
     CONTENT: {
       backgroundColor: COLOR.WHITE,
       borderRadius: SPACE.MEDIUM,
       marginTop: SPACE.XS,
-      paddingTop: SPACE.S,
+      paddingVertical: SPACE.S,
     },
     DIALOG: {
       justifyContent: 'flex-end',

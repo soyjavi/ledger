@@ -1,7 +1,6 @@
 import C from './constants';
 import currencyDecimals from './currencyDecimals';
 import exchange from './exchange';
-import fetch from './fetch';
 import FORM from './forms';
 import getIconCategory from './getIconCategory';
 import L10N from './l10n';
@@ -20,7 +19,6 @@ export {
   C,
   currencyDecimals,
   exchange,
-  fetch,
   FORM,
   getIconCategory,
   L10N,
