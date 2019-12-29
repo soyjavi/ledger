@@ -32,7 +32,7 @@ const DialogClone = ({
 
   const onSubmit = async (wipe = false) => {
     setBusy(true);
-    const value = await createTx(store, {
+    const tx = await createTx(store, {
       vault,
       category,
       value,
@@ -41,7 +41,7 @@ const DialogClone = ({
       ...(wipe ? { category: WIPE, tx: hash, type: type === EXPENSE ? INCOME : EXPENSE } : { location }),
     });
     setBusy(false);
-    if (value) showTx();
+    if (tx) showTx();
   };
 
   const color = type === EXPENSE ? COLOR.EXPENSE : COLOR.INCOME;

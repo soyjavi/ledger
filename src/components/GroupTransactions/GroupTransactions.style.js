@@ -6,8 +6,7 @@ const { SPACE } = THEME;
 
 export default StyleSheet.create({
   container: {
-    marginTop: SPACE.XS,
-    marginBottom: SPACE.S,
+    marginVertical: SPACE.XXS,
   },
 
   heading: {

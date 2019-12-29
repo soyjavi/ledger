@@ -10,6 +10,15 @@ export default StyleSheet.create({
     lineHeight: UNIT * 3.2,
   },
 
+  box: {
+    marginRight: SPACE.S,
+    flex: 1,
+  },
+
+  spaceBetween: {
+    justifyContent: 'space-between',
+  },
+
   container: {
     paddingHorizontal: SPACE.MEDIUM,
     marginBottom: SPACE.L,
@@ -27,8 +36,4 @@ export default StyleSheet.create({
   },
 
   row: LAYOUT.STYLE.ROW,
-
-  spaceBetween: {
-    justifyContent: 'space-between',
-  },
 });
