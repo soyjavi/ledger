@@ -3,6 +3,7 @@ import Session from './Session';
 import Settings from './Settings';
 import Stats from './Stats';
 import Vault from './Vault';
+import Vaults from './Vaults';
 
 export {
   Dashboard,
@@ -10,4 +11,5 @@ export {
   Settings,
   Stats,
   Vault,
+  Vaults,
 };

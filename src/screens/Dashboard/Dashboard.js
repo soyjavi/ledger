@@ -63,7 +63,7 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
         { isInitialized && (
           <>
             <Heading value={l10n.VAULTS} style={styles.headingVaults}>
-              <Button small contained={false} onPress={() => navigation.go(SCREEN.SETTINGS)}>
+              <Button small contained={false} onPress={() => navigation.go(SCREEN.VAULTS)}>
                 <MaterialCommunityIcons name="table-of-contents" color={COLOR.TEXT} size={24} />
               </Button>
             </Heading>
