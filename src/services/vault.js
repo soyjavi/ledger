@@ -1,14 +1,15 @@
 import { apiCall, composeHeaders } from './modules';
 
-const createVault = async (store, props) => {
-  const { onError, rates, vaults = [] } = store;
+const createVault = async (store, snackbar, props) => {
+  const { rates, vaults = [] } = store;
+  const { snackbarError } = snackbar;
 
   const vault = await apiCall({
     method: 'POST',
     service: 'vault',
     headers: composeHeaders(store),
     ...props,
-  }).catch(onError);
+  }).catch((error) => snackbarError(error.message));
 
   const next = { vaults: [...vaults, vault] };
   if (vaults.length === 0) {

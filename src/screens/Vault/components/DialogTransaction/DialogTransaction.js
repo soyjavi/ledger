@@ -5,7 +5,7 @@ import { THEME } from '../../../../reactor/common';
 import { Button, Dialog, Text } from '../../../../reactor/components';
 
 import { C } from '../../../../common';
-import { useL10N, useStore } from '../../../../context';
+import { useL10N, useSnackBar, useStore } from '../../../../context';
 import { CardOption, HeatMap } from '../../../../components';
 import { FormTransaction, FormTransfer } from './components';
 import { getLocation, onTransaction, onTransfer } from './modules';
@@ -31,6 +31,7 @@ const DialogTransaction = (props) => {
     currency, onClose, visible, ...inherit
   } = props;
   const l10n = useL10N();
+  const snackbar = useSnackBar();
   const store = useStore();
   const [busy, setBusy] = useState(false);
   const [state, setState] = useState(INITIAL_STATE);
@@ -40,7 +41,9 @@ const DialogTransaction = (props) => {
   const onSubmit = async () => {
     setBusy(true);
     const method = state.type === TRANSFER ? onTransfer : onTransaction;
-    const value = await method({ props, state, store });
+    const value = await method({
+      props, state, store, snackbar,
+    });
     if (value) onClose();
     setBusy(false);
     setState(INITIAL_STATE);

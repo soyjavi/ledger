@@ -1,3 +1,3 @@
 import VaultItem from './VaultItem';
 
-export { VaultItem, };
+export { VaultItem };

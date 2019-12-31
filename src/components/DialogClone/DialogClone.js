@@ -7,7 +7,9 @@ import { Button, Dialog, Text } from '../../reactor/components';
 import {
   C, exchange, verboseMonthShort, verboseTime,
 } from '../../common';
-import { useNavigation, useL10N, useStore } from '../../context';
+import {
+  useNavigation, useL10N, useSnackBar, useStore,
+} from '../../context';
 import { createTx } from '../../services';
 import { Box } from '../Box';
 import { HeatMap } from '../HeatMap';
@@ -26,13 +28,14 @@ const DialogClone = ({
 }) => {
   const l10n = useL10N();
   const store = useStore();
+  const snackbar = useSnackBar();
   const { baseCurrency, rates, txs } = store;
   const { showTx } = useNavigation();
   const [busy, setBusy] = useState(false);
 
   const onSubmit = async (wipe = false) => {
     setBusy(true);
-    const tx = await createTx(store, {
+    const tx = await createTx(store, snackbar, {
       vault,
       category,
       value,

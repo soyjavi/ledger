@@ -8,6 +8,7 @@ export default ({
     },
   },
   store,
-}) => createTransfer(store, {
+  snackbar,
+}) => createTransfer(store, snackbar, {
   vault, from, to, exchange, value,
 });

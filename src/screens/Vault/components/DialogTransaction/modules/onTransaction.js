@@ -6,7 +6,8 @@ export default ({
     category, coords = {}, form: { value, title = '' }, place, type,
   },
   store,
-}) => createTx(store, {
+  snackbar,
+}) => createTx(store, snackbar, {
   category,
   title,
   type,

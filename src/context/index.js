@@ -6,6 +6,7 @@ import { L10NProvider, useL10N } from '../reactor/context/L10N';
 import { ConnectionProvider, useConnection } from './connection';
 import { NavigationProvider, useNavigation } from './navigation';
 import { SettingsProvider, useSettings } from './settings';
+import { SnackBarProvider, useSnackBar } from './snackbar';
 import { StoreProvider, useStore } from './store';
 
 const Provider = ({ children, dictionary, language }) => (
@@ -14,7 +15,9 @@ const Provider = ({ children, dictionary, language }) => (
       <NavigationProvider>
         <StoreProvider>
           <SettingsProvider>
-            {children}
+            <SnackBarProvider>
+              {children}
+            </SnackBarProvider>
           </SettingsProvider>
         </StoreProvider>
       </NavigationProvider>
@@ -35,5 +38,6 @@ export {
   useL10N,
   useNavigation,
   useSettings,
+  useSnackBar,
   useStore,
 };
