@@ -9,9 +9,12 @@ import { C, currencyDecimals } from '../../common';
 import { useSettings } from '../../context';
 import styles from './PriceFriendly.style';
 
+const MASK_SYMBOL = '*';
 const { COLOR } = THEME;
 const { SYMBOL } = C;
-const maskValue = (props) => format({ ...props, operator: undefined }).replace(/[0-9]/gi, '#');
+const maskValue = ({ value }) => format({
+  value: value > 1000 ? 9999.99 : 9.99,
+}).replace(/[0-9]/gi, MASK_SYMBOL);
 
 const PriceFriendly = ({
   currency, label, operator, value = 0, ...inherit
