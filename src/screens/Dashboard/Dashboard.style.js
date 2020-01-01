@@ -10,7 +10,7 @@ export default StyleSheet.create({
   content: CONTENT,
 
   headingVaults: {
-    marginRight: SPACE.XS,
+    marginRight: SPACE.XXS,
   },
 
   icon: {

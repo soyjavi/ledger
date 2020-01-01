@@ -1,5 +1,5 @@
 import { bool, func, string } from 'prop-types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { THEME } from '../../../../reactor/common';
 import { Button, Dialog, Text } from '../../../../reactor/components';
@@ -8,7 +8,7 @@ import { C } from '../../../../common';
 import { useL10N, useSnackBar, useStore } from '../../../../context';
 import { CardOption, HeatMap } from '../../../../components';
 import { FormTransaction, FormTransfer } from './components';
-import { getLocation, onTransaction, onTransfer } from './modules';
+import { getLocation, handleSubmit } from './modules';
 
 import styles from './DialogTransaction.style';
 
@@ -16,15 +16,10 @@ const { COLOR } = THEME;
 const { CURRENCY, TX: { TYPE: { EXPENSE, TRANSFER } } } = C;
 
 const INITIAL_STATE = {
-  busy: false,
-  category: undefined,
-  coords: undefined,
-  form: {},
-  location: false,
-  place: undefined,
-  type: EXPENSE,
-  valid: false,
+  busy: false, category: undefined, form: {}, type: EXPENSE, valid: false,
 };
+
+const INITIAL_STATE_LOCATION = { coords: undefined, place: undefined };
 
 const DialogTransaction = (props) => {
   const {
@@ -35,33 +30,30 @@ const DialogTransaction = (props) => {
   const store = useStore();
   const [busy, setBusy] = useState(false);
   const [state, setState] = useState(INITIAL_STATE);
+  const [location, setLocation] = useState(INITIAL_STATE_LOCATION);
 
-  const onLocation = () => { getLocation(state, setState); };
+  useEffect(() => {
+    if (visible) {
+      setState(INITIAL_STATE);
+      setLocation(INITIAL_STATE_LOCATION);
+      getLocation(setLocation);
+    }
+  }, [visible]);
 
-  const onSubmit = async () => {
-    setBusy(true);
-    const method = state.type === TRANSFER ? onTransfer : onTransaction;
-    const value = await method({
-      props, state, store, snackbar,
-    });
-    if (value) onClose();
-    setBusy(false);
-    setState(INITIAL_STATE);
-  };
+  const onSubmit = handleSubmit.bind(undefined, {
+    props, store, snackbar, setBusy, state, setState,
+  });
 
-  const {
-    coords, location, place, type = EXPENSE, valid,
-  } = state;
+  const { type = EXPENSE, valid } = state;
+  const { coords, place } = location;
   let color = COLOR.TRANSFER;
-  if (type !== TRANSFER) color = type === EXPENSE ? COLOR.EXPENSE : COLOR.INCOME;
-
-  const formProps = {
-    ...props,
-    ...INITIAL_STATE,
-    ...state,
-    color,
-    onChange: (value) => setState({ ...state, ...value }),
-  };
+  let Form;
+  if (type !== TRANSFER) {
+    color = type === EXPENSE ? COLOR.EXPENSE : COLOR.INCOME;
+    Form = FormTransaction;
+  } else {
+    Form = FormTransfer;
+  }
 
   const options = store.vaults.length === 1 ? [l10n.EXPENSE, l10n.INCOME] : [l10n.EXPENSE, l10n.INCOME, l10n.TRANSFER];
 
@@ -91,10 +83,13 @@ const DialogTransaction = (props) => {
         ))}
       </View>
       <View style={styles.form}>
-        { type !== TRANSFER ? <FormTransaction {...formProps} /> : <FormTransfer {...formProps} /> }
-
+        <Form
+          {...props}
+          {...state}
+          color={color}
+          onChange={(value) => setState({ ...state, ...value })}
+        />
         <View>
-          { visible && location === false && onLocation(this) }
           <HeatMap color={color} points={coords ? [[coords.longitude, coords.latitude]] : undefined} />
           <Text caption lighten>{place || l10n.LOADING_PLACE}</Text>
         </View>

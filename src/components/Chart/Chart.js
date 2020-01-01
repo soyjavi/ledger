@@ -1,5 +1,5 @@
 import {
-  arrayOf, bool, number, string,
+  arrayOf, bool, number, oneOfType, string,
 } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
@@ -14,7 +14,7 @@ import styles from './Chart.style';
 const { COLOR } = THEME;
 
 
-const A = ({
+const HeadingExtended = ({
   title, max, min, ...inherit
 }) => (
   <Heading value={title} style={styles.heading}>
@@ -25,20 +25,20 @@ const A = ({
   </Heading>
 );
 
-A.propTypes = {
+HeadingExtended.propTypes = {
   title: string,
   max: number,
   min: number,
 };
 
-A.defaultProps = {
+HeadingExtended.defaultProps = {
   title: undefined,
   max: undefined,
   min: undefined,
 };
 
 const Chart = React.memo(({
-  captions, highlight, inverted, values, ...inherit
+  captions, highlight, inverted, values, styleContainer, ...inherit
 }) => {
   const {
     color, currency, max, min, med: avg,
@@ -47,8 +47,8 @@ const Chart = React.memo(({
   if (firstValueIndex === -1) firstValueIndex = undefined;
 
   return (
-    <View style={inherit.styleContainer}>
-      { !inverted && <A {...inherit} /> }
+    <View style={styleContainer}>
+      { !inverted && <HeadingExtended {...inherit} /> }
       <View style={[styles.container, inverted && styles.containerInverted]}>
         { avg > 0 && (
           <View style={styles.scales}>
@@ -87,7 +87,7 @@ const Chart = React.memo(({
           ))}
         </View>
 
-        { inverted && <A {...inherit} /> }
+        { inverted && <HeadingExtended {...inherit} /> }
 
         { captions && (
           <View style={[styles.captions, styles.row]}>
@@ -111,6 +111,7 @@ Chart.propTypes = {
   currency: string,
   highlight: number,
   inverted: bool,
+  styleContainer: oneOfType([arrayOf(number), number]),
   title: string,
   values: arrayOf(number),
 };
@@ -121,6 +122,7 @@ Chart.defaultProps = {
   currency: undefined,
   highlight: undefined,
   inverted: false,
+  styleContainer: undefined,
   title: undefined,
   values: [],
 };

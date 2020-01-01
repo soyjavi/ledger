@@ -16,7 +16,7 @@ const createTx = async (store, snackbar, props, save = true) => {
     ...props,
   }).catch((error) => snackbarError(error.message));
 
-  if (save) store.save({ txs: [...txs, tx] });
+  if (tx && save) store.save({ txs: [...txs, tx] });
 
   return tx;
 };
@@ -27,7 +27,9 @@ const createTransfer = async (store, snackbar, props) => {
   } = props;
 
   const fromTx = await createTx(
-    store, {
+    store,
+    snackbar,
+    {
       category: VAULT_TRANSFER, title: to.title, type: EXPENSE, value: parseFloat(value, 10), vault,
     },
     false,

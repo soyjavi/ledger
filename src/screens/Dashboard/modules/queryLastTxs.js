@@ -1,6 +1,6 @@
 import { C } from '../../../common';
 
-const { CURRENCY, VAULT_TRANSFER, WIPE } = C;
+const { CURRENCY } = C;
 const MAX_DAYS = 3;
 
 export default ({ txs = [], vaults = [] }) => {
@@ -13,7 +13,6 @@ export default ({ txs = [], vaults = [] }) => {
   txs
     .slice(-32)
     .reverse()
-    .filter(({ category, vault }) => category !== VAULT_TRANSFER && category !== WIPE && vault !== undefined)
     .some((tx) => {
       const { currency = CURRENCY } = vaults.find((vault) => vault.hash === tx.vault) || {};
       const txDate = new Date(new Date(tx.timestamp).getTime() - offset).toISOString().substr(0, 10);

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 import { C } from './common';
 import { useNavigation, useStore } from './context';
@@ -28,8 +28,9 @@ export default () => {
       { stack.includes(SESSION) && <Dashboard backward={current !== DASHBOARD} visible={stack.includes(DASHBOARD)} /> }
 
       { sync && stack.includes(DASHBOARD) && (
-        <Fragment>
+        <>
           <Settings visible={stack.includes(SETTINGS)} />
+          <Vaults visible={stack.includes(VAULTS)} />
           <Vault
             backward={current !== VAULT}
             dataSource={stack.includes(VAULT) && params.Vault
@@ -38,10 +39,9 @@ export default () => {
             back={back}
             visible={stack.includes(VAULT)}
           />
-          <Vaults visible={stack.includes(VAULTS)} />
           <Stats vault={params.Vault} visible={stack.includes(STATS)} />
           <DialogClone dataSource={tx} visible={tx !== undefined} />
-        </Fragment>
+        </>
       )}
     </LayoutView>
   );

@@ -76,21 +76,20 @@ const Vault = (props) => {
     <Viewport {...inherit} scroll={false} visible={visible}>
       <Header highlight={scroll} image={FLAGS[currency]} title={`${title} ${l10n.BALANCE}`} />
       <ScrollView onScroll={onScroll} ref={scrollview} scrollEventThrottle={40} style={styles.container}>
-        <Fragment>
+        <>
           <Summary {...vault} image={FLAGS[currency]} title={`${title} ${l10n.BALANCE}`} />
           <Search l10n={l10n} onValue={onSearch} value={search} />
-        </Fragment>
+        </>
         <View style={styles.content}>
           { values.length > 0
             ? (
-              <Fragment>
-                <Fragment>
+              <>
+                <>
                   { values.map((item) => (
                     <GroupTransactions key={`${item.timestamp}-${search}`} {...item} currency={currency} />))}
-                </Fragment>
-                { !search && !scrollQuery && (
-                  <Activity size="large" color={COLOR.BASE} style={styles.activity} />)}
-              </Fragment>
+                </>
+                { !search && !scrollQuery && <Activity size="large" color={COLOR.BASE} style={styles.activity} /> }
+              </>
             )
             : (
               <View style={[styles.centered, styles.container]}>
@@ -107,12 +106,7 @@ const Vault = (props) => {
       />
 
       { visible && (
-        <DialogTransaction
-          currency={currency}
-          onClose={() => setDialog(false)}
-          vault={hash}
-          visible={dialog}
-        />
+        <DialogTransaction currency={currency} onClose={() => setDialog(false)} vault={hash} visible={dialog} />
       )}
     </Viewport>
   );

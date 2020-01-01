@@ -7,7 +7,7 @@ import { THEME } from '../../reactor/common';
 import { Button, Viewport } from '../../reactor/components';
 
 import { C } from '../../common';
-import { Footer, Header, Heading } from '../../components';
+import { Footer, Header } from '../../components';
 import {
   useL10N, useNavigation, useSettings, useStore,
 } from '../../context';
@@ -30,23 +30,22 @@ const Vaults = ({ visible, ...inherit }) => {
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
-      <Header highlight title={l10n.VAULTS} />
+      <Header highlight title={l10n.VAULTS}>
+        <Button contained={false} small onPress={() => setOrder(!order)}>
+          <MaterialCommunityIcons
+            name={order ? 'sort-descending' : 'sort-ascending'}
+            color={COLOR.TEXT}
+            size={20}
+          />
+        </Button>
+      </Header>
 
       <ScrollView contentContainerStyle={styles.container}>
-        <Heading value={`${l10n.VAULTS} ${l10n.VISIBILITY}`}>
-          <Button contained={false} small onPress={() => setOrder(!order)}>
-            <MaterialCommunityIcons
-              name={order ? 'sort-descending' : 'sort-ascending'}
-              color={COLOR.TEXT}
-              size={20}
-            />
-          </Button>
-        </Heading>
         <View style={styles.currencies}>
           { sort(vaults, order).map((vault) => (
             <VaultItem
               key={vault.hash}
-              active={state[vault.hash]}
+              active={state[vault.hash] !== false}
               dataSource={vault}
               onChange={(value) => dispatch({ type: 'VAULT_VISIBLE', vault: vault.hash, value })}
               onPress={() => navigation.go(SCREEN.VAULT, vault)}
