@@ -7,7 +7,9 @@ import { Activity, Text, Viewport } from '../../reactor/components';
 
 import { LOGO } from '../../assets';
 import { C } from '../../common';
-import { useL10N, useNavigation, useStore } from '../../context';
+import {
+  useL10N, useNavigation, useSnackBar, useStore,
+} from '../../context';
 import { getAuthorization, getProfile } from '../../services';
 import { NumKeyboard } from './components';
 import styles from './Session.style';
@@ -19,6 +21,7 @@ const Session = (props) => {
   const l10n = useL10N();
   const navigation = useNavigation();
   const store = useStore();
+  const snackbar = useSnackBar();
   const [fingerprint, setFingerprint] = useState(undefined);
   const [pin, setPin] = useState('');
   const [busy, setBusy] = useState(false);
@@ -38,12 +41,12 @@ const Session = (props) => {
 
     setBusy(true);
     if (isSignup) {
-      const authorization = await getAuthorization(store, pin);
-      await getProfile(store, authorization);
+      const authorization = await getAuthorization(store, snackbar, pin);
+      await getProfile(store, snackbar, authorization);
       navigation.go(SCREEN.DASHBOARD);
     } else {
       navigation.go(SCREEN.DASHBOARD);
-      await getProfile(store);
+      await getProfile(store, snackbar);
     }
     setBusy(false);
     setPin('');

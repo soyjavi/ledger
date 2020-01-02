@@ -4,7 +4,9 @@ import { View } from 'react-native';
 
 import { Button, Motion } from '../../../../reactor/components';
 import { THEME } from '../../../../reactor/common';
-import { useConnection, useL10N, useStore } from '../../../../context';
+import {
+  useConnection, useL10N, useSnackBar, useStore,
+} from '../../../../context';
 import { getProfile } from '../../../../services';
 import styles from './Syncing.style';
 
@@ -13,12 +15,13 @@ const { COLOR } = THEME;
 const Syncing = ({ scroll }) => {
   const { connected } = useConnection();
   const l10n = useL10N();
+  const snackbar = useSnackBar();
   const store = useStore();
   const { setSync, sync } = store;
 
   const handleSync = async () => {
     setSync(false);
-    await getProfile(store);
+    await getProfile(store, snackbar);
     setSync(true);
   };
 

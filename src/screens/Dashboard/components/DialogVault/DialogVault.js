@@ -5,7 +5,7 @@ import { View } from 'react-native';
 import { FLAGS } from '../../../../assets';
 import { FORM, setCurrency, translate } from '../../../../common';
 import { CardOption } from '../../../../components';
-import { useL10N, useStore } from '../../../../context';
+import { useL10N, useSnackBar, useStore } from '../../../../context';
 import { createVault } from '../../../../services';
 import { THEME } from '../../../../reactor/common';
 import {
@@ -20,6 +20,7 @@ const INITIAL_STATE = { title: '', balance: '0' };
 const DialogVault = ({ onClose, visible }) => {
   const l10n = useL10N();
   const store = useStore();
+  const snackbar = useSnackBar();
   const { baseCurrency, rates, vaults = [] } = store;
 
   const [busy, setBusy] = useState(false);
@@ -28,7 +29,7 @@ const DialogVault = ({ onClose, visible }) => {
 
   const onSubmit = async () => {
     setBusy(true);
-    const vault = await createVault(store, { currency, ...form });
+    const vault = await createVault(store, snackbar, { currency, ...form });
     if (vault) {
       onClose();
       setVaultCurrency(vault.currency);

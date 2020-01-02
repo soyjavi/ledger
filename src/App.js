@@ -1,9 +1,8 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 import { C } from './common';
-import { useL10N, useNavigation, useStore } from './context';
-import { THEME } from './reactor/common';
-import { LayoutView, Snackbar } from './reactor/components';
+import { useNavigation, useStore } from './context';
+import { LayoutView } from './reactor/components';
 import { DialogClone } from './components';
 import {
   Session, Settings, Stats, Dashboard, Vault, Vaults,
@@ -14,16 +13,12 @@ const { SCREEN } = C;
 const {
   SESSION, SETTINGS, STATS, DASHBOARD, VAULT, VAULTS,
 } = SCREEN;
-const { COLOR } = THEME;
 
 export default () => {
   const {
     current, back, params, stack, tx,
   } = useNavigation();
-  const l10n = useL10N();
-  const {
-    error, onError, sync, vaults = [],
-  } = useStore();
+  const { sync, vaults = [] } = useStore();
   console.log('<App>');
 
   return (
@@ -33,8 +28,9 @@ export default () => {
       { stack.includes(SESSION) && <Dashboard backward={current !== DASHBOARD} visible={stack.includes(DASHBOARD)} /> }
 
       { sync && stack.includes(DASHBOARD) && (
-        <Fragment>
+        <>
           <Settings visible={stack.includes(SETTINGS)} />
+          <Vaults visible={stack.includes(VAULTS)} />
           <Vault
             backward={current !== VAULT}
             dataSource={stack.includes(VAULT) && params.Vault
@@ -43,19 +39,10 @@ export default () => {
             back={back}
             visible={stack.includes(VAULT)}
           />
-          <Vaults visible={stack.includes(VAULTS)} />
           <Stats vault={params.Vault} visible={stack.includes(STATS)} />
           <DialogClone dataSource={tx} visible={tx !== undefined} />
-        </Fragment>
+        </>
       )}
-
-      <Snackbar
-        button={l10n.CLOSE.toUpperCase()}
-        caption={error}
-        color={COLOR.ERROR}
-        onPress={() => onError(undefined)}
-        visible={!!(error)}
-      />
     </LayoutView>
   );
 };

@@ -1,9 +1,11 @@
 import { bool, func, string } from 'prop-types';
 import React, { useState } from 'react';
 
-import { useL10N, useStore } from '../../../../context';
+import { useL10N, useSnackBar, useStore } from '../../../../context';
 import { THEME } from '../../../../reactor/common';
 import { Button, Dialog, Text } from '../../../../reactor/components';
+import { fork } from '../../../../services';
+
 import styles from './DialogFork.style';
 
 const { COLOR } = THEME;
@@ -12,13 +14,14 @@ const DialogFork = ({
   onClose, onForked, query, visible, ...inherit
 }) => {
   const l10n = useL10N();
-  const { onFork } = useStore();
+  const store = useStore();
+  const snackbar = useSnackBar();
   const [busy, setBusy] = useState(false);
 
   const onSubmit = async () => {
     setBusy(true);
-    const fork = await onFork(query);
-    if (fork) onForked();
+    const forked = await fork(store, snackbar, query);
+    if (forked) onForked();
     else onClose();
     setBusy(false);
   };

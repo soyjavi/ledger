@@ -26,7 +26,6 @@ const INITIAL_STATE = {
 const StoreProvider = ({ children }) => {
   const [state, setState] = useState(undefined);
   const [sync, setSync] = useState(false);
-  const [error, setError] = useState(undefined);
 
   useEffect(() => {
     const load = async () => {
@@ -42,14 +41,8 @@ const StoreProvider = ({ children }) => {
     setState(next);
   };
 
-  const onError = (error) => setError(error ? error.message : undefined);
-
   return (
-    <StoreContext.Provider
-      value={{
-        error, onError, sync, setSync, ...state, save,
-      }}
-    >
+    <StoreContext.Provider value={{ sync, setSync, save, ...state }}>
       { children }
     </StoreContext.Provider>
   );

@@ -1,5 +1,6 @@
 const FAMILY = 'font-family';
 const FAMILY_BOLD = 'font-family-bold';
+
 const WEIGHT = { REGULAR: '400', BOLD: '700' };
 
 export default {
