@@ -24,8 +24,7 @@ export default () => {
   return (
     <LayoutView style={styles.container}>
       <Session backward={current !== SESSION} visible />
-
-      { stack.includes(SESSION) && <Dashboard backward={current !== DASHBOARD} visible={stack.includes(DASHBOARD)} /> }
+      <Dashboard backward={current !== DASHBOARD} visible={stack.includes(DASHBOARD)} />
 
       { sync && stack.includes(DASHBOARD) && (
         <>

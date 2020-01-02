@@ -8,6 +8,7 @@ export default StyleSheet.create({
   balance: {
     fontSize: UNIT * 3.2,
     lineHeight: UNIT * 3.2,
+    marginTop: SPACE.XS,
   },
 
   box: {

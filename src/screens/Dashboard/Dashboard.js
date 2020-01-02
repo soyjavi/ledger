@@ -24,7 +24,7 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
   const l10n = useL10N();
   const navigation = useNavigation();
   const {
-    baseCurrency, overall, sync, txs, vaults,
+    baseCurrency, overall, sync, txs = [], vaults = [],
   } = useStore();
 
   const [dialog, setDialog] = useState(false);

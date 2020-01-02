@@ -79,7 +79,7 @@ const Stats = (props) => {
           {...calcScales(chart.incomes)}
           {...common}
           color={COLOR.INCOME}
-          styleContainer={styles.chart}
+          styleContainer={[styles.chart]}
           title={`${l10n.INCOMES} & ${l10n.EXPENSES}`}
           values={chart.incomes}
         />

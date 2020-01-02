@@ -1,4 +1,6 @@
-import { shape, number, string } from 'prop-types';
+import {
+  oneOfType, shape, number, string,
+} from 'prop-types';
 import React from 'react';
 import { Image, View } from 'react-native';
 
@@ -93,7 +95,7 @@ Summary.propTypes = {
   currency: string,
   currentBalance: number,
   currentMonth: shape({}),
-  image: string,
+  image: oneOfType([number, string]),
   title: string,
 };
 

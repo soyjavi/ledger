@@ -1,5 +1,5 @@
 import {
-  arrayOf, bool, number, oneOfType, string,
+  array, arrayOf, bool, number, oneOfType, string,
 } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
@@ -111,7 +111,7 @@ Chart.propTypes = {
   currency: string,
   highlight: number,
   inverted: bool,
-  styleContainer: oneOfType([arrayOf(number), number]),
+  styleContainer: oneOfType([array, number]),
   title: string,
   values: arrayOf(number),
 };

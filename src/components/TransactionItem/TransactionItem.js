@@ -76,13 +76,14 @@ TransactionItem.propTypes = {
   location: shape({}),
   timestamp: oneOfType([string, number]).isRequired,
   title: string,
-  type: number.isRequired,
+  type: number,
   value: number.isRequired,
 };
 
 TransactionItem.defaultProps = {
   location: undefined,
   title: undefined,
+  type: EXPENSE,
 };
 
 export { TransactionItem };

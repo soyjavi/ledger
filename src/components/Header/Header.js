@@ -10,7 +10,7 @@ import { LOGO } from '../../assets';
 import { Heading } from '../Heading';
 import styles from './Header.style';
 
-export const Header = ({
+const Header = ({
   children, highlight, image, title,
 }) => (
   <View style={styles.container}>
@@ -34,3 +34,5 @@ Header.defaultProps = {
   image: LOGO,
   title: undefined,
 };
+
+export { Header };
