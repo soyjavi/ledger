@@ -1,7 +1,12 @@
 import { C } from '../common';
 import { apiCall, composeHeaders } from './modules';
 
-const { VAULT_TRANSFER, TX: { TYPE: { EXPENSE, INCOME } } } = C;
+const {
+  VAULT_TRANSFER,
+  TX: {
+    TYPE: { EXPENSE, INCOME },
+  },
+} = C;
 
 const createTx = async (store, snackbar, props, save = true) => {
   const { txs = [] } = store;
@@ -22,15 +27,17 @@ const createTx = async (store, snackbar, props, save = true) => {
 };
 
 const createTransfer = async (store, snackbar, props) => {
-  const {
-    vault, from, to, exchange, value,
-  } = props;
+  const { vault, from, to, exchange, value } = props;
 
   const fromTx = await createTx(
     store,
     snackbar,
     {
-      category: VAULT_TRANSFER, title: to.title, type: EXPENSE, value: parseFloat(value, 10), vault,
+      category: VAULT_TRANSFER,
+      title: to.title,
+      type: EXPENSE,
+      value: parseFloat(value, 10),
+      vault,
     },
     false,
   );

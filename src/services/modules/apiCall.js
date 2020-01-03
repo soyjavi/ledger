@@ -14,9 +14,7 @@ const HEADER_FORM = {
 
 if (typeof global.self === 'undefined') global.self = global;
 
-const apiCall = async ({
-  endpoint = ENDPOINT, headers, method = DEFAULT_METHOD, service, ...props
-}) => (
+const apiCall = async ({ endpoint = ENDPOINT, headers, method = DEFAULT_METHOD, service, ...props }) =>
   new Promise((resolve, reject) => {
     fetch(`${endpoint}/${service}`, {
       headers: {
@@ -31,13 +29,13 @@ const apiCall = async ({
 
         if (response.status >= 400) reject({ code: response.status, message: json.message }); // eslint-disable-line
         else resolve(json);
-      }).catch(({ message = 'Something wrong happened. Try again.', response } = {}) => {
+      })
+      .catch(({ message = 'Something wrong happened. Try again.', response } = {}) => {
         reject({ // eslint-disable-line
           code: response ? response.status : 500,
           message,
         });
       });
-  })
-);
+  });
 
 export { apiCall };

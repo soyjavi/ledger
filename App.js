@@ -7,7 +7,9 @@ import { Provider } from './src/context';
 import { THEME } from './src/reactor/common';
 
 const { LANGUAGE } = C;
-const { UIManager: { setLayoutAnimationEnabledExperimental: setLayoutAnimation } } = NativeModules;
+const {
+  UIManager: { setLayoutAnimationEnabledExperimental: setLayoutAnimation },
+} = NativeModules;
 if (setLayoutAnimation) setLayoutAnimation(true);
 
 const App = () => {
@@ -28,13 +30,13 @@ const App = () => {
 
   const App = loaded ? require('./src/App').default : View; // eslint-disable-line
 
-  return loaded
-    ? (
-      <Provider dictionary={L10N} language={LANGUAGE}>
-        <App />
-      </Provider>
-    )
-    : <App />;
+  return loaded ? (
+    <Provider dictionary={L10N} language={LANGUAGE}>
+      <App />
+    </Provider>
+  ) : (
+    <App />
+  );
 };
 
 export default App;

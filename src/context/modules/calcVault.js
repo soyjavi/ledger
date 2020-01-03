@@ -1,11 +1,12 @@
 import { C, exchange } from '../../common';
 
-const { TX: { TYPE }, VAULT_TRANSFER } = C;
+const {
+  TX: { TYPE },
+  VAULT_TRANSFER,
+} = C;
 const CURRENT_MONTH = 11;
 
-export default ({
-  vault = {}, txs = [], baseCurrency, rates = {},
-}) => {
+export default ({ vault = {}, txs = [], baseCurrency, rates = {} }) => {
   const now = new Date();
   const lastYear = new Date(now.getFullYear(), now.getMonth() - 11, 1);
   const currentDay = now.getDate();
@@ -19,14 +20,12 @@ export default ({
   let today = 0;
 
   const dataSource = txs.filter((tx) => tx.vault === vault.hash);
-  dataSource.forEach(({
-    category, timestamp, type, value,
-  }) => {
+  dataSource.forEach(({ category, timestamp, type, value }) => {
     const isExpense = type === TYPE.EXPENSE;
     const date = new Date(timestamp);
-    const monthNumber = date.getMonth() - lastYear.getMonth() + (12 * (date.getFullYear() - lastYear.getFullYear()));
+    const monthNumber = date.getMonth() - lastYear.getMonth() + 12 * (date.getFullYear() - lastYear.getFullYear());
 
-    balance += isExpense ? -(value) : value;
+    balance += isExpense ? -value : value;
 
     if (monthNumber >= 0) {
       if (monthNumber === CURRENT_MONTH) {
@@ -34,9 +33,9 @@ export default ({
           currentMonthTxs += 1;
           if (isExpense) expenses += value;
           else incomes += value;
-          progression += isExpense ? -(value) : value;
+          progression += isExpense ? -value : value;
 
-          if (date.getDate() === currentDay) today += isExpense ? -(value) : value;
+          if (date.getDate() === currentDay) today += isExpense ? -value : value;
         }
       }
     }

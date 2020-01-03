@@ -6,7 +6,5 @@ export default (dataSource = []) => {
 
   const half = Math.floor(values.length / 2);
 
-  return values.length % 2
-    ? values[half]
-    : (values[half - 1] + values[half]) / 2;
+  return values.length % 2 ? values[half] : (values[half - 1] + values[half]) / 2;
 };

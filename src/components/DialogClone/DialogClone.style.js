@@ -3,7 +3,9 @@ import { StyleSheet } from 'react-native';
 import { C } from '../../common';
 import { LAYOUT, THEME } from '../../reactor/common';
 
-const { STYLE: { DIALOG, DIALOG_FRAME } } = C;
+const {
+  STYLE: { DIALOG, DIALOG_FRAME },
+} = C;
 
 const { COLOR, SPACE, UNIT } = THEME;
 const MONTH_FONT_SIZE = UNIT * 0.9;

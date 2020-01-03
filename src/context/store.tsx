@@ -1,7 +1,5 @@
 import { node } from 'prop-types';
-import React, {
-  createContext, useContext, useState, useEffect,
-} from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 import { C } from '../common';
 import { consolidate, Storage } from './modules';
@@ -41,11 +39,7 @@ const StoreProvider = ({ children }) => {
     setState(next);
   };
 
-  return (
-    <StoreContext.Provider value={{ sync, setSync, save, ...state }}>
-      { children }
-    </StoreContext.Provider>
-  );
+  return <StoreContext.Provider value={{ sync, setSync, save, ...state }}>{children}</StoreContext.Provider>;
 };
 
 StoreProvider.propTypes = {
