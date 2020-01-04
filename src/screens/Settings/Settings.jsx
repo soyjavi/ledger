@@ -58,19 +58,13 @@ const Settings = ({ visible, ...inherit }) => {
       <Header highlight title={l10n.SETTINGS} />
 
       <ScrollView contentContainerStyle={styles.container}>
+        <Heading value={l10n.TRANSFER_TXS} caption={l10n.IMPORT_EXPORT_CAPTION}>
+          {hasCamera === undefined && <Activity color="white" style={styles.activity} />}
+          {hasCamera && (
+            <Button outlined onPress={() => setCamera(!camera)} small title={camera ? l10n.CLOSE : l10n.QR_READER} />
+          )}
+        </Heading>
         <View style={styles.content}>
-          <Heading color={COLOR.TEXT_CONTRAST} value={l10n.TRANSFER_TXS} caption={l10n.IMPORT_EXPORT_CAPTION}>
-            {hasCamera === undefined && <Activity color="white" style={styles.activity} />}
-            {hasCamera && (
-              <Button
-                contained={false}
-                onPress={() => setCamera(!camera)}
-                small
-                style={styles.button}
-                title={camera ? l10n.CLOSE : l10n.QR_READER}
-              />
-            )}
-          </Heading>
           {!camera ? (
             <Image source={{ uri: `${QR_URI}=${secret}|${authorization}` }} style={styles.qr} />
           ) : (
@@ -78,10 +72,10 @@ const Settings = ({ visible, ...inherit }) => {
               <View style={styles.cameraViewport} />
             </Camera>
           )}
-          <Text caption lighten style={styles.caption}>
-            {camera ? l10n.TRANSFER_TXS_CAMERA : l10n.TRANSFER_TXS_CAPTION}
-          </Text>
         </View>
+        <Text caption lighten style={styles.caption}>
+          {camera ? l10n.TRANSFER_TXS_CAMERA : l10n.TRANSFER_TXS_CAPTION}
+        </Text>
       </ScrollView>
 
       <Footer onBack={navigation.back} onHardwareBack={visible ? () => navigation.back() : undefined} />

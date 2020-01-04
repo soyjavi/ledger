@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 
 import { FLAGS } from '../../assets';
-import { Footer, GroupTransactions, Header, Summary } from '../../components';
+import { Footer, GroupTransactions, Header, Heading, Summary } from '../../components';
 import { useL10N, useNavigation } from '../../context';
 import { LAYOUT, THEME } from '../../reactor/common';
 import { Activity, Text, Viewport } from '../../reactor/components';
@@ -86,22 +86,24 @@ const Vault = (props) => {
           <Summary {...vault} image={FLAGS[currency]} title={`${title} ${l10n.BALANCE}`} />
           <Search onValue={onSearch} value={search} />
         </>
-        <View style={styles.content}>
-          {values.length > 0 ? (
-            <>
+
+        {values.length > 0 ? (
+          <>
+            <Heading value={l10n.TRANSACTIONS} />
+            <View style={styles.content}>
               <>
                 {values.map((item) => (
                   <GroupTransactions key={`${item.timestamp}-${search}`} {...item} currency={currency} />
                 ))}
               </>
               {!search && !scrollQuery && <Activity size="large" color={COLOR.BASE} style={styles.activity} />}
-            </>
-          ) : (
-            <View style={[styles.centered, styles.container]}>
-              <Text lighten>{l10n.NO_TRANSACTIONS}</Text>
             </View>
-          )}
-        </View>
+          </>
+        ) : (
+          <View style={[styles.centered, styles.container]}>
+            <Text lighten>{l10n.NO_TRANSACTIONS}</Text>
+          </View>
+        )}
       </ScrollView>
 
       <Footer

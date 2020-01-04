@@ -17,15 +17,13 @@ export default StyleSheet.create({
     height: 28,
   },
 
-  button: {
-    marginRight: -SPACE.XS,
-  },
-
   cameraViewport: {
     flex: 1,
   },
 
   caption: {
+    marginHorizontal: SPACE.MEDIUM,
+    marginVertical: SPACE.XS,
     textAlign: 'center',
   },
 
@@ -33,10 +31,7 @@ export default StyleSheet.create({
     paddingVertical: HEADER_HEIGHT,
   },
 
-  content: {
-    ...CONTENT,
-    // marginHorizontal: SPACE.MEDIUM,
-  },
+  content: CONTENT,
 
   options: {
     marginBottom: SPACE.MEDIUM,
@@ -45,8 +40,8 @@ export default StyleSheet.create({
   qr: {
     alignSelf: 'center',
     height: QR_SIZE,
-    marginTop: SPACE.XXS,
-    marginBottom: SPACE.XS,
+    // marginTop: SPACE.XXS,
+    // marginBottom: SPACE.XS,
     width: QR_SIZE,
   },
 });

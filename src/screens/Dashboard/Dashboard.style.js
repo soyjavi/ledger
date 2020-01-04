@@ -25,6 +25,7 @@ export default StyleSheet.create({
   },
 
   vaults: {
+    marginBottom: SPACE.L,
     paddingLeft: SPACE.XXS,
     paddingRight: SPACE.MEDIUM,
   },

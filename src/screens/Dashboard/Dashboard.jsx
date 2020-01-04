@@ -74,16 +74,18 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
                 <VaultCard {...vault} key={vault.hash} onPress={() => navigation.go(SCREEN.VAULT, vault)} />
               ))}
             </Slider>
-          </>
-        )}
 
-        {isInitialized && lastTxs.length > 0 && (
-          <View style={styles.content}>
-            <Heading color={COLOR.TEXT_CONTRAST} value={l10n.LAST_TRANSACTIONS} />
-            {lastTxs.map((item) => (
-              <GroupTransactions key={`${item.timestamp}`} {...item} currency={baseCurrency} />
-            ))}
-          </View>
+            {lastTxs.length > 0 && (
+              <>
+                <Heading value={l10n.LAST_TRANSACTIONS} />
+                <View style={styles.content}>
+                  {lastTxs.map((item) => (
+                    <GroupTransactions key={`${item.timestamp}`} {...item} currency={baseCurrency} />
+                  ))}
+                </View>
+              </>
+            )}
+          </>
         )}
       </ScrollView>
 

@@ -134,6 +134,7 @@ export default {
     TO: 'to',
     TODAY: 'Today',
     TRANSACTION: 'Transaction',
+    TRANSACTIONS: 'Transactions',
     TRANSFER: 'Transfer',
     TRANSFERS: 'Transfers',
     TRANSFER_TXS: 'Transfer transactions',

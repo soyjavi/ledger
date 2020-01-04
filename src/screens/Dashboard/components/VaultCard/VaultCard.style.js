@@ -9,7 +9,6 @@ const { SPACE, UNIT } = THEME;
 export default StyleSheet.create({
   container: {
     height: UNIT * 12.8,
-    marginBottom: SPACE.S,
     marginLeft: SPACE.S,
     width: STYLE.VAULT_ITEM_WIDTH,
   },
