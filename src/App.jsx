@@ -13,6 +13,7 @@ const { SESSION, SETTINGS, STATS, DASHBOARD, VAULT, VAULTS } = SCREEN;
 const App = () => {
   const { current, back, params, stack, tx } = useNavigation();
   const { sync, vaults = [] } = useStore();
+
   console.log('<App>');
 
   return (

@@ -26,6 +26,8 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
 
   const [dialog, setDialog] = useState(false);
   const [scroll, setScroll] = useState(false);
+  const [lastTxs, setLastTxs] = useState([]);
+  const [visibleVaults, setVisibleVaults] = useState([]);
 
   useEffect(() => {
     onHardwareBackPress(!backward, () => {
@@ -37,16 +39,14 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
     if (sync && vaults.length === 0) setDialog(true);
   }, [sync, vaults]);
 
-  console.log('<Dashboard>', {
-    visible,
-    sync,
-    vaults,
-    txs,
-    baseCurrency,
-  });
+  useEffect(() => {
+    if (visible) {
+      setLastTxs(queryLastTxs({ txs, vaults }));
+      setVisibleVaults(queryVaults({ settings, vaults }));
+    }
+  }, [visible, txs, vaults]);
 
-  const isInitialized = vaults.length > 0;
-  const lastTxs = queryLastTxs({ txs, vaults });
+  console.log('<Dashboard>', { visible, sync });
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
@@ -62,7 +62,7 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
       >
         <Summary {...overall} currency={baseCurrency} title={l10n.OVERALL_BALANCE} />
 
-        {isInitialized && (
+        {vaults.length > 0 && (
           <>
             <Heading value={l10n.VAULTS} style={styles.headingVaults}>
               <Button small contained={false} onPress={() => navigation.go(SCREEN.VAULTS)}>
@@ -70,7 +70,7 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
               </Button>
             </Heading>
             <Slider itemWidth={VAULT_ITEM_WIDTH + SPACE.S} itemMargin={0} style={styles.vaults}>
-              {queryVaults({ settings, vaults }).map((vault) => (
+              {visibleVaults.map((vault) => (
                 <VaultCard {...vault} key={vault.hash} onPress={() => navigation.go(SCREEN.VAULT, vault)} />
               ))}
             </Slider>

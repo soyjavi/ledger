@@ -59,7 +59,7 @@ const OptionItem = ({ active, onChange, onPress, dataSource: { currency, current
 
 OptionItem.propTypes = {
   active: bool,
-  dataSource: shape.isRequired,
+  dataSource: shape({}).isRequired,
   onChange: func.isRequired,
   onPress: func.isRequired,
 };

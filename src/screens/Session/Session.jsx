@@ -2,7 +2,7 @@ import * as LocalAuthentication from 'expo-local-authentication';
 import React, { useEffect, useState } from 'react';
 import { Image, View } from 'react-native';
 
-import { THEME } from '../../reactor/common';
+import { ENV, THEME } from '../../reactor/common';
 import { Activity, Text, Viewport } from '../../reactor/components';
 
 import { LOGO } from '../../assets';
@@ -28,12 +28,22 @@ const Session = (props) => {
 
   useEffect(() => {
     async function askFingerprint() {
-      setFingerprint(
-        IS_DEV || ((await LocalAuthentication.hasHardwareAsync()) && (await LocalAuthentication.isEnrolledAsync())),
-      );
+      try {
+        if ((await LocalAuthentication.hasHardwareAsync()) && (await LocalAuthentication.isEnrolledAsync())) {
+          setFingerprint(true);
+          const { success } = await LocalAuthentication.authenticateAsync();
+          if (success) onHandshake(store.pin);
+        } else setFingerprint(false);
+      } catch (e) {
+        setFingerprint(false);
+      }
     }
-    if (fingerprint === undefined) askFingerprint();
-  }, [fingerprint]);
+
+    if (store.pin) {
+      if (IS_DEV && ENV.IS_WEB) onHandshake(store.pin);
+      else if (fingerprint === undefined) askFingerprint();
+    }
+  }, [fingerprint, store.pin]);
 
   const onHandshake = async (pin) => {
     const isSignup = store.pin === undefined;
@@ -51,21 +61,6 @@ const Session = (props) => {
     setPin('');
   };
 
-  const onFingerprint = async () => {
-    setFingerprint(false);
-    let needHandshake = false;
-
-    try {
-      const { error, success } = await LocalAuthentication.authenticateAsync();
-      if (success) needHandshake = true;
-      else if (error) setFingerprint(true);
-    } catch (error) {
-      if (IS_DEV) needHandshake = true;
-    }
-
-    if (needHandshake) onHandshake(store.pin);
-  };
-
   const onPin = (next) => {
     setPin(next);
 
@@ -78,10 +73,9 @@ const Session = (props) => {
   };
 
   console.log('<Session>', { fingerprint, busy, pin });
-  if (!busy && fingerprint && store.pin) onFingerprint();
 
   return (
-    <Viewport {...props} scroll={false} visible style={{ margin: 0, padding: 0 }}>
+    <Viewport {...props} scroll={false}>
       <View style={styles.container}>
         <View style={styles.content}>
           <View style={styles.row}>
