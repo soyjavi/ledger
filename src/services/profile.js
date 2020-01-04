@@ -8,8 +8,7 @@ const getProfile = async (store, snackbar, signup = {}) => {
   const { snackbarError } = snackbar;
   const headers = { authorization, secret };
 
-  const profile = await apiCall({ service: 'profile', headers })
-    .catch((error) => snackbarError(error.message));
+  const profile = await apiCall({ service: 'profile', headers }).catch((error) => snackbarError(error.message));
   if (!profile) return undefined;
 
   const { version } = store;
@@ -18,13 +17,16 @@ const getProfile = async (store, snackbar, signup = {}) => {
   const { hash: localHash } = txs[txs.length - 1] || {};
 
   if (remoteHash !== localHash || version !== VERSION) {
-    const { txs: nextTxs = [] } = await apiCall({ service: 'transactions', headers })
-      .catch((error) => snackbarError(error.message)) || {};
+    const { txs: nextTxs = [] } =
+      (await apiCall({ service: 'transactions', headers }).catch((error) => snackbarError(error.message))) || {};
     if (nextTxs.length > 0) txs = nextTxs;
   }
 
   await store.save({
-    ...inherit, ...signup, txs, version: VERSION,
+    ...inherit,
+    ...signup,
+    txs,
+    version: VERSION,
   });
 
   store.setSync(true);

@@ -19,7 +19,23 @@ import XAU from './flags/gold.png';
 import XAG from './flags/silver.png';
 
 const FLAGS = {
-  AUD, BTC, CNY, EUR, HKD, JPY, KRW, MXN, MYR, THB, GBP, RUB, SGD, USD, VND, XAU, XAG,
+  AUD,
+  BTC,
+  CNY,
+  EUR,
+  HKD,
+  JPY,
+  KRW,
+  MXN,
+  MYR,
+  THB,
+  GBP,
+  RUB,
+  SGD,
+  USD,
+  VND,
+  XAU,
+  XAG,
 };
 
 export { LOGO, FLAGS };

@@ -4,10 +4,4 @@ import hydrate from './hydrate';
 import queryCategories from './queryCategories';
 import queryAvailableVaults from './queryAvailableVaults';
 
-export {
-  getLocation,
-  handleSubmit,
-  hydrate,
-  queryCategories,
-  queryAvailableVaults,
-};
+export { getLocation, handleSubmit, hydrate, queryCategories, queryAvailableVaults };

@@ -3,9 +3,4 @@ import orderByAmount from './orderByAmount';
 import orderCaptions from './orderCaptions';
 import query from './query';
 
-export {
-  calcScales,
-  orderByAmount,
-  orderCaptions,
-  query,
-};
+export { calcScales, orderByAmount, orderCaptions, query };

@@ -2,7 +2,12 @@ import { C, exchange } from '../../../common';
 
 import calcHeatmap from './calcHeatmap';
 
-const { TX: { TYPE: { EXPENSE } }, VAULT_TRANSFER } = C;
+const {
+  TX: {
+    TYPE: { EXPENSE },
+  },
+  VAULT_TRANSFER,
+} = C;
 
 const parseDate = (date) => {
   const value = date ? new Date(date) : new Date();
@@ -12,9 +17,7 @@ const parseDate = (date) => {
 
 export default (vault = {}, store, query = {}) => {
   const range = 12;
-  const {
-    baseCurrency, overall, rates, txs, vaults,
-  } = store;
+  const { baseCurrency, overall, rates, txs, vaults } = store;
   const chart = {
     balance: new Array(range).fill(0),
     expenses: new Array(range).fill(0),
@@ -32,23 +35,20 @@ export default (vault = {}, store, query = {}) => {
   txs
     .filter((tx) => vault.hash === undefined || vault.hash === tx.vault)
     .forEach((tx) => {
-      const {
-        category, location: { place } = {}, timestamp, type, value, title,
-      } = tx;
+      const { category, location: { place } = {}, timestamp, type, value, title } = tx;
 
       const date = parseDate(timestamp);
       const dMonth = date.getMonth();
       const dYear = date.getFullYear();
-      const month = date.getMonth() - lastYear.getMonth() + (12 * (date.getFullYear() - lastYear.getFullYear()));
-      const index = date.getMonth() - lastYear.getMonth() + (12 * (date.getFullYear() - lastYear.getFullYear()));
+      const month = date.getMonth() - lastYear.getMonth() + 12 * (date.getFullYear() - lastYear.getFullYear());
+      const index = date.getMonth() - lastYear.getMonth() + 12 * (date.getFullYear() - lastYear.getFullYear());
 
       if (value && month >= 0) {
         const { currency } = vaults.find(({ hash }) => hash === tx.vault);
         const valueExchange = exchange(value, currency, baseCurrency, rates, timestamp);
 
-        chart.balance[index] += type === EXPENSE ? -(valueExchange) : valueExchange;
+        chart.balance[index] += type === EXPENSE ? -valueExchange : valueExchange;
         const isTransfer = category === VAULT_TRANSFER;
-
 
         if (isTransfer && type === EXPENSE) chart.transfers[index] += valueExchange;
         else if (!isTransfer && type === EXPENSE) chart.expenses[index] += valueExchange;
@@ -65,7 +65,6 @@ export default (vault = {}, store, query = {}) => {
             cities[city] = cities[city] ? cities[city] + 1 : 1;
             countries[country] = countries[country] ? countries[country] + 1 : 1;
           }
-
 
           if (!isTransfer) {
             const keyType = type === EXPENSE ? 'expenses' : 'incomes';

@@ -2,9 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import { LAYOUT, THEME } from '../../../../reactor/common';
 
-const {
-  BORDER_RADIUS, COLOR, FONT, UNIT, SPACE,
-} = THEME;
+const { BORDER_RADIUS, COLOR, FONT, UNIT, SPACE } = THEME;
 
 const INPUT_HEIGHT = UNIT * 4.4;
 

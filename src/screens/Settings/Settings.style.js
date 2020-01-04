@@ -3,18 +3,18 @@ import { StyleSheet } from 'react-native';
 import { C } from '../../common';
 import { LAYOUT, THEME } from '../../reactor/common';
 
-const { STYLE: { CONTENT, HEADER_HEIGHT } } = C;
-const { VIEWPORT: { W } } = LAYOUT;
+const {
+  STYLE: { CONTENT, HEADER_HEIGHT },
+} = C;
+const {
+  VIEWPORT: { W },
+} = LAYOUT;
 const { SPACE } = THEME;
-const QR_SIZE = W - (SPACE.MEDIUM * 2);
+const QR_SIZE = W - SPACE.MEDIUM * 2;
 
 export default StyleSheet.create({
   activity: {
     height: 28,
-  },
-
-  button: {
-    marginRight: -SPACE.XS,
   },
 
   cameraViewport: {
@@ -22,6 +22,8 @@ export default StyleSheet.create({
   },
 
   caption: {
+    marginHorizontal: SPACE.MEDIUM,
+    marginVertical: SPACE.XS,
     textAlign: 'center',
   },
 
@@ -29,10 +31,7 @@ export default StyleSheet.create({
     paddingVertical: HEADER_HEIGHT,
   },
 
-  content: {
-    ...CONTENT,
-    // marginHorizontal: SPACE.MEDIUM,
-  },
+  content: CONTENT,
 
   options: {
     marginBottom: SPACE.MEDIUM,
@@ -41,8 +40,6 @@ export default StyleSheet.create({
   qr: {
     alignSelf: 'center',
     height: QR_SIZE,
-    marginTop: SPACE.XXS,
-    marginBottom: SPACE.XS,
     width: QR_SIZE,
   },
 });

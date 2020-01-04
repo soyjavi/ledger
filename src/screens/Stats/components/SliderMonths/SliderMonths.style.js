@@ -2,11 +2,9 @@ import { StyleSheet } from 'react-native';
 
 import { THEME } from '../../../../reactor/common';
 
-const {
-  BORDER_RADIUS, COLOR, UNIT, SPACE,
-} = THEME;
+const { BORDER_RADIUS, COLOR, UNIT, SPACE } = THEME;
 const ITEM_SIZE = UNIT * 6;
-const ITEM_WIDTH = ITEM_SIZE + (SPACE.XXS * 2);
+const ITEM_WIDTH = ITEM_SIZE + SPACE.XXS * 2;
 
 export { ITEM_WIDTH };
 

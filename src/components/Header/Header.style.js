@@ -4,7 +4,9 @@ import { C } from '../../common';
 import { LAYOUT, ENV, THEME } from '../../reactor/common';
 
 const { SPACE } = THEME;
-const { STYLE: { HEADER_HEIGHT } } = C;
+const {
+  STYLE: { HEADER_HEIGHT },
+} = C;
 
 export default StyleSheet.create({
   container: {

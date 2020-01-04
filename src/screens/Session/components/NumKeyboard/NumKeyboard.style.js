@@ -2,12 +2,10 @@ import { StyleSheet } from 'react-native';
 
 import { LAYOUT, THEME } from '../../../../reactor/common';
 
-const {
-  BORDER_RADIUS, UNIT, SPACE, COLOR,
-} = THEME;
+const { BORDER_RADIUS, UNIT, SPACE, COLOR } = THEME;
 
 const KEY_HEIGHT = UNIT * 5.6;
-const KEY_WIDTH = (LAYOUT.VIEWPORT.W / 3) - (SPACE.XS * 4);
+const KEY_WIDTH = LAYOUT.VIEWPORT.W / 3 - SPACE.XS * 4;
 
 export default StyleSheet.create({
   container: {

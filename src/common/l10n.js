@@ -28,7 +28,8 @@ export default {
 
     CANCEL: 'Cancel',
     CATEGORIES: [
-      { // Expenses
+      {
+        // Expenses
         0: 'Wipe',
         1: 'Food & Drinks',
         3: 'Travel',
@@ -44,7 +45,8 @@ export default {
         13: 'Others',
         99: 'Vault Transfer',
       },
-      { // Incomes
+      {
+        // Incomes
         0: 'Wipe',
         1: 'Salary',
         2: 'Investment',
@@ -71,16 +73,18 @@ export default {
 
     ENTER_PIN: 'Enter your pin',
     ENTER_PIN_OR_FINGERPRINT: 'Enter your pin or fingerprint',
-    EXPENSE: 'Expense',
+    EXPENSE: 'EXPENSE',
     EXPENSES: 'Expenses',
 
-    FIRST_VAULT_CAPTION: 'This will be your first vault. The currency you choose will be used as the basis for all reports.', // eslint-disable-line
+    FIRST_VAULT_CAPTION:
+      'This will be your first vault. The currency you choose will be used as the basis for all reports.', // eslint-disable-line
+    FORKED_CORRECTLY: 'All transactions have been successfully transferred to this device.',
     FROM: 'from',
 
     GET: 'Get',
 
     IMPORT: 'Import',
-    INCOME: 'Income',
+    INCOME: 'INCOME',
     INCOMES: 'Incomes',
     INITIAL_BALANCE: 'Initial balance',
 
@@ -89,13 +93,23 @@ export default {
     LOCATIONS: 'Locations',
 
     MONTHS: [
-      'January', 'February', 'March', 'April', 'May', 'June',
-      'July', 'August', 'September', 'October', 'November', 'December',
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
     ],
     MORE: 'More',
 
     NAME: 'Name',
-    NEW: 'New',
+    NEW: 'NEW',
     NO_TRANSACTIONS: "You don't have any transaction.",
 
     OFFLINE_MODE: 'Offline mode',
@@ -120,20 +134,24 @@ export default {
     TAP_TO_UPDATE: 'Tap to update',
     TO: 'to',
     TODAY: 'Today',
-    TRANSACTION: 'Transaction',
+    TRANSACTION: 'TRANSACTION',
+    TRANSACTIONS: 'Transactions',
     TRANSFER: 'Transfer',
     TRANSFERS: 'Transfers',
     TRANSFER_TXS: 'Transfer transactions',
-    TRANSFER_TXS_CAPTION: 'Transfer all your transactions and vaults from this device to a new one just reading this QR in the new device.',
+    TRANSFER_TXS_CAPTION:
+      'Transfer all your transactions and vaults from this device to a new one just reading this QR in the new device.',
     TRANSFER_TXS_CAMERA: 'Read the QR code from the device you want get all its transactions and vaults.',
-    TRANSFER_TXS_IMPORT: 'You are about to import all transactions and vaults from another device. Keep in mind that all your current data will be deleted from this device.',
+    TRANSFER_TXS_IMPORT:
+      'You are about to import all transactions and vaults from another device. Keep in mind that all your current data will be deleted from this device.',
     TRANSFER_CAPTION: 'Transfer any amount to another of your vaults.',
     TYPE: 'Type',
 
-    VAULT: 'Vault',
+    VAULT: 'VAULT',
     VAULT_DESTINATION: 'Destination vault',
     VAULTS: 'Vaults',
-    VAULT_CAPTION: 'You can create as many vaults as you want. You can continue using your base currency or choose any other.', // eslint-disable-line
+    VAULT_CAPTION:
+      'You can create as many vaults as you want. You can continue using your base currency or choose any other.', // eslint-disable-line
     VISIBILITY: 'Visibility',
 
     WARNING: 'Warning',
@@ -143,6 +161,5 @@ export default {
     YESTERDAY: 'Yesterday',
   },
 
-  'es-ES': {
-  },
+  'es-ES': {},
 };
