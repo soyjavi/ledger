@@ -48,6 +48,7 @@ const DialogClone = ({
 
   const color = type === EXPENSE ? COLOR.EXPENSE : COLOR.INCOME;
   const operator = type === EXPENSE ? -1 : 1;
+  const buttonProps = { activity: busy, color, disabled: busy, large: true, style: styles.button };
 
   return (
     <Dialog
@@ -61,7 +62,7 @@ const DialogClone = ({
     >
       <View style={styles.container}>
         <View style={[styles.content, styles.row]}>
-          <Box color={color} style={styles.box} opacity={0.3} small>
+          <Box color={color} style={styles.box} opacity={0.25} small>
             <View style={styles.boxContent}>
               <Text bold color={color}>
                 {new Date(timestamp || null).getDate()}
@@ -105,25 +106,14 @@ const DialogClone = ({
 
       <View style={styles.row}>
         <Button
-          activity={busy}
-          color={color}
+          {...buttonProps}
           contained={false}
-          disabled={busy}
           onPress={() => onSubmit(true)}
           outlined
-          style={styles.button}
           title={!busy ? l10n.WIPE : undefined}
         />
         <View style={styles.buttonSeparator} />
-        <Button
-          activity={busy}
-          color={color}
-          disabled={busy}
-          onPress={() => onSubmit(false)}
-          shadow
-          style={styles.button}
-          title={!busy ? l10n.CLONE : undefined}
-        />
+        <Button {...buttonProps} onPress={() => onSubmit(false)} title={!busy ? l10n.CLONE : undefined} />
       </View>
     </Dialog>
   );

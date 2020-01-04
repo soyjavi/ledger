@@ -47,11 +47,11 @@ export default {
     },
     HEADLINE: {
       fontFamily: FAMILY_BOLD,
-      letterSpacing: -1,
+      letterSpacing: -0.75,
     },
     SUBTITLE: {
       fontFamily: FAMILY_BOLD,
-      letterSpacing: -1,
+      letterSpacing: -0.5,
     },
     BODY: {
       fontSize: 14,
@@ -70,6 +70,8 @@ export default {
       fontSize: 12,
       letterSpacing: -0.25,
     },
-    INPUT: {},
+    INPUT: {
+      fontFamily: FAMILY_BOLD,
+    },
   },
 };

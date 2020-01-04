@@ -113,8 +113,8 @@ const DialogTransaction = (props) => {
         activity={busy}
         color={color || COLOR.PRIMARY}
         disabled={busy || !valid}
+        large
         onPress={onSubmit}
-        shadow
         style={styles.button}
         title={!busy ? l10n.SAVE : undefined}
       />

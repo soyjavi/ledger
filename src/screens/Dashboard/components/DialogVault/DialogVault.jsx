@@ -65,10 +65,10 @@ const DialogVault = ({ onClose, visible }) => {
       </View>
       <Button
         activity={busy}
-        color={COLOR.ACCENT}
+        color={COLOR.WHITE}
         disabled={busy || form.title.trim().length === 0}
         onPress={onSubmit}
-        shadow
+        large
         style={styles.button}
         title={!busy ? l10n.SAVE : undefined}
       />

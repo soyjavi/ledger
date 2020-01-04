@@ -42,13 +42,13 @@ const SnackBarProvider = ({ children }) => {
 
   return (
     <SnackBarContext.Provider value={events}>
+      {children}
       <Snackbar
         {...state}
         button={l10n.CLOSE.toUpperCase()}
         onPress={() => dispatch({ type: 'HIDE' })}
         visible={state.caption !== undefined}
       />
-      {children}
     </SnackBarContext.Provider>
   );
 };

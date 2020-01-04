@@ -40,8 +40,6 @@ export default StyleSheet.create({
   qr: {
     alignSelf: 'center',
     height: QR_SIZE,
-    // marginTop: SPACE.XXS,
-    // marginBottom: SPACE.XS,
     width: QR_SIZE,
   },
 });

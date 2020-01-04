@@ -26,7 +26,7 @@ Box.defaultProps = {
   borderRadius: BORDER_RADIUS,
   children: undefined,
   color: COLOR.BASE,
-  opacity: 0.68,
+  opacity: 0.8,
   small: false,
 };
 

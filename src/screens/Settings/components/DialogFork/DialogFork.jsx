@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useL10N, useSnackBar, useStore } from '../../../../context';
 import { THEME } from '../../../../reactor/common';
 import { Button, Dialog, Text } from '../../../../reactor/components';
-import { fork } from '../../../../services';
+import { fork, getProfile } from '../../../../services';
 
 import styles from './DialogFork.style';
 
@@ -18,9 +18,12 @@ const DialogFork = ({ onClose, onForked, query, visible, ...inherit }) => {
 
   const onSubmit = async () => {
     setBusy(true);
-    const forked = await fork(store, snackbar, query);
-    if (forked) onForked();
-    else onClose();
+    const forked = await fork(store, snackbar, query, l10n);
+    if (forked) {
+      await getProfile(store, snackbar);
+      onForked();
+    }
+    onClose();
     setBusy(false);
   };
 
@@ -39,8 +42,9 @@ const DialogFork = ({ onClose, onForked, query, visible, ...inherit }) => {
         activity={busy}
         color={COLOR.PRIMARY}
         disabled={busy}
+        large
+        outlined
         onPress={onSubmit}
-        shadow
         style={styles.button}
         title={!busy ? l10n.IMPORT : undefined}
       />

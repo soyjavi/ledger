@@ -5,15 +5,12 @@ import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 
-import { THEME } from '../../reactor/common';
 import { Activity, Button, Image, Text, Viewport } from '../../reactor/components';
 
 import { Footer, Header, Heading } from '../../components';
-import { useL10N, useNavigation, useStore } from '../../context';
+import { useL10N, useNavigation, useSnackBar, useStore } from '../../context';
 import { DialogFork } from './components';
 import styles from './Settings.style';
-
-const { COLOR } = THEME;
 
 const QR_URI = 'https://chart.googleapis.com/chart?cht=qr&chs=512x512&chld=H|1&chl';
 const CAMERA_PROPS = {
@@ -25,6 +22,7 @@ const Settings = ({ visible, ...inherit }) => {
   const navigation = useNavigation();
   const l10n = useL10N();
   const { authorization, secret } = useStore();
+  const { snackbarSuccess } = useSnackBar();
 
   const [dialog, setDialog] = useState(false);
   const [hasCamera, setHasCamera] = useState(undefined);
@@ -47,7 +45,7 @@ const Settings = ({ visible, ...inherit }) => {
   };
 
   const onForked = () => {
-    setDialog(false);
+    snackbarSuccess(l10n.FORKED_CORRECTLY);
     navigation.back();
   };
 

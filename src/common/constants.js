@@ -47,7 +47,7 @@ export default {
     CONTENT: {
       backgroundColor: COLOR.WHITE,
       borderRadius: SPACE.MEDIUM,
-      marginTop: SPACE.XS,
+      marginTop: SPACE.XXS,
       paddingVertical: SPACE.S,
     },
     DIALOG: {

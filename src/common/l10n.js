@@ -73,17 +73,18 @@ export default {
 
     ENTER_PIN: 'Enter your pin',
     ENTER_PIN_OR_FINGERPRINT: 'Enter your pin or fingerprint',
-    EXPENSE: 'Expense',
+    EXPENSE: 'EXPENSE',
     EXPENSES: 'Expenses',
 
     FIRST_VAULT_CAPTION:
       'This will be your first vault. The currency you choose will be used as the basis for all reports.', // eslint-disable-line
+    FORKED_CORRECTLY: 'All transactions have been successfully transferred to this device.',
     FROM: 'from',
 
     GET: 'Get',
 
     IMPORT: 'Import',
-    INCOME: 'Income',
+    INCOME: 'INCOME',
     INCOMES: 'Incomes',
     INITIAL_BALANCE: 'Initial balance',
 
@@ -108,7 +109,7 @@ export default {
     MORE: 'More',
 
     NAME: 'Name',
-    NEW: 'New',
+    NEW: 'NEW',
     NO_TRANSACTIONS: "You don't have any transaction.",
 
     OFFLINE_MODE: 'Offline mode',
@@ -133,7 +134,7 @@ export default {
     TAP_TO_UPDATE: 'Tap to update',
     TO: 'to',
     TODAY: 'Today',
-    TRANSACTION: 'Transaction',
+    TRANSACTION: 'TRANSACTION',
     TRANSACTIONS: 'Transactions',
     TRANSFER: 'Transfer',
     TRANSFERS: 'Transfers',
@@ -146,7 +147,7 @@ export default {
     TRANSFER_CAPTION: 'Transfer any amount to another of your vaults.',
     TYPE: 'Type',
 
-    VAULT: 'Vault',
+    VAULT: 'VAULT',
     VAULT_DESTINATION: 'Destination vault',
     VAULTS: 'Vaults',
     VAULT_CAPTION:
