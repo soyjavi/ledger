@@ -84,7 +84,7 @@ const Vault = (props) => {
       <ScrollView onScroll={onScroll} ref={scrollview} scrollEventThrottle={40} style={styles.container}>
         <>
           <Summary {...vault} image={FLAGS[currency]} title={`${title} ${l10n.BALANCE}`} />
-          <Search l10n={l10n} onValue={onSearch} value={search} />
+          <Search onValue={onSearch} value={search} />
         </>
         <View style={styles.content}>
           {values.length > 0 ? (
