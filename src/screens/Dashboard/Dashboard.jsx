@@ -1,4 +1,3 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { bool } from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { View, ScrollView } from 'react-native';
@@ -16,7 +15,7 @@ const {
   SCREEN,
   STYLE: { VAULT_ITEM_WIDTH },
 } = C;
-const { COLOR, SPACE } = THEME;
+const { SPACE } = THEME;
 
 const Dashboard = ({ backward, visible, ...inherit }) => {
   const { state: settings } = useSettings();
@@ -40,20 +39,25 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
   }, [sync, vaults]);
 
   useEffect(() => {
-    if (visible) {
-      setLastTxs(queryLastTxs({ txs, vaults }));
-      setVisibleVaults(queryVaults({ settings, vaults }));
-    }
+    if (visible) setLastTxs(queryLastTxs({ txs, vaults }));
   }, [visible, txs, vaults]);
+
+  useEffect(() => {
+    if (visible) setVisibleVaults(queryVaults({ settings, vaults }));
+  }, [visible, settings, txs, vaults]);
 
   console.log('<Dashboard>', { visible, sync });
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
       <Header highlight={scroll} title={l10n.OVERALL_BALANCE}>
-        <Button small contained={false} onPress={() => navigation.go(SCREEN.SETTINGS)}>
-          <MaterialCommunityIcons name="settings-outline" color={COLOR.TEXT} size={24} />
-        </Button>
+        <Button
+          contained={false}
+          icon="settings-outline"
+          iconSize={24}
+          onPress={() => navigation.go(SCREEN.SETTINGS)}
+          small
+        />
       </Header>
       <ScrollView
         onScroll={({ nativeEvent: { contentOffset } }) => setScroll(contentOffset.y > SPACE.MEDIUM)}
@@ -65,9 +69,13 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
         {vaults.length > 0 && (
           <>
             <Heading value={l10n.VAULTS} style={styles.headingVaults}>
-              <Button small contained={false} onPress={() => navigation.go(SCREEN.VAULTS)}>
-                <MaterialCommunityIcons name="table-of-contents" color={COLOR.TEXT} size={24} />
-              </Button>
+              <Button
+                contained={false}
+                icon="eye-outline"
+                iconSize={24}
+                onPress={() => navigation.go(SCREEN.VAULTS)}
+                small
+              />
             </Heading>
             <Slider itemWidth={VAULT_ITEM_WIDTH + SPACE.S} itemMargin={0} style={styles.vaults}>
               {visibleVaults.map((vault) => (

@@ -4,7 +4,7 @@ import { ScrollView, View } from 'react-native';
 
 import { FLAGS } from '../../assets';
 import { Footer, GroupTransactions, Header, Heading, Summary } from '../../components';
-import { useL10N, useNavigation } from '../../context';
+import { useL10N, useNavigation, useStore } from '../../context';
 import { LAYOUT, THEME } from '../../reactor/common';
 import { Activity, Text, Viewport } from '../../reactor/components';
 import { DialogTransaction, Search } from './components';
@@ -17,6 +17,7 @@ const Vault = (props) => {
   const { dataSource, visible, ...inherit } = props;
   const l10n = useL10N();
   const navigation = useNavigation();
+  const { baseCurrency } = useStore();
   const [dialog, setDialog] = useState(false);
   const [scroll, setScroll] = useState(false);
   const [scrollQuery, setScrollQuery] = useState(false);
@@ -25,6 +26,7 @@ const Vault = (props) => {
   const [vault, setVault] = useState(undefined);
   const scrollview = useRef(null);
 
+  // @TODO: Refacto
   useEffect(() => {
     if (visible) {
       const nextValues = query(props, { ...dataSource, search: undefined });
@@ -67,7 +69,7 @@ const Vault = (props) => {
     setValues(query(props, { ...dataSource, search: value.toLowerCase().trim() }, scrollQuery));
   };
 
-  const { currency, hash, title } = vault || {};
+  const { currency = baseCurrency, hash, title } = vault || {};
 
   console.log('<Vault>', {
     visible,

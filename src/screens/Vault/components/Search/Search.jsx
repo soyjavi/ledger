@@ -1,10 +1,9 @@
-import { FontAwesome } from '@expo/vector-icons';
 import { func, string } from 'prop-types';
 import React, { useState } from 'react';
 import { TextInput, View } from 'react-native';
 
 import { THEME } from '../../../../reactor/common';
-import { Activity } from '../../../../reactor/components';
+import { Activity, Icon } from '../../../../reactor/components';
 import { useL10N } from '../../../../context';
 import styles from './Search.style';
 
@@ -25,7 +24,7 @@ const Search = ({ onValue, value }) => {
 
   return (
     <View style={[styles.container, focus && styles.focus]}>
-      <FontAwesome name="search" color={COLOR.TEXT} size={16} style={styles.icon} />
+      <Icon olor={COLOR.TEXT} family="MaterialIcons" value="search" size={16} />
       <TextInput
         autoCorrect={false}
         autoCapitalize="none"

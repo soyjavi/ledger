@@ -1,8 +1,6 @@
 const FAMILY = 'font-family';
 const FAMILY_BOLD = 'font-family-bold';
 
-const WEIGHT = { REGULAR: '400', BOLD: '700' };
-
 export default {
   COLOR: {
     BACKGROUND: '#000',
@@ -43,7 +41,6 @@ export default {
 
     DEFAULT: {
       fontFamily: FAMILY,
-      fontWeight: WEIGHT.REGULAR,
     },
     HEADLINE: {
       fontFamily: FAMILY_BOLD,
@@ -61,6 +58,10 @@ export default {
     CAPTION: {
       fontSize: 11,
       letterSpacing: -0.25,
+    },
+    BOLD: {
+      fontFamily: FAMILY_BOLD,
+      fontWeight: '400',
     },
     BUTTON: {
       fontSize: 15,

@@ -3,34 +3,13 @@ import React from 'react';
 import { View } from 'react-native';
 import { THEME } from '../../reactor/common';
 import { Text } from '../../reactor/components';
-import { Heading } from '../Heading';
 import { PriceFriendly } from '../PriceFriendly';
 
+import { ChartHeading } from './components';
 import { calcHeight } from './modules';
 import styles from './Chart.style';
 
 const { COLOR } = THEME;
-
-const HeadingExtended = ({ title, max, min, ...inherit }) => (
-  <Heading value={title} style={styles.heading}>
-    <View style={styles.row}>
-      {max > 0 && <PriceFriendly {...inherit} label="max " value={max} style={styles.legend} />}
-      {min > 0 && <PriceFriendly {...inherit} label="  min " value={min} style={styles.legend} />}
-    </View>
-  </Heading>
-);
-
-HeadingExtended.propTypes = {
-  title: string,
-  max: number,
-  min: number,
-};
-
-HeadingExtended.defaultProps = {
-  title: undefined,
-  max: undefined,
-  min: undefined,
-};
 
 const Chart = ({ captions, highlight, inverted, values, styleContainer, ...inherit }) => {
   const { color, currency, max, min, med: avg } = inherit;
@@ -39,19 +18,14 @@ const Chart = ({ captions, highlight, inverted, values, styleContainer, ...inher
 
   return (
     <View style={styleContainer}>
-      {!inverted && <HeadingExtended {...inherit} />}
+      {!inverted && <ChartHeading {...inherit} />}
       <View style={[styles.container, inverted && styles.containerInverted]}>
         {avg > 0 && (
           <View style={styles.scales}>
             <View style={[styles.scaleAvg, { top: `${100 - parseInt(((avg - min) * 100) / (max - min), 10)}%` }]}>
               <View style={[styles.scaleLine, { backgroundColor: color }]} />
               <View style={[styles.tag, { backgroundColor: color }]}>
-                <PriceFriendly
-                  currency={currency}
-                  value={avg}
-                  lighten
-                  style={[styles.legend, styles.legendHighlight]}
-                />
+                <PriceFriendly bold color={COLOR.WHITE} currency={currency} value={avg} lighten style={styles.legend} />
               </View>
             </View>
           </View>
@@ -75,13 +49,18 @@ const Chart = ({ captions, highlight, inverted, values, styleContainer, ...inher
           ))}
         </View>
 
-        {inverted && <HeadingExtended {...inherit} />}
+        {inverted && <ChartHeading {...inherit} />}
 
         {captions && (
           <View style={[styles.captions, styles.row]}>
             {captions.map((caption, index) => (
               <View key={caption} style={styles.column}>
-                <Text lighten style={[styles.legend, highlight === index && styles.legendHighlight]}>
+                <Text
+                  bold={highlight === index}
+                  color={highlight === index ? COLOR.WHITE : undefined}
+                  lighten
+                  style={styles.legend}
+                >
                   {caption.substring(0, 3).toUpperCase()}
                 </Text>
               </View>

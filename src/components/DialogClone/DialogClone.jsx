@@ -62,15 +62,13 @@ const DialogClone = ({
     >
       <View style={styles.container}>
         <View style={[styles.content, styles.row]}>
-          <Box color={color} style={styles.box} opacity={0.25} small>
-            <View style={styles.boxContent}>
-              <Text bold color={color}>
-                {new Date(timestamp || null).getDate()}
-              </Text>
-              <Text bold style={styles.month}>
-                {verboseMonthShort(timestamp, l10n)}
-              </Text>
-            </View>
+          <Box color={color} style={styles.box} styleContent={styles.boxContent} opacity={0.25} small>
+            <Text bold color={color} style={styles.day}>
+              {new Date(timestamp || null).getDate()}
+            </Text>
+            <Text bold style={styles.month}>
+              {verboseMonthShort(timestamp, l10n)}
+            </Text>
           </Box>
           <View style={styles.texts}>
             <Text bold numberOfLines={1} style={styles.title}>

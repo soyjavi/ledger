@@ -1,4 +1,3 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { bool } from 'prop-types';
 import React, { useState } from 'react';
 import { ScrollView, View } from 'react-native';
@@ -29,9 +28,13 @@ const Vaults = ({ visible, ...inherit }) => {
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
       <Header highlight title={l10n.VAULTS}>
-        <Button contained={false} small onPress={() => setOrder(!order)}>
-          <MaterialCommunityIcons name={order ? 'sort-descending' : 'sort-ascending'} color={COLOR.TEXT} size={20} />
-        </Button>
+        <Button
+          contained={false}
+          icon={order ? 'sort-descending' : 'sort-ascending'}
+          iconSize={24}
+          onPress={() => setOrder(!order)}
+          small
+        />
       </Header>
 
       <ScrollView contentContainerStyle={styles.container}>

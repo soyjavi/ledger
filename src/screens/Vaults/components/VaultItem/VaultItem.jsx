@@ -1,11 +1,10 @@
-import { FontAwesome } from '@expo/vector-icons';
 import { bool, shape, func } from 'prop-types';
 import React, { Fragment } from 'react';
 import { Image, View } from 'react-native';
 
 import { FLAGS } from '../../../../assets';
 import { THEME } from '../../../../reactor/common';
-import { Text, Touchable } from '../../../../reactor/components';
+import { InputOption, Text, Touchable } from '../../../../reactor/components';
 
 import { exchange } from '../../../../common';
 import { Box, PriceFriendly } from '../../../../components';
@@ -48,11 +47,7 @@ const OptionItem = ({ active, onChange, onPress, dataSource: { currency, current
           )}
         </View>
       </Touchable>
-      <Touchable onPress={() => onChange(!active)} rippleColor={COLOR.ACCENT}>
-        <View style={[styles.iconContainer, active && styles.iconActive]}>
-          {active && <FontAwesome name="check" color={COLOR.BACKGROUND} size={16} />}
-        </View>
-      </Touchable>
+      <InputOption onChange={() => onChange(!active)} value={active} size={24} style={styles.inputOption} />
     </View>
   );
 };

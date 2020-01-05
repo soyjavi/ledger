@@ -10,7 +10,7 @@ const { BORDER_RADIUS, COLOR } = THEME;
 const Box = ({ borderRadius, children, color, opacity, small, ...inherit }) => (
   <View style={[styles.container, inherit.style]}>
     <View style={[styles.frame, { backgroundColor: color, borderRadius, opacity }]} />
-    <View style={[styles.content, small && styles.small]}>{children}</View>
+    <View style={[styles.content, small && styles.small, inherit.styleContent]}>{children}</View>
   </View>
 );
 

@@ -83,8 +83,8 @@ const FormTransaction = (props) => {
 };
 
 FormTransaction.propTypes = {
-  destination: string,
   color: string.isRequired,
+  destination: string,
   form: shape({}).isRequired,
   onChange: func.isRequired,
   vault: string.isRequired,

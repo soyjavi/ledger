@@ -13,7 +13,7 @@ export default StyleSheet.create({
     ...LAYOUT.STYLE.ROW,
     backgroundColor: 'rgba(0, 0, 0, 0.9)',
     height: HEADER_HEIGHT,
-    paddingRight: SPACE.XXS,
+    paddingRight: SPACE.S,
     position: ENV.IS_WEB ? 'fixed' : 'absolute',
     top: 0,
     width: '100%',

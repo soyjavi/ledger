@@ -1,4 +1,3 @@
-import { FLAGS } from '../assets';
 import C from './constants';
 
 const { SYMBOL } = C;
@@ -8,7 +7,7 @@ export default (form = {}, currency) => {
     if (form[key].currency) {
       const value = currency || form[key].currency;
 
-      form[key] = { ...form[key], currency: SYMBOL[value], icon: FLAGS[value] }; // eslint-disable-line
+      form[key] = { ...form[key], currency: SYMBOL[value] };
     }
   });
 

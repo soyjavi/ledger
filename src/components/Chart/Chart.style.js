@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import { LAYOUT, THEME } from '../../reactor/common';
 
-const { COLOR, FONT, UNIT, SPACE } = THEME;
+const { COLOR, UNIT, SPACE } = THEME;
 
 const COLUMN_HEIGHT = UNIT * 6.4;
 const COLUMN_WIDTH = UNIT * 1;
@@ -70,11 +70,6 @@ export default StyleSheet.create({
     fontSize: UNIT,
     height: UNIT,
     lineHeight: UNIT,
-  },
-
-  legendHighlight: {
-    color: COLOR.WHITE,
-    fontWeight: FONT.WEIGHT.BOLD,
   },
 
   row: {
