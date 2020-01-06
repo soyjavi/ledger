@@ -11,7 +11,7 @@ const { SCREEN } = C;
 const { SESSION, SETTINGS, STATS, DASHBOARD, VAULT, VAULTS } = SCREEN;
 
 const App = () => {
-  const { current, back, params, stack, tx } = useNavigation();
+  const { current, params, stack, tx } = useNavigation();
   const { sync, vaults = [] } = useStore();
 
   console.log('<App>');
@@ -27,13 +27,16 @@ const App = () => {
           <Vaults visible={stack.includes(VAULTS)} />
           <Vault
             backward={current !== VAULT}
+            // @TODO: Responsibility of vault
             dataSource={
               stack.includes(VAULT) && params.Vault ? vaults.find(({ hash }) => hash === params.Vault.hash) : undefined
             }
-            back={back}
             visible={stack.includes(VAULT)}
           />
-          <Stats vault={params.Vault} visible={stack.includes(STATS)} />
+          <Stats
+            vault={stack.includes(VAULT) && stack.includes(STATS) ? params.Vault : undefined}
+            visible={stack.includes(STATS)}
+          />
           <DialogClone dataSource={tx} visible={tx !== undefined} />
         </>
       )}

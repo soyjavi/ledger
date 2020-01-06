@@ -18,8 +18,8 @@ const App = () => {
   useEffect(() => {
     async function loadFonts() {
       await Font.loadAsync({
-        'font-family': require('./assets/fonts/IBMPlexMono-Regular.ttf'), // eslint-disable-line
-        'font-family-bold': require('./assets/fonts/IBMPlexMono-Bold.ttf'), // eslint-disable-line
+        'font-family': require('./assets/fonts/IBMPlexMono-Regular.ttf'),
+        'font-family-bold': require('./assets/fonts/IBMPlexMono-Bold.ttf'),
       });
       THEME.extend(theme);
       setLoaded(true);
@@ -28,7 +28,7 @@ const App = () => {
     if (!loaded) loadFonts();
   }, [loaded]);
 
-  const App = loaded ? require('./src/App').default : View; // eslint-disable-line
+  const App = loaded ? require('./src/App').default : View;
 
   return loaded ? (
     <Provider dictionary={L10N} language={LANGUAGE}>

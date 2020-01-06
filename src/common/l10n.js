@@ -77,7 +77,7 @@ export default {
     EXPENSES: 'Expenses',
 
     FIRST_VAULT_CAPTION:
-      'This will be your first vault. The currency you choose will be used as the basis for all reports.', // eslint-disable-line
+      'This will be your first vault. The currency you choose will be used as the basis for all reports.',
     FORKED_CORRECTLY: 'All transactions have been successfully transferred to this device.',
     FROM: 'from',
 
@@ -151,7 +151,7 @@ export default {
     VAULT_DESTINATION: 'Destination vault',
     VAULTS: 'Vaults',
     VAULT_CAPTION:
-      'You can create as many vaults as you want. You can continue using your base currency or choose any other.', // eslint-disable-line
+      'You can create as many vaults as you want. You can continue using your base currency or choose any other.',
     VISIBILITY: 'Visibility',
 
     WARNING: 'Warning',

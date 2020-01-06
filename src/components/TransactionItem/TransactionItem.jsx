@@ -29,7 +29,7 @@ const TransactionItem = (props) => {
   if (category === VAULT_TRANSFER) color = COLOR.TRANSFER;
 
   return (
-    <Touchable rippleColor={COLOR.TEXT_LIGHTEN} onPress={() => showTx(props)}>
+    <Touchable rippleColor={COLOR.TEXT} onPress={() => showTx(props)}>
       <View style={[styles.container, styles.row]}>
         <Box color={color} opacity={0.25} small style={styles.box} styleContent={styles.boxContent}>
           <Icon value={getIconCategory({ type, category, title })} color={color} />

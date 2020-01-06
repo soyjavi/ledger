@@ -1,4 +1,4 @@
-import { bool, func, shape } from 'prop-types';
+import { bool, shape } from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 
@@ -122,16 +122,12 @@ const Vault = (props) => {
 };
 
 Vault.propTypes = {
-  backward: bool,
   dataSource: shape({}),
-  back: func,
   visible: bool,
 };
 
 Vault.defaultProps = {
-  backward: false,
   dataSource: undefined,
-  back() {},
   visible: true,
 };
 
