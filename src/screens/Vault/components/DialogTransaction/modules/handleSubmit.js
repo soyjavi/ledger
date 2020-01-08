@@ -17,14 +17,14 @@ const INITIAL_STATE = {
   valid: false,
 };
 
-export default async ({ props, store, snackbar, setBusy, state, setState }) => {
+export default async ({ props, snackbar, setBusy, setState, state, store }) => {
   setBusy(true);
   const method = state.type === TRANSFER ? onTransfer : onTransaction;
   const value = await method({
     props,
+    snackbar,
     state,
     store,
-    snackbar,
   });
   if (value) props.onClose();
   setBusy(false);

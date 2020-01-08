@@ -21,8 +21,8 @@ export default StyleSheet.create({
     marginLeft: UNIT,
   },
 
-  inputOption: {
-    marginBottom: 0,
+  disabled: {
+    opacity: 0.38,
   },
 
   image: {
@@ -32,8 +32,12 @@ export default StyleSheet.create({
   },
 
   imageDisabled: {
-    opacity: 0.5,
+    // opacity: 0.38,
   },
 
   row: LAYOUT.STYLE.ROW,
+
+  switch: {
+    padding: SPACE.XXS,
+  },
 });

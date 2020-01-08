@@ -4,7 +4,7 @@ import { Image, View } from 'react-native';
 
 import { FLAGS } from '../../../../assets';
 import { THEME } from '../../../../reactor/common';
-import { InputOption, Text, Touchable } from '../../../../reactor/components';
+import { Icon, Text, Touchable } from '../../../../reactor/components';
 
 import { exchange } from '../../../../common';
 import { Box, PriceFriendly } from '../../../../components';
@@ -18,18 +18,17 @@ const OptionItem = ({ active, onChange, onPress, dataSource: { currency, current
   const disabled = !active;
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, disabled && styles.disabled]}>
       <Box small color={active ? COLOR[currency] : undefined}>
-        <Image source={FLAGS[currency]} style={[styles.image, disabled && styles.imageDisabled]} />
+        <Image source={FLAGS[currency]} style={[styles.image]} />
       </Box>
       <Touchable onPress={onPress} rippleColor={COLOR.PRIMARY} style={styles.content}>
-        <Text bold numberOfLines={1} lighten={disabled}>
+        <Text bold numberOfLines={1}>
           {title}
         </Text>
         <View style={styles.row}>
           <PriceFriendly
             caption
-            lighten={disabled}
             currency={baseCurrency}
             value={currency !== baseCurrency ? exchange(currentBalance, currency, baseCurrency, rates) : currentBalance}
             style={styles.balance}
@@ -47,7 +46,9 @@ const OptionItem = ({ active, onChange, onPress, dataSource: { currency, current
           )}
         </View>
       </Touchable>
-      <InputOption onChange={() => onChange(!active)} value={active} size={24} style={styles.inputOption} />
+      <Touchable onPress={() => onChange(!active)} value={active} style={styles.switch}>
+        <Icon size={24} value={active ? 'eye-outline' : 'eye-off-outline'} />
+      </Touchable>
     </View>
   );
 };

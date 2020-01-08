@@ -57,19 +57,22 @@ export default {
     },
     CAPTION: {
       fontSize: 11,
-      letterSpacing: -0.25,
+      letterSpacing: -0.1,
     },
     BOLD: {
       fontFamily: FAMILY_BOLD,
       fontWeight: '400',
     },
     BUTTON: {
-      fontSize: 15,
+      fontSize: 16,
       fontFamily: FAMILY_BOLD,
+      fontWeight: 'normal',
     },
     BUTTON_SMALL: {
+      lineHeight: 15,
       fontSize: 12,
-      letterSpacing: -0.25,
+      fontFamily: FAMILY_BOLD,
+      letterSpacing: -0.1,
     },
     INPUT: {
       fontFamily: FAMILY_BOLD,

@@ -143,6 +143,7 @@ export default {
       'Transfer all your transactions and vaults from this device to a new one just reading this QR in the new device.',
     TRANSFER_TXS_CAMERA: 'Read the QR code from the device you want get all its transactions and vaults.',
     TRANSFER_TXS_IMPORT:
+      // eslint-disable-next-line max-len
       'You are about to import all transactions and vaults from another device. Keep in mind that all your current data will be deleted from this device.',
     TRANSFER_CAPTION: 'Transfer any amount to another of your vaults.',
     TYPE: 'Type',

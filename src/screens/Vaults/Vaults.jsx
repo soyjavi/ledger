@@ -2,7 +2,6 @@ import { bool } from 'prop-types';
 import React, { useState } from 'react';
 import { ScrollView, View } from 'react-native';
 
-import { THEME } from '../../reactor/common';
 import { Button, Viewport } from '../../reactor/components';
 
 import { C } from '../../common';
@@ -13,7 +12,6 @@ import { sort } from './modules';
 import styles from './Vaults.style';
 
 const { SCREEN } = C;
-const { COLOR } = THEME;
 
 const Vaults = ({ visible, ...inherit }) => {
   const { state = {}, dispatch } = useSettings();

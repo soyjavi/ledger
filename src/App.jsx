@@ -11,7 +11,7 @@ const { SCREEN } = C;
 const { SESSION, SETTINGS, STATS, DASHBOARD, VAULT, VAULTS } = SCREEN;
 
 const App = () => {
-  const { current, params, stack, tx } = useNavigation();
+  const { current, params, stack = [], tx } = useNavigation();
   const { sync, vaults = [] } = useStore();
 
   console.log('<App>');
