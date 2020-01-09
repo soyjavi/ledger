@@ -21,11 +21,11 @@ const Locations = ({ cities, countries, points, precission }) => {
         <Heading color={COLOR.TEXT_CONTRAST} value={l10n.LOCATIONS} style={styles.heading} />
         <HeatMap
           color={COLOR.LOCATION}
+          darkMode={false}
           points={points}
           precission={precission}
           height={MAP_HEIGHT}
           width={MAP_WIDTH}
-          style={styles.map}
         />
       </View>
 

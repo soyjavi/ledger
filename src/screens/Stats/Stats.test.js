@@ -9,8 +9,4 @@ describe('<Stats>', () => {
     const tree = renderer.create(<Stats />).toJSON();
     expect(tree).toMatchSnapshot();
   });
-
-  // it('when {...}', () => {
-  // });
 });
-

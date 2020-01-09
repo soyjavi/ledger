@@ -37,7 +37,7 @@ const ItemGroupCategories = ({ dataSource, type }) => {
             key={key}
             onPress={() => setExpand(expand !== key ? key : undefined)}
             rippleColor={COLOR.TEXT}
-            style={styles.content}
+            style={[styles.content, expand && expand !== key && styles.noHighlight]}
           >
             <HorizontalChartItem
               color={isExpense ? COLOR.EXPENSE : COLOR.INCOME}
@@ -52,7 +52,7 @@ const ItemGroupCategories = ({ dataSource, type }) => {
                 {orderByAmount(dataSource[key]).map((item) => (
                   <HorizontalChartItem
                     key={`${key}-${item.key}`}
-                    color={COLOR.TEXT_LIGHTEN}
+                    color={isExpense ? COLOR.EXPENSE : COLOR.INCOME}
                     currency={baseCurrency}
                     small
                     title={item.key}
