@@ -1,12 +1,13 @@
 import { node } from 'prop-types';
-import React, { useContext, useEffect, useReducer, useState, createContext } from 'react';
-import { View } from 'react-native';
+import React, { useContext, useReducer, createContext } from 'react';
 
-import { C } from '../common';
+import { C, theme } from '../common';
 import { useL10N } from '../reactor/context/L10N';
+import { Snackbar } from '../reactor/components';
 
 const KEY = `${C.NAME}:context:snackbar`;
 const SnackBarContext = createContext(KEY);
+const { COLOR } = theme;
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -21,23 +22,14 @@ const reducer = (state, action) => {
   }
 };
 
-let Snackbar = View;
-
 const SnackBarProvider = ({ children }) => {
   const l10n = useL10N();
-  const [mounted, setMounted] = useState(false);
   const [state, dispatch] = useReducer(reducer, { color: undefined, caption: undefined });
 
-  useEffect(() => {
-    // We need delay the component load meanwhile theming is processing
-    Snackbar = require('../reactor/components/Snackbar').default;
-    setMounted(true);
-  }, [mounted]);
-
   const events = {
-    snackbarSuccess: (caption) => dispatch({ type: 'SHOW', caption, color: 'green' }),
-    snackbarError: (caption) => dispatch({ type: 'SHOW', caption, color: 'red' }),
-    snackbarWarning: (caption) => dispatch({ type: 'SHOW', caption, color: 'orange' }),
+    snackbarSuccess: (caption) => dispatch({ type: 'SHOW', caption, color: COLOR.SUCCESS }),
+    snackbarError: (caption) => dispatch({ type: 'SHOW', caption, color: COLOR.ERROR }),
+    snackbarWarning: (caption) => dispatch({ type: 'SHOW', caption, color: COLOR.WARNING }),
   };
 
   return (
