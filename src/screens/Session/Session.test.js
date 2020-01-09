@@ -9,8 +9,4 @@ describe('<Session>', () => {
     const tree = renderer.create(<Session />).toJSON();
     expect(tree).toMatchSnapshot();
   });
-
-  // it('when {...}', () => {
-  // });
 });
-
