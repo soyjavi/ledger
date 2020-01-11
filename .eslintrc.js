@@ -16,7 +16,7 @@ module.exports = {
     },
     sourceType: 'module',
   },
-  plugins: ['prettier', 'react', 'react-hooks', 'react-native', '@typescript-eslint'],
+  plugins: ['prettier', 'react', 'react-hooks', 'react-native'],
   rules: {
     'max-len': [1, 120, { tabWidth: 2, ignoreComments: true }],
     'react/jsx-filename-extension': ['warn', { extensions: ['.jsx', '.tsx'] }],
