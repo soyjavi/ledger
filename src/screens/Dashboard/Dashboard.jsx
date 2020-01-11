@@ -46,7 +46,7 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
     if (visible) setVisibleVaults(queryVaults({ settings, vaults }));
   }, [visible, settings, txs, vaults]);
 
-  console.log('<Dashboard>', { visible, sync });
+  console.log('  <Dashboard>', { visible, sync, vaults, dialog, scroll, lastTxs, visibleVaults });
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
@@ -114,4 +114,4 @@ Dashboard.defaultProps = {
   visible: true,
 };
 
-export default Dashboard;
+export default React.memo(Dashboard);
