@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { NativeModules, View } from 'react-native';
 import * as Font from 'expo-font';
 
-import { C, L10N, theme } from './src/common';
+import { theme } from './src/common';
 import { THEME } from './src/reactor/common';
 
-const { LANGUAGE } = C;
 const {
   UIManager: { setLayoutAnimationEnabledExperimental: setLayoutAnimation },
 } = NativeModules;
@@ -26,15 +25,8 @@ const App = () => {
       });
       THEME.extend(theme);
 
-      const { Provider } = require('./src/context');
       const { App } = require('./src/App');
-
-      // eslint-disable-next-line react/no-children-prop
-      Component = React.createElement(Provider, {
-        dictionary: L10N,
-        language: LANGUAGE,
-        children: React.createElement(App),
-      });
+      Component = React.createElement(App);
 
       setLoaded(true);
     }

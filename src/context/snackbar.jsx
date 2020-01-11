@@ -1,13 +1,14 @@
 import { node } from 'prop-types';
 import React, { useContext, useReducer, createContext } from 'react';
 
-import { C, theme } from '../common';
+import { C } from '../common';
+import { THEME } from '../reactor/common';
 import { useL10N } from '../reactor/context/L10N';
 import { Snackbar } from '../reactor/components';
 
 const KEY = `${C.NAME}:context:snackbar`;
 const SnackBarContext = createContext(KEY);
-const { COLOR } = theme;
+const { COLOR } = THEME;
 
 const reducer = (state, action) => {
   switch (action.type) {
