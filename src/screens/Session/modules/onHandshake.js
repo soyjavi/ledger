@@ -12,8 +12,8 @@ export const onHandshake = async ({ navigation, store, setBusy, setPin, snackbar
     await getProfile(store, snackbar, authorization);
     navigation.go(SCREEN.DASHBOARD);
   } else {
+    getProfile(store, snackbar);
     navigation.go(SCREEN.DASHBOARD);
-    await getProfile(store, snackbar);
   }
   setBusy(false);
   setPin('');

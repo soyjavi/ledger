@@ -5,13 +5,10 @@ import { ScrollView, View } from 'react-native';
 import { FLAGS } from '../../assets';
 import { Footer, GroupTransactions, Header, Heading, Summary } from '../../components';
 import { useL10N, useNavigation, useStore } from '../../context';
-import { LAYOUT, THEME } from '../../reactor/common';
 import { Text, Viewport } from '../../reactor/components';
 import { DialogTransaction, Search } from './components';
-import query from './modules/query';
+import { onScroll, onSearch, query } from './modules';
 import styles from './Vault.style';
-
-const { SPACE } = THEME;
 
 const Vault = ({ visible, ...inherit }) => {
   const l10n = useL10N();
@@ -47,35 +44,14 @@ const Vault = ({ visible, ...inherit }) => {
     else navigation.back();
   };
 
-  const handleScroll = ({
-    nativeEvent: {
-      contentOffset: { y },
-    },
-  }) => {
-    const nextScroll = y > SPACE.MEDIUM;
-    if (nextScroll !== scroll) setScroll(nextScroll);
-    if (!scrollQuery && y > LAYOUT.VIEWPORT.H / 2) {
-      setScrollQuery(true);
-      setTxs(query({ l10n, txs: dataSource.txs, search, scroll: true }));
-    }
-  };
-
-  const handleSearch = (value) => {
-    const nextSearch = value.trim();
-    setSearch(nextSearch);
-    setTxs(query({ l10n, txs: dataSource.txs, search: nextSearch, scroll: true }));
-  };
-
-  console.log('  <Vault>', {
-    visible,
-    dialog,
-    scroll,
-    scrollQuery,
-    search,
-  });
+  const bindings = { l10n, dataSource, setTxs };
+  const handleScroll = onScroll.bind(undefined, { ...bindings, scrollQuery, search, setScroll, setScrollQuery });
+  const handleSearch = onSearch.bind(undefined, { ...bindings, setSearch });
 
   const { currency, title } = dataSource || params.Vault || {};
   const headingProps = { image: FLAGS[currency], title: `${title} ${l10n.BALANCE}` };
+
+  console.log('  <Vault>', { visible, dialog, scroll, scrollQuery, search });
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>

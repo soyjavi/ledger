@@ -44,7 +44,7 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
 
   useEffect(() => {
     if (visible) setVisibleVaults(queryVaults({ settings, vaults }));
-  }, [visible, settings, txs, vaults]);
+  }, [visible, settings, vaults]);
 
   console.log('  <Dashboard>', { visible, sync, vaults, dialog, scroll, lastTxs, visibleVaults });
 

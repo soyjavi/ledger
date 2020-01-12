@@ -8,7 +8,7 @@ const {
 } = C;
 const MAX_DAYS = 30;
 
-export default ({ l10n: { CATEGORIES = [] } = {}, txs = [], search = '', scroll = false }) => {
+export const query = ({ l10n: { CATEGORIES = [] } = {}, txs = [], search = '', scroll = false }) => {
   const queryTxs = [];
   const hasSearch = search.length > 0;
   const offset = new Date().getTimezoneOffset() * 60 * 1000;

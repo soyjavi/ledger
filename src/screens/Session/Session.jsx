@@ -33,7 +33,7 @@ const Session = (props) => {
     }
   }, [fingerprint, store.pin]);
 
-  console.log('<Session>', { fingerprint, busy, pin });
+  console.log('  <Session>', { fingerprint, busy, pin });
 
   return (
     <Viewport {...props} scroll={false}>
@@ -60,4 +60,4 @@ const Session = (props) => {
   );
 };
 
-export default Session;
+export default React.memo(Session);
