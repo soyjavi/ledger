@@ -14,7 +14,7 @@ const Vault = ({ visible, ...inherit }) => {
   const l10n = useL10N();
   const { params, ...navigation } = useNavigation();
   const store = useStore();
-  const [dataSource, setDataSource] = useState(undefined);
+  const [dataSource, setDataSource] = useState(inherit.dataSource);
   const [dialog, setDialog] = useState(false);
   const [scroll, setScroll] = useState(false);
   const [scrollQuery, setScrollQuery] = useState(false);
@@ -24,16 +24,17 @@ const Vault = ({ visible, ...inherit }) => {
 
   useEffect(() => {
     if (visible) {
-      const { hash } = params.Vault || {};
-      const vault = store.vaults.find((vault) => vault.hash === hash) || {};
-      setDataSource(vault);
+      const { hash } = params.vault;
+      const vault = store.vaults.find((vault) => vault.hash === hash);
       setTxs(query({ l10n, txs: vault.txs }));
+      setDataSource(vault);
     }
   }, [visible, store]);
 
   useEffect(() => {
     if (!visible) {
       scrollview.current.scrollTo({ y: 0, animated: false });
+      setDataSource(undefined);
       setScrollQuery(false);
       setSearch(undefined);
     }
@@ -45,19 +46,26 @@ const Vault = ({ visible, ...inherit }) => {
   };
 
   const bindings = { l10n, dataSource, setTxs };
-  const handleScroll = onScroll.bind(undefined, { ...bindings, scrollQuery, search, setScroll, setScrollQuery });
+  const handleScroll = onScroll.bind(undefined, {
+    ...bindings,
+    scroll,
+    scrollQuery,
+    search,
+    setScroll,
+    setScrollQuery,
+  });
   const handleSearch = onSearch.bind(undefined, { ...bindings, setSearch });
 
-  const { currency, title } = dataSource || params.Vault || {};
-  const headingProps = { image: FLAGS[currency], title: `${title} ${l10n.BALANCE}` };
+  const { currency = store.baseCurrency, title, ...rest } = dataSource || params.vault || {};
+  const vaultProps = { ...rest, image: FLAGS[currency], title: `${title} ${l10n.BALANCE}` };
 
-  console.log('  <Vault>', { visible, dialog, scroll, scrollQuery, search });
+  console.log('  <Vault>', { visible, dialog, scroll, scrollQuery, search, inherit, dataSource });
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
-      <Header highlight={scroll} {...headingProps} />
+      <Header highlight={scroll} {...vaultProps} />
       <ScrollView onScroll={handleScroll} ref={scrollview} scrollEventThrottle={40} style={styles.container}>
-        <Summary {...dataSource} {...headingProps} />
+        <Summary {...vaultProps} />
         <Search onValue={handleSearch} value={search} />
 
         {txs.length > 0 ? (

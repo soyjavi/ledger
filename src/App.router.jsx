@@ -9,7 +9,7 @@ const { SCREEN } = C;
 const { SESSION, SETTINGS, STATS, DASHBOARD, VAULT, VAULTS } = SCREEN;
 
 const Router = () => {
-  const { current, params, stack = [], tx } = useNavigation();
+  const { current, stack = [], tx } = useNavigation();
   console.log(' <Router>');
 
   return (
@@ -22,10 +22,7 @@ const Router = () => {
           <Settings visible={stack.includes(SETTINGS)} />
           <Vaults visible={stack.includes(VAULTS)} />
           <Vault backward={current !== VAULT} visible={stack.includes(VAULT)} />
-          <Stats
-            vault={stack.includes(VAULT) && stack.includes(STATS) ? params.Vault : undefined}
-            visible={stack.includes(STATS)}
-          />
+          <Stats visible={stack.includes(STATS)} />
           <DialogClone dataSource={tx} visible={tx !== undefined} />
         </>
       )}

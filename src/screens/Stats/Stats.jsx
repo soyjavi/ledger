@@ -20,11 +20,14 @@ const {
 } = C;
 
 const Stats = (props) => {
-  const { vault, visible, ...inherit } = props;
+  const { visible, ...inherit } = props;
   const [slider, setSlider] = useState({});
   const [values, setValues] = useState({});
   const scrollview = useRef(null);
-  const navigation = useNavigation();
+  const {
+    params: { vault },
+    ...navigation
+  } = useNavigation();
   const l10n = useL10N();
   const store = useStore();
   const { baseCurrency: currency } = store;
@@ -123,7 +126,7 @@ const Stats = (props) => {
 Stats.propTypes = {
   backward: bool,
   txs: arrayOf(shape({})),
-  vault: shape({}),
+  // vault: shape({}),
   vaults: arrayOf(shape({})),
   visible: bool,
 };
@@ -131,7 +134,7 @@ Stats.propTypes = {
 Stats.defaultProps = {
   backward: false,
   txs: undefined,
-  vault: undefined,
+  // vault: undefined,
   vaults: undefined,
   visible: true,
 };

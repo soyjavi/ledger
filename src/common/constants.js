@@ -5,7 +5,7 @@ import PKG from '../../package.json';
 
 const { COLOR, SPACE, UNIT } = THEME;
 
-const IS_PRODUCTION = true;
+const IS_PRODUCTION = false;
 const IS_ANDROID = Platform.OS === 'android';
 const MS_IN_DAY = 1000 * 24 * 60 * 60;
 const MS_IN_WEEK = MS_IN_DAY * 7;
@@ -36,12 +36,12 @@ export default {
   NAME: PKG.name,
 
   SCREEN: {
-    DASHBOARD: 'Dashboard',
-    SESSION: 'Session',
-    SETTINGS: 'Settings',
-    STATS: 'Stats',
-    VAULT: 'Vault',
-    VAULTS: 'Vaults',
+    DASHBOARD: 'dashboard',
+    SESSION: 'session',
+    SETTINGS: 'settings',
+    STATS: 'stats',
+    VAULT: 'vault',
+    VAULTS: 'vaults',
   },
   STYLE: {
     CONTENT: {

@@ -4,7 +4,7 @@ import { query } from './query';
 const { SPACE } = THEME;
 
 export const onScroll = (
-  { l10n, dataSource, scrollQuery, search, setScroll, setScrollQuery, setTxs },
+  { l10n, dataSource, scroll, scrollQuery, search, setScroll, setScrollQuery, setTxs },
   {
     nativeEvent: {
       contentOffset: { y },
@@ -12,6 +12,7 @@ export const onScroll = (
   },
 ) => {
   const nextScroll = y > SPACE.MEDIUM;
+
   if (nextScroll !== scroll) setScroll(nextScroll);
   if (!scrollQuery && y > LAYOUT.VIEWPORT.H / 2) {
     setScrollQuery(true);

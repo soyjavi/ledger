@@ -12,7 +12,7 @@ export const query = ({ l10n: { CATEGORIES = [] } = {}, txs = [], search = '', s
   const queryTxs = [];
   const hasSearch = search.length > 0;
   const offset = new Date().getTimezoneOffset() * 60 * 1000;
-  const limit = -(scroll ? 128 : 16);
+  const limit = -(scroll ? 0 : 16);
   let days = 0;
   let date;
   let dateIndex = 0;
