@@ -1,8 +1,6 @@
 const FAMILY = 'font-family';
 const FAMILY_BOLD = 'font-family-bold';
 
-const WEIGHT = { REGULAR: '400', BOLD: '700' };
-
 export default {
   COLOR: {
     BACKGROUND: '#000',
@@ -14,21 +12,13 @@ export default {
     TEXT_LIGHTEN: '#808080',
 
     PRIMARY: '#ffffff',
-
-    // ACCENT: '#7966FF',
-    // EXPENSE: '#E9305C',
-    INCOME: '#43e97b',
-    // TRANSFER: '#4066EA',
-    // LOCATION: '#A6FE01',
-
-    ACCENT: '#FFC700',
-    EXPENSE: '#FF3986',
-    // INCOME: '#24F2AD',
-    TRANSFER: '#7218FF',
-    LOCATION: '#2F9BFF',
-
-    WARNING: '#EDE622',
+    ACCENT: '#FFC700', // ACCENT: '#7966FF',
     ERROR: '#E9305C',
+
+    EXPENSE: '#FF3986',
+    INCOME: '#43e97b', // INCOME: '#24F2AD',
+    TRANSFER: '#7218FF', // TRANSFER: '#4066EA',
+    LOCATION: '#2F9BFF', // LOCATION: '#A6FE01',
 
     BTC: '#f4b659',
     EUR: '#0251b5',
@@ -43,7 +33,6 @@ export default {
 
     DEFAULT: {
       fontFamily: FAMILY,
-      fontWeight: WEIGHT.REGULAR,
     },
     HEADLINE: {
       fontFamily: FAMILY_BOLD,
@@ -60,15 +49,22 @@ export default {
     },
     CAPTION: {
       fontSize: 11,
-      letterSpacing: -0.25,
+      letterSpacing: -0.1,
+    },
+    BOLD: {
+      fontFamily: FAMILY_BOLD,
+      fontWeight: '400',
     },
     BUTTON: {
-      fontSize: 15,
+      fontSize: 16,
       fontFamily: FAMILY_BOLD,
+      fontWeight: 'normal',
     },
     BUTTON_SMALL: {
+      lineHeight: 15,
       fontSize: 12,
-      letterSpacing: -0.25,
+      fontFamily: FAMILY_BOLD,
+      letterSpacing: -0.1,
     },
     INPUT: {
       fontFamily: FAMILY_BOLD,

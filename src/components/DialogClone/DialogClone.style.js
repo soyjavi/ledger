@@ -18,7 +18,6 @@ export default StyleSheet.create({
   boxContent: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: UNIT * 0.2,
   },
 
   button: {
@@ -34,6 +33,10 @@ export default StyleSheet.create({
 
   content: {
     paddingVertical: SPACE.XS,
+  },
+
+  day: {
+    lineHeight: UNIT * 1.4,
   },
 
   dialog: {

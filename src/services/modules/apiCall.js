@@ -27,11 +27,11 @@ const apiCall = async ({ endpoint = ENDPOINT, headers, method = DEFAULT_METHOD, 
       .then(async (response) => {
         const json = await response.json();
 
-        if (response.status >= 400) reject({ code: response.status, message: json.message }); // eslint-disable-line
+        if (response.status >= 400) reject({ code: response.status, message: json.message });
         else resolve(json);
       })
       .catch(({ message = 'Something wrong happened. Try again.', response } = {}) => {
-        reject({ // eslint-disable-line
+        reject({
           code: response ? response.status : 500,
           message,
         });

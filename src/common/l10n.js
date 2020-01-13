@@ -77,7 +77,7 @@ export default {
     EXPENSES: 'Expenses',
 
     FIRST_VAULT_CAPTION:
-      'This will be your first vault. The currency you choose will be used as the basis for all reports.', // eslint-disable-line
+      'This will be your first vault. The currency you choose will be used as the basis for all reports.',
     FORKED_CORRECTLY: 'All transactions have been successfully transferred to this device.',
     FROM: 'from',
 
@@ -143,6 +143,7 @@ export default {
       'Transfer all your transactions and vaults from this device to a new one just reading this QR in the new device.',
     TRANSFER_TXS_CAMERA: 'Read the QR code from the device you want get all its transactions and vaults.',
     TRANSFER_TXS_IMPORT:
+      // eslint-disable-next-line max-len
       'You are about to import all transactions and vaults from another device. Keep in mind that all your current data will be deleted from this device.',
     TRANSFER_CAPTION: 'Transfer any amount to another of your vaults.',
     TYPE: 'Type',
@@ -151,7 +152,7 @@ export default {
     VAULT_DESTINATION: 'Destination vault',
     VAULTS: 'Vaults',
     VAULT_CAPTION:
-      'You can create as many vaults as you want. You can continue using your base currency or choose any other.', // eslint-disable-line
+      'You can create as many vaults as you want. You can continue using your base currency or choose any other.',
     VISIBILITY: 'Visibility',
 
     WARNING: 'Warning',

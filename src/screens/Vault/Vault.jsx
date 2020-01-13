@@ -1,102 +1,80 @@
-import { bool, func, shape } from 'prop-types';
+import { bool } from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 
 import { FLAGS } from '../../assets';
 import { Footer, GroupTransactions, Header, Heading, Summary } from '../../components';
-import { useL10N, useNavigation } from '../../context';
-import { LAYOUT, THEME } from '../../reactor/common';
-import { Activity, Text, Viewport } from '../../reactor/components';
+import { useL10N, useNavigation, useStore } from '../../context';
+import { Text, Viewport } from '../../reactor/components';
 import { DialogTransaction, Search } from './components';
-import query from './modules/query';
+import { onScroll, onSearch, query } from './modules';
 import styles from './Vault.style';
 
-const { COLOR, SPACE } = THEME;
-
-const Vault = (props) => {
-  const { dataSource, visible, ...inherit } = props;
+const Vault = ({ visible, ...inherit }) => {
   const l10n = useL10N();
-  const navigation = useNavigation();
+  const { params, ...navigation } = useNavigation();
+  const store = useStore();
+  const [dataSource, setDataSource] = useState(inherit.dataSource);
   const [dialog, setDialog] = useState(false);
   const [scroll, setScroll] = useState(false);
   const [scrollQuery, setScrollQuery] = useState(false);
   const [search, setSearch] = useState(undefined);
-  const [values, setValues] = useState([]);
-  const [vault, setVault] = useState(undefined);
+  const [txs, setTxs] = useState([]);
   const scrollview = useRef(null);
 
   useEffect(() => {
     if (visible) {
-      const nextValues = query(props, { ...dataSource, search: undefined });
-      const totalTxs =
-        Object.values(nextValues).length > 0
-          ? Object.values(nextValues)
-              .map((value) => value.txs.length)
-              .reduce((a, b) => (a += b))
-          : 0;
+      const { hash } = params.vault;
+      const vault = store.vaults.find((vault) => vault.hash === hash);
+      setTxs(query({ l10n, txs: vault.txs }));
+      setDataSource(vault);
+    }
+  }, [visible, store]);
 
-      setScrollQuery(totalTxs !== 16);
+  useEffect(() => {
+    if (!visible) {
+      scrollview.current.scrollTo({ y: 0, animated: false });
+      setDataSource(undefined);
+      setScrollQuery(false);
       setSearch(undefined);
-      setValues(nextValues);
-      setVault(dataSource);
-    } else if (!visible) scrollview.current.scrollTo({ y: 0, animated: false });
-  }, [visible, dataSource, props]);
+    }
+  }, [visible]);
 
-  const onHardwareBack = () => {
+  const handleHardwareBack = () => {
     if (dialog) setDialog(false);
     else navigation.back();
   };
 
-  const onScroll = ({
-    nativeEvent: {
-      contentOffset: { y },
-    },
-  }) => {
-    const nextScroll = y > SPACE.MEDIUM;
-    if (nextScroll !== scroll) setScroll(nextScroll);
-
-    if (!scrollQuery && y > LAYOUT.VIEWPORT.H / 2) {
-      const nextscrollQuery = true;
-      setScrollQuery(nextscrollQuery);
-      setValues(query(props, { ...dataSource, search }, nextscrollQuery));
-    }
-  };
-
-  const onSearch = (value) => {
-    setSearch(value);
-    setValues(query(props, { ...dataSource, search: value.toLowerCase().trim() }, scrollQuery));
-  };
-
-  const { currency, hash, title } = vault || {};
-
-  console.log('<Vault>', {
-    visible,
-    dialog,
+  const bindings = { l10n, dataSource, setTxs };
+  const handleScroll = onScroll.bind(undefined, {
+    ...bindings,
     scroll,
     scrollQuery,
     search,
-    values,
+    setScroll,
+    setScrollQuery,
   });
+  const handleSearch = onSearch.bind(undefined, { ...bindings, setSearch });
+
+  const { currency = store.baseCurrency, title, ...rest } = dataSource || params.vault || {};
+  const vaultProps = { ...rest, image: FLAGS[currency], title: `${title} ${l10n.BALANCE}` };
+
+  console.log('  <Vault>', { visible, dialog, scroll, scrollQuery, search, inherit, dataSource });
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
-      <Header highlight={scroll} image={FLAGS[currency]} title={`${title} ${l10n.BALANCE}`} />
-      <ScrollView onScroll={onScroll} ref={scrollview} scrollEventThrottle={40} style={styles.container}>
-        <>
-          <Summary {...vault} image={FLAGS[currency]} title={`${title} ${l10n.BALANCE}`} />
-          <Search onValue={onSearch} value={search} />
-        </>
+      <Header highlight={scroll} {...vaultProps} />
+      <ScrollView onScroll={handleScroll} ref={scrollview} scrollEventThrottle={40} style={styles.container}>
+        <Summary {...vaultProps} />
+        <Search onValue={handleSearch} value={search} />
 
-        {values.length > 0 ? (
+        {txs.length > 0 ? (
           <>
             <Heading value={l10n.TRANSACTIONS} />
             <View style={styles.content}>
-              <>
-                {values.map((item) => (
-                  <GroupTransactions key={`${item.timestamp}-${search}`} {...item} currency={currency} />
-                ))}
-              </>
-              {!search && !scrollQuery && <Activity size="large" color={COLOR.BASE} style={styles.activity} />}
+              {txs.map((item) => (
+                <GroupTransactions key={`${item.timestamp}-${search}`} {...item} currency={currency} />
+              ))}
             </View>
           </>
         ) : (
@@ -108,29 +86,28 @@ const Vault = (props) => {
 
       <Footer
         onBack={navigation.back}
-        onHardwareBack={visible ? onHardwareBack : undefined}
+        onHardwareBack={visible ? handleHardwareBack : undefined}
         onPress={() => setDialog(true)}
       />
 
-      {visible && (
-        <DialogTransaction currency={currency} onClose={() => setDialog(false)} vault={hash} visible={dialog} />
+      {visible && dataSource && (
+        <DialogTransaction
+          currency={currency}
+          onClose={() => setDialog(false)}
+          vault={dataSource.hash}
+          visible={dialog}
+        />
       )}
     </Viewport>
   );
 };
 
 Vault.propTypes = {
-  backward: bool,
-  dataSource: shape({}),
-  back: func,
   visible: bool,
 };
 
 Vault.defaultProps = {
-  backward: false,
-  dataSource: undefined,
-  back() {},
   visible: true,
 };
 
-export default Vault;
+export default React.memo(Vault);

@@ -5,12 +5,8 @@
     "slug": "voltvault",
     "privacy": "public",
     "sdkVersion": "36.0.0",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
-    "version": "0.18.0",
+    "platforms": ["ios", "android", "web"],
+    "version": "0.18.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -19,11 +15,11 @@
       "backgroundColor": "#000000"
     },
     "updates": {
+      "enabled": true,
+      "checkAutomatically": "ON_LOAD",
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": false
     },
@@ -39,6 +35,6 @@
       "barStyle": "light-content",
       "backgroundColor": "#000000"
     },
-    "githubUrl": "https://github.com/soyjavi/voltvault"
+    "githubUrl": "https://github.com/soyjavi/voltvault-app"
   }
 }

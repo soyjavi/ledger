@@ -1,4 +1,4 @@
-import { array, arrayOf, number, string } from 'prop-types';
+import { array, arrayOf, bool, number, string } from 'prop-types';
 import React from 'react';
 
 import { C, objectToQueryString } from '../../common';
@@ -9,7 +9,7 @@ import styles, { MAP_HEIGHT, MAP_WIDTH } from './HeatMap.style';
 const { ENDPOINT } = C;
 const { COLOR } = THEME;
 
-const HeatMap = ({ color, height, points, precission, width, ...inherit }) => {
+const HeatMap = ({ color, darkMode, height, points, precission, width, ...inherit }) => {
   const queryString = points
     ? objectToQueryString({
         color,
@@ -22,7 +22,9 @@ const HeatMap = ({ color, height, points, precission, width, ...inherit }) => {
   return (
     <Image
       resizeMode="cover"
-      source={queryString ? { uri: `${ENDPOINT}/heatmap?${queryString}&style=dark` } : undefined}
+      source={
+        queryString ? { uri: `${ENDPOINT}/heatmap?${queryString}&style=${darkMode ? 'dark' : 'light'}` } : undefined
+      }
       style={[styles.container, inherit.style]}
     />
   );
@@ -30,14 +32,16 @@ const HeatMap = ({ color, height, points, precission, width, ...inherit }) => {
 
 HeatMap.propTypes = {
   color: string,
+  darkMode: bool,
   height: number,
-  width: number,
   points: arrayOf(array),
   precission: number,
+  width: number,
 };
 
 HeatMap.defaultProps = {
   color: COLOR.PRIMARY,
+  darkMode: true,
   height: MAP_HEIGHT,
   points: undefined,
   precission: 0.001,

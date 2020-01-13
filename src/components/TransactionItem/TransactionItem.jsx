@@ -1,9 +1,8 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { number, oneOfType, shape, string } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 import { THEME } from '../../reactor/common';
-import { Text, Touchable } from '../../reactor/components';
+import { Icon, Text, Touchable } from '../../reactor/components';
 
 import { C, exchange, getIconCategory } from '../../common';
 import { useNavigation, useStore } from '../../context';
@@ -30,15 +29,10 @@ const TransactionItem = (props) => {
   if (category === VAULT_TRANSFER) color = COLOR.TRANSFER;
 
   return (
-    <Touchable rippleColor={COLOR.TEXT_LIGHTEN} onPress={() => showTx(props)}>
+    <Touchable rippleColor={COLOR.TEXT} onPress={() => showTx(props)}>
       <View style={[styles.container, styles.row]}>
-        <Box color={color} opacity={0.25} small style={styles.box}>
-          <MaterialCommunityIcons
-            name={getIconCategory({ type, category, title })}
-            color={color}
-            size={20}
-            style={styles.icon}
-          />
+        <Box color={color} opacity={0.25} small style={styles.box} styleContent={styles.boxContent}>
+          <Icon value={getIconCategory({ type, category, title })} color={color} />
         </Box>
 
         <View style={[styles.content, styles.row]}>
@@ -67,7 +61,6 @@ const TransactionItem = (props) => {
                 currency={currency}
                 operator={type === INCOME}
                 value={value * operator}
-                style={styles.caption}
               />
             )}
           </View>

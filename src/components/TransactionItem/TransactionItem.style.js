@@ -9,6 +9,11 @@ export default StyleSheet.create({
     marginRight: UNIT,
   },
 
+  boxContent: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
   container: {
     paddingVertical: SPACE.XS,
     paddingHorizontal: SPACE.MEDIUM,
@@ -17,11 +22,6 @@ export default StyleSheet.create({
   content: {
     alignItems: 'flex-start',
     flex: 1,
-  },
-
-  icon: {
-    alignSelf: 'center',
-    marginTop: UNIT * 0.6,
   },
 
   prices: {

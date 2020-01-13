@@ -15,16 +15,11 @@ export default StyleSheet.create({
     borderWidth: 1,
     marginHorizontal: SPACE.MEDIUM,
     marginBottom: SPACE.MEDIUM,
-    paddingHorizontal: SPACE.MEDIUM,
+    paddingHorizontal: SPACE.S,
   },
 
   focus: {
     borderColor: COLOR.PRIMARY,
-  },
-
-  icon: {
-    marginRight: SPACE.MEDIUM,
-    opacity: 0.65,
   },
 
   input: {
@@ -34,5 +29,6 @@ export default StyleSheet.create({
     flex: 1,
     fontSize: UNIT * 1.6,
     height: INPUT_HEIGHT,
+    marginLeft: SPACE.S,
   },
 });

@@ -1,11 +1,10 @@
-import { FontAwesome } from '@expo/vector-icons';
 import { bool, shape, func } from 'prop-types';
 import React, { Fragment } from 'react';
 import { Image, View } from 'react-native';
 
 import { FLAGS } from '../../../../assets';
 import { THEME } from '../../../../reactor/common';
-import { Text, Touchable } from '../../../../reactor/components';
+import { Icon, Text, Touchable } from '../../../../reactor/components';
 
 import { exchange } from '../../../../common';
 import { Box, PriceFriendly } from '../../../../components';
@@ -19,18 +18,17 @@ const OptionItem = ({ active, onChange, onPress, dataSource: { currency, current
   const disabled = !active;
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, disabled && styles.disabled]}>
       <Box small color={active ? COLOR[currency] : undefined}>
-        <Image source={FLAGS[currency]} style={[styles.image, disabled && styles.imageDisabled]} />
+        <Image source={FLAGS[currency]} style={[styles.image]} />
       </Box>
       <Touchable onPress={onPress} rippleColor={COLOR.PRIMARY} style={styles.content}>
-        <Text bold numberOfLines={1} lighten={disabled}>
+        <Text bold numberOfLines={1}>
           {title}
         </Text>
         <View style={styles.row}>
           <PriceFriendly
             caption
-            lighten={disabled}
             currency={baseCurrency}
             value={currency !== baseCurrency ? exchange(currentBalance, currency, baseCurrency, rates) : currentBalance}
             style={styles.balance}
@@ -48,10 +46,8 @@ const OptionItem = ({ active, onChange, onPress, dataSource: { currency, current
           )}
         </View>
       </Touchable>
-      <Touchable onPress={() => onChange(!active)} rippleColor={COLOR.ACCENT}>
-        <View style={[styles.iconContainer, active && styles.iconActive]}>
-          {active && <FontAwesome name="check" color={COLOR.BACKGROUND} size={16} />}
-        </View>
+      <Touchable onPress={() => onChange(!active)} value={active} style={styles.switch}>
+        <Icon size={24} value={active ? 'eye-outline' : 'eye-off-outline'} />
       </Touchable>
     </View>
   );
@@ -59,7 +55,7 @@ const OptionItem = ({ active, onChange, onPress, dataSource: { currency, current
 
 OptionItem.propTypes = {
   active: bool,
-  dataSource: shape.isRequired,
+  dataSource: shape({}).isRequired,
   onChange: func.isRequired,
   onPress: func.isRequired,
 };

@@ -1,9 +1,8 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { bool, func, node, number, oneOfType, string } from 'prop-types';
 import React from 'react';
 import { Image, View } from 'react-native';
 
-import { Text, Touchable } from '../../reactor/components';
+import { Icon, Text, Touchable } from '../../reactor/components';
 import { THEME } from '../../reactor/common';
 import { Box } from '../Box';
 import styles from './CardOption.style';
@@ -19,7 +18,7 @@ const CardOption = ({ children, color, icon, image, onPress, selected, title, ..
     >
       {icon && (
         <View style={styles.icon}>
-          <MaterialCommunityIcons name={icon} color={COLOR.TEXT} size={28} />
+          <Icon value={icon} color={COLOR.TEXT} size={28} />
         </View>
       )}
 

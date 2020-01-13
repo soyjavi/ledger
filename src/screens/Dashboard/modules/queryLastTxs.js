@@ -3,7 +3,7 @@ import { C } from '../../../common';
 const { CURRENCY } = C;
 const MAX_DAYS = 3;
 
-export default ({ txs = [], vaults = [] }) => {
+export const queryLastTxs = ({ txs = [], vaults = [] }) => {
   const dataSource = [];
   const offset = new Date().getTimezoneOffset() * 60 * 1000;
   let days = 0;

@@ -36,12 +36,12 @@ export default {
   NAME: PKG.name,
 
   SCREEN: {
-    DASHBOARD: 'Dashboard',
-    SESSION: 'Session',
-    SETTINGS: 'Settings',
-    STATS: 'Stats',
-    VAULT: 'Vault',
-    VAULTS: 'Vaults',
+    DASHBOARD: 'dashboard',
+    SESSION: 'session',
+    SETTINGS: 'settings',
+    STATS: 'stats',
+    VAULT: 'vault',
+    VAULTS: 'vaults',
   },
   STYLE: {
     CONTENT: {

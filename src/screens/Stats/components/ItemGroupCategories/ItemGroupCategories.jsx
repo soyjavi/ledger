@@ -21,7 +21,7 @@ const ItemGroupCategories = ({ dataSource, type }) => {
   let total = 0;
   Object.keys(dataSource).forEach((category) => {
     if (category >= 0) {
-      totals[category] = Object.values(dataSource[category]).reduce((a, b) => a += b); // eslint-disable-line
+      totals[category] = Object.values(dataSource[category]).reduce((a, b) => (a += b));
       total += totals[category];
     }
   });
@@ -33,7 +33,12 @@ const ItemGroupCategories = ({ dataSource, type }) => {
       </Heading>
       <View>
         {orderByAmount(totals).map(({ key, amount }) => (
-          <Touchable key={key} onPress={() => setExpand(expand !== key ? key : undefined)} style={styles.content}>
+          <Touchable
+            key={key}
+            onPress={() => setExpand(expand !== key ? key : undefined)}
+            rippleColor={COLOR.TEXT}
+            style={[styles.content, expand && expand !== key && styles.noHighlight]}
+          >
             <HorizontalChartItem
               color={isExpense ? COLOR.EXPENSE : COLOR.INCOME}
               currency={baseCurrency}
@@ -47,7 +52,7 @@ const ItemGroupCategories = ({ dataSource, type }) => {
                 {orderByAmount(dataSource[key]).map((item) => (
                   <HorizontalChartItem
                     key={`${key}-${item.key}`}
-                    color={COLOR.TEXT_LIGHTEN}
+                    color={isExpense ? COLOR.EXPENSE : COLOR.INCOME}
                     currency={baseCurrency}
                     small
                     title={item.key}

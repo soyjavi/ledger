@@ -51,7 +51,7 @@ const DialogTransaction = (props) => {
     store,
     snackbar,
     setBusy,
-    state,
+    state: { ...state, ...location },
     setState,
   });
 

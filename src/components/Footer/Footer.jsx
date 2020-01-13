@@ -1,4 +1,3 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { func } from 'prop-types';
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
@@ -6,7 +5,7 @@ import { View } from 'react-native';
 import { onHardwareBackPress } from '../../common';
 import { useConnection } from '../../context';
 import { THEME } from '../../reactor/common';
-import { Button } from '../../reactor/components';
+import { Button, Icon } from '../../reactor/components';
 import styles from './Footer.style';
 
 const { COLOR } = THEME;
@@ -31,12 +30,12 @@ const Footer = ({ onBack, onHardwareBack, onPress, ...inherit }) => {
     <View style={[styles.container, inherit.style]}>
       {onBack && (
         <Button {...BUTTON} color={COLOR.BACKGROUND} onPress={onBack}>
-          <MaterialCommunityIcons name="arrow-left" color={COLOR.TEXT} size={24} />
+          <Icon value="arrow-left" color={COLOR.TEXT} size={24} />
         </Button>
       )}
       {onPress && connected && (
         <Button {...BUTTON} color={COLOR.ACCENT} disabled={!connected} onPress={onPress}>
-          <MaterialCommunityIcons name="plus" color={COLOR.BASE} size={24} />
+          <Icon value="plus" color={COLOR.BASE} size={24} />
         </Button>
       )}
     </View>

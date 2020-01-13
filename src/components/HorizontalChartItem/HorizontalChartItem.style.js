@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import { LAYOUT, THEME } from '../../reactor/common';
 
-const { COLOR, SPACE, UNIT } = THEME;
+const { BORDER_RADIUS, COLOR, SPACE, UNIT } = THEME;
 const BAR_SIZE = UNIT;
 const BAR_SIZE_SMALL = UNIT / 2;
 const IMAGE_SIZE = SPACE.MEDIUM;
@@ -10,6 +10,7 @@ const IMAGE_SIZE = SPACE.MEDIUM;
 export default StyleSheet.create({
   bar: {
     backgroundColor: COLOR.TEXT_LIGHTEN,
+    borderRadius: BORDER_RADIUS,
     height: BAR_SIZE,
     minWidth: BAR_SIZE,
   },
