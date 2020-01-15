@@ -7,6 +7,7 @@ module.exports = {
   globals: {
     global: 'readonly',
     require: 'readonly',
+    __DEV__: 'readonly',
   },
   parser: 'babel-eslint',
   parserOptions: {

@@ -5,7 +5,7 @@ import PKG from '../../package.json';
 
 const { COLOR, SPACE, UNIT } = THEME;
 
-const IS_PRODUCTION = false;
+const IS_DEV = __DEV__;
 const IS_ANDROID = Platform.OS === 'android';
 const MS_IN_DAY = 1000 * 24 * 60 * 60;
 const MS_IN_WEEK = MS_IN_DAY * 7;
@@ -13,7 +13,7 @@ const MS_IN_WEEK = MS_IN_DAY * 7;
 export default {
   CURRENCY: 'EUR',
 
-  ENDPOINT: IS_PRODUCTION ? 'https://voltvault.glitch.me' : 'http://localhost:8080',
+  ENDPOINT: IS_DEV ? 'http://localhost:8080' : 'https://voltvault.glitch.me',
 
   FIXED: {
     BTC: 6,
@@ -25,8 +25,7 @@ export default {
     XAG: 0,
   },
 
-  IS_DEV: !IS_PRODUCTION,
-  IS_PRODUCTION,
+  IS_DEV,
 
   LANGUAGE: 'en-EN',
 
