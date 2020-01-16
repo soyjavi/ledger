@@ -111,7 +111,8 @@ const DialogTransaction = (props) => {
 
       <Button
         activity={busy}
-        color={color || COLOR.PRIMARY}
+        color={color}
+        colorContent={COLOR.BACKGROUND}
         disabled={busy || !valid}
         large
         onPress={onSubmit}
