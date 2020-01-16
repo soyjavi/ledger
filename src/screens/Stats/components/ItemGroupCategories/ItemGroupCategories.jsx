@@ -28,8 +28,8 @@ const ItemGroupCategories = ({ dataSource, type }) => {
 
   return (
     <View style={styles.container}>
-      <Heading color={COLOR.TEXT_CONTRAST} value={isExpense ? l10n.EXPENSES : l10n.INCOMES}>
-        <PriceFriendly color={COLOR.TEXT_CONTRAST} currency={baseCurrency} value={total} />
+      <Heading color={COLOR.TEXT} value={isExpense ? l10n.EXPENSES : l10n.INCOMES}>
+        <PriceFriendly color={COLOR.TEXT} currency={baseCurrency} value={total} />
       </Heading>
       <View>
         {orderByAmount(totals).map(({ key, amount }) => (

@@ -72,7 +72,6 @@ const Stats = (props) => {
           {...calcScales(chart.balance)}
           {...common}
           captions={orderCaptions(l10n)}
-          color={COLOR.ACCENT}
           styleContainer={[styles.chart, styles.chartMargin]}
           style={styles.chartBalance}
           title={l10n.OVERALL_BALANCE}
@@ -98,6 +97,7 @@ const Stats = (props) => {
         {!vault && (
           <Chart
             {...calcScales(chart.transfers)}
+            {...common}
             captions={orderCaptions(l10n)}
             color={COLOR.TRANSFER}
             styleContainer={[styles.chart, styles.chartMargin]}
@@ -107,11 +107,11 @@ const Stats = (props) => {
         )}
 
         {hasExpenses || hasIncomes ? (
-          <View style={styles.content}>
+          <>
             {hasIncomes && <ItemGroupCategories type={INCOME} dataSource={incomes} />}
             {hasExpenses && <ItemGroupCategories type={EXPENSE} dataSource={expenses} />}
             {hasPoints && <Locations {...inherit} {...locations} />}
-          </View>
+          </>
         ) : (
           <View style={styles.contentEmpty}>
             <Text lighten>{l10n.NO_TRANSACTIONS}</Text>

@@ -71,11 +71,11 @@ const Vault = ({ visible, ...inherit }) => {
         {txs.length > 0 ? (
           <>
             <Heading value={l10n.TRANSACTIONS} />
-            <View style={styles.content}>
+            <>
               {txs.map((item) => (
                 <GroupTransactions key={`${item.timestamp}-${search}`} {...item} currency={currency} />
               ))}
-            </View>
+            </>
           </>
         ) : (
           <View style={[styles.centered, styles.container]}>

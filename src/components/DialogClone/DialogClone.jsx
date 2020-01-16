@@ -111,7 +111,12 @@ const DialogClone = ({
           title={!busy ? l10n.WIPE : undefined}
         />
         <View style={styles.buttonSeparator} />
-        <Button {...buttonProps} onPress={() => onSubmit(false)} title={!busy ? l10n.CLONE : undefined} />
+        <Button
+          {...buttonProps}
+          colorContent={COLOR.BACKGROUND}
+          onPress={() => onSubmit(false)}
+          title={!busy ? l10n.CLONE : undefined}
+        />
       </View>
     </Dialog>
   );

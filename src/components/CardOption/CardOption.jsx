@@ -9,28 +9,33 @@ import styles from './CardOption.style';
 
 const { COLOR } = THEME;
 
-const CardOption = ({ children, color, icon, image, onPress, selected, title, ...inherit }) => (
-  <Box small style={[styles.box, inherit.style]}>
-    <Touchable
-      onPress={onPress}
-      rippleColor={COLOR.PRIMARY}
-      style={[styles.container, selected && { backgroundColor: color }]}
-    >
-      {icon && (
-        <View style={styles.icon}>
-          <Icon value={icon} color={COLOR.TEXT} size={28} />
-        </View>
-      )}
+const CardOption = ({ children, color, icon, image, onPress, selected, title, ...inherit }) => {
+  let colorContent = selected ? COLOR.TEXT : COLOR.TEXT_LIGHTEN;
+  if (selected && color === COLOR.PRIMARY) colorContent = COLOR.BACKGROUND;
 
-      {image && <Image source={image} style={styles.image} />}
+  return (
+    <Box small style={[styles.box, inherit.style]}>
+      <Touchable
+        onPress={onPress}
+        rippleColor={COLOR.PRIMARY}
+        style={[styles.container, selected && { backgroundColor: color }]}
+      >
+        {icon && (
+          <View style={styles.icon}>
+            <Icon value={icon} color={colorContent} size={28} />
+          </View>
+        )}
 
-      <Text caption lighten={selected && color === COLOR.PRIMARY} numberOfLines={1} style={styles.title}>
-        {title}
-      </Text>
-      {children}
-    </Touchable>
-  </Box>
-);
+        {image && <Image source={image} style={styles.image} />}
+
+        <Text caption color={colorContent} numberOfLines={1} style={styles.title}>
+          {title}
+        </Text>
+        {children}
+      </Touchable>
+    </Box>
+  );
+};
 
 CardOption.propTypes = {
   children: node,

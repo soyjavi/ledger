@@ -13,10 +13,10 @@ const HorizontalChartItem = ({ color, currency, image, small, title, value, widt
   <View style={inherit.style}>
     <View style={styles.row}>
       {image && <Image source={image} style={styles.image} />}
-      <Text caption color={COLOR.TEXT_CONTRAST} bold={!small} style={styles.text}>
+      <Text caption color={COLOR.TEXT} bold={!small} style={styles.text}>
         {title}
       </Text>
-      <PriceFriendly caption color={COLOR.TEXT_CONTRAST} currency={currency} bold={!small} value={value} />
+      <PriceFriendly caption color={COLOR.TEXT} currency={currency} bold={!small} value={value} />
     </View>
 
     <View style={[styles.bar, styles.barContainer, small && styles.barSmall]}>
@@ -36,7 +36,7 @@ HorizontalChartItem.propTypes = {
 };
 
 HorizontalChartItem.defaultProps = {
-  color: COLOR.PRIMARY,
+  color: COLOR.TEXT,
   image: undefined,
   small: false,
   width: 100,

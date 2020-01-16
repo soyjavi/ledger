@@ -25,7 +25,13 @@ const Chart = ({ captions, highlight, inverted, values, styleContainer, ...inher
             <View style={[styles.scaleAvg, { top: `${100 - parseInt(((avg - min) * 100) / (max - min), 10)}%` }]}>
               <View style={[styles.scaleLine, { backgroundColor: color }]} />
               <View style={[styles.tag, { backgroundColor: color }]}>
-                <PriceFriendly bold color={COLOR.WHITE} currency={currency} value={avg} lighten style={styles.legend} />
+                <PriceFriendly
+                  bold
+                  color={color === COLOR.TEXT || color === COLOR.PRIMARY ? COLOR.BACKGROUND : COLOR.TEXT}
+                  currency={currency}
+                  value={avg}
+                  style={styles.legend}
+                />
               </View>
             </View>
           </View>
@@ -85,7 +91,7 @@ Chart.propTypes = {
 
 Chart.defaultProps = {
   captions: undefined,
-  color: COLOR.PRIMARY,
+  color: COLOR.TEXT,
   currency: undefined,
   highlight: undefined,
   inverted: false,

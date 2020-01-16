@@ -52,7 +52,6 @@ const DialogVault = ({ onClose, visible }) => {
           {queryCurrencies(baseCurrency, rates).map((item) => (
             <CardOption
               image={FLAGS[item]}
-              color={COLOR[currency]}
               key={item}
               onPress={() => setVaultCurrency(item)}
               selected={currency === item}
@@ -65,7 +64,8 @@ const DialogVault = ({ onClose, visible }) => {
       </View>
       <Button
         activity={busy}
-        color={COLOR.WHITE}
+        color={COLOR.PRIMARY}
+        colorContent={COLOR.BACKGROUND}
         disabled={busy || form.title.trim().length === 0}
         onPress={onSubmit}
         large

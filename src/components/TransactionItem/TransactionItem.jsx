@@ -31,14 +31,14 @@ const TransactionItem = (props) => {
   return (
     <Touchable rippleColor={COLOR.TEXT} onPress={() => showTx(props)}>
       <View style={[styles.container, styles.row]}>
-        <Box color={color} opacity={0.25} small style={styles.box} styleContent={styles.boxContent}>
+        <Box color={color} opacity={0.15} small style={styles.box} styleContent={styles.boxContent}>
           <Icon value={getIconCategory({ type, category, title })} color={color} />
         </Box>
 
         <View style={[styles.content, styles.row]}>
           <View style={styles.texts}>
             {title && (
-              <Text color={COLOR.TEXT_CONTRAST} bold numberOfLines={1}>
+              <Text color={COLOR.TEXT} bold numberOfLines={1}>
                 {title}
               </Text>
             )}
@@ -48,7 +48,7 @@ const TransactionItem = (props) => {
           </View>
           <View style={styles.prices}>
             <PriceFriendly
-              color={COLOR.TEXT_CONTRAST}
+              color={COLOR.TEXT}
               currency={baseCurrency}
               operator={type === INCOME}
               value={exchange(value, currency, baseCurrency, rates, timestamp) * operator}

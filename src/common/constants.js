@@ -3,7 +3,7 @@ import { Platform } from 'react-native';
 import { LAYOUT, THEME } from '../reactor/common';
 import PKG from '../../package.json';
 
-const { COLOR, SPACE, UNIT } = THEME;
+const { SPACE, UNIT } = THEME;
 
 const IS_DEV = __DEV__;
 const IS_ANDROID = Platform.OS === 'android';
@@ -43,12 +43,6 @@ export default {
     VAULTS: 'vaults',
   },
   STYLE: {
-    CONTENT: {
-      backgroundColor: COLOR.WHITE,
-      borderRadius: SPACE.MEDIUM,
-      marginTop: SPACE.XXS,
-      paddingVertical: SPACE.S,
-    },
     DIALOG: {
       justifyContent: 'flex-end',
       zIndex: 2,

@@ -17,8 +17,8 @@ const VaultCard = ({ currency, onPress, currentBalance, currentMonth: { progress
   const { baseCurrency, rates } = useStore();
 
   return React.useCallback(
-    <Touchable onPress={onPress} rippleColor={COLOR.TEXT_LIGHTEN} style={styles.container}>
-      <Box borderRadius={SPACE.S} color={COLOR[currency]}>
+    <Touchable onPress={onPress} rippleColor={COLOR[currency] || COLOR.TEXT_LIGHTEN} style={styles.container}>
+      <Box borderRadius={SPACE.S} color={COLOR[currency]} opacity={COLOR[currency] ? 0.2 : undefined}>
         <View style={styles.content}>
           <View style={styles.row}>
             <Image source={FLAGS[currency]} style={styles.thumbnail} />
