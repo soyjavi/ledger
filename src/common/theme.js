@@ -9,7 +9,7 @@ export default {
     BACKGROUND: '#000',
     BACKGROUND_INPUT: '#202020',
     BACKGROUND_OPACITY: 'rgba(16, 16, 16, 0.85)',
-    BASE: '#191919',
+    BASE: '#222222',
     TEXT: '#ffffff',
     TEXT_LIGHTEN: '#808080',
 

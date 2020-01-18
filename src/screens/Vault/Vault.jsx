@@ -65,7 +65,7 @@ const Vault = ({ visible, ...inherit }) => {
     <Viewport {...inherit} scroll={false} visible={visible}>
       <Header highlight={scroll} {...vaultProps} />
       <ScrollView onScroll={handleScroll} ref={scrollview} scrollEventThrottle={40} style={styles.container}>
-        <Summary {...vaultProps} />
+        <Summary {...vaultProps} currency={currency} />
         <Search onValue={handleSearch} value={search} />
 
         {txs.length > 0 ? (
