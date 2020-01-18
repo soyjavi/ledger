@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import { LAYOUT, THEME } from '../../reactor/common';
 
-const { SPACE, UNIT } = THEME;
+const { COLOR, SPACE, UNIT } = THEME;
 
 export default StyleSheet.create({
   balance: {
@@ -16,13 +16,17 @@ export default StyleSheet.create({
     flex: 1,
   },
 
+  button: {
+    backgroundColor: COLOR.ACCENT,
+  },
+
   spaceBetween: {
     justifyContent: 'space-between',
   },
 
   container: {
     paddingHorizontal: SPACE.MEDIUM,
-    marginBottom: SPACE.L,
+    marginBottom: SPACE.MEDIUM,
   },
 
   content: {

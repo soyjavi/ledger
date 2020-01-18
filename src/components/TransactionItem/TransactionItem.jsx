@@ -31,7 +31,7 @@ const TransactionItem = (props) => {
   return (
     <Touchable rippleColor={COLOR.TEXT} onPress={() => showTx(props)}>
       <View style={[styles.container, styles.row]}>
-        <Box outlined color={color} opacity={OPACITY.M} small style={styles.box} styleContent={styles.boxContent}>
+        <Box color={color} opacity={OPACITY.M} outlined small style={styles.box} styleContent={styles.boxContent}>
           <Icon value={getIconCategory({ type, category, title })} color={color} />
         </Box>
 

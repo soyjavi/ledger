@@ -40,9 +40,10 @@ const Syncing = ({ scroll }) => {
       >
         <Button
           color={COLOR.PRIMARY}
-          colorContent={COLOR.BACKGROUND}
           onPress={handleSync}
+          outlined
           small
+          style={styles.button}
           title={l10n.TAP_TO_UPDATE}
         />
       </Motion>

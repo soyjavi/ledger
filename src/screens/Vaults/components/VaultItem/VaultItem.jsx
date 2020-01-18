@@ -18,9 +18,9 @@ const OptionItem = ({ active, onChange, onPress, dataSource: { currency, current
   const disabled = !active;
 
   return (
-    <Touchable onPress={onPress} rippleColor={COLOR.TEXT}>
-      <View style={[styles.container, disabled && styles.disabled]}>
-        <Box small color={COLOR[currency]} opacity={COLOR[currency] ? 0.2 : undefined}>
+    <View style={[styles.row, disabled && styles.disabled]}>
+      <Touchable onPress={onPress} rippleColor={COLOR.TEXT} style={styles.container}>
+        <Box small color={COLOR[currency]} opacity={COLOR[currency] ? 0.2 : undefined} styleContent={styles.boxContent}>
           <Image source={FLAGS[currency]} style={[styles.image]} />
         </Box>
         <View style={styles.content}>
@@ -49,11 +49,11 @@ const OptionItem = ({ active, onChange, onPress, dataSource: { currency, current
             )}
           </View>
         </View>
-        <Touchable onPress={() => onChange(!active)} value={active} style={styles.switch}>
-          <Icon size={24} value={active ? 'eye-outline' : 'eye-off-outline'} />
-        </Touchable>
-      </View>
-    </Touchable>
+      </Touchable>
+      <Touchable onPress={() => onChange(!active)} value={active} style={styles.switch}>
+        <Icon size={24} value={active ? 'eye-outline' : 'eye-off-outline'} />
+      </Touchable>
+    </View>
   );
 };
 

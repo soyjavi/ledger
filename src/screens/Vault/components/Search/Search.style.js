@@ -19,7 +19,7 @@ export default StyleSheet.create({
   },
 
   focus: {
-    borderColor: COLOR.PRIMARY,
+    borderColor: COLOR.TEXT,
   },
 
   input: {
