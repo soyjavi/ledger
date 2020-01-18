@@ -17,7 +17,7 @@ const {
     TYPE: { INCOME, EXPENSE },
   },
 } = C;
-const { COLOR } = THEME;
+const { COLOR, OPACITY } = THEME;
 
 const TransactionItem = (props) => {
   const { baseCurrency, rates } = useStore();
@@ -31,7 +31,7 @@ const TransactionItem = (props) => {
   return (
     <Touchable rippleColor={COLOR.TEXT} onPress={() => showTx(props)}>
       <View style={[styles.container, styles.row]}>
-        <Box color={color} opacity={0.15} small style={styles.box} styleContent={styles.boxContent}>
+        <Box outlined color={color} opacity={OPACITY.M} small style={styles.box} styleContent={styles.boxContent}>
           <Icon value={getIconCategory({ type, category, title })} color={color} />
         </Box>
 
