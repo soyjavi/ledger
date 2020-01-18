@@ -3,17 +3,23 @@ import { StyleSheet } from 'react-native';
 import { LAYOUT, THEME } from '../../../../reactor/common';
 
 const { SPACE, UNIT } = THEME;
-const IMAGE_SIZE = UNIT * 2.2;
+const IMAGE_SIZE = UNIT * 1.6;
 
 export default StyleSheet.create({
   balance: {
     marginRight: SPACE.XXS,
   },
 
+  boxContent: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
   container: {
     ...LAYOUT.STYLE.ROW,
     paddingHorizontal: SPACE.MEDIUM,
     paddingVertical: SPACE.XXS,
+    flex: 1,
   },
 
   content: {
@@ -28,16 +34,12 @@ export default StyleSheet.create({
   image: {
     height: IMAGE_SIZE,
     width: IMAGE_SIZE,
-    margin: SPACE.XS,
-  },
-
-  imageDisabled: {
-    // opacity: 0.38,
   },
 
   row: LAYOUT.STYLE.ROW,
 
   switch: {
-    padding: SPACE.XXS,
+    padding: SPACE.XS,
+    marginRight: SPACE.XS,
   },
 });

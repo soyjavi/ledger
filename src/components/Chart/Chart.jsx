@@ -9,7 +9,7 @@ import { ChartHeading } from './components';
 import { calcHeight } from './modules';
 import styles from './Chart.style';
 
-const { COLOR } = THEME;
+const { COLOR, OPACITY } = THEME;
 
 const Chart = ({ captions, highlight, inverted, values, styleContainer, ...inherit }) => {
   const { color, currency, max, min, med: avg } = inherit;
@@ -25,7 +25,13 @@ const Chart = ({ captions, highlight, inverted, values, styleContainer, ...inher
             <View style={[styles.scaleAvg, { top: `${100 - parseInt(((avg - min) * 100) / (max - min), 10)}%` }]}>
               <View style={[styles.scaleLine, { backgroundColor: color }]} />
               <View style={[styles.tag, { backgroundColor: color }]}>
-                <PriceFriendly bold color={COLOR.WHITE} currency={currency} value={avg} lighten style={styles.legend} />
+                <PriceFriendly
+                  bold
+                  color={color === COLOR.TEXT || color === COLOR.PRIMARY ? COLOR.BACKGROUND : COLOR.TEXT}
+                  currency={currency}
+                  value={avg}
+                  style={styles.legend}
+                />
               </View>
             </View>
           </View>
@@ -39,10 +45,8 @@ const Chart = ({ captions, highlight, inverted, values, styleContainer, ...inher
                   styles.bar,
                   inverted && styles.barInverted,
                   value !== 0 && { height: `${calcHeight(value, { min, max, avg })}%` },
-                  {
-                    backgroundColor: color,
-                    opacity: highlight && highlight === index ? 1 : 0.68,
-                  },
+                  highlight !== index && styles.noHighlight,
+                  { backgroundColor: color },
                 ]}
               />
             </View>
@@ -55,12 +59,7 @@ const Chart = ({ captions, highlight, inverted, values, styleContainer, ...inher
           <View style={[styles.captions, styles.row]}>
             {captions.map((caption, index) => (
               <View key={caption} style={styles.column}>
-                <Text
-                  bold={highlight === index}
-                  color={highlight === index ? COLOR.WHITE : undefined}
-                  lighten
-                  style={styles.legend}
-                >
+                <Text bold={highlight === index} style={[styles.legend, highlight !== index && styles.noHighlight]}>
                   {caption.substring(0, 3).toUpperCase()}
                 </Text>
               </View>
@@ -85,7 +84,7 @@ Chart.propTypes = {
 
 Chart.defaultProps = {
   captions: undefined,
-  color: COLOR.PRIMARY,
+  color: COLOR.TEXT,
   currency: undefined,
   highlight: undefined,
   inverted: false,

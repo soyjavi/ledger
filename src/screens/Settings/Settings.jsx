@@ -5,12 +5,15 @@ import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 
+import { THEME } from '../../reactor/common';
 import { Activity, Button, Image, Text, Viewport } from '../../reactor/components';
 
 import { Footer, Header, Heading } from '../../components';
 import { useL10N, useNavigation, useSnackBar, useStore } from '../../context';
 import { DialogFork } from './components';
 import styles from './Settings.style';
+
+const { COLOR } = THEME;
 
 const QR_URI = 'https://chart.googleapis.com/chart?cht=qr&chs=512x512&chld=H|1&chl';
 const CAMERA_PROPS = {
@@ -59,7 +62,14 @@ const Settings = ({ visible, ...inherit }) => {
         <Heading value={l10n.TRANSFER_TXS} caption={l10n.IMPORT_EXPORT_CAPTION}>
           {hasCamera === undefined && <Activity color="white" style={styles.activity} />}
           {hasCamera && (
-            <Button outlined onPress={() => setCamera(!camera)} small title={camera ? l10n.CLOSE : l10n.QR_READER} />
+            <Button
+              color={COLOR.PRIMARY}
+              outlined
+              onPress={() => setCamera(!camera)}
+              small
+              style={styles.button}
+              title={camera ? l10n.CLOSE : l10n.QR_READER}
+            />
           )}
         </Heading>
         <View style={styles.content}>

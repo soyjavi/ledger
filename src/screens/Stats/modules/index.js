@@ -1,6 +1,7 @@
 import calcScales from './calcScales';
 import orderByAmount from './orderByAmount';
 import orderCaptions from './orderCaptions';
-import query from './query';
+import queryMonth from './queryMonth';
+import queryChart from './queryChart';
 
-export { calcScales, orderByAmount, orderCaptions, query };
+export { calcScales, orderByAmount, orderCaptions, queryMonth, queryChart };

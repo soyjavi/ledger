@@ -2,6 +2,7 @@ import { oneOfType, shape, number, string } from 'prop-types';
 import React from 'react';
 import { Image, View } from 'react-native';
 
+import { THEME } from '../../reactor/common';
 import { Button, Text, Touchable } from '../../reactor/components';
 import { LOGO } from '../../assets';
 import { C, exchange, verboseMonth } from '../../common';
@@ -11,10 +12,11 @@ import { PriceFriendly } from '../PriceFriendly';
 import styles from './Summary.style';
 
 const { CURRENCY, SCREEN } = C;
+const { COLOR } = THEME;
 
 const BoxSummary = ({ caption, value, style = styles.box, ...inherit }) => (
   <Box style={style}>
-    <Text caption lighten={value === 0}>
+    <Text caption lighten>
       {caption.toUpperCase()}
     </Text>
     <PriceFriendly {...inherit} caption lighten={value === 0} value={value} />
@@ -65,7 +67,14 @@ const Summary = ({ currency, currentBalance, currentMonth, image, title }) => {
           {baseCurrency !== currency && <PriceFriendly currency={currency} subtitle lighten value={currentBalance} />}
         </View>
 
-        <Button onPress={() => navigation.go(SCREEN.STATS)} outlined small title={l10n.ACTIVITY} />
+        <Button
+          color={COLOR.PRIMARY}
+          onPress={() => navigation.go(SCREEN.STATS)}
+          outlined
+          small
+          style={styles.button}
+          title={l10n.ACTIVITY}
+        />
       </View>
 
       <View style={[styles.row, styles.spaceBetween]}>

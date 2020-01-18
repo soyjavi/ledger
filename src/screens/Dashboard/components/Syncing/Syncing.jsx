@@ -38,7 +38,14 @@ const Syncing = ({ scroll }) => {
         style={styles.container}
         timeline={[{ property: 'translateY', value: connected && sync && !scroll ? 0 : 128 }]}
       >
-        <Button color={COLOR.BACKGROUND} onPress={handleSync} small title={l10n.TAP_TO_UPDATE} />
+        <Button
+          color={COLOR.PRIMARY}
+          onPress={handleSync}
+          outlined
+          small
+          style={styles.button}
+          title={l10n.TAP_TO_UPDATE}
+        />
       </Motion>
     </View>
   );

@@ -9,12 +9,16 @@ const {
 const {
   VIEWPORT: { W },
 } = LAYOUT;
-const { SPACE } = THEME;
+const { COLOR, SPACE } = THEME;
 const QR_SIZE = W - SPACE.MEDIUM * 2;
 
 export default StyleSheet.create({
   activity: {
     height: 28,
+  },
+
+  button: {
+    backgroundColor: COLOR.ACCENT,
   },
 
   cameraViewport: {

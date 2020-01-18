@@ -18,32 +18,36 @@ const OptionItem = ({ active, onChange, onPress, dataSource: { currency, current
   const disabled = !active;
 
   return (
-    <View style={[styles.container, disabled && styles.disabled]}>
-      <Box small color={active ? COLOR[currency] : undefined}>
-        <Image source={FLAGS[currency]} style={[styles.image]} />
-      </Box>
-      <Touchable onPress={onPress} rippleColor={COLOR.PRIMARY} style={styles.content}>
-        <Text bold numberOfLines={1}>
-          {title}
-        </Text>
-        <View style={styles.row}>
-          <PriceFriendly
-            caption
-            currency={baseCurrency}
-            value={currency !== baseCurrency ? exchange(currentBalance, currency, baseCurrency, rates) : currentBalance}
-            style={styles.balance}
-          />
-          {currency !== baseCurrency && (
-            <Fragment>
-              <Text caption lighten>
-                (
-              </Text>
-              <PriceFriendly caption lighten currency={currency} value={currentBalance} />
-              <Text caption lighten>
-                )
-              </Text>
-            </Fragment>
-          )}
+    <View style={[styles.row, disabled && styles.disabled]}>
+      <Touchable onPress={onPress} rippleColor={COLOR.TEXT} style={styles.container}>
+        <Box small color={COLOR[currency]} opacity={COLOR[currency] ? 0.2 : undefined} styleContent={styles.boxContent}>
+          <Image source={FLAGS[currency]} style={[styles.image]} />
+        </Box>
+        <View style={styles.content}>
+          <Text bold numberOfLines={1}>
+            {title}
+          </Text>
+          <View style={styles.row}>
+            <PriceFriendly
+              caption
+              currency={baseCurrency}
+              value={
+                currency !== baseCurrency ? exchange(currentBalance, currency, baseCurrency, rates) : currentBalance
+              }
+              style={styles.balance}
+            />
+            {currency !== baseCurrency && (
+              <Fragment>
+                <Text caption lighten>
+                  (
+                </Text>
+                <PriceFriendly caption lighten currency={currency} value={currentBalance} />
+                <Text caption lighten>
+                  )
+                </Text>
+              </Fragment>
+            )}
+          </View>
         </View>
       </Touchable>
       <Touchable onPress={() => onChange(!active)} value={active} style={styles.switch}>

@@ -1,6 +1,6 @@
 import { median } from '../../../common';
 
-export default (values) => {
+export default (values = []) => {
   if (!values) return undefined;
 
   const max = Math.floor(Math.max(...values));
@@ -9,8 +9,7 @@ export default (values) => {
 
   if (max > 0) {
     min = Math.floor(Math.min(...values));
-    med = median(values);
-
+    med = median(values.slice(0, 11)); // We should not use currentMonth
     // if (med === max) {
     //   med /= 2;
     //   min = 0;

@@ -101,7 +101,7 @@ export default (vault = {}, store, query = {}) => {
         }),
     },
     ...values,
-    currencies,
+    // currencies,
     locations: {
       cities,
       countries,

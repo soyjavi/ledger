@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import { THEME } from '../../../../reactor/common';
 
-const { SPACE } = THEME;
+const { COLOR, SPACE } = THEME;
 
 export default StyleSheet.create({
   container: {
@@ -10,5 +10,9 @@ export default StyleSheet.create({
     left: SPACE.MEDIUM,
     bottom: SPACE.REGULAR,
     zIndex: 1,
+  },
+
+  button: {
+    backgroundColor: COLOR.ACCENT,
   },
 });

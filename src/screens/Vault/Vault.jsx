@@ -65,17 +65,17 @@ const Vault = ({ visible, ...inherit }) => {
     <Viewport {...inherit} scroll={false} visible={visible}>
       <Header highlight={scroll} {...vaultProps} />
       <ScrollView onScroll={handleScroll} ref={scrollview} scrollEventThrottle={40} style={styles.container}>
-        <Summary {...vaultProps} />
+        <Summary {...vaultProps} currency={currency} />
         <Search onValue={handleSearch} value={search} />
 
         {txs.length > 0 ? (
           <>
             <Heading value={l10n.TRANSACTIONS} />
-            <View style={styles.content}>
+            <>
               {txs.map((item) => (
                 <GroupTransactions key={`${item.timestamp}-${search}`} {...item} currency={currency} />
               ))}
-            </View>
+            </>
           </>
         ) : (
           <View style={[styles.centered, styles.container]}>

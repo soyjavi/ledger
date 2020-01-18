@@ -1,6 +1,6 @@
 import { bool } from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { View, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 
 import { THEME } from '../../reactor/common';
 import { Button, Slider, Viewport } from '../../reactor/components';
@@ -86,11 +86,11 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
             {lastTxs.length > 0 && (
               <>
                 <Heading value={l10n.LAST_TRANSACTIONS} />
-                <View style={styles.content}>
+                <>
                   {lastTxs.map((item) => (
                     <GroupTransactions key={`${item.timestamp}`} {...item} currency={baseCurrency} />
                   ))}
-                </View>
+                </>
               </>
             )}
           </>

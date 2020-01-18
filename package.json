@@ -1,14 +1,14 @@
 {
   "name": "voltvault-app",
   "description": "Cross-Device client for voltvault",
-  "version": "0.18.6",
+  "version": "0.18.14",
   "license": "LGPL-3.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "build:apk": "NODE_ENV=production expo build:android",
     "build:ota": "NODE_ENV=production expo publish",
     "start": "expo start --web",
-    "start:prod": "expo start --no-dev --minify",
+    "start:prod": "expo start --no-dev --minify --web",
     "test": "node_modules/.bin/jest",
     "test:debug": "node --inspect-brk node_modules/jest/bin/jest.js --runInBand",
     "lint": "eslint src"

@@ -10,6 +10,7 @@ import styles from './Footer.style';
 
 const { COLOR } = THEME;
 const BUTTON = {
+  color: COLOR.PRIMARY,
   large: true,
   small: true,
   shadow: true,
@@ -29,12 +30,12 @@ const Footer = ({ onBack, onHardwareBack, onPress, ...inherit }) => {
   return (
     <View style={[styles.container, inherit.style]}>
       {onBack && (
-        <Button {...BUTTON} color={COLOR.BACKGROUND} onPress={onBack}>
-          <Icon value="arrow-left" color={COLOR.TEXT} size={24} />
+        <Button {...BUTTON} color={onPress ? COLOR.TEXT : COLOR.PRIMARY} onPress={onBack}>
+          <Icon value="arrow-left" color={COLOR.BACKGROUND} size={24} />
         </Button>
       )}
       {onPress && connected && (
-        <Button {...BUTTON} color={COLOR.ACCENT} disabled={!connected} onPress={onPress}>
+        <Button {...BUTTON} disabled={!connected} onPress={onPress}>
           <Icon value="plus" color={COLOR.BASE} size={24} />
         </Button>
       )}
