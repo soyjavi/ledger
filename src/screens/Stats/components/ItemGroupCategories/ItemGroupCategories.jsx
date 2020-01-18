@@ -9,7 +9,7 @@ import { Touchable } from '../../../../reactor/components';
 import { orderByAmount } from '../../modules';
 import styles from './ItemGroupCategories.style';
 
-const { COLOR } = THEME;
+const { COLOR, OPACITY } = THEME;
 
 const ItemGroupCategories = ({ dataSource, type }) => {
   const l10n = useL10N();
@@ -37,7 +37,7 @@ const ItemGroupCategories = ({ dataSource, type }) => {
             key={key}
             onPress={() => setExpand(expand !== key ? key : undefined)}
             rippleColor={COLOR.TEXT}
-            style={[styles.content, expand && expand !== key && styles.noHighlight]}
+            style={[styles.content, expand && expand !== key && { opacity: OPACITY.M }]}
           >
             <HorizontalChartItem
               color={isExpense ? COLOR.EXPENSE : COLOR.INCOME}

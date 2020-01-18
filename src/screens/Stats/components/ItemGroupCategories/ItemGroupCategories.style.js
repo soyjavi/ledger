@@ -13,10 +13,6 @@ export default StyleSheet.create({
     paddingHorizontal: SPACE.MEDIUM,
   },
 
-  noHighlight: {
-    opacity: 0.38,
-  },
-
   expand: {
     marginBottom: SPACE.XS,
   },

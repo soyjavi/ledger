@@ -44,6 +44,7 @@ export default {
     },
     SUBTITLE: {
       fontFamily: FAMILY_BOLD,
+      fontSize: 16,
       letterSpacing: -0.5,
     },
     BODY: {
