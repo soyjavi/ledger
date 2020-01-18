@@ -45,10 +45,8 @@ const Chart = ({ captions, highlight, inverted, values, styleContainer, ...inher
                   styles.bar,
                   inverted && styles.barInverted,
                   value !== 0 && { height: `${calcHeight(value, { min, max, avg })}%` },
-                  {
-                    backgroundColor: color,
-                    opacity: highlight && highlight === index ? 1 : OPACITY.M,
-                  },
+                  highlight !== index && styles.noHighlight,
+                  { backgroundColor: color },
                 ]}
               />
             </View>
@@ -61,12 +59,7 @@ const Chart = ({ captions, highlight, inverted, values, styleContainer, ...inher
           <View style={[styles.captions, styles.row]}>
             {captions.map((caption, index) => (
               <View key={caption} style={styles.column}>
-                <Text
-                  bold={highlight === index}
-                  color={highlight === index ? COLOR.WHITE : undefined}
-                  lighten
-                  style={styles.legend}
-                >
+                <Text bold={highlight === index} style={[styles.legend, highlight !== index && styles.noHighlight]}>
                   {caption.substring(0, 3).toUpperCase()}
                 </Text>
               </View>

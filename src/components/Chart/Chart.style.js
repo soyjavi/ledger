@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import { LAYOUT, THEME } from '../../reactor/common';
 
-const { BORDER_RADIUS, COLOR, UNIT, SPACE } = THEME;
+const { BORDER_RADIUS, COLOR, OPACITY, UNIT, SPACE } = THEME;
 
 const COLUMN_HEIGHT = UNIT * 6.4;
 const COLUMN_WIDTH = UNIT * 1;
@@ -63,6 +63,10 @@ export default StyleSheet.create({
 
   heading: {
     marginHorizontal: 0,
+  },
+
+  noHighlight: {
+    opacity: OPACITY.M,
   },
 
   legend: {
