@@ -51,6 +51,7 @@ const DialogVault = ({ onClose, visible }) => {
         <Slider itemMargin={0} itemWidth={CARD_WIDTH + SPACE.S} style={styles.currencies}>
           {queryCurrencies(baseCurrency, rates).map((item) => (
             <CardOption
+              _color={COLOR.PRIMARY}
               image={FLAGS[item]}
               key={item}
               onPress={() => setVaultCurrency(item)}
@@ -60,11 +61,16 @@ const DialogVault = ({ onClose, visible }) => {
             />
           ))}
         </Slider>
-        <Form attributes={setCurrency(translate(FORM.VAULT, l10n), currency)} onChange={setForm} value={form} />
+        <Form
+          attributes={setCurrency(translate(FORM.VAULT, l10n), currency)}
+          color={COLOR.TEXT}
+          onChange={setForm}
+          value={form}
+        />
       </View>
       <Button
         activity={busy}
-        color={COLOR.PRIMARY}
+        color={COLOR.TEXT}
         colorContent={COLOR.BACKGROUND}
         disabled={busy || form.title.trim().length === 0}
         onPress={onSubmit}

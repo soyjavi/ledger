@@ -55,8 +55,8 @@ const FormTransaction = (props) => {
       <Slider itemMargin={0} itemWidth={CARD_WIDTH + SPACE.S} style={styles.cards}>
         {queryAvailableVaults(store, vault).map(({ currency, currentBalance, hash, title }) => (
           <CardOption
-            key={hash}
             color={color}
+            key={hash}
             image={FLAGS[currency]}
             onPress={() => onChange({ destination: hash, form: {}, valid: false })}
             selected={hash === destination}
@@ -65,7 +65,7 @@ const FormTransaction = (props) => {
           >
             <PriceFriendly
               caption
-              color={hash === destination ? COLOR.WHITE : COLOR.TEXT_LIGHTEN}
+              color={hash === destination ? COLOR.BACKGROUND : COLOR.TEXT_LIGHTEN}
               value={currentBalance}
               currency={currency}
             />

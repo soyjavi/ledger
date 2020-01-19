@@ -10,14 +10,13 @@ import styles from './CardOption.style';
 const { COLOR } = THEME;
 
 const CardOption = ({ children, color, icon, image, onPress, selected, title, ...inherit }) => {
-  let colorContent = selected ? COLOR.TEXT : COLOR.TEXT_LIGHTEN;
-  if (selected && color === COLOR.PRIMARY) colorContent = COLOR.BACKGROUND;
+  let colorContent = selected ? COLOR.BACKGROUND : COLOR.TEXT_LIGHTEN;
 
   return (
     <Box small style={[styles.box, inherit.style]}>
       <Touchable
         onPress={onPress}
-        rippleColor={COLOR.PRIMARY}
+        rippleColor={COLOR.TEXT}
         style={[styles.container, selected && { backgroundColor: color }]}
       >
         {icon && (
@@ -49,7 +48,7 @@ CardOption.propTypes = {
 
 CardOption.defaultProps = {
   children: undefined,
-  color: COLOR.PRIMARY,
+  color: COLOR.TEXT,
   icon: undefined,
   image: undefined,
   selected: false,

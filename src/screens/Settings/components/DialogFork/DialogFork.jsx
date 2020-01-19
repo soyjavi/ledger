@@ -40,10 +40,10 @@ const DialogFork = ({ onClose, onForked, query, visible, ...inherit }) => {
       <Text>{l10n.TRANSFER_TXS_IMPORT}</Text>
       <Button
         activity={busy}
-        color={COLOR.PRIMARY}
+        color={COLOR.TEXT}
+        colorContent={COLOR.BACKGROUND}
         disabled={busy}
         large
-        outlined
         onPress={onSubmit}
         style={styles.button}
         title={!busy ? l10n.IMPORT : undefined}
