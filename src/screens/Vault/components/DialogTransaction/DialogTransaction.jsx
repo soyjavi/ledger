@@ -57,12 +57,11 @@ const DialogTransaction = (props) => {
 
   const { type = EXPENSE, valid } = state;
   const { coords, place } = location;
-  let color = COLOR.TRANSFER;
-  let Form;
-  if (type !== TRANSFER) {
-    color = type === EXPENSE ? COLOR.EXPENSE : COLOR.INCOME;
-    Form = FormTransaction;
-  } else {
+  let color = type === EXPENSE ? COLOR.EXPENSE : COLOR.INCOME;
+  let Form = FormTransaction;
+
+  if (type === TRANSFER) {
+    color = COLOR.TRANSFER;
     Form = FormTransfer;
   }
 

@@ -1,8 +1,8 @@
 const FAMILY = 'font-family';
 const FAMILY_BOLD = 'font-family-bold';
 
-const INCOME = '#24F2AD'; // '#94febf',
-const EXPENSE = '#E9305C'; // '#FF3986',
+const INCOME = '#94febf'; //  #24F2AD #94febf
+const EXPENSE = '#FF3986'; // #E9305C #FF3986
 
 export default {
   COLOR: {
@@ -21,8 +21,7 @@ export default {
 
     EXPENSE,
     INCOME,
-    TRANSFER: '#7218FF', // TRANSFER: '#4066EA',
-    LOCATION: '#2F9BFF', // LOCATION: '#A6FE01',
+    TRANSFER: '#ffffff',
 
     BTC: '#f4b659',
     EUR: '#0251b5',
