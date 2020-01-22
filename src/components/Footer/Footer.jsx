@@ -36,7 +36,7 @@ const Footer = ({ onBack, onHardwareBack, onPress, ...inherit }) => {
       )}
       {onPress && connected && (
         <Button {...BUTTON} disabled={!connected} onPress={onPress}>
-          <Icon value="plus" color={COLOR.BASE} size={24} />
+          <Icon value="plus" color={COLOR.BACKGROUND} size={24} />
         </Button>
       )}
     </View>

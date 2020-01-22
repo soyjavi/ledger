@@ -6,10 +6,10 @@ const EXPENSE = '#FF3986'; // #E9305C #FF3986
 
 export default {
   COLOR: {
-    BACKGROUND: '#000',
-    BACKGROUND_INPUT: '#202020',
+    BACKGROUND: '#000000',
+    BACKGROUND_INPUT: '#000000',
     BACKGROUND_OPACITY: 'rgba(16, 16, 16, 0.85)',
-    BASE: '#222222',
+    BASE: '#333333',
     TEXT: '#ffffff',
     TEXT_LIGHTEN: '#808080',
 
@@ -72,11 +72,13 @@ export default {
     },
     INPUT: {
       fontFamily: FAMILY_BOLD,
+      fontSize: 14,
     },
   },
 
   OPACITY: {
     S: 0.2,
     M: 0.4,
+    L: 0.6,
   },
 };

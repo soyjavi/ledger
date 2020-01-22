@@ -9,7 +9,7 @@ const IMAGE_SIZE = SPACE.MEDIUM;
 
 export default StyleSheet.create({
   bar: {
-    backgroundColor: COLOR.BACKGROUND_INPUT,
+    backgroundColor: COLOR.BASE,
     borderRadius: BORDER_RADIUS,
     height: BAR_SIZE,
     minWidth: BAR_SIZE,

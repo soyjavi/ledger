@@ -17,7 +17,6 @@ export default StyleSheet.create({
     alignContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
-    backgroundColor: COLOR.BASE,
     borderRadius: BORDER_RADIUS,
     height: ITEM_SIZE,
     justifyContent: 'center',
@@ -30,7 +29,8 @@ export default StyleSheet.create({
     backgroundColor: COLOR.PRIMARY,
   },
 
-  year: {
-    opacity: 0.66,
+  itemOutLined: {
+    borderWidth: 1,
+    borderColor: COLOR.BASE,
   },
 });

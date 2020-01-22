@@ -9,7 +9,7 @@ import { ChartHeading } from './components';
 import { calcHeight } from './modules';
 import styles from './Chart.style';
 
-const { COLOR, OPACITY } = THEME;
+const { COLOR } = THEME;
 
 const Chart = ({ captions, highlight, inverted, values, styleContainer, ...inherit }) => {
   const { color, currency, max, min, med: avg } = inherit;
