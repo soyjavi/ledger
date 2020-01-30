@@ -9,7 +9,7 @@ const INPUT_HEIGHT = UNIT * 4.4;
 export default StyleSheet.create({
   container: {
     ...LAYOUT.STYLE.ROW,
-    backgroundColor: COLOR.BASE,
+    backgroundColor: COLOR.BACKGROUND,
     borderColor: COLOR.BASE,
     borderRadius: BORDER_RADIUS,
     borderWidth: 1,
@@ -27,7 +27,6 @@ export default StyleSheet.create({
     borderWidth: 0,
     color: COLOR.TEXT,
     flex: 1,
-    fontSize: UNIT * 1.6,
     height: INPUT_HEIGHT,
     marginLeft: SPACE.S,
   },

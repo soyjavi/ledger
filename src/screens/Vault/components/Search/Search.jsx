@@ -24,7 +24,7 @@ const Search = ({ onValue, value }) => {
 
   return (
     <View style={[styles.container, focus && styles.focus]}>
-      <Icon olor={COLOR.TEXT} family="MaterialIcons" value="search" size={16} />
+      <Icon color={COLOR.TEXT_LIGHTEN} family="MaterialIcons" value="search" size={16} />
       <TextInput
         autoCorrect={false}
         autoCapitalize="none"

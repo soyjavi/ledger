@@ -26,12 +26,12 @@ const SliderMonths = ({ index, onChange, ...inherit }) => {
           key={month}
           onPress={() => onChange({ index: i, month, year })}
           rippleColor={COLOR.WHITE}
-          style={[styles.item, index === i && styles.itemSelected]}
+          style={[styles.item, index === i ? styles.itemSelected : styles.itemOutLined]}
         >
-          <Text bold lighten color={index === i ? COLOR.BACKGROUND : undefined}>
+          <Text bold color={index === i ? COLOR.BACKGROUND : undefined} lighten>
             {l10n.MONTHS[month].substr(0, 3)}
           </Text>
-          <Text caption lighten color={index === i ? COLOR.BACKGROUND : undefined} style={styles.year}>
+          <Text caption color={index === i ? COLOR.BACKGROUND : undefined} lighten>
             {year}
           </Text>
         </Touchable>

@@ -13,7 +13,7 @@ const CardOption = ({ children, color, icon, image, onPress, selected, title, ..
   let colorContent = selected ? COLOR.BACKGROUND : COLOR.TEXT_LIGHTEN;
 
   return (
-    <Box small style={[styles.box, inherit.style]}>
+    <Box outlined={!selected} small style={[styles.box, inherit.style]}>
       <Touchable
         onPress={onPress}
         rippleColor={COLOR.TEXT}

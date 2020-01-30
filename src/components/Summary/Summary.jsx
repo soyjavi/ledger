@@ -15,7 +15,7 @@ const { CURRENCY, SCREEN } = C;
 const { COLOR } = THEME;
 
 const BoxSummary = ({ caption, value, style = styles.box, ...inherit }) => (
-  <Box style={style}>
+  <Box outlined style={style}>
     <Text caption lighten>
       {caption.toUpperCase()}
     </Text>

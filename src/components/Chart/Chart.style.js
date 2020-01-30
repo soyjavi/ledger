@@ -97,7 +97,7 @@ export default StyleSheet.create({
   scaleLine: {
     backgroundColor: COLOR.BASE,
     height: 1,
-    opacity: 0.31,
+    opacity: OPACITY.L,
     width: '100%',
     top: '50%',
   },

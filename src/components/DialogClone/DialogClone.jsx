@@ -40,7 +40,7 @@ const DialogClone = ({
       value,
       title,
       type,
-      ...(wipe ? { category: WIPE, tx: hash, type: type === EXPENSE ? INCOME : EXPENSE } : { location }),
+      ...(wipe ? { category: WIPE, tx: hash, type: type === EXPENSE ? INCOME : EXPENSE } : location),
     });
     setBusy(false);
     if (tx) showTx();
