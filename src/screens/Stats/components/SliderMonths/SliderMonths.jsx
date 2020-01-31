@@ -12,11 +12,14 @@ const { COLOR } = THEME;
 const SliderMonths = ({ index, onChange, ...inherit }) => {
   const l10n = useL10N();
   const slider = useRef(null);
+
   useEffect(() => {
-    const {
-      current: { scrollview },
-    } = slider;
-    scrollview.current.scrollTo({ x: (index - 3) * ITEM_WIDTH, animated: true });
+    if (index) {
+      const {
+        current: { scrollview },
+      } = slider;
+      scrollview.current.scrollTo({ x: (index - 3) * ITEM_WIDTH, animated: true });
+    }
   }, [index]);
 
   return (
@@ -48,7 +51,7 @@ SliderMonths.propTypes = {
 };
 
 SliderMonths.defaultProps = {
-  index: 11,
+  index: undefined,
   month: 0,
   onChange: undefined,
   year: 0,
