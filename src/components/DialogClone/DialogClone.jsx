@@ -31,8 +31,10 @@ const DialogClone = ({
   const { baseCurrency, rates } = store;
   const { showTx } = useNavigation();
   const [busy, setBusy] = useState(false);
+  const [wipe, setWipe] = useState(false);
 
-  const onSubmit = async (wipe = false) => {
+  const onSubmit = async (nextWipe = false) => {
+    setWipe(nextWipe);
     setBusy(true);
     const tx = await createTx(store, snackbar, {
       vault,
@@ -48,7 +50,7 @@ const DialogClone = ({
 
   const color = type === EXPENSE ? COLOR.EXPENSE : COLOR.INCOME;
   const operator = type === EXPENSE ? -1 : 1;
-  const buttonProps = { activity: busy, color, disabled: busy, large: true, style: styles.button };
+  const buttonProps = { color, disabled: busy, large: true, style: styles.button };
 
   return (
     <Dialog
@@ -105,17 +107,19 @@ const DialogClone = ({
       <View style={styles.row}>
         <Button
           {...buttonProps}
+          activity={busy && wipe}
           contained={false}
           onPress={() => onSubmit(true)}
           outlined
-          title={!busy ? l10n.WIPE : undefined}
+          title={!(busy && wipe) ? l10n.WIPE : undefined}
         />
         <View style={styles.buttonSeparator} />
         <Button
           {...buttonProps}
+          activity={busy && !wipe}
           colorContent={COLOR.BACKGROUND}
           onPress={() => onSubmit(false)}
-          title={!busy ? l10n.CLONE : undefined}
+          title={!(busy && !wipe) ? l10n.CLONE : undefined}
         />
       </View>
     </Dialog>
