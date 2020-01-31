@@ -29,7 +29,7 @@ const Session = (props) => {
   useEffect(() => {
     if (store.pin) {
       if (IS_DEV && ENV.IS_WEB) handleHandshake(store.pin);
-      else if (fingerprint === undefined) handleFingerprint();
+      else if (fingerprint === undefined) setTimeout(handleFingerprint, 400);
     }
   }, [fingerprint, store.pin]);
 

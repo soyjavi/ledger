@@ -28,7 +28,6 @@ export default StyleSheet.create({
     margin: SPACE.XS,
     width: KEY_WIDTH,
     height: KEY_HEIGHT,
-    // backgroundColor: COLOR.BASE,
     borderRadius: BORDER_RADIUS,
     borderWidth: 1,
     borderColor: COLOR.TEXT_LIGHTEN,

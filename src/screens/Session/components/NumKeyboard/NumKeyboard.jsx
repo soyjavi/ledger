@@ -16,16 +16,10 @@ const NumKeyboard = ({ onPress }) => (
       <Touchable
         key={key}
         onPress={typeof key === 'number' ? () => onPress(key) : undefined}
-        rippleColor={COLOR.TEXT_LIGHTEN}
+        rippleColor={COLOR.TEXT}
         style={styles.touchable}
       >
-        <View style={styles.content}>
-          {typeof key === 'number' && (
-            <Text lighten subtitle>
-              {key}
-            </Text>
-          )}
-        </View>
+        <View style={styles.content}>{typeof key === 'number' && <Text subtitle>{key}</Text>}</View>
       </Touchable>
     ))}
   </View>
