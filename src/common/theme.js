@@ -81,4 +81,16 @@ export default {
     M: 0.4,
     L: 0.6,
   },
+
+  MOTION: {
+    // DURATION: 225,
+    // TYPE: 'spring',
+    DEFAULTS: {
+      // friction: undefined,
+      // tension: undefined,
+      // speed: undefined,
+      // bounciness: undefined,
+      // useNativeDriver: true,
+    },
+  },
 };
