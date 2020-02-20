@@ -7,8 +7,8 @@ import styles from './Box.style';
 
 const { BORDER_RADIUS, COLOR } = THEME;
 
-const Box = ({ borderRadius, children, color, opacity, outlined, small, ...inherit }) => (
-  <View style={[styles.container, inherit.style]}>
+const Box = ({ borderRadius, children, color, opacity, outlined, small, ...others }) => (
+  <View style={[styles.container, others.style]}>
     <View
       style={[
         styles.frame,
@@ -16,7 +16,7 @@ const Box = ({ borderRadius, children, color, opacity, outlined, small, ...inher
         outlined ? { borderWidth: 1, borderColor: color } : { backgroundColor: color },
       ]}
     />
-    <View style={[styles.content, small && styles.small, inherit.styleContent]}>{children}</View>
+    <View style={[styles.content, small && styles.small, others.styleContent]}>{children}</View>
   </View>
 );
 
@@ -32,7 +32,7 @@ Box.propTypes = {
 Box.defaultProps = {
   borderRadius: BORDER_RADIUS,
   children: undefined,
-  color: COLOR.BASE,
+  color: COLOR.LIGHTEN,
   opacity: 1,
   outlined: false,
   small: false,

@@ -6,7 +6,7 @@ import { FLAGS } from '../../../../assets';
 import { exchange } from '../../../../common';
 import { Box, PriceFriendly } from '../../../../components';
 import { useL10N, useStore } from '../../../../context';
-import { Text, Touchable } from '../../../../reactor/components';
+import { Row, Text, Touchable } from '../../../../reactor/components';
 import { THEME } from '../../../../reactor/common';
 import styles from './VaultCard.style';
 
@@ -17,20 +17,20 @@ const VaultCard = ({ currency, onPress, currentBalance, currentMonth: { progress
   const { baseCurrency, rates } = useStore();
 
   return React.useCallback(
-    <Touchable onPress={onPress} rippleColor={COLOR[currency] || COLOR.TEXT_LIGHTEN} style={styles.container}>
+    <Touchable marginLeft="S" onPress={onPress} rippleColor={COLOR[currency] || COLOR.LIGHTEN} style={styles.container}>
       <Box
         borderRadius={SPACE.S}
         color={COLOR[currency]}
-        opacity={progression || COLOR[currency] ? OPACITY.M : undefined}
+        opacity={progression || COLOR[currency] ? OPACITY.S : undefined}
         outlined={!progression}
       >
         <View style={styles.content}>
-          <View style={styles.row}>
+          <Row>
             <Image source={FLAGS[currency]} style={styles.thumbnail} />
-            <Text caption numberOfLines={1}>
+            <Text caption numberOfLines={1} marginLeft="XS">
               {title.toUpperCase()}
             </Text>
-          </View>
+          </Row>
           <PriceFriendly
             currency={baseCurrency}
             subtitle

@@ -29,7 +29,7 @@ const Syncing = ({ scroll }) => {
         <Button
           activity={connected}
           color={connected ? undefined : COLOR.ERROR}
-          small
+          size="S"
           title={connected ? undefined : l10n.OFFLINE_MODE}
         />
       </Motion>
@@ -39,10 +39,10 @@ const Syncing = ({ scroll }) => {
         timeline={[{ property: 'translateY', value: connected && sync && !scroll ? 0 : 128 }]}
       >
         <Button
-          color={COLOR.PRIMARY}
+          color={COLOR.BRAND}
           onPress={handleSync}
           outlined
-          small
+          size="S"
           style={styles.button}
           title={l10n.TAP_TO_UPDATE}
         />

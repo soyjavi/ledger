@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { LAYOUT, THEME } from '../../../../reactor/common';
+import { THEME } from '../../../../reactor/common';
 
 const { SPACE, UNIT } = THEME;
 const IMAGE_SIZE = UNIT * 1.6;
@@ -16,9 +16,8 @@ export default StyleSheet.create({
   },
 
   container: {
-    ...LAYOUT.STYLE.ROW,
-    paddingHorizontal: SPACE.MEDIUM,
-    paddingVertical: SPACE.XXS,
+    paddingHorizontal: SPACE.M,
+    paddingVertical: SPACE.XS,
     flex: 1,
   },
 
@@ -35,8 +34,6 @@ export default StyleSheet.create({
     height: IMAGE_SIZE,
     width: IMAGE_SIZE,
   },
-
-  row: LAYOUT.STYLE.ROW,
 
   switch: {
     padding: SPACE.XS,

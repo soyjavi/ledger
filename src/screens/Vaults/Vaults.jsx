@@ -27,11 +27,11 @@ const Vaults = ({ visible, ...inherit }) => {
     <Viewport {...inherit} scroll={false} visible={visible}>
       <Header highlight title={l10n.VAULTS}>
         <Button
-          contained={false}
+          color="transparent"
           icon={order ? 'sort-descending' : 'sort-ascending'}
           iconSize={24}
           onPress={() => setOrder(!order)}
-          small
+          size="S"
         />
       </Header>
 

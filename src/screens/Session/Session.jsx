@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Image, View } from 'react-native';
 
-import { ENV } from '../../reactor/common';
-import { Activity, Text, Viewport } from '../../reactor/components';
+import { Activity, Row, Text, Viewport } from '../../reactor/components';
+import { useEnvironment } from '../../reactor/hooks';
 
 import { LOGO } from '../../assets';
 import { C } from '../../common';
@@ -14,6 +14,7 @@ import styles from './Session.style';
 const { IS_DEV, VERSION } = C;
 
 const Session = (props) => {
+  const { IS_WEB } = useEnvironment();
   const l10n = useL10N();
   const navigation = useNavigation();
   const store = useStore();
@@ -28,7 +29,7 @@ const Session = (props) => {
 
   useEffect(() => {
     if (store.pin) {
-      if (IS_DEV && ENV.IS_WEB) handleHandshake(store.pin);
+      if (IS_DEV && IS_WEB) handleHandshake(store.pin);
       else if (fingerprint === undefined) setTimeout(handleFingerprint, 400);
     }
   }, [fingerprint, store.pin]);
@@ -39,22 +40,22 @@ const Session = (props) => {
     <Viewport {...props} scroll={false}>
       <View style={styles.container}>
         <View style={styles.content}>
-          <View style={styles.row}>
+          <Row justify="center">
             <Image source={LOGO} resizeMode="contain" style={styles.logo} />
             {['v', 'o', 'l', 't'].map((letter, index) => (
               <Text key={letter} headline style={[styles.name, pin.length > index && styles.active]}>
                 {letter}
               </Text>
             ))}
-          </View>
-          <View style={styles.row}>{busy && <Activity size="large" style={styles.activity} />}</View>
+          </Row>
+          <Row>{busy && <Activity size="large" style={styles.activity} />}</Row>
         </View>
 
-        <Text caption lighten style={styles.textCenter}>
+        <Text caption style={styles.textCenter}>
           {store.pin && fingerprint ? l10n.ENTER_PIN_OR_FINGERPRINT : l10n.ENTER_PIN}
         </Text>
         <NumKeyboard onPress={(number) => handlePin(`${pin}${number}`)} />
-        <Text lighten caption style={styles.textCenter}>{`v${VERSION}`}</Text>
+        <Text caption style={styles.textCenter}>{`v${VERSION}`}</Text>
       </View>
     </Viewport>
   );

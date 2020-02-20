@@ -1,8 +1,8 @@
 import { StyleSheet } from 'react-native';
 
-import { LAYOUT, THEME } from '../../reactor/common';
+import { THEME } from '../../reactor/common';
 
-const { UNIT, SPACE } = THEME;
+const { UNIT } = THEME;
 
 export default StyleSheet.create({
   box: {
@@ -12,26 +12,5 @@ export default StyleSheet.create({
   boxContent: {
     alignItems: 'center',
     justifyContent: 'center',
-  },
-
-  container: {
-    paddingVertical: SPACE.XS,
-    paddingHorizontal: SPACE.MEDIUM,
-  },
-
-  content: {
-    alignItems: 'flex-start',
-    flex: 1,
-  },
-
-  prices: {
-    alignSelf: 'flex-start',
-    alignItems: 'flex-end',
-  },
-
-  row: LAYOUT.STYLE.ROW,
-
-  texts: {
-    flex: 1,
   },
 });

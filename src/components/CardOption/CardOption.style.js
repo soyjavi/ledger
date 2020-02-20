@@ -2,9 +2,8 @@ import { StyleSheet } from 'react-native';
 
 import { THEME } from '../../reactor/common';
 
-const { BORDER_RADIUS, SPACE, UNIT } = THEME;
-const THUMBNAIL_SIZE = UNIT * 1.8;
-const ICON_SIZE = UNIT * 2.8;
+const { BORDER_RADIUS, FONT, SPACE } = THEME;
+const IMAGE_SIZE = SPACE.L;
 
 export default StyleSheet.create({
   box: {
@@ -14,25 +13,14 @@ export default StyleSheet.create({
   container: {
     alignItems: 'center',
     borderRadius: BORDER_RADIUS,
-    paddingVertical: SPACE.MEDIUM,
+    paddingVertical: SPACE.M,
+    paddingHorizontal: SPACE.S,
   },
 
   image: {
-    height: THUMBNAIL_SIZE,
-    marginBottom: SPACE.XXS,
-    width: THUMBNAIL_SIZE,
+    height: IMAGE_SIZE,
+    width: IMAGE_SIZE,
   },
 
-  icon: {
-    alignItems: 'center',
-    height: ICON_SIZE,
-    justifyContent: 'center',
-    marginBottom: SPACE.XS,
-    width: ICON_SIZE,
-  },
-
-  title: {
-    textAlign: 'center',
-    paddingHorizontal: SPACE.XS,
-  },
+  legend: FONT.LEGEND,
 });

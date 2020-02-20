@@ -1,28 +1,38 @@
 const FAMILY = 'font-family';
 const FAMILY_BOLD = 'font-family-bold';
 
-const INCOME = '#94febf'; //  #24F2AD #94febf
-const EXPENSE = '#FF3986'; // #E9305C #FF3986
+const INCOME = '#63C88B'; // '#94febf'; //  #24F2AD #94febf
+const EXPENSE = '#F77A64'; // '#FF3986'; // #E9305C #FF3986
+
+const BACKGROUND = '#000';
+const LIGHTEN = '#444';
+
+const UNIT = 8;
 
 export default {
+  BORDER_RADIUS: UNIT / 4,
+
   COLOR: {
-    BACKGROUND: '#000000',
-    BACKGROUND_INPUT: '#000000',
-    BACKGROUND_OPACITY: 'rgba(16, 16, 16, 0.85)',
-    BASE: '#333333',
-    TEXT: '#ffffff',
-    TEXT_LIGHTEN: '#808080',
+    BRAND: INCOME,
+    CTA: '#ffffff',
+    // BLACK
+    // WHITE
+    // GRAY
 
-    PRIMARY: INCOME,
-    ACCENT: '#041711',
-
+    BACKGROUND,
+    // DISABLED
     ERROR: EXPENSE,
     SUCCESS: INCOME,
+    TEXT: '#ffffff',
+    // TRANSPARENT
 
+    // -- Custom
+    CHART_BASE: '#222',
+    LIGHTEN,
+    OVERLAY: 'rgba(16, 16, 16, 0.8)',
     EXPENSE,
     INCOME,
     TRANSFER: '#ffffff',
-
     BTC: '#f4b659',
     EUR: '#0251b5',
     USD: '#d90122',
@@ -39,6 +49,7 @@ export default {
     },
     HEADLINE: {
       fontFamily: FAMILY_BOLD,
+      fontSize: 20,
       letterSpacing: -0.75,
     },
     SUBTITLE: {
@@ -53,8 +64,14 @@ export default {
     },
     CAPTION: {
       fontSize: 11,
-      letterSpacing: -0.1,
+      letterSpacing: -0.5,
     },
+    LEGEND: {
+      fontSize: 10,
+      lineHeight: 10,
+      letterSpacing: -0.3,
+    },
+
     BOLD: {
       fontFamily: FAMILY_BOLD,
       fontWeight: '400',
@@ -64,22 +81,18 @@ export default {
       fontFamily: FAMILY_BOLD,
       fontWeight: 'normal',
     },
-    BUTTON_SMALL: {
-      lineHeight: 15,
-      fontSize: 12,
-      fontFamily: FAMILY_BOLD,
-      letterSpacing: -0.1,
-    },
     INPUT: {
       fontFamily: FAMILY_BOLD,
       fontSize: 14,
     },
   },
 
-  OPACITY: {
-    S: 0.2,
-    M: 0.4,
-    L: 0.6,
+  INPUT: {
+    backgroundColor: BACKGROUND,
+    borderColor: LIGHTEN,
+    // borderRadius: 0,
+    // borderWidth: 1,
+    // paddingHorizontal: UNIT,
   },
 
   MOTION: {
@@ -93,4 +106,10 @@ export default {
       // useNativeDriver: true,
     },
   },
+
+  // OPACITY: {
+  //   S: 0.2,
+  //   M: 0.4,
+  //   L: 0.6,
+  // },
 };

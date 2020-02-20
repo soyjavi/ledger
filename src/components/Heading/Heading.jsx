@@ -1,34 +1,33 @@
-import { node, number, oneOfType, string } from 'prop-types';
+import { bool, node, number, oneOfType, string } from 'prop-types';
 import React from 'react';
-import { Image, View } from 'react-native';
+import { Image } from 'react-native';
 
-import { Text } from '../../reactor/components';
+import { Col, Row, Text } from '../../reactor/components';
 import styles from './Heading.style';
 
-const Heading = ({ children, image, value, ...inherit }) => (
-  <View style={[styles.container, inherit.style]}>
-    {image && <Image source={image} resizeMode="contain" style={styles.image} />}
-    <View style={styles.content}>
+const Heading = ({ children, image, subtitle = true, value, ...others }) => (
+  <Row marginBottom="XS" {...others}>
+    {image && (
+      <Col marginRight="S" width="auto">
+        <Image source={image} resizeMode="contain" style={styles.image} />
+      </Col>
+    )}
+    <Col>
       {value && (
-        <Text color={inherit.color} subtitle>
+        <Text color={others.color} subtitle={subtitle} headline={!subtitle}>
           {value.toUpperCase()}
         </Text>
       )}
-    </View>
-    {children}
-  </View>
+    </Col>
+    <Col width="auto">{children}</Col>
+  </Row>
 );
 
 Heading.propTypes = {
   children: node,
   image: oneOfType([number, string]),
+  subtitle: bool,
   value: string,
-};
-
-Heading.defaultProps = {
-  children: undefined,
-  image: undefined,
-  value: undefined,
 };
 
 export { Heading };

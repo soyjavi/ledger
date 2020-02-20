@@ -1,14 +1,11 @@
 import { StyleSheet } from 'react-native';
 
 import { C } from '../../common';
-import { LAYOUT, THEME } from '../../reactor/common';
+import { THEME } from '../../reactor/common';
 
-const {
-  STYLE: { DIALOG, DIALOG_FRAME },
-} = C;
+const { STYLE } = C;
 
-const { COLOR, SPACE, UNIT } = THEME;
-const MONTH_FONT_SIZE = UNIT * 0.9;
+const { UNIT, SPACE } = THEME;
 
 export default StyleSheet.create({
   box: {
@@ -22,41 +19,28 @@ export default StyleSheet.create({
 
   button: {
     flex: 1,
-    marginTop: SPACE.S,
   },
 
-  buttonSeparator: {
-    width: SPACE.S,
-  },
-
-  container: {},
-
-  content: {
-    paddingVertical: SPACE.XS,
+  buttonGap: {
+    width: SPACE.M,
   },
 
   day: {
-    lineHeight: UNIT * 1.4,
+    lineHeight: UNIT * 2,
   },
 
-  dialog: {
-    ...DIALOG,
-    backgroundColor: COLOR.BACKGROUND_OPACITY,
-  },
+  dialogOverlay: STYLE.DIALOG_OVERLAY,
 
-  frame: DIALOG_FRAME,
+  dialog: STYLE.DIALOG,
 
   month: {
-    fontSize: MONTH_FONT_SIZE,
-    lineHeight: MONTH_FONT_SIZE,
-    letterSpacing: -0.25,
+    fontSize: UNIT,
+    lineHeight: UNIT,
   },
 
   prices: {
     alignItems: 'flex-end',
   },
-
-  row: LAYOUT.STYLE.ROW,
 
   texts: {
     flex: 1,

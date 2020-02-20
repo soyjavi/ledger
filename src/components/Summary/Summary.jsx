@@ -1,31 +1,29 @@
 import { oneOfType, shape, number, string } from 'prop-types';
 import React from 'react';
-import { Image, View } from 'react-native';
+import { Image } from 'react-native';
 
 import { THEME } from '../../reactor/common';
-import { Button, Text, Touchable } from '../../reactor/components';
+import { Button, Col, Row, Text, Touchable } from '../../reactor/components';
 import { LOGO } from '../../assets';
 import { C, exchange, verboseMonth } from '../../common';
 import { useL10N, useNavigation, useSettings, useStore } from '../../context';
-import { Box } from '../Box';
 import { PriceFriendly } from '../PriceFriendly';
 import styles from './Summary.style';
 
 const { CURRENCY, SCREEN } = C;
 const { COLOR } = THEME;
 
-const BoxSummary = ({ caption, value, style = styles.box, ...inherit }) => (
-  <Box outlined style={style}>
-    <Text caption lighten>
+const BoxSummary = ({ caption, value, ...inherit }) => (
+  <Col>
+    <Text caption color={COLOR.LIGHTEN} numberOfLines>
       {caption.toUpperCase()}
     </Text>
-    <PriceFriendly {...inherit} caption lighten={value === 0} value={value} />
-  </Box>
+    <PriceFriendly {...inherit} color={value === 0 ? COLOR.LIGHTEN : undefined} value={value} />
+  </Col>
 );
 
 BoxSummary.propTypes = {
   caption: string.isRequired,
-  style: number,
   value: number.isRequired,
 };
 
@@ -43,15 +41,15 @@ const Summary = ({ currency, currentBalance, currentMonth, image, title }) => {
     currentBalance - progression > 0 ? (progression * 100) / (currentBalance - progression) : progression;
 
   return (
-    <View style={styles.container}>
-      <View style={[styles.row, styles.content, styles.spaceBetween]}>
-        <View>
-          <View style={styles.row}>
+    <Col paddingHorizontal="M" marginBottom="L">
+      <Row align="start" marginBottom="L">
+        <Col>
+          <Row marginBottom="XS">
             <Image source={image} resizeMode="contain" style={styles.image} />
-            <Text caption numberOfLines={1}>
+            <Text caption numberOfLines={1} marginLeft="XS">
               {title.toUpperCase()}
             </Text>
-          </View>
+          </Row>
           <Touchable onPress={() => dispatch({ type: 'MASK_AMOUNT', value: !maskAmount })}>
             <PriceFriendly
               currency={baseCurrency}
@@ -64,26 +62,27 @@ const Summary = ({ currency, currentBalance, currentMonth, image, title }) => {
               }
             />
           </Touchable>
-          {baseCurrency !== currency && <PriceFriendly currency={currency} subtitle lighten value={currentBalance} />}
-        </View>
+          {baseCurrency !== currency && <PriceFriendly currency={currency} subtitle value={currentBalance} />}
+        </Col>
 
-        <Button
-          color={COLOR.PRIMARY}
-          onPress={() => navigation.go(SCREEN.STATS)}
-          outlined
-          small
-          style={styles.button}
-          title={l10n.ACTIVITY}
-        />
-      </View>
+        <Col width="auto">
+          <Button
+            color={COLOR.BRAND}
+            onPress={() => navigation.go(SCREEN.STATS)}
+            outlined
+            size="S"
+            title={l10n.ACTIVITY}
+          />
+        </Col>
+      </Row>
 
-      <View style={[styles.row, styles.spaceBetween]}>
+      <Row justify="space">
         <BoxSummary caption={verboseMonth(new Date(), l10n)} currency="%" operator value={progressionPercentage} />
         <BoxSummary caption={l10n.INCOMES} currency={baseCurrency} value={incomes} />
         <BoxSummary caption={l10n.EXPENSES} currency={baseCurrency} value={expenses} />
         <BoxSummary caption={l10n.TODAY} currency={baseCurrency} operator value={today} style={null} />
-      </View>
-    </View>
+      </Row>
+    </Col>
   );
 };
 

@@ -1,5 +1,5 @@
-import { Storage } from '../../reactor/common';
-import { Fingerprint } from '../../reactor/context/Tracking/modules';
+import { Storage } from '../../reactor/bridges';
+import { useFingerprint } from '../../reactor/hooks';
 import { C } from '../../common';
 
 const { NAME } = C;
@@ -11,7 +11,7 @@ export default {
     const storage = (await Storage.get(KEY)) || DEFAULT_STORAGE;
 
     if (storage.fingerprint) return storage;
-    const { uuid: secret, device_id: fingerprint } = await Fingerprint();
+    const { uuid: secret, device_id: fingerprint } = await useFingerprint();
 
     return { ...storage, fingerprint, secret };
   },

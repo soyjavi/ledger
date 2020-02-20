@@ -1,21 +1,16 @@
 import { StyleSheet } from 'react-native';
 
-import { LAYOUT, THEME } from '../../../../reactor/common';
+import { THEME } from '../../../../reactor/common';
 
-const { BORDER_RADIUS, COLOR, FONT, UNIT, SPACE } = THEME;
-
-const INPUT_HEIGHT = UNIT * 4.4;
+const { BORDER_RADIUS, COLOR, FONT, SPACE } = THEME;
 
 export default StyleSheet.create({
   container: {
-    ...LAYOUT.STYLE.ROW,
     backgroundColor: COLOR.BACKGROUND,
-    borderColor: COLOR.BASE,
+    borderColor: COLOR.LIGHTEN,
     borderRadius: BORDER_RADIUS,
     borderWidth: 1,
-    marginHorizontal: SPACE.MEDIUM,
-    marginBottom: SPACE.MEDIUM,
-    paddingHorizontal: SPACE.S,
+    width: 'auto',
   },
 
   focus: {
@@ -25,9 +20,7 @@ export default StyleSheet.create({
   input: {
     ...FONT.INPUT,
     borderWidth: 0,
-    color: COLOR.TEXT,
     flex: 1,
-    height: INPUT_HEIGHT,
-    marginLeft: SPACE.S,
+    height: SPACE.XL + SPACE.S,
   },
 });

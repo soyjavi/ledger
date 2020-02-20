@@ -10,7 +10,7 @@ const {
   VIEWPORT: { W },
 } = LAYOUT;
 const { SPACE } = THEME;
-const QR_SIZE = W - SPACE.MEDIUM * 2;
+const QR_SIZE = W - SPACE.M * 2;
 
 export default StyleSheet.create({
   activity: {
@@ -35,11 +35,11 @@ export default StyleSheet.create({
 
   content: {
     ...CONTENT,
-    // marginHorizontal: SPACE.MEDIUM,
+    // marginHorizontal: SPACE.M,
   },
 
   options: {
-    marginBottom: SPACE.MEDIUM,
+    marginBottom: SPACE.M,
   },
 
   qr: {

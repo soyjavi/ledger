@@ -1,24 +1,12 @@
 import { StyleSheet } from 'react-native';
 
-import { LAYOUT, THEME } from '../../reactor/common';
+import { THEME } from '../../reactor/common';
 
-const { UNIT, SPACE } = THEME;
-const IMAGE_SIZE = UNIT * 1.8;
+const { SPACE } = THEME;
 
 export default StyleSheet.create({
-  container: {
-    ...LAYOUT.STYLE.ROW,
-    marginHorizontal: SPACE.MEDIUM,
-    marginVertical: SPACE.XXS,
-  },
-
-  content: {
-    flex: 1,
-  },
-
   image: {
-    height: IMAGE_SIZE,
-    width: IMAGE_SIZE,
-    marginRight: SPACE.XXS,
+    height: SPACE.M,
+    width: SPACE.M,
   },
 });

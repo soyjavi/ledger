@@ -1,8 +1,7 @@
 import { number, oneOfType, shape, string } from 'prop-types';
 import React from 'react';
-import { View } from 'react-native';
 import { THEME } from '../../reactor/common';
-import { Icon, Text, Touchable } from '../../reactor/components';
+import { Col, Icon, Row, Text, Touchable } from '../../reactor/components';
 
 import { C, exchange, getIconCategory } from '../../common';
 import { useNavigation, useStore } from '../../context';
@@ -17,7 +16,7 @@ const {
     TYPE: { INCOME, EXPENSE },
   },
 } = C;
-const { COLOR, OPACITY } = THEME;
+const { COLOR, OPACITY, SPACE } = THEME;
 
 const TransactionItem = (props) => {
   const { baseCurrency, rates } = useStore();
@@ -30,42 +29,49 @@ const TransactionItem = (props) => {
 
   return (
     <Touchable rippleColor={COLOR.TEXT} onPress={() => showTx(props)}>
-      <View style={[styles.container, styles.row]}>
-        <Box color={color} opacity={OPACITY.M} outlined small style={styles.box} styleContent={styles.boxContent}>
-          <Icon value={getIconCategory({ type, category, title })} color={color} />
-        </Box>
+      <Row paddingHorizontal="M" paddingVertical="S">
+        <Col width="auto">
+          <Box color={color} opacity={OPACITY.S} outlined small style={styles.box} styleContent={styles.boxContent}>
+            <Icon size={SPACE.M} value={getIconCategory({ type, category, title })} color={color} />
+          </Box>
+        </Col>
 
-        <View style={[styles.content, styles.row]}>
-          <View style={styles.texts}>
-            {title && (
+        <Col>
+          <Row>
+            <Col>
               <Text color={COLOR.TEXT} bold numberOfLines={1}>
                 {title}
               </Text>
-            )}
-            <Text caption lighten>
-              {formatCaption(new Date(timestamp), location)}
-            </Text>
-          </View>
-          <View style={styles.prices}>
-            <PriceFriendly
-              color={COLOR.TEXT}
-              currency={baseCurrency}
-              operator={type === INCOME}
-              value={exchange(value, currency, baseCurrency, rates, timestamp) * operator}
-            />
-
-            {baseCurrency !== currency && (
+            </Col>
+            <Col width="auto">
               <PriceFriendly
-                caption
-                color={COLOR.TEXT_LIGHTEN}
-                currency={currency}
+                color={COLOR.TEXT}
+                currency={baseCurrency}
                 operator={type === INCOME}
-                value={value * operator}
+                value={exchange(value, currency, baseCurrency, rates, timestamp) * operator}
               />
-            )}
-          </View>
-        </View>
-      </View>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Text caption color={COLOR.LIGHTEN}>
+                {formatCaption(new Date(timestamp), location)}
+              </Text>
+            </Col>
+            <Col width="auto">
+              {baseCurrency !== currency && (
+                <PriceFriendly
+                  caption
+                  color={COLOR.LIGHTEN}
+                  currency={currency}
+                  operator={type === INCOME}
+                  value={value * operator}
+                />
+              )}
+            </Col>
+          </Row>
+        </Col>
+      </Row>
     </Touchable>
   );
 };

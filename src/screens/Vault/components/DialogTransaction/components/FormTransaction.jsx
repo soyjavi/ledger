@@ -32,7 +32,9 @@ const FormTransaction = (props) => {
 
   return (
     <Fragment>
-      <Text subtitle>{l10n.CATEGORY}</Text>
+      <Text bold caption>
+        {l10n.CATEGORY}
+      </Text>
       <Slider itemMargin={0} itemWidth={CARD_WIDTH + SPACE.S} style={styles.cards}>
         {queryCategories({ l10n, type }).map((item) => (
           <CardOption

@@ -59,17 +59,10 @@ const Settings = ({ visible, ...inherit }) => {
       <Header highlight title={l10n.SETTINGS} />
 
       <ScrollView contentContainerStyle={styles.container}>
-        <Heading value={l10n.TRANSFER_TXS} caption={l10n.IMPORT_EXPORT_CAPTION}>
+        <Heading paddingHorizontal="M" value={l10n.TRANSFER_TXS} caption={l10n.IMPORT_EXPORT_CAPTION}>
           {hasCamera === undefined && <Activity color="white" style={styles.activity} />}
           {hasCamera && (
-            <Button
-              color={COLOR.PRIMARY}
-              outlined
-              onPress={() => setCamera(!camera)}
-              small
-              style={styles.button}
-              title={camera ? l10n.CLOSE : l10n.QR_READER}
-            />
+            <Button outlined onPress={() => setCamera(!camera)} size="S" title={camera ? l10n.CLOSE : l10n.QR_READER} />
           )}
         </Heading>
         <View style={styles.content}>
@@ -81,7 +74,7 @@ const Settings = ({ visible, ...inherit }) => {
             </Camera>
           )}
         </View>
-        <Text caption lighten style={styles.caption}>
+        <Text caption style={styles.caption}>
           {camera ? l10n.TRANSFER_TXS_CAMERA : l10n.TRANSFER_TXS_CAPTION}
         </Text>
       </ScrollView>

@@ -46,21 +46,21 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
     if (visible) setVisibleVaults(queryVaults({ settings, vaults }));
   }, [visible, settings, vaults]);
 
-  console.log('  <Dashboard>', { visible, sync, vaults, dialog, scroll, lastTxs, visibleVaults });
+  console.log('  <Dashboard>', { visible });
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
       <Header highlight={scroll} title={l10n.OVERALL_BALANCE}>
         <Button
-          contained={false}
+          color="transparent"
           icon="settings-outline"
           iconSize={24}
           onPress={() => navigation.go(SCREEN.SETTINGS)}
-          small
+          size="S"
         />
       </Header>
       <ScrollView
-        onScroll={({ nativeEvent: { contentOffset } }) => setScroll(contentOffset.y > SPACE.MEDIUM)}
+        onScroll={({ nativeEvent: { contentOffset } }) => setScroll(contentOffset.y > SPACE.M)}
         scrollEventThrottle={40}
         contentContainerStyle={styles.scroll}
       >
@@ -68,14 +68,8 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
 
         {vaults.length > 0 && (
           <>
-            <Heading value={l10n.VAULTS} style={styles.headingVaults}>
-              <Button
-                contained={false}
-                icon="eye-outline"
-                iconSize={24}
-                onPress={() => navigation.go(SCREEN.VAULTS)}
-                small
-              />
+            <Heading paddingHorizontal="M" value={l10n.VAULTS}>
+              <Button outlined title="More" onPress={() => navigation.go(SCREEN.VAULTS)} size="S" />
             </Heading>
             <Slider itemWidth={VAULT_ITEM_WIDTH + SPACE.S} itemMargin={0} style={styles.vaults}>
               {visibleVaults.map((vault) => (
@@ -85,7 +79,7 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
 
             {lastTxs.length > 0 && (
               <>
-                <Heading value={l10n.LAST_TRANSACTIONS} />
+                <Heading paddingHorizontal="M" value={l10n.LAST_TRANSACTIONS} />
                 <>
                   {lastTxs.map((item) => (
                     <GroupTransactions key={`${item.timestamp}`} {...item} currency={baseCurrency} />

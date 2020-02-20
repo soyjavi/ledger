@@ -7,8 +7,8 @@ const { COLOR, SPACE } = THEME;
 export default StyleSheet.create({
   container: {
     position: 'absolute',
-    left: SPACE.MEDIUM,
-    bottom: SPACE.REGULAR,
+    left: SPACE.M,
+    bottom: SPACE.M,
     zIndex: 1,
   },
 

@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 import { C } from '../../common';
-import { LAYOUT, THEME } from '../../reactor/common';
+import { THEME } from '../../reactor/common';
 
 const {
   STYLE: { HEADER_HEIGHT },
@@ -11,16 +11,12 @@ const { SPACE } = THEME;
 export default StyleSheet.create({
   activity: {
     alignSelf: 'center',
-    marginTop: SPACE.MEDIUM,
-  },
-
-  centered: {
-    ...LAYOUT.STYLE.CENTERED,
-    padding: SPACE.MEDIUM,
+    marginTop: SPACE.M,
   },
 
   container: {
     paddingBottom: HEADER_HEIGHT,
     paddingTop: HEADER_HEIGHT,
+    zIndex: 0,
   },
 });

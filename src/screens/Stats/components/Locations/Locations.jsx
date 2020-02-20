@@ -6,7 +6,7 @@ import { THEME } from '../../../../reactor/common';
 import { useL10N } from '../../../../context';
 import { HeatMap, Heading, HorizontalChartItem } from '../../../../components';
 import { orderByAmount } from '../../modules';
-import styles, { MAP_HEIGHT, MAP_WIDTH } from './Locations.style';
+import styles from './Locations.style';
 
 const { COLOR } = THEME;
 
@@ -19,7 +19,7 @@ const Locations = ({ cities, countries, points, precission }) => {
     <View style={styles.container}>
       <View style={styles.content}>
         <Heading value={l10n.LOCATIONS} style={styles.heading} />
-        <HeatMap color={COLOR.PRIMARY} points={points} precission={precission} height={MAP_HEIGHT} width={MAP_WIDTH} />
+        <HeatMap color={COLOR.PRIMARY} points={points} precission={precission} />
       </View>
 
       <View style={styles.content}>

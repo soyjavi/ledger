@@ -3,7 +3,7 @@ import { Platform } from 'react-native';
 import { LAYOUT, THEME } from '../reactor/common';
 import PKG from '../../package.json';
 
-const { SPACE, UNIT } = THEME;
+const { COLOR, SPACE, UNIT } = THEME;
 
 const IS_DEV = __DEV__;
 const IS_ANDROID = Platform.OS === 'android';
@@ -44,16 +44,14 @@ export default {
   },
   STYLE: {
     DIALOG: {
-      justifyContent: 'flex-end',
-      zIndex: 2,
-    },
-    DIALOG_FRAME: {
-      borderTopLeftRadius: SPACE.MEDIUM,
-      borderTopRightRadius: SPACE.MEDIUM,
-      margin: 0,
+      padding: SPACE.M,
       width: LAYOUT.VIEWPORT.W,
     },
-    HEADER_HEIGHT: UNIT * 5.2,
+    DIALOG_OVERLAY: {
+      backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    },
+
+    HEADER_HEIGHT: UNIT * 7,
     VAULT_ITEM_WIDTH: LAYOUT.VIEWPORT.W / 2 - SPACE.XL,
   },
   SYMBOL: {

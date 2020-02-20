@@ -7,13 +7,13 @@ const {
 } = LAYOUT;
 const { COLOR, BORDER_RADIUS, SPACE } = THEME;
 const MAP_HEIGHT = Math.floor(H / 5);
-const MAP_WIDTH = Math.floor(W - SPACE.MEDIUM * 2);
+const MAP_WIDTH = Math.floor(W - SPACE.M * 2);
 
 export { MAP_HEIGHT, MAP_WIDTH };
 
 export default StyleSheet.create({
   container: {
-    backgroundColor: COLOR.BASE,
+    backgroundColor: COLOR.LIGHTEN,
     borderRadius: BORDER_RADIUS,
     height: MAP_HEIGHT,
     width: MAP_WIDTH,

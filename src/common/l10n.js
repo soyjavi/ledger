@@ -136,7 +136,7 @@ export default {
     TODAY: 'Today',
     TRANSACTION: 'TRANSACTION',
     TRANSACTIONS: 'Transactions',
-    TRANSFER: 'Transfer',
+    TRANSFER: 'TRANSFER',
     TRANSFERS: 'Transfers',
     TRANSFER_TXS: 'Transfer transactions',
     TRANSFER_TXS_CAPTION:

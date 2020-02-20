@@ -59,18 +59,19 @@ const Vault = ({ visible, ...inherit }) => {
   const { currency = store.baseCurrency, title, ...rest } = dataSource || params.vault || {};
   const vaultProps = { ...rest, image: FLAGS[currency], title: `${title} ${l10n.BALANCE}` };
 
-  console.log('  <Vault>', { visible, dialog, scroll, scrollQuery, search, inherit, dataSource });
+  console.log('  <Vault>', { visible, dialog });
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
       <Header highlight={scroll} {...vaultProps} />
+
       <ScrollView onScroll={handleScroll} ref={scrollview} scrollEventThrottle={40} style={styles.container}>
         <Summary {...vaultProps} currency={currency} />
         <Search onValue={handleSearch} value={search} />
 
         {txs.length > 0 ? (
           <>
-            <Heading value={l10n.TRANSACTIONS} />
+            <Heading paddingHorizontal="M" value={l10n.TRANSACTIONS} />
             <>
               {txs.map((item) => (
                 <GroupTransactions key={`${item.timestamp}-${search}`} {...item} currency={currency} />
@@ -78,8 +79,8 @@ const Vault = ({ visible, ...inherit }) => {
             </>
           </>
         ) : (
-          <View style={[styles.centered, styles.container]}>
-            <Text lighten>{l10n.NO_TRANSACTIONS}</Text>
+          <View style={styles.container}>
+            <Text>{l10n.NO_TRANSACTIONS}</Text>
           </View>
         )}
       </ScrollView>

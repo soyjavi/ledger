@@ -1,7 +1,7 @@
 import { node } from 'prop-types';
 import React, { useContext, useEffect, useReducer, useState, createContext } from 'react';
 
-import { Storage } from '../reactor/common';
+import { Storage } from '../reactor/bridges';
 import { C } from '../common';
 
 const KEY = `${C.NAME}:context:settings`;

@@ -1,15 +1,15 @@
 import { StyleSheet } from 'react-native';
 
-import { LAYOUT, THEME } from '../../reactor/common';
+import { THEME } from '../../reactor/common';
 
-const { BORDER_RADIUS, COLOR, OPACITY, UNIT, SPACE } = THEME;
+const { BORDER_RADIUS, COLOR, FONT, OPACITY, UNIT, SPACE } = THEME;
 
-const COLUMN_HEIGHT = UNIT * 6.4;
-const COLUMN_WIDTH = UNIT * 1;
+const COLUMN_WIDTH = UNIT + UNIT / 4;
+const COLUMN_HEIGHT = COLUMN_WIDTH * 8;
 
 export default StyleSheet.create({
   bar: {
-    backgroundColor: COLOR.BASE,
+    backgroundColor: COLOR.LIGHTEN,
     borderTopLeftRadius: BORDER_RADIUS,
     borderTopRightRadius: BORDER_RADIUS,
     maxHeight: '100%',
@@ -26,8 +26,8 @@ export default StyleSheet.create({
 
   captions: {
     position: 'absolute',
-    height: SPACE.MEDIUM,
-    bottom: -SPACE.MEDIUM,
+    height: SPACE.M,
+    bottom: -SPACE.M,
     width: '100%',
   },
 
@@ -44,7 +44,7 @@ export default StyleSheet.create({
   },
 
   container: {
-    borderColor: COLOR.BASE,
+    borderColor: COLOR.CHART_BASE,
     borderBottomWidth: 1,
     borderTopWidth: 1,
   },
@@ -55,30 +55,11 @@ export default StyleSheet.create({
   },
 
   content: {
-    ...LAYOUT.STYLE.ROW,
-    alignItems: 'flex-end',
     flex: 1,
     height: COLUMN_HEIGHT,
   },
 
-  heading: {
-    marginHorizontal: 0,
-  },
-
-  noHighlight: {
-    opacity: OPACITY.M,
-  },
-
-  legend: {
-    fontSize: UNIT,
-    height: UNIT,
-    lineHeight: UNIT,
-  },
-
-  row: {
-    ...LAYOUT.STYLE.ROW,
-    justifyContent: 'space-between',
-  },
+  legend: FONT.LEGEND,
 
   scales: {
     position: 'absolute',
@@ -95,7 +76,7 @@ export default StyleSheet.create({
   },
 
   scaleLine: {
-    backgroundColor: COLOR.BASE,
+    backgroundColor: COLOR.LIGHTEN,
     height: 1,
     opacity: OPACITY.L,
     width: '100%',
@@ -105,9 +86,10 @@ export default StyleSheet.create({
   tag: {
     display: 'flex',
     alignSelf: 'flex-start',
-    borderRadius: SPACE.S,
-    height: SPACE.MEDIUM,
-    justifyContent: 'center',
-    paddingHorizontal: SPACE.XS,
+    padding: SPACE.XS,
+    borderRadius: BORDER_RADIUS,
+    borderWidth: 1,
+    borderColor: COLOR.BACKGROUND,
+    zIndex: 1,
   },
 });
