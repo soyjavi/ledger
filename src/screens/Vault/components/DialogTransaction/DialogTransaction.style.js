@@ -11,17 +11,8 @@ export { CARD_WIDTH };
 
 export default StyleSheet.create({
   card: {
-    paddingHorizontal: 0,
+    minHeight: CARD_WIDTH,
     width: CARD_WIDTH,
-  },
-
-  cardOption: {
-    flex: 1,
-    width: '100%',
-  },
-
-  cardLast: {
-    marginRight: 0,
   },
 
   cards: {

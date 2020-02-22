@@ -8,7 +8,6 @@ import { useNavigation, useStore } from '../../context';
 import { Box } from '../Box';
 import { PriceFriendly } from '../PriceFriendly';
 import { formatCaption } from './modules';
-import styles from './TransactionItem.style';
 
 const {
   VAULT_TRANSFER,
@@ -29,9 +28,9 @@ const TransactionItem = (props) => {
 
   return (
     <Touchable rippleColor={COLOR.TEXT} onPress={() => showTx(props)}>
-      <Row paddingHorizontal="M" paddingVertical="S">
-        <Col width="auto">
-          <Box color={color} opacity={OPACITY.S} outlined small style={styles.box} styleContent={styles.boxContent}>
+      <Row align="start" paddingHorizontal="M" paddingVertical="S">
+        <Col marginRight="S" width="auto">
+          <Box color={color} opacity={OPACITY.S} outlined small>
             <Icon size={SPACE.M} value={getIconCategory({ type, category, title })} color={color} />
           </Box>
         </Col>

@@ -89,6 +89,7 @@ const Vault = ({ visible, ...inherit }) => {
         onBack={navigation.back}
         onHardwareBack={visible ? handleHardwareBack : undefined}
         onPress={() => setDialog(true)}
+        scroll={scroll}
       />
 
       {visible && dataSource && (

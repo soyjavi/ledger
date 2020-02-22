@@ -6,14 +6,12 @@ const { SPACE } = THEME;
 
 export default StyleSheet.create({
   container: {
-    height: '100%',
-    minHeight: SPACE.XL,
-    minWidth: SPACE.XL,
+    minHeight: SPACE.XL + SPACE.XS,
+    minWidth: SPACE.XL + SPACE.XS,
   },
 
   content: {
-    flex: 1,
-    padding: SPACE.M,
+    justifyContent: 'center',
     width: '100%',
     zIndex: 1,
   },

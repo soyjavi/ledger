@@ -5,10 +5,10 @@ import { THEME } from '../../../../reactor/common';
 import { Text, Slider } from '../../../../reactor/components';
 import { useL10N } from '../../../../context';
 import { CardOption } from '../../../../components';
-import styles, { ITEM_WIDTH } from './SliderMonths.style';
+import styles, { CARD_WIDTH } from './SliderMonths.style';
 import getLastMonths from './modules/getLastMonths';
 
-const { COLOR } = THEME;
+const { COLOR, SPACE } = THEME;
 
 const SliderMonths = ({ index, onChange, ...others }) => {
   const l10n = useL10N();
@@ -19,12 +19,12 @@ const SliderMonths = ({ index, onChange, ...others }) => {
       const {
         current: { scrollview },
       } = slider;
-      scrollview.current.scrollTo({ x: (index - 3) * ITEM_WIDTH, animated: true });
+      scrollview.current.scrollTo({ x: (index - 3) * (CARD_WIDTH + SPACE.S), animated: true });
     }
   }, [index]);
 
   return (
-    <Slider ref={slider} itemWidth={ITEM_WIDTH} itemMargin={0} style={others.style}>
+    <Slider ref={slider} itemWidth={CARD_WIDTH + SPACE.S} itemMargin={0} style={[styles.slider, others.style]}>
       {getLastMonths(l10n.MONTHS).map(({ month, year }, i) => (
         <CardOption
           key={month}

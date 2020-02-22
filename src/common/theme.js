@@ -5,7 +5,7 @@ const INCOME = '#63C88B'; // '#94febf'; //  #24F2AD #94febf
 const EXPENSE = '#F77A64'; // '#FF3986'; // #E9305C #FF3986
 
 const BACKGROUND = '#000';
-const LIGHTEN = '#444';
+const LIGHTEN = '#555';
 
 const UNIT = 8;
 

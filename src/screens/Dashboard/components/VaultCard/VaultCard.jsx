@@ -20,9 +20,10 @@ const VaultCard = ({ currency, onPress, currentBalance, currentMonth: { progress
     <Touchable marginLeft="S" onPress={onPress} rippleColor={COLOR[currency] || COLOR.LIGHTEN} style={styles.container}>
       <Box
         borderRadius={SPACE.S}
-        color={COLOR[currency]}
-        opacity={progression || COLOR[currency] ? OPACITY.S : undefined}
+        color={progression ? COLOR[currency] : undefined}
+        opacity={progression ? OPACITY.M : undefined}
         outlined={!progression}
+        style={styles.box}
       >
         <View style={styles.content}>
           <Row>
@@ -67,9 +68,9 @@ const VaultCard = ({ currency, onPress, currentBalance, currentMonth: { progress
 
 VaultCard.propTypes = {
   currency: string.isRequired,
-  onPress: func.isRequired,
   currentBalance: number.isRequired,
   currentMonth: shape({}),
+  onPress: func.isRequired,
   title: string,
 };
 

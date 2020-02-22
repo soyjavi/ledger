@@ -7,7 +7,7 @@ import { Button, Slider, Viewport } from '../../reactor/components';
 import { C, onHardwareBackPress } from '../../common';
 import { Footer, GroupTransactions, Header, Heading, Summary } from '../../components';
 import { useL10N, useNavigation, useSettings, useStore } from '../../context';
-import { DialogVault, Syncing, VaultCard } from './components';
+import { DialogVault, VaultCard } from './components';
 import { queryLastTxs, queryVaults } from './modules';
 import styles from './Dashboard.style';
 
@@ -91,8 +91,7 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
         )}
       </ScrollView>
 
-      <Syncing scroll={scroll} />
-      <Footer onPress={() => setDialog(true)} />
+      <Footer onPress={() => setDialog(true)} scroll={scroll} />
       {visible && sync && <DialogVault visible={dialog} onClose={() => setDialog(false)} />}
     </Viewport>
   );

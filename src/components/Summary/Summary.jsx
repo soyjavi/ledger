@@ -15,7 +15,7 @@ const { COLOR } = THEME;
 
 const BoxSummary = ({ caption, value, ...inherit }) => (
   <Col>
-    <Text caption color={COLOR.LIGHTEN} numberOfLines>
+    <Text caption color={COLOR.LIGHTEN} numberOfLines={1}>
       {caption.toUpperCase()}
     </Text>
     <PriceFriendly {...inherit} color={value === 0 ? COLOR.LIGHTEN : undefined} value={value} />

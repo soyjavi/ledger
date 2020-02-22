@@ -14,12 +14,14 @@ const CardOption = ({ children, color, icon, image, onPress, selected, title, ..
   const onlyText = !icon && !image;
 
   return (
-    <Box small style={[styles.box, inherit.style]} outlined={!selected}>
-      <Touchable
-        onPress={onPress}
-        rippleColor={COLOR.TEXT}
-        style={[styles.container, selected && { backgroundColor: color }]}
-      >
+    <Box
+      color={selected ? color : undefined}
+      marginRight="S"
+      outlined={!selected}
+      small
+      style={[styles.box, inherit.style]}
+    >
+      <Touchable onPress={onPress} rippleColor={COLOR.TEXT} style={styles.container}>
         {icon && <Icon value={icon} color={colorContent} size={SPACE.L} />}
         {image && <Image source={image} style={styles.image} />}
 

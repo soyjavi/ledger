@@ -2,19 +2,24 @@ import { StyleSheet } from 'react-native';
 
 import { THEME } from '../../reactor/common';
 
-const { BORDER_RADIUS, FONT, SPACE } = THEME;
+const { BORDER_RADIUS, FONT, SPACE, UNIT } = THEME;
 const IMAGE_SIZE = SPACE.L;
+
+const CARD_OPTION_WIDTH = UNIT * 8;
 
 export default StyleSheet.create({
   box: {
-    marginRight: SPACE.S,
+    width: CARD_OPTION_WIDTH,
   },
 
   container: {
     alignItems: 'center',
+    alignContent: 'center',
+    justifyContent: 'center',
     borderRadius: BORDER_RADIUS,
-    paddingVertical: SPACE.M,
-    paddingHorizontal: SPACE.S,
+    paddingHorizontal: SPACE.XS,
+    height: '100%',
+    width: '100%',
   },
 
   image: {

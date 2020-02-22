@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import { THEME } from '../../../../reactor/common';
 
-const { SPACE, UNIT } = THEME;
+const { OPACITY, SPACE, UNIT } = THEME;
 const IMAGE_SIZE = UNIT * 1.6;
 
 export default StyleSheet.create({
@@ -27,7 +27,7 @@ export default StyleSheet.create({
   },
 
   disabled: {
-    opacity: 0.38,
+    opacity: OPACITY.L,
   },
 
   image: {
@@ -36,7 +36,7 @@ export default StyleSheet.create({
   },
 
   switch: {
-    padding: SPACE.XS,
-    marginRight: SPACE.XS,
+    padding: SPACE.S,
+    marginRight: SPACE.S,
   },
 });

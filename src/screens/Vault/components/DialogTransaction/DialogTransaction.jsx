@@ -97,7 +97,6 @@ const DialogTransaction = (props) => {
               })
             }
             selected={type === index}
-            style={[styles.cardOption, index === options.length - 1 && styles.cardLast]}
             title={option}
           />
         ))}

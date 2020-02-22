@@ -4,7 +4,7 @@ import { Image, View } from 'react-native';
 
 import { FLAGS } from '../../../../assets';
 import { THEME } from '../../../../reactor/common';
-import { Icon, Row, Text, Touchable } from '../../../../reactor/components';
+import { Icon, Col, Row, Text, Touchable } from '../../../../reactor/components';
 
 import { exchange } from '../../../../common';
 import { Box, PriceFriendly } from '../../../../components';
@@ -21,10 +21,12 @@ const OptionItem = ({ active, onChange, onPress, dataSource: { currency, current
     <Row style={disabled && styles.disabled}>
       <Touchable onPress={onPress} rippleColor={COLOR.TEXT} style={styles.container}>
         <Row>
-          <Box small outlined color={COLOR[currency]} opacity={OPACITY.L} styleContent={styles.boxContent}>
-            <Image source={FLAGS[currency]} style={styles.image} />
-          </Box>
-          <View style={styles.content}>
+          <Col marginRight="S" width="auto">
+            <Box small outlined color={COLOR[currency]} opacity={OPACITY.L} styleContent={styles.boxContent}>
+              <Image source={FLAGS[currency]} style={styles.image} />
+            </Box>
+          </Col>
+          <Col>
             <Text bold numberOfLines={1}>
               {title}
             </Text>
@@ -46,7 +48,7 @@ const OptionItem = ({ active, onChange, onPress, dataSource: { currency, current
                 </>
               )}
             </Row>
-          </View>
+          </Col>
         </Row>
       </Touchable>
       <Touchable onPress={() => onChange(!active)} value={active} style={styles.switch}>

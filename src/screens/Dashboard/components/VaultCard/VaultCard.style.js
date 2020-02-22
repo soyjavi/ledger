@@ -4,11 +4,17 @@ import { C } from '../../../../common';
 import { THEME } from '../../../../reactor/common';
 
 const { STYLE } = C;
-const { SPACE, UNIT } = THEME;
+const { SPACE } = THEME;
+
+const SIZE = SPACE.XL * 4;
 
 export default StyleSheet.create({
+  box: {
+    alignItems: 'flex-start',
+  },
+
   container: {
-    height: UNIT * 14,
+    height: SIZE,
     width: STYLE.VAULT_ITEM_WIDTH,
   },
 
