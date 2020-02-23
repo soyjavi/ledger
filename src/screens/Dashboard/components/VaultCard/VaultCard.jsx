@@ -27,7 +27,7 @@ const VaultCard = ({ currency, onPress, currentBalance, currentMonth: { progress
       >
         <View style={styles.content}>
           <Row>
-            <Image source={FLAGS[currency]} style={styles.thumbnail} />
+            <Image source={FLAGS[currency]} style={styles.flag} />
             <Text caption numberOfLines={1} marginLeft="XS">
               {title.toUpperCase()}
             </Text>

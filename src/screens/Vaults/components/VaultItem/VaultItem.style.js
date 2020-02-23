@@ -3,7 +3,6 @@ import { StyleSheet } from 'react-native';
 import { THEME } from '../../../../reactor/common';
 
 const { OPACITY, SPACE, UNIT } = THEME;
-const IMAGE_SIZE = UNIT * 1.6;
 
 export default StyleSheet.create({
   balance: {
@@ -21,18 +20,13 @@ export default StyleSheet.create({
     flex: 1,
   },
 
-  content: {
-    flex: 1,
-    marginLeft: UNIT,
-  },
-
   disabled: {
     opacity: OPACITY.L,
   },
 
-  image: {
-    height: IMAGE_SIZE,
-    width: IMAGE_SIZE,
+  flag: {
+    height: SPACE.M,
+    width: SPACE.M,
   },
 
   switch: {

@@ -30,7 +30,7 @@ export default StyleSheet.create({
     flex: 1,
   },
 
-  thumbnail: {
+  flag: {
     height: SPACE.M,
     width: SPACE.M,
   },

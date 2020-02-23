@@ -3,7 +3,6 @@ import { StyleSheet } from 'react-native';
 import { THEME } from '../../reactor/common';
 
 const { BORDER_RADIUS, FONT, SPACE, UNIT } = THEME;
-const IMAGE_SIZE = SPACE.L;
 
 const CARD_OPTION_WIDTH = UNIT * 8;
 
@@ -23,8 +22,8 @@ export default StyleSheet.create({
   },
 
   image: {
-    height: IMAGE_SIZE,
-    width: IMAGE_SIZE,
+    height: SPACE.L,
+    width: SPACE.L,
   },
 
   legend: FONT.LEGEND,

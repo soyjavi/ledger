@@ -1,6 +1,6 @@
 import { bool, shape, func } from 'prop-types';
 import React from 'react';
-import { Image, View } from 'react-native';
+import { Image } from 'react-native';
 
 import { FLAGS } from '../../../../assets';
 import { THEME } from '../../../../reactor/common';
@@ -23,7 +23,7 @@ const OptionItem = ({ active, onChange, onPress, dataSource: { currency, current
         <Row>
           <Col marginRight="S" width="auto">
             <Box small outlined color={COLOR[currency]} opacity={OPACITY.L} styleContent={styles.boxContent}>
-              <Image source={FLAGS[currency]} style={styles.image} />
+              <Image source={FLAGS[currency]} style={styles.flag} />
             </Box>
           </Col>
           <Col>
