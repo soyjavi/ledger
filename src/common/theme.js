@@ -27,17 +27,12 @@ export default {
     // TRANSPARENT
 
     // -- Custom
-    CHART_BASE: '#222',
+    BASE: '#222',
     LIGHTEN,
-    OVERLAY: 'rgba(16, 16, 16, 0.8)',
+    OVERLAY: 'rgba(0, 0, 0, 0.8)',
     EXPENSE,
     INCOME,
     TRANSFER: '#ffffff',
-    BTC: '#f4b659',
-    EUR: '#0251b5',
-    USD: '#d90122',
-    XAU: '#FFD700',
-    XAG: '#c0c0c0',
   },
 
   FONT: {
@@ -50,7 +45,7 @@ export default {
     HEADLINE: {
       fontFamily: FAMILY_BOLD,
       fontWeight: '400',
-      fontSize: 30,
+      fontSize: 32,
       letterSpacing: -0.75,
     },
     SUBTITLE: {
@@ -109,9 +104,9 @@ export default {
     },
   },
 
-  // OPACITY: {
-  //   S: 0.2,
-  //   M: 0.4,
-  //   L: 0.6,
-  // },
+  OPACITY: {
+    S: 0.2,
+    M: 0.4,
+    L: 0.6,
+  },
 };

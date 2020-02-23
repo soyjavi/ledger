@@ -46,7 +46,7 @@ const Chart = ({ captions, highlight, inverted, values, styleContainer, ...inher
                   styles.bar,
                   inverted && styles.barInverted,
                   value !== 0 && { height: `${calcHeight(value, { min, max, avg })}%` },
-                  { backgroundColor: highlight !== index ? COLOR.CHART_BASE : color },
+                  { backgroundColor: highlight !== index ? COLOR.BASE : color },
                 ]}
               />
             </View>

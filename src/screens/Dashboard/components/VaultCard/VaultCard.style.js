@@ -22,10 +22,6 @@ export default StyleSheet.create({
     flex: 1,
   },
 
-  balance: {
-    opacity: 0.68,
-  },
-
   expand: {
     flex: 1,
   },

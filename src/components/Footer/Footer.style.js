@@ -14,7 +14,7 @@ export default StyleSheet.create({
   },
 
   buttonOutlined: {
-    backgroundColor: COLOR.BACKGROUND,
+    backgroundColor: COLOR.OVERLAY,
   },
 
   container: {

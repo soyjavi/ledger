@@ -62,7 +62,7 @@ const DialogClone = ({
       styleOverlay={styles.dialogOverlay}
       visible={visible}
     >
-      <Text headline color={color}>
+      <Text subtitle color={color}>
         {type === EXPENSE ? l10n.EXPENSE : l10n.INCOME}
       </Text>
       <Row marginTop="M">

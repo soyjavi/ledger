@@ -77,7 +77,7 @@ const DialogTransaction = (props) => {
       styleOverlay={styles.dialogOverlay}
       visible={visible}
     >
-      <Text headline marginBottom="M">{`${l10n.NEW} ${l10n.TRANSACTION}`}</Text>
+      <Text subtitle marginBottom="M">{`${l10n.NEW} ${l10n.TRANSACTION}`}</Text>
 
       <Text bold caption>
         {l10n.TYPE}

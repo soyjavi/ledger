@@ -40,7 +40,7 @@ Box.propTypes = {
 Box.defaultProps = {
   borderRadius: BORDER_RADIUS,
   children: undefined,
-  color: COLOR.LIGHTEN,
+  color: COLOR.BASE,
   opacity: 1,
   outlined: false,
   small: false,

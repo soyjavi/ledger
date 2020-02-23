@@ -30,6 +30,6 @@ export default StyleSheet.create({
     height: KEY_HEIGHT,
     borderRadius: BORDER_RADIUS,
     borderWidth: 1,
-    borderColor: COLOR.LIGHTEN,
+    borderColor: COLOR.BASE,
   },
 });

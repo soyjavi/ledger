@@ -7,7 +7,7 @@ import { THEME } from '../../reactor/common';
 import { Box } from '../Box';
 import styles from './CardOption.style';
 
-const { COLOR, SPACE } = THEME;
+const { COLOR, OPACITY, SPACE } = THEME;
 
 const CardOption = ({ children, color, icon, image, onPress, selected, title, ...inherit }) => {
   const colorContent = selected ? COLOR.BACKGROUND : COLOR.LIGHTEN;
@@ -17,7 +17,7 @@ const CardOption = ({ children, color, icon, image, onPress, selected, title, ..
     <Box
       color={selected ? color : undefined}
       marginRight="S"
-      outlined={!selected}
+      opacity={!selected ? OPACITY.L : undefined}
       small
       style={[styles.box, inherit.style]}
     >

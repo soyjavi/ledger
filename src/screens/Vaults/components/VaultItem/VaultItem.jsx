@@ -22,7 +22,7 @@ const OptionItem = ({ active, onChange, onPress, dataSource: { currency, current
       <Touchable onPress={onPress} rippleColor={COLOR.TEXT} style={styles.container}>
         <Row>
           <Col marginRight="S" width="auto">
-            <Box small outlined color={COLOR[currency]} opacity={OPACITY.L} styleContent={styles.boxContent}>
+            <Box small outlined opacity={OPACITY.L} styleContent={styles.boxContent}>
               <Image source={FLAGS[currency]} style={styles.flag} />
             </Box>
           </Col>

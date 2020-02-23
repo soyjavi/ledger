@@ -18,7 +18,7 @@ const BoxSummary = ({ caption, value, ...inherit }) => (
     <Text caption color={COLOR.LIGHTEN} numberOfLines={1}>
       {caption.toUpperCase()}
     </Text>
-    <PriceFriendly {...inherit} color={value === 0 ? COLOR.LIGHTEN : undefined} value={value} />
+    <PriceFriendly {...inherit} color={value === 0 ? COLOR.LIGHTEN : undefined} fixed={0} value={value} />
   </Col>
 );
 
@@ -61,17 +61,13 @@ const Summary = ({ currency, currentBalance, currentMonth, image, title }) => {
               }
             />
           </Touchable>
-          {baseCurrency !== currency && <PriceFriendly currency={currency} subtitle value={currentBalance} />}
+          {baseCurrency !== currency && (
+            <PriceFriendly color={COLOR.LIGHTEN} currency={currency} subtitle value={currentBalance} />
+          )}
         </Col>
 
         <Col width="auto">
-          <Button
-            color={COLOR.BRAND}
-            onPress={() => navigation.go(SCREEN.STATS)}
-            outlined
-            size="S"
-            title={l10n.ACTIVITY}
-          />
+          <Button onPress={() => navigation.go(SCREEN.STATS)} outlined size="S" title={l10n.ACTIVITY} />
         </Col>
       </Row>
 
@@ -79,7 +75,7 @@ const Summary = ({ currency, currentBalance, currentMonth, image, title }) => {
         <BoxSummary caption={verboseMonth(new Date(), l10n)} currency="%" operator value={progressionPercentage} />
         <BoxSummary caption={l10n.INCOMES} currency={baseCurrency} value={incomes} />
         <BoxSummary caption={l10n.EXPENSES} currency={baseCurrency} value={expenses} />
-        <BoxSummary caption={l10n.TODAY} currency={baseCurrency} operator value={today} style={null} />
+        <BoxSummary caption={l10n.TODAY} currency={baseCurrency} operator value={today} />
       </Row>
     </Col>
   );

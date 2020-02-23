@@ -38,7 +38,7 @@ const TransactionItem = (props) => {
         <Col>
           <Row>
             <Col>
-              <Text color={COLOR.TEXT} bold numberOfLines={1}>
+              <Text color={COLOR.TEXT} _bold numberOfLines={1}>
                 {title}
               </Text>
             </Col>

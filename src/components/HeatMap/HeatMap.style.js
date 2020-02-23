@@ -13,7 +13,7 @@ export { MAP_HEIGHT, MAP_WIDTH };
 
 export default StyleSheet.create({
   container: {
-    backgroundColor: COLOR.LIGHTEN,
+    backgroundColor: COLOR.BASE,
     borderRadius: BORDER_RADIUS,
     height: MAP_HEIGHT,
     width: MAP_WIDTH,

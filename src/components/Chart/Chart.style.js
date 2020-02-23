@@ -44,7 +44,7 @@ export default StyleSheet.create({
   },
 
   container: {
-    borderColor: COLOR.CHART_BASE,
+    borderColor: COLOR.BASE,
     borderBottomWidth: 1,
     borderTopWidth: 1,
   },

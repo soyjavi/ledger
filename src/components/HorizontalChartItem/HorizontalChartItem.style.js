@@ -7,7 +7,7 @@ const BAR_SIZE = UNIT + UNIT / 4;
 
 export default StyleSheet.create({
   bar: {
-    backgroundColor: COLOR.CHART_BASE,
+    backgroundColor: COLOR.BASE,
     borderRadius: BORDER_RADIUS,
     height: BAR_SIZE,
     minWidth: BAR_SIZE,

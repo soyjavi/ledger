@@ -44,7 +44,7 @@ const DialogVault = ({ onClose, visible }) => {
       position="bottom"
       visible={visible}
     >
-      <Text headline marginBottom="XS">{`${l10n.NEW} ${l10n.VAULT}`}</Text>
+      <Text subtitle marginBottom="XS">{`${l10n.NEW} ${l10n.VAULT}`}</Text>
       <Text caption color={COLOR.LIGHTEN} marginBottom="M">
         {vaults.length === 0 ? l10n.FIRST_VAULT_CAPTION : l10n.VAULT_CAPTION}
       </Text>
