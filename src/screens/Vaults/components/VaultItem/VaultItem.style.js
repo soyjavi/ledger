@@ -16,7 +16,7 @@ export default StyleSheet.create({
 
   container: {
     paddingHorizontal: SPACE.M,
-    paddingVertical: SPACE.XS,
+    paddingVertical: SPACE.S,
     flex: 1,
   },
 

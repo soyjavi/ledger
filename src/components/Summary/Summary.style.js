@@ -6,7 +6,7 @@ const { SPACE } = THEME;
 
 export default StyleSheet.create({
   image: {
-    height: SPACE.S,
-    width: SPACE.S,
+    height: SPACE.M,
+    width: SPACE.M,
   },
 });

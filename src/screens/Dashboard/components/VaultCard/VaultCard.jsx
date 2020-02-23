@@ -10,7 +10,7 @@ import { Row, Text, Touchable } from '../../../../reactor/components';
 import { THEME } from '../../../../reactor/common';
 import styles from './VaultCard.style';
 
-const { COLOR, SPACE, OPACITY } = THEME;
+const { COLOR, SPACE } = THEME;
 
 const VaultCard = ({ currency, onPress, currentBalance, currentMonth: { progression }, title }) => {
   const l10n = useL10N();
@@ -18,12 +18,7 @@ const VaultCard = ({ currency, onPress, currentBalance, currentMonth: { progress
 
   return React.useCallback(
     <Touchable marginLeft="S" onPress={onPress} rippleColor={COLOR.LIGHTEN} style={styles.container}>
-      <Box
-        borderRadius={SPACE.S}
-        opacity={progression ? OPACITY.L : undefined}
-        outlined={!progression}
-        style={styles.box}
-      >
+      <Box borderRadius={SPACE.S} outlined={!progression} style={styles.box}>
         <View style={styles.content}>
           <Row>
             <Image source={FLAGS[currency]} style={styles.flag} />

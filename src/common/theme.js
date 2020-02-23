@@ -5,7 +5,7 @@ const INCOME = '#63C88B'; // '#94febf'; //  #24F2AD #94febf
 const EXPENSE = '#F77A64'; // '#FF3986'; // #E9305C #FF3986
 
 const BACKGROUND = '#000';
-const LIGHTEN = '#555';
+const LIGHTEN = '#4E4E4E';
 
 const UNIT = 8;
 
@@ -27,7 +27,7 @@ export default {
     // TRANSPARENT
 
     // -- Custom
-    BASE: '#222',
+    BASE: '#131313',
     LIGHTEN,
     OVERLAY: 'rgba(0, 0, 0, 0.8)',
     EXPENSE,

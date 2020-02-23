@@ -11,7 +11,7 @@ import styles from './Footer.style';
 
 const { COLOR, SPACE } = THEME;
 
-const BUTTON = { color: COLOR.BRAND, marginLeft: 'S', style: styles.button };
+const BUTTON = { marginLeft: 'S', style: styles.button };
 const BUTTON_OUTLINED = { ...BUTTON, outlined: true, style: [styles.button, styles.buttonOutlined] };
 const MOTION_HIDE = SPACE.XXL * 2;
 
@@ -44,11 +44,11 @@ export const Footer = ({ onBack, onHardwareBack, onPress, scroll }) => {
         <Row width="auto" justify="end">
           {onBack ? (
             <Button {...BUTTON_OUTLINED} onPress={onBack}>
-              <Icon value="arrow-left" color={COLOR.BRAND} size={SPACE.L} />
+              <Icon value="arrow-left" size={SPACE.L} />
             </Button>
           ) : (
             <Button {...BUTTON_OUTLINED} activity={!sync} disabled={!sync} onPress={sync ? handleSync : undefined}>
-              {sync && <Icon value={'refresh'} color={COLOR.BRAND} size={SPACE.L} />}
+              {sync && <Icon value={'refresh'} size={SPACE.L} />}
             </Button>
           )}
 

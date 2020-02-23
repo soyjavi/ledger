@@ -7,20 +7,14 @@ import { THEME } from '../../reactor/common';
 import { Box } from '../Box';
 import styles from './CardOption.style';
 
-const { COLOR, OPACITY, SPACE } = THEME;
+const { COLOR, SPACE } = THEME;
 
 const CardOption = ({ children, color, icon, image, onPress, selected, title, ...inherit }) => {
   const colorContent = selected ? COLOR.BACKGROUND : COLOR.LIGHTEN;
   const onlyText = !icon && !image;
 
   return (
-    <Box
-      color={selected ? color : undefined}
-      marginRight="S"
-      opacity={!selected ? OPACITY.L : undefined}
-      small
-      style={[styles.box, inherit.style]}
-    >
+    <Box color={selected ? color : undefined} marginRight="S" small style={[styles.box, inherit.style]}>
       <Touchable onPress={onPress} rippleColor={COLOR.TEXT} style={styles.container}>
         {icon && <Icon value={icon} color={colorContent} size={SPACE.L} />}
         {image && <Image source={image} style={styles.image} />}

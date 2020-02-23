@@ -11,7 +11,7 @@ import { Box, PriceFriendly } from '../../../../components';
 import { useStore } from '../../../../context';
 import styles from './VaultItem.style';
 
-const { COLOR, OPACITY } = THEME;
+const { COLOR } = THEME;
 
 const OptionItem = ({ active, onChange, onPress, dataSource: { currency, currentBalance, title } }) => {
   const { baseCurrency, rates } = useStore();
@@ -22,7 +22,7 @@ const OptionItem = ({ active, onChange, onPress, dataSource: { currency, current
       <Touchable onPress={onPress} rippleColor={COLOR.TEXT} style={styles.container}>
         <Row>
           <Col marginRight="S" width="auto">
-            <Box small outlined opacity={OPACITY.L} styleContent={styles.boxContent}>
+            <Box small outlined styleContent={styles.boxContent}>
               <Image source={FLAGS[currency]} style={styles.flag} />
             </Box>
           </Col>
