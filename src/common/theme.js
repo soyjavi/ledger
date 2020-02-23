@@ -49,12 +49,14 @@ export default {
     },
     HEADLINE: {
       fontFamily: FAMILY_BOLD,
-      fontSize: 20,
+      fontWeight: '400',
+      fontSize: 30,
       letterSpacing: -0.75,
     },
     SUBTITLE: {
       fontFamily: FAMILY_BOLD,
-      fontSize: 16,
+      fontWeight: '400',
+      fontSize: 18,
       letterSpacing: -0.5,
     },
     BODY: {

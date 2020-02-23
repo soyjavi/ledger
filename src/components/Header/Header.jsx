@@ -11,7 +11,7 @@ const Header = ({ children, highlight, image, title }) => (
   <Row paddingRight="S" style={styles.container}>
     <Col>
       <Motion timeline={[{ property: 'opacity', value: highlight ? 1 : 0 }]}>
-        <Heading subtitle={false} paddingLeft="M" value={title} image={image} />
+        <Heading paddingLeft="M" value={title} image={image} />
       </Motion>
     </Col>
     <Col width="auto">{children}</Col>

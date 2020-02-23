@@ -44,7 +44,7 @@ const Summary = ({ currency, currentBalance, currentMonth, image, title }) => {
     <Col paddingHorizontal="M" marginBottom="L">
       <Row align="start" marginBottom="L">
         <Col>
-          <Row marginBottom="XS">
+          <Row>
             <Image source={image} resizeMode="contain" style={styles.image} />
             <Text caption numberOfLines={1} marginLeft="XS">
               {title.toUpperCase()}
@@ -54,7 +54,6 @@ const Summary = ({ currency, currentBalance, currentMonth, image, title }) => {
             <PriceFriendly
               currency={baseCurrency}
               headline
-              style={styles.balance}
               value={
                 baseCurrency !== currency
                   ? exchange(Math.abs(currentBalance), currency, baseCurrency, rates)
