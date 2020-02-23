@@ -6,8 +6,8 @@ const { BORDER_RADIUS, COLOR, FONT, SPACE } = THEME;
 
 export default StyleSheet.create({
   container: {
-    backgroundColor: COLOR.BACKGROUND,
-    borderColor: COLOR.LIGHTEN,
+    backgroundColor: COLOR.BASE,
+    borderColor: COLOR.BASE,
     borderRadius: BORDER_RADIUS,
     borderWidth: 1,
     width: 'auto',

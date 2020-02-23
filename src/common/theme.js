@@ -4,13 +4,12 @@ const FAMILY_BOLD = 'font-family-bold';
 const INCOME = '#63C88B'; // '#94febf'; //  #24F2AD #94febf
 const EXPENSE = '#F77A64'; // '#FF3986'; // #E9305C #FF3986
 
-const BACKGROUND = '#000';
-const LIGHTEN = '#4E4E4E';
-
+const BASE = '#131313';
 const UNIT = 8;
+const BORDER_RADIUS = UNIT / 4;
 
 export default {
-  BORDER_RADIUS: UNIT / 4,
+  BORDER_RADIUS,
 
   COLOR: {
     BRAND: INCOME,
@@ -19,7 +18,7 @@ export default {
     // WHITE
     // GRAY
 
-    BACKGROUND,
+    BACKGROUND: '#000000',
     // DISABLED
     ERROR: EXPENSE,
     SUCCESS: INCOME,
@@ -27,8 +26,8 @@ export default {
     // TRANSPARENT
 
     // -- Custom
-    BASE: '#131313',
-    LIGHTEN,
+    BASE,
+    LIGHTEN: '#4E4E4E',
     OVERLAY: 'rgba(0, 0, 0, 0.8)',
     EXPENSE,
     INCOME,
@@ -85,12 +84,13 @@ export default {
   },
 
   INPUT: {
-    backgroundColor: BACKGROUND,
-    borderColor: LIGHTEN,
-    // borderRadius: 0,
-    // borderWidth: 1,
+    backgroundColor: BASE,
+    borderColor: 'transparent',
+    borderRadius: BORDER_RADIUS,
+    borderWidth: 1,
     // paddingHorizontal: UNIT,
   },
+  INPUT_FOCUS: {},
 
   MOTION: {
     // DURATION: 225,
