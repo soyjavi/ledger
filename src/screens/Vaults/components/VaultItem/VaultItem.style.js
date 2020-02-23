@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 import { THEME } from '../../../../reactor/common';
 
-const { OPACITY, SPACE, UNIT } = THEME;
+const { OPACITY, SPACE } = THEME;
 
 export default StyleSheet.create({
   balance: {

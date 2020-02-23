@@ -1,2 +1,4 @@
-src/reactor/**/*.js
+src/reactor/**
+web-build/**
 **/*.test.js
+babel.config.js
