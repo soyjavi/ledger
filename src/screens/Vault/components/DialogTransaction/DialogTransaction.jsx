@@ -72,12 +72,16 @@ const DialogTransaction = (props) => {
       {...inherit}
       highlight
       onClose={onClose}
-      style={styles.frame}
-      styleContainer={styles.dialog}
-      title={`${l10n.NEW} ${l10n.TRANSACTION}`}
+      position="bottom"
+      style={styles.dialog}
+      styleOverlay={styles.dialogOverlay}
       visible={visible}
     >
-      <Text subtitle>{l10n.TYPE}</Text>
+      <Text subtitle marginBottom="M">{`${l10n.NEW} ${l10n.TRANSACTION}`}</Text>
+
+      <Text bold caption>
+        {l10n.TYPE}
+      </Text>
       <View style={styles.cards}>
         {options.map((option, index) => (
           <CardOption
@@ -93,30 +97,28 @@ const DialogTransaction = (props) => {
               })
             }
             selected={type === index}
-            style={[styles.cardOption, index === options.length - 1 && styles.cardLast]}
             title={option}
           />
         ))}
       </View>
-      <View style={styles.form}>
-        <Form {...props} {...state} color={color} onChange={(value) => setState({ ...state, ...value })} />
-        <View>
-          <HeatMap color={color} points={coords ? [[coords.longitude, coords.latitude]] : undefined} />
-          <Text caption lighten>
-            {place || l10n.LOADING_PLACE}
-          </Text>
-        </View>
-      </View>
+
+      <Form {...props} {...state} color={color} onChange={(value) => setState({ ...state, ...value })} />
+      <HeatMap
+        caption={place || l10n.LOADING_PLACE}
+        color={color}
+        points={coords ? [[coords.longitude, coords.latitude]] : undefined}
+      />
 
       <Button
         activity={busy}
         color={color}
-        colorContent={COLOR.BACKGROUND}
+        colorText={COLOR.BACKGROUND}
         disabled={busy || !valid}
-        large
+        marginTop="L"
         onPress={onSubmit}
-        style={styles.button}
+        size="L"
         title={!busy ? l10n.SAVE : undefined}
+        wide
       />
     </Dialog>
   );

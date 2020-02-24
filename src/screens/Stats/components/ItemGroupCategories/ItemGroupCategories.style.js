@@ -6,11 +6,11 @@ const { SPACE } = THEME;
 
 export default StyleSheet.create({
   container: {
-    marginBottom: SPACE.S,
+    marginBottom: SPACE.L,
   },
 
   content: {
-    paddingHorizontal: SPACE.MEDIUM,
+    paddingHorizontal: SPACE.M,
   },
 
   expand: {

@@ -6,11 +6,11 @@ import { THEME } from '../../reactor/common';
 const {
   STYLE: { HEADER_HEIGHT },
 } = C;
-const { COLOR, SPACE, UNIT } = THEME;
+const { COLOR, SPACE } = THEME;
 
 export default StyleSheet.create({
   chart: {
-    marginHorizontal: SPACE.MEDIUM,
+    marginHorizontal: SPACE.M,
   },
 
   charts: {
@@ -18,24 +18,20 @@ export default StyleSheet.create({
   },
 
   chartMargin: {
-    marginBottom: SPACE.XL,
-  },
-
-  chartBalance: {
-    height: UNIT * 9.6,
+    marginBottom: SPACE.XL + SPACE.XS,
   },
 
   contentEmpty: {
-    padding: SPACE.MEDIUM,
+    padding: SPACE.M,
     alignItems: 'center',
   },
 
   scrollView: {
     paddingBottom: HEADER_HEIGHT,
+    paddingTop: SPACE.L,
   },
 
   sliderMonths: {
     marginTop: HEADER_HEIGHT,
-    paddingBottom: SPACE.S,
   },
 });

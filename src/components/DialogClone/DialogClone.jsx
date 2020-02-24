@@ -1,8 +1,8 @@
 import { bool, shape } from 'prop-types';
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
 import { THEME } from '../../reactor/common';
-import { Button, Dialog, Text } from '../../reactor/components';
+import { Button, Col, Dialog, Row, Text } from '../../reactor/components';
 
 import { C, exchange, verboseMonthShort, verboseTime } from '../../common';
 import { useNavigation, useL10N, useSnackBar, useStore } from '../../context';
@@ -31,8 +31,10 @@ const DialogClone = ({
   const { baseCurrency, rates } = store;
   const { showTx } = useNavigation();
   const [busy, setBusy] = useState(false);
+  const [wipe, setWipe] = useState(false);
 
-  const onSubmit = async (wipe = false) => {
+  const onSubmit = async (nextWipe = false) => {
+    setWipe(nextWipe);
     setBusy(true);
     const tx = await createTx(store, snackbar, {
       vault,
@@ -48,21 +50,24 @@ const DialogClone = ({
 
   const color = type === EXPENSE ? COLOR.EXPENSE : COLOR.INCOME;
   const operator = type === EXPENSE ? -1 : 1;
-  const buttonProps = { activity: busy, color, disabled: busy, large: true, style: styles.button };
+  const buttonProps = { color, disabled: busy, large: true, style: styles.button };
 
   return (
     <Dialog
       {...inherit}
       highlight
       onClose={() => showTx(undefined)}
-      style={styles.frame}
-      styleContainer={styles.dialog}
-      title={type === EXPENSE ? l10n.EXPENSE : l10n.INCOME}
+      position="bottom"
+      style={styles.dialog}
+      styleOverlay={styles.dialogOverlay}
       visible={visible}
     >
-      <View style={styles.container}>
-        <View style={[styles.content, styles.row]}>
-          <Box color={color} style={styles.box} styleContent={styles.boxContent} opacity={0.25} small>
+      <Text subtitle color={color}>
+        {type === EXPENSE ? l10n.EXPENSE : l10n.INCOME}
+      </Text>
+      <Row marginTop="M">
+        <Col marginRight="S" width="auto">
+          <Box color={color} style={styles.boxContent} opacity={0.25} small>
             <Text bold color={color} style={styles.day}>
               {new Date(timestamp || null).getDate()}
             </Text>
@@ -70,54 +75,64 @@ const DialogClone = ({
               {verboseMonthShort(timestamp, l10n)}
             </Text>
           </Box>
-          <View style={styles.texts}>
-            <Text bold numberOfLines={1} style={styles.title}>
-              {title}
-            </Text>
-            <Text caption lighten numberOfLines={1}>
-              {`${verboseTime(new Date(timestamp))} - ${l10n.CATEGORIES[type][category]}`}
-            </Text>
-          </View>
-          <View style={styles.prices}>
-            <PriceFriendly
-              currency={baseCurrency}
-              operator
-              value={
-                baseCurrency !== currency ? exchange(value * operator, currency, baseCurrency, rates) : value * operator
-              }
-            />
-            {currency !== baseCurrency && (
-              <PriceFriendly caption color={COLOR.TEXT_LIGHTEN} currency={currency} operator value={value * operator} />
-            )}
-          </View>
-        </View>
+        </Col>
+        <Col>
+          <Row>
+            <Col>
+              <Text bold numberOfLines={1}>
+                {title}
+              </Text>
+            </Col>
+            <Col width="auto">
+              <PriceFriendly
+                currency={baseCurrency}
+                operator
+                value={
+                  baseCurrency !== currency
+                    ? exchange(value * operator, currency, baseCurrency, rates)
+                    : value * operator
+                }
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Text caption numberOfLines={1}>
+                {`${verboseTime(new Date(timestamp))} - ${l10n.CATEGORIES[type][category]}`}
+              </Text>
+            </Col>
+            <Col width="auto">
+              {currency !== baseCurrency && (
+                <PriceFriendly caption color={COLOR.LIGHTEN} currency={currency} operator value={value * operator} />
+              )}
+            </Col>
+          </Row>
+        </Col>
+      </Row>
 
-        {location && (
-          <Fragment>
-            <HeatMap color={color} points={[[location.longitude, location.latitude]]} />
-            <Text caption lighten style={styles.content}>
-              {location.place}
-            </Text>
-          </Fragment>
-        )}
-      </View>
+      {location && (
+        <Col marginTop="S">
+          <HeatMap caption={location.place} color={color} points={[[location.longitude, location.latitude]]} />
+        </Col>
+      )}
 
-      <View style={styles.row}>
+      <Row marginTop="M">
         <Button
           {...buttonProps}
-          contained={false}
+          activity={busy && wipe}
           onPress={() => onSubmit(true)}
           outlined
-          title={!busy ? l10n.WIPE : undefined}
+          title={!(busy && wipe) ? l10n.WIPE : undefined}
         />
-        <View style={styles.buttonSeparator} />
+        <View style={styles.buttonGap} />
         <Button
           {...buttonProps}
-          colorContent={COLOR.BACKGROUND}
+          activity={busy && !wipe}
+          colorText={COLOR.BACKGROUND}
           onPress={() => onSubmit(false)}
-          title={!busy ? l10n.CLONE : undefined}
+          title={!(busy && !wipe) ? l10n.CLONE : undefined}
         />
-      </View>
+      </Row>
     </Dialog>
   );
 };

@@ -2,18 +2,16 @@ import { StyleSheet } from 'react-native';
 
 import { THEME } from '../../reactor/common';
 
-const { SPACE, UNIT } = THEME;
+const { SPACE } = THEME;
 
 export default StyleSheet.create({
   container: {
-    height: '100%',
-    minHeight: UNIT * 3.6,
-    minWidth: UNIT * 3.6,
+    minHeight: SPACE.XL + SPACE.XS,
+    minWidth: SPACE.XL + SPACE.XS,
   },
 
   content: {
-    flex: 1,
-    padding: SPACE.MEDIUM,
+    justifyContent: 'center',
     width: '100%',
     zIndex: 1,
   },

@@ -1,23 +1,22 @@
 import { bool, number, string } from 'prop-types';
 import React from 'react';
-import { Image, View } from 'react-native';
+import { View } from 'react-native';
 
-import { Text } from '../../reactor/components';
+import { Row, Text } from '../../reactor/components';
 import { THEME } from '../../reactor/common';
 import { PriceFriendly } from '../PriceFriendly';
 import styles from './HorizontalChartItem.style';
 
 const { COLOR } = THEME;
 
-const HorizontalChartItem = ({ color, currency, image, small, title, value, width, ...inherit }) => (
+const HorizontalChartItem = ({ color, currency, small, title, value, width, ...inherit }) => (
   <View style={inherit.style}>
-    <View style={styles.row}>
-      {image && <Image source={image} style={styles.image} />}
+    <Row align="end">
       <Text caption color={COLOR.TEXT} bold={!small} style={styles.text}>
         {title}
       </Text>
       <PriceFriendly caption color={COLOR.TEXT} currency={currency} bold={!small} value={value} />
-    </View>
+    </Row>
 
     <View style={[styles.bar, styles.barContainer, small && styles.barSmall]}>
       <View style={[styles.bar, small && styles.barSmall, { backgroundColor: color, width: `${width}%` }]} />
@@ -28,7 +27,6 @@ const HorizontalChartItem = ({ color, currency, image, small, title, value, widt
 HorizontalChartItem.propTypes = {
   color: string,
   currency: string.isRequired,
-  image: string,
   small: bool,
   title: string.isRequired,
   value: number.isRequired,
@@ -37,7 +35,6 @@ HorizontalChartItem.propTypes = {
 
 HorizontalChartItem.defaultProps = {
   color: COLOR.TEXT,
-  image: undefined,
   small: false,
   width: 100,
 };

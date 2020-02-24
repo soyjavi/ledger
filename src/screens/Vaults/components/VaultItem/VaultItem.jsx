@@ -1,10 +1,10 @@
 import { bool, shape, func } from 'prop-types';
-import React, { Fragment } from 'react';
-import { Image, View } from 'react-native';
+import React from 'react';
+import { Image } from 'react-native';
 
 import { FLAGS } from '../../../../assets';
 import { THEME } from '../../../../reactor/common';
-import { Icon, Text, Touchable } from '../../../../reactor/components';
+import { Icon, Col, Row, Text, Touchable } from '../../../../reactor/components';
 
 import { exchange } from '../../../../common';
 import { Box, PriceFriendly } from '../../../../components';
@@ -18,42 +18,43 @@ const OptionItem = ({ active, onChange, onPress, dataSource: { currency, current
   const disabled = !active;
 
   return (
-    <View style={[styles.row, disabled && styles.disabled]}>
+    <Row style={disabled && styles.disabled}>
       <Touchable onPress={onPress} rippleColor={COLOR.TEXT} style={styles.container}>
-        <Box small color={COLOR[currency]} opacity={COLOR[currency] ? 0.2 : undefined} styleContent={styles.boxContent}>
-          <Image source={FLAGS[currency]} style={[styles.image]} />
-        </Box>
-        <View style={styles.content}>
-          <Text bold numberOfLines={1}>
-            {title}
-          </Text>
-          <View style={styles.row}>
-            <PriceFriendly
-              caption
-              currency={baseCurrency}
-              value={
-                currency !== baseCurrency ? exchange(currentBalance, currency, baseCurrency, rates) : currentBalance
-              }
-              style={styles.balance}
-            />
-            {currency !== baseCurrency && (
-              <Fragment>
-                <Text caption lighten>
-                  (
-                </Text>
-                <PriceFriendly caption lighten currency={currency} value={currentBalance} />
-                <Text caption lighten>
-                  )
-                </Text>
-              </Fragment>
-            )}
-          </View>
-        </View>
+        <Row>
+          <Col marginRight="S" width="auto">
+            <Box small outlined styleContent={styles.boxContent}>
+              <Image source={FLAGS[currency]} style={styles.flag} />
+            </Box>
+          </Col>
+          <Col>
+            <Text bold numberOfLines={1}>
+              {title}
+            </Text>
+            <Row>
+              <PriceFriendly
+                caption
+                color={COLOR.LIGHTEN}
+                currency={baseCurrency}
+                value={
+                  currency !== baseCurrency ? exchange(currentBalance, currency, baseCurrency, rates) : currentBalance
+                }
+                style={styles.balance}
+              />
+              {currency !== baseCurrency && (
+                <>
+                  <Text caption>(</Text>
+                  <PriceFriendly caption currency={currency} value={currentBalance} />
+                  <Text caption>)</Text>
+                </>
+              )}
+            </Row>
+          </Col>
+        </Row>
       </Touchable>
       <Touchable onPress={() => onChange(!active)} value={active} style={styles.switch}>
         <Icon size={24} value={active ? 'eye-outline' : 'eye-off-outline'} />
       </Touchable>
-    </View>
+    </Row>
   );
 };
 

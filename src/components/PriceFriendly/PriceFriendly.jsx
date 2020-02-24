@@ -1,8 +1,8 @@
 import { bool, number, string } from 'prop-types';
 import React from 'react';
-import { View } from 'react-native';
+
 import { THEME } from '../../reactor/common';
-import { Price, Text } from '../../reactor/components';
+import { Price, Row, Text } from '../../reactor/components';
 import { format } from '../../reactor/components/Price/modules';
 
 import { C, currencyDecimals } from '../../common';
@@ -17,52 +17,53 @@ const maskValue = ({ value }) =>
     value: value > 1000 ? 9999.99 : value + 0.99,
   }).replace(/[0-9]/gi, MASK_SYMBOL);
 
-const PriceFriendly = ({ currency, label, operator, value = 0, ...inherit }) => {
+const PriceFriendly = ({ currency, fixed, label, operator, value = 0, ...others }) => {
   const {
     state: { maskAmount },
   } = useSettings();
-  let { color } = inherit;
+  let { color } = others;
   let operatorEnhanced;
 
   if (operator && !color && !maskAmount) {
-    if (value === 0) color = COLOR.TEXT_LIGHTEN;
+    if (value === 0) color = COLOR.LIGHTEN;
     else color = value > 0 ? COLOR.INCOME : COLOR.EXPENSE;
   }
   if (operator && value > 0) operatorEnhanced = '+';
   else if (operator && value < 0) operatorEnhanced = '-';
 
   const props = {
-    ...inherit,
+    ...others,
     color,
-    fixed: currencyDecimals(value, currency),
+    fixed: fixed !== undefined ? fixed : currencyDecimals(value, currency),
     numberOfLines: 1,
     operator: operatorEnhanced,
     symbol: SYMBOL[currency] || currency,
     value: Math.abs(value),
   };
 
-  const style = [styles.font, inherit.style];
+  const style = [styles.font, others.style];
 
   return (
-    <View style={styles.container}>
+    <Row width="auto">
       {label && (
-        <Text color={color} {...inherit}>
+        <Text color={color} {...others}>
           {label}
         </Text>
       )}
       {maskAmount ? (
-        <Text {...inherit} color={color} style={style}>
+        <Text {...others} color={color} style={style}>
           {maskValue(props)}
         </Text>
       ) : (
         <Price {...props} style={style} />
       )}
-    </View>
+    </Row>
   );
 };
 
 PriceFriendly.propTypes = {
   currency: string,
+  fixed: number,
   label: string,
   operator: bool,
   value: number,
@@ -70,6 +71,7 @@ PriceFriendly.propTypes = {
 
 PriceFriendly.defaultProps = {
   currency: undefined,
+  fixed: undefined,
   label: undefined,
   operator: false,
   value: 0,

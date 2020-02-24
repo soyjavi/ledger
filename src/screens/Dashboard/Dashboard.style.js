@@ -9,22 +9,13 @@ const {
 const { SPACE } = THEME;
 
 export default StyleSheet.create({
-  headingVaults: {
-    marginRight: SPACE.S,
-  },
-
-  icon: {
-    height: SPACE.L,
-    width: SPACE.L,
-  },
-
   scroll: {
     paddingVertical: HEADER_HEIGHT,
   },
 
   vaults: {
     marginBottom: SPACE.L,
-    paddingLeft: SPACE.XXS,
-    paddingRight: SPACE.MEDIUM,
+    paddingLeft: SPACE.S,
+    paddingRight: SPACE.M,
   },
 });

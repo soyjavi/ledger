@@ -1,33 +1,32 @@
 import { bool, func, node, number, oneOfType, string } from 'prop-types';
 import React from 'react';
-import { Image, View } from 'react-native';
+import { Image } from 'react-native';
 
 import { Icon, Text, Touchable } from '../../reactor/components';
 import { THEME } from '../../reactor/common';
 import { Box } from '../Box';
 import styles from './CardOption.style';
 
-const { COLOR } = THEME;
+const { COLOR, SPACE } = THEME;
 
 const CardOption = ({ children, color, icon, image, onPress, selected, title, ...inherit }) => {
-  let colorContent = selected ? COLOR.BACKGROUND : COLOR.TEXT_LIGHTEN;
+  const colorContent = selected ? COLOR.BACKGROUND : COLOR.LIGHTEN;
+  const onlyText = !icon && !image;
 
   return (
-    <Box outlined={!selected} small style={[styles.box, inherit.style]}>
-      <Touchable
-        onPress={onPress}
-        rippleColor={COLOR.TEXT}
-        style={[styles.container, selected && { backgroundColor: color }]}
-      >
-        {icon && (
-          <View style={styles.icon}>
-            <Icon value={icon} color={colorContent} size={28} />
-          </View>
-        )}
-
+    <Box color={selected ? color : undefined} marginRight="S" small style={[styles.box, inherit.style]}>
+      <Touchable onPress={onPress} rippleColor={COLOR.TEXT} style={styles.container}>
+        {icon && <Icon value={icon} color={colorContent} size={SPACE.L} />}
         {image && <Image source={image} style={styles.image} />}
 
-        <Text caption color={colorContent} numberOfLines={1} style={styles.title}>
+        <Text
+          align="center"
+          caption={onlyText}
+          color={colorContent}
+          marginTop={!onlyText ? 'S' : undefined}
+          numberOfLines={1}
+          style={!onlyText ? styles.legend : undefined}
+        >
           {title}
         </Text>
         {children}

@@ -28,7 +28,7 @@ const ItemGroupCategories = ({ dataSource, type }) => {
 
   return (
     <View style={styles.container}>
-      <Heading color={COLOR.TEXT} value={isExpense ? l10n.EXPENSES : l10n.INCOMES}>
+      <Heading paddingHorizontal="M" value={isExpense ? l10n.EXPENSES : l10n.INCOMES}>
         <PriceFriendly color={COLOR.TEXT} currency={baseCurrency} value={total} />
       </Heading>
       <View>
@@ -37,7 +37,7 @@ const ItemGroupCategories = ({ dataSource, type }) => {
             key={key}
             onPress={() => setExpand(expand !== key ? key : undefined)}
             rippleColor={COLOR.TEXT}
-            style={[styles.content, expand && expand !== key && { opacity: OPACITY.M }]}
+            style={[styles.content, expand && expand !== key && { opacity: OPACITY.S }]}
           >
             <HorizontalChartItem
               color={isExpense ? COLOR.EXPENSE : COLOR.INCOME}

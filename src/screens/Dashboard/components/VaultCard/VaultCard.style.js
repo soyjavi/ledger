@@ -1,15 +1,20 @@
 import { StyleSheet } from 'react-native';
 
 import { C } from '../../../../common';
-import { LAYOUT, THEME } from '../../../../reactor/common';
+import { THEME } from '../../../../reactor/common';
 
 const { STYLE } = C;
-const { SPACE, UNIT } = THEME;
+const { SPACE } = THEME;
+
+const SIZE = SPACE.XL * 4;
 
 export default StyleSheet.create({
+  box: {
+    alignItems: 'flex-start',
+  },
+
   container: {
-    height: UNIT * 12.8,
-    marginLeft: SPACE.S,
+    height: SIZE,
     width: STYLE.VAULT_ITEM_WIDTH,
   },
 
@@ -17,19 +22,12 @@ export default StyleSheet.create({
     flex: 1,
   },
 
-  balance: {
-    opacity: 0.68,
-  },
-
-  row: LAYOUT.STYLE.ROW,
-
   expand: {
     flex: 1,
   },
 
-  thumbnail: {
-    height: SPACE.MEDIUM,
-    marginRight: SPACE.XXS,
-    width: SPACE.MEDIUM,
+  flag: {
+    height: SPACE.M,
+    width: SPACE.M,
   },
 });

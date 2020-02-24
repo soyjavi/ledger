@@ -33,14 +33,19 @@ const SnackBarProvider = ({ children }) => {
     snackbarWarning: (caption) => dispatch({ type: 'SHOW', caption, color: COLOR.WARNING }),
   };
 
+  const { caption = '', color, type } = state;
+
   return (
     <SnackBarContext.Provider value={events}>
       {children}
       <Snackbar
         {...state}
+        caption={caption}
+        color={color}
+        icon="cancel"
         button={l10n.CLOSE.toUpperCase()}
-        onPress={() => dispatch({ type: 'HIDE' })}
-        visible={state.caption !== undefined}
+        onClose={() => dispatch({ type: 'HIDE' })}
+        visible={type === 'SHOW'}
       />
     </SnackBarContext.Provider>
   );

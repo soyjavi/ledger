@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { LAYOUT, THEME } from '../../reactor/common';
+import { THEME } from '../../reactor/common';
 
 const {
   FONT: { FAMILY_BOLD },
@@ -9,10 +9,6 @@ const {
 } = THEME;
 
 export default StyleSheet.create({
-  container: {
-    ...LAYOUT.STYLE.ROW,
-  },
-
   font: {
     fontFamily: FAMILY_BOLD,
   },

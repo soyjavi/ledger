@@ -1,20 +1,26 @@
 import { StyleSheet } from 'react-native';
 
-import { LAYOUT, ENV, THEME } from '../../reactor/common';
+import { useEnvironment } from '../../reactor/hooks';
+import { THEME } from '../../reactor/common';
 
-const { SPACE } = THEME;
+const ENV = useEnvironment();
+const { COLOR, SPACE } = THEME;
 
 export default StyleSheet.create({
   button: {
-    marginLeft: SPACE.S,
+    height: SPACE.XXL,
+    width: SPACE.XXL,
+    paddingHorizontal: 0,
+  },
+
+  buttonOutlined: {
+    backgroundColor: COLOR.OVERLAY,
   },
 
   container: {
-    ...LAYOUT.STYLE.ROW,
-    bottom: SPACE.MEDIUM,
-    justifyContent: 'flex-end',
+    bottom: SPACE.M,
     position: ENV.IS_WEB ? 'fixed' : 'absolute',
-    right: SPACE.MEDIUM,
+    right: SPACE.M,
     zIndex: 1,
   },
 });

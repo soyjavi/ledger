@@ -2,7 +2,7 @@ import { array, arrayOf, bool, number, oneOfType, string } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 import { THEME } from '../../reactor/common';
-import { Text } from '../../reactor/components';
+import { Col, Row, Text } from '../../reactor/components';
 import { PriceFriendly } from '../PriceFriendly';
 
 import { ChartHeading } from './components';
@@ -27,8 +27,9 @@ const Chart = ({ captions, highlight, inverted, values, styleContainer, ...inher
               <View style={[styles.tag, { backgroundColor: color }]}>
                 <PriceFriendly
                   bold
-                  color={color === COLOR.TEXT || color === COLOR.PRIMARY ? COLOR.BACKGROUND : COLOR.TEXT}
+                  color={COLOR.BACKGROUND}
                   currency={currency}
+                  fixed={0}
                   value={avg}
                   style={styles.legend}
                 />
@@ -37,7 +38,7 @@ const Chart = ({ captions, highlight, inverted, values, styleContainer, ...inher
           </View>
         )}
 
-        <View style={[styles.content, styles.row, inherit.style]}>
+        <Row align="end" justify="space" style={[styles.content, inherit.style]}>
           {values.map((value, index) => (
             <View key={`${value}-${index.toString()}`} style={[styles.column, inverted && styles.columnInverted]}>
               <View
@@ -45,26 +46,25 @@ const Chart = ({ captions, highlight, inverted, values, styleContainer, ...inher
                   styles.bar,
                   inverted && styles.barInverted,
                   value !== 0 && { height: `${calcHeight(value, { min, max, avg })}%` },
-                  highlight !== index && styles.noHighlight,
-                  { backgroundColor: color },
+                  { backgroundColor: highlight !== index ? COLOR.BASE : color },
                 ]}
               />
             </View>
           ))}
-        </View>
+        </Row>
 
         {inverted && <ChartHeading {...inherit} />}
 
         {captions && (
-          <View style={[styles.captions, styles.row]}>
+          <Row justify="space" style={styles.captions}>
             {captions.map((caption, index) => (
-              <View key={caption} style={styles.column}>
-                <Text bold={highlight === index} style={[styles.legend, highlight !== index && styles.noHighlight]}>
+              <Col align="center" key={caption} paddingTop="S">
+                <Text color={highlight !== index ? COLOR.LIGHTEN : undefined} style={styles.legend}>
                   {caption.substring(0, 3).toUpperCase()}
                 </Text>
-              </View>
+              </Col>
             ))}
-          </View>
+          </Row>
         )}
       </View>
     </View>

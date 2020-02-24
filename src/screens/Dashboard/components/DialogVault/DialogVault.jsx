@@ -1,6 +1,5 @@
 import { bool, func } from 'prop-types';
 import React, { useState } from 'react';
-import { View } from 'react-native';
 
 import { FLAGS } from '../../../../assets';
 import { FORM, setCurrency, translate } from '../../../../common';
@@ -40,43 +39,46 @@ const DialogVault = ({ onClose, visible }) => {
     <Dialog
       highlight
       onClose={vaults.length > 0 ? onClose : undefined}
-      style={styles.frame}
-      styleContainer={styles.dialog}
-      title={`${l10n.NEW} ${l10n.VAULT}`}
+      style={styles.dialog}
+      styleOverlay={styles.dialogOverlay}
+      position="bottom"
       visible={visible}
     >
-      <Text lighten>{vaults.length === 0 ? l10n.FIRST_VAULT_CAPTION : l10n.VAULT_CAPTION}</Text>
-      <View style={styles.form}>
-        <Text subtitle>{l10n.CURRENCIES}</Text>
-        <Slider itemMargin={0} itemWidth={CARD_WIDTH + SPACE.S} style={styles.currencies}>
-          {queryCurrencies(baseCurrency, rates).map((item) => (
-            <CardOption
-              _color={COLOR.PRIMARY}
-              image={FLAGS[item]}
-              key={item}
-              onPress={() => setVaultCurrency(item)}
-              selected={currency === item}
-              style={styles.card}
-              title={item}
-            />
-          ))}
-        </Slider>
-        <Form
-          attributes={setCurrency(translate(FORM.VAULT, l10n), currency)}
-          color={COLOR.TEXT}
-          onChange={setForm}
-          value={form}
-        />
-      </View>
+      <Text subtitle marginBottom="XS">{`${l10n.NEW} ${l10n.VAULT}`}</Text>
+      <Text caption color={COLOR.LIGHTEN} marginBottom="M">
+        {vaults.length === 0 ? l10n.FIRST_VAULT_CAPTION : l10n.VAULT_CAPTION}
+      </Text>
+      <Text bold caption marginBottom="XS">
+        {l10n.CURRENCIES}
+      </Text>
+      <Slider itemMargin={0} itemWidth={CARD_WIDTH + SPACE.S}>
+        {queryCurrencies(baseCurrency, rates).map((item) => (
+          <CardOption
+            image={FLAGS[item]}
+            key={item}
+            onPress={() => setVaultCurrency(item)}
+            selected={currency === item}
+            style={styles.card}
+            title={item}
+          />
+        ))}
+      </Slider>
+      <Form
+        marginTop="M"
+        marginBottom="S"
+        attributes={setCurrency(translate(FORM.VAULT, l10n), currency)}
+        color={COLOR.TEXT}
+        onChange={setForm}
+        value={form}
+      />
       <Button
         activity={busy}
         color={COLOR.TEXT}
-        colorContent={COLOR.BACKGROUND}
+        colorText={COLOR.BACKGROUND}
         disabled={busy || form.title.trim().length === 0}
         onPress={onSubmit}
-        large
-        style={styles.button}
         title={!busy ? l10n.SAVE : undefined}
+        wide
       />
     </Dialog>
   );

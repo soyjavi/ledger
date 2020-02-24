@@ -14,7 +14,7 @@ export default StyleSheet.create({
 
   dialog: {
     ...STYLE.DIALOG,
-    backgroundColor: COLOR.BACKGROUND_OPACITY,
+    backgroundColor: COLOR.OVERLAY,
   },
 
   frame: {

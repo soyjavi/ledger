@@ -1,40 +1,42 @@
 import { number, func } from 'prop-types';
 import React, { useEffect, useRef } from 'react';
 
-import { useL10N } from '../../../../context';
 import { THEME } from '../../../../reactor/common';
-import { Text, Touchable, Slider } from '../../../../reactor/components';
-import styles, { ITEM_WIDTH } from './SliderMonths.style';
+import { Text, Slider } from '../../../../reactor/components';
+import { useL10N } from '../../../../context';
+import { CardOption } from '../../../../components';
+import styles, { CARD_WIDTH } from './SliderMonths.style';
 import getLastMonths from './modules/getLastMonths';
 
-const { COLOR } = THEME;
+const { COLOR, SPACE } = THEME;
 
-const SliderMonths = ({ index, onChange, ...inherit }) => {
+const SliderMonths = ({ index, onChange, ...others }) => {
   const l10n = useL10N();
   const slider = useRef(null);
+
   useEffect(() => {
-    const {
-      current: { scrollview },
-    } = slider;
-    scrollview.current.scrollTo({ x: (index - 3) * ITEM_WIDTH, animated: true });
+    if (index) {
+      const {
+        current: { scrollview },
+      } = slider;
+      scrollview.current.scrollTo({ x: (index - 3) * (CARD_WIDTH + SPACE.S), animated: true });
+    }
   }, [index]);
 
   return (
-    <Slider ref={slider} itemWidth={ITEM_WIDTH} itemMargin={0} style={[styles.container, inherit.style]}>
+    <Slider ref={slider} itemWidth={CARD_WIDTH + SPACE.S} itemMargin={0} style={[styles.slider, others.style]}>
       {getLastMonths(l10n.MONTHS).map(({ month, year }, i) => (
-        <Touchable
+        <CardOption
           key={month}
+          title={l10n.MONTHS[month].substr(0, 3)}
           onPress={() => onChange({ index: i, month, year })}
-          rippleColor={COLOR.WHITE}
-          style={[styles.item, index === i ? styles.itemSelected : styles.itemOutLined]}
+          selected={index === i}
+          style={styles.card}
         >
-          <Text bold color={index === i ? COLOR.BACKGROUND : undefined} lighten>
-            {l10n.MONTHS[month].substr(0, 3)}
-          </Text>
-          <Text caption color={index === i ? COLOR.BACKGROUND : undefined} lighten>
+          <Text bold caption color={index === i ? COLOR.BACKGROUND : COLOR.LIGHTEN}>
             {year}
           </Text>
-        </Touchable>
+        </CardOption>
       ))}
     </Slider>
   );
@@ -48,7 +50,7 @@ SliderMonths.propTypes = {
 };
 
 SliderMonths.defaultProps = {
-  index: 11,
+  index: undefined,
   month: 0,
   onChange: undefined,
   year: 0,

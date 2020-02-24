@@ -5,7 +5,7 @@ import { LAYOUT, THEME } from '../../../../reactor/common';
 const { BORDER_RADIUS, UNIT, SPACE, COLOR } = THEME;
 
 const KEY_HEIGHT = UNIT * 5.6;
-const KEY_WIDTH = LAYOUT.VIEWPORT.W / 3 - SPACE.XS * 4;
+const KEY_WIDTH = LAYOUT.VIEWPORT.W / 3 - SPACE.M * 2;
 
 export default StyleSheet.create({
   container: {
@@ -28,9 +28,8 @@ export default StyleSheet.create({
     margin: SPACE.XS,
     width: KEY_WIDTH,
     height: KEY_HEIGHT,
-    // backgroundColor: COLOR.BASE,
     borderRadius: BORDER_RADIUS,
     borderWidth: 1,
-    borderColor: COLOR.TEXT_LIGHTEN,
+    borderColor: COLOR.BASE,
   },
 });

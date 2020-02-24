@@ -115,7 +115,7 @@ const Stats = (props) => {
           </>
         ) : (
           <View style={styles.contentEmpty}>
-            <Text lighten>{l10n.NO_TRANSACTIONS}</Text>
+            <Text>{l10n.NO_TRANSACTIONS}</Text>
           </View>
         )}
       </ScrollView>

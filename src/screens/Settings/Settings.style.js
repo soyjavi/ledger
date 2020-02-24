@@ -9,16 +9,12 @@ const {
 const {
   VIEWPORT: { W },
 } = LAYOUT;
-const { COLOR, SPACE } = THEME;
-const QR_SIZE = W - SPACE.MEDIUM * 2;
+const { SPACE } = THEME;
+const QR_SIZE = W - SPACE.M * 2;
 
 export default StyleSheet.create({
   activity: {
     height: 28,
-  },
-
-  button: {
-    backgroundColor: COLOR.ACCENT,
   },
 
   cameraViewport: {
@@ -26,7 +22,7 @@ export default StyleSheet.create({
   },
 
   caption: {
-    marginHorizontal: SPACE.MEDIUM,
+    marginHorizontal: SPACE.M,
     marginVertical: SPACE.XS,
     textAlign: 'center',
   },
@@ -38,7 +34,7 @@ export default StyleSheet.create({
   content: CONTENT,
 
   options: {
-    marginBottom: SPACE.MEDIUM,
+    marginBottom: SPACE.M,
   },
 
   qr: {

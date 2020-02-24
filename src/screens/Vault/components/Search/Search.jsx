@@ -1,9 +1,9 @@
 import { func, string } from 'prop-types';
 import React, { useState } from 'react';
-import { TextInput, View } from 'react-native';
+import { TextInput } from 'react-native';
 
 import { THEME } from '../../../../reactor/common';
-import { Activity, Icon } from '../../../../reactor/components';
+import { Activity, Icon, Row } from '../../../../reactor/components';
 import { useL10N } from '../../../../context';
 import styles from './Search.style';
 
@@ -23,8 +23,8 @@ const Search = ({ onValue, value }) => {
   };
 
   return (
-    <View style={[styles.container, focus && styles.focus]}>
-      <Icon color={COLOR.TEXT_LIGHTEN} family="MaterialIcons" value="search" size={16} />
+    <Row paddingHorizontal="S" marginBottom="L" marginHorizontal="M" style={[styles.container, focus && styles.focus]}>
+      <Icon color={COLOR.LIGHTEN} family="MaterialIcons" marginRight="S" value="search" size={16} />
       <TextInput
         autoCorrect={false}
         autoCapitalize="none"
@@ -33,13 +33,13 @@ const Search = ({ onValue, value }) => {
         onChangeText={onChangeText}
         onFocus={() => setFocus(true)}
         placeholder={`${l10n.SEARCH}...`}
-        placeholderTextColor={COLOR.TEXT_LIGHTEN}
+        placeholderTextColor={COLOR.LIGHTEN}
         underlineColorAndroid="transparent"
         defaultValue={value}
         style={styles.input}
       />
-      {busy && <Activity color={COLOR.TEXT_LIGHTEN} />}
-    </View>
+      {busy && <Activity color={COLOR.LIGHTEN} />}
+    </Row>
   );
 };
 

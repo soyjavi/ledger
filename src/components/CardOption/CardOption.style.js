@@ -2,37 +2,29 @@ import { StyleSheet } from 'react-native';
 
 import { THEME } from '../../reactor/common';
 
-const { BORDER_RADIUS, SPACE, UNIT } = THEME;
-const THUMBNAIL_SIZE = UNIT * 1.8;
-const ICON_SIZE = UNIT * 2.8;
+const { BORDER_RADIUS, FONT, SPACE, UNIT } = THEME;
+
+const CARD_OPTION_WIDTH = UNIT * 8;
 
 export default StyleSheet.create({
   box: {
-    marginRight: SPACE.S,
+    width: CARD_OPTION_WIDTH,
   },
 
   container: {
     alignItems: 'center',
+    alignContent: 'center',
+    justifyContent: 'center',
     borderRadius: BORDER_RADIUS,
-    paddingVertical: SPACE.MEDIUM,
+    paddingHorizontal: SPACE.XS,
+    height: '100%',
+    width: '100%',
   },
 
   image: {
-    height: THUMBNAIL_SIZE,
-    marginBottom: SPACE.XXS,
-    width: THUMBNAIL_SIZE,
+    height: SPACE.L,
+    width: SPACE.L,
   },
 
-  icon: {
-    alignItems: 'center',
-    height: ICON_SIZE,
-    justifyContent: 'center',
-    marginBottom: SPACE.XS,
-    width: ICON_SIZE,
-  },
-
-  title: {
-    textAlign: 'center',
-    paddingHorizontal: SPACE.XS,
-  },
+  legend: FONT.LEGEND,
 });

@@ -1,10 +1,10 @@
 module.exports = {
-  arrowParens: "always",
+  arrowParens: 'always',
   semi: true,
   singleQuote: true,
   printWidth: 120,
-  proseWrap: "preserve",
+  proseWrap: 'preserve',
   tabWidth: 2,
-  trailingComma: "all",
-  useTabs: false
+  trailingComma: 'all',
+  useTabs: false,
 };

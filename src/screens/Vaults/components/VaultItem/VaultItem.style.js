@@ -1,9 +1,8 @@
 import { StyleSheet } from 'react-native';
 
-import { LAYOUT, THEME } from '../../../../reactor/common';
+import { THEME } from '../../../../reactor/common';
 
-const { SPACE, UNIT } = THEME;
-const IMAGE_SIZE = UNIT * 1.6;
+const { OPACITY, SPACE } = THEME;
 
 export default StyleSheet.create({
   balance: {
@@ -16,30 +15,22 @@ export default StyleSheet.create({
   },
 
   container: {
-    ...LAYOUT.STYLE.ROW,
-    paddingHorizontal: SPACE.MEDIUM,
-    paddingVertical: SPACE.XXS,
+    paddingHorizontal: SPACE.M,
+    paddingVertical: SPACE.S,
     flex: 1,
-  },
-
-  content: {
-    flex: 1,
-    marginLeft: UNIT,
   },
 
   disabled: {
-    opacity: 0.38,
+    opacity: OPACITY.L,
   },
 
-  image: {
-    height: IMAGE_SIZE,
-    width: IMAGE_SIZE,
+  flag: {
+    height: SPACE.M,
+    width: SPACE.M,
   },
-
-  row: LAYOUT.STYLE.ROW,
 
   switch: {
-    padding: SPACE.XS,
-    marginRight: SPACE.XS,
+    padding: SPACE.S,
+    marginRight: SPACE.S,
   },
 });

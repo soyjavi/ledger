@@ -1,11 +1,3 @@
-import { C } from '../../../common';
-
-const {
-  TX: {
-    TYPE: { INCOME },
-  },
-  VAULT_TRANSFER,
-} = C;
 const MAX_DAYS = 30;
 
 export const query = ({ l10n: { CATEGORIES = [] } = {}, txs = [], search = '', scroll = false }) => {
@@ -31,12 +23,9 @@ export const query = ({ l10n: { CATEGORIES = [] } = {}, txs = [], search = '', s
           days += 1;
           date = txDate;
           dateIndex = queryTxs.length;
-          queryTxs.push({ value: 0, timestamp: tx.timestamp, txs: [] });
+          queryTxs.push({ timestamp: tx.timestamp, txs: [] });
         }
 
-        if (tx.category !== VAULT_TRANSFER) {
-          queryTxs[dateIndex].value += tx.type === INCOME ? tx.value : -tx.value;
-        }
         queryTxs[dateIndex].txs.push(tx);
       }
 

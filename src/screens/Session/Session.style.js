@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { LAYOUT, THEME } from '../../reactor/common';
+import { THEME } from '../../reactor/common';
 
 const { COLOR, UNIT, SPACE } = THEME;
 
@@ -18,7 +18,7 @@ export default StyleSheet.create({
   container: {
     alignSelf: 'center',
     height: '100%',
-    paddingHorizontal: SPACE.REGULAR,
+    paddingHorizontal: SPACE.M,
   },
 
   content: {
@@ -34,10 +34,8 @@ export default StyleSheet.create({
     marginRight: SPACE.XS,
   },
 
-  row: LAYOUT.STYLE.ROW,
-
   name: {
-    color: COLOR.TEXT_LIGHTEN,
+    color: COLOR.LIGHTEN,
     fontSize: UNIT * 5.6,
     zIndex: 1,
   },

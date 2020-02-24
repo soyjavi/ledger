@@ -13,7 +13,7 @@ const MS_IN_WEEK = MS_IN_DAY * 7;
 export default {
   CURRENCY: 'EUR',
 
-  ENDPOINT: IS_DEV ? 'http://localhost:8080' : 'https://voltvault.glitch.me',
+  ENDPOINT: IS_DEV ? 'http://192.168.1.115:8080' : 'https://voltvault.glitch.me',
 
   FIXED: {
     BTC: 6,
@@ -44,16 +44,14 @@ export default {
   },
   STYLE: {
     DIALOG: {
-      justifyContent: 'flex-end',
-      zIndex: 2,
-    },
-    DIALOG_FRAME: {
-      borderTopLeftRadius: SPACE.MEDIUM,
-      borderTopRightRadius: SPACE.MEDIUM,
-      margin: 0,
+      padding: SPACE.M,
       width: LAYOUT.VIEWPORT.W,
     },
-    HEADER_HEIGHT: UNIT * 5.2,
+    DIALOG_OVERLAY: {
+      backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    },
+
+    HEADER_HEIGHT: UNIT * 7,
     VAULT_ITEM_WIDTH: LAYOUT.VIEWPORT.W / 2 - SPACE.XL,
   },
   SYMBOL: {

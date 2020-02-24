@@ -3,12 +3,13 @@ import React from 'react';
 import { View } from 'react-native';
 
 import { THEME } from '../../reactor/common';
+import { Col } from '../../reactor/components';
 import styles from './Box.style';
 
 const { BORDER_RADIUS, COLOR } = THEME;
 
-const Box = ({ borderRadius, children, color, opacity, outlined, small, ...inherit }) => (
-  <View style={[styles.container, inherit.style]}>
+const Box = ({ borderRadius, children, color, opacity, outlined, small, ...others }) => (
+  <Col {...others} align="center" style={styles.container}>
     <View
       style={[
         styles.frame,
@@ -16,8 +17,15 @@ const Box = ({ borderRadius, children, color, opacity, outlined, small, ...inher
         outlined ? { borderWidth: 1, borderColor: color } : { backgroundColor: color },
       ]}
     />
-    <View style={[styles.content, small && styles.small, inherit.styleContent]}>{children}</View>
-  </View>
+    <Col
+      align="center"
+      paddingHorizontal={!small ? 'M' : undefined}
+      paddingVertical={!small ? 'M' : undefined}
+      style={[styles.content, others.style]}
+    >
+      {children}
+    </Col>
+  </Col>
 );
 
 Box.propTypes = {

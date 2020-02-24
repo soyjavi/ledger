@@ -1,37 +1,23 @@
 import { arrayOf, number, oneOfType, shape, string } from 'prop-types';
 import React from 'react';
-import { View } from 'react-native';
 import { Text } from '../../reactor/components';
 
-import { exchange, verboseDate } from '../../common';
-import { useL10N, useStore } from '../../context';
-import { PriceFriendly } from '../PriceFriendly';
+import { verboseDate } from '../../common';
+import { useL10N } from '../../context';
 import { TransactionItem } from '../TransactionItem';
-import styles from './GroupTransactions.style';
 
-const GroupTransactions = ({ currency, timestamp, txs = [], value }) => {
+const GroupTransactions = ({ currency, timestamp, txs = [] }) => {
   const l10n = useL10N();
-  const { baseCurrency, rates } = useStore();
 
   return (
-    <View style={styles.container}>
-      <View style={styles.heading}>
-        <Text lighten caption>
-          {verboseDate(timestamp, l10n)}
-        </Text>
-        {value !== 0 && (
-          <PriceFriendly
-            caption
-            currency={baseCurrency}
-            operator
-            value={exchange(value, currency, baseCurrency, rates, timestamp)}
-          />
-        )}
-      </View>
+    <>
+      <Text caption paddingHorizontal="M" marginTop="S">
+        {verboseDate(timestamp, l10n)}
+      </Text>
       {txs.map((tx) => (
         <TransactionItem key={tx.hash} currency={currency} {...tx} />
       ))}
-    </View>
+    </>
   );
 };
 

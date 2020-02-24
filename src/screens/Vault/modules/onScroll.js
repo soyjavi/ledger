@@ -11,7 +11,7 @@ export const onScroll = (
     },
   },
 ) => {
-  const nextScroll = y > SPACE.MEDIUM;
+  const nextScroll = y > SPACE.M;
 
   if (nextScroll !== scroll) setScroll(nextScroll);
   if (!scrollQuery && y > LAYOUT.VIEWPORT.H / 2) {

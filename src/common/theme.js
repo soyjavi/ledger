@@ -1,33 +1,37 @@
 const FAMILY = 'font-family';
 const FAMILY_BOLD = 'font-family-bold';
 
-const INCOME = '#94febf'; //  #24F2AD #94febf
-const EXPENSE = '#FF3986'; // #E9305C #FF3986
+const INCOME = '#63C88B'; // '#94febf'; //  #24F2AD #94febf
+const EXPENSE = '#F77A64'; // '#FF3986'; // #E9305C #FF3986
+
+const BASE = '#131313';
+const UNIT = 8;
+const BORDER_RADIUS = UNIT / 4;
 
 export default {
+  BORDER_RADIUS,
+
   COLOR: {
+    BRAND: INCOME,
+    CTA: '#ffffff',
+    // BLACK
+    // WHITE
+    // GRAY
+
     BACKGROUND: '#000000',
-    BACKGROUND_INPUT: '#000000',
-    BACKGROUND_OPACITY: 'rgba(16, 16, 16, 0.85)',
-    BASE: '#333333',
-    TEXT: '#ffffff',
-    TEXT_LIGHTEN: '#808080',
-
-    PRIMARY: INCOME,
-    ACCENT: '#041711',
-
+    // DISABLED
     ERROR: EXPENSE,
     SUCCESS: INCOME,
+    TEXT: '#ffffff',
+    // TRANSPARENT
 
+    // -- Custom
+    BASE,
+    LIGHTEN: '#4E4E4E',
+    OVERLAY: 'rgba(0, 0, 0, 0.8)',
     EXPENSE,
     INCOME,
     TRANSFER: '#ffffff',
-
-    BTC: '#f4b659',
-    EUR: '#0251b5',
-    USD: '#d90122',
-    XAU: '#FFD700',
-    XAG: '#c0c0c0',
   },
 
   FONT: {
@@ -39,11 +43,14 @@ export default {
     },
     HEADLINE: {
       fontFamily: FAMILY_BOLD,
+      fontWeight: '400',
+      fontSize: 32,
       letterSpacing: -0.75,
     },
     SUBTITLE: {
       fontFamily: FAMILY_BOLD,
-      fontSize: 16,
+      fontWeight: '400',
+      fontSize: 18,
       letterSpacing: -0.5,
     },
     BODY: {
@@ -53,8 +60,14 @@ export default {
     },
     CAPTION: {
       fontSize: 11,
-      letterSpacing: -0.1,
+      letterSpacing: -0.5,
     },
+    LEGEND: {
+      fontSize: 10,
+      lineHeight: 10,
+      letterSpacing: -0.3,
+    },
+
     BOLD: {
       fontFamily: FAMILY_BOLD,
       fontWeight: '400',
@@ -64,15 +77,30 @@ export default {
       fontFamily: FAMILY_BOLD,
       fontWeight: 'normal',
     },
-    BUTTON_SMALL: {
-      lineHeight: 15,
-      fontSize: 12,
-      fontFamily: FAMILY_BOLD,
-      letterSpacing: -0.1,
-    },
     INPUT: {
       fontFamily: FAMILY_BOLD,
       fontSize: 14,
+    },
+  },
+
+  INPUT: {
+    backgroundColor: BASE,
+    borderColor: 'transparent',
+    borderRadius: BORDER_RADIUS,
+    borderWidth: 1,
+    // paddingHorizontal: UNIT,
+  },
+  INPUT_FOCUS: {},
+
+  MOTION: {
+    // DURATION: 225,
+    // TYPE: 'spring',
+    DEFAULTS: {
+      // friction: undefined,
+      // tension: undefined,
+      // speed: undefined,
+      // bounciness: undefined,
+      // useNativeDriver: true,
     },
   },
 
