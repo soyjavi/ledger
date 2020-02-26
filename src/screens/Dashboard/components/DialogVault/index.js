@@ -1,1 +1,1 @@
-export { default } from './DialogVault';
+export * from './DialogVault';

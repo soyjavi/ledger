@@ -4,7 +4,8 @@ const FAMILY_BOLD = 'font-family-bold';
 const INCOME = '#63C88B'; // '#94febf'; //  #24F2AD #94febf
 const EXPENSE = '#F77A64'; // '#FF3986'; // #E9305C #FF3986
 
-const BASE = '#131313';
+// const BASE = '#131313';
+const BASE = '#222222';
 const UNIT = 8;
 const BORDER_RADIUS = UNIT / 4;
 
@@ -19,15 +20,15 @@ export default {
     // GRAY
 
     BACKGROUND: '#000000',
-    // DISABLED
+    BASE,
     ERROR: EXPENSE,
     SUCCESS: INCOME,
     TEXT: '#ffffff',
     // TRANSPARENT
 
     // -- Custom
-    BASE,
-    LIGHTEN: '#4E4E4E',
+    // LIGHTEN: '#4E4E4E',
+    LIGHTEN: '#555555',
     OVERLAY: 'rgba(0, 0, 0, 0.8)',
     EXPENSE,
     INCOME,

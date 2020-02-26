@@ -1,11 +1,8 @@
 import { StyleSheet } from 'react-native';
 
-import { C } from '../../common';
 import { LAYOUT, THEME } from '../../reactor/common';
+import { HEADER_HEIGHT } from '../../components';
 
-const {
-  STYLE: { CONTENT, HEADER_HEIGHT },
-} = C;
 const {
   VIEWPORT: { W },
 } = LAYOUT;
@@ -30,8 +27,6 @@ export default StyleSheet.create({
   container: {
     paddingVertical: HEADER_HEIGHT,
   },
-
-  content: CONTENT,
 
   options: {
     marginBottom: SPACE.M,

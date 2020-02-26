@@ -12,7 +12,7 @@ import styles from './VaultCard.style';
 
 const { COLOR, SPACE } = THEME;
 
-const VaultCard = ({ currency, onPress, currentBalance, currentMonth: { progression }, title }) => {
+export const VaultCard = ({ currency, onPress, currentBalance, currentMonth: { progression }, title }) => {
   const l10n = useL10N();
   const { baseCurrency, rates } = useStore();
 
@@ -72,5 +72,3 @@ VaultCard.defaultProps = {
   currentMonth: {},
   title: '',
 };
-
-export default VaultCard;

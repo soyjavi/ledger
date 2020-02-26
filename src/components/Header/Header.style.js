@@ -1,12 +1,13 @@
 import { StyleSheet } from 'react-native';
 
-import { C } from '../../common';
+import { THEME } from '../../reactor/common';
 import { useEnvironment } from '../../reactor/hooks';
 
+const { UNIT } = THEME;
+
 const ENV = useEnvironment();
-const {
-  STYLE: { HEADER_HEIGHT },
-} = C;
+
+export const HEADER_HEIGHT = UNIT * 7;
 
 export default StyleSheet.create({
   container: {

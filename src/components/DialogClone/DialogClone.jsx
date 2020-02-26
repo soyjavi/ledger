@@ -50,7 +50,7 @@ const DialogClone = ({
 
   const color = type === EXPENSE ? COLOR.EXPENSE : COLOR.INCOME;
   const operator = type === EXPENSE ? -1 : 1;
-  const buttonProps = { color, disabled: busy, large: true, style: styles.button };
+  const buttonProps = { color, disabled: busy, size: 'L', style: styles.button };
 
   return (
     <Dialog

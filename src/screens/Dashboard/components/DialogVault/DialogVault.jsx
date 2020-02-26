@@ -14,7 +14,7 @@ import styles, { CARD_WIDTH } from './DialogVault.style';
 const { COLOR, SPACE } = THEME;
 const INITIAL_STATE = { title: '', balance: '0' };
 
-const DialogVault = ({ onClose, visible }) => {
+export const DialogVault = ({ onClose, visible }) => {
   const l10n = useL10N();
   const store = useStore();
   const snackbar = useSnackBar();
@@ -77,6 +77,7 @@ const DialogVault = ({ onClose, visible }) => {
         colorText={COLOR.BACKGROUND}
         disabled={busy || form.title.trim().length === 0}
         onPress={onSubmit}
+        size="L"
         title={!busy ? l10n.SAVE : undefined}
         wide
       />
@@ -92,5 +93,3 @@ DialogVault.propTypes = {
 DialogVault.defaultProps = {
   visible: false,
 };
-
-export default DialogVault;

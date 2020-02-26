@@ -106,7 +106,6 @@ export default {
       'November',
       'December',
     ],
-    MORE: 'More',
 
     NAME: 'Name',
     NEW: 'NEW',
@@ -153,6 +152,7 @@ export default {
     VAULTS: 'Vaults',
     VAULT_CAPTION:
       'You can create as many vaults as you want. You can continue using your base currency or choose any other.',
+    VIEW_ALL: 'View All',
     VISIBILITY: 'Visibility',
 
     WARNING: 'Warning',

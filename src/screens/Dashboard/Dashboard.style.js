@@ -1,14 +1,17 @@
 import { StyleSheet } from 'react-native';
 
-import { C } from '../../common';
+import { HEADER_HEIGHT } from '../../components';
 import { THEME } from '../../reactor/common';
 
-const {
-  STYLE: { HEADER_HEIGHT },
-} = C;
-const { SPACE } = THEME;
+const { COLOR, SPACE } = THEME;
 
 export default StyleSheet.create({
+  buttonHeader: {
+    height: SPACE.L,
+    paddingHorizontal: 0,
+    backgroundColor: COLOR.BACKGROUND,
+  },
+
   scroll: {
     paddingVertical: HEADER_HEIGHT,
   },

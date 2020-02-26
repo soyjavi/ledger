@@ -18,7 +18,12 @@ const BoxSummary = ({ caption, value, ...inherit }) => (
     <Text caption color={COLOR.LIGHTEN} numberOfLines={1}>
       {caption.toUpperCase()}
     </Text>
-    <PriceFriendly {...inherit} color={value === 0 ? COLOR.LIGHTEN : undefined} fixed={0} value={value} />
+    <PriceFriendly
+      {...inherit}
+      color={value === 0 ? COLOR.LIGHTEN : undefined}
+      fixed={value >= 1000 ? 0 : undefined}
+      value={value}
+    />
   </Col>
 );
 
@@ -67,7 +72,12 @@ const Summary = ({ currency, currentBalance, currentMonth, image, title }) => {
         </Col>
 
         <Col width="auto">
-          <Button onPress={() => navigation.go(SCREEN.STATS)} outlined size="S" title={l10n.ACTIVITY} />
+          <Button
+            colorText={COLOR.BACKGROUND}
+            onPress={() => navigation.go(SCREEN.STATS)}
+            size="S"
+            title={l10n.ACTIVITY}
+          />
         </Col>
       </Row>
 
