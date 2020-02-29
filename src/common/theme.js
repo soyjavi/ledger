@@ -1,8 +1,8 @@
 const FAMILY = 'font-family';
 const FAMILY_BOLD = 'font-family-bold';
 
-const INCOME = '#63C88B'; // '#94febf'; //  #24F2AD #94febf
-const EXPENSE = '#F77A64'; // '#FF3986'; // #E9305C #FF3986
+const INCOME = '#63C88B';
+const EXPENSE = '#F77A64';
 
 // const BASE = '#131313';
 const BASE = '#222222';
@@ -32,7 +32,8 @@ export default {
     OVERLAY: 'rgba(0, 0, 0, 0.8)',
     EXPENSE,
     INCOME,
-    TRANSFER: '#ffffff',
+    TRANSFER: '#ECAF6E',
+    LOCATION: '#7393DC',
   },
 
   FONT: {
