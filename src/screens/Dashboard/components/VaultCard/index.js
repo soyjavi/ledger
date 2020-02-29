@@ -1,1 +1,1 @@
-export { default } from './VaultCard';
+export * from './VaultCard';

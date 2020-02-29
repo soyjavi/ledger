@@ -7,14 +7,11 @@ import { Button, Slider, Viewport } from '../../reactor/components';
 import { C, onHardwareBackPress } from '../../common';
 import { Footer, GroupTransactions, Header, Heading, Summary } from '../../components';
 import { useL10N, useNavigation, useSettings, useStore } from '../../context';
-import { DialogVault, VaultCard } from './components';
+import { DialogVault, VaultCard, VAULTCARD_WIDTH } from './components';
 import { queryLastTxs, queryVaults } from './modules';
 import styles from './Dashboard.style';
 
-const {
-  SCREEN,
-  STYLE: { VAULT_ITEM_WIDTH },
-} = C;
+const { SCREEN } = C;
 const { SPACE } = THEME;
 
 const Dashboard = ({ backward, visible, ...inherit }) => {
@@ -68,10 +65,15 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
 
         {vaults.length > 0 && (
           <>
-            <Heading paddingHorizontal="M" value={l10n.VAULTS}>
-              <Button outlined title="More" onPress={() => navigation.go(SCREEN.VAULTS)} size="S" />
+            <Heading paddingLeft="M" paddingRight="S" value={l10n.VAULTS}>
+              <Button
+                title={l10n.VIEW_ALL}
+                onPress={() => navigation.go(SCREEN.VAULTS)}
+                size="S"
+                style={styles.buttonHeader}
+              />
             </Heading>
-            <Slider itemWidth={VAULT_ITEM_WIDTH + SPACE.S} itemMargin={0} style={styles.vaults}>
+            <Slider itemWidth={VAULTCARD_WIDTH + SPACE.S} itemMargin={0} style={styles.vaults}>
               {visibleVaults.map((vault) => (
                 <VaultCard {...vault} key={vault.hash} onPress={() => navigation.go(SCREEN.VAULT, vault)} />
               ))}

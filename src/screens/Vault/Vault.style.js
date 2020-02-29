@@ -1,11 +1,8 @@
 import { StyleSheet } from 'react-native';
 
-import { C } from '../../common';
 import { THEME } from '../../reactor/common';
+import { HEADER_HEIGHT } from '../../components';
 
-const {
-  STYLE: { HEADER_HEIGHT },
-} = C;
 const { SPACE } = THEME;
 
 export default StyleSheet.create({

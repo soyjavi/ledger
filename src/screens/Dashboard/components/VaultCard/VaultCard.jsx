@@ -8,11 +8,13 @@ import { Box, PriceFriendly } from '../../../../components';
 import { useL10N, useStore } from '../../../../context';
 import { Row, Text, Touchable } from '../../../../reactor/components';
 import { THEME } from '../../../../reactor/common';
-import styles from './VaultCard.style';
+import styles, { VAULTCARD_WIDTH } from './VaultCard.style';
 
 const { COLOR, SPACE } = THEME;
 
-const VaultCard = ({ currency, onPress, currentBalance, currentMonth: { progression }, title }) => {
+export { VAULTCARD_WIDTH };
+
+export const VaultCard = ({ currency, onPress, currentBalance, currentMonth: { progression }, title }) => {
   const l10n = useL10N();
   const { baseCurrency, rates } = useStore();
 
@@ -72,5 +74,3 @@ VaultCard.defaultProps = {
   currentMonth: {},
   title: '',
 };
-
-export default VaultCard;

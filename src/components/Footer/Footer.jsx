@@ -47,7 +47,13 @@ export const Footer = ({ onBack, onHardwareBack, onPress, scroll }) => {
               <Icon value="arrow-left" size={SPACE.L} />
             </Button>
           ) : (
-            <Button {...BUTTON_OUTLINED} activity={!sync} disabled={!sync} onPress={sync ? handleSync : undefined}>
+            <Button
+              {...BUTTON_OUTLINED}
+              outlined={sync}
+              activity={!sync}
+              disabled={!sync}
+              onPress={sync ? handleSync : undefined}
+            >
               {sync && <Icon value={'refresh'} size={SPACE.L} />}
             </Button>
           )}

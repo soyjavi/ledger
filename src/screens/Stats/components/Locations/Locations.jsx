@@ -19,7 +19,7 @@ const Locations = ({ cities, countries, points, precission }) => {
     <View style={styles.container}>
       <View style={styles.content}>
         <Heading value={l10n.LOCATIONS} style={styles.heading} />
-        <HeatMap color={COLOR.PRIMARY} points={points} precission={precission} />
+        <HeatMap color={COLOR.LOCATION} points={points} precission={precission} />
       </View>
 
       <View style={styles.content}>
@@ -28,6 +28,7 @@ const Locations = ({ cities, countries, points, precission }) => {
           {orderByAmount(cities).map(({ key, amount }) => (
             <HorizontalChartItem
               key={key}
+              color={COLOR.LOCATION}
               currency="x"
               title={key}
               value={amount}
@@ -44,6 +45,7 @@ const Locations = ({ cities, countries, points, precission }) => {
             {orderByAmount(countries).map(({ key, amount }) => (
               <HorizontalChartItem
                 key={key}
+                color={COLOR.LOCATION}
                 currency="x"
                 title={key}
                 value={amount}

@@ -1,12 +1,10 @@
 import { StyleSheet } from 'react-native';
 
-import { C } from '../../../../common';
-import { THEME } from '../../../../reactor/common';
+import { LAYOUT, THEME } from '../../../../reactor/common';
 
-const { STYLE } = C;
 const { SPACE } = THEME;
 
-const SIZE = SPACE.XL * 4;
+export const VAULTCARD_WIDTH = LAYOUT.VIEWPORT.W / 2 - SPACE.XL;
 
 export default StyleSheet.create({
   box: {
@@ -14,8 +12,8 @@ export default StyleSheet.create({
   },
 
   container: {
-    height: SIZE,
-    width: STYLE.VAULT_ITEM_WIDTH,
+    height: VAULTCARD_WIDTH * 0.68,
+    width: VAULTCARD_WIDTH,
   },
 
   content: {

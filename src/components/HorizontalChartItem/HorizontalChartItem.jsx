@@ -9,13 +9,13 @@ import styles from './HorizontalChartItem.style';
 
 const { COLOR } = THEME;
 
-const HorizontalChartItem = ({ color, currency, small, title, value, width, ...inherit }) => (
+export const HorizontalChartItem = ({ color = COLOR.TEXT, currency, small, title, value, width = 100, ...inherit }) => (
   <View style={inherit.style}>
     <Row align="end">
-      <Text caption color={COLOR.TEXT} bold={!small} style={styles.text}>
+      <Text bold={!small} caption style={styles.text}>
         {title}
       </Text>
-      <PriceFriendly caption color={COLOR.TEXT} currency={currency} bold={!small} value={value} />
+      <PriceFriendly caption currency={currency} value={value} />
     </Row>
 
     <View style={[styles.bar, styles.barContainer, small && styles.barSmall]}>
@@ -32,11 +32,3 @@ HorizontalChartItem.propTypes = {
   value: number.isRequired,
   width: number,
 };
-
-HorizontalChartItem.defaultProps = {
-  color: COLOR.TEXT,
-  small: false,
-  width: 100,
-};
-
-export { HorizontalChartItem };

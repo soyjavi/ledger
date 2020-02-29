@@ -14,7 +14,7 @@ const { COLOR } = THEME;
 const { SYMBOL } = C;
 const maskValue = ({ value }) =>
   format({
-    value: value > 1000 ? 9999.99 : value + 0.99,
+    value: value >= 1000 ? 9999 : 9.99,
   }).replace(/[0-9]/gi, MASK_SYMBOL);
 
 const PriceFriendly = ({ currency, fixed, label, operator, value = 0, ...others }) => {

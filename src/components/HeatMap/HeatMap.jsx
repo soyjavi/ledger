@@ -9,14 +9,7 @@ import styles, { MAP_HEIGHT, MAP_WIDTH } from './HeatMap.style';
 const { ENDPOINT } = C;
 const { COLOR } = THEME;
 
-export const HeatMap = ({
-  caption,
-  color = COLOR.PRIMARY,
-  darkMode = true,
-  points,
-  precission = 0.001,
-  ...inherit
-}) => {
+export const HeatMap = ({ caption, color = COLOR.BRAND, darkMode = true, points, precission = 0.001, ...inherit }) => {
   const queryString = points
     ? objectToQueryString({
         color,

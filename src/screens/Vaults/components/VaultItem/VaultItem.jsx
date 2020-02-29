@@ -27,9 +27,7 @@ const OptionItem = ({ active, onChange, onPress, dataSource: { currency, current
             </Box>
           </Col>
           <Col>
-            <Text bold numberOfLines={1}>
-              {title}
-            </Text>
+            <Text numberOfLines={1}>{title}</Text>
             <Row>
               <PriceFriendly
                 caption
