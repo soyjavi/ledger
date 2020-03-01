@@ -27,13 +27,12 @@ export default {
     // TRANSPARENT
 
     // -- Custom
-    // LIGHTEN: '#4E4E4E',
-    LIGHTEN: '#555555',
+    LIGHTEN: '#555555', // '#4E4E4E'
     OVERLAY: 'rgba(0, 0, 0, 0.8)',
     EXPENSE,
     INCOME,
-    TRANSFER: '#ECAF6E',
-    LOCATION: '#7393DC',
+    // LOCATION: '#ECAF6E',
+    TRANSFER: '#7393DC',
   },
 
   FONT: {
