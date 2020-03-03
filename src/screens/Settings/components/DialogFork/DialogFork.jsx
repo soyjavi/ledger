@@ -32,20 +32,23 @@ const DialogFork = ({ onClose, onForked, query, visible, ...inherit }) => {
       {...inherit}
       highlight
       onClose={onClose}
-      style={styles.frame}
-      styleContainer={styles.dialog}
+      position="bottom"
+      style={styles.dialog}
       title={l10n.WARNING}
       visible={visible}
     >
-      <Text>{l10n.TRANSFER_TXS_IMPORT}</Text>
+      <Text marginBottom="XS" subtitle>
+        {l10n.EXPENSE}
+      </Text>
+      <Text caption>{l10n.TRANSFER_TXS_IMPORT}</Text>
       <Button
         activity={busy}
         color={COLOR.TEXT}
-        colorContent={COLOR.BACKGROUND}
+        colorText={COLOR.ERROR}
         disabled={busy}
-        large
+        marginTop="M"
         onPress={onSubmit}
-        style={styles.button}
+        wide
         title={!busy ? l10n.IMPORT : undefined}
       />
     </Dialog>

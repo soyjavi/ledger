@@ -77,7 +77,6 @@ export const DialogVault = ({ onClose, visible }) => {
         colorText={COLOR.BACKGROUND}
         disabled={busy || form.title.trim().length === 0}
         onPress={onSubmit}
-        size="L"
         title={!busy ? l10n.SAVE : undefined}
         wide
       />
