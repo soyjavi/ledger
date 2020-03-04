@@ -37,7 +37,6 @@ export const DialogVault = ({ onClose, visible }) => {
 
   return (
     <Dialog
-      highlight
       onClose={vaults.length > 0 ? onClose : undefined}
       style={styles.dialog}
       styleOverlay={styles.dialogOverlay}

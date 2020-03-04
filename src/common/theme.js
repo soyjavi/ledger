@@ -1,3 +1,7 @@
+import { THEME } from '../reactor/common';
+
+const { SPACE } = THEME;
+
 const FAMILY = 'font-family';
 const FAMILY_BOLD = 'font-family-bold';
 
@@ -6,8 +10,8 @@ const EXPENSE = '#F77A64';
 
 const BASE = '#222222';
 const DIALOG = '#131313';
-const UNIT = 8;
-const BORDER_RADIUS = UNIT / 2;
+const BORDER_RADIUS = SPACE.XS;
+const OVERLAY = 'rgba(0, 0, 0, 0.8)';
 
 export default {
   BORDER_RADIUS,
@@ -27,8 +31,8 @@ export default {
     // TRANSPARENT
 
     // -- Custom
-    LIGHTEN: '#555555', // '#4E4E4E'
-    OVERLAY: 'rgba(0, 0, 0, 0.8)',
+    LIGHTEN: '#555555', // '#4E4E4E',
+    OVERLAY,
     EXPENSE,
     INCOME,
     // LOCATION: '#ECAF6E',
@@ -85,13 +89,16 @@ export default {
   },
 
   DIALOG: {
-    borderTopLeftRadius: UNIT * 2,
-    borderTopRightRadius: UNIT * 2,
-    padding: UNIT * 2,
     backgroundColor: DIALOG,
+    borderRadius: SPACE.L,
+    marginBottom: SPACE.S,
+    padding: SPACE.L,
+  },
+  DIALOG_BUTTON: {
+    color: 'rgba(255, 255, 255, 0.1)',
   },
   DIALOG_OVERLAY: {
-    // backgroundColor: 'rgba(0,0,0,0.8)',
+    backgroundColor: OVERLAY,
   },
 
   INPUT: {

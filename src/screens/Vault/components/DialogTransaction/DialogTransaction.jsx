@@ -70,7 +70,6 @@ const DialogTransaction = (props) => {
   return (
     <Dialog
       {...inherit}
-      highlight
       onClose={onClose}
       position="bottom"
       style={styles.dialog}

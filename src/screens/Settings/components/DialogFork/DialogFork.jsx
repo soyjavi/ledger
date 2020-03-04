@@ -30,7 +30,6 @@ const DialogFork = ({ onClose, onForked, query, visible, ...inherit }) => {
   return (
     <Dialog
       {...inherit}
-      highlight
       onClose={onClose}
       position="bottom"
       style={styles.dialog}
