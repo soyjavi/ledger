@@ -133,7 +133,7 @@ export default {
     TAP_TO_UPDATE: 'Tap to update',
     TO: 'to',
     TODAY: 'Today',
-    TRANSACTION: 'TRANSACTION',
+    TRANSACTION: ['EXPENSE', 'INCOME', 'TRANSFER'],
     TRANSACTIONS: 'Transactions',
     TRANSFER: 'TRANSFER',
     TRANSFERS: 'Transfers',

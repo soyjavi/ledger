@@ -37,7 +37,6 @@ export const DialogVault = ({ onClose, visible }) => {
 
   return (
     <Dialog
-      highlight
       onClose={vaults.length > 0 ? onClose : undefined}
       style={styles.dialog}
       styleOverlay={styles.dialogOverlay}
@@ -77,7 +76,6 @@ export const DialogVault = ({ onClose, visible }) => {
         colorText={COLOR.BACKGROUND}
         disabled={busy || form.title.trim().length === 0}
         onPress={onSubmit}
-        size="L"
         title={!busy ? l10n.SAVE : undefined}
         wide
       />

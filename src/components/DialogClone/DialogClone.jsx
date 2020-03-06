@@ -18,7 +18,7 @@ const {
   },
   WIPE,
 } = C;
-const { COLOR } = THEME;
+const { COLOR, SPACE } = THEME;
 
 const DialogClone = ({
   dataSource: { category, currency, hash, value, vault, location, title, timestamp, type = EXPENSE },
@@ -50,18 +50,10 @@ const DialogClone = ({
 
   const color = type === EXPENSE ? COLOR.EXPENSE : COLOR.INCOME;
   const operator = type === EXPENSE ? -1 : 1;
-  const buttonProps = { color, disabled: busy, size: 'L', style: styles.button };
+  const buttonProps = { color, disabled: busy, style: styles.button };
 
   return (
-    <Dialog
-      {...inherit}
-      highlight
-      onClose={() => showTx(undefined)}
-      position="bottom"
-      style={styles.dialog}
-      styleOverlay={styles.dialogOverlay}
-      visible={visible}
-    >
+    <Dialog {...inherit} highlight onClose={() => showTx(undefined)} position="bottom" visible={visible}>
       <Text subtitle color={color}>
         {type === EXPENSE ? l10n.EXPENSE : l10n.INCOME}
       </Text>

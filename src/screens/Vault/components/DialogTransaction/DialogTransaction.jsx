@@ -70,14 +70,13 @@ const DialogTransaction = (props) => {
   return (
     <Dialog
       {...inherit}
-      highlight
       onClose={onClose}
       position="bottom"
       style={styles.dialog}
       styleOverlay={styles.dialogOverlay}
       visible={visible}
     >
-      <Text subtitle marginBottom="M">{`${l10n.NEW} ${l10n.TRANSACTION}`}</Text>
+      <Text color={color} subtitle marginBottom="M">{`${l10n.NEW} ${l10n.TRANSACTION[type]}`}</Text>
 
       <Text bold caption>
         {l10n.TYPE}
@@ -116,7 +115,6 @@ const DialogTransaction = (props) => {
         disabled={busy || !valid}
         marginTop="L"
         onPress={onSubmit}
-        size="L"
         title={!busy ? l10n.SAVE : undefined}
         wide
       />

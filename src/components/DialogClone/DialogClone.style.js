@@ -1,9 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { C } from '../../common';
 import { THEME } from '../../reactor/common';
-
-const { STYLE } = C;
 
 const { UNIT, SPACE } = THEME;
 
@@ -28,10 +25,6 @@ export default StyleSheet.create({
   day: {
     lineHeight: UNIT * 2,
   },
-
-  dialogOverlay: STYLE.DIALOG_OVERLAY,
-
-  dialog: STYLE.DIALOG,
 
   month: {
     fontSize: UNIT,

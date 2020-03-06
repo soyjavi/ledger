@@ -1,9 +1,6 @@
 import { Platform } from 'react-native';
 
-import { LAYOUT, THEME } from '../reactor/common';
 import PKG from '../../package.json';
-
-const { SPACE, UNIT } = THEME;
 
 const IS_DEV = __DEV__;
 const IS_ANDROID = Platform.OS === 'android';
@@ -13,7 +10,7 @@ const MS_IN_WEEK = MS_IN_DAY * 7;
 export default {
   CURRENCY: 'EUR',
 
-  ENDPOINT: IS_DEV ? 'http://192.168.1.115:8080' : 'https://voltvault.glitch.me',
+  ENDPOINT: IS_DEV ? 'http://localhost:8080' : 'https://voltvault.glitch.me',
 
   FIXED: {
     BTC: 6,
@@ -41,18 +38,6 @@ export default {
     STATS: 'stats',
     VAULT: 'vault',
     VAULTS: 'vaults',
-  },
-  STYLE: {
-    DIALOG: {
-      padding: SPACE.M,
-      width: LAYOUT.VIEWPORT.W,
-    },
-    DIALOG_OVERLAY: {
-      backgroundColor: 'rgba(0, 0, 0, 0.8)',
-    },
-
-    HEADER_HEIGHT: UNIT * 7,
-    VAULT_ITEM_WIDTH: LAYOUT.VIEWPORT.W / 2 - SPACE.XL,
   },
   SYMBOL: {
     AUD: 'AU$',

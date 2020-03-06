@@ -1,9 +1,7 @@
 import { StyleSheet } from 'react-native';
 
-import { C } from '../../../../common';
 import { THEME } from '../../../../reactor/common';
 
-const { STYLE } = C;
 const { SPACE, UNIT } = THEME;
 const CARD_WIDTH = UNIT * 9.6;
 
@@ -20,8 +18,4 @@ export default StyleSheet.create({
     marginBottom: SPACE.M,
     marginTop: SPACE.XS,
   },
-
-  dialogOverlay: STYLE.DIALOG_OVERLAY,
-
-  dialog: STYLE.DIALOG,
 });
