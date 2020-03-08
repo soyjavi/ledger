@@ -6,7 +6,7 @@ import { Col, Row, Text } from '../../reactor/components';
 import styles from './Heading.style';
 
 const Heading = ({ children, image, value, ...others }) => (
-  <Row align="end" marginBottom="XS" {...others}>
+  <Row marginBottom="XS" {...others}>
     {image && (
       <Col marginRight="S" width="auto">
         <Image source={image} resizeMode="contain" style={styles.image} />
