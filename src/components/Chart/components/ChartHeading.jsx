@@ -7,11 +7,11 @@ import { PriceFriendly } from '../../PriceFriendly';
 
 import styles from '../Chart.style';
 
-const ChartHeading = ({ title, max, min, ...inherit }) => (
+const ChartHeading = ({ title, max, min, ...others }) => (
   <Heading value={title}>
-    <Row width="auto">
-      {max > 0 && <PriceFriendly {...inherit} label="max " value={max} style={styles.legend} />}
-      {min > 0 && <PriceFriendly {...inherit} label="  min " value={min} style={styles.legend} />}
+    <Row marginTop="S" width="auto">
+      {max > 0 && <PriceFriendly {...others} label="max " value={max} style={styles.legend} />}
+      {min > 0 && <PriceFriendly {...others} label="  min " value={min} style={styles.legend} />}
     </Row>
   </Heading>
 );

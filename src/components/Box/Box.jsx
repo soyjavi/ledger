@@ -6,7 +6,7 @@ import { THEME } from '../../reactor/common';
 import { Col } from '../../reactor/components';
 import styles from './Box.style';
 
-const { BORDER_RADIUS, COLOR } = THEME;
+const { COLOR, SPACE } = THEME;
 
 const Box = ({ borderRadius, children, color, opacity, outlined, small, ...others }) => (
   <Col {...others} align="center" style={styles.container}>
@@ -38,7 +38,7 @@ Box.propTypes = {
 };
 
 Box.defaultProps = {
-  borderRadius: BORDER_RADIUS,
+  borderRadius: SPACE.S,
   children: undefined,
   color: COLOR.BASE,
   opacity: 1,

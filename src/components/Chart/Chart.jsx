@@ -22,7 +22,12 @@ const Chart = ({ captions, highlight, inverted, values, styleContainer, ...inher
       <View style={[styles.container, inverted && styles.containerInverted]}>
         {avg > 0 && (
           <View style={styles.scales}>
-            <View style={[styles.scaleAvg, { top: `${100 - parseInt(((avg - min) * 100) / (max - min), 10)}%` }]}>
+            <View
+              style={[
+                styles.scaleAvg,
+                { top: inverted ? `${calcHeight(avg, { min, max })}%` : `${100 - calcHeight(avg, { min, max })}%` },
+              ]}
+            >
               <View style={[styles.scaleLine, { backgroundColor: color }]} />
               <View style={[styles.tag, { backgroundColor: color }]}>
                 <PriceFriendly
@@ -45,7 +50,7 @@ const Chart = ({ captions, highlight, inverted, values, styleContainer, ...inher
                 style={[
                   styles.bar,
                   inverted && styles.barInverted,
-                  value !== 0 && { height: `${calcHeight(value, { min, max, avg })}%` },
+                  value !== 0 && { height: `${calcHeight(value, { min, max })}%` },
                   { backgroundColor: highlight !== index ? COLOR.BASE : color },
                 ]}
               />
@@ -53,7 +58,11 @@ const Chart = ({ captions, highlight, inverted, values, styleContainer, ...inher
           ))}
         </Row>
 
-        {inverted && <ChartHeading {...inherit} />}
+        {inverted && (
+          <View style={{ position: 'absolute', right: 0, bottom: 0 }}>
+            <ChartHeading {...inherit} />
+          </View>
+        )}
 
         {captions && (
           <Row justify="space" style={styles.captions}>

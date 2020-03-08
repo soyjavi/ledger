@@ -13,7 +13,7 @@ export default StyleSheet.create({
     marginBottom: SPACE.L,
   },
 
-  heading: {
-    marginHorizontal: 0,
+  heatMap: {
+    width: '100%',
   },
 });

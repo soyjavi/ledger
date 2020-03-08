@@ -55,7 +55,7 @@ const Session = (props) => {
           {store.pin && fingerprint ? l10n.ENTER_PIN_OR_FINGERPRINT : l10n.ENTER_PIN}
         </Text>
         <NumKeyboard onPress={(number) => handlePin(`${pin}${number}`)} />
-        <Text caption style={styles.textCenter}>{`v${VERSION}`}</Text>
+        <Text caption marginBottom="M" style={styles.textCenter}>{`v${VERSION}`}</Text>
       </View>
     </Viewport>
   );

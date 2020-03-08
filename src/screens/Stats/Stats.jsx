@@ -56,8 +56,6 @@ const Stats = (props) => {
   const hasPoints = locations.points && locations.points.length > 0;
   const title = vault ? `${vault.title} ` : '';
 
-  console.log('<Stats>', { visible, title });
-
   const common = {
     currency,
     highlight: slider.index,

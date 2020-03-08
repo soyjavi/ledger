@@ -3,13 +3,15 @@ import { median } from '../../../common';
 export default (values = []) => {
   if (!values) return undefined;
 
-  const max = Math.floor(Math.max(...values));
+  const historicValues = values.slice(0, 11);
+
+  const max = Math.floor(Math.max(...historicValues));
   let min = 0;
   let med = 0;
 
   if (max > 0) {
-    min = Math.floor(Math.min(...values));
-    med = median(values.slice(0, 11)); // We should not use currentMonth
+    min = Math.floor(Math.min(...historicValues));
+    med = median(historicValues);
     // if (med === max) {
     //   med /= 2;
     //   min = 0;

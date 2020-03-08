@@ -4,7 +4,7 @@ import parseDate from './parseDate';
 
 const {
   TX: {
-    TYPE: { EXPENSE },
+    TYPE: { EXPENSE, INCOME },
   },
   VAULT_TRANSFER,
 } = C;
@@ -35,7 +35,7 @@ export default (vault = {}, store) => {
 
     if (isTransfer && type === EXPENSE) chart.transfers[index] += valueExchange;
     else if (!isTransfer && type === EXPENSE) chart.expenses[index] += valueExchange;
-    else if (!isTransfer) chart.incomes[index] += valueExchange;
+    else if (!isTransfer && type === INCOME) chart.incomes[index] += valueExchange;
   });
 
   let total = 0;

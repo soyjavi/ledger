@@ -45,6 +45,7 @@ const ItemGroupCategories = ({ dataSource, type }) => {
               title={l10n.CATEGORIES[type][key]}
               value={amount}
               width={Math.floor((amount / total) * 100)}
+              marginBottom="XS"
             />
 
             {expand === key && (

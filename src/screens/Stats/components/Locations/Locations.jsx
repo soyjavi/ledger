@@ -18,12 +18,12 @@ const Locations = ({ cities, countries, points, precission }) => {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <Heading value={l10n.LOCATIONS} style={styles.heading} />
-        <HeatMap color={COLOR.LOCATION} points={points} precission={precission} />
+        <Heading value={l10n.LOCATIONS} />
+        <HeatMap color={COLOR.LOCATION} points={points} precission={precission} style={styles.heatMap} />
       </View>
 
       <View style={styles.content}>
-        <Heading value={l10n.CITIES} style={styles.heading} />
+        <Heading value={l10n.CITIES} />
         <Fragment>
           {orderByAmount(cities).map(({ key, amount }) => (
             <HorizontalChartItem
@@ -40,7 +40,7 @@ const Locations = ({ cities, countries, points, precission }) => {
 
       {Object.keys(countries).length > 1 && (
         <View style={styles.content}>
-          <Heading value={l10n.COUNTRIES} style={styles.heading} />
+          <Heading value={l10n.COUNTRIES} />
           <Fragment>
             {orderByAmount(countries).map(({ key, amount }) => (
               <HorizontalChartItem
