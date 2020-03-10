@@ -13,7 +13,10 @@
     "test:debug": "node --inspect-brk node_modules/jest/bin/jest.js --runInBand",
     "fixer": "yarn prettier && yarn linter",
     "prettier": "prettier '**/*.{js,ts,tsx}' --write",
-    "linter": "eslint '**/*.{js,jsx}' --fix "
+    "linter": "eslint '**/*.{js,jsx}' --fix ",
+    "preversion": "npm fixer",
+    "_version": "git add -A dist",
+    "postversion": "git push && git push --tags"
   },
   "dependencies": {
     "@expo/vector-icons": "~10.0.6",
