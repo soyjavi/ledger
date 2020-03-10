@@ -1,11 +1,10 @@
 import { bool } from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { ScrollView } from 'react-native';
 
 import { THEME } from '../../reactor/common';
 import { Button, Slider, Viewport } from '../../reactor/components';
 import { C, onHardwareBackPress } from '../../common';
-import { Footer, GroupTransactions, Header, Heading, Summary } from '../../components';
+import { Footer, GroupTransactions, Header, Heading, ScrollView, Summary } from '../../components';
 import { useL10N, useNavigation, useSettings, useStore } from '../../context';
 import { DialogVault, VaultCard, VAULTCARD_WIDTH } from './components';
 import { queryLastTxs, queryVaults } from './modules';
@@ -56,11 +55,7 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
           size="S"
         />
       </Header>
-      <ScrollView
-        onScroll={({ nativeEvent: { contentOffset } }) => setScroll(contentOffset.y > SPACE.M)}
-        scrollEventThrottle={40}
-        contentContainerStyle={styles.scroll}
-      >
+      <ScrollView onScroll={setScroll} contentContainerStyle={styles.scroll}>
         <Summary {...overall} currency={baseCurrency} title={l10n.OVERALL_BALANCE} />
 
         {vaults.length > 0 && (
