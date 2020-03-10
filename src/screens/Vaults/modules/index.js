@@ -1,4 +1,4 @@
+import filter from './filter';
 import query from './query';
-import sort from './sort';
 
-export { query, sort };
+export { filter, query };

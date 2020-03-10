@@ -26,8 +26,14 @@ export default StyleSheet.create({
     textAlign: 'center',
   },
 
-  container: {
+  scroll: {
     paddingVertical: HEADER_HEIGHT,
+  },
+
+  slider: {
+    marginBottom: SPACE.L,
+    paddingLeft: SPACE.S,
+    paddingRight: SPACE.M,
   },
 
   options: {

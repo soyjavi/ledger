@@ -1,17 +1,20 @@
 import { bool } from 'prop-types';
-import React, { useState } from 'react';
-import { ScrollView, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View } from 'react-native';
 
-import { Button, Viewport } from '../../reactor/components';
+import { THEME } from '../../reactor/common';
+import { Slider, Text, Viewport } from '../../reactor/components';
 
+import { LOGO } from '../../assets';
 import { C } from '../../common';
-import { Footer, Header } from '../../components';
+import { Footer, Header, Heading, ScrollView } from '../../components';
 import { useL10N, useNavigation, useSettings, useStore } from '../../context';
-import { VaultItem } from './components';
-import { sort } from './modules';
+import { CURRENCYCARD_WIDTH, CurrencyCard, VaultItem } from './components';
+import { filter, query } from './modules';
 import styles from './Vaults.style';
 
 const { SCREEN } = C;
+const { SPACE } = THEME;
 
 const Vaults = ({ visible, ...inherit }) => {
   const { state = {}, dispatch } = useSettings();
@@ -19,25 +22,49 @@ const Vaults = ({ visible, ...inherit }) => {
   const l10n = useL10N();
   const { vaults } = useStore();
 
-  const [order, setOrder] = useState(true);
+  const [scroll, setScroll] = useState(false);
+  const [currencies, setCurrencies] = useState([]);
+  const [selected, setSelected] = useState(undefined);
 
-  console.log('<Vaults>', { visible });
+  useEffect(() => {
+    if (visible) setCurrencies(query(vaults));
+  }, [visible]);
+
+  console.log('<Vaults>', { visible, scroll, currencies });
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
-      <Header highlight title={l10n.VAULTS}>
-        <Button
-          color="transparent"
-          icon={order ? 'sort-descending' : 'sort-ascending'}
-          iconSize={24}
-          onPress={() => setOrder(!order)}
-          size="S"
-        />
-      </Header>
+      <Header highlight title={l10n.VAULTS} />
 
-      <ScrollView contentContainerStyle={styles.container}>
+      <ScrollView onScroll={setScroll} contentContainerStyle={styles.scroll}>
+        {currencies.length > 0 && (
+          <>
+            <Heading value="Currencies" paddingHorizontal="M">
+              <Text caption bold>
+                {currencies.length}
+              </Text>
+            </Heading>
+            <Slider itemWidth={CURRENCYCARD_WIDTH + SPACE.S} itemMargin={0} style={styles.slider}>
+              {currencies.map(({ currency, ...item }) => (
+                <CurrencyCard
+                  {...item}
+                  currency={currency}
+                  key={currency}
+                  onPress={() => setSelected(currency !== selected ? currency : undefined)}
+                  selected={currency === selected}
+                />
+              ))}
+            </Slider>
+          </>
+        )}
+
+        <Heading value="Vaults" paddingHorizontal="M">
+          <Text caption bold>
+            10
+          </Text>
+        </Heading>
         <View style={styles.currencies}>
-          {sort(vaults, order).map((vault) => (
+          {filter(vaults, selected).map((vault) => (
             <VaultItem
               key={vault.hash}
               active={state[vault.hash] !== false}

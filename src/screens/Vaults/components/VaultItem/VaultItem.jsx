@@ -6,15 +6,12 @@ import { FLAGS } from '../../../../assets';
 import { THEME } from '../../../../reactor/common';
 import { Icon, Col, Row, Text, Touchable } from '../../../../reactor/components';
 
-import { exchange } from '../../../../common';
 import { Box, PriceFriendly } from '../../../../components';
-import { useStore } from '../../../../context';
 import styles from './VaultItem.style';
 
 const { COLOR } = THEME;
 
-const OptionItem = ({ active, onChange, onPress, dataSource: { currency, currentBalance, title } }) => {
-  const { baseCurrency, rates } = useStore();
+export const VaultItem = ({ active, onChange, onPress, dataSource: { currency, currentBalance, title } }) => {
   const disabled = !active;
 
   return (
@@ -28,24 +25,7 @@ const OptionItem = ({ active, onChange, onPress, dataSource: { currency, current
           </Col>
           <Col>
             <Text numberOfLines={1}>{title}</Text>
-            <Row>
-              <PriceFriendly
-                caption
-                color={COLOR.LIGHTEN}
-                currency={baseCurrency}
-                value={
-                  currency !== baseCurrency ? exchange(currentBalance, currency, baseCurrency, rates) : currentBalance
-                }
-                style={styles.balance}
-              />
-              {currency !== baseCurrency && (
-                <>
-                  <Text caption>(</Text>
-                  <PriceFriendly caption currency={currency} value={currentBalance} />
-                  <Text caption>)</Text>
-                </>
-              )}
-            </Row>
+            <PriceFriendly caption color={COLOR.LIGHTEN} currency={currency} value={currentBalance} />
           </Col>
         </Row>
       </Touchable>
@@ -56,15 +36,9 @@ const OptionItem = ({ active, onChange, onPress, dataSource: { currency, current
   );
 };
 
-OptionItem.propTypes = {
+VaultItem.propTypes = {
   active: bool,
   dataSource: shape({}).isRequired,
   onChange: func.isRequired,
   onPress: func.isRequired,
 };
-
-OptionItem.defaultProps = {
-  active: false,
-};
-
-export default OptionItem;
