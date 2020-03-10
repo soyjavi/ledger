@@ -9,5 +9,6 @@ export * from './Heading';
 export * from './HeatMap';
 export * from './HorizontalChartItem';
 export * from './PriceFriendly';
+export * from './ScrollView';
 export * from './Summary';
 export * from './TransactionItem';
