@@ -3,6 +3,7 @@ import currencyDecimals from './currencyDecimals';
 import exchange from './exchange';
 import FORM from './forms';
 import getIconCategory from './getIconCategory';
+import { groupTxsByDate } from './groupTxsByDate';
 import L10N from './l10n';
 import median from './median';
 import objectToQueryString from './objectToQueryString';
@@ -21,6 +22,7 @@ export {
   exchange,
   FORM,
   getIconCategory,
+  groupTxsByDate,
   L10N,
   median,
   objectToQueryString,
