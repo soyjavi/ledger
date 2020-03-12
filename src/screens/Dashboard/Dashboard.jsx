@@ -6,7 +6,7 @@ import { Button, Slider, Viewport } from '../../reactor/components';
 import { C, onHardwareBackPress } from '../../common';
 import { Footer, GroupTransactions, Header, Heading, ScrollView, Summary } from '../../components';
 import { useL10N, useNavigation, useSettings, useStore } from '../../context';
-import { DialogVault, VaultCard, VAULTCARD_WIDTH } from './components';
+import { DialogVault, Search, VaultCard, VAULTCARD_WIDTH } from './components';
 import { queryLastTxs, queryVaults } from './modules';
 import styles from './Dashboard.style';
 
@@ -21,6 +21,7 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
 
   const [dialog, setDialog] = useState(false);
   const [scroll, setScroll] = useState(false);
+  const [searchTxs, setSearchTxs] = useState(undefined);
   const [lastTxs, setLastTxs] = useState([]);
   const [visibleVaults, setVisibleVaults] = useState([]);
 
@@ -77,11 +78,10 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
             {lastTxs.length > 0 && (
               <>
                 <Heading paddingHorizontal="M" value={l10n.LAST_TRANSACTIONS} />
-                <>
-                  {lastTxs.map((item) => (
-                    <GroupTransactions key={`${item.timestamp}`} {...item} currency={baseCurrency} />
-                  ))}
-                </>
+                <Search onValue={setSearchTxs} />
+                {(searchTxs || lastTxs).map((item) => (
+                  <GroupTransactions key={`${item.timestamp}`} {...item} currency={baseCurrency} />
+                ))}
               </>
             )}
           </>

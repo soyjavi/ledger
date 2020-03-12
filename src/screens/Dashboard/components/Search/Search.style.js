@@ -19,6 +19,7 @@ export default StyleSheet.create({
 
   input: {
     ...FONT.INPUT,
+    color: COLOR.TEXT,
     borderWidth: 0,
     flex: 1,
     height: SPACE.XL + SPACE.S,
