@@ -5,7 +5,6 @@ import { View } from 'react-native';
 import { THEME } from '../../reactor/common';
 import { Slider, Text, Viewport } from '../../reactor/components';
 
-import { LOGO } from '../../assets';
 import { C } from '../../common';
 import { Footer, Header, Heading, ScrollView } from '../../components';
 import { useL10N, useNavigation, useSettings, useStore } from '../../context';
