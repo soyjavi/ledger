@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { THEME } from '../../reactor/common';
 import { useEnvironment } from '../../reactor/hooks';
 
-const { UNIT, COLOR } = THEME;
+const { UNIT, COLOR, SPACE } = THEME;
 
 const ENV = useEnvironment();
 
@@ -17,5 +17,10 @@ export default StyleSheet.create({
     top: 0,
     width: '100%',
     zIndex: 2,
+  },
+
+  image: {
+    height: SPACE.M,
+    width: SPACE.M,
   },
 });

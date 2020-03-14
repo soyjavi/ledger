@@ -18,7 +18,7 @@ const {
   },
   WIPE,
 } = C;
-const { COLOR, SPACE } = THEME;
+const { COLOR } = THEME;
 
 const DialogClone = ({
   dataSource: { category, currency, hash, value, vault, location, title, timestamp, type = EXPENSE },

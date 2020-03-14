@@ -6,8 +6,8 @@ import { FLAGS } from '../../assets';
 import { Footer, GroupTransactions, Header, Heading, Summary } from '../../components';
 import { useL10N, useNavigation, useStore } from '../../context';
 import { Text, Viewport } from '../../reactor/components';
-import { DialogTransaction, Search } from './components';
-import { onScroll, onSearch, query } from './modules';
+import { DialogTransaction } from './components';
+import { onScroll, query } from './modules';
 import styles from './Vault.style';
 
 const Vault = ({ visible, ...inherit }) => {
@@ -18,7 +18,6 @@ const Vault = ({ visible, ...inherit }) => {
   const [dialog, setDialog] = useState(false);
   const [scroll, setScroll] = useState(false);
   const [scrollQuery, setScrollQuery] = useState(false);
-  const [search, setSearch] = useState(undefined);
   const [txs, setTxs] = useState([]);
   const scrollview = useRef(null);
 
@@ -36,7 +35,6 @@ const Vault = ({ visible, ...inherit }) => {
       scrollview.current.scrollTo({ y: 0, animated: false });
       setDataSource(undefined);
       setScrollQuery(false);
-      setSearch(undefined);
     }
   }, [visible]);
 
@@ -50,11 +48,9 @@ const Vault = ({ visible, ...inherit }) => {
     ...bindings,
     scroll,
     scrollQuery,
-    search,
     setScroll,
     setScrollQuery,
   });
-  const handleSearch = onSearch.bind(undefined, { ...bindings, setSearch });
 
   const { currency = store.baseCurrency, title, ...rest } = dataSource || params.vault || {};
   const vaultProps = { ...rest, image: FLAGS[currency], title: `${title} ${l10n.BALANCE}` };
@@ -67,16 +63,13 @@ const Vault = ({ visible, ...inherit }) => {
 
       <ScrollView onScroll={handleScroll} ref={scrollview} scrollEventThrottle={40} style={styles.container}>
         <Summary {...vaultProps} currency={currency} />
-        <Search onValue={handleSearch} value={search} />
 
         {txs.length > 0 ? (
           <>
             <Heading paddingHorizontal="M" value={l10n.TRANSACTIONS} />
-            <>
-              {txs.map((item) => (
-                <GroupTransactions key={`${item.timestamp}-${search}`} {...item} currency={currency} />
-              ))}
-            </>
+            {txs.map((item) => (
+              <GroupTransactions key={item.timestamp} {...item} currency={currency} />
+            ))}
           </>
         ) : (
           <View style={styles.container}>

@@ -5,10 +5,6 @@ import { THEME } from '../../../../reactor/common';
 const { OPACITY, SPACE } = THEME;
 
 export default StyleSheet.create({
-  balance: {
-    marginRight: SPACE.XXS,
-  },
-
   boxContent: {
     alignItems: 'center',
     justifyContent: 'center',

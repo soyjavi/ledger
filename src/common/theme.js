@@ -50,13 +50,13 @@ export default {
       fontFamily: FAMILY_BOLD,
       fontWeight: '400',
       fontSize: 32,
-      letterSpacing: -0.75,
+      letterSpacing: 0,
     },
     SUBTITLE: {
       fontFamily: FAMILY_BOLD,
       fontWeight: '400',
       fontSize: 18,
-      letterSpacing: -0.5,
+      letterSpacing: 0,
     },
     BODY: {
       fontSize: 14,

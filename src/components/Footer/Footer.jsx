@@ -11,7 +11,7 @@ import styles from './Footer.style';
 
 const { COLOR, SPACE } = THEME;
 
-const BUTTON = { borderRadius: SPACE.XL, marginLeft: 'S', style: styles.button };
+const BUTTON = { marginLeft: 'S', style: styles.button };
 const BUTTON_OUTLINED = { ...BUTTON, outlined: true, style: [styles.button, styles.buttonOutlined] };
 const MOTION_HIDE = SPACE.XXL * 2;
 

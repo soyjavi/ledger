@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { C } from './common';
-import { useNavigation } from './context';
+import { useNavigation, useStore } from './context';
 import { DialogClone } from './components';
 import { Session, Settings, Stats, Dashboard, Vault, Vaults } from './screens';
 
@@ -10,6 +10,7 @@ const { SESSION, SETTINGS, STATS, DASHBOARD, VAULT, VAULTS } = SCREEN;
 
 const Router = () => {
   const { current, stack = [], tx } = useNavigation();
+  const { sync } = useStore();
   console.log(' <Router>');
 
   return (
@@ -17,7 +18,7 @@ const Router = () => {
       <Session backward={current !== SESSION} visible />
       <Dashboard backward={current !== DASHBOARD} visible={stack.includes(DASHBOARD)} />
 
-      {stack.includes(DASHBOARD) && (
+      {stack.includes(DASHBOARD) && sync && (
         <>
           <Settings visible={stack.includes(SETTINGS)} />
           <Vaults visible={stack.includes(VAULTS)} />

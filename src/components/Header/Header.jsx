@@ -1,5 +1,6 @@
 import { bool, node, number, oneOfType, string } from 'prop-types';
 import React from 'react';
+import { Image } from 'react-native';
 
 import { Col, Motion, Row } from '../../reactor/components';
 
@@ -13,7 +14,10 @@ export const Header = ({ children, highlight = false, image = LOGO, title }) => 
   <Row paddingRight="S" style={styles.container}>
     <Col>
       <Motion timeline={[{ property: 'opacity', value: highlight ? 1 : 0 }]}>
-        <Heading paddingLeft="M" value={title} image={image} />
+        <Row align="center" marginLeft="M">
+          <Image source={image} resizeMode="contain" style={styles.image} />
+          <Heading marginLeft="S" value={title} marginBottom={null} />
+        </Row>
       </Motion>
     </Col>
     <Col width="auto">{children}</Col>
