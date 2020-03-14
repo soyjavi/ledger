@@ -14,6 +14,7 @@ let TIMEOUT;
 const querySearchTxs = (next, txs = [], l10n) =>
   groupTxsByDate(
     txs
+      .slice()
       .reverse()
       .filter((tx) => {
         const title = tx.title ? tx.title.toLowerCase() : undefined;
