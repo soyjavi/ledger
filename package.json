@@ -1,7 +1,7 @@
 {
   "name": "voltvault-app",
   "description": "Cross-Device client for voltvault",
-  "version": "0.19.2",
+  "version": "0.19.6",
   "license": "LGPL-3.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
@@ -14,8 +14,8 @@
     "fixer": "yarn prettier && yarn linter",
     "prettier": "prettier '**/*.{js,ts,tsx}' --write",
     "linter": "eslint '**/*.{js,jsx}' --fix ",
-    "preversion": "npm fixer",
-    "_version": "git add -A dist",
+    "preversion": "yarn fixer",
+    "version": "git add -A dist",
     "postversion": "git push && git push --tags"
   },
   "dependencies": {

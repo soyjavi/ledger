@@ -22,11 +22,14 @@ const FormTransaction = (props) => {
   const handleChange = (values) => {
     const keys = Object.keys(rates);
     const lastRates = rates[keys[keys.length - 1]];
-    const { value } = values;
+    let { value = 0 } = values;
     let { exchange } = values;
 
+    value = !value || value.length === 0 ? undefined : value;
     const from = vaults.find(({ hash }) => hash === vault);
     const to = vaults.find(({ hash }) => hash === destination);
+
+    console.log({ values });
 
     if (destination && exchange === form.exchange) {
       if (from.currency === to.currency) exchange = value;
