@@ -1,6 +1,5 @@
 import { bool, number, string } from 'prop-types';
 import React from 'react';
-// import { View } from 'react-native';
 
 import { Row, Text, View } from '../../reactor/components';
 import { THEME } from '../../reactor/common';
