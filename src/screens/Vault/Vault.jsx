@@ -38,11 +38,6 @@ const Vault = ({ visible, ...inherit }) => {
     }
   }, [visible]);
 
-  const handleHardwareBack = () => {
-    if (dialog) setDialog(false);
-    else navigation.back();
-  };
-
   const bindings = { l10n, dataSource, setTxs };
   const handleScroll = onScroll.bind(undefined, {
     ...bindings,
@@ -80,7 +75,7 @@ const Vault = ({ visible, ...inherit }) => {
 
       <Footer
         onBack={navigation.back}
-        onHardwareBack={visible ? handleHardwareBack : undefined}
+        onHardwareBack={visible ? navigation.back : undefined}
         onPress={() => setDialog(true)}
         scroll={scroll}
       />
