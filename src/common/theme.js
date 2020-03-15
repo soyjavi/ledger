@@ -2,8 +2,20 @@ import { THEME } from '../reactor/common';
 
 const { SPACE } = THEME;
 
-const FAMILY = 'font-family';
-const FAMILY_BOLD = 'font-family-bold';
+const FONT_FAMILY = {
+  fontFamily: 'font-family',
+  fontWeight: '400',
+};
+
+const FONT_FAMILY_BOLD = {
+  fontFamily: 'font-family-bold',
+  fontWeight: '400',
+};
+
+const FONT_FAMILY_PRICE = {
+  fontFamily: 'font-family-price',
+  fontWeight: '400',
+};
 
 const INCOME = '#63C88B';
 const EXPENSE = '#F77A64';
@@ -40,50 +52,36 @@ export default {
   },
 
   FONT: {
-    FAMILY,
-    FAMILY_BOLD,
-
-    DEFAULT: {
-      fontFamily: FAMILY,
-    },
+    DEFAULT: FONT_FAMILY,
     HEADLINE: {
-      fontFamily: FAMILY_BOLD,
-      fontWeight: '400',
+      ...FONT_FAMILY_BOLD,
       fontSize: 32,
       letterSpacing: 0,
     },
     SUBTITLE: {
-      fontFamily: FAMILY_BOLD,
-      fontWeight: '400',
+      ...FONT_FAMILY_BOLD,
       fontSize: 18,
-      letterSpacing: 0,
     },
     BODY: {
       fontSize: 14,
-      letterSpacing: -0.5,
       lineHeight: 14 * 1.5,
     },
     CAPTION: {
       fontSize: 11,
-      letterSpacing: -0.5,
     },
     LEGEND: {
       fontSize: 10,
       lineHeight: 10,
-      letterSpacing: -0.3,
     },
+    PRICE: FONT_FAMILY_PRICE,
 
-    BOLD: {
-      fontFamily: FAMILY_BOLD,
-      fontWeight: '400',
-    },
+    BOLD: FONT_FAMILY_BOLD,
     BUTTON: {
+      ...FONT_FAMILY_BOLD,
       fontSize: 16,
-      fontFamily: FAMILY_BOLD,
-      fontWeight: 'normal',
     },
     INPUT: {
-      fontFamily: FAMILY_BOLD,
+      ...FONT_FAMILY_BOLD,
       fontSize: 14,
     },
   },
