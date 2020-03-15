@@ -76,7 +76,7 @@ const Settings = ({ visible, ...inherit }) => {
         </Text>
       </ScrollView>
 
-      <Footer onBack={navigation.back} onHardwareBack={visible ? () => navigation.back() : undefined} />
+      <Footer onBack={navigation.back} onHardwareBack={visible ? navigation.back : undefined} />
 
       <DialogFork onClose={() => setDialog(false)} onForked={onForked} query={qr} visible={dialog} />
     </Viewport>

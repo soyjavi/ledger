@@ -63,17 +63,13 @@ const DialogClone = ({
             <Text bold color={color} style={styles.day}>
               {new Date(timestamp || null).getDate()}
             </Text>
-            <Text bold style={styles.month}>
-              {verboseMonthShort(timestamp, l10n)}
-            </Text>
+            <Text style={styles.month}>{verboseMonthShort(timestamp, l10n)}</Text>
           </Box>
         </Col>
         <Col>
           <Row>
             <Col>
-              <Text bold numberOfLines={1}>
-                {title}
-              </Text>
+              <Text numberOfLines={1}>{title}</Text>
             </Col>
             <Col width="auto">
               <PriceFriendly
@@ -89,7 +85,7 @@ const DialogClone = ({
           </Row>
           <Row>
             <Col>
-              <Text caption numberOfLines={1}>
+              <Text caption color={COLOR.LIGHTEN} numberOfLines={1}>
                 {`${verboseTime(new Date(timestamp))} - ${l10n.CATEGORIES[type][category]}`}
               </Text>
             </Col>
