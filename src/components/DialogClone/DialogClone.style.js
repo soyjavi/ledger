@@ -2,13 +2,9 @@ import { StyleSheet } from 'react-native';
 
 import { THEME } from '../../reactor/common';
 
-const { UNIT, SPACE } = THEME;
+const { FONT, SPACE } = THEME;
 
 export default StyleSheet.create({
-  box: {
-    marginRight: UNIT,
-  },
-
   boxContent: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -23,13 +19,10 @@ export default StyleSheet.create({
   },
 
   day: {
-    lineHeight: UNIT * 2,
+    lineHeight: FONT.BODY.fontSize,
   },
 
-  month: {
-    fontSize: UNIT,
-    lineHeight: UNIT,
-  },
+  month: FONT.LEGEND,
 
   prices: {
     alignItems: 'flex-end',
