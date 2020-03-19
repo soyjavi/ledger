@@ -11,10 +11,10 @@ import { PriceFriendly } from '../PriceFriendly';
 import styles from './Summary.style';
 
 const { CURRENCY, SCREEN } = C;
-const { COLOR } = THEME;
+const { COLOR, SPACE } = THEME;
 
 const BoxSummary = ({ caption, value, ...inherit }) => (
-  <Col>
+  <Col align="center" paddingHorizontal="M">
     <Text caption color={COLOR.LIGHTEN} numberOfLines={1}>
       {caption.toUpperCase()}
     </Text>
@@ -46,46 +46,55 @@ const Summary = ({ currency, currentBalance, currentMonth, image, title }) => {
     currentBalance - progression > 0 ? (progression * 100) / (currentBalance - progression) : progression;
 
   return (
-    <Col paddingHorizontal="M" marginBottom="L">
-      <Row align="start" marginBottom="L">
-        <Col>
-          <Row>
-            <Image source={image} resizeMode="contain" style={styles.image} />
-            <Text caption numberOfLines={1} marginLeft="XS">
-              {title.toUpperCase()}
-            </Text>
-          </Row>
-          <Touchable onPress={() => dispatch({ type: 'MASK_AMOUNT', value: !maskAmount })}>
-            <PriceFriendly
-              currency={baseCurrency}
-              headline
-              value={
-                baseCurrency !== currency
-                  ? exchange(Math.abs(currentBalance), currency, baseCurrency, rates)
-                  : Math.abs(currentBalance)
-              }
-            />
-          </Touchable>
-          {baseCurrency !== currency && (
-            <PriceFriendly color={COLOR.LIGHTEN} currency={currency} subtitle value={currentBalance} />
-          )}
-        </Col>
-
-        <Col width="auto">
-          <Button
-            colorText={COLOR.BACKGROUND}
-            onPress={() => navigation.go(SCREEN.STATS)}
-            size="S"
-            title={l10n.ACTIVITY}
+    <Col align="center" paddingHorizontal="M" marginBottom="L">
+      <Col align="center" marginBottom="M">
+        <Row width="auto">
+          <Image source={image} resizeMode="contain" style={styles.image} />
+          <Text caption numberOfLines={1} marginLeft="XS">
+            {title.toUpperCase()}
+          </Text>
+        </Row>
+        <Touchable onPress={() => dispatch({ type: 'MASK_AMOUNT', value: !maskAmount })}>
+          <PriceFriendly
+            currency={baseCurrency}
+            headline
+            value={
+              baseCurrency !== currency
+                ? exchange(Math.abs(currentBalance), currency, baseCurrency, rates)
+                : Math.abs(currentBalance)
+            }
           />
-        </Col>
-      </Row>
+        </Touchable>
+        {baseCurrency !== currency && (
+          <PriceFriendly color={COLOR.LIGHTEN} currency={currency} subtitle value={currentBalance} />
+        )}
+      </Col>
 
-      <Row justify="space">
+      <Row justify="center" marginBottom="M" width="auto">
         <BoxSummary caption={verboseMonth(new Date(), l10n)} currency="%" operator value={progressionPercentage} />
         <BoxSummary caption={l10n.INCOMES} currency={baseCurrency} value={incomes} />
         <BoxSummary caption={l10n.EXPENSES} currency={baseCurrency} value={expenses} />
         <BoxSummary caption={l10n.TODAY} currency={baseCurrency} operator value={today} />
+      </Row>
+
+      <Row justify="center">
+        <Button
+          borderRadius={SPACE.L}
+          colorText={COLOR.BACKGROUND}
+          marginRight="M"
+          onPress={() => navigation.go(SCREEN.STATS)}
+          size="S"
+          style={styles.button}
+          title={l10n.ACTIVITY}
+        />
+        <Button
+          borderRadius={SPACE.L}
+          icon="settings-outline"
+          // iconSize={24}
+          onPress={() => navigation.go(SCREEN.SETTINGS)}
+          outlined
+          size="S"
+        />
       </Row>
     </Col>
   );
