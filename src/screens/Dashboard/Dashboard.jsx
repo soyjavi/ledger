@@ -47,15 +47,8 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
-      <Header highlight={scroll} title={l10n.OVERALL_BALANCE}>
-        <Button
-          color="transparent"
-          icon="settings-outline"
-          iconSize={24}
-          onPress={() => navigation.go(SCREEN.SETTINGS)}
-          size="S"
-        />
-      </Header>
+      <Header highlight={scroll} title={l10n.OVERALL_BALANCE} />
+
       <ScrollView onScroll={setScroll} contentContainerStyle={styles.scroll}>
         <Summary {...overall} currency={baseCurrency} title={l10n.OVERALL_BALANCE} />
 
