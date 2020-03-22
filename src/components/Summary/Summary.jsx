@@ -1,4 +1,4 @@
-import { oneOfType, shape, number, string } from 'prop-types';
+import { oneOfType, bool, shape, number, string } from 'prop-types';
 import React from 'react';
 import { Image } from 'react-native';
 
@@ -11,7 +11,7 @@ import { PriceFriendly } from '../PriceFriendly';
 import styles from './Summary.style';
 
 const { CURRENCY, SCREEN } = C;
-const { COLOR, SPACE } = THEME;
+const { COLOR } = THEME;
 
 const BoxSummary = ({ caption, value, ...inherit }) => (
   <Col align="center" paddingHorizontal="M">
@@ -32,7 +32,14 @@ BoxSummary.propTypes = {
   value: number.isRequired,
 };
 
-const Summary = ({ currency, currentBalance, currentMonth, image, title }) => {
+const Summary = ({
+  currency = CURRENCY,
+  currentBalance,
+  currentMonth = {},
+  image = LOGO,
+  settings = false,
+  title = '',
+}) => {
   const l10n = useL10N();
   const { baseCurrency, rates } = useStore();
   const navigation = useNavigation();
@@ -47,7 +54,7 @@ const Summary = ({ currency, currentBalance, currentMonth, image, title }) => {
 
   return (
     <Col align="center" paddingHorizontal="M" marginBottom="L">
-      <Col align="center" marginBottom="M">
+      <Col align="center">
         <Row width="auto">
           <Image source={image} resizeMode="contain" style={styles.image} />
           <Text caption numberOfLines={1} marginLeft="XS">
@@ -70,7 +77,7 @@ const Summary = ({ currency, currentBalance, currentMonth, image, title }) => {
         )}
       </Col>
 
-      <Row justify="center" marginBottom="M" width="auto">
+      <Row justify="space" marginVertical="M" paddingHorizontal="M">
         <BoxSummary caption={verboseMonth(new Date(), l10n)} currency="%" operator value={progressionPercentage} />
         <BoxSummary caption={l10n.INCOMES} currency={baseCurrency} value={incomes} />
         <BoxSummary caption={l10n.EXPENSES} currency={baseCurrency} value={expenses} />
@@ -79,22 +86,21 @@ const Summary = ({ currency, currentBalance, currentMonth, image, title }) => {
 
       <Row justify="center">
         <Button
-          borderRadius={SPACE.L}
           colorText={COLOR.BACKGROUND}
-          marginRight="M"
           onPress={() => navigation.go(SCREEN.STATS)}
           size="S"
           style={styles.button}
           title={l10n.ACTIVITY}
         />
-        <Button
-          borderRadius={SPACE.L}
-          icon="settings-outline"
-          // iconSize={24}
-          onPress={() => navigation.go(SCREEN.SETTINGS)}
-          outlined
-          size="S"
-        />
+        {settings && (
+          <Button
+            icon="settings-outline"
+            marginLeft="M"
+            onPress={() => navigation.go(SCREEN.SETTINGS)}
+            outlined
+            size="S"
+          />
+        )}
       </Row>
     </Col>
   );
@@ -105,15 +111,8 @@ Summary.propTypes = {
   currentBalance: number,
   currentMonth: shape({}),
   image: oneOfType([number, string]),
+  settings: bool,
   title: string,
-};
-
-Summary.defaultProps = {
-  currency: CURRENCY,
-  currentBalance: undefined,
-  currentMonth: {},
-  image: LOGO,
-  title: '',
 };
 
 export { Summary };
