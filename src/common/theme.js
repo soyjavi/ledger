@@ -61,10 +61,11 @@ export default {
     SUBTITLE: {
       ...FONT_FAMILY_BOLD,
       fontSize: 18,
+      letterSpacing: -0.5,
     },
     BODY: {
-      fontSize: 14,
-      lineHeight: 14 * 1.5,
+      fontSize: 13,
+      lineHeight: 13 * 1.5,
     },
     CAPTION: {
       fontSize: 11,

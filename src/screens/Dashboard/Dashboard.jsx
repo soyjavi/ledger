@@ -50,7 +50,7 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
       <Header highlight={scroll} title={l10n.OVERALL_BALANCE} />
 
       <ScrollView onScroll={setScroll} contentContainerStyle={styles.scroll}>
-        <Summary {...overall} currency={baseCurrency} title={l10n.OVERALL_BALANCE} />
+        <Summary {...overall} currency={baseCurrency} settings title={l10n.OVERALL_BALANCE} />
 
         {vaults.length > 0 && (
           <>
