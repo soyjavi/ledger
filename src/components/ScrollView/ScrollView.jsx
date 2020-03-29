@@ -19,7 +19,7 @@ export const ScrollView = ({ children, onScroll, ...others }) => {
   };
 
   return (
-    <ScrollViewBase onScroll={handleScroll} scrollEventThrottle={40} {...others}>
+    <ScrollViewBase onScroll={onScroll ? handleScroll : undefined} scrollEventThrottle={40} {...others}>
       {children}
     </ScrollViewBase>
   );
