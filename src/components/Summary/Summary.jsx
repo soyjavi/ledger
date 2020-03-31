@@ -14,7 +14,7 @@ const { CURRENCY, SCREEN } = C;
 const { COLOR } = THEME;
 
 const BoxSummary = ({ caption, value, ...inherit }) => (
-  <Col align="center" paddingHorizontal="M">
+  <Col align="center" marginHorizontal="S">
     <Text caption color={COLOR.LIGHTEN} numberOfLines={1}>
       {caption.toUpperCase()}
     </Text>
@@ -53,7 +53,7 @@ const Summary = ({
     currentBalance - progression > 0 ? (progression * 100) / (currentBalance - progression) : progression;
 
   return (
-    <Col align="center" paddingHorizontal="M" marginBottom="L">
+    <Col align="center" marginHorizontal="M" marginBottom="L">
       <Col align="center">
         <Row width="auto">
           <Image source={image} resizeMode="contain" style={styles.image} />
