@@ -13,7 +13,7 @@ const { COLOR } = THEME;
 const reducer = (state, action) => {
   switch (action.type) {
     case 'SHOW':
-      return { caption: action.caption, color: action.color };
+      return action;
 
     case 'HIDE':
       return { ...state, caption: undefined };
@@ -28,22 +28,22 @@ const SnackBarProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, { color: undefined, caption: undefined });
 
   const events = {
-    snackbarSuccess: (caption) => dispatch({ type: 'SHOW', caption, color: COLOR.SUCCESS }),
-    snackbarError: (caption) => dispatch({ type: 'SHOW', caption, color: COLOR.ERROR }),
-    snackbarWarning: (caption) => dispatch({ type: 'SHOW', caption, color: COLOR.WARNING }),
+    snackbarSuccess: (caption) => dispatch({ type: 'SHOW', caption, color: COLOR.SUCCESS, icon: 'check' }),
+    snackbarError: (caption) => dispatch({ type: 'SHOW', caption, color: COLOR.ERROR, icon: 'cancel' }),
+    snackbarWarning: (caption) => dispatch({ type: 'SHOW', caption, color: COLOR.WARNING, icon: 'exclamation' }),
   };
 
-  const { caption = '', color, type } = state;
+  const { caption = '', color, icon, type } = state;
 
   return (
     <SnackBarContext.Provider value={events}>
       {children}
       <Snackbar
         {...state}
+        button={l10n.CLOSE.toUpperCase()}
         caption={caption}
         color={color}
-        icon="cancel"
-        button={l10n.CLOSE.toUpperCase()}
+        icon={icon}
         onClose={() => dispatch({ type: 'HIDE' })}
         visible={type === 'SHOW'}
       />

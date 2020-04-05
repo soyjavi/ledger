@@ -59,6 +59,7 @@ export default {
     CATEGORY: 'Category',
     CHOOSE_TRANSACTION_TYPE: 'Choose type of transaction',
     CITIES: 'Cities',
+    CLEAR: 'Clear',
     CLONE: 'Clone',
     CLONE_CAPTION: 'To make your life easier you can clone this transaction with a simple touch of the button.',
     CLOSE: 'Close',
@@ -137,9 +138,9 @@ export default {
     TRANSACTIONS: 'Transactions',
     TRANSFER: 'TRANSFER',
     TRANSFERS: 'Transfers',
-    TRANSFER_TXS: 'Transfer transactions',
+    TRANSFER_TXS: 'TRANSFER DATA',
     TRANSFER_TXS_CAPTION:
-      'Transfer all your transactions and vaults from this device to a new one just reading this QR in the new device.',
+      'Transfer all your data from this device to a new one just reading this QR in the new device.',
     TRANSFER_TXS_CAMERA: 'Read the QR code from the device you want get all its transactions and vaults.',
     TRANSFER_TXS_IMPORT:
       // eslint-disable-next-line max-len
@@ -155,7 +156,7 @@ export default {
     VIEW_ALL: 'View All',
     VISIBILITY: 'Visibility',
 
-    WARNING: 'Warning',
+    WARNING: 'WARNING',
     WIPE: 'Wipe',
     WITHOUT_TXS: 'No transactions',
 

@@ -1,13 +1,13 @@
 import { bool, func } from 'prop-types';
 import React, { useState } from 'react';
 
-import { FLAGS } from '../../../../assets';
-import { FORM, setCurrency, translate } from '../../../../common';
-import { CardOption } from '../../../../components';
-import { useL10N, useSnackBar, useStore } from '../../../../context';
-import { createVault } from '../../../../services';
-import { THEME } from '../../../../reactor/common';
-import { Button, Dialog, Form, Slider, Text } from '../../../../reactor/components';
+import { FLAGS } from '../../assets';
+import { FORM, setCurrency, translate } from '../../common';
+import { CardOption } from '../../components';
+import { useL10N, useSnackBar, useStore } from '../../context';
+import { createVault } from '../../services';
+import { THEME } from '../../reactor/common';
+import { Button, Dialog, Form, Slider, Text } from '../../reactor/components';
 import queryCurrencies from './modules/queryCurrencies';
 import styles, { CARD_WIDTH } from './DialogVault.style';
 

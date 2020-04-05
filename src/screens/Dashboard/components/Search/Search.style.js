@@ -13,7 +13,6 @@ export default StyleSheet.create({
   },
 
   focus: {
-    borderColor: COLOR.TEXT,
     backgroundColor: COLOR.BASE,
   },
 
@@ -21,7 +20,7 @@ export default StyleSheet.create({
     ...FONT.INPUT,
     color: COLOR.TEXT,
     borderWidth: 0,
-    flex: 1,
+    flex: 2,
     height: SPACE.XL + SPACE.S,
   },
 });
