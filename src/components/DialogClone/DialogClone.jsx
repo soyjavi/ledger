@@ -1,6 +1,6 @@
 import { bool, shape } from 'prop-types';
 import React, { useState } from 'react';
-import { View } from 'react-native';
+
 import { THEME } from '../../reactor/common';
 import { Button, Col, Dialog, Row, Text } from '../../reactor/components';
 
@@ -50,7 +50,12 @@ const DialogClone = ({
 
   const color = type === EXPENSE ? COLOR.EXPENSE : COLOR.INCOME;
   const operator = type === EXPENSE ? -1 : 1;
-  const buttonProps = { color, disabled: busy, style: styles.button };
+  const buttonProps = {
+    activity: busy && wipe,
+    color,
+    disabled: busy,
+    style: styles.button,
+  };
 
   return (
     <Dialog {...inherit} highlight onClose={() => showTx(undefined)} position="bottom" visible={visible}>
@@ -107,15 +112,13 @@ const DialogClone = ({
       <Row marginTop="M">
         <Button
           {...buttonProps}
-          activity={busy && wipe}
           onPress={() => onSubmit(true)}
           outlined
+          marginRight="M"
           title={!(busy && wipe) ? l10n.WIPE : undefined}
         />
-        <View style={styles.buttonGap} />
         <Button
           {...buttonProps}
-          activity={busy && !wipe}
           colorText={COLOR.BACKGROUND}
           onPress={() => onSubmit(false)}
           title={!(busy && !wipe) ? l10n.CLONE : undefined}

@@ -138,7 +138,7 @@ export default {
     TRANSACTIONS: 'Transactions',
     TRANSFER: 'TRANSFER',
     TRANSFERS: 'Transfers',
-    TRANSFER_TXS: 'TRANSFER TRANSACTIONS',
+    TRANSFER_TXS: 'TRANSFER DATA',
     TRANSFER_TXS_CAPTION:
       'Transfer all your data from this device to a new one just reading this QR in the new device.',
     TRANSFER_TXS_CAMERA: 'Read the QR code from the device you want get all its transactions and vaults.',
@@ -156,7 +156,7 @@ export default {
     VIEW_ALL: 'View All',
     VISIBILITY: 'Visibility',
 
-    WARNING: 'Warning',
+    WARNING: 'WARNING',
     WIPE: 'Wipe',
     WITHOUT_TXS: 'No transactions',
 

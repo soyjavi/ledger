@@ -39,6 +39,10 @@ export default StyleSheet.create({
     backgroundColor: COLOR.WHITE,
   },
 
+  dialogButton: {
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+  },
+
   qr: {
     height: QR_SIZE,
     width: QR_SIZE,

@@ -4,7 +4,7 @@ import { TextInput } from 'react-native';
 
 import { THEME } from '../../../../reactor/common';
 import { Activity, Button, Col, Icon, Row } from '../../../../reactor/components';
-import { groupTxsByDate, L10N } from '../../../../common';
+import { groupTxsByDate } from '../../../../common';
 import { useL10N, useStore } from '../../../../context';
 import styles from './Search.style';
 

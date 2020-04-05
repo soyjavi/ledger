@@ -29,7 +29,7 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
   const { baseCurrency, overall, sync, txs = [], vaults = [] } = useStore();
 
   const [dialogVault, setDialogVault] = useState(false);
-  const [dialogSettings, setDialogSettings] = useState(true);
+  const [dialogSettings, setDialogSettings] = useState(false);
   const [scroll, setScroll] = useState(false);
   const [searchTxs, setSearchTxs] = useState(undefined);
   const [lastTxs, setLastTxs] = useState([]);

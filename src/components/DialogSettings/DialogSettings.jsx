@@ -24,7 +24,7 @@ export const DialogSettings = ({ visible, ...inherit }) => {
   const { authorization, secret } = useStore();
   const { snackbarSuccess } = useSnackBar();
 
-  const [dialog, setDialog] = useState(false);
+  const [dialogFork, setDialogFork] = useState(false);
   const [hasCamera, setHasCamera] = useState(undefined);
   const [camera, setCamera] = useState(false);
   const [qr, setQr] = useState(undefined);
@@ -44,17 +44,18 @@ export const DialogSettings = ({ visible, ...inherit }) => {
   const onQR = ({ data = '' } = {}) => {
     const [secure, file] = data.split('|');
 
-    setDialog(secure !== undefined && file !== undefined);
+    setDialogFork(secure !== undefined && file !== undefined);
     setQr(data);
   };
 
   const onForked = () => {
-    snackbarSuccess(l10n.FORKED_CORRECTLY);
+    setDialogFork(false);
     inherit.onClose();
+    snackbarSuccess(l10n.FORKED_CORRECTLY);
   };
 
   return (
-    <Dialog {...inherit} style={styles.dialog} _highlight position="bottom" visible={visible}>
+    <Dialog {...inherit} style={styles.dialog} styleButton={styles.dialogButton} position="bottom" visible={visible}>
       <Text color={COLOR.BACKGROUND} marginBottom="XS" subtitle>
         {l10n.TRANSFER_TXS}
       </Text>
@@ -82,7 +83,7 @@ export const DialogSettings = ({ visible, ...inherit }) => {
         />
       )}
 
-      <DialogFork onClose={() => setDialog(false)} onForked={onForked} query={qr} visible={dialog} />
+      <DialogFork onClose={() => setDialogFork(false)} onForked={onForked} query={qr} visible={dialogFork} />
     </Dialog>
   );
 };

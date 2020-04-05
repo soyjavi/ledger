@@ -1,9 +1,10 @@
 import { bool, func, string } from 'prop-types';
 import React, { useState } from 'react';
 
-import { useL10N, useSnackBar, useStore } from '../../context';
 import { THEME } from '../../reactor/common';
-import { Button, Dialog, Text } from '../../reactor/components';
+import { Button, Dialog, Row, Text } from '../../reactor/components';
+
+import { useL10N, useSnackBar, useStore } from '../../context';
 import { fork, getProfile } from '../../services';
 
 import styles from './DialogFork.style';
@@ -27,29 +28,23 @@ export const DialogFork = ({ onClose, onForked, query, visible, ...inherit }) =>
     setBusy(false);
   };
 
+  const buttonProps = {
+    activity: busy,
+    color: COLOR.TEXT,
+    disabled: busy,
+    style: styles.button,
+  };
+
   return (
-    <Dialog
-      {...inherit}
-      onClose={onClose}
-      position="bottom"
-      style={styles.dialog}
-      title={l10n.WARNING}
-      visible={visible}
-    >
+    <Dialog {...inherit} onClose={onClose} position="bottom" style={styles.dialog} visible={visible}>
       <Text marginBottom="XS" subtitle>
-        {l10n.EXPENSE}
+        {l10n.WARNING}
       </Text>
       <Text caption>{l10n.TRANSFER_TXS_IMPORT}</Text>
-      <Button
-        activity={busy}
-        color={COLOR.TEXT}
-        colorText={COLOR.ERROR}
-        disabled={busy}
-        marginTop="M"
-        onPress={onSubmit}
-        wide
-        title={!busy ? l10n.IMPORT : undefined}
-      />
+      <Row marginTop="M" justify="space">
+        <Button {...buttonProps} outlined onPress={onClose} title={l10n.CLOSE} marginRight="M" />
+        <Button {...buttonProps} colorText={COLOR.ERROR} onPress={onSubmit} title={!busy ? l10n.IMPORT : undefined} />
+      </Row>
     </Dialog>
   );
 };
