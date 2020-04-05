@@ -10,7 +10,7 @@ const MS_IN_WEEK = MS_IN_DAY * 7;
 export default {
   CURRENCY: 'EUR',
 
-  ENDPOINT: IS_DEV ? 'http://localhost:8080' : 'https://voltvault.glitch.me',
+  ENDPOINT: IS_DEV ? 'http://192.168.1.105:8080' : 'https://voltvault.glitch.me',
 
   FIXED: {
     BTC: 6,
@@ -34,7 +34,6 @@ export default {
   SCREEN: {
     DASHBOARD: 'dashboard',
     SESSION: 'session',
-    SETTINGS: 'settings',
     STATS: 'stats',
     VAULT: 'vault',
     VAULTS: 'vaults',

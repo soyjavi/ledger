@@ -4,9 +4,18 @@ import React, { useEffect, useState } from 'react';
 import { THEME } from '../../reactor/common';
 import { Button, Slider, Viewport } from '../../reactor/components';
 import { C, onHardwareBackPress } from '../../common';
-import { Footer, GroupTransactions, Header, Heading, ScrollView, Summary } from '../../components';
+import {
+  DialogSettings,
+  DialogVault,
+  Footer,
+  GroupTransactions,
+  Header,
+  Heading,
+  ScrollView,
+  Summary,
+} from '../../components';
 import { useL10N, useNavigation, useSettings, useStore } from '../../context';
-import { DialogVault, Search, VaultCard, VAULTCARD_WIDTH } from './components';
+import { Search, VaultCard, VAULTCARD_WIDTH } from './components';
 import { queryLastTxs, queryVaults } from './modules';
 import styles from './Dashboard.style';
 
@@ -19,7 +28,8 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
   const navigation = useNavigation();
   const { baseCurrency, overall, sync, txs = [], vaults = [] } = useStore();
 
-  const [dialog, setDialog] = useState(false);
+  const [dialogVault, setDialogVault] = useState(false);
+  const [dialogSettings, setDialogSettings] = useState(true);
   const [scroll, setScroll] = useState(false);
   const [searchTxs, setSearchTxs] = useState(undefined);
   const [lastTxs, setLastTxs] = useState([]);
@@ -27,12 +37,13 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
 
   useEffect(() => {
     onHardwareBackPress(!backward, () => {
-      if (dialog) setDialog(false);
+      if (dialogVault) setDialogVault(false);
+      if (dialogSettings) setDialogSettings(false);
     });
-  }, [backward, dialog]);
+  }, [backward, dialogVault, dialogSettings]);
 
   useEffect(() => {
-    if (sync && vaults.length === 0) setDialog(true);
+    if (sync && vaults.length === 0) setDialogVault(true);
   }, [sync, vaults]);
 
   useEffect(() => {
@@ -43,14 +54,19 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
     if (visible) setVisibleVaults(queryVaults({ settings, vaults }));
   }, [visible, settings, vaults]);
 
-  console.log('  <Dashboard>', { visible });
+  console.log('  <Dashboard>', { visible, searchTxs });
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
       <Header highlight={scroll} title={l10n.OVERALL_BALANCE} />
 
       <ScrollView onScroll={setScroll} contentContainerStyle={styles.scroll}>
-        <Summary {...overall} currency={baseCurrency} settings title={l10n.OVERALL_BALANCE} />
+        <Summary
+          {...overall}
+          currency={baseCurrency}
+          onSettings={() => setDialogSettings(true)}
+          title={l10n.OVERALL_BALANCE}
+        />
 
         {vaults.length > 0 && (
           <>
@@ -81,8 +97,9 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
         )}
       </ScrollView>
 
-      <Footer onPress={() => setDialog(true)} scroll={scroll} />
-      {visible && sync && <DialogVault visible={dialog} onClose={() => setDialog(false)} />}
+      <Footer onPress={() => setDialogVault(true)} scroll={scroll} />
+      {visible && sync && <DialogVault onClose={() => setDialogVault(false)} visible={dialogVault} />}
+      <DialogSettings onClose={() => setDialogSettings(false)} visible={dialogSettings} />
     </Viewport>
   );
 };

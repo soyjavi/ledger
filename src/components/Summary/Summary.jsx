@@ -1,4 +1,4 @@
-import { oneOfType, bool, shape, number, string } from 'prop-types';
+import { oneOfType, func, shape, number, string } from 'prop-types';
 import React from 'react';
 import { Image } from 'react-native';
 
@@ -32,14 +32,7 @@ BoxSummary.propTypes = {
   value: number.isRequired,
 };
 
-const Summary = ({
-  currency = CURRENCY,
-  currentBalance,
-  currentMonth = {},
-  image = LOGO,
-  settings = false,
-  title = '',
-}) => {
+const Summary = ({ currency = CURRENCY, currentBalance, currentMonth = {}, image = LOGO, onSettings, title = '' }) => {
   const l10n = useL10N();
   const { baseCurrency, rates } = useStore();
   const navigation = useNavigation();
@@ -92,15 +85,7 @@ const Summary = ({
           style={styles.button}
           title={l10n.ACTIVITY}
         />
-        {settings && (
-          <Button
-            icon="settings-outline"
-            marginLeft="M"
-            onPress={() => navigation.go(SCREEN.SETTINGS)}
-            outlined
-            size="S"
-          />
-        )}
+        {onSettings && <Button icon="settings-outline" marginLeft="M" onPress={onSettings} outlined size="S" />}
       </Row>
     </Col>
   );
@@ -111,7 +96,7 @@ Summary.propTypes = {
   currentBalance: number,
   currentMonth: shape({}),
   image: oneOfType([number, string]),
-  settings: bool,
+  onSettings: func,
   title: string,
 };
 

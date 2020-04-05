@@ -3,10 +3,10 @@ import React from 'react';
 import { C } from './common';
 import { useNavigation, useStore } from './context';
 import { DialogClone } from './components';
-import { Session, Settings, Stats, Dashboard, Vault, Vaults } from './screens';
+import { Session, Stats, Dashboard, Vault, Vaults } from './screens';
 
 const { SCREEN } = C;
-const { SESSION, SETTINGS, STATS, DASHBOARD, VAULT, VAULTS } = SCREEN;
+const { SESSION, STATS, DASHBOARD, VAULT, VAULTS } = SCREEN;
 
 const Router = () => {
   const { current, stack = [], tx } = useNavigation();
@@ -20,7 +20,6 @@ const Router = () => {
 
       {stack.includes(DASHBOARD) && sync && (
         <>
-          <Settings visible={stack.includes(SETTINGS)} />
           <Vaults visible={stack.includes(VAULTS)} />
           <Vault backward={current !== VAULT} visible={stack.includes(VAULT)} />
           <Stats visible={stack.includes(STATS)} />

@@ -138,9 +138,9 @@ export default {
     TRANSACTIONS: 'Transactions',
     TRANSFER: 'TRANSFER',
     TRANSFERS: 'Transfers',
-    TRANSFER_TXS: 'Transfer transactions',
+    TRANSFER_TXS: 'TRANSFER TRANSACTIONS',
     TRANSFER_TXS_CAPTION:
-      'Transfer all your transactions and vaults from this device to a new one just reading this QR in the new device.',
+      'Transfer all your data from this device to a new one just reading this QR in the new device.',
     TRANSFER_TXS_CAMERA: 'Read the QR code from the device you want get all its transactions and vaults.',
     TRANSFER_TXS_IMPORT:
       // eslint-disable-next-line max-len
