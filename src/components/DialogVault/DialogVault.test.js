@@ -1,12 +1,12 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import { C } from '../../../../common';
-import DialogFork from './DialogFork';
+import { C } from '../../common';
+import DialogVault from './DialogVault';
 
-describe('<DialogFork>', () => {
+describe('<DialogVault>', () => {
   it('renders', () => {
-    const tree = renderer.create(<DialogFork />).toJSON();
+    const tree = renderer.create(<DialogVault />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
