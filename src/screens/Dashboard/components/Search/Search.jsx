@@ -1,10 +1,10 @@
-import { func, string } from 'prop-types';
+import { func } from 'prop-types';
 import React, { useState } from 'react';
 import { TextInput } from 'react-native';
 
 import { THEME } from '../../../../reactor/common';
-import { Activity, Col, Icon, Row } from '../../../../reactor/components';
-import { groupTxsByDate } from '../../../../common';
+import { Activity, Button, Col, Icon, Row } from '../../../../reactor/components';
+import { groupTxsByDate, L10N } from '../../../../common';
 import { useL10N, useStore } from '../../../../context';
 import styles from './Search.style';
 
@@ -25,25 +25,34 @@ const querySearchTxs = (next, txs = [], l10n) =>
       .slice(0, 16),
   );
 
-export const Search = ({ onValue, value }) => {
+export const Search = ({ onValue }) => {
   const l10n = useL10N();
   const { txs = [] } = useStore();
 
-  const [focus, setFocus] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [focus, setFocus] = useState(false);
+  const [value, setValue] = useState(undefined);
 
-  const onChangeText = (next) => {
+  const onChangeText = (nextValue) => {
     clearTimeout(TIMEOUT);
-    setBusy(next.length > 0);
+    setBusy(nextValue.length > 0);
+    setValue(nextValue);
 
-    if (next.length === 0) return onValue();
+    if (nextValue.length === 0) return onValue();
 
-    setBusy(next.length > 0);
     TIMEOUT = setTimeout(() => {
-      onValue(querySearchTxs(next, txs, l10n));
+      onValue(querySearchTxs(nextValue, txs, l10n));
       setBusy(false);
     }, 250);
   };
+
+  const onReset = () => {
+    const nextValue = undefined;
+    setValue(nextValue);
+    onValue(nextValue);
+  };
+
+  console.log({ value });
 
   return (
     <Row paddingHorizontal="S" marginTop="XS" marginHorizontal="M" style={[styles.container, focus && styles.focus]}>
@@ -52,17 +61,19 @@ export const Search = ({ onValue, value }) => {
         autoCorrect={false}
         autoCapitalize="none"
         blurOnSubmit
+        editable={true}
         onBlur={() => setFocus(false)}
         onChangeText={onChangeText}
         onFocus={() => setFocus(true)}
         placeholder={`${l10n.SEARCH}...`}
         placeholderTextColor={COLOR.LIGHTEN}
-        underlineColorAndroid="transparent"
-        defaultValue={value}
         style={styles.input}
+        underlineColorAndroid="transparent"
+        value={value || ''}
       />
       <Col marginLeft="S" width="auto">
         {busy && <Activity color={COLOR.LIGHTEN} size="XS" />}
+        {value && !busy && <Button colorText={COLOR.BACKGROUND} onPress={onReset} size="S" title={l10n.CLEAR} />}
       </Col>
     </Row>
   );
@@ -70,5 +81,4 @@ export const Search = ({ onValue, value }) => {
 
 Search.propTypes = {
   onValue: func.isRequired,
-  value: string,
 };

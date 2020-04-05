@@ -59,6 +59,7 @@ export default {
     CATEGORY: 'Category',
     CHOOSE_TRANSACTION_TYPE: 'Choose type of transaction',
     CITIES: 'Cities',
+    CLEAR: 'Clear',
     CLONE: 'Clone',
     CLONE_CAPTION: 'To make your life easier you can clone this transaction with a simple touch of the button.',
     CLOSE: 'Close',
