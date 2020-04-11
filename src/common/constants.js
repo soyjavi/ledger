@@ -10,6 +10,8 @@ const MS_IN_WEEK = MS_IN_DAY * 7;
 export default {
   CURRENCY: 'EUR',
 
+  DELAY_PRESS_MS: 600,
+
   ENDPOINT: IS_DEV ? 'http://192.168.1.105:8080' : 'https://voltvault.glitch.me',
 
   FIXED: {

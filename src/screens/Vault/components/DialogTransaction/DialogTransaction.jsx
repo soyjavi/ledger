@@ -14,6 +14,7 @@ import styles from './DialogTransaction.style';
 
 const { COLOR } = THEME;
 const {
+  DELAY_PRESS_MS,
   TX: {
     TYPE: { EXPENSE, TRANSFER },
   },
@@ -112,6 +113,7 @@ const DialogTransaction = (props) => {
         activity={busy}
         color={color}
         colorText={COLOR.BACKGROUND}
+        delay={DELAY_PRESS_MS}
         disabled={busy || !valid}
         marginTop="L"
         onPress={onSubmit}

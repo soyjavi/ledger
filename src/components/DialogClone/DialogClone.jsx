@@ -13,6 +13,7 @@ import { PriceFriendly } from '../PriceFriendly';
 import styles from './DialogClone.style';
 
 const {
+  DELAY_PRESS_MS,
   TX: {
     TYPE: { INCOME, EXPENSE },
   },
@@ -120,6 +121,7 @@ const DialogClone = ({
         <Button
           {...buttonProps}
           colorText={COLOR.BACKGROUND}
+          delay={DELAY_PRESS_MS}
           onPress={() => onSubmit(false)}
           title={!(busy && !wipe) ? l10n.CLONE : undefined}
         />
