@@ -4,11 +4,13 @@ import React, { useState } from 'react';
 import { THEME } from '../../reactor/common';
 import { Button, Dialog, Row, Text } from '../../reactor/components';
 
+import { C } from '../../common';
 import { useL10N, useSnackBar, useStore } from '../../context';
 import { fork, getProfile } from '../../services';
 
 import styles from './DialogFork.style';
 
+const { DELAY_PRESS_MS } = C;
 const { COLOR } = THEME;
 
 export const DialogFork = ({ onClose, onForked, query, visible, ...inherit }) => {
@@ -43,7 +45,13 @@ export const DialogFork = ({ onClose, onForked, query, visible, ...inherit }) =>
       <Text caption>{l10n.TRANSFER_TXS_IMPORT}</Text>
       <Row marginTop="M" justify="space">
         <Button {...buttonProps} outlined onPress={onClose} title={l10n.CLOSE} marginRight="M" />
-        <Button {...buttonProps} colorText={COLOR.ERROR} onPress={onSubmit} title={!busy ? l10n.IMPORT : undefined} />
+        <Button
+          {...buttonProps}
+          colorText={COLOR.ERROR}
+          delay={DELAY_PRESS_MS}
+          onPress={onSubmit}
+          title={!busy ? l10n.IMPORT : undefined}
+        />
       </Row>
     </Dialog>
   );
