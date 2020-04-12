@@ -98,8 +98,12 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
       </ScrollView>
 
       <Footer onPress={() => setDialogVault(true)} scroll={scroll} />
-      {visible && sync && <DialogVault onClose={() => setDialogVault(false)} visible={dialogVault} />}
-      <DialogSettings onClose={() => setDialogSettings(false)} visible={dialogSettings} />
+      {visible && sync && (
+        <>
+          <DialogVault onClose={() => setDialogVault(false)} visible={dialogVault} />
+          <DialogSettings onClose={() => setDialogSettings(false)} visible={dialogSettings} />
+        </>
+      )}
     </Viewport>
   );
 };

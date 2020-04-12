@@ -2,7 +2,7 @@ import { bool, func } from 'prop-types';
 import React, { useState } from 'react';
 
 import { FLAGS } from '../../assets';
-import { FORM, setCurrency, translate } from '../../common';
+import { C, FORM, setCurrency, translate } from '../../common';
 import { CardOption } from '../../components';
 import { useL10N, useSnackBar, useStore } from '../../context';
 import { createVault } from '../../services';
@@ -11,6 +11,7 @@ import { Button, Dialog, Form, Slider, Text } from '../../reactor/components';
 import queryCurrencies from './modules/queryCurrencies';
 import styles, { CARD_WIDTH } from './DialogVault.style';
 
+const { DELAY_PRESS_MS } = C;
 const { COLOR, SPACE } = THEME;
 const INITIAL_STATE = { title: '', balance: '0' };
 
@@ -74,6 +75,7 @@ export const DialogVault = ({ onClose, visible }) => {
         activity={busy}
         color={COLOR.TEXT}
         colorText={COLOR.BACKGROUND}
+        delay={DELAY_PRESS_MS}
         disabled={busy || form.title.trim().length === 0}
         onPress={onSubmit}
         title={!busy ? l10n.SAVE : undefined}

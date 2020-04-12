@@ -2,19 +2,28 @@ import { node } from 'prop-types';
 import React, { useContext, useEffect, useState, createContext } from 'react';
 import NetInfo from '@react-native-community/netinfo';
 
+import { useEnvironment } from '../reactor/hooks';
 import { C } from '../common';
 
 const ConnectionContext = createContext(`${C.NAME}:context:connection`);
 
 const ConnectionProvider = ({ children }) => {
+  const { IS_NATIVE } = useEnvironment();
+
   const [connected, setConnected] = useState(false);
 
   useEffect(() => {
-    NetInfo.isConnected.fetch().then(setConnected);
-    NetInfo.isConnected.addEventListener('connectionChange', setConnected);
+    if (IS_NATIVE) {
+      NetInfo.fetch().then((state) => setConnected(state.isConnected));
+      NetInfo.addEventListener((state) => setConnected(state.isConnected));
+    } else {
+      NetInfo.isConnected.fetch().then(setConnected);
+      NetInfo.isConnected.addEventListener('connectionChange', setConnected);
+    }
 
     return () => {
-      NetInfo.isConnected.removeEventListener('connectionChange');
+      if (IS_NATIVE) NetInfo.addEventListener();
+      else NetInfo.isConnected.removeEventListener('connectionChange');
     };
   }, []);
 

@@ -83,7 +83,9 @@ export const DialogSettings = ({ visible, ...inherit }) => {
         />
       )}
 
-      <DialogFork onClose={() => setDialogFork(false)} onForked={onForked} query={qr} visible={dialogFork} />
+      {visible && (
+        <DialogFork onClose={() => setDialogFork(false)} onForked={onForked} query={qr} visible={dialogFork} />
+      )}
     </Dialog>
   );
 };

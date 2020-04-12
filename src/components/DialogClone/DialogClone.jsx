@@ -13,6 +13,7 @@ import { PriceFriendly } from '../PriceFriendly';
 import styles from './DialogClone.style';
 
 const {
+  DELAY_PRESS_MS,
   TX: {
     TYPE: { INCOME, EXPENSE },
   },
@@ -53,6 +54,7 @@ const DialogClone = ({
   const buttonProps = {
     activity: busy && wipe,
     color,
+    delay: DELAY_PRESS_MS,
     disabled: busy,
     style: styles.button,
   };

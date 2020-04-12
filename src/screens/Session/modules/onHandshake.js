@@ -10,12 +10,12 @@ export const onHandshake = async ({ navigation, store, setBusy, setPin, snackbar
   if (isSignup) {
     const authorization = await getAuthorization(store, snackbar, pin);
     await getProfile(store, snackbar, authorization);
-    navigation.go(SCREEN.DASHBOARD);
   } else {
     getProfile(store, snackbar);
-    navigation.go(SCREEN.DASHBOARD);
-    // navigation.go(SCREEN.VAULT, store.vaults[1]);
   }
+  navigation.go(SCREEN.DASHBOARD);
+  // navigation.go(SCREEN.VAULT, store.vaults[1]);
+
   setBusy(false);
   setPin('');
 };
