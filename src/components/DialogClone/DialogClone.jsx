@@ -54,6 +54,7 @@ const DialogClone = ({
   const buttonProps = {
     activity: busy && wipe,
     color,
+    delay: DELAY_PRESS_MS,
     disabled: busy,
     style: styles.button,
   };
@@ -121,7 +122,6 @@ const DialogClone = ({
         <Button
           {...buttonProps}
           colorText={COLOR.BACKGROUND}
-          delay={DELAY_PRESS_MS}
           onPress={() => onSubmit(false)}
           title={!(busy && !wipe) ? l10n.CLONE : undefined}
         />
