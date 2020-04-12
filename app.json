@@ -4,9 +4,9 @@
     "description": "A new expanded and private finance experience running on the blockchain.",
     "slug": "voltvault",
     "privacy": "public",
-    "sdkVersion": "36.0.0",
+    "sdkVersion": "37.0.0",
     "platforms": ["ios", "android", "web"],
-    "version": "0.19.0",
+    "version": "0.20.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -31,7 +31,7 @@
       "barStyle": "light-content"
     },
     "androidNavigationBar": {
-      "visible": true,
+      "visible": "leanback",
       "barStyle": "light-content",
       "backgroundColor": "#000000"
     },
