@@ -17,13 +17,16 @@ const FONT_FAMILY_PRICE = {
   fontWeight: '400',
 };
 
-const INCOME = '#63C88B';
-const EXPENSE = '#F77A64';
+const INCOME = '#00FB92';
+const EXPENSE = '#fb5662'; // '#F77A64';
 
-const BASE = '#222222';
-const DIALOG = '#131313';
+const BACKGROUND = '#000000';
+const BASE = '#161616';
 const BORDER_RADIUS = SPACE.XS;
+const DIALOG = '#090909';
 const OVERLAY = 'rgba(0, 0, 0, 0.8)';
+const TEXT = '#ffffff';
+const LIGHTEN = '#555555';
 
 export default {
   BORDER_RADIUS,
@@ -35,15 +38,15 @@ export default {
     // WHITE
     // GRAY
 
-    BACKGROUND: '#000000',
+    BACKGROUND,
     BASE,
     ERROR: EXPENSE,
     SUCCESS: INCOME,
-    TEXT: '#ffffff',
+    TEXT,
     // TRANSPARENT
 
     // -- Custom
-    LIGHTEN: '#555555', // '#4E4E4E',
+    LIGHTEN,
     OVERLAY,
     EXPENSE,
     INCOME,
@@ -89,8 +92,8 @@ export default {
 
   DIALOG: {
     backgroundColor: DIALOG,
-    borderRadius: SPACE.L,
-    marginBottom: SPACE.S,
+    borderRadius: SPACE.M,
+    marginBottom: SPACE.M,
     padding: SPACE.L,
   },
   DIALOG_BUTTON: {
@@ -122,7 +125,7 @@ export default {
   },
 
   OPACITY: {
-    S: 0.2,
+    S: 0.11,
     M: 0.4,
     L: 0.6,
   },

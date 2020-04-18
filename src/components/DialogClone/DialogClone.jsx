@@ -19,7 +19,7 @@ const {
   },
   WIPE,
 } = C;
-const { COLOR } = THEME;
+const { COLOR, OPACITY } = THEME;
 
 const DialogClone = ({
   dataSource: { category, currency, hash, value, vault, location, title, timestamp, type = EXPENSE },
@@ -66,11 +66,13 @@ const DialogClone = ({
       </Text>
       <Row marginTop="M">
         <Col marginRight="S" width="auto">
-          <Box color={color} style={styles.boxContent} opacity={0.25} small>
+          <Box color={color} style={styles.boxContent} opacity={OPACITY.S} small>
             <Text bold color={color} style={styles.day}>
               {new Date(timestamp || null).getDate()}
             </Text>
-            <Text style={styles.month}>{verboseMonthShort(timestamp, l10n)}</Text>
+            <Text color={color} style={styles.month}>
+              {verboseMonthShort(timestamp, l10n)}
+            </Text>
           </Box>
         </Col>
         <Col>

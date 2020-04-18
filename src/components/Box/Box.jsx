@@ -8,7 +8,7 @@ import styles from './Box.style';
 
 const { COLOR, SPACE } = THEME;
 
-const Box = ({ borderRadius, children, color, opacity, outlined, small, ...others }) => (
+const Box = ({ borderRadius = SPACE.S, children, color = COLOR.BASE, opacity = 1, outlined, small, ...others }) => (
   <Col {...others} align="center" style={styles.container}>
     <View
       style={[
@@ -35,15 +35,6 @@ Box.propTypes = {
   opacity: number,
   outlined: bool,
   small: bool,
-};
-
-Box.defaultProps = {
-  borderRadius: SPACE.S,
-  children: undefined,
-  color: COLOR.BASE,
-  opacity: 1,
-  outlined: false,
-  small: false,
 };
 
 export { Box };
