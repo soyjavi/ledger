@@ -11,7 +11,7 @@ import styles from './Search.style';
 const { COLOR } = THEME;
 let TIMEOUT;
 
-const querySearchTxs = (next, txs = [], l10n) =>
+const querySearchTxs = (next, { txs = [], vaults = [] }, l10n) =>
   groupTxsByDate(
     txs
       .slice()
@@ -22,12 +22,16 @@ const querySearchTxs = (next, txs = [], l10n) =>
 
         return (title && title.includes(next)) || (category && category.includes(next));
       })
-      .slice(0, 16),
+      .slice(0, 16)
+      .map((tx) => {
+        const { currency } = vaults.find(({ hash }) => hash === tx.vault);
+        return { ...tx, currency };
+      }),
   );
 
 export const Search = ({ onValue }) => {
   const l10n = useL10N();
-  const { txs = [] } = useStore();
+  const store = useStore();
 
   const [busy, setBusy] = useState(false);
   const [focus, setFocus] = useState(false);
@@ -38,15 +42,15 @@ export const Search = ({ onValue }) => {
     setBusy(nextValue.length > 0);
     setValue(nextValue);
 
-    if (nextValue.length === 0) return onValue();
+    if (nextValue.length === 0) return handleReset();
 
     TIMEOUT = setTimeout(() => {
-      onValue(querySearchTxs(nextValue, txs, l10n));
+      onValue(querySearchTxs(nextValue, store, l10n));
       setBusy(false);
     }, 250);
   };
 
-  const onReset = () => {
+  const handleReset = () => {
     const nextValue = undefined;
     setValue(nextValue);
     onValue(nextValue);
@@ -73,7 +77,7 @@ export const Search = ({ onValue }) => {
       />
       <Col marginLeft="S" width="auto">
         {busy && <Activity color={COLOR.LIGHTEN} size="XS" />}
-        {value && !busy && <Button colorText={COLOR.BACKGROUND} onPress={onReset} size="S" title={l10n.CLEAR} />}
+        {value && !busy && <Button colorText={COLOR.BACKGROUND} onPress={handleReset} size="S" title={l10n.CLEAR} />}
       </Col>
     </Row>
   );
