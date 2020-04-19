@@ -70,7 +70,7 @@ const FormTransaction = (props) => {
           >
             <PriceFriendly
               caption
-              color={hash === destination ? COLOR.BACKGROUND : COLOR.LIGHTEN}
+              color={hash === destination ? color : COLOR.LIGHTEN}
               value={currentBalance}
               currency={currency}
             />

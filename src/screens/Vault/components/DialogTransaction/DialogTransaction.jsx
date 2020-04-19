@@ -62,7 +62,7 @@ const DialogTransaction = (props) => {
   let Form = FormTransaction;
 
   if (type === TRANSFER) {
-    color = COLOR.TRANSFER;
+    color = COLOR.TEXT;
     Form = FormTransfer;
   }
 

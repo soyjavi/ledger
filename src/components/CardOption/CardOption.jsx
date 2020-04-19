@@ -7,17 +7,19 @@ import { THEME } from '../../reactor/common';
 import { Box } from '../Box';
 import styles from './CardOption.style';
 
-const { BORDER_RADIUS, COLOR, SPACE } = THEME;
+const { BORDER_RADIUS, COLOR, OPACITY, SPACE } = THEME;
 
 const CardOption = ({ children, color, icon, image, onPress, selected, title, ...inherit }) => {
-  const colorContent = selected ? COLOR.BACKGROUND : COLOR.LIGHTEN;
+  const colorContent = selected ? color : COLOR.LIGHTEN;
   const onlyText = !icon && !image;
 
   return (
     <Box
       borderRadius={BORDER_RADIUS}
-      color={selected ? color : undefined}
+      color={selected ? color : COLOR.BASE}
       marginRight="S"
+      outlined={!selected}
+      opacity={selected ? OPACITY.S : undefined}
       small
       style={[styles.box, inherit.style]}
     >

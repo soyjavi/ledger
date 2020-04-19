@@ -33,7 +33,7 @@ const SliderMonths = ({ index, onChange, ...others }) => {
           selected={index === i}
           style={styles.card}
         >
-          <Text bold caption color={index === i ? COLOR.BACKGROUND : COLOR.LIGHTEN}>
+          <Text bold caption color={index === i ? COLOR.TEXT : COLOR.LIGHTEN}>
             {year}
           </Text>
         </CardOption>

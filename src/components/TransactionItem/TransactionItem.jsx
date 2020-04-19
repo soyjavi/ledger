@@ -24,13 +24,13 @@ const TransactionItem = (props) => {
   const operator = type === EXPENSE ? -1 : 1;
 
   let color = type === EXPENSE ? COLOR.EXPENSE : COLOR.INCOME;
-  if (category === VAULT_TRANSFER) color = COLOR.TRANSFER;
+  if (category === VAULT_TRANSFER) color = COLOR.TEXT;
 
   return (
     <Touchable rippleColor={COLOR.TEXT} onPress={() => showTx(props)}>
       <Row align="start" paddingHorizontal="M" paddingVertical="S">
         <Col marginRight="S" width="auto">
-          <Box color={color} opacity={OPACITY.S} outlined small>
+          <Box color={color} opacity={OPACITY.S} small>
             <Icon size={SPACE.M} value={getIconCategory({ type, category, title })} color={color} />
           </Box>
         </Col>

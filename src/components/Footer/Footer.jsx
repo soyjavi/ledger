@@ -15,7 +15,7 @@ const BUTTON = { marginLeft: 'S', style: styles.button };
 const BUTTON_OUTLINED = { ...BUTTON, outlined: true, style: [styles.button, styles.buttonOutlined] };
 const MOTION_HIDE = SPACE.XXL * 2;
 
-export const Footer = ({ onBack, onHardwareBack, onPress, scroll }) => {
+export const Footer = ({ onBack, onHardwareBack, onPress, scroll, showSync }) => {
   const { connected } = useConnection();
   const l10n = useL10N();
   const snackbar = useSnackBar();
@@ -42,11 +42,13 @@ export const Footer = ({ onBack, onHardwareBack, onPress, scroll }) => {
         timeline={[{ property: 'translateY', value: connected && !scroll ? 0 : MOTION_HIDE }]}
       >
         <Row width="auto" justify="end">
-          {onBack ? (
-            <Button {...BUTTON_OUTLINED} onPress={onBack}>
-              <Icon value="arrow-left" size={SPACE.L} />
+          {onBack && (
+            <Button {...(onPress ? BUTTON_OUTLINED : BUTTON)} onPress={onBack}>
+              <Icon color={!onPress ? COLOR.BACKGROUND : undefined} value="arrow-left" size={SPACE.L} />
             </Button>
-          ) : (
+          )}
+
+          {showSync && (
             <Button
               {...BUTTON_OUTLINED}
               outlined={sync}
@@ -77,4 +79,5 @@ Footer.propTypes = {
   onHardwareBack: func,
   onPress: func,
   scroll: bool,
+  showSync: bool,
 };
