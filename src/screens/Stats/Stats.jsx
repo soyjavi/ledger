@@ -61,6 +61,8 @@ const Stats = (props) => {
     highlight: slider.index,
   };
 
+  const hasData = hasExpenses || hasIncomes;
+
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
       <Header highlight title={`${title}${l10n.ACTIVITY}`} />
@@ -94,28 +96,33 @@ const Stats = (props) => {
           styleContainer={[styles.chart, styles.chartMargin]}
           values={chart.expenses}
         />
-        {!vault && (
-          <Chart
-            {...calcScales(chart.transfers)}
-            {...common}
-            captions={orderCaptions(l10n)}
-            color={COLOR.TRANSFER}
-            styleContainer={[styles.chart, styles.chartMargin]}
-            title={l10n.TRANSFERS}
-            values={chart.transfers}
-          />
-        )}
 
-        {hasExpenses || hasIncomes ? (
+        {hasData ? (
           <>
             {hasIncomes && <ItemGroupCategories type={INCOME} dataSource={incomes} />}
             {hasExpenses && <ItemGroupCategories type={EXPENSE} dataSource={expenses} />}
-            {hasPoints && <Locations {...inherit} {...locations} />}
           </>
         ) : (
           <View style={styles.contentEmpty}>
             <Text>{l10n.NO_TRANSACTIONS}</Text>
           </View>
+        )}
+
+        {hasData && (
+          <>
+            {hasPoints && <Locations {...inherit} {...locations} />}
+            {!vault && (
+              <Chart
+                {...calcScales(chart.transfers)}
+                {...common}
+                captions={orderCaptions(l10n)}
+                color={COLOR.TRANSFER}
+                styleContainer={[styles.chart, styles.chartMargin]}
+                title={l10n.TRANSFERS}
+                values={chart.transfers}
+              />
+            )}
+          </>
         )}
       </ScrollView>
       <Footer onBack={navigation.back} onHardwareBack={visible ? navigation.back : undefined} />
