@@ -62,8 +62,9 @@ export const Search = ({ onValue }) => {
     <Row paddingHorizontal="S" marginTop="XS" marginHorizontal="M" style={[styles.container, focus && styles.focus]}>
       <Icon color={COLOR.LIGHTEN} family="MaterialIcons" marginRight="S" value="search" size={16} />
       <TextInput
-        autoCorrect={false}
         autoCapitalize="none"
+        autoCorrect={false}
+        autoFocus
         blurOnSubmit
         editable={true}
         onBlur={() => setFocus(false)}

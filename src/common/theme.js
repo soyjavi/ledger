@@ -18,12 +18,12 @@ const FONT_FAMILY_PRICE = {
 };
 
 const INCOME = '#00FB92';
-const EXPENSE = '#fb5662'; // '#F77A64';
+const EXPENSE = '#fb5662';
 
 const BACKGROUND = '#000000';
-const BASE = '#161616';
+const BASE = '#181818';
 const BORDER_RADIUS = SPACE.XS;
-const DIALOG = '#090909';
+const DIALOG = '#0C0C0C';
 const OVERLAY = 'rgba(0, 0, 0, 0.8)';
 const TEXT = '#ffffff';
 const LIGHTEN = '#555555';
@@ -50,8 +50,6 @@ export default {
     OVERLAY,
     EXPENSE,
     INCOME,
-    // LOCATION: '#ECAF6E',
-    TRANSFER: '#7393DC',
   },
 
   FONT: {
@@ -93,7 +91,7 @@ export default {
   DIALOG: {
     backgroundColor: DIALOG,
     borderRadius: SPACE.M,
-    marginBottom: SPACE.M,
+    // marginBottom: SPACE.M,
     padding: SPACE.L,
   },
   DIALOG_BUTTON: {
@@ -125,7 +123,7 @@ export default {
   },
 
   OPACITY: {
-    S: 0.11,
+    S: 0.15,
     M: 0.4,
     L: 0.6,
   },

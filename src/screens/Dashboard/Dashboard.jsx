@@ -31,6 +31,7 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
   const [dialogVault, setDialogVault] = useState(false);
   const [dialogSettings, setDialogSettings] = useState(false);
   const [scroll, setScroll] = useState(false);
+  const [search, setSearch] = useState(false);
   const [searchTxs, setSearchTxs] = useState(undefined);
   const [lastTxs, setLastTxs] = useState([]);
   const [visibleVaults, setVisibleVaults] = useState([]);
@@ -86,8 +87,10 @@ const Dashboard = ({ backward, visible, ...inherit }) => {
 
             {lastTxs.length > 0 && (
               <>
-                <Heading paddingHorizontal="M" value={l10n.LAST_TRANSACTIONS} />
-                <Search onValue={setSearchTxs} />
+                <Heading paddingLeft="M" paddingRight="S" value={l10n.LAST_TRANSACTIONS}>
+                  <Button title={l10n.SEARCH} onPress={() => setSearch(!search)} size="S" style={styles.buttonHeader} />
+                </Heading>
+                {search && <Search onValue={setSearchTxs} />}
                 {(searchTxs || lastTxs).map((item) => (
                   <GroupTransactions key={`${item.timestamp}`} {...item} currency={baseCurrency} />
                 ))}

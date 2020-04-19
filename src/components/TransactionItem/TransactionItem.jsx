@@ -24,7 +24,7 @@ const TransactionItem = (props) => {
   const operator = type === EXPENSE ? -1 : 1;
 
   let color = type === EXPENSE ? COLOR.EXPENSE : COLOR.INCOME;
-  if (category === VAULT_TRANSFER) color = COLOR.TRANSFER;
+  if (category === VAULT_TRANSFER) color = COLOR.TEXT;
 
   return (
     <Touchable rippleColor={COLOR.TEXT} onPress={() => showTx(props)}>

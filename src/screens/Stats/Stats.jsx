@@ -116,7 +116,6 @@ const Stats = (props) => {
                 {...calcScales(chart.transfers)}
                 {...common}
                 captions={orderCaptions(l10n)}
-                color={COLOR.TRANSFER}
                 styleContainer={[styles.chart, styles.chartMargin]}
                 title={l10n.TRANSFERS}
                 values={chart.transfers}

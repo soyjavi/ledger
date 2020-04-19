@@ -10,10 +10,11 @@ export default StyleSheet.create({
     borderRadius: BORDER_RADIUS,
     borderWidth: 1,
     width: 'auto',
+    backgroundColor: COLOR.BASE,
   },
 
   focus: {
-    backgroundColor: COLOR.BASE,
+    borderColor: COLOR.TEXT,
   },
 
   input: {
