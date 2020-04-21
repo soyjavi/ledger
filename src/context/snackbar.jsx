@@ -16,7 +16,7 @@ const reducer = (state, action) => {
       return action;
 
     case 'HIDE':
-      return { ...state, caption: undefined };
+      return { ...state, caption: undefined, type: 'HIDE' };
 
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
