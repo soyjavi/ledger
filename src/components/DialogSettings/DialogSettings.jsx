@@ -8,7 +8,7 @@ import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Button, Dialog, Image, Text } from '../../reactor/components';
 import { THEME } from '../../reactor/common';
 import { useL10N, useSnackBar, useStore } from '../../context';
-import { DialogFork } from '..';
+import { DialogFork } from '../DialogFork';
 
 import styles from './DialogSettings.style';
 
