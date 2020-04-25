@@ -6,7 +6,7 @@
     "privacy": "public",
     "sdkVersion": "37.0.0",
     "platforms": ["ios", "android", "web"],
-    "version": "0.20.0",
+    "version": "0.20.14",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -28,7 +28,8 @@
     },
     "androidStatusBar": {
       "backgroundColor": "#000000",
-      "barStyle": "light-content"
+      "barStyle": "light-content",
+      "translucent": false
     },
     "androidNavigationBar": {
       "visible": "immersive",
