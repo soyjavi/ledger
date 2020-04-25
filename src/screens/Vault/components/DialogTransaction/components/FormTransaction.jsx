@@ -1,5 +1,5 @@
 import { func, number, shape, string } from 'prop-types';
-import React, { Fragment } from 'react';
+import React from 'react';
 
 import { FORM, getIconCategory, setCurrency, translate } from '../../../../../common';
 import { CardOption } from '../../../../../components';
@@ -31,11 +31,11 @@ const FormTransaction = (props) => {
   };
 
   return (
-    <Fragment>
+    <>
       <Text bold caption>
         {l10n.CATEGORY}
       </Text>
-      <Slider itemMargin={0} itemWidth={CARD_WIDTH + SPACE.S} style={styles.cards}>
+      <Slider itemMargin={0} itemWidth={CARD_WIDTH + SPACE.S} marginTop="XS" marginBottom="M">
         {queryCategories({ l10n, type }).map((item) => (
           <CardOption
             key={item.key}
@@ -55,7 +55,7 @@ const FormTransaction = (props) => {
         onChange={(value) => handleChange({ form: value })}
         value={form}
       />
-    </Fragment>
+    </>
   );
 };
 

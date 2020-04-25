@@ -17,7 +17,7 @@ const CardOption = ({ children, color, icon, image, onPress, selected, title, ..
     <Box
       borderRadius={BORDER_RADIUS}
       color={selected ? color : COLOR.BASE}
-      marginRight="S"
+      marginRight={inherit.marginRight || 'S'}
       outlined={!selected}
       opacity={selected ? OPACITY.S : undefined}
       small
