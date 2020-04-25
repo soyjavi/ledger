@@ -48,7 +48,7 @@ const Session = (props) => {
               </Text>
             ))}
           </Row>
-          <Row>{busy && <Activity size="large" style={styles.activity} />}</Row>
+          <Row>{busy && <Activity size="M" style={styles.activity} />}</Row>
         </View>
 
         <Text caption style={styles.textCenter}>

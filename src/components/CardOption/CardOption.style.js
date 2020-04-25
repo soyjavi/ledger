@@ -8,7 +8,7 @@ const CARD_OPTION_WIDTH = UNIT * 8;
 
 export default StyleSheet.create({
   box: {
-    width: CARD_OPTION_WIDTH,
+    minWidth: CARD_OPTION_WIDTH,
   },
 
   container: {

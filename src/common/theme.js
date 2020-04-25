@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import { THEME } from '../reactor/common';
 
 const { SPACE } = THEME;
@@ -118,7 +119,8 @@ export default {
       // tension: undefined,
       // speed: undefined,
       // bounciness: undefined,
-      // useNativeDriver: true,
+      useNativeDriver: Platform.OS !== 'web',
+      // useNativeDriver: false,
     },
   },
 

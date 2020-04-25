@@ -1,5 +1,5 @@
 import { func, shape, string } from 'prop-types';
-import React, { Fragment } from 'react';
+import React from 'react';
 
 import { FLAGS } from '../../../../../assets';
 import { currencyDecimals, setCurrency, translate } from '../../../../../common';
@@ -53,11 +53,11 @@ const FormTransaction = (props) => {
   };
 
   return (
-    <Fragment>
+    <>
       <Text bold caption>
         {l10n.VAULT_DESTINATION}
       </Text>
-      <Slider itemMargin={0} itemWidth={CARD_WIDTH + SPACE.S} style={styles.cards}>
+      <Slider itemMargin={0} itemWidth={CARD_WIDTH + SPACE.S} marginTop="XS" marginBottom="M">
         {queryAvailableVaults(store, vault).map(({ currency, currentBalance, hash, title }) => (
           <CardOption
             color={color}
@@ -83,7 +83,7 @@ const FormTransaction = (props) => {
         onChange={handleChange}
         value={form}
       />
-    </Fragment>
+    </>
   );
 };
 
