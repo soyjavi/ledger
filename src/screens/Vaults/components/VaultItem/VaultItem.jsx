@@ -19,7 +19,7 @@ export const VaultItem = ({ active, onChange, onPress, dataSource: { currency, c
       <Touchable onPress={onPress} rippleColor={COLOR.TEXT} style={styles.container}>
         <Row>
           <Col marginRight="S" width="auto">
-            <Box small outlined styleContent={styles.boxContent}>
+            <Box small outlined={currentBalance === 0} styleContent={styles.boxContent}>
               <Image source={FLAGS[currency]} style={styles.flag} />
             </Box>
           </Col>
