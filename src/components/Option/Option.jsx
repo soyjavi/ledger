@@ -5,35 +5,35 @@ import { Image } from 'react-native';
 import { Icon, Text, Touchable } from '../../reactor/components';
 import { THEME } from '../../reactor/common';
 import { Box } from '../Box';
-import styles from './CardOption.style';
+import styles from './Option.style';
 
-const { BORDER_RADIUS, COLOR, OPACITY, SPACE } = THEME;
+const { BORDER_RADIUS, COLOR, SPACE } = THEME;
 
-const CardOption = ({ children, color, icon, image, onPress, selected, title, ...inherit }) => {
-  const colorContent = selected ? color : COLOR.LIGHTEN;
+const Option = ({ children, color = COLOR.BASE, icon, image, onPress, selected, title, ...inherit }) => {
+  const colorContent = selected ? COLOR.BACKGROUND : COLOR.TEXT;
   const onlyText = !icon && !image;
 
   return (
     <Box
       borderRadius={BORDER_RADIUS}
-      color={selected ? color : COLOR.BASE}
+      color={selected ? COLOR.CTA : color}
+      elevate={inherit.elevate || selected}
       marginRight={inherit.marginRight || 'S'}
-      outlined={!selected}
-      opacity={selected ? OPACITY.S : undefined}
       small
-      style={[styles.box, inherit.style]}
+      style={[styles.container, inherit.style]}
     >
-      <Touchable onPress={onPress} rippleColor={COLOR.TEXT} style={styles.container}>
+      <Touchable onPress={onPress} rippleColor={COLOR.TEXT} style={[styles.content]}>
         {icon && <Icon value={icon} color={colorContent} size={SPACE.L} />}
         {image && <Image source={image} style={styles.image} />}
 
         <Text
           align="center"
-          caption={onlyText}
+          // caption={onlyText}
+          caption
           color={colorContent}
           marginTop={!onlyText ? 'S' : undefined}
           numberOfLines={1}
-          style={!onlyText ? styles.legend : undefined}
+          // style={!onlyText ? styles.legend : undefined}
         >
           {title}
         </Text>
@@ -43,7 +43,7 @@ const CardOption = ({ children, color, icon, image, onPress, selected, title, ..
   );
 };
 
-CardOption.propTypes = {
+Option.propTypes = {
   children: node,
   color: string,
   icon: oneOfType([number, string]),
@@ -53,12 +53,4 @@ CardOption.propTypes = {
   title: string.isRequired,
 };
 
-CardOption.defaultProps = {
-  children: undefined,
-  color: COLOR.TEXT,
-  icon: undefined,
-  image: undefined,
-  selected: false,
-};
-
-export { CardOption };
+export { Option };

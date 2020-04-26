@@ -2,11 +2,11 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 
 import { C } from '../../common';
-import CardOption from './CardOption';
+import Option from './Option';
 
-describe('<CardOption>', () => {
+describe('<Option>', () => {
   it('renders', () => {
-    const tree = renderer.create(<CardOption />).toJSON();
+    const tree = renderer.create(<Option />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 

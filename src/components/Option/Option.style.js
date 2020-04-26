@@ -4,14 +4,16 @@ import { THEME } from '../../reactor/common';
 
 const { BORDER_RADIUS, FONT, SPACE, UNIT } = THEME;
 
-const CARD_OPTION_WIDTH = UNIT * 8;
+const BOX_SIZE = UNIT * 8;
 
 export default StyleSheet.create({
-  box: {
-    minWidth: CARD_OPTION_WIDTH,
+  container: {
+    width: BOX_SIZE,
+    maxWidth: BOX_SIZE,
+    height: BOX_SIZE,
   },
 
-  container: {
+  content: {
     alignItems: 'center',
     alignContent: 'center',
     justifyContent: 'center',
