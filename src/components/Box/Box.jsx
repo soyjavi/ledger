@@ -1,30 +1,26 @@
 import { node, number, string, bool } from 'prop-types';
 import React from 'react';
-import { View } from 'react-native';
 
 import { THEME } from '../../reactor/common';
 import { Col } from '../../reactor/components';
 import styles from './Box.style';
 
-const { COLOR, SPACE } = THEME;
+const { BORDER_RADIUS, COLOR } = THEME;
 
-const Box = ({ borderRadius = SPACE.S, children, color = COLOR.BASE, opacity = 1, outlined, small, ...others }) => (
-  <Col {...others} align="center" style={styles.container}>
-    <View
-      style={[
-        styles.frame,
-        { borderRadius, opacity },
-        outlined ? { borderWidth: 1, borderColor: color } : { backgroundColor: color },
-      ]}
-    />
-    <Col
-      align="center"
-      paddingHorizontal={!small ? 'M' : undefined}
-      paddingVertical={!small ? 'M' : undefined}
-      style={[styles.content, others.style]}
-    >
-      {children}
-    </Col>
+const Box = ({ borderRadius = BORDER_RADIUS, children, color = COLOR.BASE, elevate, outlined, small, ...others }) => (
+  <Col
+    {...others}
+    align="center"
+    paddingHorizontal={!small ? 'M' : undefined}
+    paddingVertical={!small ? 'M' : undefined}
+    style={[
+      styles.container,
+      elevate && styles.elevation,
+      outlined ? { borderRadius, borderWidth: 1, borderColor: color } : { borderRadius, backgroundColor: color },
+      others.style,
+    ]}
+  >
+    {children}
   </Col>
 );
 
@@ -32,6 +28,7 @@ Box.propTypes = {
   borderRadius: number,
   children: node,
   color: string,
+  elevate: bool,
   opacity: number,
   outlined: bool,
   small: bool,
