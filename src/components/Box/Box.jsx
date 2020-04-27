@@ -7,12 +7,10 @@ import styles from './Box.style';
 
 const { BORDER_RADIUS, COLOR } = THEME;
 
-const Box = ({ borderRadius = BORDER_RADIUS, children, color = COLOR.BASE, elevate, outlined, small, ...others }) => (
+const Box = ({ borderRadius = BORDER_RADIUS, children, color = COLOR.BASE, elevate, outlined, ...others }) => (
   <Col
     {...others}
     align="center"
-    paddingHorizontal={!small ? 'M' : undefined}
-    paddingVertical={!small ? 'M' : undefined}
     style={[
       styles.container,
       elevate && styles.elevation,
@@ -31,7 +29,6 @@ Box.propTypes = {
   elevate: bool,
   opacity: number,
   outlined: bool,
-  small: bool,
 };
 
 export { Box };
