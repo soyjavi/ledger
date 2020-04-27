@@ -15,27 +15,25 @@ const Option = ({ children, color = COLOR.BASE, icon, image, onPress, selected, 
 
   return (
     <Box
+      {...inherit}
       borderRadius={BORDER_RADIUS}
       color={selected ? COLOR.CTA : color}
-      elevate={inherit.elevate || selected}
-      marginRight={inherit.marginRight || 'S'}
       small
       style={[styles.container, inherit.style]}
     >
-      <Touchable onPress={onPress} rippleColor={COLOR.TEXT} style={[styles.content]}>
-        {icon && <Icon value={icon} color={colorContent} size={SPACE.L} />}
+      <Touchable onPress={onPress} rippleColor={colorContent} style={[styles.content]}>
+        {icon && <Icon value={icon} color={colorContent} family={inherit.family} size={SPACE.L} />}
         {image && <Image source={image} style={styles.image} />}
 
         <Text
           align="center"
-          // caption={onlyText}
           caption
           color={colorContent}
-          marginTop={!onlyText ? 'S' : undefined}
+          marginTop={!onlyText ? 'XS' : undefined}
           numberOfLines={1}
-          // style={!onlyText ? styles.legend : undefined}
+          style={onlyText ? styles.legend : undefined}
         >
-          {title}
+          {onlyText ? title.toUpperCase() : title}
         </Text>
         {children}
       </Touchable>

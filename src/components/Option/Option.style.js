@@ -8,7 +8,7 @@ const BOX_SIZE = UNIT * 8;
 
 export default StyleSheet.create({
   container: {
-    width: BOX_SIZE,
+    minWidth: BOX_SIZE,
     maxWidth: BOX_SIZE,
     height: BOX_SIZE,
   },

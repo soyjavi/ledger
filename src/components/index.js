@@ -1,5 +1,4 @@
 export * from './Box';
-export * from './CardOption';
 export * from './Chart';
 export * from './DialogClone';
 export * from './DialogFork';
@@ -11,6 +10,7 @@ export * from './Header';
 export * from './Heading';
 export * from './HeatMap';
 export * from './HorizontalChartItem';
+export * from './Option';
 export * from './PriceFriendly';
 export * from './ScrollView';
 export * from './Summary';
