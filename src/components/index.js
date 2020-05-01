@@ -1,3 +1,4 @@
+export * from './Banner';
 export * from './Box';
 export * from './Chart';
 export * from './DialogClone';
