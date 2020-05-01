@@ -1,21 +1,20 @@
 import { bool, func } from 'prop-types';
 import React, { useEffect } from 'react';
+import { THEME } from 'reactor/common';
+import { Motion } from 'reactor/components';
 
-import { THEME } from '../../reactor/common';
-import { Button, Icon, Motion, Row } from '../../reactor/components';
+import { onHardwareBackPress } from '@common';
+import { useConnection, useL10N, useSnackBar, useStore } from '@context';
 
-import { onHardwareBackPress } from '../../common';
-import { useConnection, useL10N, useSnackBar, useStore } from '../../context';
-import { getProfile } from '../../services';
+import { Option } from '../Option';
+import { getProfile } from '@services';
 import styles from './Footer.style';
 
 const { COLOR, SPACE } = THEME;
 
-const BUTTON = { marginLeft: 'S', style: styles.button };
-const BUTTON_OUTLINED = { ...BUTTON, outlined: true, style: [styles.button, styles.buttonOutlined] };
 const MOTION_HIDE = SPACE.XXL * 2;
 
-export const Footer = ({ onBack, onHardwareBack, onPress, scroll, showSync }) => {
+export const Footer = ({ onBack, onHardwareBack, showSync, visible }) => {
   const { connected } = useConnection();
   const l10n = useL10N();
   const snackbar = useSnackBar();
@@ -39,36 +38,15 @@ export const Footer = ({ onBack, onHardwareBack, onPress, scroll, showSync }) =>
     <>
       <Motion
         style={styles.container}
-        timeline={[{ property: 'translateY', value: connected && !scroll ? 0 : MOTION_HIDE }]}
+        timeline={[{ property: 'translateY', value: connected && visible ? 0 : MOTION_HIDE }]}
       >
-        <Row width="auto" justify="end">
-          {onBack && (
-            <Button {...(onPress ? BUTTON_OUTLINED : BUTTON)} onPress={onBack}>
-              <Icon color={!onPress ? COLOR.BACKGROUND : undefined} value="arrow-left" size={SPACE.L} />
-            </Button>
-          )}
-
-          {showSync && (
-            <Button
-              {...BUTTON_OUTLINED}
-              outlined={sync}
-              activity={!sync}
-              disabled={!sync}
-              onPress={sync ? handleSync : undefined}
-            >
-              {sync && <Icon value={'refresh'} size={SPACE.L} />}
-            </Button>
-          )}
-
-          {onPress && (
-            <Button {...BUTTON} onPress={onPress}>
-              <Icon value="plus" color={COLOR.BACKGROUND} size={SPACE.L} />
-            </Button>
-          )}
-        </Row>
+        {onBack && <Option selected onPress={onBack} caption={l10n.BACK} />}
+        {showSync && (
+          <Option icon={sync ? 'refresh' : 'cloud-download'} disabled={!sync} onPress={handleSync} selected={sync} />
+        )}
       </Motion>
       <Motion style={styles.container} timeline={[{ property: 'translateY', value: !connected ? 0 : MOTION_HIDE }]}>
-        <Button color={COLOR.ERROR} size="S" title={l10n.OFFLINE_MODE} />
+        <Option color={COLOR.ERROR} onPress={onBack} legend={l10n.OFFLINE_MODE} />
       </Motion>
     </>
   );
@@ -77,7 +55,6 @@ export const Footer = ({ onBack, onHardwareBack, onPress, scroll, showSync }) =>
 Footer.propTypes = {
   onBack: func,
   onHardwareBack: func,
-  onPress: func,
-  scroll: bool,
   showSync: bool,
+  visible: bool,
 };

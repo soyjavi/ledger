@@ -1,6 +1,7 @@
-import { Storage } from '../../reactor/bridges';
-import { useFingerprint } from '../../reactor/hooks';
-import { C } from '../../common';
+import { Storage } from 'reactor/bridges';
+import { useFingerprint } from 'reactor/hooks';
+
+import { C } from '@common';
 
 const { NAME } = C;
 const KEY = `${NAME}:context:store`;

@@ -1,4 +1,5 @@
-import { C } from '../common';
+import { C } from '@common';
+
 import { apiCall, composeHeaders } from './modules';
 
 const {

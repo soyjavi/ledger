@@ -1,7 +1,7 @@
 import { node } from 'prop-types';
 import React, { useContext, useReducer, createContext } from 'react';
 
-import { C } from '../common';
+import { C } from '@common';
 
 const {
   SCREEN: { SESSION },

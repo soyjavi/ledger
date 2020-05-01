@@ -1,14 +1,13 @@
 import C from './constants';
 import currencyDecimals from './currencyDecimals';
 import exchange from './exchange';
-import FORM from './forms';
 import getIconCategory from './getIconCategory';
+import { getLastRates } from './getLastRates';
 import { groupTxsByDate } from './groupTxsByDate';
 import L10N from './l10n';
 import median from './median';
 import objectToQueryString from './objectToQueryString';
 import onHardwareBackPress from './onHardwareBackPress';
-import setCurrency from './setCurrency';
 import theme from './theme';
 import translate from './translate';
 import verboseDate from './verboseDate';
@@ -20,14 +19,13 @@ export {
   C,
   currencyDecimals,
   exchange,
-  FORM,
   getIconCategory,
+  getLastRates,
   groupTxsByDate,
   L10N,
   median,
   objectToQueryString,
   onHardwareBackPress,
-  setCurrency,
   theme,
   translate,
   verboseDate,

@@ -1,11 +1,12 @@
 import { shape, number } from 'prop-types';
 import React, { useState } from 'react';
 import { View } from 'react-native';
+import { THEME } from 'reactor/common';
+import { Touchable } from 'reactor/components';
 
-import { Heading, HorizontalChartItem, PriceFriendly } from '../../../../components';
-import { useL10N, useStore } from '../../../../context';
-import { THEME } from '../../../../reactor/common';
-import { Touchable } from '../../../../reactor/components';
+import { Heading, HorizontalChartItem, PriceFriendly } from '@components';
+import { useL10N, useStore } from '@context';
+
 import { orderByAmount } from '../../modules';
 import styles from './ItemGroupCategories.style';
 
@@ -26,10 +27,12 @@ const ItemGroupCategories = ({ dataSource, type }) => {
     }
   });
 
+  const color = isExpense ? COLOR.EXPENSE : COLOR.INCOME;
+
   return (
     <View style={styles.container}>
       <Heading paddingHorizontal="M" value={isExpense ? l10n.EXPENSES : l10n.INCOMES}>
-        <PriceFriendly color={COLOR.TEXT} currency={baseCurrency} value={total} />
+        <PriceFriendly bold color={color} currency={baseCurrency} operator value={total} />
       </Heading>
       <View>
         {orderByAmount(totals).map(({ key, amount }) => (
@@ -40,7 +43,7 @@ const ItemGroupCategories = ({ dataSource, type }) => {
             style={[styles.content, expand && expand !== key && { opacity: OPACITY.S }]}
           >
             <HorizontalChartItem
-              color={isExpense ? COLOR.EXPENSE : COLOR.INCOME}
+              color={color}
               currency={baseCurrency}
               title={l10n.CATEGORIES[type][key]}
               value={amount}
@@ -53,7 +56,7 @@ const ItemGroupCategories = ({ dataSource, type }) => {
                 {orderByAmount(dataSource[key]).map((item) => (
                   <HorizontalChartItem
                     key={`${key}-${item.key}`}
-                    color={isExpense ? COLOR.EXPENSE : COLOR.INCOME}
+                    color={color}
                     currency={baseCurrency}
                     small
                     title={item.key}

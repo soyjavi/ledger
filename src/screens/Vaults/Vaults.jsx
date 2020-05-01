@@ -1,12 +1,12 @@
 import { bool } from 'prop-types';
 import React, { useEffect, useState } from 'react';
+import { THEME } from 'reactor/common';
+import { Slider, Viewport } from 'reactor/components';
 
-import { THEME } from '../../reactor/common';
-import { Slider, Viewport } from '../../reactor/components';
+import { C } from '@common';
+import { Footer, Header, Heading, ScrollView } from '@components';
+import { useL10N, useNavigation, useSettings, useStore } from '@context';
 
-import { C } from '../../common';
-import { Footer, Header, Heading, ScrollView } from '../../components';
-import { useL10N, useNavigation, useSettings, useStore } from '../../context';
 import { CURRENCYCARD_WIDTH, CurrencyCard, VaultItem } from './components';
 import { filter, query } from './modules';
 import styles from './Vaults.style';

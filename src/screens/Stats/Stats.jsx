@@ -1,13 +1,13 @@
 import { arrayOf, bool, shape } from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
-import { ScrollView, View } from 'react-native';
+import { View } from 'react-native';
+import { THEME } from 'reactor/common';
+import { Text, Viewport } from 'reactor/components';
 
-import { THEME } from '../../reactor/common';
-import { Text, Viewport } from '../../reactor/components';
+import { C } from '@common';
+import { Chart, Footer, Header, Heading, ScrollView } from '@components';
+import { useL10N, useNavigation, useStore } from '@context';
 
-import { C } from '../../common';
-import { Chart, Footer, Header } from '../../components';
-import { useL10N, useNavigation, useStore } from '../../context';
 import { ItemGroupCategories, Locations, SliderMonths } from './components';
 import { calcScales, orderCaptions, queryMonth, queryChart } from './modules';
 import styles from './Stats.style';
@@ -21,9 +21,12 @@ const {
 
 const Stats = (props) => {
   const { visible, ...inherit } = props;
+
   const [chart, setChart] = useState({});
   const [slider, setSlider] = useState({});
   const [month, setMonth] = useState({});
+  const [scroll, setScroll] = useState(false);
+
   const scrollview = useRef(null);
   const {
     params: { vault },
@@ -54,7 +57,7 @@ const Stats = (props) => {
   const hasExpenses = Object.keys(expenses).length > 0;
   const hasIncomes = Object.keys(incomes).length > 0;
   const hasPoints = locations.points && locations.points.length > 0;
-  const title = vault ? `${vault.title} ` : '';
+  const title = vault ? `${vault.title} ` : `${l10n.MONTHS[slider.month]} ${slider.year}`;
 
   const common = {
     currency,
@@ -65,11 +68,12 @@ const Stats = (props) => {
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
-      <Header highlight title={`${title}${l10n.ACTIVITY}`} />
+      <Heading />
+      <Header highlight={scroll} onBack={navigation.back} title={title} />
 
-      <SliderMonths {...slider} onChange={onChangeSlider} style={styles.sliderMonths} />
+      <ScrollView contentContainerStyle={styles.scrollView} onScroll={setScroll} ref={scrollview}>
+        <SliderMonths {...slider} onChange={onChangeSlider} marginBottom="M" />
 
-      <ScrollView contentContainerStyle={styles.scrollView} ref={scrollview}>
         <Chart
           {...calcScales(chart.balance)}
           {...common}
@@ -79,6 +83,7 @@ const Stats = (props) => {
           title={l10n.OVERALL_BALANCE}
           values={chart.balance}
         />
+
         <Chart
           {...calcScales(chart.incomes)}
           {...common}
@@ -124,7 +129,7 @@ const Stats = (props) => {
           </>
         )}
       </ScrollView>
-      <Footer onBack={navigation.back} onHardwareBack={visible ? navigation.back : undefined} />
+      <Footer onBack={navigation.back} onHardwareBack={visible ? navigation.back : undefined} visible={!scroll} />
     </Viewport>
   );
 };

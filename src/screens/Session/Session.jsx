@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { Image, View } from 'react-native';
+import { Activity, Row, Text, Viewport } from 'reactor/components';
+import { useEnvironment } from 'reactor/hooks';
 
-import { Activity, Row, Text, Viewport } from '../../reactor/components';
-import { useEnvironment } from '../../reactor/hooks';
+import { LOGO } from '@assets';
+import { C } from '@common';
+import { useL10N, useNavigation, useSnackBar, useStore } from '@context';
 
-import { LOGO } from '../../assets';
-import { C } from '../../common';
-import { useL10N, useNavigation, useSnackBar, useStore } from '../../context';
 import { NumKeyboard } from './components';
 import { onHandshake, onFingerprint, onPin } from './modules';
 import styles from './Session.style';
 
 const { IS_DEV, VERSION } = C;
 
-const Session = (props) => {
+export const Session = (props) => {
   const { IS_WEB } = useEnvironment();
   const l10n = useL10N();
   const navigation = useNavigation();
@@ -60,5 +60,3 @@ const Session = (props) => {
     </Viewport>
   );
 };
-
-export default React.memo(Session);

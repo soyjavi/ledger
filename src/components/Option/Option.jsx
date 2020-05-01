@@ -1,40 +1,66 @@
-import { bool, func, node, number, oneOfType, string } from 'prop-types';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Image } from 'react-native';
+import { Icon, Text, Touchable } from 'reactor/components';
+import { THEME } from 'reactor/common';
 
-import { Icon, Text, Touchable } from '../../reactor/components';
-import { THEME } from '../../reactor/common';
 import { Box } from '../Box';
-import styles from './Option.style';
+import styles, { OPTION_SIZE } from './Option.style';
 
 const { BORDER_RADIUS, COLOR, SPACE } = THEME;
 
-const Option = ({ children, color = COLOR.BASE, icon, image, onPress, selected, title, ...inherit }) => {
-  const colorContent = selected ? COLOR.BACKGROUND : COLOR.TEXT;
-  const onlyText = !icon && !image;
+export { OPTION_SIZE };
+
+export const Option = ({
+  caption,
+  children,
+  color = COLOR.BASE,
+  disabled,
+  icon,
+  image,
+  onPress,
+  selected,
+  legend,
+  ...inherit
+}) => {
+  const colorContent = disabled ? COLOR.LIGHTEN : selected ? COLOR.BACKGROUND : COLOR.TEXT;
 
   return (
     <Box
       {...inherit}
+      elevate={disabled ? false : inherit.elevate}
       borderRadius={BORDER_RADIUS}
       color={selected ? COLOR.CTA : color}
       small
       style={[styles.container, inherit.style]}
     >
-      <Touchable onPress={onPress} rippleColor={colorContent} style={[styles.content]}>
-        {icon && <Icon value={icon} color={colorContent} family={inherit.family} size={SPACE.L} />}
+      <Touchable onPress={!disabled ? onPress : undefined} rippleColor={colorContent} style={styles.content}>
+        {icon && <Icon value={icon} color={colorContent} family={inherit.family || 'SimpleLineIcons'} size={SPACE.L} />}
         {image && <Image source={image} style={styles.image} />}
 
-        <Text
-          align="center"
-          caption
-          color={colorContent}
-          marginTop={!onlyText ? 'XS' : undefined}
-          numberOfLines={1}
-          style={onlyText ? styles.legend : undefined}
-        >
-          {onlyText ? title.toUpperCase() : title}
-        </Text>
+        {caption && (
+          <Text
+            align="center"
+            caption
+            color={colorContent}
+            marginTop={icon || image ? 'XS' : undefined}
+            numberOfLines={1}
+          >
+            {caption}
+          </Text>
+        )}
+        {legend && (
+          <Text
+            align="center"
+            legend
+            color={colorContent}
+            marginTop={icon || image ? 'XS' : undefined}
+            numberOfLines={1}
+            style={styles.legend}
+          >
+            {legend}
+          </Text>
+        )}
         {children}
       </Touchable>
     </Box>
@@ -42,13 +68,13 @@ const Option = ({ children, color = COLOR.BASE, icon, image, onPress, selected, 
 };
 
 Option.propTypes = {
-  children: node,
-  color: string,
-  icon: oneOfType([number, string]),
-  image: oneOfType([number, string]),
-  onPress: func.isRequired,
-  selected: bool,
-  title: string.isRequired,
+  caption: PropTypes.string,
+  children: PropTypes.node,
+  color: PropTypes.string,
+  disabled: PropTypes.bool,
+  icon: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  image: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  legend: PropTypes.string,
+  onPress: PropTypes.func,
+  selected: PropTypes.bool,
 };
-
-export { Option };

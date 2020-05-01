@@ -1,19 +1,16 @@
 import { arrayOf, number, oneOfType, shape, string } from 'prop-types';
 import React from 'react';
-import { Text } from '../../reactor/components';
 
-import { verboseDate } from '../../common';
-import { useL10N } from '../../context';
+import { useL10N } from '@context';
 import { TransactionItem } from '../TransactionItem';
+import { BoxDate } from '../Box';
 
 const GroupTransactions = ({ currency, timestamp, txs = [] }) => {
   const l10n = useL10N();
 
   return (
     <>
-      <Text caption paddingHorizontal="M" marginTop="S">
-        {verboseDate(timestamp, l10n)}
-      </Text>
+      <BoxDate l10n={l10n} timestamp={timestamp} marginHorizontal="M" marginVertical="S" />
       {txs.map((tx) => (
         <TransactionItem key={tx.hash} currency={currency} {...tx} />
       ))}

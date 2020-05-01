@@ -1,4 +1,4 @@
-import { FORM } from '../../../../../common';
+import { FORM } from '@common';
 
 const { TRANSFER } = FORM;
 

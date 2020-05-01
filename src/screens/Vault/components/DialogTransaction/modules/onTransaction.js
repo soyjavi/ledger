@@ -1,13 +1,11 @@
-import { createTx } from '../../../../../services';
+import { createTx } from '@services';
 
 export default ({
-  props: { vault },
+  props: { vault, type },
   state: {
-    category,
     coords = {},
-    form: { value, title = '' },
+    form: { category, value, title = '' },
     place,
-    type,
   },
   store,
   snackbar,

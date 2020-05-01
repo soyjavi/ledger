@@ -1,4 +1,4 @@
-import { groupTxsByDate } from '../../../common';
+import { groupTxsByDate } from '@common';
 
 export const query = ({ txs = [], scroll = false }) =>
   groupTxsByDate(

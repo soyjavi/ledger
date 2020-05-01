@@ -1,12 +1,13 @@
 import { func, number, string, bool } from 'prop-types';
 import React from 'react';
 import { Image, View } from 'react-native';
+import { Row, Text, Touchable } from 'reactor/components';
+import { THEME } from 'reactor/common';
 
-import { FLAGS } from '../../../../assets';
-import { Box, PriceFriendly } from '../../../../components';
-import { useStore } from '../../../../context';
-import { Row, Text, Touchable } from '../../../../reactor/components';
-import { THEME } from '../../../../reactor/common';
+import { FLAGS } from '@assets';
+import { Box, PriceFriendly } from '@components';
+import { useStore } from '@context';
+
 import styles, { CURRENCYCARD_WIDTH } from './CurrencyCard.style';
 
 const { COLOR } = THEME;

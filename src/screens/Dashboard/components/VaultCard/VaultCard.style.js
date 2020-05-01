@@ -1,10 +1,12 @@
 import { StyleSheet } from 'react-native';
-
-import { LAYOUT, THEME } from '../../../../reactor/common';
+import { LAYOUT, THEME } from 'reactor/common';
 
 const { SPACE } = THEME;
 
-export const VAULTCARD_WIDTH = LAYOUT.VIEWPORT.W / 2 - SPACE.XL;
+let VAULTCARD_WIDTH = LAYOUT.VIEWPORT.W / 2 - (SPACE.L + SPACE.XS);
+if (VAULTCARD_WIDTH > 196) VAULTCARD_WIDTH = 196;
+
+export { VAULTCARD_WIDTH };
 
 export default StyleSheet.create({
   box: {
@@ -18,6 +20,8 @@ export default StyleSheet.create({
 
   content: {
     flex: 1,
+    paddingHorizontal: SPACE.M,
+    paddingVertical: SPACE.S + SPACE.XS,
   },
 
   expand: {
@@ -27,5 +31,11 @@ export default StyleSheet.create({
   flag: {
     height: SPACE.M,
     width: SPACE.M,
+  },
+
+  title: {
+    fontFamily: 'font-family-headline',
+    fontWeight: '400',
+    fontSize: 16,
   },
 });

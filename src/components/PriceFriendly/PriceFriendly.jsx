@@ -1,13 +1,11 @@
 import { bool, number, string } from 'prop-types';
 import React from 'react';
+import { THEME } from 'reactor/common';
+import { Price, Row, Text } from 'reactor/components';
+import { format } from 'reactor/components/Price/modules';
 
-import { THEME } from '../../reactor/common';
-import { Price, Row, Text } from '../../reactor/components';
-import { format } from '../../reactor/components/Price/modules';
-
-import { C, currencyDecimals } from '../../common';
-import { useSettings } from '../../context';
-import styles from './PriceFriendly.style';
+import { C, currencyDecimals } from '@common';
+import { useSettings } from '@context';
 
 const MASK_SYMBOL = '*';
 const { COLOR } = THEME;
@@ -41,8 +39,6 @@ const PriceFriendly = ({ currency, fixed, label, operator, value = 0, ...others 
     value: Math.abs(value),
   };
 
-  const style = [styles.font, others.style];
-
   return (
     <Row width="auto">
       {label && (
@@ -51,11 +47,11 @@ const PriceFriendly = ({ currency, fixed, label, operator, value = 0, ...others 
         </Text>
       )}
       {maskAmount ? (
-        <Text {...others} color={color} style={style}>
+        <Text {...others} color={color}>
           {maskValue(props)}
         </Text>
       ) : (
-        <Price {...props} style={style} />
+        <Price {...props} />
       )}
     </Row>
   );

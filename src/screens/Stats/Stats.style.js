@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
+import { THEME } from 'reactor/common';
 
-import { THEME } from '../../reactor/common';
-import { HEADER_HEIGHT } from '../../components';
+import { HEADER_HEIGHT } from '@components';
 
 const { COLOR, SPACE } = THEME;
 
@@ -24,11 +24,6 @@ export default StyleSheet.create({
   },
 
   scrollView: {
-    paddingBottom: HEADER_HEIGHT,
-    paddingTop: SPACE.L,
-  },
-
-  sliderMonths: {
-    marginTop: HEADER_HEIGHT,
+    paddingVertical: HEADER_HEIGHT,
   },
 });

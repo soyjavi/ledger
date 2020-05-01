@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native';
-
-import { LAYOUT, THEME } from '../../../../reactor/common';
+import { LAYOUT, THEME } from 'reactor/common';
 
 const { BORDER_RADIUS, UNIT, SPACE, COLOR } = THEME;
 

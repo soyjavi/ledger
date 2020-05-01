@@ -1,16 +1,17 @@
-import { oneOfType, func, shape, number, string } from 'prop-types';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Image } from 'react-native';
+import { THEME } from 'reactor/common';
+import { Col, Row, Text, Touchable, View } from 'reactor/components';
 
-import { THEME } from '../../reactor/common';
-import { Button, Col, Row, Text, Touchable } from '../../reactor/components';
-import { LOGO } from '../../assets';
-import { C, exchange, verboseMonth } from '../../common';
-import { useL10N, useNavigation, useSettings, useStore } from '../../context';
+import { LOGO } from '@assets';
+import { C, exchange, verboseMonth } from '@common';
+import { useL10N, useSettings, useStore } from '@context';
+
 import { PriceFriendly } from '../PriceFriendly';
 import styles from './Summary.style';
 
-const { CURRENCY, SCREEN } = C;
+const { CURRENCY } = C;
 const { COLOR } = THEME;
 
 const BoxSummary = ({ caption, value, ...inherit }) => (
@@ -20,6 +21,8 @@ const BoxSummary = ({ caption, value, ...inherit }) => (
     </Text>
     <PriceFriendly
       {...inherit}
+      bold
+      caption
       color={value === 0 ? COLOR.LIGHTEN : undefined}
       fixed={value >= 1000 ? 0 : undefined}
       value={value}
@@ -28,14 +31,13 @@ const BoxSummary = ({ caption, value, ...inherit }) => (
 );
 
 BoxSummary.propTypes = {
-  caption: string.isRequired,
-  value: number.isRequired,
+  caption: PropTypes.string.isRequired,
+  value: PropTypes.number.isRequired,
 };
 
-const Summary = ({ currency = CURRENCY, currentBalance, currentMonth = {}, image = LOGO, onSettings, title = '' }) => {
+const Summary = ({ children, currency = CURRENCY, currentBalance, currentMonth = {}, image = LOGO, title = '' }) => {
   const l10n = useL10N();
   const { baseCurrency, rates } = useStore();
-  const navigation = useNavigation();
   const {
     state: { maskAmount },
     dispatch,
@@ -46,58 +48,62 @@ const Summary = ({ currency = CURRENCY, currentBalance, currentMonth = {}, image
     currentBalance - progression > 0 ? (progression * 100) / (currentBalance - progression) : progression;
 
   return (
-    <Col align="center" marginHorizontal="M" marginBottom="L">
-      <Col align="center">
-        <Row width="auto">
-          <Image source={image} resizeMode="contain" style={styles.image} />
-          <Text caption numberOfLines={1} marginLeft="XS">
-            {title.toUpperCase()}
-          </Text>
+    <View style={styles.container}>
+      <Col align="center" style={styles.content}>
+        <Image source={image} resizeMode="contain" style={styles.image} />
+        <Col align="center" marginBottom="M">
+          <Text subtitle>{title}</Text>
+          <Touchable onPress={() => dispatch({ type: 'MASK_AMOUNT', value: !maskAmount })}>
+            <PriceFriendly
+              currency={baseCurrency}
+              headline
+              value={
+                baseCurrency !== currency
+                  ? exchange(Math.abs(currentBalance), currency, baseCurrency, rates)
+                  : Math.abs(currentBalance)
+              }
+            />
+          </Touchable>
+          {baseCurrency !== currency && (
+            <PriceFriendly color={COLOR.LIGHTEN} currency={currency} value={currentBalance} />
+          )}
+        </Col>
+
+        <Row justify="space" paddingHorizontal="S">
+          <BoxSummary caption={verboseMonth(new Date(), l10n)} currency="%" operator value={progressionPercentage} />
+          <BoxSummary caption={l10n.INCOMES} currency={baseCurrency} value={incomes} />
+          <BoxSummary caption={l10n.EXPENSES} currency={baseCurrency} value={expenses} />
+          <BoxSummary caption={l10n.TODAY} currency={baseCurrency} operator value={today} />
         </Row>
-        <Touchable onPress={() => dispatch({ type: 'MASK_AMOUNT', value: !maskAmount })}>
-          <PriceFriendly
-            currency={baseCurrency}
-            headline
-            value={
-              baseCurrency !== currency
-                ? exchange(Math.abs(currentBalance), currency, baseCurrency, rates)
-                : Math.abs(currentBalance)
-            }
-          />
-        </Touchable>
-        {baseCurrency !== currency && (
-          <PriceFriendly color={COLOR.LIGHTEN} currency={currency} subtitle value={currentBalance} />
-        )}
       </Col>
 
-      <Row justify="space" marginVertical="M" paddingHorizontal="M">
-        <BoxSummary caption={verboseMonth(new Date(), l10n)} currency="%" operator value={progressionPercentage} />
-        <BoxSummary caption={l10n.INCOMES} currency={baseCurrency} value={incomes} />
-        <BoxSummary caption={l10n.EXPENSES} currency={baseCurrency} value={expenses} />
-        <BoxSummary caption={l10n.TODAY} currency={baseCurrency} operator value={today} />
-      </Row>
-
-      <Row justify="center">
-        <Button
-          colorText={COLOR.BACKGROUND}
-          onPress={() => navigation.go(SCREEN.STATS)}
-          size="S"
-          style={styles.button}
-          title={l10n.ACTIVITY}
-        />
-        {onSettings && <Button icon="settings-outline" marginLeft="M" onPress={onSettings} outlined size="S" />}
-      </Row>
-    </Col>
+      {children && (
+        <Row justify="center" style={styles.buttons}>
+          {React.Children.map(children, (option, index) =>
+            option
+              ? React.cloneElement(option, {
+                  key: index,
+                  color: COLOR.BACKGROUND,
+                  elevate: true,
+                  marginRight: index < children.length - 1 ? 'M' : undefined,
+                  ...option.props,
+                })
+              : undefined,
+          )}
+        </Row>
+      )}
+    </View>
   );
 };
 
 Summary.propTypes = {
-  currency: string,
-  currentBalance: number,
-  currentMonth: shape({}),
-  image: oneOfType([number, string]),
-  onSettings: func,
-  title: string,
+  children: PropTypes.node,
+  currency: PropTypes.string,
+  currentBalance: PropTypes.number,
+  currentMonth: PropTypes.shape({}),
+  image: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  onSettings: PropTypes.func,
+  title: PropTypes.string,
 };
 
 export { Summary };

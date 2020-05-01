@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
+import { THEME } from 'reactor/common';
 
-import { THEME } from '../../reactor/common';
-import { HEADER_HEIGHT } from '../../components';
+import { HEADER_HEIGHT } from '@components';
 
 const { SPACE } = THEME;
 

@@ -1,4 +1,4 @@
-import { createTransfer } from '../../../../../services';
+import { createTransfer } from '@services';
 
 export default ({
   props: { vault },

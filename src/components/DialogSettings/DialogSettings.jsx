@@ -4,12 +4,12 @@ import { View } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import { Button, Dialog, Image, Text } from 'reactor/components';
+import { THEME } from 'reactor/common';
 
-import { Button, Dialog, Image, Text } from '../../reactor/components';
-import { THEME } from '../../reactor/common';
-import { useL10N, useSnackBar, useStore } from '../../context';
+import { useL10N, useSnackBar, useStore } from '@context';
+
 import { DialogFork } from '../DialogFork';
-
 import styles from './DialogSettings.style';
 
 const { COLOR } = THEME;
@@ -56,7 +56,7 @@ export const DialogSettings = ({ visible, ...inherit }) => {
 
   return (
     <Dialog {...inherit} style={styles.dialog} styleButton={styles.dialogButton} position="bottom" visible={visible}>
-      <Text color={COLOR.BACKGROUND} marginBottom="XS" subtitle>
+      <Text marginBottom="XS" subtitle>
         {l10n.TRANSFER_TXS}
       </Text>
       <Text caption color={COLOR.LIGHTEN}>

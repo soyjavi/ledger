@@ -1,25 +1,28 @@
 import { bool } from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
-import { ScrollView, View } from 'react-native';
+import { View } from 'react-native';
+import { Text, Viewport } from 'reactor/components';
 
-import { FLAGS } from '../../assets';
-import { Footer, GroupTransactions, Header, Heading, Summary } from '../../components';
-import { useL10N, useNavigation, useStore } from '../../context';
-import { Text, Viewport } from '../../reactor/components';
+import { FLAGS } from '@assets';
+import { Footer, GroupTransactions, Header, Heading, Option, ScrollView, Summary } from '@components';
+import { useConnection, useL10N, useNavigation, useStore } from '@context';
+
 import { DialogTransaction } from './components';
 import { onScroll, query } from './modules';
 import styles from './Vault.style';
 
 const Vault = ({ visible, ...inherit }) => {
+  const { connected } = useConnection();
   const l10n = useL10N();
   const { params, ...navigation } = useNavigation();
   const store = useStore();
+  const scrollview = useRef(null);
+
   const [dataSource, setDataSource] = useState(inherit.dataSource);
   const [dialog, setDialog] = useState(false);
   const [scroll, setScroll] = useState(false);
   const [scrollQuery, setScrollQuery] = useState(false);
   const [txs, setTxs] = useState([]);
-  const scrollview = useRef(null);
 
   useEffect(() => {
     if (visible) {
@@ -27,6 +30,8 @@ const Vault = ({ visible, ...inherit }) => {
       const vault = store.vaults.find((vault) => vault.hash === hash);
       setTxs(query({ l10n, txs: vault.txs }));
       setDataSource(vault);
+    } else {
+      setDialog(false);
     }
   }, [visible, store]);
 
@@ -48,7 +53,7 @@ const Vault = ({ visible, ...inherit }) => {
   });
 
   const { currency = store.baseCurrency, title, ...rest } = dataSource || params.vault || {};
-  const vaultProps = { ...rest, image: FLAGS[currency], title: `${title} ${l10n.BALANCE}` };
+  const vaultProps = { ...rest, image: FLAGS[currency], title };
 
   console.log('  <Vault>', { visible, dialog });
 
@@ -56,12 +61,20 @@ const Vault = ({ visible, ...inherit }) => {
     <Viewport {...inherit} scroll={false} visible={visible}>
       <Header highlight={scroll} {...vaultProps} />
 
-      <ScrollView onScroll={handleScroll} ref={scrollview} scrollEventThrottle={40} style={styles.container}>
-        <Summary {...vaultProps} currency={currency} />
+      <ScrollView onScroll={handleScroll} ref={scrollview} style={styles.container}>
+        <Summary {...vaultProps} currency={currency}>
+          <Option disabled={!connected} icon="arrow-up" onPress={() => setDialog(1)} caption={l10n.INCOME} />
+          <Option disabled={!connected} icon="arrow-down" onPress={() => setDialog(0)} caption={l10n.EXPENSE} />
+          {store.vaults.length > 1 ? (
+            <Option disabled={!connected} icon="shuffle" onPress={() => setDialog(2)} caption={l10n.TRANSFER} />
+          ) : (
+            undefined
+          )}
+        </Summary>
 
         {txs.length > 0 ? (
           <>
-            <Heading paddingHorizontal="M" value={l10n.TRANSACTIONS} />
+            <Heading paddingHorizontal="M" small value={l10n.TRANSACTIONS} />
             {txs.map((item) => (
               <GroupTransactions key={item.timestamp} {...item} currency={currency} />
             ))}
@@ -73,19 +86,15 @@ const Vault = ({ visible, ...inherit }) => {
         )}
       </ScrollView>
 
-      <Footer
-        onBack={navigation.back}
-        onHardwareBack={visible ? navigation.back : undefined}
-        onPress={() => setDialog(true)}
-        scroll={scroll}
-      />
+      <Footer onBack={navigation.back} onHardwareBack={visible ? navigation.back : undefined} visible={!scroll} />
 
       {visible && dataSource && (
         <DialogTransaction
           currency={currency}
           onClose={() => setDialog(false)}
+          type={dialog}
           vault={dataSource.hash}
-          visible={dialog}
+          visible={visible && dialog !== false}
         />
       )}
     </Viewport>

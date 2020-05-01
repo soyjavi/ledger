@@ -1,15 +1,14 @@
 import { StyleSheet } from 'react-native';
+import { THEME } from 'reactor/common';
 
-import { HEADER_HEIGHT } from '../../components';
-import { THEME } from '../../reactor/common';
+import { HEADER_HEIGHT } from '@components';
 
-const { COLOR, SPACE } = THEME;
+const { SPACE, FONT } = THEME;
 
 export default StyleSheet.create({
-  buttonHeader: {
-    height: SPACE.L,
+  smallButton: {
+    ...FONT.BUTTON,
     paddingHorizontal: 0,
-    backgroundColor: COLOR.BACKGROUND,
   },
 
   scroll: {
@@ -17,8 +16,6 @@ export default StyleSheet.create({
   },
 
   vaults: {
-    marginBottom: SPACE.L,
-    paddingLeft: SPACE.S,
-    paddingRight: SPACE.M,
+    marginBottom: SPACE.M,
   },
 });

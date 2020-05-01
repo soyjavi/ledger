@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { TextInput } from 'react-native';
+import { THEME } from 'reactor/common';
+import { Col, Row, Text } from 'reactor/components';
+import { format } from 'reactor/components/Price/modules';
 
-import { THEME } from '../../reactor/common';
-import { Col, Row, Text } from '../../reactor/components';
-import { format } from '../../reactor/components/Price/modules';
+import { C, currencyDecimals, getLastRates } from '@common';
+import { useStore } from '@context';
 
-import { C, currencyDecimals, getLastRates } from '../../common';
-import { useStore } from '../../context';
 import styles from './Input.style';
 
 const { SYMBOL } = C;
@@ -72,7 +72,7 @@ export const Input = ({ currency, onChange, ...others }) => {
           autoCorrect={false}
           blurOnSubmit
           editable
-          keyboardType={currency ? 'numeric' : 'text'}
+          keyboardType={currency ? 'numeric' : 'default'}
           onBlur={() => setFocus(false)}
           onChangeText={handleChange}
           onFocus={() => setFocus(true)}
@@ -83,6 +83,7 @@ export const Input = ({ currency, onChange, ...others }) => {
           value={others.value}
         />
       </Row>
+
       {exchange && (
         <Row justify="center" marginTop="XS">
           <Text bold caption color={COLOR.LIGHTEN}>

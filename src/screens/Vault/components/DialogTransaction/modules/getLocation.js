@@ -1,7 +1,7 @@
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 
-import { getPlace } from '../../../../../services';
+import { getPlace } from '@services';
 
 export default async (setLocation) => {
   const { status } = await Permissions.askAsync(Permissions.LOCATION);

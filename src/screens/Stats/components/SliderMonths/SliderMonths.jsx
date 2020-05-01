@@ -1,11 +1,10 @@
 import { number, func } from 'prop-types';
 import React, { useEffect, useRef } from 'react';
+import { THEME } from 'reactor/common';
+import { Text, Slider, View } from 'reactor/components';
 
-import { THEME } from '../../../../reactor/common';
-import { Text, Slider } from '../../../../reactor/components';
-import { useL10N } from '../../../../context';
-import { CardOption } from '../../../../components';
-import styles, { CARD_WIDTH } from './SliderMonths.style';
+import { useL10N } from '@context';
+import { Option, OPTION_SIZE } from '@components';
 import getLastMonths from './modules/getLastMonths';
 
 const { COLOR, SPACE } = THEME;
@@ -19,26 +18,28 @@ const SliderMonths = ({ index, onChange, ...others }) => {
       const {
         current: { scrollview },
       } = slider;
-      scrollview.current.scrollTo({ x: (index - 3) * (CARD_WIDTH + SPACE.S), animated: true });
+      scrollview.current.scrollTo({ x: (index - 3) * (OPTION_SIZE + SPACE.S), animated: true });
     }
   }, [index]);
 
   return (
-    <Slider ref={slider} itemWidth={CARD_WIDTH + SPACE.S} itemMargin={0} style={[styles.slider, others.style]}>
-      {getLastMonths(l10n.MONTHS).map(({ month, year }, i) => (
-        <CardOption
-          key={month}
-          title={l10n.MONTHS[month].substr(0, 3)}
-          onPress={() => onChange({ index: i, month, year })}
-          selected={index === i}
-          style={styles.card}
-        >
-          <Text bold caption color={index === i ? COLOR.TEXT : COLOR.LIGHTEN}>
-            {year}
-          </Text>
-        </CardOption>
-      ))}
-    </Slider>
+    <View {...others}>
+      <Slider ref={slider} itemWidth={OPTION_SIZE} itemMargin={SPACE.S}>
+        {getLastMonths(l10n.MONTHS).map(({ month, year }, i) => (
+          <Option
+            key={month}
+            marginRight="S"
+            onPress={() => onChange({ index: i, month, year })}
+            selected={index === i}
+            caption={l10n.MONTHS[month].substr(0, 3)}
+          >
+            <Text bold caption color={COLOR.LIGHTEN}>
+              {year}
+            </Text>
+          </Option>
+        ))}
+      </Slider>
+    </View>
   );
 };
 

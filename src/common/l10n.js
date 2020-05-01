@@ -3,8 +3,10 @@ export default {
     ACCEPT: 'Accept',
     ACTIVE: 'Active',
     ACTIVITY: 'Activity',
+    ADD: 'Add',
     AMOUNT: 'Amount',
 
+    BACK: 'BACK',
     BALANCE: 'Balance',
 
     // CATEGORIES: [
@@ -60,9 +62,9 @@ export default {
     CHOOSE_TRANSACTION_TYPE: 'Choose type of transaction',
     CITIES: 'Cities',
     CLEAR: 'Clear',
-    CLONE: 'Clone',
+    CLONE: 'CLONE',
     CLONE_CAPTION: 'To make your life easier you can clone this transaction with a simple touch of the button.',
-    CLOSE: 'Close',
+    CLOSE: 'CLOSE',
     CONCEPT: 'Concept',
     COUNTRIES: 'Countries',
     CURRENCY: 'Currency',
@@ -74,7 +76,7 @@ export default {
 
     ENTER_PIN: 'Enter your pin',
     ENTER_PIN_OR_FINGERPRINT: 'Enter your pin or fingerprint',
-    EXPENSE: 'EXPENSE',
+    EXPENSE: 'Expense',
     EXPENSES: 'Expenses',
 
     FIRST_VAULT_CAPTION:
@@ -82,10 +84,10 @@ export default {
     FORKED_CORRECTLY: 'All transactions have been successfully transferred to this device.',
     FROM: 'from',
 
-    GET: 'Get',
+    GET: 'Amount you will get',
 
     IMPORT: 'Import',
-    INCOME: 'INCOME',
+    INCOME: 'Income',
     INCOMES: 'Incomes',
     INITIAL_BALANCE: 'Initial balance',
 
@@ -109,10 +111,10 @@ export default {
     ],
 
     NAME: 'Name',
-    NEW: 'NEW',
+    NEW: 'New',
     NO_TRANSACTIONS: "You don't have any transaction.",
 
-    OFFLINE_MODE: 'Offline mode',
+    OFFLINE_MODE: 'OFFLINE',
     OTHERS: 'Others',
     OVERALL_BALANCE: 'Overall Balance',
 
@@ -120,8 +122,7 @@ export default {
 
     QR_READER: 'Open camera',
 
-    SAVE: 'Save',
-    SAVE_LOCATION: 'Save location',
+    SAVE: 'SAVE',
     SEARCH: 'Search',
     SEND: 'Send',
     SETTINGS: 'Settings',
@@ -134,9 +135,9 @@ export default {
     TAP_TO_UPDATE: 'Tap to update',
     TO: 'to',
     TODAY: 'Today',
-    TRANSACTION: ['EXPENSE', 'INCOME', 'TRANSFER'],
+    TRANSACTION: ['Expense', 'Income', 'Transfer'],
     TRANSACTIONS: 'Transactions',
-    TRANSFER: 'TRANSFER',
+    TRANSFER: 'Transfer',
     TRANSFERS: 'Transfers',
     TRANSFER_TXS: 'TRANSFER DATA',
     TRANSFER_TXS_CAPTION:
@@ -148,7 +149,7 @@ export default {
     TRANSFER_CAPTION: 'Transfer any amount to another of your vaults.',
     TYPE: 'Type',
 
-    VAULT: 'VAULT',
+    VAULT: 'Vault',
     VAULT_DESTINATION: 'Destination vault',
     VAULTS: 'Vaults',
     VAULT_CAPTION:
@@ -156,8 +157,8 @@ export default {
     VIEW_ALL: 'View All',
     VISIBILITY: 'Visibility',
 
-    WARNING: 'WARNING',
-    WIPE: 'Wipe',
+    WARNING: 'Warning',
+    WIPE: 'WIPE',
     WITHOUT_TXS: 'No transactions',
 
     YESTERDAY: 'Yesterday',

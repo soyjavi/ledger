@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native';
-
-import { THEME } from '../../reactor/common';
+import { THEME } from 'reactor/common';
 
 const { COLOR, FONT, SPACE } = THEME;
 
@@ -11,11 +10,10 @@ export default StyleSheet.create({
   },
 
   focus: {
-    borderBottomColor: COLOR.TEXT,
+    borderBottomColor: COLOR.LIGHTEN,
   },
 
   value: {
-    // paddingLeft: SPACE.L,
     minWidth: SPACE.L,
   },
 

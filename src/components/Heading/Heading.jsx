@@ -1,13 +1,15 @@
-import { node, string } from 'prop-types';
+import PropTypes from 'prop-types';
 import React from 'react';
+import { Col, Row, Text } from 'reactor/components';
+import { THEME } from 'reactor/common';
 
-import { Col, Row, Text } from '../../reactor/components';
+const { COLOR } = THEME;
 
-const Heading = ({ children, value = '', ...others }) => (
-  <Row marginBottom="XS" {...others}>
+const Heading = ({ children, small, value = '', ...others }) => (
+  <Row {...others}>
     <Col>
-      <Text color={others.color} subtitle>
-        {value.toUpperCase()}
+      <Text bold={small} caption={small} color={small ? COLOR.LIGHTEN : undefined} subtitle={!small}>
+        {small ? value.toUpperCase() : value}
       </Text>
     </Col>
     <Col width="auto">{children}</Col>
@@ -15,8 +17,9 @@ const Heading = ({ children, value = '', ...others }) => (
 );
 
 Heading.propTypes = {
-  children: node,
-  value: string,
+  children: PropTypes.node,
+  small: PropTypes.bool,
+  value: PropTypes.string,
 };
 
 export { Heading };

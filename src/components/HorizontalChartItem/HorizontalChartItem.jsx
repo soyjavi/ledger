@@ -1,8 +1,8 @@
 import { bool, number, string } from 'prop-types';
 import React from 'react';
+import { Row, Text, View } from 'reactor/components';
+import { THEME } from 'reactor/common';
 
-import { Row, Text, View } from '../../reactor/components';
-import { THEME } from '../../reactor/common';
 import { PriceFriendly } from '../PriceFriendly';
 import styles from './HorizontalChartItem.style';
 

@@ -1,8 +1,8 @@
 import { node, number, string, bool } from 'prop-types';
 import React from 'react';
+import { THEME } from 'reactor/common';
+import { Col } from 'reactor/components';
 
-import { THEME } from '../../reactor/common';
-import { Col } from '../../reactor/components';
 import styles from './Box.style';
 
 const { BORDER_RADIUS, COLOR } = THEME;

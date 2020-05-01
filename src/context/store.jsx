@@ -1,7 +1,8 @@
 import { node } from 'prop-types';
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-import { C } from '../common';
+import { C } from '@common';
+
 import { consolidate, Storage } from './modules';
 
 const { CURRENCY, NAME } = C;

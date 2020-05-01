@@ -1,12 +1,11 @@
 import { bool, func, string } from 'prop-types';
 import React, { useState } from 'react';
+import { THEME } from 'reactor/common';
+import { Button, Dialog, Row, Text } from 'reactor/components';
 
-import { THEME } from '../../reactor/common';
-import { Button, Dialog, Row, Text } from '../../reactor/components';
-
-import { C } from '../../common';
-import { useL10N, useSnackBar, useStore } from '../../context';
-import { fork, getProfile } from '../../services';
+import { C } from '@common';
+import { useL10N, useSnackBar, useStore } from '@context';
+import { fork, getProfile } from '@services';
 
 import styles from './DialogFork.style';
 

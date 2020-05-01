@@ -1,12 +1,12 @@
 import { bool, shape, func } from 'prop-types';
 import React from 'react';
 import { Image } from 'react-native';
+import { THEME } from 'reactor/common';
+import { Icon, Col, Row, Text, Touchable } from 'reactor/components';
 
-import { FLAGS } from '../../../../assets';
-import { THEME } from '../../../../reactor/common';
-import { Icon, Col, Row, Text, Touchable } from '../../../../reactor/components';
+import { FLAGS } from '@assets';
+import { Box, PriceFriendly } from '@components';
 
-import { Box, PriceFriendly } from '../../../../components';
 import styles from './VaultItem.style';
 
 const { COLOR } = THEME;

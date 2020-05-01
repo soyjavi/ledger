@@ -1,4 +1,4 @@
-import { C } from '../../../../../common';
+import { C } from '@common';
 
 const { VAULT_TRANSFER, WIPE } = C;
 const INTERNAL_KEYS = [VAULT_TRANSFER.toString(), WIPE.toString()];

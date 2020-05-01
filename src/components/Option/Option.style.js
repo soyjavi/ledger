@@ -1,16 +1,18 @@
 import { StyleSheet } from 'react-native';
+import { LAYOUT, THEME } from 'reactor/common';
 
-import { THEME } from '../../reactor/common';
+const { BORDER_RADIUS, FONT, SPACE } = THEME;
 
-const { BORDER_RADIUS, FONT, SPACE, UNIT } = THEME;
+let OPTION_SIZE = LAYOUT.VIEWPORT.W / 6 + SPACE.XS;
+if (OPTION_SIZE > 80) OPTION_SIZE = 80;
 
-const BOX_SIZE = UNIT * 8;
+export { OPTION_SIZE };
 
 export default StyleSheet.create({
   container: {
-    minWidth: BOX_SIZE,
-    maxWidth: BOX_SIZE,
-    height: BOX_SIZE,
+    width: OPTION_SIZE,
+    maxWidth: OPTION_SIZE,
+    height: OPTION_SIZE,
   },
 
   content: {

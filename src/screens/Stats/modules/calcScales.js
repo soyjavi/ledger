@@ -1,4 +1,4 @@
-import { median } from '../../../common';
+import { median } from '@common';
 
 export default (values = []) => {
   if (!values) return undefined;
