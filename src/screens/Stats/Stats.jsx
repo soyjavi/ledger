@@ -1,11 +1,11 @@
 import { arrayOf, bool, shape } from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
-import { View } from 'react-native';
 import { THEME } from 'reactor/common';
-import { Text, Viewport } from 'reactor/components';
+import { Viewport } from 'reactor/components';
 
+import { BANNERS } from '@assets';
 import { C } from '@common';
-import { Chart, Footer, Header, Heading, ScrollView } from '@components';
+import { Banner, Chart, Footer, Header, Heading, ScrollView } from '@components';
 import { useL10N, useNavigation, useStore } from '@context';
 
 import { ItemGroupCategories, Locations, SliderMonths } from './components';
@@ -108,9 +108,7 @@ const Stats = (props) => {
             {hasExpenses && <ItemGroupCategories type={EXPENSE} dataSource={expenses} />}
           </>
         ) : (
-          <View style={styles.contentEmpty}>
-            <Text>{l10n.NO_TRANSACTIONS}</Text>
-          </View>
+          <Banner image={BANNERS.NOT_FOUND} paddingHorizontal="M" paddingVertical="M" title={l10n.NO_TRANSACTIONS} />
         )}
 
         {hasData && (

@@ -18,11 +18,6 @@ export default StyleSheet.create({
     marginBottom: SPACE.XL + SPACE.XS,
   },
 
-  contentEmpty: {
-    padding: SPACE.M,
-    alignItems: 'center',
-  },
-
   scrollView: {
     paddingVertical: HEADER_HEIGHT,
   },
