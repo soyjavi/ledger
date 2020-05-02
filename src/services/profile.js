@@ -4,7 +4,7 @@ import { apiCall, composeHeaders } from './modules';
 
 const { VERSION } = C;
 
-const getProfile = async (store, snackbar, signup = {}) => {
+export const getProfile = async (store, snackbar, signup = {}) => {
   const { authorization = signup.authorization, secret } = store;
   const { snackbarError } = snackbar;
   const headers = { authorization, secret };
@@ -33,7 +33,7 @@ const getProfile = async (store, snackbar, signup = {}) => {
   store.setSync(true);
 };
 
-const fork = async (store, snackbar, query = '') => {
+export const fork = async (store, snackbar, query = '') => {
   const { snackbarError } = snackbar;
   const [secure, file] = query.split('|');
 
@@ -47,5 +47,3 @@ const fork = async (store, snackbar, query = '') => {
 
   return response;
 };
-
-export { getProfile, fork };

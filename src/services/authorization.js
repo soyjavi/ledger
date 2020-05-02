@@ -1,6 +1,6 @@
 import { apiCall } from './modules';
 
-const getAuthorization = async (store, snackbar, pin) => {
+export const getAuthorization = async (store, snackbar, pin) => {
   const { fingerprint } = store;
   const { snackbarError } = snackbar;
 
@@ -14,5 +14,3 @@ const getAuthorization = async (store, snackbar, pin) => {
 
   return next;
 };
-
-export { getAuthorization };
