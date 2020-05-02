@@ -5,13 +5,16 @@ const { SPACE } = THEME;
 
 export default StyleSheet.create({
   container: {
-    alignItems: 'center',
+    paddingHorizontal: SPACE.L,
+    paddingVertical: SPACE.XL,
     justifyContent: 'flex-end',
-    height: '100%',
-    paddingHorizontal: SPACE.M,
   },
 
-  input: {
-    height: SPACE.XXL * 2,
+  form: {
+    alignItems: 'center',
+  },
+
+  buttonRight: {
+    marginLeft: 'auto',
   },
 });

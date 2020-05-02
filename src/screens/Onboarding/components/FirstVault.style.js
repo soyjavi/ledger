@@ -4,14 +4,15 @@ import { THEME } from 'reactor/common';
 const { SPACE } = THEME;
 
 export default StyleSheet.create({
-  container: {
+  form: {
     alignItems: 'center',
-    justifyContent: 'flex-end',
-    height: '100%',
-    paddingHorizontal: SPACE.M,
   },
 
-  input: {
-    height: SPACE.XXL * 2,
+  caption: {
+    textAlign: 'center',
+  },
+
+  button: {
+    marginHorizontal: 'auto',
   },
 });

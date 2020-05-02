@@ -1,62 +1,70 @@
+import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { Image, View } from 'react-native';
-import { Activity, Row, Text, Viewport } from 'reactor/components';
+import { THEME } from 'reactor/common';
+import { Activity, Row, Text, View, Viewport } from 'reactor/components';
 import { useEnvironment } from 'reactor/hooks';
 
-import { LOGO } from '@assets';
 import { C } from '@common';
-import { useL10N, useNavigation, useSnackBar, useStore } from '@context';
+import { useL10N, useSnackBar, useStore } from '@context';
 
 import { NumKeyboard } from './components';
 import { onHandshake, onFingerprint, onPin } from './modules';
 import styles from './Session.style';
 
 const { IS_DEV, VERSION } = C;
+const { COLOR } = THEME;
 
-export const Session = (props) => {
+export const Session = ({ onProfile, visible, ...others }) => {
   const { IS_WEB } = useEnvironment();
   const l10n = useL10N();
-  const navigation = useNavigation();
   const store = useStore();
   const snackbar = useSnackBar();
+
+  const [busy, setBusy] = useState(false);
   const [fingerprint, setFingerprint] = useState(undefined);
   const [pin, setPin] = useState('');
-  const [busy, setBusy] = useState(false);
 
-  const handleHandshake = onHandshake.bind(undefined, { navigation, setBusy, setPin, snackbar, store });
+  const handleHandshake = onHandshake.bind(undefined, { onProfile, setBusy, setPin, snackbar, store });
   const handleFingerprint = onFingerprint.bind(undefined, { handleHandshake, setFingerprint, store });
   const handlePin = onPin.bind(undefined, { handleHandshake, setPin, store });
 
   useEffect(() => {
-    if (store.pin) {
-      if (IS_DEV && IS_WEB) handleHandshake(store.pin);
+    const { pin, vaults = [] } = store;
+    if (visible && pin && vaults.length > 0) {
+      if (IS_DEV && IS_WEB) handleHandshake(pin);
       else if (fingerprint === undefined) setTimeout(handleFingerprint, 400);
     }
-  }, [fingerprint, store.pin]);
+  }, [fingerprint, store.pin, visible]);
 
-  console.log('  <Session>', { fingerprint, busy, pin });
+  const signup = store.authorization === undefined;
 
   return (
-    <Viewport {...props} scroll={false}>
+    <Viewport {...others} visible={visible} scroll={false}>
       <View style={styles.container}>
-        <View style={styles.content}>
-          <Row justify="center">
-            <Image source={LOGO} resizeMode="contain" style={styles.logo} />
-            {['v', 'o', 'l', 't'].map((letter, index) => (
-              <Text key={letter} headline style={[styles.name, pin.length > index && styles.active]}>
-                {letter}
-              </Text>
-            ))}
-          </Row>
-          <Row>{busy && <Activity size="M" style={styles.activity} />}</Row>
-        </View>
+        <Text headline>{signup ? l10n.PIN_CHOOSE : l10n.PIN}</Text>
+        <Row justify="center" style={styles.input}>
+          {!busy ? (
+            <>
+              {['•', '•', '•', '•'].map((letter, index) => (
+                <Text key={index} headline color={pin.length <= index ? COLOR.LIGHTEN : undefined}>
+                  {letter}
+                </Text>
+              ))}
+            </>
+          ) : (
+            <Activity />
+          )}
+        </Row>
 
-        <Text caption style={styles.textCenter}>
-          {store.pin && fingerprint ? l10n.ENTER_PIN_OR_FINGERPRINT : l10n.ENTER_PIN}
-        </Text>
         <NumKeyboard onPress={(number) => handlePin(`${pin}${number}`)} />
-        <Text caption marginBottom="M" style={styles.textCenter}>{`v${VERSION}`}</Text>
+        <Text caption color={COLOR.LIGHTEN} marginBottom="M">{`v${VERSION}`}</Text>
       </View>
     </Viewport>
   );
+};
+
+Session.propTypes = {
+  onProfile: PropTypes.func,
+  signup: PropTypes.bool,
+  visible: PropTypes.bool,
 };

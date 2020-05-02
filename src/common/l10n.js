@@ -1,6 +1,7 @@
 export default {
   'en-EN': {
     ACCEPT: 'Accept',
+    ACCOUNT_NAME: 'Account name',
     ACTIVE: 'Active',
     ACTIVITY: 'Activity',
     ADD: 'Add',
@@ -66,6 +67,7 @@ export default {
     CLONE_CAPTION: 'To make your life easier you can clone this transaction with a simple touch of the button.',
     CLOSE: 'CLOSE',
     CONCEPT: 'Concept',
+    CONTINUE: 'CONTINUE',
     COUNTRIES: 'Countries',
     CURRENCY: 'Currency',
     CURRENCIES: 'Currencies',
@@ -74,17 +76,19 @@ export default {
     DAY: 'day',
     DAY_NAMES: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
 
+    ELEVATOR_PITCH: 'Your private finance accounting running on your own blockchain.',
     ENTER_PIN: 'Enter your pin',
     ENTER_PIN_OR_FINGERPRINT: 'Enter your pin or fingerprint',
     EXPENSE: 'Expense',
     EXPENSES: 'Expenses',
 
     FIRST_VAULT_CAPTION:
-      'This will be your first vault. The currency you choose will be used as the basis for all reports.',
+      'You are about to create your first account, choose the currency you use the most. Later you can create all the accounts you want and in all the available currencies.',
     FORKED_CORRECTLY: 'All transactions have been successfully transferred to this device.',
     FROM: 'from',
 
     GET: 'Amount you will get',
+    GET_STARTED: 'GET STARTED',
 
     IMPORT: 'Import',
     INCOME: 'Income',
@@ -111,6 +115,7 @@ export default {
     ],
 
     NAME: 'Name',
+    NEXT: 'NEXT',
     NEW: 'New',
     NO_TRANSACTIONS: "You don't have any transaction.",
 
@@ -118,6 +123,8 @@ export default {
     OTHERS: 'Others',
     OVERALL_BALANCE: 'Overall Balance',
 
+    PIN: 'Your PIN code',
+    PIN_CHOOSE: 'Choose PIN code',
     PROGRESSION: 'Progression',
 
     QR_READER: 'Open camera',
@@ -128,7 +135,8 @@ export default {
     SETTINGS: 'Settings',
     SETTING_1_TITLE: 'Hide amounts',
     SETTING_1_CAPTION: 'Switch visibility just touching it',
-    SLOGAN: 'Your private accounting on the blockchain.',
+    SLOGAN: 'Blockchain personal ledger',
+
     STATS: 'Stats',
     STATS_CAPTION: 'In this summary you can see a breakdown of your operations in the selected category.',
 
@@ -157,6 +165,7 @@ export default {
     VIEW_ALL: 'View All',
     VISIBILITY: 'Visibility',
 
+    WAIT: 'Just a moment...',
     WARNING: 'Warning',
     WIPE: 'WIPE',
     WITHOUT_TXS: 'No transactions',
