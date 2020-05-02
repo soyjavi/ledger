@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { TextInput } from 'react-native';
 import { THEME } from 'reactor/common';
-import { Col, Row, Text } from 'reactor/components';
+import { Row, Text, View } from 'reactor/components';
 import { format } from 'reactor/components/Price/modules';
 
 import { C, currencyDecimals, getLastRates } from '@common';
@@ -15,7 +15,16 @@ const { COLOR } = THEME;
 
 const LEFT_SYMBOLS = ['$', '£'];
 
-export const Input = ({ currency, onChange, ...others }) => {
+export const Input = ({
+  currency,
+  keyboard = 'default',
+  label,
+  maxLength,
+  onChange,
+  secure,
+  showExchange,
+  ...others
+}) => {
   const { baseCurrency, rates } = useStore();
 
   const [exchange, setExchange] = useState();
@@ -23,23 +32,26 @@ export const Input = ({ currency, onChange, ...others }) => {
   const [focus, setFocus] = useState(false);
 
   useEffect(() => {
-    setExchange(
-      currency && currency !== baseCurrency
-        ? format({
-            value: lastRates[currency],
-            fixed: currencyDecimals(value, currency),
-          })
-        : undefined,
-    );
+    if (showExchange && currency && currency !== baseCurrency) {
+      const lastRates = getLastRates(rates);
+      setExchange(
+        format({
+          value: lastRates[currency],
+          fixed: currencyDecimals(value, currency),
+        }),
+      );
+    } else setExchange(undefined);
   }, [currency]);
 
   useEffect(() => {
     setValue(others.value);
   }, [others.value]);
 
-  const handleChange = (value) => {
-    if (currency) setValue(value);
-    onChange && onChange(currency ? parseFloat(value || 0, 10) : value);
+  const handleChange = (value = '') => {
+    const nextValue = value && value.toString().length > 0 ? value : undefined;
+
+    if (currency) setValue(nextValue);
+    onChange && onChange(currency ? parseFloat(nextValue || 0, 10) : nextValue);
   };
 
   const symbol = SYMBOL[currency];
@@ -50,11 +62,14 @@ export const Input = ({ currency, onChange, ...others }) => {
     subtitle: true,
   };
 
-  const lastRates = getLastRates(rates);
-
   return (
-    <Col {...others}>
-      <Row _align="center" justify="center" style={[styles.content, focus && styles.focus]}>
+    <View {...others} style={[styles.container, others.style]}>
+      <Row justify="center" marginBottom="XS  ">
+        <Text caption color={COLOR.LIGHTEN}>
+          {(others.value || currency) && label ? label : ' '}
+        </Text>
+      </Row>
+      <Row justify="center" style={[styles.content, focus && styles.focus]}>
         {currency && (
           <>
             {LEFT_SYMBOLS.includes(symbol) && <Text {...symbolProps} />}
@@ -66,24 +81,24 @@ export const Input = ({ currency, onChange, ...others }) => {
         )}
 
         <TextInput
-          defaultValue={others.defaultValue}
           disabled={others.disabled}
           autoCapitalize="none"
           autoCorrect={false}
           blurOnSubmit
           editable
-          keyboardType={currency ? 'numeric' : 'default'}
+          keyboardType={currency ? 'numeric' : keyboard}
+          maxLength={maxLength}
           onBlur={() => setFocus(false)}
           onChangeText={handleChange}
           onFocus={() => setFocus(true)}
-          placeholder={others.placeholder}
+          placeholder={others.placeholder || label}
           placeholderTextColor={COLOR.LIGHTEN}
+          secureTextEntry={secure}
           style={[styles.input, currency ? styles.inputCurrency : styles.inputText]}
           underlineColorAndroid="transparent"
-          value={others.value}
+          value={others.value ? others.value.toString() : undefined}
         />
       </Row>
-
       {exchange && (
         <Row justify="center" marginTop="XS">
           <Text bold caption color={COLOR.LIGHTEN}>
@@ -91,11 +106,16 @@ export const Input = ({ currency, onChange, ...others }) => {
           </Text>
         </Row>
       )}
-    </Col>
+    </View>
   );
 };
 
 Input.propTypes = {
   currency: PropTypes.string,
+  keyboard: PropTypes.string,
+  label: PropTypes.string,
+  maxLength: PropTypes.number,
   onChange: PropTypes.func,
+  secure: PropTypes.bool,
+  showExchange: PropTypes.bool,
 };
