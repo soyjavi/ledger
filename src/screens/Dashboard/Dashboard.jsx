@@ -4,27 +4,17 @@ import { THEME } from 'reactor/common';
 import { Button, Slider, Viewport } from 'reactor/components';
 
 import { C, onHardwareBackPress } from '@common';
-import {
-  DialogSettings,
-  DialogVault,
-  Footer,
-  GroupTransactions,
-  Header,
-  Heading,
-  Option,
-  ScrollView,
-  Summary,
-} from '@components';
+import { Footer, GroupTransactions, Header, Heading, Option, ScrollView, Summary } from '@components';
 import { useConnection, useL10N, useNavigation, useSettings, useStore } from '@context';
 
-import { Search, VaultCard, VAULTCARD_WIDTH } from './components';
+import { DialogSettings, DialogVault, Search, VaultCard, VAULTCARD_WIDTH } from './components';
 import { queryLastTxs, queryVaults } from './modules';
 import styles from './Dashboard.style';
 
 const { SCREEN } = C;
 const { COLOR, SPACE } = THEME;
 
-const ButtonProps = {
+const buttonProps = {
   color: COLOR.BACKGROUND,
   colorText: COLOR.TEXT,
   size: 'S',
@@ -33,9 +23,9 @@ const ButtonProps = {
 
 export const Dashboard = ({ backward, visible, ...inherit }) => {
   const { connected } = useConnection();
-  const { state: settings } = useSettings();
   const l10n = useL10N();
   const navigation = useNavigation();
+  const { state: settings } = useSettings();
   const { baseCurrency, overall, sync, txs = [], vaults = [] } = useStore();
 
   const [dialogVault, setDialogVault] = useState(false);
@@ -52,10 +42,6 @@ export const Dashboard = ({ backward, visible, ...inherit }) => {
       if (dialogSettings) setDialogSettings(false);
     });
   }, [backward, dialogVault, dialogSettings]);
-
-  useEffect(() => {
-    if (sync && vaults.length === 0) setDialogVault(true);
-  }, [sync, vaults]);
 
   useEffect(() => {
     if (visible) setLastTxs(queryLastTxs({ txs, vaults }));
@@ -86,7 +72,7 @@ export const Dashboard = ({ backward, visible, ...inherit }) => {
         {vaults.length > 0 && (
           <>
             <Heading paddingLeft="M" paddingRight="S" small value={l10n.VAULTS}>
-              <Button {...ButtonProps} title={l10n.VIEW_ALL} onPress={() => navigation.go(SCREEN.VAULTS)} />
+              <Button {...buttonProps} title={l10n.VIEW_ALL} onPress={() => navigation.go(SCREEN.VAULTS)} />
             </Heading>
             <Slider itemWidth={VAULTCARD_WIDTH} itemMargin={SPACE.S} style={styles.vaults}>
               {visibleVaults.map((vault, index) => (
@@ -103,7 +89,7 @@ export const Dashboard = ({ backward, visible, ...inherit }) => {
             {lastTxs.length > 0 && (
               <>
                 <Heading paddingLeft="M" paddingRight="S" small value={l10n.LAST_TRANSACTIONS}>
-                  <Button {...ButtonProps} title={l10n.SEARCH} onPress={() => setSearch(!search)} />
+                  <Button {...buttonProps} title={l10n.SEARCH} onPress={() => setSearch(!search)} />
                 </Heading>
                 {search && <Search onValue={setSearchTxs} />}
                 {(searchTxs || lastTxs).map((item) => (

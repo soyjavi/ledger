@@ -34,9 +34,7 @@ export const Onboarding = ({ ...others }) => {
 
   const handleComplete = () => {
     navigation.go(SCREEN.DASHBOARD);
-    // navigation.go(SCREEN.VAULTS);
-    // navigation.go(SCREEN.STATS);
-    navigation.go(SCREEN.VAULT, vaults[0]);
+    // navigation.go(SCREEN.VAULT, vaults[0]);
   };
 
   console.log('<OnBoarding>');

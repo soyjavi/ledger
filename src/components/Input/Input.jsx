@@ -81,6 +81,7 @@ export const Input = ({
         )}
 
         <TextInput
+          defaultValue={others.defaultValue}
           disabled={others.disabled}
           autoCapitalize="none"
           autoCorrect={false}
@@ -96,7 +97,7 @@ export const Input = ({
           secureTextEntry={secure}
           style={[styles.input, currency ? styles.inputCurrency : styles.inputText]}
           underlineColorAndroid="transparent"
-          value={others.value ? others.value.toString() : undefined}
+          value={others.value ? others.value.toString() : ''}
         />
       </Row>
       {exchange && (

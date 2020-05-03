@@ -1,10 +1,9 @@
 import { bool } from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
-import { View } from 'react-native';
-import { Text, Viewport } from 'reactor/components';
+import { Viewport } from 'reactor/components';
 
-import { FLAGS } from '@assets';
-import { Footer, GroupTransactions, Header, Heading, Option, ScrollView, Summary } from '@components';
+import { BANNERS, FLAGS } from '@assets';
+import { Banner, Footer, GroupTransactions, Header, Heading, Option, ScrollView, Summary } from '@components';
 import { useConnection, useL10N, useNavigation, useStore } from '@context';
 
 import { DialogTransaction } from './components';
@@ -80,9 +79,7 @@ const Vault = ({ visible, ...inherit }) => {
             ))}
           </>
         ) : (
-          <View style={styles.container}>
-            <Text>{l10n.NO_TRANSACTIONS}</Text>
-          </View>
+          <Banner image={BANNERS.NOT_FOUND} paddingHorizontal="M" paddingVertical="M" title={l10n.NO_TRANSACTIONS} />
         )}
       </ScrollView>
 

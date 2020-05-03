@@ -3,11 +3,10 @@ import { THEME } from 'reactor/common';
 
 import { HEADER_HEIGHT } from '@components';
 
-const { SPACE, FONT } = THEME;
+const { SPACE } = THEME;
 
 export default StyleSheet.create({
   smallButton: {
-    ...FONT.BUTTON,
     paddingHorizontal: 0,
   },
 

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { TextInput } from 'react-native';
 import { THEME } from 'reactor/common';
-import { Activity, Button, Col, Icon, Row } from 'reactor/components';
+import { Activity, Button, Col, Row } from 'reactor/components';
 
 import { groupTxsByDate } from '@common';
 import { useL10N, useStore } from '@context';
@@ -57,11 +57,8 @@ export const Search = ({ onValue }) => {
     onValue(nextValue);
   };
 
-  console.log({ value });
-
   return (
-    <Row paddingHorizontal="S" marginTop="XS" marginHorizontal="M" style={[styles.container, focus && styles.focus]}>
-      <Icon color={COLOR.LIGHTEN} family="MaterialIcons" marginRight="S" value="search" size={16} />
+    <Row paddingHorizontal="M" marginHorizontal="M" marginBottom="XS" style={[styles.container, focus && styles.focus]}>
       <TextInput
         autoCapitalize="none"
         autoCorrect={false}

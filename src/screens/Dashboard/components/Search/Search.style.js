@@ -1,12 +1,11 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from 'reactor/common';
 
-const { BORDER_RADIUS, COLOR, FONT, SPACE } = THEME;
+const { COLOR, FONT, SPACE } = THEME;
 
 export default StyleSheet.create({
   container: {
     borderColor: COLOR.BASE,
-    borderRadius: BORDER_RADIUS,
     borderWidth: 1,
     width: 'auto',
     backgroundColor: COLOR.BASE,

@@ -104,7 +104,6 @@ export default {
     backgroundColor: BACKGROUND,
     borderRadius: SPACE.M,
     padding: SPACE.L,
-    paddingTop: SPACE.XL,
   },
   DIALOG_BUTTON: {
     color: BASE,

@@ -11,7 +11,7 @@ import { queryCategories } from '../modules';
 
 const { SPACE } = THEME;
 
-const FormTransaction = ({ form = {}, onChange, type, ...inherit }) => {
+const FormTransaction = ({ currency, form = {}, onChange, type }) => {
   const l10n = useL10N();
 
   const handleField = (field, fieldValue) => {
@@ -40,7 +40,7 @@ const FormTransaction = ({ form = {}, onChange, type, ...inherit }) => {
       </Slider>
 
       <Input
-        currency={inherit.currency}
+        currency={currency}
         marginBottom="M"
         onChange={(value) => handleField('value', value)}
         placeholder={l10n.AMOUNT}
@@ -58,7 +58,7 @@ const FormTransaction = ({ form = {}, onChange, type, ...inherit }) => {
 };
 
 FormTransaction.propTypes = {
-  category: string,
+  currency: string,
   form: shape({}).isRequired,
   onChange: func.isRequired,
   type: number.isRequired,

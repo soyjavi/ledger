@@ -14,14 +14,13 @@ const { COLOR } = THEME;
 const {
   DELAY_PRESS_MS,
   TX: {
-    TYPE: { EXPENSE, TRANSFER },
+    TYPE: { TRANSFER },
   },
 } = C;
 
 const INITIAL_STATE = {
   busy: false,
   form: { value: 0 },
-  type: EXPENSE,
   valid: false,
 };
 
@@ -56,8 +55,6 @@ const DialogTransaction = (props = {}) => {
   const { valid } = state;
   const { coords, place } = location;
   const Form = type === TRANSFER ? FormTransfer : FormTransaction;
-
-  console.log('DialogTransaction.state', state);
 
   return (
     <Dialog {...inherit} onClose={onClose} position="bottom" visible={visible}>

@@ -28,7 +28,10 @@ export const VaultCard = ({
 
   return React.useCallback(
     <Touchable {...others} onPress={onPress} rippleColor={COLOR.LIGHTEN} style={styles.container}>
-      <Box outlined={!progression} style={styles.box}>
+      <Box
+        //outlined={!progression} @TODO: Think about this
+        style={styles.box}
+      >
         <View style={styles.content}>
           <Row>
             <Image source={FLAGS[currency]} style={styles.flag} />

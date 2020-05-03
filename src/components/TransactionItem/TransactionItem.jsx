@@ -28,7 +28,7 @@ const TransactionItem = (props) => {
       <Row align="start" paddingHorizontal="M" paddingVertical="S">
         <Col marginRight="S" width="auto">
           <Box small>
-            <Icon size={SPACE.M} value={getIconCategory({ type, category, title })} />
+            <Icon family="MaterialCommunityIcons" size={SPACE.M} value={getIconCategory({ type, category, title })} />
           </Box>
         </Col>
 

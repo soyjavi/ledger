@@ -5,14 +5,15 @@ import { Button, Dialog, Row, Text } from 'reactor/components';
 
 import { C } from '@common';
 import { FormVault } from '@components';
-import { useL10N, useSnackBar, useStore } from '@context';
+import { useNavigation, useL10N, useSnackBar, useStore } from '@context';
 import { createVault } from '@services';
 
-const { DELAY_PRESS_MS } = C;
-const { COLOR } = THEME;
+const { DELAY_PRESS_MS, SCREEN } = C;
+const { COLOR, MOTION } = THEME;
 const INITIAL_STATE = { currency: undefined };
 
 export const DialogVault = ({ onClose, visible }) => {
+  const navigation = useNavigation();
   const l10n = useL10N();
   const store = useStore();
   const snackbar = useSnackBar();
@@ -22,10 +23,7 @@ export const DialogVault = ({ onClose, visible }) => {
   const [form, setForm] = useState(INITIAL_STATE);
 
   useEffect(() => {
-    if (visible) {
-      // setVaultCurrency(vault.currency);
-      setForm({ ...INITIAL_STATE, currency: baseCurrency });
-    }
+    if (visible) setForm({ ...INITIAL_STATE, currency: baseCurrency });
   }, [visible]);
 
   const handleSubmit = async () => {
@@ -33,9 +31,7 @@ export const DialogVault = ({ onClose, visible }) => {
     const vault = await createVault(store, snackbar, form);
     if (vault) {
       onClose();
-      console.log({ vault });
-      // @TODO: Should send to the vault
-      // navigation.go(SCREEN.VAULT, vault);
+      setTimeout(() => navigation.go(SCREEN.VAULT, vault), MOTION.DURATION);
     }
     setBusy(false);
   };
