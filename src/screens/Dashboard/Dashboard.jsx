@@ -4,10 +4,10 @@ import { THEME } from 'reactor/common';
 import { Button, Slider, Viewport } from 'reactor/components';
 
 import { C, onHardwareBackPress } from '@common';
-import { Footer, GroupTransactions, Header, Heading, Option, ScrollView, Summary } from '@components';
+import { CARD_WIDTH, Footer, GroupTransactions, Header, Heading, Option, ScrollView, Summary } from '@components';
 import { useConnection, useL10N, useNavigation, useSettings, useStore } from '@context';
 
-import { DialogSettings, DialogVault, Search, VaultCard, VAULTCARD_WIDTH } from './components';
+import { DialogSettings, DialogVault, Search, VaultCard } from './components';
 import { queryLastTxs, queryVaults } from './modules';
 import styles from './Dashboard.style';
 
@@ -74,13 +74,14 @@ export const Dashboard = ({ backward, visible, ...inherit }) => {
             <Heading paddingLeft="M" paddingRight="S" small value={l10n.VAULTS}>
               <Button {...buttonProps} title={l10n.VIEW_ALL} onPress={() => navigation.go(SCREEN.VAULTS)} />
             </Heading>
-            <Slider itemWidth={VAULTCARD_WIDTH} itemMargin={SPACE.S} style={styles.vaults}>
+
+            <Slider itemWidth={CARD_WIDTH} itemMargin={SPACE.S} style={styles.vaults}>
               {visibleVaults.map((vault, index) => (
                 <VaultCard
                   {...vault}
+                  key={vault.hash}
                   marginLeft={index === 0 ? 'M' : undefined}
                   marginRight="S"
-                  key={vault.hash}
                   onPress={() => navigation.go(SCREEN.VAULT, vault)}
                 />
               ))}
