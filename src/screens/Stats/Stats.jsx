@@ -69,7 +69,7 @@ const Stats = (props) => {
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
       <Heading />
-      <Header highlight={scroll} onBack={navigation.back} title={title} />
+      <Header highlight={scroll} onBack={scroll ? navigation.back : undefined} title={title} />
 
       <ScrollView contentContainerStyle={styles.scrollView} onScroll={setScroll} ref={scrollview}>
         <SliderMonths {...slider} onChange={onChangeSlider} marginBottom="M" />

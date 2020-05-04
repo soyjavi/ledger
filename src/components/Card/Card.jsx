@@ -23,7 +23,7 @@ export const Card = ({ balance, currency, disabled, onPress, percentage, title =
     <Touchable {...others} onPress={onPress} rippleColor={COLOR.LIGHTEN} style={styles.container}>
       <Box outlined={disabled} style={styles.box}>
         <View style={styles.content}>
-          <Row align="end" marginBottom="XS">
+          <Row marginBottom="XS">
             <Image source={FLAGS[currency]} style={styles.flag} />
             <Text numberOfLines={1} marginLeft="XS" style={[styles.text, styles.title]}>
               {title}

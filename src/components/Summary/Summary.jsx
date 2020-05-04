@@ -54,18 +54,16 @@ const Summary = ({ children, currency = CURRENCY, currentBalance, currentMonth =
         <Col align="center" marginBottom="M">
           <Text subtitle>{title}</Text>
           <Touchable onPress={() => dispatch({ type: 'MASK_AMOUNT', value: !maskAmount })}>
-            <PriceFriendly
-              currency={baseCurrency}
-              headline
-              value={
-                baseCurrency !== currency
-                  ? exchange(Math.abs(currentBalance), currency, baseCurrency, rates)
-                  : Math.abs(currentBalance)
-              }
-            />
+            <PriceFriendly currency={currency} headline value={Math.abs(currentBalance)} />
           </Touchable>
           {baseCurrency !== currency && (
-            <PriceFriendly color={COLOR.LIGHTEN} currency={currency} value={currentBalance} />
+            <PriceFriendly
+              color={COLOR.LIGHTEN}
+              currency={baseCurrency}
+              subtitle
+              value={exchange(Math.abs(currentBalance), currency, baseCurrency, rates)}
+              style={styles.baseCurrency}
+            />
           )}
         </Col>
 
