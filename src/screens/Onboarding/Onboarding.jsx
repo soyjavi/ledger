@@ -34,27 +34,29 @@ export const Onboarding = ({ ...others }) => {
 
   const handleComplete = () => {
     navigation.go(SCREEN.DASHBOARD);
-    // navigation.go(SCREEN.VAULT, vaults[0]);
+    // navigation.go(SCREEN.SETTINGS, vaults[0]);
   };
 
   console.log('<OnBoarding>');
 
+  const signed = authorization !== undefined;
+
   return (
     <>
-      <Viewport {...style} visible={step >= WELCOME} backward={step > WELCOME}>
+      <Viewport {...style} visible={!signed || step >= WELCOME} backward={step > WELCOME}>
         <Banner align="left" image={BANNERS.SEND} marginBottom="XL" title={l10n.SLOGAN} caption={l10n.ELEVATOR_PITCH} />
         <Button onPress={handleStep} title={l10n.GET_STARTED} />
       </Viewport>
 
       <Session
+        visible={signed || step >= PIN_CODE}
         backward={step > PIN_CODE}
         onProfile={authorization ? handleComplete : handleStep}
-        visible={others.authorization === true || step >= PIN_CODE}
       />
 
-      <FirstVault {...style} backward={step > VAULT} onVault={handleStep} visible={step >= VAULT} />
+      <FirstVault {...style} visible={step >= VAULT} backward={step > VAULT} onVault={handleStep} />
 
-      <Viewport {...style} backward={step > COMPLETED} visible={step >= COMPLETED}>
+      <Viewport {...style} visible={step >= COMPLETED} backward={step > COMPLETED}>
         <Banner
           align="right"
           image={BANNERS.RECEIVE}
