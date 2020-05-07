@@ -87,7 +87,7 @@ const Stats = (props) => {
         <Chart
           {...calcScales(chart.incomes)}
           {...common}
-          color={COLOR.INCOME}
+          color={COLOR.BRAND}
           styleContainer={[styles.chart]}
           title={`${l10n.INCOMES} & ${l10n.EXPENSES}`}
           values={chart.incomes}
@@ -96,7 +96,6 @@ const Stats = (props) => {
           {...calcScales(chart.expenses)}
           {...common}
           captions={orderCaptions(l10n)}
-          color={COLOR.EXPENSE}
           inverted
           styleContainer={[styles.chart, styles.chartMargin]}
           values={chart.expenses}

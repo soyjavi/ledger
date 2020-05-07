@@ -27,7 +27,7 @@ const ItemGroupCategories = ({ dataSource, type }) => {
     }
   });
 
-  const chartColor = isExpense ? COLOR.EXPENSE : COLOR.INCOME;
+  const chartColor = !isExpense ? COLOR.BRAND : undefined;
 
   return (
     <View style={styles.container}>

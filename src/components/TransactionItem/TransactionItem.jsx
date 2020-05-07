@@ -4,11 +4,12 @@ import { THEME } from 'reactor/common';
 import { Col, Icon, Row, Text, Touchable } from 'reactor/components';
 
 import { C, exchange, getIconCategory } from '@common';
-import { useNavigation, useStore } from '@context';
+import { useNavigation, useSettings, useStore } from '@context';
 
 import { Box } from '../Box';
 import { PriceFriendly } from '../PriceFriendly';
 import { formatCaption } from './modules';
+import styles from './TransactionItem.style';
 
 const {
   TX: {
@@ -20,6 +21,10 @@ const { COLOR, SPACE } = THEME;
 const TransactionItem = (props) => {
   const { baseCurrency, rates } = useStore();
   const { showTx } = useNavigation();
+  const {
+    state: { maskAmount },
+  } = useSettings();
+
   const { category, currency, location, timestamp, title, type, value } = props;
   const operator = type === EXPENSE ? -1 : 1;
 
@@ -39,10 +44,10 @@ const TransactionItem = (props) => {
                 {title}
               </Text>
             </Col>
-            <Col width="auto">
+            <Col width="auto" style={type === INCOME && !maskAmount ? styles.highlight : undefined}>
               <PriceFriendly
                 bold
-                color={type === INCOME ? COLOR.INCOME : undefined}
+                color={type === INCOME ? COLOR.BRAND : undefined}
                 currency={baseCurrency}
                 operator={type === EXPENSE}
                 value={exchange(value, currency, baseCurrency, rates, timestamp) * operator}
@@ -61,8 +66,7 @@ const TransactionItem = (props) => {
                   caption
                   color={COLOR.LIGHTEN}
                   currency={currency}
-                  // operator={type === INCOME}
-                  operator
+                  operator={type === EXPENSE}
                   value={value * operator}
                 />
               )}

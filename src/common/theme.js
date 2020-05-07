@@ -21,8 +21,6 @@ const FONT_FAMILY_BOLD = {
 const BACKGROUND = '#ffffff';
 const BASE = '#rgba(246, 246, 249, 1)';
 const BORDER_RADIUS = SPACE.S;
-const EXPENSE = '#fb5662';
-const INCOME = '#19CEAB';
 const LIGHTEN = '#B3B3B3';
 const OVERLAY = 'rgba(255, 255, 255, 0.8)';
 const TEXT = '#1A1A1A';
@@ -41,7 +39,8 @@ export default {
   BORDER_RADIUS,
 
   COLOR: {
-    BRAND: INCOME,
+    BRAND: '#19CEAB',
+    BRAND_HIGHLIGHT: 'rgba(25, 206, 171, 0.075)',
     CTA: '#000000',
     // BLACK
     // WHITE
@@ -49,16 +48,14 @@ export default {
 
     BACKGROUND,
     BASE,
-    ERROR: EXPENSE,
-    SUCCESS: INCOME,
+    ERROR: '#fb5662',
+    // SUCCESS,
     TEXT,
     // TRANSPARENT
 
     // -- Custom
     LIGHTEN,
     OVERLAY,
-    EXPENSE,
-    INCOME,
   },
 
   ELEVATION,
