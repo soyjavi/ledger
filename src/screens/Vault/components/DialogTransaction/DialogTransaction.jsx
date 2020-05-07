@@ -58,7 +58,7 @@ const DialogTransaction = (props = {}) => {
 
   return (
     <Dialog {...inherit} onClose={onClose} position="bottom" visible={visible}>
-      <Text subtitle marginBottom="M">{`${l10n.NEW} ${l10n.TRANSACTION[type]}`}</Text>
+      <Text subtitle marginTop="S" marginBottom="M">{`${l10n.NEW} ${l10n.TRANSACTION[type]}`}</Text>
 
       <Form {...props} {...state} onChange={(value) => setState({ ...state, ...value })} />
       <HeatMap

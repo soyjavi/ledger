@@ -38,11 +38,13 @@ export const DialogFork = ({ onClose, onForked, query, visible, ...inherit }) =>
 
   return (
     <Dialog {...inherit} onClose={onClose} position="bottom" style={styles.dialog} visible={visible}>
-      <Text marginBottom="XS" subtitle>
+      <Text subtitle marginTop="S" marginBottom="XS">
         {l10n.WARNING}
       </Text>
-      <Text caption>{l10n.TRANSFER_TXS_IMPORT}</Text>
-      <Row marginTop="M" justify="space">
+      <Text caption marginBottom="M">
+        {l10n.TRANSFER_TXS_IMPORT}
+      </Text>
+      <Row justify="space">
         <Button {...buttonProps} outlined onPress={onClose} title={l10n.CLOSE} marginRight="M" />
         <Button
           {...buttonProps}

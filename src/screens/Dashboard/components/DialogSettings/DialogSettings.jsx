@@ -56,7 +56,7 @@ export const DialogSettings = ({ visible, ...inherit }) => {
 
   return (
     <Dialog {...inherit} style={styles.dialog} styleButton={styles.dialogButton} position="bottom" visible={visible}>
-      <Text marginBottom="XS" subtitle>
+      <Text marginTop="S" marginBottom="M" subtitle>
         {l10n.TRANSFER_TXS}
       </Text>
       <Text caption color={COLOR.LIGHTEN}>

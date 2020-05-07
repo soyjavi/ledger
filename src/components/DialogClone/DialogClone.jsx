@@ -59,8 +59,10 @@ const DialogClone = ({
 
   return (
     <Dialog {...inherit} highlight onClose={() => showTx(undefined)} position="bottom" visible={visible}>
-      <Text subtitle>{type === EXPENSE ? l10n.EXPENSE : l10n.INCOME}</Text>
-      <Row marginTop="M">
+      <Text marginTop="S" marginBottom="M" subtitle>
+        {type === EXPENSE ? l10n.EXPENSE : l10n.INCOME}
+      </Text>
+      <Row>
         <Col marginRight="S" width="auto">
           <BoxDate l10n={l10n} timestamp={timestamp} />
         </Col>
