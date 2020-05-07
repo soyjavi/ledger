@@ -12,7 +12,7 @@ const { COLOR } = THEME;
 
 export const HeatMap = ({
   caption,
-  color = COLOR.TEXT,
+  color = COLOR.BRAND,
   darkMode = false,
   points,
   precission = 0.001,
@@ -24,7 +24,7 @@ export const HeatMap = ({
         color,
         points: JSON.stringify(points),
         precission,
-        resolution: `${MAP_WIDTH}x${MAP_HEIGHT}@2x`,
+        resolution: `${MAP_WIDTH}x${small ? MAP_HEIGHT / 2 : MAP_HEIGHT}@2x`,
       })
     : undefined;
 
