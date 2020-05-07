@@ -12,7 +12,7 @@ import { formatCaption } from './modules';
 
 const {
   TX: {
-    TYPE: { EXPENSE },
+    TYPE: { EXPENSE, INCOME },
   },
 } = C;
 const { COLOR, SPACE } = THEME;
@@ -42,10 +42,9 @@ const TransactionItem = (props) => {
             <Col width="auto">
               <PriceFriendly
                 bold
-                color={type === EXPENSE ? COLOR.EXPENSE : undefined}
+                color={type === INCOME ? COLOR.INCOME : undefined}
                 currency={baseCurrency}
-                // operator={type === INCOME}
-                operator
+                operator={type === EXPENSE}
                 value={exchange(value, currency, baseCurrency, rates, timestamp) * operator}
               />
             </Col>

@@ -27,12 +27,12 @@ const ItemGroupCategories = ({ dataSource, type }) => {
     }
   });
 
-  const color = isExpense ? COLOR.EXPENSE : COLOR.INCOME;
+  const chartColor = isExpense ? COLOR.EXPENSE : COLOR.INCOME;
 
   return (
     <View style={styles.container}>
       <Heading paddingHorizontal="M" value={isExpense ? l10n.EXPENSES : l10n.INCOMES}>
-        <PriceFriendly bold color={color} currency={baseCurrency} operator value={total} />
+        <PriceFriendly bold currency={baseCurrency} value={total} />
       </Heading>
       <View>
         {orderByAmount(totals).map(({ key, amount }) => (
@@ -43,7 +43,7 @@ const ItemGroupCategories = ({ dataSource, type }) => {
             style={[styles.content, expand && expand !== key && { opacity: OPACITY.S }]}
           >
             <HorizontalChartItem
-              color={color}
+              color={chartColor}
               currency={baseCurrency}
               title={l10n.CATEGORIES[type][key]}
               value={amount}
@@ -56,7 +56,7 @@ const ItemGroupCategories = ({ dataSource, type }) => {
                 {orderByAmount(dataSource[key]).map((item) => (
                   <HorizontalChartItem
                     key={`${key}-${item.key}`}
-                    color={color}
+                    color={chartColor}
                     currency={baseCurrency}
                     small
                     title={item.key}
