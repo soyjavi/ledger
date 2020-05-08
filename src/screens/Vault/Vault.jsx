@@ -18,7 +18,7 @@ const Vault = ({ visible, ...inherit }) => {
   const scrollview = useRef(null);
 
   const [dataSource, setDataSource] = useState(inherit.dataSource);
-  const [dialog, setDialog] = useState(false);
+  const [dialog, setDialog] = useState(undefined);
   const [scroll, setScroll] = useState(false);
   const [scrollQuery, setScrollQuery] = useState(false);
   const [txs, setTxs] = useState([]);
@@ -88,10 +88,10 @@ const Vault = ({ visible, ...inherit }) => {
       {visible && dataSource && (
         <DialogTransaction
           currency={currency}
-          onClose={() => setDialog(false)}
+          onClose={() => setDialog(undefined)}
           type={dialog}
-          vault={dataSource.hash}
-          visible={visible && dialog !== false}
+          vault={dataSource}
+          visible={visible && dialog !== undefined}
         />
       )}
     </Viewport>

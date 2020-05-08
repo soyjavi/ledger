@@ -1,4 +1,4 @@
-import { func, shape, string } from 'prop-types';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { THEME } from 'reactor/common';
 import { Icon, Slider } from 'reactor/components';
@@ -6,18 +6,19 @@ import { Icon, Slider } from 'reactor/components';
 import { FLAGS } from '@assets';
 import { currencyDecimals } from '@common';
 import { Input, Option, PriceFriendly, OPTION_SIZE } from '@components';
-import { useStore } from '@context';
+import { useL10N, useStore } from '@context';
 
-import { getCurrency, getVault, queryAvailableVaults } from '../modules';
+import { getVault, queryAvailableVaults } from '../modules';
 
 const { COLOR, SPACE } = THEME;
 
-const FormTransaction = ({ form = {}, onChange, vault }) => {
+const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
+  const l10n = useL10N();
   const { baseCurrency, vaults, rates } = useStore();
 
   const handleField = (field, fieldValue) => {
     const next = { ...form, [field]: fieldValue };
-    const from = getVault(vault, vaults);
+    const from = getVault(vault.hash, vaults);
     const to = getVault(next.destination, vaults);
     let { exchange = 0, value = 0 } = next;
 
@@ -42,13 +43,16 @@ const FormTransaction = ({ form = {}, onChange, vault }) => {
   return (
     <>
       <Input
-        currency={getCurrency(vault, vaults)}
+        currency={vault.currency}
+        label={l10n.SEND}
+        maxValue={vault.currentBalance}
         onChange={(value) => handleField('value', value)}
         value={form.value}
       />
 
       <Icon
         color={form.value <= 0 ? COLOR.LIGHTEN : undefined}
+        family="SimpleLineIcons"
         marginVertical="S"
         value="arrow-down"
         size={SPACE.L}
@@ -56,7 +60,7 @@ const FormTransaction = ({ form = {}, onChange, vault }) => {
       />
 
       <Slider itemMargin={SPACE.S} itemWidth={OPTION_SIZE}>
-        {queryAvailableVaults(vaults, vault).map(({ currency, currentBalance, hash, title }) => (
+        {queryAvailableVaults(vaults, vault.hash).map(({ currency, currentBalance, hash, title }) => (
           <Option
             key={hash}
             image={FLAGS[currency]}
@@ -70,17 +74,11 @@ const FormTransaction = ({ form = {}, onChange, vault }) => {
         ))}
       </Slider>
 
-      <Icon
-        color={!form.to ? COLOR.LIGHTEN : undefined}
-        marginVertical="S"
-        value="arrow-down"
-        size={SPACE.L}
-        style={{ alignSelf: 'center' }}
-      />
-
       <Input
         currency={form.to ? form.to.currency : baseCurrency}
         disabled={!form.to}
+        label={l10n.GET}
+        marginTop="M"
         marginBottom="XL"
         onChange={(value) => handleField('exchange', value)}
         value={form.to ? form.exchange : undefined}
@@ -90,10 +88,10 @@ const FormTransaction = ({ form = {}, onChange, vault }) => {
 };
 
 FormTransaction.propTypes = {
-  destination: string,
-  form: shape({}).isRequired,
-  onChange: func.isRequired,
-  vault: string.isRequired,
+  destination: PropTypes.string,
+  form: PropTypes.shape({}).isRequired,
+  onChange: PropTypes.func.isRequired,
+  vault: PropTypes.shape({}).isRequired,
 };
 
 FormTransaction.defaultProps = {

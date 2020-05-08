@@ -1,7 +1,7 @@
 import { createTx } from '@services';
 
 export default ({
-  props: { vault, type },
+  props: { vault = {}, type },
   state: {
     coords = {},
     form: { category, value, title = '' },
@@ -15,7 +15,7 @@ export default ({
     title,
     type,
     value: parseFloat(value, 10),
-    vault,
+    vault: vault.hash,
     place,
     ...coords,
   });

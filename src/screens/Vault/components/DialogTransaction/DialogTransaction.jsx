@@ -27,13 +27,19 @@ const INITIAL_STATE = {
 const INITIAL_STATE_LOCATION = { coords: undefined, place: undefined };
 
 const DialogTransaction = (props = {}) => {
-  const { onClose, visible, type, ...inherit } = props;
+  const { onClose, visible, ...inherit } = props;
   const l10n = useL10N();
   const snackbar = useSnackBar();
   const store = useStore();
+
   const [busy, setBusy] = useState(false);
-  const [state, setState] = useState(INITIAL_STATE);
   const [location, setLocation] = useState(INITIAL_STATE_LOCATION);
+  const [state, setState] = useState(INITIAL_STATE);
+  const [type, setType] = useState();
+
+  useEffect(() => {
+    if (visible && props.type !== undefined && props.type !== type) setType(props.type);
+  }, [visible, props.type]);
 
   useEffect(() => {
     if (visible) {
@@ -54,13 +60,14 @@ const DialogTransaction = (props = {}) => {
 
   const { valid } = state;
   const { coords, place } = location;
+
   const Form = type === TRANSFER ? FormTransfer : FormTransaction;
 
   return (
     <Dialog {...inherit} onClose={onClose} position="bottom" visible={visible}>
       <Text subtitle marginTop="S" marginBottom="M">{`${l10n.NEW} ${l10n.TRANSACTION[type]}`}</Text>
 
-      <Form {...props} {...state} onChange={(value) => setState({ ...state, ...value })} />
+      <Form {...props} {...state} type={type} onChange={(value) => setState({ ...state, ...value })} />
       <HeatMap
         caption={place || l10n.LOADING_PLACE}
         points={coords ? [[coords.longitude, coords.latitude]] : undefined}
@@ -94,7 +101,7 @@ const DialogTransaction = (props = {}) => {
 DialogTransaction.propTypes = {
   onClose: PropTypes.func.isRequired,
   type: PropTypes.number,
-  vault: PropTypes.string,
+  vault: PropTypes.shape({}),
   visible: PropTypes.bool,
 };
 

@@ -11,7 +11,7 @@ import { queryCategories } from '../modules';
 
 const { SPACE } = THEME;
 
-const FormTransaction = ({ currency, form = {}, onChange, type }) => {
+const FormTransaction = ({ currency, form = {}, onChange, type, vault: { currentBalance = 0 } = {} }) => {
   const l10n = useL10N();
 
   const handleField = (field, fieldValue) => {
@@ -41,16 +41,17 @@ const FormTransaction = ({ currency, form = {}, onChange, type }) => {
 
       <Input
         currency={currency}
-        marginBottom="M"
+        label={l10n.AMOUNT}
+        marginVertical="M"
+        maxValue={currentBalance}
         onChange={(value) => handleField('value', value)}
-        placeholder={l10n.AMOUNT}
         value={form.value}
       />
 
       <Input
+        label={l10n.CONCEPT}
         marginBottom="M"
         onChange={(value) => handleField('title', value)}
-        placeholder={l10n.CONCEPT}
         value={form.title}
       />
     </>
@@ -61,7 +62,8 @@ FormTransaction.propTypes = {
   currency: string,
   form: shape({}).isRequired,
   onChange: func.isRequired,
-  type: number.isRequired,
+  type: number,
+  vault: shape({}).isRequired,
 };
 
 export default FormTransaction;
