@@ -6,6 +6,7 @@ import { Row, Text, View } from 'reactor/components';
 import { format } from 'reactor/components/Price/modules';
 
 import { C, currencyDecimals, getLastRates } from '@common';
+import { PriceFriendly } from '../PriceFriendly';
 import { useStore } from '@context';
 
 import styles from './Input.style';
@@ -15,24 +16,18 @@ const { COLOR } = THEME;
 
 const LEFT_SYMBOLS = ['$', '£'];
 
-export const Input = ({
-  currency,
-  keyboard = 'default',
-  label,
-  maxLength,
-  onChange,
-  secure,
-  showExchange,
-  ...others
-}) => {
+const exchangeCaption = { caption: true, color: COLOR.LIGHTEN };
+
+export const Input = ({ currency, keyboard = 'default', label, maxLength, maxValue, onChange, secure, ...others }) => {
   const { baseCurrency, rates } = useStore();
 
+  const [error, setError] = useState(false);
   const [exchange, setExchange] = useState();
-  const [value, setValue] = useState();
   const [focus, setFocus] = useState(false);
+  const [value, setValue] = useState();
 
   useEffect(() => {
-    if (showExchange && currency && currency !== baseCurrency) {
+    if (currency && currency !== baseCurrency) {
       const lastRates = getLastRates(rates);
       setExchange(
         format({
@@ -50,8 +45,12 @@ export const Input = ({
   const handleChange = (value = '') => {
     const nextValue = value && value.toString().length > 0 ? value : undefined;
 
-    if (currency) setValue(nextValue);
-    onChange && onChange(currency ? parseFloat(nextValue || 0, 10) : nextValue);
+    if (currency) {
+      console.log({ nextValue: parseFloat(nextValue, 10), maxValue });
+      setValue(nextValue);
+    }
+    // onChange && onChange(currency ? parseFloat(nextValue || 0, 10) : nextValue);
+    onChange && onChange(nextValue);
   };
 
   const symbol = SYMBOL[currency];
@@ -97,14 +96,27 @@ export const Input = ({
           secureTextEntry={secure}
           style={[styles.input, currency ? styles.inputCurrency : styles.inputText]}
           underlineColorAndroid="transparent"
-          value={others.value ? others.value.toString() : ''}
+          // value={others.value ? others.value.toString() : ''}
+          value={others.value || ''}
         />
       </Row>
       {exchange && (
         <Row justify="center" marginTop="XS">
-          <Text bold caption color={COLOR.LIGHTEN}>
-            {`1 ${baseCurrency} = ${exchange} ${currency}`}
-          </Text>
+          {others.value > 0 && (
+            <PriceFriendly
+              {...exchangeCaption}
+              bold
+              color={COLOR.TEXT}
+              currency={baseCurrency}
+              marginRight="XS"
+              value={parseFloat(others.value, 10) / exchange}
+            />
+          )}
+          <Text {...exchangeCaption}>(</Text>
+          <PriceFriendly {...exchangeCaption} currency={baseCurrency} value={1} />
+          <Text {...exchangeCaption}>{` = `}</Text>
+          <PriceFriendly {...exchangeCaption} currency={currency} value={exchange} />
+          <Text {...exchangeCaption}>)</Text>
         </Row>
       )}
     </View>
@@ -116,7 +128,7 @@ Input.propTypes = {
   keyboard: PropTypes.string,
   label: PropTypes.string,
   maxLength: PropTypes.number,
+  maxValue: PropTypes.number,
   onChange: PropTypes.func,
   secure: PropTypes.bool,
-  showExchange: PropTypes.bool,
 };
