@@ -30,24 +30,25 @@ export const DialogFork = ({ onClose, onForked, query, visible, ...inherit }) =>
   };
 
   const buttonProps = {
-    activity: busy,
-    color: COLOR.TEXT,
+    color: COLOR.WHITE,
     disabled: busy,
     style: styles.button,
+    wide: true,
   };
 
   return (
     <Dialog {...inherit} onClose={onClose} position="bottom" style={styles.dialog} visible={visible}>
-      <Text subtitle marginTop="S" marginBottom="XS">
+      <Text color={COLOR.WHITE} subtitle marginTop="S" marginBottom="XS">
         {l10n.WARNING}
       </Text>
-      <Text caption marginBottom="M">
+      <Text color={COLOR.WHITE} marginBottom="M">
         {l10n.TRANSFER_TXS_IMPORT}
       </Text>
-      <Row justify="space">
-        <Button {...buttonProps} outlined onPress={onClose} title={l10n.CLOSE} marginRight="M" />
+      <Row>
+        <Button {...buttonProps} outlined onPress={onClose} title={l10n.CANCEL} marginRight="M" />
         <Button
           {...buttonProps}
+          activity={busy}
           colorText={COLOR.ERROR}
           delay={DELAY_PRESS_MS}
           onPress={onSubmit}

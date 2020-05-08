@@ -1,13 +1,14 @@
-import { bool } from 'prop-types';
+import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
+// import { View } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
 import { BarCodeScanner } from 'expo-barcode-scanner';
-import { Button, Dialog, Image, Text } from 'reactor/components';
+import { Button, Dialog, Image, Row, Text, View } from 'reactor/components';
 import { THEME } from 'reactor/common';
 
 import { useL10N, useSnackBar, useStore } from '@context';
+import { Heading, SliderCurrencies } from '@components';
 
 import { DialogFork } from '../DialogFork';
 import styles from './DialogSettings.style';
@@ -19,9 +20,9 @@ const CAMERA_PROPS = {
   type: Camera.Constants.Type.back,
 };
 
-export const DialogSettings = ({ visible, ...inherit }) => {
+export const DialogSettings = ({ onClose, visible, ...inherit }) => {
   const l10n = useL10N();
-  const { authorization, secret } = useStore();
+  const { authorization, baseCurrency, secret } = useStore();
   const { snackbarSuccess } = useSnackBar();
 
   const [dialogFork, setDialogFork] = useState(false);
@@ -41,55 +42,62 @@ export const DialogSettings = ({ visible, ...inherit }) => {
     if (!visible) setCamera(false);
   }, [visible]);
 
-  const onQR = ({ data = '' } = {}) => {
+  const handleQr = ({ data = '' } = {}) => {
     const [secure, file] = data.split('|');
 
     setDialogFork(secure !== undefined && file !== undefined);
     setQr(data);
   };
 
-  const onForked = () => {
+  const handleForked = () => {
     setDialogFork(false);
     inherit.onClose();
     snackbarSuccess(l10n.FORKED_CORRECTLY);
   };
 
+  const handleChangeCurrency = (currency) => {
+    // @TODO
+    console.log('currency', currency);
+  };
+
   return (
-    <Dialog {...inherit} style={styles.dialog} styleButton={styles.dialogButton} position="bottom" visible={visible}>
-      <Text marginTop="S" marginBottom="M" subtitle>
-        {l10n.TRANSFER_TXS}
-      </Text>
-      <Text caption color={COLOR.LIGHTEN}>
-        {camera ? l10n.TRANSFER_TXS_CAMERA : l10n.TRANSFER_TXS_CAPTION}
-      </Text>
+    <>
+      <Dialog {...inherit} onClose={onClose} position="bottom" visible={visible}>
+        <Text marginTop="S" subtitle>
+          {l10n.SETTINGS}
+        </Text>
 
-      <View style={styles.content}>
-        {!camera ? (
-          <Image source={{ uri: `${QR_URI}=${secret}|${authorization}` }} style={styles.qr} />
-        ) : (
-          <Camera {...CAMERA_PROPS} onBarCodeScanned={onQR} style={styles.camera}>
-            <View style={styles.cameraViewport} />
-          </Camera>
-        )}
-      </View>
+        <Heading marginTop="L" small value={l10n.TRANSFER_TXS}>
+          {hasCamera && (
+            <Button onPress={() => setCamera(!camera)} size="S" title={camera ? l10n.CLOSE : l10n.QR_READER} />
+          )}
+        </Heading>
 
-      {hasCamera && (
-        <Button
-          color={COLOR.BASE}
-          outlined
-          onPress={() => setCamera(!camera)}
-          title={camera ? l10n.CLOSE : l10n.QR_READER}
-          wide
-        />
-      )}
+        <View marginTop="S" marginBottom="XS" style={styles.content}>
+          {!camera ? (
+            <Image source={{ uri: `${QR_URI}=${secret}|${authorization}` }} style={styles.qr} />
+          ) : (
+            <Camera {...CAMERA_PROPS} onBarCodeScanned={handleQr} style={styles.camera}>
+              <View style={styles.cameraViewport} />
+            </Camera>
+          )}
+        </View>
+        <Text caption color={COLOR.LIGHTEN} style={styles.legend}>
+          {camera ? l10n.TRANSFER_TXS_CAMERA : l10n.TRANSFER_TXS_CAPTION}
+        </Text>
+
+        <Heading marginTop="L" marginBottom="XS" small value="$ Choose your base currency"></Heading>
+        <SliderCurrencies onChange={handleChangeCurrency} selected={baseCurrency} />
+      </Dialog>
 
       {visible && (
-        <DialogFork onClose={() => setDialogFork(false)} onForked={onForked} query={qr} visible={dialogFork} />
+        <DialogFork onClose={() => setDialogFork(false)} onForked={handleForked} query={qr} visible={dialogFork} />
       )}
-    </Dialog>
+    </>
   );
 };
 
 DialogSettings.propTypes = {
-  visible: bool,
+  onClose: PropTypes.func.isRequired,
+  visible: PropTypes.bool,
 };

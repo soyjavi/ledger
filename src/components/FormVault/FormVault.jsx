@@ -1,20 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { THEME } from 'reactor/common';
-import { Slider } from 'reactor/components';
 
-import { FLAGS } from '@assets';
-import { useL10N, useStore } from '@context';
-import { Option, OPTION_SIZE } from '@components/Option';
+import { useL10N } from '@context';
 import { Input } from '@components/Input';
-
-import { queryCurrencies } from './modules';
-
-const { SPACE } = THEME;
+import { SliderCurrencies } from '@components/SliderCurrencies';
 
 export const FormVault = ({ form = {}, onChange }) => {
   const l10n = useL10N();
-  const store = useStore();
 
   const handleField = (field, value) => {
     const next = { ...form, [field]: value };
@@ -27,18 +19,7 @@ export const FormVault = ({ form = {}, onChange }) => {
 
   return (
     <>
-      <Slider itemMargin={SPACE.S} itemWidth={OPTION_SIZE}>
-        {queryCurrencies(store).map((currency, index) => (
-          <Option
-            caption={currency}
-            image={FLAGS[currency]}
-            key={index}
-            marginRight="S"
-            onPress={() => handleField('currency', currency)}
-            selected={form.currency === currency}
-          />
-        ))}
-      </Slider>
+      <SliderCurrencies onChange={(currency) => handleField('currency', currency)} selected={form.currency} />
       <Input
         currency={form.currency}
         label={l10n.INITIAL_BALANCE}
