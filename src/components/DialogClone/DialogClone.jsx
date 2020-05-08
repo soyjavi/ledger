@@ -49,13 +49,7 @@ const DialogClone = ({
   };
 
   const operator = type === EXPENSE ? -1 : 1;
-  const buttonProps = {
-    activity: busy && wipe,
-
-    delay: DELAY_PRESS_MS,
-    disabled: busy,
-    wide: true,
-  };
+  const buttonProps = { delay: DELAY_PRESS_MS, disabled: busy, wide: true };
 
   return (
     <Dialog {...inherit} highlight onClose={() => showTx(undefined)} position="bottom" visible={visible}>
@@ -118,6 +112,7 @@ const DialogClone = ({
         />
         <Button
           {...buttonProps}
+          activity={busy && wipe}
           colorText={COLOR.BACKGROUND}
           onPress={() => onSubmit(false)}
           title={!(busy && !wipe) ? l10n.CLONE : undefined}

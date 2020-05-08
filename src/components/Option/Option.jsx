@@ -52,7 +52,6 @@ export const Option = ({
         {legend && (
           <Text
             align="center"
-            legend
             color={colorContent}
             marginTop={icon || image ? 'XS' : undefined}
             numberOfLines={1}

@@ -19,7 +19,7 @@ const PIN_CODE = 2;
 const VAULT = 3;
 const COMPLETED = 4;
 
-export const Onboarding = ({ ...others }) => {
+export const Onboarding = () => {
   const l10n = useL10N();
   const navigation = useNavigation();
   const { authorization, vaults = [] } = useStore();
@@ -34,7 +34,7 @@ export const Onboarding = ({ ...others }) => {
 
   const handleComplete = () => {
     navigation.go(SCREEN.DASHBOARD);
-    // navigation.go(SCREEN.SETTINGS, vaults[0]);
+    // navigation.go(SCREEN.VAULT, vaults[1]);
   };
 
   console.log('<OnBoarding>');

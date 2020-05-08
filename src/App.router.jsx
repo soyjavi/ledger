@@ -10,12 +10,12 @@ const { ONBOARDING, STATS, DASHBOARD, VAULT, VAULTS } = SCREEN;
 
 const Router = () => {
   const { current, stack = [], tx } = useNavigation();
-  const { authorization } = useStore();
+  const { authorization, ready } = useStore();
   console.log(' <Router>');
 
   return (
     <>
-      <Onboarding backward={current !== ONBOARDING} visible />
+      {ready && <Onboarding backward={current !== ONBOARDING} visible />}
       {authorization && (
         <>
           <Dashboard backward={current !== DASHBOARD} visible={stack.includes(DASHBOARD)} />

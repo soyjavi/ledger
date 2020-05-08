@@ -29,7 +29,7 @@ const TransactionItem = (props) => {
   const operator = type === EXPENSE ? -1 : 1;
 
   return (
-    <Touchable rippleColor={COLOR.TEXT} onPress={() => showTx(props)}>
+    <Touchable onPress={() => showTx(props)}>
       <Row align="start" paddingHorizontal="M" paddingVertical="S">
         <Col marginRight="S" width="auto">
           <Box small>
@@ -48,9 +48,9 @@ const TransactionItem = (props) => {
               <PriceFriendly
                 bold
                 color={type === INCOME ? COLOR.BRAND : undefined}
-                currency={baseCurrency}
+                currency={currency}
                 operator={type === EXPENSE}
-                value={exchange(value, currency, baseCurrency, rates, timestamp) * operator}
+                value={value * operator}
               />
             </Col>
           </Row>
@@ -63,11 +63,12 @@ const TransactionItem = (props) => {
             <Col width="auto">
               {baseCurrency !== currency && (
                 <PriceFriendly
+                  bold
                   caption
                   color={COLOR.LIGHTEN}
-                  currency={currency}
+                  currency={baseCurrency}
                   operator={type === EXPENSE}
-                  value={value * operator}
+                  value={exchange(value, currency, baseCurrency, rates, timestamp) * operator}
                 />
               )}
             </Col>

@@ -39,7 +39,6 @@ const ItemGroupCategories = ({ dataSource, type }) => {
           <Touchable
             key={key}
             onPress={() => setExpand(expand !== key ? key : undefined)}
-            rippleColor={COLOR.TEXT}
             style={[styles.content, expand && expand !== key && { opacity: OPACITY.S }]}
           >
             <HorizontalChartItem

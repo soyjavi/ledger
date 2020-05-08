@@ -76,7 +76,6 @@ const DialogTransaction = (props = {}) => {
 
       <Row marginTop="L">
         <Button
-          activity={busy}
           color={COLOR.BASE}
           colorText={COLOR.TEXT}
           disabled={busy}

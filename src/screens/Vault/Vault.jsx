@@ -30,7 +30,7 @@ const Vault = ({ visible, ...inherit }) => {
       setTxs(query({ l10n, txs: vault.txs }));
       setDataSource(vault);
     } else {
-      setDialog(false);
+      setDialog(undefined);
     }
   }, [visible, store]);
 

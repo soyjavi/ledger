@@ -29,7 +29,7 @@ export default {
     //   'Travel',
     // ],
 
-    CANCEL: 'Cancel',
+    CANCEL: 'CANCEL',
     CATEGORIES: [
       {
         // Expenses
@@ -90,7 +90,7 @@ export default {
     GET: 'Amount you will get',
     GET_STARTED: 'GET STARTED',
 
-    IMPORT: 'Import',
+    IMPORT: 'IMPORT',
     INCOME: 'Income',
     INCOMES: 'Incomes',
     INITIAL_BALANCE: 'Initial balance',
@@ -147,7 +147,7 @@ export default {
     TRANSACTIONS: 'Transactions',
     TRANSFER: 'Transfer',
     TRANSFERS: 'Transfers',
-    TRANSFER_TXS: 'TRANSFER DATA',
+    TRANSFER_TXS: 'Transfer your transactions',
     TRANSFER_TXS_CAPTION:
       'Transfer all your data from this device to a new one just reading this QR in the new device.',
     TRANSFER_TXS_CAMERA: 'Read the QR code from the device you want get all its transactions and vaults.',

@@ -14,5 +14,6 @@ export * from './Input';
 export * from './Option';
 export * from './PriceFriendly';
 export * from './ScrollView';
+export * from './SliderCurrencies';
 export * from './Summary';
 export * from './TransactionItem';
