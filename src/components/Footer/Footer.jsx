@@ -1,7 +1,7 @@
 import { bool, func } from 'prop-types';
 import React, { useEffect } from 'react';
 import { THEME } from 'reactor/common';
-import { Motion } from 'reactor/components';
+import { Motion, Snackbar } from 'reactor/components';
 
 import { onHardwareBackPress } from '@common';
 import { useConnection, useL10N, useSnackBar, useStore } from '@context';
@@ -42,12 +42,20 @@ export const Footer = ({ onBack, onHardwareBack, showSync, visible }) => {
       >
         {onBack && <Option selected onPress={onBack} caption={l10n.BACK} />}
         {showSync && (
-          <Option icon={sync ? 'refresh' : 'cloud-download'} disabled={!sync} onPress={handleSync} selected={sync} />
+          <Motion timeline={[{ property: 'scale', value: sync ? 1 : 0.5 }]}>
+            <Option icon={sync ? 'refresh' : 'cloud-download'} disabled={!sync} onPress={handleSync} selected={sync} />
+          </Motion>
         )}
       </Motion>
-      <Motion style={styles.container} timeline={[{ property: 'translateY', value: !connected ? 0 : MOTION_HIDE }]}>
-        <Option color={COLOR.ERROR} onPress={onBack} legend={l10n.OFFLINE_MODE} />
-      </Motion>
+      <Snackbar
+        caption={l10n.OFFLINE_MODE}
+        color={COLOR.ERROR}
+        icon="ban"
+        iconSize={SPACE.M}
+        family="SimpleLineIcons"
+        style={styles.snackbar}
+        visible={!connected}
+      />
     </>
   );
 };

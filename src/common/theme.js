@@ -136,4 +136,10 @@ export default {
     M: 0.4,
     L: 0.6,
   },
+
+  SNACKBAR: {
+    borderRadius: 0,
+    paddingHorizontal: SPACE.M,
+    paddingVertical: SPACE.M,
+  },
 };

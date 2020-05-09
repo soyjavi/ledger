@@ -5,7 +5,7 @@ import { useEnvironment } from 'reactor/hooks';
 import { OPTION_SIZE } from '../Option';
 
 const ENV = useEnvironment();
-const { SPACE } = THEME;
+const { SNACKBAR, SPACE } = THEME;
 
 export default StyleSheet.create({
   container: {
@@ -15,4 +15,6 @@ export default StyleSheet.create({
     zIndex: 2,
     width: OPTION_SIZE,
   },
+
+  snackbar: SNACKBAR,
 });
