@@ -58,7 +58,7 @@ export const Search = ({ onValue }) => {
   };
 
   return (
-    <Row paddingHorizontal="M" marginHorizontal="M" marginBottom="XS" style={[styles.container, focus && styles.focus]}>
+    <Row marginHorizontal="M" marginBottom="XS" style={[styles.container, focus && styles.focus]}>
       <TextInput
         autoCapitalize="none"
         autoCorrect={false}
