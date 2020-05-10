@@ -1,7 +1,7 @@
 import { bool, func } from 'prop-types';
 import React, { useEffect } from 'react';
 import { THEME } from 'reactor/common';
-import { Motion, Snackbar } from 'reactor/components';
+import { Icon, Motion, Snackbar } from 'reactor/components';
 
 import { onHardwareBackPress } from '@common';
 import { useConnection, useL10N, useSnackBar, useStore } from '@context';
@@ -10,7 +10,7 @@ import { Option } from '../Option';
 import { getProfile } from '@services';
 import styles from './Footer.style';
 
-const { COLOR, SPACE } = THEME;
+const { COLOR, MOTION, SPACE } = THEME;
 
 const MOTION_HIDE = SPACE.XXL * 2;
 
@@ -42,9 +42,16 @@ export const Footer = ({ onBack, onHardwareBack, showSync, visible }) => {
       >
         {onBack && <Option selected onPress={onBack} caption={l10n.BACK} />}
         {showSync && (
-          <Motion timeline={[{ property: 'scale', value: sync ? 1 : 0.5 }]}>
-            <Option icon={sync ? 'refresh' : 'cloud-download'} disabled={!sync} onPress={handleSync} selected={sync} />
-          </Motion>
+          <Option disabled={!sync} onPress={handleSync} selected={sync}>
+            <Motion duration={MOTION.DURATION * 4} timeline={[{ property: 'rotate', value: sync ? 0 : 3.1 }]}>
+              <Icon
+                color={sync ? COLOR.BACKGROUND : COLOR.LIGHTEN}
+                family="SimpleLineIcons"
+                size={SPACE.L}
+                value="refresh"
+              />
+            </Motion>
+          </Option>
         )}
       </Motion>
       <Snackbar
