@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "Volt.",
-    "description": "A new expanded and private finance experience running on the blockchain.",
-    "slug": "voltvault",
+    "name": "ledger",
+    "description": "Your private finance ledger running on your own blockchain",
+    "slug": "ledger",
     "privacy": "public",
     "sdkVersion": "37.0.0",
     "platforms": ["ios", "android", "web"],
-    "version": "0.20.14",
+    "version": "0.21.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -24,7 +24,7 @@
       "supportsTablet": false
     },
     "android": {
-      "package": "com.soyjavi.voltvault"
+      "package": "com.soyjavi.ledger"
     },
     "androidStatusBar": {
       "backgroundColor": "#ffffff",
