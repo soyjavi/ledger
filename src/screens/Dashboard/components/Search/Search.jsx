@@ -1,11 +1,12 @@
-import { func } from 'prop-types';
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { TextInput } from 'react-native';
+import { THEME } from 'reactor/common';
+import { Activity, Button, Col, Row } from 'reactor/components';
 
-import { THEME } from '../../../../reactor/common';
-import { Activity, Button, Col, Icon, Row } from '../../../../reactor/components';
-import { groupTxsByDate } from '../../../../common';
-import { useL10N, useStore } from '../../../../context';
+import { groupTxsByDate } from '@common';
+import { useL10N, useStore } from '@context';
+
 import styles from './Search.style';
 
 const { COLOR } = THEME;
@@ -56,11 +57,8 @@ export const Search = ({ onValue }) => {
     onValue(nextValue);
   };
 
-  console.log({ value });
-
   return (
-    <Row paddingHorizontal="S" marginTop="XS" marginHorizontal="M" style={[styles.container, focus && styles.focus]}>
-      <Icon color={COLOR.LIGHTEN} family="MaterialIcons" marginRight="S" value="search" size={16} />
+    <Row marginHorizontal="M" marginBottom="XS" style={[styles.container, focus && styles.focus]}>
       <TextInput
         autoCapitalize="none"
         autoCorrect={false}
@@ -85,5 +83,5 @@ export const Search = ({ onValue }) => {
 };
 
 Search.propTypes = {
-  onValue: func.isRequired,
+  onValue: PropTypes.func.isRequired,
 };

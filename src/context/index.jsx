@@ -1,7 +1,6 @@
 import { node, shape, string } from 'prop-types';
 import React from 'react';
-
-import { L10NProvider, useL10N } from '../reactor/context/L10N';
+import { L10NProvider, useL10N } from 'reactor/context/L10N';
 
 import { ConnectionProvider, useConnection } from './connection';
 import { NavigationProvider, useNavigation } from './navigation';

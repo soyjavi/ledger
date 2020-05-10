@@ -1,4 +1,4 @@
-import { C, exchange } from '../../../common';
+import { C, exchange } from '@common';
 
 import calcHeatmap from './calcHeatmap';
 

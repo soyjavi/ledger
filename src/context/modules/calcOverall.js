@@ -1,4 +1,4 @@
-import { exchange } from '../../common';
+import { exchange } from '@common';
 
 const KEYS = ['expenses', 'incomes', 'progression', 'today'];
 

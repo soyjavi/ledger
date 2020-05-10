@@ -1,7 +1,9 @@
 export default (form = {}, l10n) => {
   Object.keys(form).forEach((key) => {
-    const caption = form[key].label.split('.')[1];
-    if (caption) form[key].label = l10n[caption];
+    ['label', 'placeholder'].forEach((domain) => {
+      const caption = form[key][domain] ? form[key][domain].split('.')[1] : undefined;
+      if (caption) form[key][domain] = l10n[caption];
+    });
   });
 
   return form;

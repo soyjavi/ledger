@@ -1,4 +1,4 @@
-import { THEME } from '../../../reactor/common';
+import { THEME } from 'reactor/common';
 
 const {
   MOTION: { DURATION },

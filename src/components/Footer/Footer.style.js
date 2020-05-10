@@ -1,26 +1,20 @@
 import { StyleSheet } from 'react-native';
+import { THEME } from 'reactor/common';
+import { useEnvironment } from 'reactor/hooks';
 
-import { useEnvironment } from '../../reactor/hooks';
-import { THEME } from '../../reactor/common';
+import { OPTION_SIZE } from '../Option';
 
 const ENV = useEnvironment();
-const { COLOR, SPACE } = THEME;
+const { SNACKBAR, SPACE } = THEME;
 
 export default StyleSheet.create({
-  button: {
-    height: SPACE.XXL,
-    width: SPACE.XXL,
-    paddingHorizontal: 0,
-  },
-
-  buttonOutlined: {
-    backgroundColor: COLOR.OVERLAY,
-  },
-
   container: {
     bottom: SPACE.M,
     position: ENV.IS_WEB ? 'fixed' : 'absolute',
     right: SPACE.M,
-    zIndex: 1,
+    zIndex: 2,
+    width: OPTION_SIZE,
   },
+
+  snackbar: SNACKBAR,
 });

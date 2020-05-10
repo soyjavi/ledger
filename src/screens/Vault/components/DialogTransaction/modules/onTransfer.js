@@ -1,7 +1,7 @@
-import { createTransfer } from '../../../../../services';
+import { createTransfer } from '@services';
 
 export default ({
-  props: { vault },
+  props: { vault = {} },
   state: {
     form: { from, to, exchange, value },
   },
@@ -9,7 +9,7 @@ export default ({
   snackbar,
 }) =>
   createTransfer(store, snackbar, {
-    vault,
+    vault: vault.hash,
     from,
     to,
     exchange,

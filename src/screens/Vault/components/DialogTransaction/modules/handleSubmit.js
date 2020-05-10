@@ -1,4 +1,4 @@
-import { C } from '../../../../../common';
+import { C } from '@common';
 
 import onTransaction from './onTransaction';
 import onTransfer from './onTransfer';
@@ -19,7 +19,7 @@ const INITIAL_STATE = {
 
 export default async ({ props, snackbar, setBusy, setState, state, store }) => {
   setBusy(true);
-  const method = state.type === TRANSFER ? onTransfer : onTransaction;
+  const method = props.type === TRANSFER ? onTransfer : onTransaction;
   const value = await method({
     props,
     snackbar,

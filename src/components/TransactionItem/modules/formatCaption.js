@@ -1,4 +1,4 @@
-import { verboseTime } from '../../../common';
+import { verboseTime } from '@common';
 
 export default (time, { place } = {}) => {
   let value = verboseTime(time);

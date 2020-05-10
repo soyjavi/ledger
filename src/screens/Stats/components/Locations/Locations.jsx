@@ -1,10 +1,11 @@
 import { array, arrayOf, number, shape } from 'prop-types';
 import React, { Fragment } from 'react';
 import { View } from 'react-native';
-import { THEME } from '../../../../reactor/common';
+import { THEME } from 'reactor/common';
 
-import { useL10N } from '../../../../context';
-import { HeatMap, Heading, HorizontalChartItem } from '../../../../components';
+import { useL10N } from '@context';
+import { HeatMap, Heading, HorizontalChartItem } from '@components';
+
 import { orderByAmount } from '../../modules';
 import styles from './Locations.style';
 

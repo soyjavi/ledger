@@ -1,16 +1,15 @@
 import { bool, shape } from 'prop-types';
 import React, { useState } from 'react';
+import { THEME } from 'reactor/common';
+import { Button, Col, Dialog, Row, Text } from 'reactor/components';
 
-import { THEME } from '../../reactor/common';
-import { Button, Col, Dialog, Row, Text } from '../../reactor/components';
+import { C, exchange, verboseTime } from '@common';
+import { useNavigation, useL10N, useSnackBar, useStore } from '@context';
+import { createTx } from '@services';
 
-import { C, exchange, verboseMonthShort, verboseTime } from '../../common';
-import { useNavigation, useL10N, useSnackBar, useStore } from '../../context';
-import { createTx } from '../../services';
-import { Box } from '../Box';
+import { BoxDate } from '../Box';
 import { HeatMap } from '../HeatMap';
 import { PriceFriendly } from '../PriceFriendly';
-import styles from './DialogClone.style';
 
 const {
   DELAY_PRESS_MS,
@@ -19,7 +18,7 @@ const {
   },
   WIPE,
 } = C;
-const { COLOR, OPACITY } = THEME;
+const { COLOR } = THEME;
 
 const DialogClone = ({
   dataSource: { category, currency, hash, value, vault, location, title, timestamp, type = EXPENSE },
@@ -49,39 +48,28 @@ const DialogClone = ({
     if (tx) showTx();
   };
 
-  const color = type === EXPENSE ? COLOR.EXPENSE : COLOR.INCOME;
   const operator = type === EXPENSE ? -1 : 1;
-  const buttonProps = {
-    activity: busy && wipe,
-    color,
-    delay: DELAY_PRESS_MS,
-    disabled: busy,
-    style: styles.button,
-  };
+  const buttonProps = { delay: DELAY_PRESS_MS, disabled: busy, wide: true };
 
   return (
     <Dialog {...inherit} highlight onClose={() => showTx(undefined)} position="bottom" visible={visible}>
-      <Text subtitle color={color}>
+      <Text marginTop="S" marginBottom="M" subtitle>
         {type === EXPENSE ? l10n.EXPENSE : l10n.INCOME}
       </Text>
-      <Row marginTop="M">
+      <Row>
         <Col marginRight="S" width="auto">
-          <Box color={color} style={styles.boxContent} opacity={OPACITY.S} small>
-            <Text bold color={color} style={styles.day}>
-              {new Date(timestamp || null).getDate()}
-            </Text>
-            <Text color={color} style={styles.month}>
-              {verboseMonthShort(timestamp, l10n)}
-            </Text>
-          </Box>
+          <BoxDate l10n={l10n} timestamp={timestamp} />
         </Col>
         <Col>
           <Row>
             <Col>
-              <Text numberOfLines={1}>{title}</Text>
+              <Text bold numberOfLines={1}>
+                {title}
+              </Text>
             </Col>
             <Col width="auto">
               <PriceFriendly
+                bold
                 currency={baseCurrency}
                 operator
                 value={
@@ -109,20 +97,22 @@ const DialogClone = ({
 
       {location && (
         <Col marginTop="S">
-          <HeatMap caption={location.place} color={color} points={[[location.longitude, location.latitude]]} />
+          <HeatMap caption={location.place} points={[[location.longitude, location.latitude]]} small />
         </Col>
       )}
 
       <Row marginTop="M">
         <Button
           {...buttonProps}
+          color={COLOR.BASE}
+          colorText={COLOR.TEXT}
           onPress={() => onSubmit(true)}
-          outlined
           marginRight="M"
           title={!(busy && wipe) ? l10n.WIPE : undefined}
         />
         <Button
           {...buttonProps}
+          activity={busy && wipe}
           colorText={COLOR.BACKGROUND}
           onPress={() => onSubmit(false)}
           title={!(busy && !wipe) ? l10n.CLONE : undefined}

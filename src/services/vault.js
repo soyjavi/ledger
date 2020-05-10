@@ -1,6 +1,6 @@
 import { apiCall, composeHeaders } from './modules';
 
-const createVault = async (store, snackbar, props) => {
+export const createVault = async (store, snackbar, props) => {
   const { rates, vaults = [] } = store;
   const { snackbarError } = snackbar;
 
@@ -21,5 +21,3 @@ const createVault = async (store, snackbar, props) => {
   store.save(next);
   return vault;
 };
-
-export { createVault };

@@ -1,37 +1,31 @@
-import { func, shape, string } from 'prop-types';
+import PropTypes from 'prop-types';
 import React from 'react';
+import { THEME } from 'reactor/common';
+import { Icon, Slider } from 'reactor/components';
 
-import { FLAGS } from '../../../../../assets';
-import { currencyDecimals, setCurrency, translate } from '../../../../../common';
-import { CardOption, PriceFriendly } from '../../../../../components';
-import { useL10N, useStore } from '../../../../../context';
-import { Form, Slider, Text } from '../../../../../reactor/components';
-import { THEME } from '../../../../../reactor/common';
-import { hydrate, queryAvailableVaults } from '../modules';
+import { FLAGS } from '@assets';
+import { currencyDecimals } from '@common';
+import { Input, Option, PriceFriendly, OPTION_SIZE } from '@components';
+import { useL10N, useStore } from '@context';
 
-import styles, { CARD_WIDTH } from '../DialogTransaction.style';
+import { getVault, queryAvailableVaults } from '../modules';
 
-const { COLOR, SPACE } = THEME;
+const { COLOR, ICON, SPACE } = THEME;
 
-const FormTransaction = (props) => {
-  const { color, destination, form, onChange, vault } = props;
+const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
   const l10n = useL10N();
-  const store = useStore();
-  const { baseCurrency, vaults, rates } = store;
+  const { baseCurrency, vaults, rates } = useStore();
 
-  const handleChange = (values) => {
-    const keys = Object.keys(rates);
-    const lastRates = rates[keys[keys.length - 1]];
-    let { value = 0 } = values;
-    let { exchange } = values;
+  const handleField = (field, fieldValue) => {
+    const next = { ...form, [field]: fieldValue };
+    const from = getVault(vault.hash, vaults);
+    const to = getVault(next.destination, vaults);
+    let { exchange = 0, value = 0 } = next;
 
-    value = !value || value.length === 0 ? undefined : value;
-    const from = vaults.find(({ hash }) => hash === vault);
-    const to = vaults.find(({ hash }) => hash === destination);
+    if (next.destination && exchange === form.exchange) {
+      const keys = Object.keys(rates);
+      const lastRates = rates[keys[keys.length - 1]];
 
-    console.log({ values });
-
-    if (destination && exchange === form.exchange) {
       if (from.currency === to.currency) exchange = value;
       else if (from.currency === baseCurrency) exchange = value * lastRates[to.currency];
       else if (to.currency === baseCurrency) exchange = value / lastRates[from.currency];
@@ -41,58 +35,63 @@ const FormTransaction = (props) => {
     }
 
     onChange({
-      form: {
-        exchange,
-        from,
-        to,
-        value,
-      },
-      valid:
-        to !== undefined && value !== undefined && value.length > 0 && exchange !== undefined && exchange.length > 0,
+      form: { ...next, from, to, exchange },
+      valid: next.value > 0 && next.destination !== undefined && next.exchange > 0,
     });
   };
 
   return (
     <>
-      <Text bold caption>
-        {l10n.VAULT_DESTINATION}
-      </Text>
-      <Slider itemMargin={0} itemWidth={CARD_WIDTH + SPACE.S} marginTop="XS" marginBottom="M">
-        {queryAvailableVaults(store, vault).map(({ currency, currentBalance, hash, title }) => (
-          <CardOption
-            color={color}
+      <Input
+        currency={vault.currency}
+        label={l10n.SEND}
+        maxValue={vault.currentBalance}
+        onChange={(value) => handleField('value', value)}
+        value={form.value}
+      />
+
+      <Icon
+        color={form.value <= 0 ? COLOR.LIGHTEN : undefined}
+        family={ICON.FAMILY}
+        marginVertical="S"
+        value="arrow-down"
+        size={SPACE.L}
+        style={{ alignSelf: 'center' }}
+      />
+
+      <Slider itemMargin={SPACE.S} itemWidth={OPTION_SIZE}>
+        {queryAvailableVaults(vaults, vault.hash).map(({ currency, currentBalance, hash, title }) => (
+          <Option
             key={hash}
             image={FLAGS[currency]}
-            onPress={() => onChange({ destination: hash, form: {}, valid: false })}
-            selected={hash === destination}
-            style={styles.card}
-            title={title}
+            legend={title}
+            marginRight="S"
+            onPress={() => handleField('destination', hash)}
+            selected={hash === form.destination}
           >
-            <PriceFriendly
-              caption
-              color={hash === destination ? color : COLOR.LIGHTEN}
-              value={currentBalance}
-              currency={currency}
-            />
-          </CardOption>
+            <PriceFriendly caption color={COLOR.LIGHTEN} value={currentBalance} currency={currency} />
+          </Option>
         ))}
       </Slider>
-      <Form
-        attributes={setCurrency(translate(hydrate(props, vaults), l10n))}
-        color={color}
-        onChange={handleChange}
-        value={form}
+
+      <Input
+        currency={form.to ? form.to.currency : baseCurrency}
+        disabled={!form.to}
+        label={l10n.GET}
+        marginTop="M"
+        marginBottom="XL"
+        onChange={(value) => handleField('exchange', value)}
+        value={form.to ? form.exchange : undefined}
       />
     </>
   );
 };
 
 FormTransaction.propTypes = {
-  color: string.isRequired,
-  destination: string,
-  form: shape({}).isRequired,
-  onChange: func.isRequired,
-  vault: string.isRequired,
+  destination: PropTypes.string,
+  form: PropTypes.shape({}).isRequired,
+  onChange: PropTypes.func.isRequired,
+  vault: PropTypes.shape({}).isRequired,
 };
 
 FormTransaction.defaultProps = {

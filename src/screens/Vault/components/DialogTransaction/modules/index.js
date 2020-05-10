@@ -1,7 +1,8 @@
+import getCurrency from './getCurrency';
 import getLocation from './getLocation';
+import getVault from './getVault';
 import handleSubmit from './handleSubmit';
-import hydrate from './hydrate';
 import queryCategories from './queryCategories';
 import queryAvailableVaults from './queryAvailableVaults';
 
-export { getLocation, handleSubmit, hydrate, queryCategories, queryAvailableVaults };
+export { getCurrency, getLocation, getVault, handleSubmit, queryCategories, queryAvailableVaults };

@@ -1,15 +1,15 @@
 import { node } from 'prop-types';
 import React, { useContext, useReducer, createContext } from 'react';
 
-import { C } from '../common';
+import { C } from '@common';
 
 const {
-  SCREEN: { SESSION },
+  SCREEN: { ONBOARDING },
 } = C;
 const NavigationContext = createContext(`${C.NAME}:context:navigation`);
 const INITIAL_STATE = {
   params: {},
-  stack: [SESSION],
+  stack: [ONBOARDING],
   tx: undefined,
 };
 

@@ -1,7 +1,8 @@
 import { node } from 'prop-types';
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-import { C } from '../common';
+import { C } from '@common';
+
 import { consolidate, Storage } from './modules';
 
 const { CURRENCY, NAME } = C;
@@ -9,6 +10,7 @@ const StoreContext = createContext(`${NAME}:context:store`);
 
 const INITIAL_STATE = {
   overall: {},
+
   // -- STORAGE --------------------------------------------------------------
   authorization: undefined,
   baseCurrency: CURRENCY,
@@ -27,7 +29,7 @@ const StoreProvider = ({ children }) => {
 
   useEffect(() => {
     const load = async () => {
-      setState({ ...INITIAL_STATE, ...consolidate(await Storage.get()) });
+      setState({ ...INITIAL_STATE, ready: true, ...consolidate(await Storage.get()) });
     };
     if (!state) load();
   }, [state]);

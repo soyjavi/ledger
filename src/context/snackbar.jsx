@@ -1,14 +1,14 @@
 import { node } from 'prop-types';
 import React, { useContext, useReducer, createContext } from 'react';
+import { THEME } from 'reactor/common';
+import { useL10N } from 'reactor/context/L10N';
+import { Snackbar } from 'reactor/components';
 
-import { C } from '../common';
-import { THEME } from '../reactor/common';
-import { useL10N } from '../reactor/context/L10N';
-import { Snackbar } from '../reactor/components';
+import { C } from '@common';
 
 const KEY = `${C.NAME}:context:snackbar`;
 const SnackBarContext = createContext(KEY);
-const { COLOR } = THEME;
+const { COLOR, ICON, SNACKBAR, SPACE } = THEME;
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -29,11 +29,9 @@ const SnackBarProvider = ({ children }) => {
 
   const events = {
     snackbarSuccess: (caption) => dispatch({ type: 'SHOW', caption, color: COLOR.SUCCESS, icon: 'check' }),
-    snackbarError: (caption) => dispatch({ type: 'SHOW', caption, color: COLOR.ERROR, icon: 'cancel' }),
-    snackbarWarning: (caption) => dispatch({ type: 'SHOW', caption, color: COLOR.WARNING, icon: 'exclamation' }),
+    snackbarError: (caption) => dispatch({ type: 'SHOW', caption, color: COLOR.ERROR, icon: 'ban' }),
+    snackbarWarning: (caption) => dispatch({ type: 'SHOW', caption, color: COLOR.WARNING, icon: 'info' }),
   };
-
-  const { caption = '', color, icon, type } = state;
 
   return (
     <SnackBarContext.Provider value={events}>
@@ -41,11 +39,11 @@ const SnackBarProvider = ({ children }) => {
       <Snackbar
         {...state}
         button={l10n.CLOSE.toUpperCase()}
-        caption={caption}
-        color={color}
-        icon={icon}
+        iconSize={SPACE.M}
+        family={ICON.FAMILY}
         onClose={() => dispatch({ type: 'HIDE' })}
-        visible={type === 'SHOW'}
+        style={SNACKBAR}
+        visible={state.type === 'SHOW'}
       />
     </SnackBarContext.Provider>
   );

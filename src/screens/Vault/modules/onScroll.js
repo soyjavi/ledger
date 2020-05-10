@@ -1,18 +1,12 @@
-import { LAYOUT, THEME } from '../../../reactor/common';
-import { query } from './query';
+import { LAYOUT } from 'reactor/common';
 
-const { SPACE } = THEME;
+import { query } from './query';
 
 export const onScroll = (
   { l10n, dataSource, scroll, scrollQuery, search, setScroll, setScrollQuery, setTxs },
-  {
-    nativeEvent: {
-      contentOffset: { y },
-    },
-  },
+  nextScroll,
+  y,
 ) => {
-  const nextScroll = y > SPACE.M;
-
   if (nextScroll !== scroll) setScroll(nextScroll);
   if (!scrollQuery && y > LAYOUT.VIEWPORT.H / 2) {
     setScrollQuery(true);

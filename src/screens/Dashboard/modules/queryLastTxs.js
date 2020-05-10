@@ -1,4 +1,4 @@
-import { C, groupTxsByDate } from '../../../common';
+import { C, groupTxsByDate } from '@common';
 
 const { CURRENCY } = C;
 

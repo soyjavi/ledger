@@ -1,4 +1,5 @@
-import { C } from '../common';
+import { C } from '@common';
+
 import { apiCall, composeHeaders } from './modules';
 
 const {
@@ -8,7 +9,7 @@ const {
   },
 } = C;
 
-const createTx = async (store, snackbar, props, save = true) => {
+export const createTx = async (store, snackbar, props, save = true) => {
   const { txs = [] } = store;
   const { snackbarError } = snackbar;
   const { hash: previousHash } = txs[txs.length - 1] || {};
@@ -26,7 +27,7 @@ const createTx = async (store, snackbar, props, save = true) => {
   return tx;
 };
 
-const createTransfer = async (store, snackbar, props) => {
+export const createTransfer = async (store, snackbar, props) => {
   const { vault, from, to, exchange, value } = props;
 
   const fromTx = await createTx(
@@ -63,5 +64,3 @@ const createTransfer = async (store, snackbar, props) => {
     return [toTx, fromTx];
   }
 };
-
-export { createTx, createTransfer };

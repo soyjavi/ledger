@@ -1,8 +1,9 @@
 import React from 'react';
+import { LayoutView } from 'reactor/components';
 
-import { LayoutView } from './reactor/components';
-import { C, L10N } from './common';
-import { Provider } from './context';
+import { C, L10N } from '@common';
+import { Provider } from '@context';
+
 import { Router } from './App.router';
 import styles from './App.style';
 

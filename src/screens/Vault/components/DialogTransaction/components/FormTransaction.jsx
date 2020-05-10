@@ -1,74 +1,69 @@
 import { func, number, shape, string } from 'prop-types';
 import React from 'react';
+import { Slider } from 'reactor/components';
+import { THEME } from 'reactor/common';
 
-import { FORM, getIconCategory, setCurrency, translate } from '../../../../../common';
-import { CardOption } from '../../../../../components';
-import { useL10N } from '../../../../../context';
-import { Form, Slider, Text } from '../../../../../reactor/components';
-import { THEME } from '../../../../../reactor/common';
+import { getIconCategory } from '@common';
+import { Input, Option, OPTION_SIZE } from '@components';
+import { useL10N } from '@context';
+
 import { queryCategories } from '../modules';
-
-import styles, { CARD_WIDTH } from '../DialogTransaction.style';
 
 const { SPACE } = THEME;
 
-const FormTransaction = (props) => {
-  const { color, form, onChange, type, ...inherit } = props;
-
+const FormTransaction = ({ currency, form = {}, onChange, type, vault: { currentBalance = 0 } = {} }) => {
   const l10n = useL10N();
 
-  const handleChange = (values = {}) => {
-    const {
-      category,
-      form: { title = '', value },
-    } = { ...props, ...values };
+  const handleField = (field, fieldValue) => {
+    const next = { ...form, [field]: fieldValue };
 
     onChange({
-      ...values,
-      type,
-      valid: category !== undefined && title !== '' && value > 0,
+      form: next,
+      valid: next.category !== undefined && next.title !== '' && next.value > 0,
     });
   };
 
   return (
     <>
-      <Text bold caption>
-        {l10n.CATEGORY}
-      </Text>
-      <Slider itemMargin={0} itemWidth={CARD_WIDTH + SPACE.S} marginTop="XS" marginBottom="M">
+      <Slider itemMargin={SPACE.S} itemWidth={OPTION_SIZE} marginTop="XS" marginBottom="M">
         {queryCategories({ l10n, type }).map((item) => (
-          <CardOption
+          <Option
+            legend={item.caption}
             key={item.key}
-            color={color}
             icon={getIconCategory({ type, category: item.key })}
-            onPress={() => handleChange({ category: item.key })}
-            selected={props.category === item.key}
-            style={styles.card}
-            title={item.caption}
+            family="MaterialCommunityIcons"
+            marginRight="S"
+            onPress={() => handleField('category', item.key)}
+            selected={form.category === item.key}
           />
         ))}
       </Slider>
 
-      <Form
-        attributes={setCurrency(translate(FORM.TRANSACTION, l10n), inherit.currency)}
-        color={color}
-        onChange={(value) => handleChange({ form: value })}
-        value={form}
+      <Input
+        currency={currency}
+        label={l10n.AMOUNT}
+        marginVertical="M"
+        maxValue={currentBalance}
+        onChange={(value) => handleField('value', value)}
+        value={form.value}
+      />
+
+      <Input
+        label={l10n.CONCEPT}
+        marginBottom="M"
+        onChange={(value) => handleField('title', value)}
+        value={form.title}
       />
     </>
   );
 };
 
 FormTransaction.propTypes = {
-  category: string,
-  color: string.isRequired,
+  currency: string,
   form: shape({}).isRequired,
   onChange: func.isRequired,
-  type: number.isRequired,
-};
-
-FormTransaction.defaultProps = {
-  category: undefined,
+  type: number,
+  vault: shape({}).isRequired,
 };
 
 export default FormTransaction;

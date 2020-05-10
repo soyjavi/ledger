@@ -1,13 +1,13 @@
 import { bool } from 'prop-types';
 import React, { useEffect, useState } from 'react';
+import { THEME } from 'reactor/common';
+import { Slider, Viewport } from 'reactor/components';
 
-import { THEME } from '../../reactor/common';
-import { Slider, Viewport } from '../../reactor/components';
+import { C } from '@common';
+import { Card, CARD_WIDTH, Footer, Header, Heading, ScrollView } from '@components';
+import { useL10N, useNavigation, useSettings, useStore } from '@context';
 
-import { C } from '../../common';
-import { Footer, Header, Heading, ScrollView } from '../../components';
-import { useL10N, useNavigation, useSettings, useStore } from '../../context';
-import { CURRENCYCARD_WIDTH, CurrencyCard, VaultItem } from './components';
+import { VaultItem } from './components';
 import { filter, query } from './modules';
 import styles from './Vaults.style';
 
@@ -18,9 +18,10 @@ const Vaults = ({ visible, ...inherit }) => {
   const { state = {}, dispatch } = useSettings();
   const navigation = useNavigation();
   const l10n = useL10N();
-  const { vaults } = useStore();
+  const { overall, vaults } = useStore();
 
   const [currencies, setCurrencies] = useState([]);
+  const [scroll, setScroll] = useState(false);
   const [selected, setSelected] = useState(undefined);
 
   useEffect(() => {
@@ -32,20 +33,24 @@ const Vaults = ({ visible, ...inherit }) => {
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
-      <Header highlight title={l10n.VAULTS} />
+      <Header highlight={scroll} onBack={scroll ? navigation.back : undefined} title={l10n.VAULTS} />
 
-      <ScrollView contentContainerStyle={styles.scroll}>
+      <ScrollView contentContainerStyle={styles.scroll} onScroll={setScroll}>
         {hasCurrencies && (
           <>
             <Heading value="Currencies" paddingHorizontal="M" />
-            <Slider itemWidth={CURRENCYCARD_WIDTH + SPACE.S} itemMargin={0} style={styles.slider}>
-              {currencies.map(({ currency, ...item }) => (
-                <CurrencyCard
+            <Slider itemWidth={CARD_WIDTH} itemMargin={SPACE.S} style={styles.slider}>
+              {currencies.map(({ base, currency, ...item }, index) => (
+                <Card
                   {...item}
                   currency={currency}
+                  disabled={currency !== selected}
                   key={currency}
+                  marginLeft={index === 0 ? 'M' : undefined}
+                  marginRight="S"
                   onPress={() => setSelected(currency !== selected ? currency : undefined)}
-                  selected={currency === selected}
+                  percentage={(base * 100) / overall.balance}
+                  title={currency}
                 />
               ))}
             </Slider>
@@ -66,7 +71,7 @@ const Vaults = ({ visible, ...inherit }) => {
         </>
       </ScrollView>
 
-      <Footer onBack={navigation.back} onHardwareBack={visible ? navigation.back : undefined} />
+      <Footer onBack={navigation.back} onHardwareBack={visible ? navigation.back : undefined} visible={!scroll} />
     </Viewport>
   );
 };

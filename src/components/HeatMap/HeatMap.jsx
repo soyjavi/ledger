@@ -1,21 +1,30 @@
-import { array, arrayOf, bool, number, string } from 'prop-types';
+import PropTypes from 'prop-types';
 import React from 'react';
+import { THEME } from 'reactor/common';
+import { Col, Image, Text } from 'reactor/components';
 
-import { C, objectToQueryString } from '../../common';
-import { THEME } from '../../reactor/common';
-import { Col, Image, Text } from '../../reactor/components';
+import { C, objectToQueryString } from '@common';
+
 import styles, { MAP_HEIGHT, MAP_WIDTH } from './HeatMap.style';
 
 const { ENDPOINT } = C;
 const { COLOR } = THEME;
 
-export const HeatMap = ({ caption, color = COLOR.TEXT, darkMode = true, points, precission = 0.001, ...inherit }) => {
+export const HeatMap = ({
+  caption,
+  color = COLOR.BRAND,
+  darkMode = false,
+  points,
+  precission = 0.001,
+  small,
+  ...inherit
+}) => {
   const queryString = points
     ? objectToQueryString({
         color,
         points: JSON.stringify(points),
         precission,
-        resolution: `${MAP_WIDTH}x${MAP_HEIGHT}@2x`,
+        resolution: `${MAP_WIDTH}x${small ? MAP_HEIGHT / 2 : MAP_HEIGHT}@2x`,
       })
     : undefined;
 
@@ -26,7 +35,7 @@ export const HeatMap = ({ caption, color = COLOR.TEXT, darkMode = true, points, 
         source={
           queryString ? { uri: `${ENDPOINT}/heatmap?${queryString}&style=${darkMode ? 'dark' : 'light'}` } : undefined
         }
-        style={[styles.container, inherit.style]}
+        style={[styles.container, small && styles.small, inherit.style]}
       />
       {caption && (
         <Text caption color={COLOR.LIGHTEN} marginTop="XS">
@@ -38,9 +47,10 @@ export const HeatMap = ({ caption, color = COLOR.TEXT, darkMode = true, points, 
 };
 
 HeatMap.propTypes = {
-  caption: string,
-  color: string,
-  darkMode: bool,
-  points: arrayOf(array),
-  precission: number,
+  caption: PropTypes.string,
+  color: PropTypes.string,
+  darkMode: PropTypes.bool,
+  points: PropTypes.arrayOf(PropTypes.array),
+  precission: PropTypes.number,
+  small: PropTypes.bool,
 };

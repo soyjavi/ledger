@@ -1,24 +1,24 @@
 import { array, arrayOf, bool, number, oneOfType, string } from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
-import { THEME } from '../../reactor/common';
-import { Col, Row, Text } from '../../reactor/components';
-import { PriceFriendly } from '../PriceFriendly';
+import { THEME } from 'reactor/common';
+import { Col, Row, Text } from 'reactor/components';
 
+import { PriceFriendly } from '../PriceFriendly';
 import { ChartHeading } from './components';
 import { calcHeight } from './modules';
 import styles from './Chart.style';
 
 const { COLOR } = THEME;
 
-const Chart = ({ captions, highlight, inverted, values, styleContainer, ...inherit }) => {
-  const { color, currency, max, min, med: avg } = inherit;
+const Chart = ({ captions, highlight, inverted, values, styleContainer, ...others }) => {
+  const { color, currency, max, min, med: avg } = others;
   let firstValueIndex = values.findIndex((value) => value !== 0);
   if (firstValueIndex === -1) firstValueIndex = undefined;
 
   return (
     <View style={styleContainer}>
-      {!inverted && <ChartHeading {...inherit} />}
+      {!inverted && <ChartHeading {...others} />}
       <View style={[styles.container, inverted && styles.containerInverted]}>
         {avg > 0 && (
           <View style={styles.scales}>
@@ -43,7 +43,7 @@ const Chart = ({ captions, highlight, inverted, values, styleContainer, ...inher
           </View>
         )}
 
-        <Row align="end" justify="space" style={[styles.content, inherit.style]}>
+        <Row align="end" justify="space" style={[styles.content, others.style]}>
           {values.map((value, index) => (
             <View key={`${value}-${index.toString()}`} style={[styles.column, inverted && styles.columnInverted]}>
               <View
@@ -58,11 +58,7 @@ const Chart = ({ captions, highlight, inverted, values, styleContainer, ...inher
           ))}
         </Row>
 
-        {inverted && (
-          <View style={{ position: 'absolute', right: 0, bottom: 0 }}>
-            <ChartHeading {...inherit} />
-          </View>
-        )}
+        {inverted && <ChartHeading {...others} inver />}
 
         {captions && (
           <Row justify="space" style={styles.captions}>
