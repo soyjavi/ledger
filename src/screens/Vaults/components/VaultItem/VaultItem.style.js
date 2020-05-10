@@ -23,9 +23,4 @@ export default StyleSheet.create({
     height: SPACE.M,
     width: SPACE.M,
   },
-
-  switch: {
-    padding: SPACE.S,
-    marginRight: SPACE.S,
-  },
 });

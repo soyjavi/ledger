@@ -7,7 +7,7 @@ import { THEME } from 'reactor/common';
 import { Box } from '../Box';
 import styles, { OPTION_SIZE } from './Option.style';
 
-const { BORDER_RADIUS, COLOR, SPACE } = THEME;
+const { BORDER_RADIUS, COLOR, ICON, SPACE } = THEME;
 
 export { OPTION_SIZE };
 
@@ -35,7 +35,7 @@ export const Option = ({
       style={[styles.container, inherit.style]}
     >
       <Touchable onPress={!disabled ? onPress : undefined} rippleColor={colorContent} style={styles.content}>
-        {icon && <Icon value={icon} color={colorContent} family={inherit.family || 'SimpleLineIcons'} size={SPACE.L} />}
+        {icon && <Icon value={icon} color={colorContent} family={inherit.family || ICON.FAMILY} size={SPACE.L} />}
         {image && <Image source={image} style={styles.image} />}
 
         {caption && (

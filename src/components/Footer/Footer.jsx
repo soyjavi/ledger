@@ -10,7 +10,7 @@ import { Option } from '../Option';
 import { getProfile } from '@services';
 import styles from './Footer.style';
 
-const { COLOR, MOTION, SPACE } = THEME;
+const { COLOR, ICON, MOTION, SPACE } = THEME;
 
 const MOTION_HIDE = SPACE.XXL * 2;
 
@@ -46,7 +46,7 @@ export const Footer = ({ onBack, onHardwareBack, showSync, visible }) => {
             <Motion duration={MOTION.DURATION * 4} timeline={[{ property: 'rotate', value: sync ? 0 : 3.1 }]}>
               <Icon
                 color={sync ? COLOR.BACKGROUND : COLOR.LIGHTEN}
-                family="SimpleLineIcons"
+                family={ICON.FAMILY}
                 size={SPACE.L}
                 value="refresh"
               />
@@ -59,7 +59,7 @@ export const Footer = ({ onBack, onHardwareBack, showSync, visible }) => {
         color={COLOR.ERROR}
         icon="ban"
         iconSize={SPACE.M}
-        family="SimpleLineIcons"
+        family={ICON.FAMILY}
         style={styles.snackbar}
         visible={!connected}
       />

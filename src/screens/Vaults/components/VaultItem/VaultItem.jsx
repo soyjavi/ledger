@@ -9,7 +9,7 @@ import { Box, PriceFriendly } from '@components';
 
 import styles from './VaultItem.style';
 
-const { COLOR } = THEME;
+const { COLOR, ICON, SPACE } = THEME;
 
 export const VaultItem = ({ active, onChange, onPress, dataSource: { currency, currentBalance, title } }) => {
   const disabled = !active;
@@ -29,8 +29,8 @@ export const VaultItem = ({ active, onChange, onPress, dataSource: { currency, c
           </Col>
         </Row>
       </Touchable>
-      <Touchable onPress={() => onChange(!active)} value={active} style={styles.switch}>
-        <Icon size={24} value={active ? 'eye-outline' : 'eye-off-outline'} />
+      <Touchable marginRight="M" onPress={() => onChange(!active)} padding="S" value={active}>
+        <Icon family={ICON.FAMILY} size={SPACE.M} value={active ? 'lock-open' : 'lock'} />
       </Touchable>
     </Row>
   );

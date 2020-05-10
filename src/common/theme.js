@@ -90,8 +90,12 @@ export default {
     },
     INPUT: {
       ...FONT_FAMILY_BOLD,
-      fontSize: 14,
+      fontSize: 13,
     },
+  },
+
+  ICON: {
+    FAMILY: 'SimpleLineIcons',
   },
 
   DIALOG: {

@@ -10,7 +10,7 @@ import { useL10N, useStore } from '@context';
 
 import { getVault, queryAvailableVaults } from '../modules';
 
-const { COLOR, SPACE } = THEME;
+const { COLOR, ICON, SPACE } = THEME;
 
 const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
   const l10n = useL10N();
@@ -52,7 +52,7 @@ const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
 
       <Icon
         color={form.value <= 0 ? COLOR.LIGHTEN : undefined}
-        family="SimpleLineIcons"
+        family={ICON.FAMILY}
         marginVertical="S"
         value="arrow-down"
         size={SPACE.L}
