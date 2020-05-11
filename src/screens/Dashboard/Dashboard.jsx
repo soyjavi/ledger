@@ -57,7 +57,7 @@ export const Dashboard = ({ backward, visible, ...inherit }) => {
     <Viewport {...inherit} scroll={false} visible={visible}>
       <Header highlight={scroll} title={l10n.OVERALL_BALANCE} />
 
-      <ScrollView onScroll={setScroll} contentContainerStyle={styles.scroll}>
+      <ScrollView contentContainerStyle={styles.scroll} onScroll={(value) => setScroll(value)}>
         <Summary {...overall} currency={baseCurrency} title={l10n.OVERALL_BALANCE}>
           <Option icon="chart" onPress={() => navigation.go(SCREEN.STATS)} caption={l10n.ACTIVITY} />
           <Option disabled={!connected} icon="wallet" onPress={() => setDialogVault(true)} caption={l10n.VAULT} />

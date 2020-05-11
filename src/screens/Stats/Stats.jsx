@@ -41,11 +41,10 @@ const Stats = (props) => {
       const today = new Date();
       const nextSlider = { month: today.getMonth(), year: today.getFullYear(), index: 11 };
 
-      scrollview.current.scrollTo({ y: 0, animated: false });
       setSlider(nextSlider);
       setChart(queryChart(vault, store));
       setMonth(queryMonth(vault, store, nextSlider));
-    }
+    } else scrollview.current.scrollTo({ y: 0, animated: false });
   }, [store, vault, visible]); // @TODO: What this warning means?
 
   const onChangeSlider = (value) => {
@@ -71,7 +70,7 @@ const Stats = (props) => {
       <Heading />
       <Header highlight={scroll} onBack={scroll ? navigation.back : undefined} title={title} />
 
-      <ScrollView contentContainerStyle={styles.scrollView} onScroll={setScroll} ref={scrollview}>
+      <ScrollView contentContainerStyle={styles.scrollView} onScroll={(value) => setScroll(value)} ref={scrollview}>
         <SliderMonths {...slider} onChange={onChangeSlider} marginBottom="M" />
 
         <Chart

@@ -1,5 +1,5 @@
 import { bool } from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Slider, Viewport } from 'reactor/components';
 
@@ -18,6 +18,7 @@ const Vaults = ({ visible, ...inherit }) => {
   const { state = {}, dispatch } = useSettings();
   const navigation = useNavigation();
   const l10n = useL10N();
+  const scrollview = useRef(null);
   const { overall, vaults } = useStore();
 
   const [currencies, setCurrencies] = useState([]);
@@ -26,6 +27,7 @@ const Vaults = ({ visible, ...inherit }) => {
 
   useEffect(() => {
     if (visible) setCurrencies(query(vaults));
+    else scrollview.current.scrollTo({ y: 0, animated: false });
   }, [visible]);
 
   console.log('<Vaults>', { visible, currencies });
@@ -35,7 +37,7 @@ const Vaults = ({ visible, ...inherit }) => {
     <Viewport {...inherit} scroll={false} visible={visible}>
       <Header highlight={scroll} onBack={scroll ? navigation.back : undefined} title={l10n.VAULTS} />
 
-      <ScrollView contentContainerStyle={styles.scroll} onScroll={setScroll}>
+      <ScrollView contentContainerStyle={styles.scroll} onScroll={(value) => setScroll(value)} ref={scrollview}>
         {hasCurrencies && (
           <>
             <Heading value="Currencies" paddingHorizontal="M" />
