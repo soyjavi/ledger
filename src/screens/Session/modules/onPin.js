@@ -1,8 +1,6 @@
 import { THEME } from 'reactor/common';
 
-const {
-  MOTION: { DURATION },
-} = THEME;
+const { MOTION } = THEME;
 
 export const onPin = ({ handleHandshake, setPin, store }, pin) => {
   setPin(pin);
@@ -11,6 +9,6 @@ export const onPin = ({ handleHandshake, setPin, store }, pin) => {
     setTimeout(() => {
       if (store.pin === undefined || store.pin === pin) handleHandshake(pin);
       else setPin('');
-    }, DURATION / 2);
+    }, MOTION.COLLAPSE);
   }
 };

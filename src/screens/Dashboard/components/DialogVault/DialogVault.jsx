@@ -31,7 +31,7 @@ export const DialogVault = ({ onClose, visible }) => {
     const vault = await createVault(store, snackbar, form);
     if (vault) {
       onClose();
-      setTimeout(() => navigation.go(SCREEN.VAULT, vault), MOTION.DURATION);
+      setTimeout(() => navigation.go(SCREEN.VAULT, vault), MOTION.COLLAPSE);
     }
     setBusy(false);
   };

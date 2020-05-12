@@ -43,7 +43,11 @@ export const Footer = ({ onBack, onHardwareBack, showSync, visible }) => {
         {onBack && <Option selected onPress={onBack} caption={l10n.BACK} />}
         {showSync && (
           <Option disabled={!sync} onPress={handleSync} selected={sync}>
-            <Motion duration={MOTION.DURATION * 4} timeline={[{ property: 'rotate', value: sync ? 0 : 3.1 }]}>
+            <Motion
+              duration={MOTION.EXPAND * 2}
+              timeline={[{ property: 'rotate', value: sync ? 0 : 3.1 }]}
+              type="spring"
+            >
               <Icon
                 color={sync ? COLOR.BACKGROUND : COLOR.LIGHTEN}
                 family={ICON.FAMILY}
