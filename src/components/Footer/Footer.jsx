@@ -40,7 +40,7 @@ export const Footer = ({ onBack, onHardwareBack, showSync, visible }) => {
         style={styles.container}
         timeline={[{ property: 'translateY', value: connected && visible ? 0 : MOTION_HIDE }]}
       >
-        {onBack && <Option selected onPress={onBack} caption={l10n.BACK} />}
+        {onBack && <Option selected onPress={onBack} icon="arrow-left" />}
         {showSync && (
           <Option disabled={!sync} onPress={handleSync} selected={sync}>
             <Motion
