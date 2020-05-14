@@ -15,22 +15,29 @@ export const VaultItem = ({ active, onChange, onPress, dataSource: { currency, c
   const disabled = !active;
 
   return (
-    <Row style={disabled && styles.disabled}>
+    <Row>
       <Touchable onPress={onPress} rippleColor={COLOR.TEXT} style={styles.container}>
         <Row>
-          <Col marginRight="S" width="auto">
+          <Col marginRight="S" width="auto" style={disabled && styles.disabled}>
             <Box small outlined={currentBalance === 0} styleContent={styles.boxContent}>
               <Image source={FLAGS[currency]} style={styles.flag} />
             </Box>
           </Col>
           <Col>
-            <Text numberOfLines={1}>{title}</Text>
-            <PriceFriendly caption color={COLOR.LIGHTEN} currency={currency} value={currentBalance} />
+            <Text bold={active} color={!active ? COLOR.LIGHTEN : undefined} numberOfLines={1}>
+              {title}
+            </Text>
+            <PriceFriendly bold={active} caption color={COLOR.LIGHTEN} currency={currency} value={currentBalance} />
           </Col>
         </Row>
       </Touchable>
       <Touchable marginRight="M" onPress={() => onChange(!active)} padding="S" value={active}>
-        <Icon family={ICON.FAMILY} size={SPACE.M} value={active ? 'lock-open' : 'lock'} />
+        <Icon
+          color={!active ? COLOR.LIGHTEN : undefined}
+          family={ICON.FAMILY}
+          size={SPACE.M}
+          value={active ? 'lock-open' : 'lock'}
+        />
       </Touchable>
     </Row>
   );

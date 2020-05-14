@@ -16,7 +16,7 @@ export default StyleSheet.create({
   },
 
   disabled: {
-    opacity: OPACITY.L,
+    opacity: OPACITY.M,
   },
 
   flag: {

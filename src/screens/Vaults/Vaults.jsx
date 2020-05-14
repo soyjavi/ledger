@@ -40,7 +40,7 @@ const Vaults = ({ visible, ...inherit }) => {
       <ScrollView contentContainerStyle={styles.scroll} onScroll={(value) => setScroll(value)} ref={scrollview}>
         {hasCurrencies && (
           <>
-            <Heading value="Currencies" paddingHorizontal="M" />
+            <Heading marginBottom="XS" paddingHorizontal="M" small value={l10n.CURRENCIES} />
             <Slider itemWidth={CARD_WIDTH} itemMargin={SPACE.S} style={styles.slider}>
               {currencies.map(({ base, currency, ...item }, index) => (
                 <Card
@@ -59,7 +59,7 @@ const Vaults = ({ visible, ...inherit }) => {
           </>
         )}
 
-        {hasCurrencies && <Heading value="Vaults" paddingHorizontal="M" />}
+        {hasCurrencies && <Heading paddingHorizontal="M" small value={l10n.VAULTS} />}
         <>
           {filter(vaults, selected).map((vault) => (
             <VaultItem
