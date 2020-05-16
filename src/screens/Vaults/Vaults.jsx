@@ -52,7 +52,7 @@ const Vaults = ({ visible, ...inherit }) => {
                   marginRight="S"
                   onPress={() => setSelected(currency !== selected ? currency : undefined)}
                   percentage={(base * 100) / overall.balance}
-                  title={currency}
+                  title={l10n.CURRENCY_NAME[currency] || currency}
                 />
               ))}
             </Slider>
