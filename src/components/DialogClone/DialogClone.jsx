@@ -5,54 +5,40 @@ import { Button, Col, Dialog, Row, Text } from 'reactor/components';
 
 import { C, exchange, verboseTime } from '@common';
 import { useNavigation, useL10N, useSnackBar, useStore } from '@context';
-import { createTx } from '@services';
 
 import { BoxDate } from '../Box';
 import { HeatMap } from '../HeatMap';
 import { PriceFriendly } from '../PriceFriendly';
+import { onSubmit } from './modules';
 
 const {
   DELAY_PRESS_MS,
   TX: {
-    TYPE: { INCOME, EXPENSE },
+    TYPE: { EXPENSE },
   },
-  WIPE,
 } = C;
 const { COLOR } = THEME;
 
-const DialogClone = ({
-  dataSource: { category, currency, hash, value, vault, location, title, timestamp, type = EXPENSE },
-  visible,
-  ...inherit
-}) => {
+const DialogClone = ({ dataSource, visible, ...inherit }) => {
+  const { category, currency, value, location, title, timestamp, type = EXPENSE } = dataSource;
+
   const l10n = useL10N();
   const store = useStore();
   const snackbar = useSnackBar();
   const { baseCurrency, rates } = store;
-  const { showTx } = useNavigation();
+  const navigation = useNavigation();
   const [busy, setBusy] = useState(false);
   const [wipe, setWipe] = useState(false);
 
-  const onSubmit = async (nextWipe = false) => {
-    setWipe(nextWipe);
-    setBusy(true);
-    const tx = await createTx(store, snackbar, {
-      vault,
-      category,
-      value,
-      title,
-      type,
-      ...(wipe ? { category: WIPE, tx: hash, type: type === EXPENSE ? INCOME : EXPENSE } : location),
-    });
-    setBusy(false);
-    if (tx) showTx();
-  };
+  const bindings = { dataSource, navigation, snackbar, setBusy, setWipe, store };
+  const handleClone = onSubmit.bind(undefined, bindings);
+  const handleWipe = onSubmit.bind(undefined, { ...bindings, wipe: true });
 
   const operator = type === EXPENSE ? -1 : 1;
   const buttonProps = { delay: DELAY_PRESS_MS, disabled: busy, wide: true };
 
   return (
-    <Dialog {...inherit} highlight onClose={() => showTx(undefined)} position="bottom" visible={visible}>
+    <Dialog {...inherit} highlight onClose={() => navigation.showTx(undefined)} position="bottom" visible={visible}>
       <Text marginTop="S" marginBottom="M" subtitle>
         {type === EXPENSE ? l10n.EXPENSE : l10n.INCOME}
       </Text>
@@ -104,17 +90,18 @@ const DialogClone = ({
       <Row marginTop="M">
         <Button
           {...buttonProps}
+          activity={busy && wipe}
           color={COLOR.BASE}
           colorText={COLOR.TEXT}
-          onPress={() => onSubmit(true)}
+          onPress={handleWipe}
           marginRight="M"
           title={!(busy && wipe) ? l10n.WIPE : undefined}
         />
         <Button
           {...buttonProps}
-          activity={busy && wipe}
+          activity={busy && !wipe}
           colorText={COLOR.BACKGROUND}
-          onPress={() => onSubmit(false)}
+          onPress={handleClone}
           title={!(busy && !wipe) ? l10n.CLONE : undefined}
         />
       </Row>
