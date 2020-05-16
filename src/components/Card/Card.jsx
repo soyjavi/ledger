@@ -6,9 +6,10 @@ import { THEME } from 'reactor/common';
 
 import { FLAGS } from '@assets';
 import { exchange } from '@common';
-import { Box, PriceFriendly } from '@components';
 import { useL10N, useStore } from '@context';
 
+import { Box } from '../Box';
+import { PriceFriendly } from '../PriceFriendly';
 import styles, { CARD_WIDTH } from './Card.style';
 
 const { COLOR } = THEME;

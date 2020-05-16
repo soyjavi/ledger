@@ -9,7 +9,7 @@ const { SCREEN } = C;
 const { ONBOARDING, STATS, DASHBOARD, VAULT, VAULTS } = SCREEN;
 
 const Router = () => {
-  const { current, stack = [], tx } = useNavigation();
+  const { back, current, stack = [], tx } = useNavigation();
   const { authorization, ready } = useStore();
   console.log(' <Router>');
 
@@ -21,10 +21,10 @@ const Router = () => {
           <Dashboard backward={current !== DASHBOARD} visible={stack.includes(DASHBOARD)} />
           {stack.includes(DASHBOARD) && (
             <>
-              <Vaults visible={stack.includes(VAULTS)} />
-              <Vault backward={current !== VAULT} visible={stack.includes(VAULT)} />
-              <Stats visible={stack.includes(STATS)} />
-              <DialogClone dataSource={tx} visible={tx !== undefined} />
+              <Vaults onClose={back} visible={stack.includes(VAULTS)} />
+              <Vault backward={current !== VAULT} onClose={back} visible={stack.includes(VAULT)} />
+              <Stats onClose={back} visible={stack.includes(STATS)} />
+              <DialogClone dataSource={tx} onClose={back} visible={tx !== undefined} />
             </>
           )}
         </>

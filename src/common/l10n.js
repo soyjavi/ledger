@@ -7,7 +7,6 @@ export default {
     ADD: 'Add',
     AMOUNT: 'Amount',
 
-    BACK: 'BACK',
     BALANCE: 'Balance',
 
     // CATEGORIES: [
@@ -119,7 +118,7 @@ export default {
     NEW: 'New',
     NO_TRANSACTIONS: "You don't have any transaction.",
 
-    OFFLINE_MODE: 'OFFLINE',
+    OFFLINE_MODE: 'No internet connection. Offline mode.',
     OTHERS: 'Others',
     OVERALL_BALANCE: 'Overall Balance',
 

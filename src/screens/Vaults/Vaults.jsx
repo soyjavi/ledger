@@ -30,7 +30,7 @@ const Vaults = ({ visible, ...inherit }) => {
     else scrollview.current.scrollTo({ y: 0, animated: false });
   }, [visible]);
 
-  console.log('<Vaults>', { visible, currencies });
+  console.log('  <Vaults>', { visible, currencies });
   const hasCurrencies = currencies.length > 0;
 
   return (

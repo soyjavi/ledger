@@ -1,5 +1,5 @@
 import { bool } from 'prop-types';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Viewport } from 'reactor/components';
 
 import { BANNERS, FLAGS } from '@assets';
@@ -14,44 +14,49 @@ const Vault = ({ visible, ...inherit }) => {
   const { connected } = useConnection();
   const l10n = useL10N();
   const { params, ...navigation } = useNavigation();
-  const store = useStore();
+  const { baseCurrency, vaults } = useStore();
   const scrollview = useRef(null);
 
-  const [dataSource, setDataSource] = useState(inherit.dataSource);
+  const [dataSource, setDataSource] = useState({});
   const [dialog, setDialog] = useState(undefined);
   const [scroll, setScroll] = useState(false);
   const [scrollQuery, setScrollQuery] = useState(false);
   const [txs, setTxs] = useState([]);
 
-  useEffect(() => {
-    if (visible) {
-      const { hash } = params.vault;
-      const vault = store.vaults.find((vault) => vault.hash === hash);
-      setTxs(query({ l10n, txs: vault.txs }));
-      setDataSource(vault);
-    } else {
+  useLayoutEffect(() => {
+    if (params.vault) {
+      scrollview.current.scrollTo({ y: 0, animated: false });
       setDialog(undefined);
     }
-  }, [visible, store]);
+  }, [params.vault]);
 
   useEffect(() => {
-    if (!visible) {
-      scrollview.current.scrollTo({ y: 0, animated: false });
-      setDataSource(undefined);
-      setScrollQuery(false);
-    }
-  }, [visible]);
+    if (params.vault) refreshDatasource(vaults.find((vault) => vault.hash === params.vault.hash));
+  }, [params.vault]);
 
-  const bindings = { l10n, dataSource, setTxs };
+  useEffect(() => {
+    const { currentBalance, txs: currentTxs, hash } = dataSource;
+    if (visible && params.vault.hash === hash) {
+      const vault = vaults.find((vault) => vault.hash === hash);
+      if (vault.currentBalance !== currentBalance || vault.txs.length !== currentTxs.length) refreshDatasource(vault);
+    }
+  }, [visible, vaults]);
+
   const handleScroll = onScroll.bind(undefined, {
-    ...bindings,
-    scroll,
+    dataSource,
     scrollQuery,
     setScroll,
     setScrollQuery,
+    setTxs,
   });
 
-  const { currency = store.baseCurrency, title, ...rest } = dataSource || params.vault || {};
+  const refreshDatasource = (vault) => {
+    setDataSource(vault);
+    setTxs(query(vault.txs));
+    setScrollQuery(false);
+  };
+
+  const { currency = baseCurrency, title, ...rest } = dataSource;
   const vaultProps = { ...rest, image: FLAGS[currency], title };
 
   console.log('  <Vault>', { visible, dialog });
@@ -64,7 +69,7 @@ const Vault = ({ visible, ...inherit }) => {
         <Summary {...vaultProps} currency={currency}>
           <Option disabled={!connected} icon="arrow-up" onPress={() => setDialog(1)} caption={l10n.INCOME} />
           <Option disabled={!connected} icon="arrow-down" onPress={() => setDialog(0)} caption={l10n.EXPENSE} />
-          {store.vaults.length > 1 ? (
+          {vaults.length > 1 ? (
             <Option disabled={!connected} icon="shuffle" onPress={() => setDialog(2)} caption={l10n.TRANSFER} />
           ) : (
             undefined
@@ -85,7 +90,7 @@ const Vault = ({ visible, ...inherit }) => {
 
       <Footer onBack={navigation.back} onHardwareBack={visible ? navigation.back : undefined} visible={!scroll} />
 
-      {visible && dataSource && (
+      {visible && (
         <DialogTransaction
           currency={currency}
           onClose={() => setDialog(undefined)}
