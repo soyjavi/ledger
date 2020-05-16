@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useLayoutEffect, useState } from 'react';
 import { KeyboardAvoidingView, SafeAreaView } from 'react-native';
-import { THEME } from 'reactor/common';
 import { Button, Text, Viewport } from 'reactor/components';
 
 import { C } from '@common';

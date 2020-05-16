@@ -30,7 +30,7 @@ export const Card = ({ balance, currency, disabled, onPress, percentage, title =
               {title}
             </Text>
           </Row>
-          <PriceFriendly subtitle currency={currency} style={[styles.text, styles.price]} value={balance} />
+          <PriceFriendly subtitle currency={currency} style={[styles.text, styles.balance]} value={balance} />
           {currency !== baseCurrency && (
             <PriceFriendly
               currency={baseCurrency}

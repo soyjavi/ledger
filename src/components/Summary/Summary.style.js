@@ -6,6 +6,7 @@ import { OPTION_SIZE } from '../Option';
 const { BORDER_RADIUS, FONT, COLOR, SPACE } = THEME;
 
 const IMAGE_SIZE = SPACE.XL + SPACE.M;
+const FONT_SIZE_BASE_CURRENCY = FONT.SUBTITLE.fontSize - SPACE.XS;
 
 export default StyleSheet.create({
   buttons: {
@@ -27,6 +28,12 @@ export default StyleSheet.create({
   },
 
   legend: FONT.LEGEND,
+
+  baseCurrency: {
+    fontSize: FONT_SIZE_BASE_CURRENCY,
+    lineHeight: FONT_SIZE_BASE_CURRENCY * 1.2,
+    height: FONT_SIZE_BASE_CURRENCY,
+  },
 
   image: {
     borderRadius: BORDER_RADIUS,

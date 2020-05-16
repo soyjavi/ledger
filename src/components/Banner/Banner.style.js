@@ -4,7 +4,7 @@ import { LAYOUT, THEME } from 'reactor/common';
 const { SPACE } = THEME;
 
 const {
-  VIEWPORT: { H, W },
+  VIEWPORT: { H },
 } = LAYOUT;
 
 let IMAGE_HEIGHT = H / 4;

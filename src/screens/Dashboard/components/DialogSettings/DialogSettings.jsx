@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import * as Permissions from 'expo-permissions';
 import { Camera } from 'expo-camera';
 import { BarCodeScanner } from 'expo-barcode-scanner';
-import { Button, Dialog, Image, Row, Text, View } from 'reactor/components';
+import { Button, Dialog, Image, Text, View } from 'reactor/components';
 import { THEME } from 'reactor/common';
 
 import { useL10N, useSnackBar, useStore } from '@context';
