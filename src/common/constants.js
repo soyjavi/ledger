@@ -12,7 +12,7 @@ export default {
 
   DELAY_PRESS_MS: 500,
 
-  ENDPOINT: IS_DEV ? 'http://192.168.1.102:8080' : 'https://voltvault.glitch.me',
+  ENDPOINT: IS_DEV ? 'http://192.168.1.105:8080' : 'https://voltvault.glitch.me',
 
   FIXED: {
     BTC: 6,
@@ -40,6 +40,7 @@ export default {
     VAULT: 'vault',
     VAULTS: 'vaults',
   },
+  STATS_MONTHS_LIMIT: 18,
   SYMBOL: {
     AUD: 'AU$',
     // BGN: '',
