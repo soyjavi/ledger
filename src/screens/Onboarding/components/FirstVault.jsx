@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useLayoutEffect, useState } from 'react';
-import { KeyboardAvoidingView, SafeAreaView } from 'react-native';
+import { KeyboardAvoidingView } from 'react-native';
 import { Button, Text, Viewport } from 'reactor/components';
 
 import { C } from '@common';
@@ -35,16 +35,14 @@ export const FirstVault = ({ onVault, ...others }) => {
 
   return (
     <Viewport {...others}>
-      <SafeAreaView>
-        <KeyboardAvoidingView behavior={'padding'} style={styles.form}>
-          <Text marginBottom="M" headline>
-            Your first account
-          </Text>
-          <Text caption marginBottom="L" style={styles.caption}>
-            {l10n.FIRST_VAULT_CAPTION}
-          </Text>
-          <FormVault form={form} onChange={setForm} rates={rates} />
-        </KeyboardAvoidingView>
+      <KeyboardAvoidingView behavior="position" contentContainerStyle={styles.form}>
+        <Text marginBottom="M" headline>
+          Your first account
+        </Text>
+        <Text caption marginBottom="L" style={styles.caption}>
+          {l10n.FIRST_VAULT_CAPTION}
+        </Text>
+        <FormVault form={form} onChange={setForm} rates={rates} />
 
         <Button
           activity={busy}
@@ -54,7 +52,7 @@ export const FirstVault = ({ onVault, ...others }) => {
           style={styles.button}
           title={l10n.NEXT}
         />
-      </SafeAreaView>
+      </KeyboardAvoidingView>
     </Viewport>
   );
 };

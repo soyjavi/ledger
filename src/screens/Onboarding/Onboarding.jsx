@@ -34,12 +34,12 @@ export const Onboarding = () => {
 
   const handleComplete = () => {
     navigation.go(SCREEN.DASHBOARD);
-    // navigation.go(SCREEN.VAULT, vaults[1]);
+    // navigation.go(SCREEN.STATS, vaults[1]);
   };
 
-  console.log('<OnBoarding>');
-
   const signed = authorization !== undefined;
+
+  console.log('<OnBoarding>');
 
   return (
     <>

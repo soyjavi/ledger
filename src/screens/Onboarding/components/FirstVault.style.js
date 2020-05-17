@@ -11,5 +11,6 @@ export default StyleSheet.create({
 
   button: {
     marginHorizontal: 'auto',
+    alignSelf: 'center',
   },
 });
