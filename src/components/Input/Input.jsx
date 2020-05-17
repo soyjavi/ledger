@@ -15,7 +15,7 @@ const { COLOR } = THEME;
 
 const LEFT_SYMBOLS = ['$', '£'];
 
-const exchangeCaption = { caption: true, color: COLOR.LIGHTEN };
+const exchangeCaption = { caption: true, color: COLOR.LIGHTEN, maskAmount: false };
 
 export const Input = ({ currency, keyboard = 'default', label, maxLength, maxValue, onChange, secure, ...others }) => {
   const { baseCurrency, rates } = useStore();

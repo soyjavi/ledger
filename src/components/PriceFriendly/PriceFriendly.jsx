@@ -16,10 +16,9 @@ const maskValue = ({ value }) =>
   }).replace(/[0-9]/gi, MASK_SYMBOL);
 
 const PriceFriendly = ({ currency, fixed, label, operator, value = 0, ...others }) => {
-  const {
-    state: { maskAmount },
-  } = useSettings();
+  const { state } = useSettings();
 
+  const maskAmount = others.maskAmount || state.maskAmount;
   let { color } = others;
   let operatorEnhanced;
 
