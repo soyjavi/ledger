@@ -5,7 +5,7 @@ import { Viewport } from 'reactor/components';
 
 import { BANNERS } from '@assets';
 import { C } from '@common';
-import { Banner, Chart, Footer, Header, Heading, ScrollView } from '@components';
+import { Banner, Chart, Footer, Header, ScrollView } from '@components';
 import { useL10N, useNavigation, useStore } from '@context';
 
 import { ItemGroupCategories, Locations, SliderMonths } from './components';
@@ -62,7 +62,6 @@ export const Stats = ({ visible, ...inherit }) => {
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
-      <Heading />
       <Header
         highlight={scroll}
         onBack={scroll ? navigation.back : undefined}
