@@ -1,22 +1,18 @@
-export default () => {
+import { C } from '@common';
+
+const { STATS_MONTHS_LIMIT } = C;
+
+export const getLastMonths = () => {
   const today = new Date();
+  const originDate = new Date(today.getFullYear(), today.getMonth() - STATS_MONTHS_LIMIT, 1, 0, 0);
   const values = [];
-  const month = today.getMonth();
-  const year = today.getFullYear();
-  let currentMonth = 11 - today.getMonth();
 
-  if (11 - today.getMonth()) {
-    currentMonth = today.getMonth() + 1;
-    while (currentMonth < 12) {
-      values.push({ month: currentMonth, year: year - 1 });
-      currentMonth += 1;
-    }
-  }
+  let index = 1;
+  while (index <= STATS_MONTHS_LIMIT) {
+    const date = new Date(originDate.getFullYear(), originDate.getMonth() + index, 1, 0, 0);
 
-  currentMonth = 0;
-  while (currentMonth <= month) {
-    values.push({ month: currentMonth, year });
-    currentMonth += 1;
+    values.push({ month: date.getMonth(), year: date.getFullYear() });
+    index += 1;
   }
 
   return values;
