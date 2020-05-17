@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from 'reactor/common';
 
-const { COLOR, FONT, OPACITY, SPACE } = THEME;
+const { COLOR, FONT, OPACITY, SPACE, UNIT } = THEME;
 const COLUMN_WIDTH = SPACE.S + SPACE.XS / 2;
 const COLUMN_RADIUS = COLUMN_WIDTH / 2;
 const COLUMN_HEIGHT = COLUMN_WIDTH * 8;
@@ -28,6 +28,10 @@ export default StyleSheet.create({
     height: SPACE.M,
     bottom: -SPACE.M,
     width: '100%',
+  },
+
+  caption: {
+    fontSize: UNIT,
   },
 
   column: {

@@ -1,4 +1,4 @@
-import { array, arrayOf, bool, number, oneOfType, string } from 'prop-types';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 import { THEME } from 'reactor/common';
@@ -11,8 +11,8 @@ import styles from './Chart.style';
 
 const { COLOR } = THEME;
 
-const Chart = ({ captions, highlight, inverted, values, styleContainer, ...others }) => {
-  const { color, currency, max, min, med: avg } = others;
+export const Chart = ({ captions, highlight, inverted = false, values = [], styleContainer, ...others }) => {
+  const { color = COLOR.TEXT, currency, max, min, med: avg } = others;
   let firstValueIndex = values.findIndex((value) => value !== 0);
   if (firstValueIndex === -1) firstValueIndex = undefined;
 
@@ -58,13 +58,13 @@ const Chart = ({ captions, highlight, inverted, values, styleContainer, ...other
           ))}
         </Row>
 
-        {inverted && <ChartHeading {...others} inver />}
+        {inverted && <ChartHeading {...others} inverted />}
 
         {captions && (
           <Row justify="space" style={styles.captions}>
             {captions.map((caption, index) => (
-              <Col align="center" key={caption} paddingTop="S">
-                <Text color={highlight !== index ? COLOR.LIGHTEN : undefined} style={styles.legend}>
+              <Col align="center" key={`${caption}-${index}`} paddingTop="S">
+                <Text color={highlight !== index ? COLOR.LIGHTEN : undefined} style={styles.caption}>
                   {caption.substring(0, 3).toUpperCase()}
                 </Text>
               </Col>
@@ -77,25 +77,12 @@ const Chart = ({ captions, highlight, inverted, values, styleContainer, ...other
 };
 
 Chart.propTypes = {
-  captions: arrayOf(string),
-  color: string,
-  currency: string,
-  highlight: number,
-  inverted: bool,
-  styleContainer: oneOfType([array, number]),
-  title: string,
-  values: arrayOf(number),
+  captions: PropTypes.arrayOf(PropTypes.string),
+  color: PropTypes.string,
+  currency: PropTypes.string,
+  highlight: PropTypes.number,
+  inverted: PropTypes.bool,
+  styleContainer: PropTypes.oneOfType([PropTypes.array, PropTypes.number]),
+  title: PropTypes.string,
+  values: PropTypes.arrayOf(PropTypes.number),
 };
-
-Chart.defaultProps = {
-  captions: undefined,
-  color: COLOR.TEXT,
-  currency: undefined,
-  highlight: undefined,
-  inverted: false,
-  styleContainer: undefined,
-  title: undefined,
-  values: [],
-};
-
-export { Chart };
