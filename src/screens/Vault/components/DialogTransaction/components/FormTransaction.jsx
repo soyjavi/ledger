@@ -3,12 +3,17 @@ import React from 'react';
 import { Slider } from 'reactor/components';
 import { THEME } from 'reactor/common';
 
-import { getIconCategory } from '@common';
+import { C, getIconCategory } from '@common';
 import { Input, Option, OPTION_SIZE } from '@components';
 import { useL10N } from '@context';
 
 import { queryCategories } from '../modules';
 
+const {
+  TX: {
+    TYPE: { EXPENSE },
+  },
+} = C;
 const { SPACE } = THEME;
 
 const FormTransaction = ({ currency, form = {}, onChange, type, vault: { currentBalance = 0 } = {} }) => {
@@ -43,7 +48,7 @@ const FormTransaction = ({ currency, form = {}, onChange, type, vault: { current
         currency={currency}
         label={l10n.AMOUNT}
         marginVertical="M"
-        maxValue={currentBalance}
+        maxValue={type === EXPENSE ? currentBalance : undefined}
         onChange={(value) => handleField('value', value)}
         value={form.value}
       />
