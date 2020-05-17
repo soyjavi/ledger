@@ -23,8 +23,7 @@ const PriceFriendly = ({ currency, fixed, label, operator, value = 0, ...others 
   let { color } = others;
   let operatorEnhanced;
 
-  if (maskAmount) color = undefined;
-  else if (operator && !color) {
+  if (operator && !color) {
     if (value === 0) color = COLOR.LIGHTEN;
     else color = value > 0 ? COLOR.BRAND : undefined;
   }
