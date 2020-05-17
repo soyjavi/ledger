@@ -1,7 +1,7 @@
 {
   "name": "voltvault-app",
   "description": "Your private finance ledger running on your own blockchain",
-  "version": "0.21.9",
+  "version": "0.21.13",
   "license": "LGPL-3.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
@@ -16,7 +16,8 @@
     "linter": "eslint '**/*.{js,jsx}' --fix ",
     "preversion": "yarn fixer",
     "version": "git add -A dist",
-    "postversion": "git push && git push --tags"
+    "postversion": "git push && git push --tags",
+    "release-it": "yarn version --patch && git push --follow-tags"
   },
   "dependencies": {
     "@expo/vector-icons": "^10.1.0",
