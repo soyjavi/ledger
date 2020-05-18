@@ -1,5 +1,5 @@
 import { bool, shape } from 'prop-types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Button, Col, Dialog, Row, Text } from 'reactor/components';
 
@@ -27,8 +27,16 @@ const DialogClone = ({ dataSource, visible, ...inherit }) => {
   const snackbar = useSnackBar();
   const { baseCurrency, rates } = store;
   const navigation = useNavigation();
+
   const [busy, setBusy] = useState(false);
   const [wipe, setWipe] = useState(false);
+
+  useEffect(() => {
+    if (!visible) {
+      setBusy(false);
+      setWipe(false);
+    }
+  }, [visible]);
 
   const bindings = { dataSource, navigation, snackbar, setBusy, setWipe, store };
   const handleClone = onSubmit.bind(undefined, bindings);

@@ -9,7 +9,7 @@ const {
 } = C;
 
 export const onSubmit = async ({
-  dataSource: { category, hash, value, vault, title, type },
+  dataSource: { category, hash, location, value, vault, title, type },
   navigation: { showTx },
   snackbar,
   setBusy,
@@ -19,6 +19,7 @@ export const onSubmit = async ({
 }) => {
   setWipe(wipe);
   setBusy(true);
+
   const tx = await createTx(store, snackbar, {
     vault,
     category,
