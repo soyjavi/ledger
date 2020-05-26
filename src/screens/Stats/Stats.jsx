@@ -34,14 +34,12 @@ export const Stats = ({ visible, ...inherit }) => {
   const { baseCurrency } = store;
 
   useEffect(() => {
-    const today = new Date();
-    setSlider({ month: today.getMonth(), year: today.getFullYear(), index: STATS_MONTHS_LIMIT - 1 });
-  }, []);
-
-  useEffect(() => {
-    if (visible) setChart(queryChart(store));
-    else scrollview.current.scrollTo({ y: 0, animated: false });
-  }, [visible]);
+    if (visible) {
+      const today = new Date();
+      setChart(queryChart(store));
+      setSlider({ month: today.getMonth(), year: today.getFullYear(), index: STATS_MONTHS_LIMIT - 1 });
+    } else scrollview.current.scrollTo({ y: 0, animated: false });
+  }, [visible, store]);
 
   useEffect(() => {
     setMonth(queryMonth(store, slider));
