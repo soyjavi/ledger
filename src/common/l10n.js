@@ -45,7 +45,7 @@ export default {
         11: 'Services',
         12: 'Transfer',
         13: 'Others',
-        99: 'Vault Transfer',
+        99: 'Internal Transfer',
       },
       {
         // Incomes
@@ -55,7 +55,7 @@ export default {
         3: 'Pasives',
         4: 'Transfer',
         5: 'Others',
-        99: 'Vault Transfer',
+        99: 'Internal Transfer',
       },
     ],
     CATEGORY: 'Category',
@@ -168,18 +168,18 @@ export default {
     TRANSFER_TXS: 'Transfer your transactions',
     TRANSFER_TXS_CAPTION:
       'Transfer all your data from this device to a new one just reading this QR in the new device.',
-    TRANSFER_TXS_CAMERA: 'Read the QR code from the device you want get all its transactions and vaults.',
+    TRANSFER_TXS_CAMERA: 'Read the QR code from the device you want get all its transactions and accounts.',
     TRANSFER_TXS_IMPORT:
       // eslint-disable-next-line max-len
-      'You are about to import all transactions and vaults from another device. Keep in mind that all your current data will be deleted from this device.',
-    TRANSFER_CAPTION: 'Transfer any amount to another of your vaults.',
+      'You are about to import all transactions and accounts from another device. Keep in mind that all your current data will be deleted from this device.',
+    TRANSFER_CAPTION: 'Transfer any amount to another of your accounts.',
     TYPE: 'Type',
 
-    VAULT: 'Vault',
-    VAULT_DESTINATION: 'Destination vault',
-    VAULTS: 'Vaults',
+    VAULT: 'Account',
+    VAULT_DESTINATION: 'Destination account',
+    VAULTS: 'Accounts',
     VAULT_CAPTION:
-      'You can create as many vaults as you want. You can continue using your base currency or choose any other.',
+      'You can create as many accounts as you want. You can continue using your base currency or choose any other.',
     VIEW_ALL: 'View All',
     VISIBILITY: 'Visibility',
 

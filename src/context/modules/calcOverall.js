@@ -18,22 +18,22 @@ export default ({ baseCurrency, rates, vaults = [] }) => {
     ({
       balance: vaultBalance,
       chartBalance: vaultChartBalance,
-      currentBalance: vaultCurrentBalance,
+      currentBalanceBase: vaultCurrentBalanceBase,
       currency,
       currentMonth: vaultLast30Days,
     }) => {
       const sameCurrency = currency === baseCurrency;
       const exchangeProps = [currency, baseCurrency, rates];
 
-      currentBalance += sameCurrency ? vaultCurrentBalance : exchange(vaultCurrentBalance, ...exchangeProps);
       balance += sameCurrency ? vaultBalance : exchange(vaultBalance, ...exchangeProps);
+      currentBalance += vaultCurrentBalanceBase;
 
       KEYS.forEach((key) => {
         currentMonth[key] += vaultLast30Days[key];
       });
 
       vaultChartBalance.forEach((value, index) => {
-        if (value) chartBalance[index] += vaultChartBalance[index];
+        chartBalance[index] += vaultChartBalance[index];
       });
     },
   );

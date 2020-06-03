@@ -41,13 +41,17 @@ export default ({ vault = {}, txs = [], baseCurrency, rates = {} }) => {
 
   return {
     ...vault,
-    chartBalance: new Array(STATS_MONTHS_LIMIT).fill(0).map((value, index) => {
-      const timestamp = new Date(originDate.getFullYear(), originDate.getMonth() + index + 1, 15);
-
-      return currency !== baseCurrency
-        ? exchange(vault.balance, currency, baseCurrency, rates, timestamp)
-        : vault.balance;
-    }),
+    chartBalance: new Array(STATS_MONTHS_LIMIT)
+      .fill(0)
+      .map((value, index) =>
+        currency !== baseCurrency
+          ? exchange(
+              vault.balance,
+              ...exchangeProps,
+              new Date(originDate.getFullYear(), originDate.getMonth() + index + 1, 1),
+            )
+          : vault.balance,
+      ),
     currentBalance: balance,
     currentBalanceBase: exchange(balance, ...exchangeProps),
     currentMonth: {

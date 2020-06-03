@@ -6,7 +6,7 @@ import { parseDate } from './parseDate';
 const {
   STATS_MONTHS_LIMIT,
   TX: {
-    TYPE: { EXPENSE, INCOME },
+    TYPE: { EXPENSE },
   },
   VAULT_TRANSFER,
 } = C;
@@ -29,13 +29,14 @@ export default (store) => {
     const { currency } = vaults.find(({ hash }) => hash === tx.vault);
     const valueExchange = exchange(value, currency, baseCurrency, rates, timestamp);
     const monthIndex = getMonthDiff(originDate, parseDate(timestamp)) - 1;
-
-    chart.balance[monthIndex] += type === EXPENSE ? -valueExchange : valueExchange;
     const isTransfer = category === VAULT_TRANSFER;
 
-    if (isTransfer && type === EXPENSE) chart.transfers[monthIndex] += valueExchange;
-    else if (!isTransfer && type === EXPENSE) chart.expenses[monthIndex] += valueExchange;
-    else if (!isTransfer && type === INCOME) chart.incomes[monthIndex] += valueExchange;
+    if (!isTransfer) {
+      chart.balance[monthIndex] += type === EXPENSE ? -valueExchange : valueExchange;
+      chart[type === EXPENSE ? 'expenses' : 'incomes'][monthIndex] += valueExchange;
+    } else if (isTransfer && type === EXPENSE) {
+      chart.transfers[monthIndex] += valueExchange;
+    }
   });
 
   let total = 0;
@@ -43,7 +44,7 @@ export default (store) => {
   return {
     ...chart,
     balance: chart.balance
-      .map((value) => {
+      .map((value = 0) => {
         total += value;
         return total;
       })
