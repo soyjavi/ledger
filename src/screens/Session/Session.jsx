@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+
 import React, { useEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Activity, Row, Text, View, Viewport } from 'reactor/components';

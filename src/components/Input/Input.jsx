@@ -1,13 +1,14 @@
 import PropTypes from 'prop-types';
+
 import React, { useEffect, useState } from 'react';
 import { TextInput } from 'react-native';
 import { THEME } from 'reactor/common';
 import { Row, Text, View } from 'reactor/components';
 
 import { C, getLastRates } from '@common';
-import { PriceFriendly } from '../PriceFriendly';
 import { useStore } from '@context';
 
+import { PriceFriendly } from '../PriceFriendly';
 import styles from './Input.style';
 
 const { SYMBOL } = C;

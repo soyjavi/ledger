@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
+
 import React from 'react';
 import { Row } from 'reactor/components';
 
 import { Heading } from '../../Heading';
 import { PriceFriendly } from '../../PriceFriendly';
-
 import styles from '../Chart.style';
 
 const ChartHeading = ({ inverted, max, min, title, ...others }) => (

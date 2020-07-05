@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+
 import React from 'react';
 import { THEME } from 'reactor/common';
 import { Col, Image, Text } from 'reactor/components';

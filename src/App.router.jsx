@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { C } from './common';
-import { useNavigation, useStore } from './context';
 import { DialogClone } from './components';
+import { useNavigation, useStore } from './context';
 import { Onboarding, Stats, Dashboard, Vault, Vaults } from './screens';
 
 const { SCREEN } = C;

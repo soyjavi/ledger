@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+
 import React, { useEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Button, Slider, Viewport } from 'reactor/components';
@@ -8,8 +9,8 @@ import { CARD_WIDTH, Footer, GroupTransactions, Header, Heading, Option, ScrollV
 import { useConnection, useL10N, useNavigation, useSettings, useStore } from '@context';
 
 import { DialogSettings, DialogVault, Search, VaultCard } from './components';
-import { queryLastTxs, queryVaults } from './modules';
 import styles from './Dashboard.style';
+import { queryLastTxs, queryVaults } from './modules';
 
 const { SCREEN } = C;
 const { COLOR, SPACE } = THEME;

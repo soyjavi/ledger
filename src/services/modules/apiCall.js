@@ -1,5 +1,6 @@
-import { C } from '@common';
 import { queryString } from 'reactor/bridges';
+
+import { C } from '@common';
 
 const { ENDPOINT } = C;
 const DEFAULT_METHOD = 'GET';

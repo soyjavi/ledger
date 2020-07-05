@@ -1,4 +1,5 @@
 import { number, oneOfType, shape, string } from 'prop-types';
+
 import React from 'react';
 import { THEME } from 'reactor/common';
 import { Col, Icon, Row, Text, Touchable } from 'reactor/components';

@@ -1,11 +1,13 @@
 import { number, func } from 'prop-types';
+
 import React, { useEffect, useRef } from 'react';
 import { THEME } from 'reactor/common';
 import { Text, Slider, View } from 'reactor/components';
 
-import { useL10N } from '@context';
 import { C } from '@common';
 import { Option, OPTION_SIZE } from '@components';
+import { useL10N } from '@context';
+
 import { getLastMonths } from './modules';
 
 const { STATS_MONTHS_LIMIT } = C;

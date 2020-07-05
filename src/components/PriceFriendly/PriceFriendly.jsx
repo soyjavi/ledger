@@ -1,4 +1,5 @@
 import { bool, number, string } from 'prop-types';
+
 import React from 'react';
 import { THEME } from 'reactor/common';
 import { Price, Row, Text } from 'reactor/components';

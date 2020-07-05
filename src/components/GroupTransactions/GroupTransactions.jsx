@@ -1,9 +1,11 @@
 import { arrayOf, number, oneOfType, shape, string } from 'prop-types';
+
 import React from 'react';
 
 import { useL10N } from '@context';
-import { TransactionItem } from '../TransactionItem';
+
 import { BoxDate } from '../Box';
+import { TransactionItem } from '../TransactionItem';
 
 const GroupTransactions = ({ currency, timestamp, txs = [] }) => {
   const l10n = useL10N();

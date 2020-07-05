@@ -1,4 +1,5 @@
 import { bool } from 'prop-types';
+
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Viewport } from 'reactor/components';
 
@@ -71,9 +72,7 @@ const Vault = ({ visible, ...inherit }) => {
           <Option disabled={!connected} icon="arrow-down" onPress={() => setDialog(0)} caption={l10n.EXPENSE} />
           {vaults.length > 1 ? (
             <Option disabled={!connected} icon="shuffle" onPress={() => setDialog(2)} caption={l10n.TRANSFER} />
-          ) : (
-            undefined
-          )}
+          ) : undefined}
         </Summary>
 
         {txs.length > 0 ? (

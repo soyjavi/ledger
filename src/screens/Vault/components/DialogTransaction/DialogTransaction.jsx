@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
+
 import React, { useEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Button, Dialog, Row, Text } from 'reactor/components';
 
 import { C } from '@common';
-import { useL10N, useSnackBar, useStore } from '@context';
 import { HeatMap } from '@components';
+import { useL10N, useSnackBar, useStore } from '@context';
 
 import { FormTransaction, FormTransfer } from './components';
 import { getLocation, handleSubmit } from './modules';

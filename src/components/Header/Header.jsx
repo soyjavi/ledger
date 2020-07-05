@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+
 import React from 'react';
 import { Image } from 'react-native';
 import { THEME } from 'reactor/common';

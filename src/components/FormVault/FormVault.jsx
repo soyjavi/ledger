@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
+
 import React from 'react';
 
-import { useL10N } from '@context';
 import { Input } from '@components/Input';
 import { SliderCurrencies } from '@components/SliderCurrencies';
+import { useL10N } from '@context';
 
 export const FormVault = ({ form = {}, onChange }) => {
   const l10n = useL10N();

@@ -1,13 +1,14 @@
 import { bool, func } from 'prop-types';
+
 import React, { useEffect } from 'react';
 import { THEME } from 'reactor/common';
 import { Icon, Motion, Snackbar } from 'reactor/components';
 
 import { onHardwareBackPress } from '@common';
 import { useConnection, useL10N, useSnackBar, useStore } from '@context';
+import { getProfile } from '@services';
 
 import { Option } from '../Option';
-import { getProfile } from '@services';
 import styles from './Footer.style';
 
 const { COLOR, ICON, MOTION, SPACE } = THEME;

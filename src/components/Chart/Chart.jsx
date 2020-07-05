@@ -1,13 +1,14 @@
 import PropTypes from 'prop-types';
+
 import React from 'react';
 import { View } from 'react-native';
 import { THEME } from 'reactor/common';
 import { Col, Row, Text } from 'reactor/components';
 
 import { PriceFriendly } from '../PriceFriendly';
+import styles from './Chart.style';
 import { ChartHeading } from './components';
 import { calcHeight } from './modules';
-import styles from './Chart.style';
 
 const { COLOR } = THEME;
 

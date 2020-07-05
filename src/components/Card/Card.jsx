@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
+
 import React from 'react';
 import { Image, View } from 'react-native';
-import { Row, Text, Touchable } from 'reactor/components';
 import { THEME } from 'reactor/common';
+import { Row, Text, Touchable } from 'reactor/components';
 
 import { FLAGS } from '@assets';
 import { exchange } from '@common';

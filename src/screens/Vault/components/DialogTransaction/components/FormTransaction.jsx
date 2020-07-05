@@ -1,7 +1,8 @@
 import { func, number, shape, string } from 'prop-types';
+
 import React from 'react';
-import { Slider } from 'reactor/components';
 import { THEME } from 'reactor/common';
+import { Slider } from 'reactor/components';
 
 import { C, getIconCategory } from '@common';
 import { Input, Option, OPTION_SIZE } from '@components';

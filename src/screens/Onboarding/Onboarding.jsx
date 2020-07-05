@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+
 import React, { useState, useEffect } from 'react';
 import { Button, Viewport } from 'reactor/components';
 
@@ -8,8 +9,8 @@ import { Banner } from '@components';
 import { useNavigation, useL10N, useStore } from '@context';
 import { Session } from '@screens/Session';
 
-import styles from './Onboarding.style';
 import { FirstVault } from './components';
+import styles from './Onboarding.style';
 
 const { SCREEN } = C;
 const style = { scroll: false, styleContent: styles.container };

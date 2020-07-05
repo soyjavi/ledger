@@ -1,4 +1,5 @@
 import { bool, func, string } from 'prop-types';
+
 import React, { useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Button, Dialog, Row, Text } from 'reactor/components';

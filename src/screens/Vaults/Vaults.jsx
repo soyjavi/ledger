@@ -1,4 +1,5 @@
 import { bool } from 'prop-types';
+
 import React, { useEffect, useRef, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Slider, Viewport } from 'reactor/components';

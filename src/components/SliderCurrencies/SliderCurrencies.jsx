@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
+
 import React from 'react';
 import { THEME } from 'reactor/common';
 import { Slider } from 'reactor/components';
 
 import { FLAGS } from '@assets';
-import { useStore } from '@context';
 import { Option, OPTION_SIZE } from '@components/Option';
+import { useStore } from '@context';
 
 import { queryCurrencies } from './modules';
 

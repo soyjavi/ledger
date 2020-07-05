@@ -1,5 +1,6 @@
 /* eslint-disable react/display-name */
 import PropTypes from 'prop-types';
+
 import React, { forwardRef } from 'react';
 import { ScrollView as ScrollViewBase } from 'react-native';
 

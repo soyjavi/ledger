@@ -46,6 +46,7 @@ export default StyleSheet.create({
   },
 
   caption: {
+    // @TODO
     fontSize: 14,
     lineHeight: 14 * 1.5,
   },

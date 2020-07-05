@@ -11,9 +11,7 @@
     "start:prod": "expo start --no-dev --minify --web",
     "test": "node_modules/.bin/jest",
     "test:debug": "node --inspect-brk node_modules/jest/bin/jest.js --runInBand",
-    "fixer": "yarn prettier && yarn linter",
-    "prettier": "prettier '**/*.{js,ts,tsx}' --write",
-    "linter": "eslint '**/*.{js,jsx}' --fix ",
+    "lint": "eslint '**/*.{js,jsx}' --fix ",
     "preversion": "yarn fixer",
     "version": "git add -A dist",
     "postversion": "git push && git push --tags",
@@ -36,7 +34,8 @@
     "react": "~16.11.0",
     "react-dom": "~16.11.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-38.0.0.tar.gz",
-    "react-native-web": "~0.11.7"
+    "react-native-web": "~0.11.7",
+    "vanilla-blockchain": "^0.2.5"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
@@ -45,9 +44,10 @@
     "babel-preset-expo": "~8.1.0",
     "eslint": "^7.3.1",
     "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.20.0",
-    "eslint-plugin-react-hooks": "^4.0.4",
+    "eslint-plugin-react-hooks": "^4.0.5",
     "eslint-plugin-react-native": "^3.8.1",
     "jest-expo": "^38.0.0",
     "prettier": "^2.0.5",

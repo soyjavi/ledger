@@ -1,14 +1,16 @@
-import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
 // import { View } from 'react-native';
-import * as Permissions from 'expo-permissions';
-import { Camera } from 'expo-camera';
-import { BarCodeScanner } from 'expo-barcode-scanner';
-import { Button, Dialog, Image, Text, View } from 'reactor/components';
-import { THEME } from 'reactor/common';
 
-import { useL10N, useSnackBar, useStore } from '@context';
+import { BarCodeScanner } from 'expo-barcode-scanner';
+import { Camera } from 'expo-camera';
+import * as Permissions from 'expo-permissions';
+import PropTypes from 'prop-types';
+
+import React, { useEffect, useState } from 'react';
+import { THEME } from 'reactor/common';
+import { Button, Dialog, Image, Text, View } from 'reactor/components';
+
 import { Heading, SliderCurrencies } from '@components';
+import { useL10N, useSnackBar, useStore } from '@context';
 
 import { DialogFork } from '../DialogFork';
 import styles from './DialogSettings.style';

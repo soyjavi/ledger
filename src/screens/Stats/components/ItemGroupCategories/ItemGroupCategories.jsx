@@ -1,4 +1,5 @@
 import { shape, number } from 'prop-types';
+
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import { THEME } from 'reactor/common';

@@ -1,4 +1,5 @@
 import { bool, shape } from 'prop-types';
+
 import React, { useEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Button, Col, Dialog, Row, Text } from 'reactor/components';

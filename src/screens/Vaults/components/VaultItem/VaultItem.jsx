@@ -1,4 +1,5 @@
 import { bool, shape, func } from 'prop-types';
+
 import React from 'react';
 import { Image } from 'react-native';
 import { THEME } from 'reactor/common';

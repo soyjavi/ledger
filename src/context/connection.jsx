@@ -1,9 +1,10 @@
 import { node } from 'prop-types';
+
 import React, { useContext, useEffect, useState, createContext } from 'react';
 import { useEnvironment } from 'reactor/hooks';
-import NetInfo from '@react-native-community/netinfo';
 
 import { C } from '@common';
+import NetInfo from '@react-native-community/netinfo';
 
 const ConnectionContext = createContext(`${C.NAME}:context:connection`);
 
