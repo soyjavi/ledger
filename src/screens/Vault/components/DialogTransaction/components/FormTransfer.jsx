@@ -70,7 +70,13 @@ const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
             onPress={() => handleField('destination', hash)}
             selected={hash === form.destination}
           >
-            <PriceFriendly caption color={COLOR.LIGHTEN} value={currentBalance} currency={currency} />
+            <PriceFriendly
+              caption
+              color={COLOR.LIGHTEN}
+              maskAmount={false}
+              value={currentBalance}
+              currency={currency}
+            />
           </Option>
         ))}
       </Slider>

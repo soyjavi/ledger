@@ -19,7 +19,7 @@ const maskValue = ({ value }) =>
 const PriceFriendly = ({ currency, fixed, label, operator, value = 0, ...others }) => {
   const { state } = useSettings();
 
-  const maskAmount = others.maskAmount || state.maskAmount;
+  const maskAmount = others.maskAmount !== undefined ? others.maskAmount : state.maskAmount;
   let { color } = others;
   let operatorEnhanced;
 

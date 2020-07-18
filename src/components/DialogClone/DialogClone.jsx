@@ -66,6 +66,7 @@ const DialogClone = ({ dataSource, visible, ...inherit }) => {
               <PriceFriendly
                 bold
                 currency={baseCurrency}
+                maskAmount={false}
                 operator
                 value={
                   baseCurrency !== currency
@@ -83,7 +84,14 @@ const DialogClone = ({ dataSource, visible, ...inherit }) => {
             </Col>
             <Col width="auto">
               {currency !== baseCurrency && (
-                <PriceFriendly caption color={COLOR.LIGHTEN} currency={currency} operator value={value * operator} />
+                <PriceFriendly
+                  caption
+                  color={COLOR.LIGHTEN}
+                  currency={currency}
+                  maskAmount={false}
+                  operator
+                  value={value * operator}
+                />
               )}
             </Col>
           </Row>
@@ -99,7 +107,7 @@ const DialogClone = ({ dataSource, visible, ...inherit }) => {
       <Row marginTop="M">
         <Button
           {...buttonProps}
-          activity={busy && wipe}
+          busy={busy && wipe}
           color={COLOR.BASE}
           colorText={COLOR.TEXT}
           onPress={handleWipe}
@@ -108,7 +116,7 @@ const DialogClone = ({ dataSource, visible, ...inherit }) => {
         />
         <Button
           {...buttonProps}
-          activity={busy && !wipe}
+          busy={busy && !wipe}
           colorText={COLOR.BACKGROUND}
           onPress={handleClone}
           title={!(busy && !wipe) ? l10n.CLONE : undefined}
