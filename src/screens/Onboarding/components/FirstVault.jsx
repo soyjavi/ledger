@@ -11,7 +11,7 @@ import { createVault, getRates } from '@services';
 
 import styles from './FirstVault.style';
 
-const { CURRENCY } = C;
+const { BUSY_PRESS_MS, CURRENCY, DELAY_PRESS_MS } = C;
 
 export const FirstVault = ({ onVault, ...others }) => {
   const l10n = useL10N();
@@ -46,7 +46,8 @@ export const FirstVault = ({ onVault, ...others }) => {
         <FormVault form={form} onChange={setForm} rates={rates} />
 
         <Button
-          activity={busy}
+          busy={busy ? BUSY_PRESS_MS : undefined}
+          delay={DELAY_PRESS_MS}
           disabled={busy || !form.valid}
           marginTop="XL"
           onPress={handleSubmit}

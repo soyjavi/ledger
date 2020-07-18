@@ -9,7 +9,7 @@ import { FormVault } from '@components';
 import { useNavigation, useL10N, useSnackBar, useStore } from '@context';
 import { createVault } from '@services';
 
-const { DELAY_PRESS_MS, SCREEN } = C;
+const { BUSY_PRESS_MS, DELAY_PRESS_MS, SCREEN } = C;
 const { COLOR, MOTION } = THEME;
 const INITIAL_STATE = { currency: undefined };
 
@@ -25,6 +25,7 @@ export const DialogVault = ({ onClose, visible }) => {
 
   useEffect(() => {
     if (visible) setForm({ ...INITIAL_STATE, currency: baseCurrency });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
 
   const handleSubmit = async () => {
@@ -52,7 +53,7 @@ export const DialogVault = ({ onClose, visible }) => {
           wide
         />
         <Button
-          activity={busy}
+          busy={busy ? BUSY_PRESS_MS : undefined}
           delay={DELAY_PRESS_MS}
           disabled={busy || form.title === undefined}
           onPress={handleSubmit}

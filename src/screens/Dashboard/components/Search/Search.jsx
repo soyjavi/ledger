@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { TextInput } from 'react-native';
 import { THEME } from 'reactor/common';
-import { Activity, Button, Col, Row } from 'reactor/components';
+import { Button, Col, Row } from 'reactor/components';
 
-import { groupTxsByDate } from '@common';
+import { C, groupTxsByDate } from '@common';
 import { useL10N, useStore } from '@context';
 
 import styles from './Search.style';
 
+const { BUSY_PRESS_MS } = C;
 const { COLOR } = THEME;
 let TIMEOUT;
 
@@ -76,8 +77,15 @@ export const Search = ({ onValue }) => {
         value={value || ''}
       />
       <Col marginLeft="S" width="auto">
-        {busy && <Activity color={COLOR.LIGHTEN} size="XS" />}
-        {value && !busy && <Button colorText={COLOR.BACKGROUND} onPress={handleReset} size="S" title={l10n.CLEAR} />}
+        {value && !busy && (
+          <Button
+            busy={busy ? BUSY_PRESS_MS : undefined}
+            colorText={COLOR.BACKGROUND}
+            onPress={handleReset}
+            size="S"
+            title={l10n.CLEAR}
+          />
+        )}
       </Col>
     </Row>
   );

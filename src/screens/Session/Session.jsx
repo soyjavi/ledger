@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 import React, { useEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
-import { Activity, Row, Text, View, Viewport } from 'reactor/components';
+import { Row, Text, View, Viewport } from 'reactor/components';
 import { useEnvironment } from 'reactor/hooks';
 
 import { C } from '@common';
@@ -35,6 +35,7 @@ export const Session = ({ onProfile, visible, ...others }) => {
       if (IS_DEV && IS_WEB) handleHandshake(pin);
       else if (fingerprint === undefined) setTimeout(handleFingerprint, 400);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fingerprint, store.pin, visible]);
 
   const signup = store.authorization === undefined;
@@ -53,7 +54,7 @@ export const Session = ({ onProfile, visible, ...others }) => {
               ))}
             </>
           ) : (
-            <Activity />
+            <></>
           )}
         </Row>
 

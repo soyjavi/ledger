@@ -13,6 +13,7 @@ import { getLocation, handleSubmit } from './modules';
 
 const { COLOR } = THEME;
 const {
+  BUSY_PRESS_MS,
   DELAY_PRESS_MS,
   TX: {
     TYPE: { TRANSFER },
@@ -86,7 +87,7 @@ const DialogTransaction = (props = {}) => {
           wide
         />
         <Button
-          activity={busy}
+          busy={busy ? BUSY_PRESS_MS : undefined}
           delay={DELAY_PRESS_MS}
           disabled={busy || !valid}
           onPress={onSubmit}

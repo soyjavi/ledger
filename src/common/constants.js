@@ -8,11 +8,13 @@ const MS_IN_DAY = 1000 * 24 * 60 * 60;
 const MS_IN_WEEK = MS_IN_DAY * 7;
 
 export default {
+  BUSY_PRESS_MS: 2500,
+
   CURRENCY: 'EUR',
 
   DELAY_PRESS_MS: 500,
 
-  ENDPOINT: IS_DEV ? 'http://192.168.1.102:8080' : 'https://voltvault.glitch.me',
+  ENDPOINT: IS_DEV ? 'http://192.168.1.104:8080' : 'https://soyjavi-voltvault.glitch.me',
 
   FIXED: {
     BTC: 6,

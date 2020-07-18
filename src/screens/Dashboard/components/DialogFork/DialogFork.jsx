@@ -10,7 +10,7 @@ import { fork, getProfile } from '@services';
 
 import styles from './DialogFork.style';
 
-const { DELAY_PRESS_MS } = C;
+const { BUSY_PRESS_MS, DELAY_PRESS_MS } = C;
 const { COLOR } = THEME;
 
 export const DialogFork = ({ onClose, onForked, query, visible, ...inherit }) => {
@@ -49,7 +49,7 @@ export const DialogFork = ({ onClose, onForked, query, visible, ...inherit }) =>
         <Button {...buttonProps} outlined onPress={onClose} title={l10n.CANCEL} marginRight="M" />
         <Button
           {...buttonProps}
-          activity={busy}
+          busy={busy ? BUSY_PRESS_MS : undefined}
           colorText={COLOR.ERROR}
           delay={DELAY_PRESS_MS}
           onPress={onSubmit}
