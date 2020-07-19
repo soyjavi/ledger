@@ -53,7 +53,7 @@ export const DialogFork = ({ onClose, onForked, query, visible, ...inherit }) =>
           colorText={COLOR.ERROR}
           delay={DELAY_PRESS_MS}
           onPress={onSubmit}
-          title={!busy ? l10n.IMPORT : undefined}
+          title={l10n.IMPORT}
         />
       </Row>
     </Dialog>

@@ -91,7 +91,7 @@ const DialogTransaction = (props = {}) => {
           delay={DELAY_PRESS_MS}
           disabled={busy || !valid}
           onPress={onSubmit}
-          title={!busy ? l10n.SAVE : undefined}
+          title={l10n.SAVE}
           wide
         />
       </Row>

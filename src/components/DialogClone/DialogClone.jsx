@@ -112,14 +112,14 @@ const DialogClone = ({ dataSource, visible, ...inherit }) => {
           colorText={COLOR.TEXT}
           onPress={handleWipe}
           marginRight="M"
-          title={!(busy && wipe) ? l10n.WIPE : undefined}
+          title={l10n.WIPE}
         />
         <Button
           {...buttonProps}
           busy={busy && !wipe}
           colorText={COLOR.BACKGROUND}
           onPress={handleClone}
-          title={!(busy && !wipe) ? l10n.CLONE : undefined}
+          title={l10n.CLONE}
         />
       </Row>
     </Dialog>
