@@ -3089,6 +3089,11 @@ cross-spawn@^7.0.0, cross-spawn@^7.0.2:
     shebang-command "^2.0.0"
     which "^2.0.1"
 
+crypto-js@4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-4.0.0.tgz#2904ab2677a9d042856a2ea2ef80de92e4a36dcc"
+  integrity sha512-bzHZN8Pn+gS7DQA6n+iUmBfl0hO5DJq++QP3U6uTucDtk/0iGpXd/Gg7CGR0p8tJhofJyaKoWBuJI4eAO00BBg==
+
 css-in-js-utils@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/css-in-js-utils/-/css-in-js-utils-2.0.1.tgz#3b472b398787291b47cfe3e44fecfdd9e914ba99"
@@ -8295,6 +8300,21 @@ validate-npm-package-license@^3.0.1:
   dependencies:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
+
+vanilla-blockchain@^0.2.6:
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/vanilla-blockchain/-/vanilla-blockchain-0.2.6.tgz#f850362e474616e1dfa2d20b499eb42380576a21"
+  integrity sha512-uzm6cbQ/HCToxAO+Vs+4ZxLjSZ+5ijs4tX3Adb63dA2Tmpj2SUvO6zOObRfKHZUFQdRtPwFXLC3fnqPA7lTh9w==
+  dependencies:
+    crypto-js "4.0.0"
+    vanilla-storage "0.3.7"
+
+vanilla-storage@0.3.7, vanilla-storage@^0.3.7:
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/vanilla-storage/-/vanilla-storage-0.3.7.tgz#02d973d30d07c8c2b44f75a4d2a1afa1391760a9"
+  integrity sha512-BlzjT++lW1n8U+k3PagdNoouIC05GLJFUKobdMsw+H5L1cl8MnzB40CCfti0XEmzG/llhDLmFgIrPYiurAUpyw==
+  dependencies:
+    crypto-js "4.0.0"
 
 vary@~1.1.2:
   version "1.1.2"
