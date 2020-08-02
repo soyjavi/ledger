@@ -41,7 +41,7 @@ const Summary = ({ children, currency = CURRENCY, currentBalance, currentMonth =
   const { baseCurrency, rates } = useStore();
   const {
     state: { maskAmount },
-    dispatch,
+    setMaskAmount,
   } = useSettings();
 
   const { expenses = 0, incomes = 0, progression = 0, today = 0 } = currentMonth;
@@ -54,7 +54,7 @@ const Summary = ({ children, currency = CURRENCY, currentBalance, currentMonth =
         <Image source={image} resizeMode="contain" style={styles.image} />
         <Col align="center" marginBottom="M">
           <Text subtitle>{title}</Text>
-          <Touchable onPress={() => dispatch({ type: 'MASK_AMOUNT', value: !maskAmount })}>
+          <Touchable onPress={() => setMaskAmount(!maskAmount)}>
             <PriceFriendly currency={currency} headline value={Math.abs(currentBalance)} />
           </Touchable>
           {baseCurrency !== currency && (
