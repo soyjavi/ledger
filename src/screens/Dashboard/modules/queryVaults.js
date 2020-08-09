@@ -1,4 +1,4 @@
-export const queryVaults = ({ settings = {}, vaults = [] }) =>
+export const queryVaults = ({ settings: { visibleVaults } = {}, vaults = [] }) =>
   vaults
-    .filter((vault) => settings[vault.hash] !== false)
+    .filter((vault) => visibleVaults[vault.hash] !== false)
     .sort(({ currentMonth: { txs } }, { currentMonth: { txs: nextTxs } }) => nextTxs - txs);

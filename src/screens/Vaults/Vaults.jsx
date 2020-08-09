@@ -16,7 +16,7 @@ const { SCREEN } = C;
 const { SPACE } = THEME;
 
 const Vaults = ({ visible, ...inherit }) => {
-  const { state = {}, dispatch } = useSettings();
+  const { state: { visibleVaults = {} } = {}, setVisibleVaults } = useSettings();
   const navigation = useNavigation();
   const l10n = useL10N();
   const scrollview = useRef(null);
@@ -31,7 +31,6 @@ const Vaults = ({ visible, ...inherit }) => {
     else scrollview.current.scrollTo({ y: 0, animated: false });
   }, [visible]);
 
-  console.log('  <Vaults>', { visible, currencies });
   const hasCurrencies = currencies.length > 0;
 
   return (
@@ -66,9 +65,9 @@ const Vaults = ({ visible, ...inherit }) => {
           {filter(vaults, selected).map((vault) => (
             <VaultItem
               key={vault.hash}
-              active={state[vault.hash] !== false}
+              active={visibleVaults[vault.hash] !== false}
               dataSource={vault}
-              onChange={(value) => dispatch({ type: 'VAULT_VISIBLE', vault: vault.hash, value })}
+              onChange={(value) => setVisibleVaults(vault.hash, value)}
               onPress={() => navigation.go(SCREEN.VAULT, vault)}
             />
           ))}

@@ -1,45 +1,51 @@
 import { node } from 'prop-types';
+import { AsyncStorage } from 'vanilla-storage';
 
-import React, { useContext, useEffect, useReducer, useState, createContext } from 'react';
-import { Storage } from 'reactor/bridges';
+import React, { useContext, useLayoutEffect, useState, createContext } from 'react';
 
 import { C } from '@common';
 
+import { AsyncStorageAdapter } from './adapters';
+
 const KEY = `${C.NAME}:context:settings`;
 const SettingsContext = createContext(KEY);
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case 'MASK_AMOUNT':
-      return { ...state, maskAmount: action.value };
-
-    case 'VAULT_VISIBLE':
-      return { ...state, [action.vault]: action.value };
-
-    case 'STORE':
-      return { ...action.value };
-
-    default:
-      throw new Error(`Unhandled action type: ${action.type}`);
-  }
-};
+const STORE_KEY = 'settings';
 
 const SettingsProvider = ({ children }) => {
-  const [loaded, setLoad] = useState(false);
-  const [state, dispatch] = useReducer(reducer, { maskAmount: false });
+  const [state, setState] = useState(undefined);
+  const [store, setStore] = useState(undefined);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     async function fetchStorage() {
-      setLoad(true);
-      const value = await Storage.get(KEY);
-      if (value) dispatch({ type: 'STORE', value });
+      const store = await new AsyncStorage({
+        adapter: AsyncStorageAdapter,
+        defaults: { settings: { maskAmount: false, visibleVaults: {} } },
+        filename: `${C.NAME}:settings`,
+      });
+
+      setState(await store.get(STORE_KEY).value);
+      setStore(store);
     }
 
-    if (!loaded) fetchStorage();
-    else Storage.set(KEY, state);
-  }, [loaded, state]);
+    if (!store) fetchStorage();
+  }, []);
 
-  return <SettingsContext.Provider value={{ state, dispatch }}>{children}</SettingsContext.Provider>;
+  const updateState = async (key, value) => {
+    await store.get(STORE_KEY).save({ [key]: value });
+    setState({ ...state, [key]: value });
+  };
+
+  return (
+    <SettingsContext.Provider
+      value={{
+        state,
+        setMaskAmount: (value) => updateState('maskAmount', value),
+        setVisibleVaults: (vault, value) => updateState('visibleVaults', { ...state.visibleVaults, [vault]: value }),
+      }}
+    >
+      {children}
+    </SettingsContext.Provider>
+  );
 };
 
 SettingsProvider.propTypes = {
