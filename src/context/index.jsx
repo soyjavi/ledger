@@ -5,7 +5,6 @@ import { L10NProvider, useL10N } from 'reactor/context/L10N';
 
 import { ConnectionProvider, useConnection } from './connection';
 import { NavigationProvider, useNavigation } from './navigation';
-import { SettingsProvider, useSettings } from './settings';
 import { SnackBarProvider, useSnackBar } from './snackbar';
 import { StoreProvider, useStore } from './store';
 
@@ -14,9 +13,7 @@ const Provider = ({ children, dictionary, language }) => (
     <ConnectionProvider>
       <NavigationProvider>
         <StoreProvider>
-          <SettingsProvider>
-            <SnackBarProvider>{children}</SnackBarProvider>
-          </SettingsProvider>
+          <SnackBarProvider>{children}</SnackBarProvider>
         </StoreProvider>
       </NavigationProvider>
     </ConnectionProvider>
@@ -29,4 +26,4 @@ Provider.propTypes = {
   language: string.isRequired,
 };
 
-export { Provider, useConnection, useL10N, useNavigation, useSettings, useSnackBar, useStore };
+export { Provider, useConnection, useL10N, useNavigation, useSnackBar, useStore };
