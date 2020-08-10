@@ -1,15 +1,21 @@
 import calcOverall from './calcOverall';
 import calcVault from './calcVault';
 
-export default (store = {}) => {
-  let { vaults = [] } = store;
+export default ({ rates = {}, settings: { baseCurrency } = {}, vaults: rawVaults = [], txs: rawTxs = [] } = {}) => {
+  const txs = rawTxs.slice(1).map(({ data = {}, hash, timestamp }) => ({ ...data, hash, timestamp }));
 
-  vaults = vaults.map((vault) =>
+  const vaults = rawVaults.slice(1).map(({ data }) =>
     calcVault({
-      ...store,
-      vault: { ...(vaults.find((item) => item.hash === vault.hash) || {}), ...vault },
+      baseCurrency,
+      rates,
+      txs,
+      vault: data,
     }),
   );
 
-  return { ...store, vaults, overall: calcOverall({ ...store, vaults }) };
+  return {
+    overall: calcOverall({ baseCurrency, rates, vaults }),
+    txs,
+    vaults,
+  };
 };
