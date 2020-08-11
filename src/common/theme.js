@@ -132,8 +132,7 @@ export default {
       // speed: undefined,
       // bounciness: undefined,
       // useNativeDriver: Platform.OS !== 'web',
-      useNativeDriver: 'false',
-      // useNativeDriver: false,
+      useNativeDriver: false,
     },
   },
 
@@ -144,8 +143,9 @@ export default {
   },
 
   SNACKBAR: {
-    borderRadius: 0,
+    borderRadius: SPACE.XS,
     paddingHorizontal: SPACE.M,
-    paddingVertical: SPACE.M,
+    paddingVertical: SPACE.S,
+    margin: SPACE.S,
   },
 };

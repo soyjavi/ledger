@@ -29,9 +29,9 @@ const SnackBarProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, { color: undefined, caption: undefined });
 
   const events = {
-    snackbarSuccess: (caption) => dispatch({ type: 'SHOW', caption, color: COLOR.SUCCESS, icon: 'check' }),
-    snackbarError: (caption) => dispatch({ type: 'SHOW', caption, color: COLOR.ERROR, icon: 'ban' }),
-    snackbarWarning: (caption) => dispatch({ type: 'SHOW', caption, color: COLOR.WARNING, icon: 'info' }),
+    error: (caption) => dispatch({ type: 'SHOW', caption, color: COLOR.ERROR, icon: 'ban' }),
+    success: (caption) => dispatch({ type: 'SHOW', caption, color: COLOR.BRAND, icon: 'check' }),
+    warning: (caption) => dispatch({ type: 'SHOW', caption, color: COLOR.CTA, icon: 'info' }),
   };
 
   return (
@@ -43,6 +43,7 @@ const SnackBarProvider = ({ children }) => {
         iconSize={SPACE.M}
         family={ICON.FAMILY}
         onClose={() => dispatch({ type: 'HIDE' })}
+        position="top"
         style={SNACKBAR}
         visible={state.type === 'SHOW'}
       />
