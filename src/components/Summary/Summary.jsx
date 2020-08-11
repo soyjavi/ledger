@@ -38,11 +38,11 @@ BoxSummary.propTypes = {
 
 const Summary = ({ children, currency = CURRENCY, currentBalance, currentMonth = {}, image = LOGO, title = '' }) => {
   const l10n = useL10N();
-  const { baseCurrency, rates } = useStore();
   const {
-    state: { maskAmount },
-    setMaskAmount,
-  } = useSettings();
+    rates,
+    settings: { baseCurrency, maskAmount },
+    updateSettings,
+  } = useStore();
 
   const { expenses = 0, incomes = 0, progression = 0, today = 0 } = currentMonth;
   const progressionPercentage =
@@ -54,7 +54,7 @@ const Summary = ({ children, currency = CURRENCY, currentBalance, currentMonth =
         <Image source={image} resizeMode="contain" style={styles.image} />
         <Col align="center" marginBottom="M">
           <Text subtitle>{title}</Text>
-          <Touchable onPress={() => setMaskAmount(!maskAmount)}>
+          <Touchable onPress={() => updateSettings('maskAmount', !maskAmount)}>
             <PriceFriendly currency={currency} headline value={Math.abs(currentBalance)} />
           </Touchable>
           {baseCurrency !== currency && (

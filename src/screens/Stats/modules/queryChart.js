@@ -13,8 +13,7 @@ const {
 
 const range = STATS_MONTHS_LIMIT;
 
-export default (store) => {
-  const { baseCurrency, overall, rates, txs, vaults } = store;
+export default ({ overall, rates, settings: { baseCurrency }, txs, vaults }) => {
   const chart = {
     balance: new Array(range).fill(0),
     expenses: new Array(range).fill(0),

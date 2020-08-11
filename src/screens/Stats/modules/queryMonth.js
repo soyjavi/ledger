@@ -13,7 +13,7 @@ const {
 
 const RANGE_MONTHS = 12;
 
-export default ({ baseCurrency, overall, rates, txs, vaults }, { month, year }) => {
+export default ({ overall, rates, settings: { baseCurrency }, txs, vaults }, { month, year }) => {
   const chart = {
     balance: new Array(RANGE_MONTHS).fill(0),
     expenses: new Array(RANGE_MONTHS).fill(0),

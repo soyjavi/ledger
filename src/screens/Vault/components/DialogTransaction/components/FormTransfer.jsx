@@ -15,7 +15,11 @@ const { COLOR, ICON, SPACE } = THEME;
 
 const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
   const l10n = useL10N();
-  const { baseCurrency, vaults, rates } = useStore();
+  const {
+    settings: { baseCurrency },
+    vaults,
+    rates,
+  } = useStore();
 
   const handleField = (field, fieldValue) => {
     const next = { ...form, [field]: fieldValue };

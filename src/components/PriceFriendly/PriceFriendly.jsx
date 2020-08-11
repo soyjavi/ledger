@@ -6,7 +6,7 @@ import { Price, Row, Text } from 'reactor/components';
 import { format } from 'reactor/components/Price/modules';
 
 import { C, currencyDecimals } from '@common';
-import { useSettings } from '@context';
+import { useStore } from '@context';
 
 const MASK_SYMBOL = '*';
 const { COLOR } = THEME;
@@ -17,9 +17,9 @@ const maskValue = ({ value }) =>
   }).replace(/[0-9]/gi, MASK_SYMBOL);
 
 const PriceFriendly = ({ currency, fixed, label, operator, value = 0, ...others }) => {
-  const { state } = useSettings();
+  const { settings } = useStore();
 
-  const maskAmount = others.maskAmount !== undefined ? others.maskAmount : state.maskAmount;
+  const maskAmount = others.maskAmount !== undefined ? others.maskAmount : settings.maskAmount;
   let { color } = others;
   let operatorEnhanced;
 

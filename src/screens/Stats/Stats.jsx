@@ -32,7 +32,9 @@ export const Stats = ({ visible, ...inherit }) => {
   const [month, setMonth] = useState({});
   const [scroll, setScroll] = useState(false);
 
-  const { baseCurrency } = store;
+  const {
+    settings: { baseCurrency },
+  } = store;
 
   useEffect(() => {
     if (visible) {
@@ -40,7 +42,7 @@ export const Stats = ({ visible, ...inherit }) => {
       setChart(queryChart(store));
       setSlider({ month: today.getMonth(), year: today.getFullYear(), index: STATS_MONTHS_LIMIT - 1 });
     } else scrollview.current.scrollTo({ y: 0, animated: false });
-  }, [visible, store]);
+  }, [visible]);
 
   useEffect(() => {
     setMonth(queryMonth(store, slider));

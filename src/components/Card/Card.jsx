@@ -19,7 +19,10 @@ export { CARD_WIDTH };
 
 export const Card = ({ balance, currency, disabled, onPress, percentage, title = '', ...others }) => {
   const l10n = useL10N();
-  const { baseCurrency, rates } = useStore();
+  const {
+    settings: { baseCurrency },
+    rates,
+  } = useStore();
 
   return (
     <Touchable {...others} onPress={onPress} rippleColor={COLOR.LIGHTEN} style={styles.container}>

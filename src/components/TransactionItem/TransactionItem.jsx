@@ -20,11 +20,11 @@ const {
 const { COLOR, SPACE } = THEME;
 
 const TransactionItem = (props) => {
-  const { baseCurrency, rates } = useStore();
-  const { showTx } = useNavigation();
   const {
-    state: { maskAmount },
-  } = useSettings();
+    settings: { baseCurrency, maskAmount },
+    rates,
+  } = useStore();
+  const { showTx } = useNavigation();
 
   const { category, currency, location, timestamp, title, type, value } = props;
   const operator = type === EXPENSE ? -1 : 1;
