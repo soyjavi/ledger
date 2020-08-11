@@ -1,16 +1,13 @@
 import { apiCall } from './modules';
 
-export const getAuthorization = async (store, snackbar, pin) => {
-  const { fingerprint } = store;
+export const getAuthorization = async (settings, snackbar) => {
+  const { fingerprint } = settings;
   const { snackbarError } = snackbar;
 
-  const { hash } =
+  const { hash: authorization } =
     (await apiCall({ method: 'POST', service: 'signup', fingerprint }).catch((error) =>
       snackbarError(error.message),
     )) || {};
 
-  const next = { authorization: hash, pin };
-  await store.save(next);
-
-  return next;
+  return authorization;
 };
