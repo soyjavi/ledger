@@ -31,6 +31,7 @@ const StoreProvider = ({ children }) => {
             baseCurrency: CURRENCY,
             fingerprint,
             maskAmount: false,
+            onboarded: false,
             pin: undefined,
             secret,
             visibleVaults: {},
