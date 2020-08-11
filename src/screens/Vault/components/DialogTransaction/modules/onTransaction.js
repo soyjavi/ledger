@@ -1,21 +1,20 @@
-import { createTx } from '@services';
-
-export default ({
+export default async ({
   props: { vault = {}, type },
   state: {
-    coords = {},
+    coords: { latitude, longitude } = {},
     form: { category, value, title = '' },
     place,
   },
-  store,
-  snackbar,
+  store: { addTx },
 }) =>
-  createTx(store, snackbar, {
+  addTx({
     category,
     title,
     type,
     value: parseFloat(value, 10),
     vault: vault.hash,
-    place,
-    ...coords,
+    location:
+      latitude && longitude
+        ? { latitude: parseFloat(latitude, 10), longitude: parseFloat(longitude, 10), place }
+        : undefined,
   });

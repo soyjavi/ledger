@@ -13,7 +13,6 @@ import { getLocation, handleSubmit } from './modules';
 
 const { COLOR } = THEME;
 const {
-  BUSY_PRESS_MS,
   DELAY_PRESS_MS,
   TX: {
     TYPE: { TRANSFER },
@@ -41,7 +40,7 @@ const DialogTransaction = (props = {}) => {
 
   useEffect(() => {
     if (visible && props.type !== undefined && props.type !== type) setType(props.type);
-  }, [visible, props.type]);
+  }, [visible, props, type]);
 
   useEffect(() => {
     if (visible) {
@@ -53,11 +52,11 @@ const DialogTransaction = (props = {}) => {
 
   const onSubmit = handleSubmit.bind(undefined, {
     props,
-    store,
-    snackbar,
     setBusy,
-    state: { ...state, ...location },
     setState,
+    snackbar,
+    state: { ...state, ...location },
+    store,
   });
 
   const { valid } = state;
@@ -70,11 +69,13 @@ const DialogTransaction = (props = {}) => {
       <Text subtitle marginTop="S" marginBottom="M">{`${l10n.NEW} ${l10n.TRANSACTION[type]}`}</Text>
 
       <Form {...props} {...state} type={type} onChange={(value) => setState({ ...state, ...value })} />
-      <HeatMap
-        caption={place || l10n.LOADING_PLACE}
-        points={coords ? [[coords.longitude, coords.latitude]] : undefined}
-        small
-      />
+      {type !== TRANSFER && (
+        <HeatMap
+          caption={place || l10n.LOADING_PLACE}
+          points={coords ? [[coords.longitude, coords.latitude]] : undefined}
+          small
+        />
+      )}
 
       <Row marginTop="L">
         <Button
@@ -86,14 +87,7 @@ const DialogTransaction = (props = {}) => {
           title={l10n.CLOSE}
           wide
         />
-        <Button
-          busy={busy ? BUSY_PRESS_MS : undefined}
-          delay={DELAY_PRESS_MS}
-          disabled={busy || !valid}
-          onPress={onSubmit}
-          title={l10n.SAVE}
-          wide
-        />
+        <Button delay={DELAY_PRESS_MS} disabled={busy || !valid} onPress={onSubmit} title={l10n.SAVE} wide />
       </Row>
     </Dialog>
   );
