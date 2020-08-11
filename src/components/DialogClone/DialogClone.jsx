@@ -5,7 +5,7 @@ import { THEME } from 'reactor/common';
 import { Button, Col, Dialog, Row, Text } from 'reactor/components';
 
 import { C, exchange, verboseTime } from '@common';
-import { useNavigation, useL10N, useSnackBar, useStore } from '@context';
+import { useNavigation, useL10N, useStore } from '@context';
 
 import { BoxDate } from '../Box';
 import { HeatMap } from '../HeatMap';
@@ -25,23 +25,21 @@ const DialogClone = ({ dataSource, visible, ...inherit }) => {
 
   const l10n = useL10N();
   const store = useStore();
-  const snackbar = useSnackBar();
-  const { baseCurrency, rates } = store;
+  const {
+    settings: { baseCurrency },
+    rates,
+  } = store;
   const navigation = useNavigation();
 
   const [busy, setBusy] = useState(false);
-  const [wipe, setWipe] = useState(false);
 
   useEffect(() => {
-    if (!visible) {
-      setBusy(false);
-      setWipe(false);
-    }
+    if (!visible) setBusy(false);
   }, [visible]);
 
-  const bindings = { dataSource, navigation, snackbar, setBusy, setWipe, store };
-  const handleClone = onSubmit.bind(undefined, bindings);
-  const handleWipe = onSubmit.bind(undefined, { ...bindings, wipe: true });
+  const bindings = { dataSource, navigation, setBusy, store };
+  const handleClone = () => onSubmit(bindings);
+  const handleWipe = () => onSubmit({ ...bindings, wipe: true });
 
   const operator = type === EXPENSE ? -1 : 1;
   const buttonProps = { delay: DELAY_PRESS_MS, disabled: busy, wide: true };
@@ -107,20 +105,13 @@ const DialogClone = ({ dataSource, visible, ...inherit }) => {
       <Row marginTop="M">
         <Button
           {...buttonProps}
-          busy={busy && wipe}
           color={COLOR.BASE}
           colorText={COLOR.TEXT}
           onPress={handleWipe}
           marginRight="M"
           title={l10n.WIPE}
         />
-        <Button
-          {...buttonProps}
-          busy={busy && !wipe}
-          colorText={COLOR.BACKGROUND}
-          onPress={handleClone}
-          title={l10n.CLONE}
-        />
+        <Button {...buttonProps} colorText={COLOR.BACKGROUND} onPress={handleClone} title={l10n.CLONE} />
       </Row>
     </Dialog>
   );

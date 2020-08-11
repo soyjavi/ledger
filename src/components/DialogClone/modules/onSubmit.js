@@ -1,5 +1,4 @@
 import { C } from '@common';
-import { createTx } from '@services';
 
 const {
   TX: {
@@ -11,23 +10,20 @@ const {
 export const onSubmit = async ({
   dataSource: { category, hash, location, value, vault, title, type },
   navigation: { showTx },
-  snackbar,
   setBusy,
-  setWipe,
-  store,
+  store: { addTx },
   wipe = false,
 }) => {
-  setWipe(wipe);
   setBusy(true);
-
-  const tx = await createTx(store, snackbar, {
-    vault,
+  const tx = await addTx({
     category,
-    value,
     title,
     type,
-    ...(wipe ? { category: WIPE, tx: hash, type: type === EXPENSE ? INCOME : EXPENSE } : location),
+    value,
+    vault: vault,
+    ...(wipe ? { category: WIPE, tx: hash, type: type === EXPENSE ? INCOME : EXPENSE } : { location }),
   });
-  setBusy(false);
+
   if (tx) showTx();
+  setBusy(false);
 };
