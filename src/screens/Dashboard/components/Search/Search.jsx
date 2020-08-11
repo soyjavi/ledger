@@ -5,12 +5,11 @@ import { TextInput } from 'react-native';
 import { THEME } from 'reactor/common';
 import { Button, Col, Row } from 'reactor/components';
 
-import { C, groupTxsByDate } from '@common';
+import { groupTxsByDate } from '@common';
 import { useL10N, useStore } from '@context';
 
 import styles from './Search.style';
 
-const { BUSY_PRESS_MS } = C;
 const { COLOR } = THEME;
 let TIMEOUT;
 
@@ -78,13 +77,7 @@ export const Search = ({ onValue }) => {
       />
       <Col marginLeft="S" width="auto">
         {value && !busy && (
-          <Button
-            busy={busy ? BUSY_PRESS_MS : undefined}
-            colorText={COLOR.BACKGROUND}
-            onPress={handleReset}
-            size="S"
-            title={l10n.CLEAR}
-          />
+          <Button colorText={COLOR.BACKGROUND} disabled={busy} onPress={handleReset} size="S" title={l10n.CLEAR} />
         )}
       </Col>
     </Row>

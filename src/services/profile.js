@@ -6,10 +6,9 @@ const { VERSION } = C;
 
 export const getProfile = async (store, snackbar, signup = {}) => {
   const { authorization = signup.authorization, secret } = store;
-  const { snackbarError } = snackbar;
   const headers = { authorization, secret };
 
-  const profile = await apiCall({ service: 'profile', headers }).catch((error) => snackbarError(error.message));
+  const profile = await apiCall({ service: 'profile', headers }).catch((error) => snackbar.error(error.message));
   if (!profile) return undefined;
 
   const { version } = store;
@@ -19,7 +18,7 @@ export const getProfile = async (store, snackbar, signup = {}) => {
 
   if (remoteHash !== localHash || version !== VERSION) {
     const { txs: nextTxs = [] } =
-      (await apiCall({ service: 'transactions', headers }).catch((error) => snackbarError(error.message))) || {};
+      (await apiCall({ service: 'transactions', headers }).catch((error) => snackbar.error(error.message))) || {};
     if (nextTxs.length > 0) txs = nextTxs;
   }
 
@@ -34,7 +33,6 @@ export const getProfile = async (store, snackbar, signup = {}) => {
 };
 
 export const fork = async (store, snackbar, query = '') => {
-  const { snackbarError } = snackbar;
   const [secure, file] = query.split('|');
 
   const response = await apiCall({
@@ -43,7 +41,7 @@ export const fork = async (store, snackbar, query = '') => {
     headers: composeHeaders(store),
     secure,
     file,
-  }).catch((error) => snackbarError(error.message));
+  }).catch((error) => snackbar.error(error.message));
 
   return response;
 };

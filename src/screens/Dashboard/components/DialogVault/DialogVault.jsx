@@ -6,19 +6,20 @@ import { Button, Dialog, Row, Text } from 'reactor/components';
 
 import { C } from '@common';
 import { FormVault } from '@components';
-import { useNavigation, useL10N, useSnackBar, useStore } from '@context';
-import { createVault } from '@services';
+import { useNavigation, useL10N, useStore } from '@context';
 
-const { BUSY_PRESS_MS, DELAY_PRESS_MS, SCREEN } = C;
+const { DELAY_PRESS_MS, SCREEN } = C;
 const { COLOR, MOTION } = THEME;
 const INITIAL_STATE = { currency: undefined };
 
 export const DialogVault = ({ onClose, visible }) => {
   const navigation = useNavigation();
   const l10n = useL10N();
-  const store = useStore();
-  const snackbar = useSnackBar();
-  const { baseCurrency, vaults = [] } = store;
+  const {
+    addVault,
+    settings: { baseCurrency },
+    vaults = [],
+  } = useStore();
 
   const [busy, setBusy] = useState(false);
   const [form, setForm] = useState(INITIAL_STATE);
@@ -30,7 +31,7 @@ export const DialogVault = ({ onClose, visible }) => {
 
   const handleSubmit = async () => {
     setBusy(true);
-    const vault = await createVault(store, snackbar, form);
+    const vault = await addVault(form);
     if (vault) {
       onClose();
       setTimeout(() => navigation.go(SCREEN.VAULT, vault), MOTION.COLLAPSE);
@@ -53,7 +54,6 @@ export const DialogVault = ({ onClose, visible }) => {
           wide
         />
         <Button
-          busy={busy ? BUSY_PRESS_MS : undefined}
           delay={DELAY_PRESS_MS}
           disabled={busy || form.title === undefined}
           onPress={handleSubmit}

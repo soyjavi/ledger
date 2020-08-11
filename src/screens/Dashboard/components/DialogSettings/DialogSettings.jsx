@@ -11,6 +11,7 @@ import { Button, Dialog, Image, Text, View } from 'reactor/components';
 
 import { Heading, SliderCurrencies } from '@components';
 import { useL10N, useSnackBar, useStore } from '@context';
+import { getRates } from '@services';
 
 import { DialogFork } from '../DialogFork';
 import styles from './DialogSettings.style';
@@ -24,8 +25,12 @@ const CAMERA_PROPS = {
 
 export const DialogSettings = ({ onClose, visible, ...inherit }) => {
   const l10n = useL10N();
-  const { authorization, baseCurrency, secret } = useStore();
-  const { snackbarSuccess } = useSnackBar();
+  const {
+    settings: { authorization, baseCurrency, secret },
+    updateRates,
+    updateSettings,
+  } = useStore();
+  const snackbar = useSnackBar();
 
   const [dialogFork, setDialogFork] = useState(false);
   const [hasCamera, setHasCamera] = useState(undefined);
@@ -54,12 +59,12 @@ export const DialogSettings = ({ onClose, visible, ...inherit }) => {
   const handleForked = () => {
     setDialogFork(false);
     inherit.onClose();
-    snackbarSuccess(l10n.FORKED_CORRECTLY);
+    snackbar.success(l10n.FORKED_CORRECTLY);
   };
 
-  const handleChangeCurrency = (currency) => {
-    // @TODO
-    console.log('currency', currency);
+  const handleChangeCurrency = async (currency) => {
+    updateSettings('baseCurrency', currency);
+    await updateRates(await getRates({ baseCurrency: currency, snackbar }));
   };
 
   return (
@@ -92,7 +97,7 @@ export const DialogSettings = ({ onClose, visible, ...inherit }) => {
         <SliderCurrencies onChange={handleChangeCurrency} selected={baseCurrency} />
       </Dialog>
 
-      {visible && (
+      {visible && camera && (
         <DialogFork onClose={() => setDialogFork(false)} onForked={handleForked} query={qr} visible={dialogFork} />
       )}
     </>

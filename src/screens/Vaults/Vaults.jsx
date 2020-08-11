@@ -6,7 +6,7 @@ import { Slider, Viewport } from 'reactor/components';
 
 import { C } from '@common';
 import { Card, CARD_WIDTH, Footer, Header, Heading, ScrollView } from '@components';
-import { useL10N, useNavigation, useSettings, useStore } from '@context';
+import { useL10N, useNavigation, useStore } from '@context';
 
 import { VaultItem } from './components';
 import { filter, query } from './modules';
@@ -16,11 +16,15 @@ const { SCREEN } = C;
 const { SPACE } = THEME;
 
 const Vaults = ({ visible, ...inherit }) => {
-  const { state: { visibleVaults = {} } = {}, setVisibleVaults } = useSettings();
   const navigation = useNavigation();
   const l10n = useL10N();
   const scrollview = useRef(null);
-  const { overall, vaults } = useStore();
+  const {
+    overall,
+    settings: { visibleVaults = {} },
+    updateSettings,
+    vaults,
+  } = useStore();
 
   const [currencies, setCurrencies] = useState([]);
   const [scroll, setScroll] = useState(false);
@@ -67,7 +71,12 @@ const Vaults = ({ visible, ...inherit }) => {
               key={vault.hash}
               active={visibleVaults[vault.hash] !== false}
               dataSource={vault}
-              onChange={(value) => setVisibleVaults(vault.hash, value)}
+              onChange={(value) =>
+                updateSettings('visibleVaults', {
+                  ...visibleVaults,
+                  [vault.hash]: value,
+                })
+              }
               onPress={() => navigation.go(SCREEN.VAULT, vault)}
             />
           ))}

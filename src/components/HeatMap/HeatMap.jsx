@@ -34,7 +34,7 @@ export const HeatMap = ({
       <Image
         resizeMode="cover"
         source={
-          queryString ? { uri: `${ENDPOINT}/heatmap?${queryString}&style=${darkMode ? 'dark' : 'light'}` } : undefined
+          queryString ? { uri: `${ENDPOINT}/map?${queryString}&style=${darkMode ? 'dark' : 'light'}` } : undefined
         }
         style={[styles.container, small && styles.small, inherit.style]}
       />

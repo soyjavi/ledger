@@ -10,13 +10,13 @@ const { ONBOARDING, STATS, DASHBOARD, VAULT, VAULTS } = SCREEN;
 
 const Router = () => {
   const { back, current, stack = [], tx } = useNavigation();
-  const { settings: { fingerprint, ready } = {} } = useStore();
+  const { settings: { fingerprint, onboarded } = {} } = useStore();
   console.log(' <Router>');
 
   return (
     <>
       {fingerprint && <Onboarding backward={current !== ONBOARDING} visible />}
-      {fingerprint && ready && (
+      {fingerprint && onboarded && (
         <>
           <Dashboard backward={current !== DASHBOARD} visible={stack.includes(DASHBOARD)} />
           {stack.includes(DASHBOARD) && (
