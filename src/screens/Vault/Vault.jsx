@@ -4,15 +4,14 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Viewport } from 'reactor/components';
 
 import { BANNERS, FLAGS } from '@assets';
-import { Banner, Footer, GroupTransactions, Header, Heading, Option, ScrollView, Summary } from '@components';
-import { useConnection, useL10N, useNavigation, useStore } from '@context';
+import { Banner, GroupTransactions, Header, Heading, Option, ScrollView, Summary } from '@components';
+import { useL10N, useNavigation, useStore } from '@context';
 
 import { DialogTransaction } from './components';
 import { onScroll, query } from './modules';
 import styles from './Vault.style';
 
 const Vault = ({ visible, ...inherit }) => {
-  const { connected } = useConnection();
   const l10n = useL10N();
   const { params, ...navigation } = useNavigation();
   const { baseCurrency, vaults } = useStore();
@@ -33,7 +32,7 @@ const Vault = ({ visible, ...inherit }) => {
 
   useEffect(() => {
     if (params.vault) refreshDatasource(vaults.find((vault) => vault.hash === params.vault.hash));
-  }, [params.vault]);
+  }, [params]);
 
   useEffect(() => {
     const { currentBalance, txs: currentTxs, hash } = dataSource;
@@ -68,10 +67,10 @@ const Vault = ({ visible, ...inherit }) => {
 
       <ScrollView onScroll={handleScroll} ref={scrollview} style={styles.container}>
         <Summary {...vaultProps} currency={currency}>
-          <Option disabled={!connected} icon="arrow-up" onPress={() => setDialog(1)} caption={l10n.INCOME} />
-          <Option disabled={!connected} icon="arrow-down" onPress={() => setDialog(0)} caption={l10n.EXPENSE} />
+          <Option icon="arrow-up" onPress={() => setDialog(1)} caption={l10n.INCOME} />
+          <Option icon="arrow-down" onPress={() => setDialog(0)} caption={l10n.EXPENSE} />
           {vaults.length > 1 ? (
-            <Option disabled={!connected} icon="shuffle" onPress={() => setDialog(2)} caption={l10n.TRANSFER} />
+            <Option icon="shuffle" onPress={() => setDialog(2)} caption={l10n.TRANSFER} />
           ) : undefined}
         </Summary>
 
@@ -86,8 +85,6 @@ const Vault = ({ visible, ...inherit }) => {
           <Banner image={BANNERS.NOT_FOUND} paddingHorizontal="M" paddingVertical="M" title={l10n.NO_TRANSACTIONS} />
         )}
       </ScrollView>
-
-      <Footer onBack={navigation.back} onHardwareBack={visible ? navigation.back : undefined} visible={!scroll} />
 
       {visible && (
         <DialogTransaction

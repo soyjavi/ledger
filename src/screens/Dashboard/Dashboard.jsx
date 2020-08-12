@@ -5,7 +5,7 @@ import { THEME } from 'reactor/common';
 import { Button, Slider, Viewport } from 'reactor/components';
 
 import { C, onHardwareBackPress } from '@common';
-import { CARD_WIDTH, Footer, GroupTransactions, Header, Heading, Option, ScrollView, Summary } from '@components';
+import { CARD_WIDTH, GroupTransactions, Header, Heading, Option, ScrollView, Summary } from '@components';
 import { useL10N, useNavigation, useStore } from '@context';
 
 import { DialogSettings, DialogVault, Search, VaultCard } from './components';
@@ -93,8 +93,6 @@ export const Dashboard = ({ backward, visible, ...inherit }) => {
           </>
         )}
       </ScrollView>
-
-      <Footer visible={!scroll} showSync />
 
       {visible && (
         <>

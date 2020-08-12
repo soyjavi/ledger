@@ -5,7 +5,7 @@ import { THEME } from 'reactor/common';
 import { Slider, Viewport } from 'reactor/components';
 
 import { C } from '@common';
-import { Card, CARD_WIDTH, Footer, Header, Heading, ScrollView } from '@components';
+import { Card, CARD_WIDTH, Header, Heading, ScrollView } from '@components';
 import { useL10N, useNavigation, useStore } from '@context';
 
 import { VaultItem } from './components';
@@ -82,8 +82,6 @@ const Vaults = ({ visible, ...inherit }) => {
           ))}
         </>
       </ScrollView>
-
-      <Footer onBack={navigation.back} onHardwareBack={visible ? navigation.back : undefined} visible={!scroll} />
     </Viewport>
   );
 };

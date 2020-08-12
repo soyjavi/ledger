@@ -137,7 +137,6 @@ export default {
     NEW: 'New',
     NO_TRANSACTIONS: "You don't have any transaction.",
 
-    OFFLINE_MODE: 'No internet connection. Offline mode.',
     OTHERS: 'Others',
     OVERALL_BALANCE: 'Overall Balance',
 
@@ -157,6 +156,9 @@ export default {
 
     STATS: 'Stats',
     STATS_CAPTION: 'In this summary you can see a breakdown of your operations in the selected category.',
+    SYNC: 'You have ${blocks} blocks out of sync',
+    SYNC_NOW: 'SYNC NOW',
+    SYNC_BUSY: 'Wait a bit while your blockchain syncs',
 
     TAP_TO_UPDATE: 'Tap to update',
     TO: 'to',
