@@ -17,5 +17,7 @@ export default ({ rates = {}, settings: { baseCurrency } = {}, vaults: rawVaults
     overall: calcOverall({ baseCurrency, rates, vaults }),
     txs,
     vaults,
+    latestTx: txs.slice(-1).pop(),
+    latestVault: vaults.slice(-1).pop(),
   };
 };

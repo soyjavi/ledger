@@ -95,7 +95,6 @@ const StoreProvider = ({ children }) => {
         addTx: (data = {}) => addBlock('txs', { ...data, value: parseFloat(data.value, 10) }),
         updateSettings: (key, value) => updateStore('settings', { ...state.settings, [key]: value }),
         updateRates: (value) => updateStore('rates', value),
-        // overall: {},
       }}
     >
       {children}
