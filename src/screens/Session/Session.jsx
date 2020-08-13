@@ -19,24 +19,24 @@ export const Session = ({ onProfile, visible, ...others }) => {
   const { IS_WEB } = useEnvironment();
   const l10n = useL10N();
   const store = useStore();
-  const snackbar = useSnackBar();
 
   const [busy, setBusy] = useState(false);
   const [fingerprint, setFingerprint] = useState(undefined);
   const [pin, setPin] = useState('');
 
-  const handleHandshake = onHandshake.bind(undefined, { onProfile, setBusy, setPin, snackbar, store });
+  const handleHandshake = onHandshake.bind(undefined, { onProfile, setBusy, store });
   const handleFingerprint = onFingerprint.bind(undefined, { handleHandshake, setFingerprint, store });
   const handlePin = onPin.bind(undefined, { handleHandshake, setPin, store });
 
   useEffect(() => {
-    const { pin, vaults = [] } = store;
-    if (visible && pin && vaults.length > 0) {
-      if (IS_DEV && IS_WEB) handleHandshake(pin);
-      else if (fingerprint === undefined) setTimeout(handleFingerprint, 400);
+    const { settings, vaults = [] } = store;
+
+    if (visible && settings.pin && vaults.length !== 0) {
+      if (IS_DEV && IS_WEB) handleHandshake(settings.pin);
+      else if (fingerprint === undefined) handleFingerprint();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fingerprint, store.pin, visible]);
+  }, [visible]);
 
   const signup = store.authorization === undefined;
 
@@ -54,7 +54,7 @@ export const Session = ({ onProfile, visible, ...others }) => {
               ))}
             </>
           ) : (
-            <></>
+            <Text>$$ Wait a moment</Text>
           )}
         </Row>
 

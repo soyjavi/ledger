@@ -97,6 +97,7 @@ export default {
     ELEVATOR_PITCH: 'Your private finance accounting running on your own blockchain.',
     ENTER_PIN: 'Enter your pin',
     ENTER_PIN_OR_FINGERPRINT: 'Enter your pin or fingerprint',
+    ERROR_SERVICE_RATES: 'Something was wrong trying to get updated currencies rates. Check that you are online.',
     EXPENSE: 'Expense',
     EXPENSES: 'Expenses',
 

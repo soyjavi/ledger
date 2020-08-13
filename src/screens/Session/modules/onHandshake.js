@@ -1,20 +1,18 @@
-import { getAuthorization, getProfile } from '@services';
+import { signup, getRates } from '@services';
 
-export const onHandshake = async ({ onProfile, store, setBusy, setPin, snackbar }, pin) => {
-  const isSignup = store.pin === undefined;
-
-  const handleError = () => {
-    setBusy(false);
-    setPin('');
-  };
+export const onHandshake = async ({ onProfile, setBusy, store: { settings, updateRates, updateSettings } }, pin) => {
+  const { fingerprint, baseCurrency } = settings;
+  const isSignup = settings.pin === undefined;
 
   setBusy(true);
-
   if (isSignup) {
-    const authorization = await getAuthorization(store, snackbar, pin).catch(handleError);
-    await getProfile(store, snackbar, authorization).catch(handleError);
+    await updateSettings({
+      pin,
+      onboarded: true,
+      authorization: await signup({ fingerprint }),
+    });
   } else {
-    getProfile(store, snackbar).catch(handleError);
+    updateRates(await getRates({ baseCurrency }).catch(() => {}));
   }
 
   onProfile();

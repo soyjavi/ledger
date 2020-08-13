@@ -7,30 +7,42 @@ import { Button, Text, Viewport } from 'reactor/components';
 import { C } from '@common';
 import { FormVault } from '@components';
 import { useL10N, useSnackBar, useStore } from '@context';
-import { createVault, getRates } from '@services';
+import { getRates } from '@services';
 
 import styles from './FirstVault.style';
 
-const { BUSY_PRESS_MS, CURRENCY, DELAY_PRESS_MS } = C;
+const { CURRENCY, DELAY_PRESS_MS } = C;
 
 export const FirstVault = ({ onVault, ...others }) => {
   const l10n = useL10N();
-  const store = useStore();
+  const {
+    addVault,
+    settings: { onboarded },
+    rates,
+    updateRates,
+    updateSettings,
+  } = useStore();
   const snackbar = useSnackBar();
 
-  const [rates, setRates] = useState({});
   const [busy, setBusy] = useState(false);
   const [form, setForm] = useState({ currency: CURRENCY });
 
   useLayoutEffect(() => {
-    const call = async () => setRates(await getRates());
-    call();
+    const call = async () => {
+      const rates = await getRates().catch(() => snackbar.error(l10n.ERROR_SERVICE_RATES));
+      if (rates) updateRates(rates);
+    };
+    if (!onboarded) call();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSubmit = async () => {
     setBusy(true);
-    const vault = await createVault(store, snackbar, form);
-    if (vault) onVault(vault);
+    const vault = await addVault(form);
+    if (vault) {
+      await updateSettings({ baseCurrency: form.currency });
+      onVault(vault);
+    }
     setBusy(false);
   };
 
@@ -46,7 +58,6 @@ export const FirstVault = ({ onVault, ...others }) => {
         <FormVault form={form} onChange={setForm} rates={rates} />
 
         <Button
-          busy={busy ? BUSY_PRESS_MS : undefined}
           delay={DELAY_PRESS_MS}
           disabled={busy || !form.valid}
           marginTop="XL"
