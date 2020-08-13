@@ -16,10 +16,11 @@ const maskValue = ({ value }) =>
     value: value >= 1000 ? 9999 : 9.99,
   }).replace(/[0-9]/gi, MASK_SYMBOL);
 
-const PriceFriendly = ({ currency, fixed, label, operator, value = 0, ...others }) => {
+const PriceFriendly = ({ currency, fixed, label, operator, maskAmount, value = 0, ...others }) => {
   const { settings } = useStore();
 
-  const maskAmount = others.maskAmount !== undefined ? others.maskAmount : settings.maskAmount;
+  const maskedAmount = maskAmount || settings.maskAmount;
+
   let { color } = others;
   let operatorEnhanced;
 
@@ -47,7 +48,7 @@ const PriceFriendly = ({ currency, fixed, label, operator, value = 0, ...others 
           {label}
         </Text>
       )}
-      {maskAmount ? (
+      {maskedAmount ? (
         <Text {...others} color={color}>
           {maskValue(props)}
         </Text>
@@ -62,16 +63,9 @@ PriceFriendly.propTypes = {
   currency: string,
   fixed: number,
   label: string,
+  maskAmount: bool,
   operator: bool,
   value: number,
-};
-
-PriceFriendly.defaultProps = {
-  currency: undefined,
-  fixed: undefined,
-  label: undefined,
-  operator: false,
-  value: 0,
 };
 
 export { PriceFriendly };

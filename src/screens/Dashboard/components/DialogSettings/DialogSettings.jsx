@@ -63,7 +63,7 @@ export const DialogSettings = ({ onClose, visible, ...inherit }) => {
   };
 
   const handleChangeCurrency = async (currency) => {
-    updateSettings('baseCurrency', currency);
+    updateSettings({ baseCurrency: currency });
     await updateRates(await getRates({ baseCurrency: currency, snackbar }));
   };
 

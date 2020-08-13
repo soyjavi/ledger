@@ -71,12 +71,7 @@ const Vaults = ({ visible, ...inherit }) => {
               key={vault.hash}
               active={visibleVaults[vault.hash] !== false}
               dataSource={vault}
-              onChange={(value) =>
-                updateSettings('visibleVaults', {
-                  ...visibleVaults,
-                  [vault.hash]: value,
-                })
-              }
+              onChange={(value) => updateSettings({ visibleVaults: { ...visibleVaults, [vault.hash]: value } })}
               onPress={() => navigation.go(SCREEN.VAULT, vault)}
             />
           ))}

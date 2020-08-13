@@ -54,7 +54,7 @@ const Summary = ({ children, currency = CURRENCY, currentBalance, currentMonth =
         <Image source={image} resizeMode="contain" style={styles.image} />
         <Col align="center" marginBottom="M">
           <Text subtitle>{title}</Text>
-          <Touchable onPress={() => updateSettings('maskAmount', !maskAmount)}>
+          <Touchable onPress={() => updateSettings({ maskAmount: !maskAmount })}>
             <PriceFriendly currency={currency} headline value={Math.abs(currentBalance)} />
           </Touchable>
           {baseCurrency !== currency && (
