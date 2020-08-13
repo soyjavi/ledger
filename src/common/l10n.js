@@ -156,9 +156,12 @@ export default {
 
     STATS: 'Stats',
     STATS_CAPTION: 'In this summary you can see a breakdown of your operations in the selected category.',
-    SYNC: 'You have ${blocks} blocks out of sync',
+    // SYNC: 'You have ${blocks} blocks out of sync',
+    SYNC_SENTENCE_1: 'You were disconnected',
+    SYNC_SENTENCE_2: 'please.',
     SYNC_NOW: 'SYNC NOW',
-    SYNC_BUSY: 'Wait a bit while your blockchain syncs',
+    SYNC_BUSY: 'Wait a bit meanwhile your transactions get sync.',
+    SYNC_DONE: 'All your transactions have been synced.',
 
     TAP_TO_UPDATE: 'Tap to update',
     TO: 'to',

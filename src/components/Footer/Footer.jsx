@@ -9,12 +9,12 @@ import { useConnection, useL10N, useSnackBar, useStore } from '@context';
 
 import { Option } from '../Option';
 import styles from './Footer.style';
-import { handleSync } from './modules';
+import { nodeStatus, syncNode } from './modules';
 
 const { COLOR, ICON, SPACE } = THEME;
 
 const MOTION_HIDE = SPACE.XXL * 2;
-const TIMEOUT_CHECK_SYNC = 5000;
+const TIMEOUT_CHECK_SYNC = 1000;
 
 export const Footer = ({ onBack, onHardwareBack }) => {
   const { connected } = useConnection();
@@ -22,7 +22,7 @@ export const Footer = ({ onBack, onHardwareBack }) => {
   const snackbar = useSnackBar();
   const store = useStore();
 
-  const [sync, setSync] = useState(true);
+  const [synced, setSynced] = useState(true);
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
@@ -33,54 +33,47 @@ export const Footer = ({ onBack, onHardwareBack }) => {
   useEffect(() => {
     const timeout = setTimeout(async () => {
       setBusy(false);
-      setSync(await handleSync({ connected, snackbar, store }));
+      if (connected) setSynced(await nodeStatus({ snackbar, store }));
     }, TIMEOUT_CHECK_SYNC);
 
     return () => clearTimeout(timeout);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [connected, store]);
 
-  const handlePressSync = async () => {
+  const handleSync = async () => {
     setBusy(true);
     // @TODO: Sync with server
-    setTimeout(() => {
-      // await syncBlockchain(store, snackbar);
-      setSync(true);
-      setBusy(true);
-      snackbar.success('Sync successfull');
-    }, 2000);
+    const success = await syncNode({ store, snackbar });
+    setSynced(true);
+    setBusy(false);
+    if (success) snackbar.success(l10n.SYNC_DONE);
   };
 
   return (
     <>
-      <Motion style={styles.container} timeline={[{ property: 'translateY', value: !busy || !sync ? 0 : MOTION_HIDE }]}>
+      <Motion style={styles.container} timeline={[{ property: 'translateY', value: synced ? 0 : MOTION_HIDE }]}>
         {onBack && <Option selected onPress={onBack} icon="arrow-left" />}
       </Motion>
 
       <Snackbar
-        caption={busy ? l10n.SYNC_BUSY : l10n.SYNC}
+        caption={busy ? l10n.SYNC_BUSY : l10n.SYNC_SENTENCE_1}
         color={busy ? COLOR.TEXT : COLOR.ERROR}
         icon={busy ? 'hourglass' : 'question'}
         iconSize={SPACE.M}
         family={ICON.FAMILY}
+        onClose={() => setSynced(true)}
         style={styles.snackbar}
-        visible={!sync}
+        visible={!synced}
       >
-        {!busy ? (
+        {!busy && (
           <>
-            <Touchable onPress={handlePressSync}>
-              <Text bold color={COLOR.BACKGROUND}>
+            <Touchable marginHorizontal="XS" onPress={handleSync} size="S">
+              <Text bold color={COLOR.WHITE} underlined>
                 {l10n.SYNC_NOW}
               </Text>
             </Touchable>
-            <Touchable onPress={() => setSync(true)}>
-              <Text bold color={COLOR.BACKGROUND}>
-                NO
-              </Text>
-            </Touchable>
+            <Text color={COLOR.WHITE}>{l10n.SYNC_SENTENCE_2}</Text>
           </>
-        ) : (
-          <></>
         )}
       </Snackbar>
     </>
