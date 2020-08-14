@@ -6,6 +6,7 @@ import React, { createContext, useContext, useLayoutEffect, useState } from 'rea
 import { useFingerprint } from 'reactor/hooks';
 
 import { C } from '@common';
+import { sync } from '@services';
 
 import { AsyncStorageAdapter } from './adapters';
 import { consolidate } from './modules';
@@ -70,12 +71,12 @@ const StoreProvider = ({ children }) => {
     });
   };
 
-  const addBlock = async (chain, data = {}) => {
-    blockchain.get(chain);
-    const { hash: previousHash } = blockchain.latestBlock;
+  const addBlock = async (key, data = {}) => {
+    const { settings } = state;
+    const { hash: previousHash } = blockchain.get(key).latestBlock;
 
     const block = await blockchain.addBlock(data, previousHash);
-    console.log(':: addBlock ::', block);
+    sync({ key, block, settings });
 
     setState({
       ...state,
@@ -93,7 +94,7 @@ const StoreProvider = ({ children }) => {
         ...consolidate(state),
         addVault: (data = {}) => addBlock('vaults', { ...data, balance: parseFloat(data.balance, 10) }),
         addTx: (data = {}) => addBlock('txs', { ...data, value: parseFloat(data.value, 10) }),
-        updateSettings: (key, value) => updateStore('settings', { ...state.settings, [key]: value }),
+        updateSettings: (value) => updateStore('settings', { ...state.settings, ...value }),
         updateRates: (value) => updateStore('rates', value),
       }}
     >
