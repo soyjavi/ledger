@@ -5,7 +5,7 @@ import { THEME } from 'reactor/common';
 import { Col, Icon, Row, Text, Touchable } from 'reactor/components';
 
 import { C, exchange, getIconCategory } from '@common';
-import { useNavigation, useSettings, useStore } from '@context';
+import { useNavigation, useStore } from '@context';
 
 import { Box } from '../Box';
 import { PriceFriendly } from '../PriceFriendly';

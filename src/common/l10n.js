@@ -60,6 +60,7 @@ export default {
     ],
     CATEGORY: 'Category',
     CHOOSE_TRANSACTION_TYPE: 'Choose type of transaction',
+    CHOOSE_CURRENCY: 'Choose your base currency',
     CITIES: 'Cities',
     CLEAR: 'Clear',
     CLONE: 'CLONE',

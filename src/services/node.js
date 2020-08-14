@@ -12,7 +12,7 @@ export const getSyncStatus = async ({ settings: { authorization, secret } }) =>
     headers: { authorization, secret },
   });
 
-export const sync = async ({ key, block, blocks, settings: { authorization, secret } }) => {
+export const sync = async ({ key, block, blocks, wipe, settings: { authorization, secret } }) => {
   const response = await apiCall({
     method: 'POST',
     service: 'sync',
@@ -20,7 +20,16 @@ export const sync = async ({ key, block, blocks, settings: { authorization, secr
     key,
     block,
     blocks,
+    wipe,
   });
 
   return response ? true : false;
 };
+
+export const blockchain = async ({ blockchain, settings: { authorization, secret } }) =>
+  apiCall({
+    method: 'POST',
+    service: 'blockchain',
+    headers: { authorization, secret },
+    blockchain,
+  });

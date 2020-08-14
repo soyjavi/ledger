@@ -7,7 +7,7 @@ import { Col, Row, Text, Touchable, View } from 'reactor/components';
 
 import { LOGO } from '@assets';
 import { C, exchange, verboseMonth } from '@common';
-import { useL10N, useSettings, useStore } from '@context';
+import { useL10N, useStore } from '@context';
 
 import { PriceFriendly } from '../PriceFriendly';
 import styles from './Summary.style';

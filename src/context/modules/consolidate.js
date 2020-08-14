@@ -2,13 +2,13 @@ import calcOverall from './calcOverall';
 import calcVault from './calcVault';
 
 export default ({ rates = {}, settings: { baseCurrency } = {}, ...blockchain } = {}) => {
-  const txs = (blockchain.txs || []).slice(1).map(({ data = {}, hash, timestamp }) => ({ ...data, hash, timestamp }));
-  const vaults = (blockchain.vaults || []).slice(1).map(({ data = {}, timestamp, hash }) =>
+  const txs = (blockchain.txs || []).slice(1).map(({ data = {}, hash, timestamp }) => ({ timestamp, ...data, hash }));
+  const vaults = (blockchain.vaults || []).slice(1).map(({ data = {}, hash, timestamp }) =>
     calcVault({
       baseCurrency,
       rates,
       txs,
-      vault: { ...data, timestamp, hash },
+      vault: { timestamp, ...data, hash },
     }),
   );
 

@@ -28,9 +28,10 @@ const CATEGORIES = [
 
 export default ({ type, category, title = '' } = {}) => {
   let value;
+  let parsedTitle = title.toLowerCase().trim();
 
-  if (title === 'coffee') value = 'coffee';
-  else if (title === 'beer') value = 'beer';
+  if (parsedTitle === 'coffee') value = 'coffee';
+  else if (parsedTitle === 'beer') value = 'beer';
   else value = CATEGORIES[type][category];
 
   return value;

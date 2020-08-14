@@ -25,9 +25,7 @@ const Router = () => {
               <Vaults onClose={back} visible={stack.includes(VAULTS)} />
               <Vault backward={current !== VAULT} onClose={back} visible={stack.includes(VAULT)} />
               <Stats onClose={back} visible={stack.includes(STATS)} />
-
               <DialogClone dataSource={tx} onClose={back} visible={tx !== undefined} />
-
               <Footer
                 onBack={current !== DASHBOARD ? back : undefined}
                 // onHardwareBack={visible ? back : undefined}

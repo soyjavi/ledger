@@ -24,5 +24,5 @@ export const BoxDate = ({ l10n, timestamp, ...inherit }) => (
 
 BoxDate.propTypes = {
   l10n: PropTypes.shape(),
-  timestamp: PropTypes.oneOfType([PropTypes.string, PropTypes.shape()]),
+  timestamp: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.shape()]),
 };
