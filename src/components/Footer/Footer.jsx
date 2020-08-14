@@ -14,7 +14,7 @@ import { nodeStatus, syncNode } from './modules';
 const { COLOR, ICON, SPACE } = THEME;
 
 const MOTION_HIDE = SPACE.XXL * 2;
-const TIMEOUT_CHECK_SYNC = 1000;
+const TIMEOUT_CHECK_SYNC = 5000;
 
 export const Footer = ({ onBack, onHardwareBack }) => {
   const { connected } = useConnection();
@@ -42,7 +42,6 @@ export const Footer = ({ onBack, onHardwareBack }) => {
 
   const handleSync = async () => {
     setBusy(true);
-    // @TODO: Sync with server
     const success = await syncNode({ store, snackbar });
     setSynced(true);
     setBusy(false);

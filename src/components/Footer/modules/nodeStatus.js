@@ -1,26 +1,32 @@
-import { getAuthorization, getSyncStatus } from '@services';
-
-// import { isSynced } from './isSynced';
+import { signup, getSyncStatus } from '@services';
 
 export const nodeStatus = async ({ snackbar, store }) => {
-  const { blocks = {}, latestHash = {}, settings, updateSettings } = store;
+  const {
+    //
+    blockchain = {},
+    latestHash: { txs: txLatestHash, vaults: vaultLatestHash } = {},
+    settings: { fingerprint },
+    updateSettings,
+  } = store;
+  let { settings } = store;
 
   if (!settings.authorization) {
-    // @TODO: Test this case
-    const authorization = await getAuthorization(settings, snackbar);
-    await updateSettings({ authorization });
+    const authorization = await signup({ fingerprint });
+    if (authorization) {
+      settings.authorization = authorization;
+      await updateSettings({ authorization });
+    }
   }
 
-  const { blocks: nodeBlocks = {}, latestHash: nodeLatestHash = {} } =
-    (await getSyncStatus({ settings, snackbar })) || {};
+  const response = await getSyncStatus({ settings, snackbar });
+  if (response) {
+    const { blocks = {}, latestHash = {} } = (await getSyncStatus({ settings, snackbar })) || {};
 
-  const synced =
-    nodeBlocks.txs === blocks.txs &&
-    nodeBlocks.vaults === blocks.vaults &&
-    nodeLatestHash.txs === latestHash.txs &&
-    nodeLatestHash.vaults === latestHash.vaults;
-
-  // const synced = isSynced({ store, node: await getSyncStatus({ settings, snackbar }) });
-
-  return synced;
+    const synced =
+      blocks.txs === blockchain.txs.length &&
+      blocks.vaults === blockchain.vaults.length &&
+      latestHash.txs === txLatestHash &&
+      latestHash.vaults === vaultLatestHash;
+    return synced;
+  } else return true;
 };
