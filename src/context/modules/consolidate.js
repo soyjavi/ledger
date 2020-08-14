@@ -1,10 +1,9 @@
 import calcOverall from './calcOverall';
 import calcVault from './calcVault';
 
-export default ({ rates = {}, settings: { baseCurrency } = {}, vaults: rawVaults = [], txs: rawTxs = [] } = {}) => {
-  const txs = rawTxs.slice(1).map(({ data = {}, hash, timestamp }) => ({ ...data, hash, timestamp }));
-
-  const vaults = rawVaults.slice(1).map(({ data = {}, timestamp, hash }) =>
+export default ({ rates = {}, settings: { baseCurrency } = {}, ...blockchain } = {}) => {
+  const txs = (blockchain.txs || []).slice(1).map(({ data = {}, hash, timestamp }) => ({ ...data, hash, timestamp }));
+  const vaults = (blockchain.vaults || []).slice(1).map(({ data = {}, timestamp, hash }) =>
     calcVault({
       baseCurrency,
       rates,
@@ -14,10 +13,13 @@ export default ({ rates = {}, settings: { baseCurrency } = {}, vaults: rawVaults
   );
 
   return {
+    blockchain,
+    latestHash: {
+      txs: blockchain.txs && blockchain.txs.length > 0 ? blockchain.txs.slice(-1).pop().hash : undefined,
+      vaults: blockchain.vaults && blockchain.vaults.length > 0 ? blockchain.vaults.slice(-1).pop().hash : undefined,
+    },
     overall: calcOverall({ baseCurrency, rates, vaults }),
     txs,
     vaults,
-    latestTx: txs.slice(-1).pop(),
-    latestVault: vaults.slice(-1).pop(),
   };
 };
