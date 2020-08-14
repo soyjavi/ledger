@@ -1,19 +1,15 @@
-// import { View } from 'react-native';
-
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Camera } from 'expo-camera';
-import * as Permissions from 'expo-permissions';
 import PropTypes from 'prop-types';
 
 import React, { useEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
-import { Button, Dialog, Image, Text, View } from 'reactor/components';
+import { Alert, Button, Dialog, Image, Text, View } from 'reactor/components';
 
 import { Heading, SliderCurrencies } from '@components';
 import { useL10N, useSnackBar, useStore } from '@context';
-import { getRates } from '@services';
 
-import { DialogFork } from '../DialogFork';
+import { askCamera, changeCurrency, getBlockchain } from './DialogSettings.controller';
 import styles from './DialogSettings.style';
 
 const { COLOR } = THEME;
@@ -22,52 +18,65 @@ const CAMERA_PROPS = {
   barCodeScannerSettings: { barCodeTypes: [BarCodeScanner.Constants.BarCodeType.qr] },
   type: Camera.Constants.Type.back,
 };
+const TIMEOUT_CHECK_BLOCKCHAIN = 400;
 
 export const DialogSettings = ({ onClose, visible, ...inherit }) => {
   const l10n = useL10N();
-  const {
-    settings: { authorization, baseCurrency, secret },
-    updateRates,
-    updateSettings,
-  } = useStore();
+  const store = useStore();
   const snackbar = useSnackBar();
 
-  const [dialogFork, setDialogFork] = useState(false);
   const [hasCamera, setHasCamera] = useState(undefined);
   const [camera, setCamera] = useState(false);
   const [qr, setQr] = useState(undefined);
+  const [blockchain, setBlockchain] = useState(undefined);
 
-  useEffect(() => {
-    async function askCamera() {
-      const { status } = await Permissions.askAsync(Permissions.CAMERA);
-      setHasCamera(status === 'granted');
-    }
-    if (hasCamera === undefined) askCamera();
-  }, [hasCamera]);
+  const {
+    settings: { authorization, baseCurrency, secret },
+    fork,
+  } = store;
 
   useEffect(() => {
     if (!visible) setCamera(false);
   }, [visible]);
 
-  const handleQr = ({ data = '' } = {}) => {
-    const [secure, file] = data.split('|');
+  useEffect(() => {
+    if (hasCamera === undefined) askCamera({ setHasCamera });
+  }, [hasCamera]);
 
-    setDialogFork(secure !== undefined && file !== undefined);
-    setQr(data);
+  useEffect(() => {
+    const timeout = setTimeout(async () => {
+      if (qr) setBlockchain(await getBlockchain({ qr, store }));
+      else clearTimeout(timeout);
+    }, TIMEOUT_CHECK_BLOCKCHAIN);
+
+    return () => clearTimeout(timeout);
+  }, [qr]);
+
+  const handleQRScanned = ({ data } = {}) => {
+    if (data) setQr(data);
   };
 
-  const handleForked = () => {
-    setDialogFork(false);
-    inherit.onClose();
-    snackbar.success(l10n.FORKED_CORRECTLY);
+  const handleFork = async () => {
+    const success = await fork(blockchain);
+    if (success) {
+      setBlockchain(undefined);
+      onClose();
+      snackbar.success(l10n.FORKED_CORRECTLY);
+    }
   };
 
-  const handleChangeCurrency = async (currency) => {
-    await updateSettings({ baseCurrency: currency });
-
-    const rates = await getRates({ baseCurrency: currency }).catch(() => snackbar.error(l10n.ERROR_SERVICE_RATES));
-    if (rates) await updateRates(rates);
+  const handleCancel = () => {
+    setBlockchain(undefined);
+    setQr(undefined);
   };
+
+  const handleChangeCurrency = (currency) => changeCurrency({ currency, l10n, snackbar, store });
+
+  console.log({
+    hasCamera,
+    camera,
+    qr,
+  });
 
   return (
     <>
@@ -86,7 +95,7 @@ export const DialogSettings = ({ onClose, visible, ...inherit }) => {
           {!camera ? (
             <Image source={{ uri: `${QR_URI}=${secret}|${authorization}` }} style={styles.qr} />
           ) : (
-            <Camera {...CAMERA_PROPS} onBarCodeScanned={handleQr} style={styles.camera}>
+            <Camera {...CAMERA_PROPS} onBarCodeScanned={handleQRScanned} style={styles.camera}>
               <View style={styles.cameraViewport} />
             </Camera>
           )}
@@ -95,13 +104,21 @@ export const DialogSettings = ({ onClose, visible, ...inherit }) => {
           {camera ? l10n.TRANSFER_TXS_CAMERA : l10n.TRANSFER_TXS_CAPTION}
         </Text>
 
-        <Heading marginTop="L" marginBottom="XS" small value="$ Choose your base currency"></Heading>
+        <Heading marginTop="L" marginBottom="S" small value={l10n.CHOOSE_CURRENCY}></Heading>
         <SliderCurrencies onChange={handleChangeCurrency} selected={baseCurrency} />
       </Dialog>
 
-      {visible && camera && (
-        <DialogFork onClose={() => setDialogFork(false)} onForked={handleForked} query={qr} visible={dialogFork} />
-      )}
+      <Alert
+        accept={l10n.IMPORT}
+        cancel={l10n.CANCEL}
+        caption={l10n.TRANSFER_TXS_IMPORT}
+        onAccept={handleFork}
+        onCancel={handleCancel}
+        onClose={handleCancel}
+        position="bottom"
+        title={l10n.WARNING}
+        visible={blockchain !== undefined}
+      />
     </>
   );
 };
