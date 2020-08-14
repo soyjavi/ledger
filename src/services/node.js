@@ -1,12 +1,18 @@
 import { apiCall } from './modules';
 
-export const getSyncStatus = async ({ settings: { authorization, secret }, snackbar }) =>
+export const signup = async ({ fingerprint }) => {
+  const { authorization } = (await apiCall({ method: 'POST', service: 'signup', fingerprint })) || {};
+
+  return authorization;
+};
+
+export const getSyncStatus = async ({ settings: { authorization, secret } }) =>
   apiCall({
     service: 'state',
     headers: { authorization, secret },
-  }).catch((error) => snackbar.error(error.message));
+  });
 
-export const sync = async ({ key, block, blocks, settings: { authorization, secret }, snackbar }) => {
+export const sync = async ({ key, block, blocks, settings: { authorization, secret } }) => {
   const response = await apiCall({
     method: 'POST',
     service: 'sync',
@@ -14,7 +20,7 @@ export const sync = async ({ key, block, blocks, settings: { authorization, secr
     key,
     block,
     blocks,
-  }).catch((error) => snackbar && snackbar.error(error.message));
+  });
 
   return response ? true : false;
 };
