@@ -7,15 +7,12 @@ const {
   WIPE,
 } = C;
 
-export const onSubmit = async ({
+export const createTx = async ({
   dataSource: { category, hash, location, value, vault, title, type },
-  navigation: { showTx },
-  setBusy,
   store: { addTx },
   wipe = false,
-}) => {
-  setBusy(true);
-  const tx = await addTx({
+}) =>
+  await addTx({
     category,
     title,
     type,
@@ -23,7 +20,3 @@ export const onSubmit = async ({
     vault: vault,
     ...(wipe ? { category: WIPE, tx: hash, type: type === EXPENSE ? INCOME : EXPENSE } : { location }),
   });
-
-  if (tx) showTx();
-  setBusy(false);
-};

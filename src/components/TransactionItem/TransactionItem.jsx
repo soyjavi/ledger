@@ -1,11 +1,11 @@
-import { number, oneOfType, shape, string } from 'prop-types';
+import PropTypes from 'prop-types';
 
 import React from 'react';
 import { THEME } from 'reactor/common';
 import { Col, Icon, Row, Text, Touchable } from 'reactor/components';
 
 import { C, exchange, getIconCategory } from '@common';
-import { useNavigation, useStore } from '@context';
+import { useStore } from '@context';
 
 import { Box } from '../Box';
 import { PriceFriendly } from '../PriceFriendly';
@@ -24,13 +24,11 @@ const TransactionItem = (props) => {
     settings: { baseCurrency, maskAmount },
     rates,
   } = useStore();
-  const { showTx } = useNavigation();
-
-  const { category, currency, location, timestamp, title, type, value } = props;
+  const { category, currency, location, timestamp, title, type = EXPENSE, value, onPress } = props;
   const operator = type === EXPENSE ? -1 : 1;
 
   return (
-    <Touchable onPress={() => showTx(props)}>
+    <Touchable onPress={onPress ? () => onPress(props) : undefined}>
       <Row align="start" paddingHorizontal="M" paddingVertical="S">
         <Col marginRight="S" width="auto">
           <Box small>
@@ -81,13 +79,14 @@ const TransactionItem = (props) => {
 };
 
 TransactionItem.propTypes = {
-  category: number.isRequired,
-  currency: string.isRequired,
-  location: shape({}),
-  timestamp: oneOfType([string, number]).isRequired,
-  title: string,
-  type: number,
-  value: number.isRequired,
+  category: PropTypes.number.isRequired,
+  currency: PropTypes.string.isRequired,
+  location: PropTypes.shape({}),
+  onPress: PropTypes.func,
+  timestamp: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  title: PropTypes.string,
+  type: PropTypes.number,
+  value: PropTypes.number.isRequired,
 };
 
 TransactionItem.defaultProps = {

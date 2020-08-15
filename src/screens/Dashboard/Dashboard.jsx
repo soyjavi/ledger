@@ -5,7 +5,7 @@ import { THEME } from 'reactor/common';
 import { Button, Slider, Viewport } from 'reactor/components';
 
 import { C, onHardwareBackPress } from '@common';
-import { CARD_WIDTH, GroupTransactions, Header, Heading, Option, ScrollView, Summary } from '@components';
+import { CARD_WIDTH, DialogClone, GroupTransactions, Header, Heading, Option, ScrollView, Summary } from '@components';
 import { useL10N, useNavigation, useStore } from '@context';
 
 import { DialogSettings, DialogVault, Search, VaultCard } from './components';
@@ -29,6 +29,7 @@ export const Dashboard = ({ backward, visible, ...inherit }) => {
 
   const [dialogVault, setDialogVault] = useState(false);
   const [dialogSettings, setDialogSettings] = useState(false);
+  const [tx, setTx] = useState(undefined);
   const [scroll, setScroll] = useState(false);
   const [search, setSearch] = useState(false);
   const [searchTxs, setSearchTxs] = useState(undefined);
@@ -86,7 +87,7 @@ export const Dashboard = ({ backward, visible, ...inherit }) => {
                 </Heading>
                 {search && <Search onValue={setSearchTxs} />}
                 {(searchTxs || lastTxs).map((item) => (
-                  <GroupTransactions key={`${item.timestamp}`} {...item} currency={baseCurrency} />
+                  <GroupTransactions {...item} key={`${item.timestamp}`} currency={baseCurrency} onPress={setTx} />
                 ))}
               </>
             )}
@@ -96,6 +97,7 @@ export const Dashboard = ({ backward, visible, ...inherit }) => {
 
       {visible && (
         <>
+          <DialogClone dataSource={tx} onClose={() => setTx(undefined)} visible={tx !== undefined} />
           <DialogVault onClose={() => setDialogVault(false)} visible={dialogVault} />
           <DialogSettings onClose={() => setDialogSettings(false)} visible={dialogSettings} />
         </>

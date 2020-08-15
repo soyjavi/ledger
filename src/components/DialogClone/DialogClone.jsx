@@ -1,16 +1,16 @@
 import { bool, shape } from 'prop-types';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Button, Col, Dialog, Row, Text } from 'reactor/components';
 
 import { C, exchange, verboseTime } from '@common';
-import { useNavigation, useL10N, useStore } from '@context';
+import { useL10N, useStore } from '@context';
 
 import { BoxDate } from '../Box';
 import { HeatMap } from '../HeatMap';
 import { PriceFriendly } from '../PriceFriendly';
-import { onSubmit } from './modules';
+import { createTx } from './DialogClone.controller';
 
 const {
   DELAY_PRESS_MS,
@@ -20,7 +20,7 @@ const {
 } = C;
 const { COLOR } = THEME;
 
-const DialogClone = ({ dataSource, visible, ...inherit }) => {
+const DialogClone = ({ dataSource = {}, ...inherit }) => {
   const { category, currency, value, location, title, timestamp, type = EXPENSE } = dataSource;
 
   const l10n = useL10N();
@@ -29,23 +29,21 @@ const DialogClone = ({ dataSource, visible, ...inherit }) => {
     settings: { baseCurrency },
     rates,
   } = store;
-  const navigation = useNavigation();
 
   const [busy, setBusy] = useState(false);
 
-  useEffect(() => {
-    if (!visible) setBusy(false);
-  }, [visible]);
-
-  const bindings = { dataSource, navigation, setBusy, store };
-  const handleClone = () => onSubmit(bindings);
-  const handleWipe = () => onSubmit({ ...bindings, wipe: true });
+  const handleSubmit = ({ wipe = false } = {}) => {
+    setBusy(true);
+    createTx({ dataSource, store, wipe });
+    inherit.onClose();
+    setBusy(false);
+  };
 
   const operator = type === EXPENSE ? -1 : 1;
   const buttonProps = { delay: DELAY_PRESS_MS, disabled: busy, wide: true };
 
   return (
-    <Dialog {...inherit} highlight onClose={() => navigation.showTx(undefined)} position="bottom" visible={visible}>
+    <Dialog {...inherit} position="bottom">
       <Text marginTop="S" marginBottom="M" subtitle>
         {type === EXPENSE ? l10n.EXPENSE : l10n.INCOME}
       </Text>
@@ -107,11 +105,11 @@ const DialogClone = ({ dataSource, visible, ...inherit }) => {
           {...buttonProps}
           color={COLOR.BASE}
           colorText={COLOR.TEXT}
-          onPress={handleWipe}
+          onPress={() => handleSubmit({ wipe: true })}
           marginRight="M"
           title={l10n.WIPE}
         />
-        <Button {...buttonProps} colorText={COLOR.BACKGROUND} onPress={handleClone} title={l10n.CLONE} />
+        <Button {...buttonProps} colorText={COLOR.BACKGROUND} onPress={() => handleSubmit()} title={l10n.CLONE} />
       </Row>
     </Dialog>
   );
@@ -120,11 +118,6 @@ const DialogClone = ({ dataSource, visible, ...inherit }) => {
 DialogClone.propTypes = {
   dataSource: shape({}),
   visible: bool,
-};
-
-DialogClone.defaultProps = {
-  dataSource: {},
-  visible: false,
 };
 
 export { DialogClone };

@@ -4,7 +4,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Viewport } from 'reactor/components';
 
 import { BANNERS, FLAGS } from '@assets';
-import { Banner, GroupTransactions, Header, Heading, Option, ScrollView, Summary } from '@components';
+import { Banner, DialogClone, GroupTransactions, Header, Heading, Option, ScrollView, Summary } from '@components';
 import { useL10N, useNavigation, useStore } from '@context';
 
 import { DialogTransaction } from './components';
@@ -22,6 +22,7 @@ const Vault = ({ visible, ...inherit }) => {
   const [scroll, setScroll] = useState(false);
   const [scrollQuery, setScrollQuery] = useState(false);
   const [txs, setTxs] = useState([]);
+  const [tx, setTx] = useState(undefined);
 
   useLayoutEffect(() => {
     if (params.vault) {
@@ -59,7 +60,7 @@ const Vault = ({ visible, ...inherit }) => {
   const { currency = baseCurrency, title, ...rest } = dataSource;
   const vaultProps = { ...rest, image: FLAGS[currency], title };
 
-  console.log('  <Vault>', { visible, dialog });
+  console.log('  <Vault>', { visible, dialog, txs });
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
@@ -78,7 +79,7 @@ const Vault = ({ visible, ...inherit }) => {
           <>
             <Heading paddingHorizontal="M" small value={l10n.TRANSACTIONS} />
             {txs.map((item) => (
-              <GroupTransactions key={item.timestamp} {...item} currency={currency} />
+              <GroupTransactions key={item.timestamp} {...item} currency={currency} onPress={setTx} />
             ))}
           </>
         ) : (
@@ -87,13 +88,16 @@ const Vault = ({ visible, ...inherit }) => {
       </ScrollView>
 
       {visible && (
-        <DialogTransaction
-          currency={currency}
-          onClose={() => setDialog(undefined)}
-          type={dialog}
-          vault={dataSource}
-          visible={visible && dialog !== undefined}
-        />
+        <>
+          <DialogTransaction
+            currency={currency}
+            onClose={() => setDialog(undefined)}
+            type={dialog}
+            vault={dataSource}
+            visible={visible && dialog !== undefined}
+          />
+          <DialogClone dataSource={tx} onClose={() => setTx(undefined)} visible={tx !== undefined} />
+        </>
       )}
     </Viewport>
   );
@@ -101,10 +105,6 @@ const Vault = ({ visible, ...inherit }) => {
 
 Vault.propTypes = {
   visible: bool,
-};
-
-Vault.defaultProps = {
-  visible: true,
 };
 
 export default React.memo(Vault);
