@@ -5,7 +5,7 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
 
-  caption: {
+  text: {
     textAlign: 'center',
   },
 

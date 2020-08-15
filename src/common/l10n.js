@@ -6,6 +6,7 @@ export default {
     ACTIVITY: 'Activity',
     ADD: 'Add',
     AMOUNT: 'Amount',
+    AUTHENTICATE: 'Authenticate',
 
     BALANCE: 'Balance',
 
@@ -69,6 +70,7 @@ export default {
     CONCEPT: 'Concept',
     CONTINUE: 'CONTINUE',
     COUNTRIES: 'Countries',
+    CREATE: 'CREATE',
     CURRENCY: 'Currency',
     CURRENCY_NAME: {
       AUD: 'Australian Dollar',
@@ -135,9 +137,11 @@ export default {
     ],
 
     NAME: 'Name',
-    NEXT: 'NEXT',
     NEW: 'New',
     NO_TRANSACTIONS: "You don't have any transaction.",
+
+    ONBOARDING_COMPLETED_TITLE: 'You did it!',
+    ONBOARDING_COMPLETED_CAPTION: 'Successfully created account',
 
     OTHERS: 'Others',
     OVERALL_BALANCE: 'Overall Balance',
