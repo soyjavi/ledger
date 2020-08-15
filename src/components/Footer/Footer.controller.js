@@ -48,10 +48,11 @@ export const syncNode = async ({
 
   // Check if needs wipe
   const wipe = !existsHash(vaults, latestHash.vaults) || !existsHash(txs, latestHash.txs);
-  if (wipe) await sync({ settings, key: 'txs', wipe: true });
-
-  await sync({ settings, key: 'vaults', blocks: wipe ? vaults : blocksToSync(vaults, latestHash.vaults) });
-  await sync({ settings, key: 'txs', blocks: wipe ? txs : blocksToSync(txs, latestHash.txs) });
+  if (wipe) await sync({ settings, blockchain: { vaults, txs } });
+  else {
+    await sync({ settings, key: 'vaults', blocks: blocksToSync(vaults, latestHash.vaults) });
+    await sync({ settings, key: 'txs', blocks: blocksToSync(txs, latestHash.txs) });
+  }
   synced = true;
 
   return synced;
