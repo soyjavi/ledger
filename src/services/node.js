@@ -6,13 +6,15 @@ export const signup = async ({ fingerprint }) => {
   return authorization;
 };
 
-export const getSyncStatus = async ({ settings: { authorization, secret } }) =>
+export const syncStatus = async ({ settings: { authorization, secret } }) =>
   apiCall({
     service: 'state',
     headers: { authorization, secret },
   });
 
 export const sync = async ({ key, block, blocks, wipe, settings: { authorization, secret } }) => {
+  if (!authorization || !secret) return false;
+
   const response = await apiCall({
     method: 'POST',
     service: 'sync',

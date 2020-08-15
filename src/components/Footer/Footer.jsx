@@ -8,13 +8,13 @@ import { onHardwareBackPress } from '@common';
 import { useConnection, useL10N, useSnackBar, useStore } from '@context';
 
 import { Option } from '../Option';
+import { isSynced, syncNode } from './Footer.controller';
 import styles from './Footer.style';
-import { nodeStatus, syncNode } from './modules';
 
 const { COLOR, ICON, SPACE } = THEME;
 
 const MOTION_HIDE = SPACE.XXL * 2;
-const TIMEOUT_CHECK_SYNC = 5000;
+const TIMEOUT_CHECK_SYNC = 1000;
 
 export const Footer = ({ onBack, onHardwareBack }) => {
   const { connected } = useConnection();
@@ -33,7 +33,7 @@ export const Footer = ({ onBack, onHardwareBack }) => {
   useEffect(() => {
     const timeout = setTimeout(async () => {
       setBusy(false);
-      if (connected) setSynced(await nodeStatus({ snackbar, store }));
+      if (connected) setSynced(await isSynced({ snackbar, store }));
     }, TIMEOUT_CHECK_SYNC);
 
     return () => clearTimeout(timeout);
