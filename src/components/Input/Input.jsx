@@ -18,7 +18,17 @@ const LEFT_SYMBOLS = ['$', '£'];
 
 const exchangeCaption = { caption: true, color: COLOR.LIGHTEN, maskAmount: false };
 
-export const Input = ({ currency, keyboard = 'default', label, maxLength, maxValue, onChange, secure, ...others }) => {
+export const Input = ({
+  currency,
+  keyboard = 'default',
+  label,
+  maxLength,
+  maxValue,
+  onChange,
+  secure,
+  showExchange,
+  ...others
+}) => {
   const { settings: { baseCurrency } = {}, rates } = useStore();
 
   const [exchange, setExchange] = useState();
@@ -26,11 +36,11 @@ export const Input = ({ currency, keyboard = 'default', label, maxLength, maxVal
   const [value, setValue] = useState();
 
   useEffect(() => {
-    if (currency && currency !== baseCurrency) {
+    if (showExchange && currency && currency !== baseCurrency) {
       const lastRates = getLastRates(rates);
       setExchange(lastRates[currency]);
     } else setExchange(undefined);
-  }, [currency]);
+  }, [currency, showExchange]);
 
   useEffect(() => {
     setValue(others.value);
@@ -44,7 +54,6 @@ export const Input = ({ currency, keyboard = 'default', label, maxLength, maxVal
       setValue(nextValue);
     }
 
-    // onChange && onChange(currency ? parseFloat(nextValue || 0, 10) : nextValue);
     onChange && onChange(nextValue);
   };
 
@@ -124,4 +133,5 @@ Input.propTypes = {
   maxValue: PropTypes.number,
   onChange: PropTypes.func,
   secure: PropTypes.bool,
+  showExchange: PropTypes.bool,
 };
