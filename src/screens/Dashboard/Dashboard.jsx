@@ -9,8 +9,8 @@ import { CARD_WIDTH, GroupTransactions, Header, Heading, Option, ScrollView, Sum
 import { useL10N, useNavigation, useStore } from '@context';
 
 import { DialogSettings, DialogVault, Search, VaultCard } from './components';
+import { queryLastTxs, queryVaults } from './Dashboard.controller';
 import styles from './Dashboard.style';
-import { queryLastTxs, queryVaults } from './modules';
 
 const { SCREEN } = C;
 const { COLOR, SPACE } = THEME;
@@ -46,7 +46,7 @@ export const Dashboard = ({ backward, visible, ...inherit }) => {
     });
   }, [backward, dialogVault, dialogSettings]);
 
-  console.log('  <Dashboard>', { visible, searchTxs });
+  console.log('  <Dashboard>', { visible, vaults });
 
   const lastTxs = queryLastTxs(store);
 

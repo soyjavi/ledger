@@ -72,12 +72,6 @@ export const DialogSettings = ({ onClose, visible, ...inherit }) => {
 
   const handleChangeCurrency = (currency) => changeCurrency({ currency, l10n, snackbar, store });
 
-  console.log({
-    hasCamera,
-    camera,
-    qr,
-  });
-
   return (
     <>
       <Dialog {...inherit} onClose={onClose} position="bottom" visible={visible}>
