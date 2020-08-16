@@ -41,12 +41,13 @@ export const Stats = ({ visible, ...inherit }) => {
       const today = new Date();
       setChart(queryChart(store));
       setSlider({ month: today.getMonth(), year: today.getFullYear(), index: STATS_MONTHS_LIMIT - 1 });
-    } else scrollview.current.scrollTo({ y: 0, animated: false });
+    } else if (scroll) scrollview.current.scrollTo({ y: 0, animated: false });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
 
   useEffect(() => {
-    setMonth(queryMonth(store, slider));
-  }, [slider]);
+    if (visible) setMonth(queryMonth(store, slider));
+  }, [slider, store, visible]);
 
   const handleSliderChange = (next) => {
     if (next.index !== slider.index) setSlider(next);

@@ -53,7 +53,7 @@ export const Footer = ({ onBack, onHardwareBack }) => {
     <>
       <Motion
         style={styles.container}
-        timeline={[{ property: 'translateY', value: synced && onBack ? 0 : MOTION_HIDE }]}
+        timeline={[{ property: 'translateX', value: synced && onBack ? 0 : MOTION_HIDE }]}
       >
         <Option selected onPress={onBack} icon="arrow-left" />
       </Motion>
