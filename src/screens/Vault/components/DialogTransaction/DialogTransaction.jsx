@@ -6,7 +6,7 @@ import { Button, Dialog, Row, Text } from 'reactor/components';
 
 import { C } from '@common';
 import { HeatMap } from '@components';
-import { useL10N, useSnackBar, useStore } from '@context';
+import { useConnection, useL10N, useSnackBar, useStore } from '@context';
 
 import { FormTransaction, FormTransfer } from './components';
 import { getLocation, handleSubmit } from './modules';
@@ -29,6 +29,7 @@ const INITIAL_STATE_LOCATION = { coords: undefined, place: undefined };
 
 const DialogTransaction = (props = {}) => {
   const { onClose, visible, ...inherit } = props;
+  const { connected } = useConnection();
   const l10n = useL10N();
   const snackbar = useSnackBar();
   const store = useStore();
@@ -46,7 +47,7 @@ const DialogTransaction = (props = {}) => {
     if (visible) {
       setState(INITIAL_STATE);
       setLocation(INITIAL_STATE_LOCATION);
-      getLocation(setLocation);
+      getLocation({ connected, setLocation });
     }
   }, [visible]);
 
@@ -69,7 +70,7 @@ const DialogTransaction = (props = {}) => {
       <Text subtitle marginTop="S" marginBottom="M">{`${l10n.NEW} ${l10n.TRANSACTION[type]}`}</Text>
 
       <Form {...props} {...state} type={type} onChange={(value) => setState({ ...state, ...value })} />
-      {type !== TRANSFER && (
+      {connected && type !== TRANSFER && (
         <HeatMap
           caption={place || l10n.LOADING_PLACE}
           points={coords ? [[coords.longitude, coords.latitude]] : undefined}

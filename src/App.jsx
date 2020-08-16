@@ -14,8 +14,8 @@ const App = () => {
 
   return (
     <L10NProvider dictionary={L10N} language={LANGUAGE}>
-      <ConnectionProvider>
-        <NavigationProvider>
+      <NavigationProvider>
+        <ConnectionProvider>
           <StoreProvider>
             <SnackBarProvider>
               <LayoutView style={styles.container}>
@@ -23,8 +23,8 @@ const App = () => {
               </LayoutView>
             </SnackBarProvider>
           </StoreProvider>
-        </NavigationProvider>
-      </ConnectionProvider>
+        </ConnectionProvider>
+      </NavigationProvider>
     </L10NProvider>
   );
 };
