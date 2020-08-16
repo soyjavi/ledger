@@ -1,17 +1,19 @@
-import { C, exchange } from '../../../common';
-import filterTxs from './filterTxs';
-import parseDate from './parseDate';
+import { C, exchange, getMonthDiff } from '@common';
+
+import { filterTxs } from './filterTxs';
+import { parseDate } from './parseDate';
 
 const {
+  STATS_MONTHS_LIMIT,
   TX: {
-    TYPE: { EXPENSE, INCOME },
+    TYPE: { EXPENSE },
   },
   VAULT_TRANSFER,
 } = C;
 
-export default (vault = {}, store) => {
-  const range = 12;
-  const { baseCurrency, overall, rates, txs, vaults } = store;
+const range = STATS_MONTHS_LIMIT;
+
+export default ({ overall, rates, settings: { baseCurrency }, txs, vaults }) => {
   const chart = {
     balance: new Array(range).fill(0),
     expenses: new Array(range).fill(0),
@@ -19,23 +21,21 @@ export default (vault = {}, store) => {
     transfers: new Array(range).fill(0),
   };
   const now = parseDate();
-  const lastYear = new Date(now.getFullYear(), now.getMonth() - 11, 1);
+  const originDate = new Date(now.getFullYear(), now.getMonth() - STATS_MONTHS_LIMIT, 1, 0, 0);
 
-  filterTxs(txs, vault).forEach((tx) => {
+  filterTxs(txs).forEach((tx) => {
     const { category, timestamp, type, value } = tx;
-
-    const date = parseDate(timestamp);
-    const index = date.getMonth() - lastYear.getMonth() + 12 * (date.getFullYear() - lastYear.getFullYear());
-
     const { currency } = vaults.find(({ hash }) => hash === tx.vault);
     const valueExchange = exchange(value, currency, baseCurrency, rates, timestamp);
-
-    chart.balance[index] += type === EXPENSE ? -valueExchange : valueExchange;
+    const monthIndex = getMonthDiff(originDate, parseDate(timestamp)) - 1;
     const isTransfer = category === VAULT_TRANSFER;
 
-    if (isTransfer && type === EXPENSE) chart.transfers[index] += valueExchange;
-    else if (!isTransfer && type === EXPENSE) chart.expenses[index] += valueExchange;
-    else if (!isTransfer && type === INCOME) chart.incomes[index] += valueExchange;
+    if (!isTransfer) {
+      chart.balance[monthIndex] += type === EXPENSE ? -valueExchange : valueExchange;
+      chart[type === EXPENSE ? 'expenses' : 'incomes'][monthIndex] += valueExchange;
+    } else if (isTransfer && type === EXPENSE) {
+      chart.transfers[monthIndex] += valueExchange;
+    }
   });
 
   let total = 0;
@@ -43,12 +43,12 @@ export default (vault = {}, store) => {
   return {
     ...chart,
     balance: chart.balance
-      .map((value) => {
+      .map((value = 0) => {
         total += value;
         return total;
       })
       .map((value, index) => {
-        const baseBalance = vault.hash ? vault.chartBalance[index] : overall.chartBalance[index];
+        const baseBalance = overall.chartBalance[index];
         return value !== 0 ? baseBalance + value : 0;
       }),
   };

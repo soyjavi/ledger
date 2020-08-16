@@ -1,10 +1,11 @@
-import { number, oneOfType, shape, string } from 'prop-types';
+import PropTypes from 'prop-types';
+
 import React from 'react';
 import { THEME } from 'reactor/common';
 import { Col, Icon, Row, Text, Touchable } from 'reactor/components';
 
 import { C, exchange, getIconCategory } from '@common';
-import { useNavigation, useSettings, useStore } from '@context';
+import { useStore } from '@context';
 
 import { Box } from '../Box';
 import { PriceFriendly } from '../PriceFriendly';
@@ -16,24 +17,22 @@ const {
     TYPE: { EXPENSE, INCOME },
   },
 } = C;
-const { COLOR, SPACE } = THEME;
+const { COLOR, ICON, SPACE } = THEME;
 
 const TransactionItem = (props) => {
-  const { baseCurrency, rates } = useStore();
-  const { showTx } = useNavigation();
   const {
-    state: { maskAmount },
-  } = useSettings();
-
-  const { category, currency, location, timestamp, title, type, value } = props;
+    settings: { baseCurrency, maskAmount },
+    rates,
+  } = useStore();
+  const { category, currency, location, timestamp, title, type = EXPENSE, value, onPress } = props;
   const operator = type === EXPENSE ? -1 : 1;
 
   return (
-    <Touchable onPress={() => showTx(props)}>
+    <Touchable onPress={onPress ? () => onPress(props) : undefined}>
       <Row align="start" paddingHorizontal="M" paddingVertical="S">
         <Col marginRight="S" width="auto">
           <Box small>
-            <Icon family="MaterialCommunityIcons" size={SPACE.M} value={getIconCategory({ type, category, title })} />
+            <Icon family={ICON.FAMILY} size={SPACE.M} value={getIconCategory({ type, category, title })} />
           </Box>
         </Col>
 
@@ -80,13 +79,14 @@ const TransactionItem = (props) => {
 };
 
 TransactionItem.propTypes = {
-  category: number.isRequired,
-  currency: string.isRequired,
-  location: shape({}),
-  timestamp: oneOfType([string, number]).isRequired,
-  title: string,
-  type: number,
-  value: number.isRequired,
+  category: PropTypes.number.isRequired,
+  currency: PropTypes.string.isRequired,
+  location: PropTypes.shape({}),
+  onPress: PropTypes.func,
+  timestamp: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  title: PropTypes.string,
+  type: PropTypes.number,
+  value: PropTypes.number.isRequired,
 };
 
 TransactionItem.defaultProps = {

@@ -9,6 +9,10 @@ if (CARD_WIDTH > 196) CARD_WIDTH = 196;
 export { CARD_WIDTH };
 
 export default StyleSheet.create({
+  balance: {
+    fontSize: FONT.SUBTITLE.fontSize - SPACE.XS,
+  },
+
   box: {
     alignItems: 'flex-start',
   },
@@ -34,15 +38,9 @@ export default StyleSheet.create({
   },
 
   title: {
-    fontSize: 14,
-    lineHeight: 14,
+    marginTop: SPACE.XS,
+    lineHeight: FONT.BODY.fontSize * 1.35,
   },
 
-  text: {
-    ...FONT.SECONDARY,
-  },
-
-  price: {
-    fontSize: 20,
-  },
+  text: FONT.SECONDARY,
 });

@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+
 import React from 'react';
 import { THEME } from 'reactor/common';
 import { Icon, Slider } from 'reactor/components';
@@ -14,7 +15,11 @@ const { COLOR, ICON, SPACE } = THEME;
 
 const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
   const l10n = useL10N();
-  const { baseCurrency, vaults, rates } = useStore();
+  const {
+    settings: { baseCurrency },
+    vaults,
+    rates,
+  } = useStore();
 
   const handleField = (field, fieldValue) => {
     const next = { ...form, [field]: fieldValue };
@@ -69,7 +74,13 @@ const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
             onPress={() => handleField('destination', hash)}
             selected={hash === form.destination}
           >
-            <PriceFriendly caption color={COLOR.LIGHTEN} value={currentBalance} currency={currency} />
+            <PriceFriendly
+              caption
+              color={COLOR.LIGHTEN}
+              maskAmount={false}
+              value={currentBalance}
+              currency={currency}
+            />
           </Option>
         ))}
       </Slider>

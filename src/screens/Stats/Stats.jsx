@@ -1,11 +1,12 @@
-import { arrayOf, bool, shape } from 'prop-types';
+import PropTypes from 'prop-types';
+
 import React, { useEffect, useRef, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Viewport } from 'reactor/components';
 
 import { BANNERS } from '@assets';
 import { C } from '@common';
-import { Banner, Chart, Footer, Header, Heading, ScrollView } from '@components';
+import { Banner, Chart, Header, ScrollView } from '@components';
 import { useL10N, useNavigation, useStore } from '@context';
 
 import { ItemGroupCategories, Locations, SliderMonths } from './components';
@@ -14,69 +15,67 @@ import styles from './Stats.style';
 
 const { COLOR } = THEME;
 const {
+  STATS_MONTHS_LIMIT,
   TX: {
     TYPE: { EXPENSE, INCOME },
   },
 } = C;
 
-const Stats = (props) => {
-  const { visible, ...inherit } = props;
+export const Stats = ({ visible, ...inherit }) => {
+  const scrollview = useRef(null);
+  const navigation = useNavigation();
+  const l10n = useL10N();
+  const store = useStore();
 
   const [chart, setChart] = useState({});
   const [slider, setSlider] = useState({});
   const [month, setMonth] = useState({});
   const [scroll, setScroll] = useState(false);
 
-  const scrollview = useRef(null);
   const {
-    params: { vault },
-    ...navigation
-  } = useNavigation();
-  const l10n = useL10N();
-  const store = useStore();
-  const { baseCurrency: currency } = store;
+    settings: { baseCurrency },
+  } = store;
 
   useEffect(() => {
     if (visible) {
       const today = new Date();
-      const nextSlider = { month: today.getMonth(), year: today.getFullYear(), index: 11 };
+      setChart(queryChart(store));
+      setSlider({ month: today.getMonth(), year: today.getFullYear(), index: STATS_MONTHS_LIMIT - 1 });
+    } else if (scroll) scrollview.current.scrollTo({ y: 0, animated: false });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visible]);
 
-      scrollview.current.scrollTo({ y: 0, animated: false });
-      setSlider(nextSlider);
-      setChart(queryChart(vault, store));
-      setMonth(queryMonth(vault, store, nextSlider));
-    }
-  }, [store, vault, visible]); // @TODO: What this warning means?
+  useEffect(() => {
+    if (visible) setMonth(queryMonth(store, slider));
+  }, [slider, store, visible]);
 
-  const onChangeSlider = (value) => {
-    setSlider(value);
-    setMonth(queryMonth(vault, store, value));
+  const handleSliderChange = (next) => {
+    if (next.index !== slider.index) setSlider(next);
   };
 
   const { expenses = {}, incomes = {}, locations = {} } = month;
   const hasExpenses = Object.keys(expenses).length > 0;
   const hasIncomes = Object.keys(incomes).length > 0;
   const hasPoints = locations.points && locations.points.length > 0;
-  const title = vault ? `${vault.title} ` : `${l10n.MONTHS[slider.month]} ${slider.year}`;
 
-  const common = {
-    currency,
-    highlight: slider.index,
-  };
+  const chartProps = { currency: baseCurrency, highlight: slider.index };
 
-  const hasData = hasExpenses || hasIncomes;
+  console.log('  <Stats>', { visible });
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
-      <Heading />
-      <Header highlight={scroll} onBack={scroll ? navigation.back : undefined} title={title} />
+      <Header
+        highlight={scroll}
+        onBack={scroll ? navigation.back : undefined}
+        title={`${l10n.MONTHS[slider.month]} ${slider.year}`}
+      />
 
-      <ScrollView contentContainerStyle={styles.scrollView} onScroll={setScroll} ref={scrollview}>
-        <SliderMonths {...slider} onChange={onChangeSlider} marginBottom="M" />
+      <ScrollView contentContainerStyle={styles.scrollView} onScroll={(value) => setScroll(value)} ref={scrollview}>
+        <SliderMonths {...slider} onChange={handleSliderChange} marginBottom="M" />
 
         <Chart
           {...calcScales(chart.balance)}
-          {...common}
+          {...chartProps}
           captions={orderCaptions(l10n)}
           styleContainer={[styles.chart, styles.chartMargin]}
           style={styles.chartBalance}
@@ -86,7 +85,7 @@ const Stats = (props) => {
 
         <Chart
           {...calcScales(chart.incomes)}
-          {...common}
+          {...chartProps}
           color={COLOR.BRAND}
           styleContainer={[styles.chart]}
           title={`${l10n.INCOMES} & ${l10n.EXPENSES}`}
@@ -94,14 +93,14 @@ const Stats = (props) => {
         />
         <Chart
           {...calcScales(chart.expenses)}
-          {...common}
+          {...chartProps}
           captions={orderCaptions(l10n)}
           inverted
           styleContainer={[styles.chart, styles.chartMargin]}
           values={chart.expenses}
         />
 
-        {hasData ? (
+        {hasExpenses || hasIncomes ? (
           <>
             {hasIncomes && <ItemGroupCategories type={INCOME} dataSource={incomes} />}
             {hasExpenses && <ItemGroupCategories type={EXPENSE} dataSource={expenses} />}
@@ -110,41 +109,24 @@ const Stats = (props) => {
           <Banner image={BANNERS.NOT_FOUND} paddingHorizontal="M" paddingVertical="M" title={l10n.NO_TRANSACTIONS} />
         )}
 
-        {hasData && (
+        {(hasExpenses || hasIncomes) && (
           <>
             {hasPoints && <Locations {...inherit} {...locations} />}
-            {!vault && (
-              <Chart
-                {...calcScales(chart.transfers)}
-                {...common}
-                captions={orderCaptions(l10n)}
-                styleContainer={[styles.chart, styles.chartMargin]}
-                title={l10n.TRANSFERS}
-                values={chart.transfers}
-              />
-            )}
+            <Chart
+              {...calcScales(chart.transfers)}
+              {...chartProps}
+              captions={orderCaptions(l10n)}
+              styleContainer={[styles.chart, styles.chartMargin]}
+              title={l10n.TRANSFERS}
+              values={chart.transfers}
+            />
           </>
         )}
       </ScrollView>
-      <Footer onBack={navigation.back} onHardwareBack={visible ? navigation.back : undefined} visible={!scroll} />
     </Viewport>
   );
 };
 
 Stats.propTypes = {
-  backward: bool,
-  txs: arrayOf(shape({})),
-  // vault: shape({}),
-  vaults: arrayOf(shape({})),
-  visible: bool,
+  visible: PropTypes.bool,
 };
-
-Stats.defaultProps = {
-  backward: false,
-  txs: undefined,
-  // vault: undefined,
-  vaults: undefined,
-  visible: true,
-};
-
-export default Stats;

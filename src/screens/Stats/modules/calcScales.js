@@ -1,9 +1,11 @@
-import { median } from '@common';
+import { C, median } from '@common';
+
+const { STATS_MONTHS_LIMIT } = C;
 
 export default (values = []) => {
   if (!values) return undefined;
 
-  const historicValues = values.slice(0, 11);
+  const historicValues = values.slice(0, STATS_MONTHS_LIMIT - 1);
 
   const max = Math.floor(Math.max(...historicValues));
   let min = 0;

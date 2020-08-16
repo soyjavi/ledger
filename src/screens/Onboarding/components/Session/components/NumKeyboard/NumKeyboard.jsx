@@ -1,8 +1,9 @@
 import { func } from 'prop-types';
+
 import React from 'react';
 import { View } from 'react-native';
-import { Text, Touchable } from 'reactor/components';
 import { THEME } from 'reactor/common';
+import { Text, Touchable } from 'reactor/components';
 
 import styles from './NumKeyboard.style';
 

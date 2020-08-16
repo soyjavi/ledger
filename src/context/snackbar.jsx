@@ -1,8 +1,9 @@
 import { node } from 'prop-types';
+
 import React, { useContext, useReducer, createContext } from 'react';
 import { THEME } from 'reactor/common';
-import { useL10N } from 'reactor/context/L10N';
 import { Snackbar } from 'reactor/components';
+import { useL10N } from 'reactor/context/L10N';
 
 import { C } from '@common';
 
@@ -28,9 +29,9 @@ const SnackBarProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, { color: undefined, caption: undefined });
 
   const events = {
-    snackbarSuccess: (caption) => dispatch({ type: 'SHOW', caption, color: COLOR.SUCCESS, icon: 'check' }),
-    snackbarError: (caption) => dispatch({ type: 'SHOW', caption, color: COLOR.ERROR, icon: 'ban' }),
-    snackbarWarning: (caption) => dispatch({ type: 'SHOW', caption, color: COLOR.WARNING, icon: 'info' }),
+    error: (caption) => dispatch({ type: 'SHOW', caption, color: COLOR.ERROR, icon: 'ban' }),
+    success: (caption) => dispatch({ type: 'SHOW', caption, color: COLOR.BRAND, icon: 'check' }),
+    warning: (caption) => dispatch({ type: 'SHOW', caption, color: COLOR.CTA, icon: 'info' }),
   };
 
   return (
@@ -42,6 +43,7 @@ const SnackBarProvider = ({ children }) => {
         iconSize={SPACE.M}
         family={ICON.FAMILY}
         onClose={() => dispatch({ type: 'HIDE' })}
+        position="top"
         style={SNACKBAR}
         visible={state.type === 'SHOW'}
       />

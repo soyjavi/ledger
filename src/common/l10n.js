@@ -6,8 +6,8 @@ export default {
     ACTIVITY: 'Activity',
     ADD: 'Add',
     AMOUNT: 'Amount',
+    AUTHENTICATE: 'Authenticate',
 
-    BACK: 'BACK',
     BALANCE: 'Balance',
 
     // CATEGORIES: [
@@ -46,7 +46,7 @@ export default {
         11: 'Services',
         12: 'Transfer',
         13: 'Others',
-        99: 'Vault Transfer',
+        99: 'Internal Transfer',
       },
       {
         // Incomes
@@ -56,11 +56,12 @@ export default {
         3: 'Pasives',
         4: 'Transfer',
         5: 'Others',
-        99: 'Vault Transfer',
+        99: 'Internal Transfer',
       },
     ],
     CATEGORY: 'Category',
     CHOOSE_TRANSACTION_TYPE: 'Choose type of transaction',
+    CHOOSE_CURRENCY: 'Choose your base currency',
     CITIES: 'Cities',
     CLEAR: 'Clear',
     CLONE: 'CLONE',
@@ -69,7 +70,27 @@ export default {
     CONCEPT: 'Concept',
     CONTINUE: 'CONTINUE',
     COUNTRIES: 'Countries',
+    CREATE: 'CREATE',
     CURRENCY: 'Currency',
+    CURRENCY_NAME: {
+      AUD: 'Australian Dollar',
+      BTC: 'Bitcoin',
+      CNY: 'Chinese Yuan',
+      GBP: 'British Pound',
+      EUR: 'Euro',
+      HKD: 'Hong Kong Dollar',
+      JPY: 'Japanese Yen',
+      KRW: 'South Korean Won',
+      MXN: 'Mexican Peso',
+      MYR: 'Malaysian Ringgit',
+      RUB: 'Russian Ruble',
+      SGD: 'Singapore Dollar',
+      THB: 'Thailand Baht',
+      USD: 'United States Dollar',
+      VND: 'Vietnamese Dong',
+      XAU: 'Gold',
+      XAG: 'Silver',
+    },
     CURRENCIES: 'Currencies',
 
     DASHBOARD: 'Dashboard',
@@ -79,6 +100,7 @@ export default {
     ELEVATOR_PITCH: 'Your private finance accounting running on your own blockchain.',
     ENTER_PIN: 'Enter your pin',
     ENTER_PIN_OR_FINGERPRINT: 'Enter your pin or fingerprint',
+    ERROR_SERVICE_RATES: 'Something was wrong trying to get updated currencies rates. Check that you are online.',
     EXPENSE: 'Expense',
     EXPENSES: 'Expenses',
 
@@ -115,11 +137,12 @@ export default {
     ],
 
     NAME: 'Name',
-    NEXT: 'NEXT',
     NEW: 'New',
     NO_TRANSACTIONS: "You don't have any transaction.",
 
-    OFFLINE_MODE: 'OFFLINE',
+    ONBOARDING_COMPLETED_TITLE: 'You did it!',
+    ONBOARDING_COMPLETED_CAPTION: 'Successfully created account',
+
     OTHERS: 'Others',
     OVERALL_BALANCE: 'Overall Balance',
 
@@ -139,6 +162,12 @@ export default {
 
     STATS: 'Stats',
     STATS_CAPTION: 'In this summary you can see a breakdown of your operations in the selected category.',
+    // SYNC: 'You have ${blocks} blocks out of sync',
+    SYNC_SENTENCE_1: 'You were disconnected',
+    SYNC_SENTENCE_2: 'please.',
+    SYNC_NOW: 'SYNC NOW',
+    SYNC_BUSY: 'Wait a bit meanwhile your transactions get sync.',
+    SYNC_DONE: 'All your transactions have been synced.',
 
     TAP_TO_UPDATE: 'Tap to update',
     TO: 'to',
@@ -150,18 +179,18 @@ export default {
     TRANSFER_TXS: 'Transfer your transactions',
     TRANSFER_TXS_CAPTION:
       'Transfer all your data from this device to a new one just reading this QR in the new device.',
-    TRANSFER_TXS_CAMERA: 'Read the QR code from the device you want get all its transactions and vaults.',
+    TRANSFER_TXS_CAMERA: 'Read the QR code from the device you want get all its transactions and accounts.',
     TRANSFER_TXS_IMPORT:
       // eslint-disable-next-line max-len
-      'You are about to import all transactions and vaults from another device. Keep in mind that all your current data will be deleted from this device.',
-    TRANSFER_CAPTION: 'Transfer any amount to another of your vaults.',
+      'You are about to import all transactions and accounts from another device. Keep in mind that all your current data will be deleted from this device.',
+    TRANSFER_CAPTION: 'Transfer any amount to another of your accounts.',
     TYPE: 'Type',
 
-    VAULT: 'Vault',
-    VAULT_DESTINATION: 'Destination vault',
-    VAULTS: 'Vaults',
+    VAULT: 'Account',
+    VAULT_DESTINATION: 'Destination account',
+    VAULTS: 'Accounts',
     VAULT_CAPTION:
-      'You can create as many vaults as you want. You can continue using your base currency or choose any other.',
+      'You can create as many accounts as you want. You can continue using your base currency or choose any other.',
     VIEW_ALL: 'View All',
     VISIBILITY: 'Visibility',
 

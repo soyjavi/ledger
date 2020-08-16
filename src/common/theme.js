@@ -123,15 +123,16 @@ export default {
   },
 
   MOTION: {
-    // DURATION: 225,
-    // TYPE: 'spring',
+    // EXPAND: 250,
+    // COLLAPSE: 200,
+    // TYPE: 'standard',
     DEFAULTS: {
       // friction: undefined,
       // tension: undefined,
       // speed: undefined,
       // bounciness: undefined,
-      useNativeDriver: Platform.OS !== 'web',
-      // useNativeDriver: false,
+      // useNativeDriver: Platform.OS !== 'web',
+      useNativeDriver: false,
     },
   },
 
@@ -142,8 +143,9 @@ export default {
   },
 
   SNACKBAR: {
-    borderRadius: 0,
+    borderRadius: SPACE.XS,
     paddingHorizontal: SPACE.M,
-    paddingVertical: SPACE.M,
+    paddingVertical: SPACE.S,
+    margin: SPACE.S,
   },
 };

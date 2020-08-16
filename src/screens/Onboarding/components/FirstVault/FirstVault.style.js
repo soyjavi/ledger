@@ -1,18 +1,16 @@
 import { StyleSheet } from 'react-native';
-import { THEME } from 'reactor/common';
-
-const { SPACE } = THEME;
 
 export default StyleSheet.create({
   form: {
     alignItems: 'center',
   },
 
-  caption: {
+  text: {
     textAlign: 'center',
   },
 
   button: {
     marginHorizontal: 'auto',
+    alignSelf: 'center',
   },
 });

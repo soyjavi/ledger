@@ -1,14 +1,15 @@
-import { C, exchange } from '@common';
+import { C, exchange, getMonthDiff } from '@common';
 
 const {
+  STATS_MONTHS_LIMIT,
   TX: { TYPE },
   VAULT_TRANSFER,
 } = C;
-const CURRENT_MONTH = 11;
 
-export default ({ vault = {}, txs = [], baseCurrency, rates = {} }) => {
+export default ({ baseCurrency, rates = {}, txs = [], vault }) => {
   const now = new Date();
-  const lastYear = new Date(now.getFullYear(), now.getMonth() - 11, 1);
+  const originDate = new Date(now.getFullYear(), now.getMonth() - STATS_MONTHS_LIMIT, 1, 0, 0);
+
   const currentDay = now.getDate();
   const { currency } = vault;
   const exchangeProps = [currency, baseCurrency, rates];
@@ -23,30 +24,34 @@ export default ({ vault = {}, txs = [], baseCurrency, rates = {} }) => {
   dataSource.forEach(({ category, timestamp, type, value }) => {
     const isExpense = type === TYPE.EXPENSE;
     const date = new Date(timestamp);
-    const monthNumber = date.getMonth() - lastYear.getMonth() + 12 * (date.getFullYear() - lastYear.getFullYear());
+    const monthIndex = getMonthDiff(originDate, date);
 
     balance += isExpense ? -value : value;
+    if (monthIndex === STATS_MONTHS_LIMIT) {
+      if (category !== VAULT_TRANSFER) {
+        currentMonthTxs += 1;
+        if (isExpense) expenses += value;
+        else incomes += value;
+        progression += isExpense ? -value : value;
 
-    if (monthNumber >= 0) {
-      if (monthNumber === CURRENT_MONTH) {
-        if (category !== VAULT_TRANSFER) {
-          currentMonthTxs += 1;
-          if (isExpense) expenses += value;
-          else incomes += value;
-          progression += isExpense ? -value : value;
-
-          if (date.getDate() === currentDay) today += isExpense ? -value : value;
-        }
+        if (date.getDate() === currentDay) today += isExpense ? -value : value;
       }
     }
   });
 
   return {
     ...vault,
-    chartBalance: new Array(12).fill(0).map((value, index) => {
-      const timestamp = new Date(lastYear.getFullYear(), lastYear.getMonth() + index, 15);
-      return exchange(vault.balance, currency, baseCurrency, rates, timestamp);
-    }),
+    chartBalance: new Array(STATS_MONTHS_LIMIT)
+      .fill(0)
+      .map((value, index) =>
+        currency !== baseCurrency
+          ? exchange(
+              vault.balance,
+              ...exchangeProps,
+              new Date(originDate.getFullYear(), originDate.getMonth() + index + 1, 1),
+            )
+          : vault.balance,
+      ),
     currentBalance: balance,
     currentBalanceBase: exchange(balance, ...exchangeProps),
     currentMonth: {

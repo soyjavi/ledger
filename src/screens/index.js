@@ -1,8 +1,7 @@
 export * from './Dashboard';
 export * from './Onboarding';
-export * from './Session';
-import Stats from './Stats';
+export * from './Stats';
 import Vault from './Vault';
 import Vaults from './Vaults';
 
-export { Stats, Vault, Vaults };
+export { Vault, Vaults };

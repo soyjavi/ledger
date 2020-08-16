@@ -1,6 +1,6 @@
 import { groupTxsByDate } from '@common';
 
-export const query = ({ txs = [], scroll = false }) =>
+export const query = (txs = [], scroll = false) =>
   groupTxsByDate(
     txs
       .slice()

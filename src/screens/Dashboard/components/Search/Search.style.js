@@ -8,7 +8,7 @@ export default StyleSheet.create({
     borderBottomColor: COLOR.BASE,
     borderBottomWidth: 1,
     width: 'auto',
-    backgroundColor: COLOR.backgroundColor,
+    paddingVertical: SPACE.XS,
   },
 
   focus: {
@@ -21,5 +21,6 @@ export default StyleSheet.create({
     borderWidth: 0,
     flex: 2,
     height: SPACE.XL,
+    outline: 'none',
   },
 });

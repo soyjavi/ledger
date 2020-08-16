@@ -3,18 +3,16 @@ import * as Permissions from 'expo-permissions';
 
 import { getPlace } from '@services';
 
-export default async (setLocation) => {
+export default async ({ connected, setLocation }) => {
   const { status } = await Permissions.askAsync(Permissions.LOCATION);
 
   if (status === 'granted') {
     const { coords } = await Location.getCurrentPositionAsync({ enableHighAccuracy: true });
-    const { latitude, longitude } = coords;
+    let location = { coords };
 
     if (coords) {
-      setLocation({
-        coords,
-        place: await getPlace({ latitude, longitude }),
-      });
+      if (connected) location.place = await getPlace(coords);
+      setLocation(location);
     }
   }
 };

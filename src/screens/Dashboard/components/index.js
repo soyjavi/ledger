@@ -1,4 +1,3 @@
-export * from './DialogFork';
 export * from './DialogSettings';
 export * from './DialogVault';
 export * from './Search';

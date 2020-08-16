@@ -1,58 +1,49 @@
 import { bool, shape } from 'prop-types';
+
 import React, { useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Button, Col, Dialog, Row, Text } from 'reactor/components';
 
 import { C, exchange, verboseTime } from '@common';
-import { useNavigation, useL10N, useSnackBar, useStore } from '@context';
-import { createTx } from '@services';
+import { useL10N, useStore } from '@context';
 
 import { BoxDate } from '../Box';
 import { HeatMap } from '../HeatMap';
 import { PriceFriendly } from '../PriceFriendly';
+import { createTx } from './DialogClone.controller';
 
 const {
   DELAY_PRESS_MS,
   TX: {
-    TYPE: { INCOME, EXPENSE },
+    TYPE: { EXPENSE },
   },
-  WIPE,
 } = C;
 const { COLOR } = THEME;
 
-const DialogClone = ({
-  dataSource: { category, currency, hash, value, vault, location, title, timestamp, type = EXPENSE },
-  visible,
-  ...inherit
-}) => {
+const DialogClone = ({ dataSource = {}, ...inherit }) => {
+  const { category, currency, value, location, title, timestamp, type = EXPENSE } = dataSource;
+
   const l10n = useL10N();
   const store = useStore();
-  const snackbar = useSnackBar();
-  const { baseCurrency, rates } = store;
-  const { showTx } = useNavigation();
-  const [busy, setBusy] = useState(false);
-  const [wipe, setWipe] = useState(false);
+  const {
+    settings: { baseCurrency },
+    rates,
+  } = store;
 
-  const onSubmit = async (nextWipe = false) => {
-    setWipe(nextWipe);
+  const [busy, setBusy] = useState(false);
+
+  const handleSubmit = ({ wipe = false } = {}) => {
     setBusy(true);
-    const tx = await createTx(store, snackbar, {
-      vault,
-      category,
-      value,
-      title,
-      type,
-      ...(wipe ? { category: WIPE, tx: hash, type: type === EXPENSE ? INCOME : EXPENSE } : location),
-    });
+    createTx({ dataSource, store, wipe });
+    inherit.onClose();
     setBusy(false);
-    if (tx) showTx();
   };
 
   const operator = type === EXPENSE ? -1 : 1;
   const buttonProps = { delay: DELAY_PRESS_MS, disabled: busy, wide: true };
 
   return (
-    <Dialog {...inherit} highlight onClose={() => showTx(undefined)} position="bottom" visible={visible}>
+    <Dialog {...inherit} position="bottom">
       <Text marginTop="S" marginBottom="M" subtitle>
         {type === EXPENSE ? l10n.EXPENSE : l10n.INCOME}
       </Text>
@@ -71,6 +62,7 @@ const DialogClone = ({
               <PriceFriendly
                 bold
                 currency={baseCurrency}
+                maskAmount={false}
                 operator
                 value={
                   baseCurrency !== currency
@@ -88,7 +80,14 @@ const DialogClone = ({
             </Col>
             <Col width="auto">
               {currency !== baseCurrency && (
-                <PriceFriendly caption color={COLOR.LIGHTEN} currency={currency} operator value={value * operator} />
+                <PriceFriendly
+                  caption
+                  color={COLOR.LIGHTEN}
+                  currency={currency}
+                  maskAmount={false}
+                  operator
+                  value={value * operator}
+                />
               )}
             </Col>
           </Row>
@@ -106,17 +105,11 @@ const DialogClone = ({
           {...buttonProps}
           color={COLOR.BASE}
           colorText={COLOR.TEXT}
-          onPress={() => onSubmit(true)}
+          onPress={() => handleSubmit({ wipe: true })}
           marginRight="M"
-          title={!(busy && wipe) ? l10n.WIPE : undefined}
+          title={l10n.WIPE}
         />
-        <Button
-          {...buttonProps}
-          activity={busy && wipe}
-          colorText={COLOR.BACKGROUND}
-          onPress={() => onSubmit(false)}
-          title={!(busy && !wipe) ? l10n.CLONE : undefined}
-        />
+        <Button {...buttonProps} colorText={COLOR.BACKGROUND} onPress={() => handleSubmit()} title={l10n.CLONE} />
       </Row>
     </Dialog>
   );
@@ -125,11 +118,6 @@ const DialogClone = ({
 DialogClone.propTypes = {
   dataSource: shape({}),
   visible: bool,
-};
-
-DialogClone.defaultProps = {
-  dataSource: {},
-  visible: false,
 };
 
 export { DialogClone };

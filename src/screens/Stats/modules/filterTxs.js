@@ -1,17 +1,16 @@
-import parseDate from './parseDate';
+import { C } from '@common';
 
-export default (txs = [], vault = {}) => {
+import { parseDate } from './parseDate';
+
+const { STATS_MONTHS_LIMIT } = C;
+
+export const filterTxs = (txs = []) => {
   const now = parseDate();
-  const lastYear = new Date(now.getFullYear(), now.getMonth() - 11, 1);
+  const originDate = new Date(now.getFullYear(), now.getMonth() - (STATS_MONTHS_LIMIT - 1), 1, 0, 0);
 
-  return txs
-    .filter((tx) => vault.hash === undefined || vault.hash === tx.vault)
-    .filter((tx) => {
-      const { timestamp, value } = tx;
+  return txs.filter((tx) => {
+    const { timestamp, value = 0 } = tx;
 
-      const date = parseDate(timestamp);
-      const month = date.getMonth() - lastYear.getMonth() + 12 * (date.getFullYear() - lastYear.getFullYear());
-
-      return value && month >= 0;
-    });
+    return value > 0 && parseDate(timestamp) > originDate;
+  });
 };

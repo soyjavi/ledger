@@ -1,6 +1,7 @@
+import * as Font from 'expo-font';
+
 import React, { useEffect, useState } from 'react';
 import { NativeModules, View } from 'react-native';
-import * as Font from 'expo-font';
 
 import { theme } from './src/common';
 import { THEME } from './src/reactor/common';

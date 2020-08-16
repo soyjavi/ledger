@@ -2,8 +2,9 @@ import C from './constants';
 import currencyDecimals from './currencyDecimals';
 import exchange from './exchange';
 import getIconCategory from './getIconCategory';
-import { getLastRates } from './getLastRates';
-import { groupTxsByDate } from './groupTxsByDate';
+export * from './getLastRates';
+export * from './getMonthDiff';
+export * from './groupTxsByDate';
 import L10N from './l10n';
 import median from './median';
 import objectToQueryString from './objectToQueryString';
@@ -20,8 +21,6 @@ export {
   currencyDecimals,
   exchange,
   getIconCategory,
-  getLastRates,
-  groupTxsByDate,
   L10N,
   median,
   objectToQueryString,

@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
+
 import React from 'react';
 import { Image } from 'react-native';
-import { Icon, Text, Touchable } from 'reactor/components';
 import { THEME } from 'reactor/common';
+import { Icon, Text, Touchable } from 'reactor/components';
 
 import { Box } from '../Box';
 import styles, { OPTION_SIZE } from './Option.style';

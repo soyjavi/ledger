@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
+
 import React from 'react';
 import { Image } from 'react-native';
 import { Text, View } from 'reactor/components';
 
 import { BANNERS } from '@assets';
+
 import styles from './Banner.style';
 
 export const Banner = ({ align, caption, children, image = BANNERS.NOT_FOUND, title, ...others }) => (

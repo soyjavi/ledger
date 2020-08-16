@@ -1,15 +1,21 @@
 import { func, number, shape, string } from 'prop-types';
-import React from 'react';
-import { Slider } from 'reactor/components';
-import { THEME } from 'reactor/common';
 
-import { getIconCategory } from '@common';
+import React from 'react';
+import { THEME } from 'reactor/common';
+import { Slider } from 'reactor/components';
+
+import { C, getIconCategory } from '@common';
 import { Input, Option, OPTION_SIZE } from '@components';
 import { useL10N } from '@context';
 
 import { queryCategories } from '../modules';
 
-const { SPACE } = THEME;
+const {
+  TX: {
+    TYPE: { EXPENSE },
+  },
+} = C;
+const { ICON, SPACE } = THEME;
 
 const FormTransaction = ({ currency, form = {}, onChange, type, vault: { currentBalance = 0 } = {} }) => {
   const l10n = useL10N();
@@ -31,7 +37,7 @@ const FormTransaction = ({ currency, form = {}, onChange, type, vault: { current
             legend={item.caption}
             key={item.key}
             icon={getIconCategory({ type, category: item.key })}
-            family="MaterialCommunityIcons"
+            family={ICON.FAMILY}
             marginRight="S"
             onPress={() => handleField('category', item.key)}
             selected={form.category === item.key}
@@ -43,7 +49,7 @@ const FormTransaction = ({ currency, form = {}, onChange, type, vault: { current
         currency={currency}
         label={l10n.AMOUNT}
         marginVertical="M"
-        maxValue={currentBalance}
+        maxValue={type === EXPENSE ? currentBalance : undefined}
         onChange={(value) => handleField('value', value)}
         value={form.value}
       />

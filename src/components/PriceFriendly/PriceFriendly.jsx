@@ -1,11 +1,12 @@
 import { bool, number, string } from 'prop-types';
+
 import React from 'react';
 import { THEME } from 'reactor/common';
 import { Price, Row, Text } from 'reactor/components';
 import { format } from 'reactor/components/Price/modules';
 
 import { C, currencyDecimals } from '@common';
-import { useSettings } from '@context';
+import { useStore } from '@context';
 
 const MASK_SYMBOL = '*';
 const { COLOR } = THEME;
@@ -15,16 +16,15 @@ const maskValue = ({ value }) =>
     value: value >= 1000 ? 9999 : 9.99,
   }).replace(/[0-9]/gi, MASK_SYMBOL);
 
-const PriceFriendly = ({ currency, fixed, label, operator, value = 0, ...others }) => {
-  const {
-    state: { maskAmount },
-  } = useSettings();
+const PriceFriendly = ({ currency, fixed, label, operator, maskAmount, value = 0, ...others }) => {
+  const { settings } = useStore();
+
+  const maskedAmount = maskAmount || settings.maskAmount;
 
   let { color } = others;
   let operatorEnhanced;
 
-  if (maskAmount) color = undefined;
-  else if (operator && !color) {
+  if (operator && !color) {
     if (value === 0) color = COLOR.LIGHTEN;
     else color = value > 0 ? COLOR.BRAND : undefined;
   }
@@ -48,7 +48,7 @@ const PriceFriendly = ({ currency, fixed, label, operator, value = 0, ...others 
           {label}
         </Text>
       )}
-      {maskAmount ? (
+      {maskedAmount ? (
         <Text {...others} color={color}>
           {maskValue(props)}
         </Text>
@@ -63,16 +63,9 @@ PriceFriendly.propTypes = {
   currency: string,
   fixed: number,
   label: string,
+  maskAmount: bool,
   operator: bool,
   value: number,
-};
-
-PriceFriendly.defaultProps = {
-  currency: undefined,
-  fixed: undefined,
-  label: undefined,
-  operator: false,
-  value: 0,
 };
 
 export { PriceFriendly };

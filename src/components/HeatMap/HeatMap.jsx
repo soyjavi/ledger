@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
+
 import React from 'react';
 import { THEME } from 'reactor/common';
 import { Col, Image, Text } from 'reactor/components';
 
 import { C, objectToQueryString } from '@common';
+import { useConnection } from '@context';
 
 import styles, { MAP_HEIGHT, MAP_WIDTH } from './HeatMap.style';
 
@@ -19,21 +21,24 @@ export const HeatMap = ({
   small,
   ...inherit
 }) => {
-  const queryString = points
-    ? objectToQueryString({
-        color,
-        points: JSON.stringify(points),
-        precission,
-        resolution: `${MAP_WIDTH}x${small ? MAP_HEIGHT / 2 : MAP_HEIGHT}@2x`,
-      })
-    : undefined;
+  const { connected } = useConnection();
+
+  const queryString =
+    connected && points
+      ? objectToQueryString({
+          color,
+          points: JSON.stringify(points),
+          precission,
+          resolution: `${MAP_WIDTH}x${small ? MAP_HEIGHT / 2 : MAP_HEIGHT}@2x`,
+        })
+      : undefined;
 
   return (
     <Col>
       <Image
         resizeMode="cover"
         source={
-          queryString ? { uri: `${ENDPOINT}/heatmap?${queryString}&style=${darkMode ? 'dark' : 'light'}` } : undefined
+          queryString ? { uri: `${ENDPOINT}/map?${queryString}&style=${darkMode ? 'dark' : 'light'}` } : undefined
         }
         style={[styles.container, small && styles.small, inherit.style]}
       />

@@ -4,9 +4,8 @@
     "description": "Your private finance ledger running on your own blockchain",
     "slug": "ledger",
     "privacy": "public",
-    "sdkVersion": "37.0.0",
     "platforms": ["ios", "android", "web"],
-    "version": "0.21.0",
+    "version": "0.22.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {

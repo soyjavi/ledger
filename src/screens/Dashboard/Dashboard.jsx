@@ -1,14 +1,15 @@
 import PropTypes from 'prop-types';
+
 import React, { useEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Button, Slider, Viewport } from 'reactor/components';
 
 import { C, onHardwareBackPress } from '@common';
-import { CARD_WIDTH, Footer, GroupTransactions, Header, Heading, Option, ScrollView, Summary } from '@components';
-import { useConnection, useL10N, useNavigation, useSettings, useStore } from '@context';
+import { CARD_WIDTH, DialogClone, GroupTransactions, Header, Heading, Option, ScrollView, Summary } from '@components';
+import { useL10N, useNavigation, useStore } from '@context';
 
 import { DialogSettings, DialogVault, Search, VaultCard } from './components';
-import { queryLastTxs, queryVaults } from './modules';
+import { queryLastTxs, queryVaults } from './Dashboard.controller';
 import styles from './Dashboard.style';
 
 const { SCREEN } = C;
@@ -22,19 +23,17 @@ const buttonProps = {
 };
 
 export const Dashboard = ({ backward, visible, ...inherit }) => {
-  const { connected } = useConnection();
   const l10n = useL10N();
   const navigation = useNavigation();
-  const { state: settings } = useSettings();
-  const { baseCurrency, overall, sync, txs = [], vaults = [] } = useStore();
+  const store = useStore();
 
   const [dialogVault, setDialogVault] = useState(false);
   const [dialogSettings, setDialogSettings] = useState(false);
+  const [tx, setTx] = useState(undefined);
   const [scroll, setScroll] = useState(false);
-  const [search, setSearch] = useState(false);
   const [searchTxs, setSearchTxs] = useState(undefined);
-  const [lastTxs, setLastTxs] = useState([]);
-  const [visibleVaults, setVisibleVaults] = useState([]);
+
+  const { settings: { baseCurrency } = {}, overall, vaults = [] } = store;
 
   useEffect(() => {
     onHardwareBackPress(!backward, () => {
@@ -43,30 +42,19 @@ export const Dashboard = ({ backward, visible, ...inherit }) => {
     });
   }, [backward, dialogVault, dialogSettings]);
 
-  useEffect(() => {
-    if (visible) setLastTxs(queryLastTxs({ txs, vaults }));
-  }, [visible, txs, vaults]);
+  console.log('  <Dashboard>', { visible });
 
-  useEffect(() => {
-    if (visible) setVisibleVaults(queryVaults({ settings, vaults }));
-  }, [visible, settings, vaults]);
-
-  console.log('  <Dashboard>', { visible, searchTxs });
+  const lastTxs = visible ? queryLastTxs(store) : [];
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
       <Header highlight={scroll} title={l10n.OVERALL_BALANCE} />
 
-      <ScrollView onScroll={setScroll} contentContainerStyle={styles.scroll}>
+      <ScrollView contentContainerStyle={styles.scroll} onScroll={(value) => setScroll(value)}>
         <Summary {...overall} currency={baseCurrency} title={l10n.OVERALL_BALANCE}>
           <Option icon="chart" onPress={() => navigation.go(SCREEN.STATS)} caption={l10n.ACTIVITY} />
-          <Option disabled={!connected} icon="wallet" onPress={() => setDialogVault(true)} caption={l10n.VAULT} />
-          <Option
-            disabled={!connected}
-            icon="settings"
-            onPress={() => setDialogSettings(true)}
-            caption={l10n.SETTINGS}
-          />
+          <Option icon="wallet" onPress={() => setDialogVault(true)} caption={l10n.VAULT} />
+          <Option icon="settings" onPress={() => setDialogSettings(true)} caption={l10n.SETTINGS} />
         </Summary>
 
         {vaults.length > 0 && (
@@ -76,7 +64,7 @@ export const Dashboard = ({ backward, visible, ...inherit }) => {
             </Heading>
 
             <Slider itemWidth={CARD_WIDTH} itemMargin={SPACE.S} style={styles.vaults}>
-              {visibleVaults.map((vault, index) => (
+              {queryVaults(store).map((vault, index) => (
                 <VaultCard
                   {...vault}
                   key={vault.hash}
@@ -89,12 +77,10 @@ export const Dashboard = ({ backward, visible, ...inherit }) => {
 
             {lastTxs.length > 0 && (
               <>
-                <Heading paddingLeft="M" paddingRight="S" small value={l10n.LAST_TRANSACTIONS}>
-                  <Button {...buttonProps} title={l10n.SEARCH} onPress={() => setSearch(!search)} />
-                </Heading>
-                {search && <Search onValue={setSearchTxs} />}
+                <Heading paddingLeft="M" paddingRight="S" small value={l10n.LAST_TRANSACTIONS} />
+                <Search onValue={setSearchTxs} />
                 {(searchTxs || lastTxs).map((item) => (
-                  <GroupTransactions key={`${item.timestamp}`} {...item} currency={baseCurrency} />
+                  <GroupTransactions {...item} key={`${item.timestamp}`} currency={baseCurrency} onPress={setTx} />
                 ))}
               </>
             )}
@@ -102,12 +88,11 @@ export const Dashboard = ({ backward, visible, ...inherit }) => {
         )}
       </ScrollView>
 
-      <Footer visible={!scroll} showSync />
-
-      {visible && sync && (
+      {visible && (
         <>
-          <DialogVault onClose={() => setDialogVault(false)} visible={dialogVault} />
+          <DialogClone dataSource={tx} onClose={() => setTx(undefined)} visible={tx !== undefined} />
           <DialogSettings onClose={() => setDialogSettings(false)} visible={dialogSettings} />
+          <DialogVault onClose={() => setDialogVault(false)} visible={dialogVault} />
         </>
       )}
     </Viewport>

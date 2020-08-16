@@ -1,68 +1,84 @@
-import { bool, func } from 'prop-types';
-import React, { useEffect } from 'react';
-import { THEME } from 'reactor/common';
-import { Icon, Motion, Snackbar } from 'reactor/components';
+import { func } from 'prop-types';
 
-import { onHardwareBackPress } from '@common';
+import React, { useEffect, useState } from 'react';
+import { THEME } from 'reactor/common';
+import { Motion, Snackbar, Text, Touchable } from 'reactor/components';
+
+import { C, onHardwareBackPress } from '@common';
 import { useConnection, useL10N, useSnackBar, useStore } from '@context';
 
 import { Option } from '../Option';
-import { getProfile } from '@services';
+import { isSynced, syncNode } from './Footer.controller';
 import styles from './Footer.style';
 
-const { COLOR, ICON, MOTION, SPACE } = THEME;
+const { TIMEOUT } = C;
+const { COLOR, ICON, SPACE } = THEME;
 
 const MOTION_HIDE = SPACE.XXL * 2;
 
-export const Footer = ({ onBack, onHardwareBack, showSync, visible }) => {
+export const Footer = ({ onBack, onHardwareBack }) => {
   const { connected } = useConnection();
   const l10n = useL10N();
   const snackbar = useSnackBar();
   const store = useStore();
-  const { setSync, sync } = store;
+
+  const [synced, setSynced] = useState(true);
+  const [busy, setBusy] = useState(false);
 
   useEffect(() => {
     if (onHardwareBack) onHardwareBackPress(true, onHardwareBack);
-    return () => {
-      onHardwareBackPress(false);
-    };
+    return () => onHardwareBackPress(false);
   }, [onHardwareBack]);
 
+  useEffect(() => {
+    const timeout = setTimeout(async () => {
+      setBusy(false);
+      if (connected) setSynced(await isSynced({ snackbar, store }));
+      else clearTimeout(timeout);
+    }, TIMEOUT.SYNC);
+
+    return () => clearTimeout(timeout);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [connected, store]);
+
   const handleSync = async () => {
-    setSync(false);
-    await getProfile(store, snackbar);
-    setSync(true);
+    setBusy(true);
+    const success = await syncNode({ store, snackbar });
+    setSynced(true);
+    setBusy(false);
+    if (success) snackbar.success(l10n.SYNC_DONE);
   };
 
   return (
     <>
       <Motion
         style={styles.container}
-        timeline={[{ property: 'translateY', value: connected && visible ? 0 : MOTION_HIDE }]}
+        timeline={[{ property: 'translateX', value: synced && onBack ? 0 : MOTION_HIDE }]}
       >
-        {onBack && <Option selected onPress={onBack} caption={l10n.BACK} />}
-        {showSync && (
-          <Option disabled={!sync} onPress={handleSync} selected={sync}>
-            <Motion duration={MOTION.DURATION * 4} timeline={[{ property: 'rotate', value: sync ? 0 : 3.1 }]}>
-              <Icon
-                color={sync ? COLOR.BACKGROUND : COLOR.LIGHTEN}
-                family={ICON.FAMILY}
-                size={SPACE.L}
-                value="refresh"
-              />
-            </Motion>
-          </Option>
-        )}
+        <Option selected onPress={onBack} icon="arrow-left" />
       </Motion>
+
       <Snackbar
-        caption={l10n.OFFLINE_MODE}
-        color={COLOR.ERROR}
-        icon="ban"
+        caption={busy ? l10n.SYNC_BUSY : l10n.SYNC_SENTENCE_1}
+        color={busy ? COLOR.TEXT : COLOR.ERROR}
+        icon={busy ? 'hourglass' : 'question'}
         iconSize={SPACE.M}
         family={ICON.FAMILY}
+        onClose={() => setSynced(true)}
         style={styles.snackbar}
-        visible={!connected}
-      />
+        visible={!synced}
+      >
+        {!busy && (
+          <>
+            <Touchable marginHorizontal="XS" onPress={handleSync} size="S">
+              <Text bold color={COLOR.WHITE} underlined>
+                {l10n.SYNC_NOW}
+              </Text>
+            </Touchable>
+            <Text color={COLOR.WHITE}>{l10n.SYNC_SENTENCE_2}</Text>
+          </>
+        )}
+      </Snackbar>
     </>
   );
 };
@@ -70,6 +86,4 @@ export const Footer = ({ onBack, onHardwareBack, showSync, visible }) => {
 Footer.propTypes = {
   onBack: func,
   onHardwareBack: func,
-  showSync: bool,
-  visible: bool,
 };

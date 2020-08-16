@@ -1,14 +1,16 @@
 import PropTypes from 'prop-types';
+
 import React from 'react';
 import { Image, View } from 'react-native';
-import { Row, Text, Touchable } from 'reactor/components';
 import { THEME } from 'reactor/common';
+import { Row, Text, Touchable } from 'reactor/components';
 
 import { FLAGS } from '@assets';
 import { exchange } from '@common';
-import { Box, PriceFriendly } from '@components';
 import { useL10N, useStore } from '@context';
 
+import { Box } from '../Box';
+import { PriceFriendly } from '../PriceFriendly';
 import styles, { CARD_WIDTH } from './Card.style';
 
 const { COLOR } = THEME;
@@ -17,7 +19,10 @@ export { CARD_WIDTH };
 
 export const Card = ({ balance, currency, disabled, onPress, percentage, title = '', ...others }) => {
   const l10n = useL10N();
-  const { baseCurrency, rates } = useStore();
+  const {
+    settings: { baseCurrency },
+    rates,
+  } = useStore();
 
   return (
     <Touchable {...others} onPress={onPress} rippleColor={COLOR.LIGHTEN} style={styles.container}>
@@ -29,7 +34,7 @@ export const Card = ({ balance, currency, disabled, onPress, percentage, title =
               {title}
             </Text>
           </Row>
-          <PriceFriendly subtitle currency={currency} style={[styles.text, styles.price]} value={balance} />
+          <PriceFriendly subtitle currency={currency} style={[styles.text, styles.balance]} value={balance} />
           {currency !== baseCurrency && (
             <PriceFriendly
               currency={baseCurrency}
@@ -43,7 +48,7 @@ export const Card = ({ balance, currency, disabled, onPress, percentage, title =
           <View style={styles.expand} />
 
           {percentage ? (
-            <PriceFriendly caption currency="%" operator value={percentage} />
+            <PriceFriendly caption currency="%" operator={others.operator} value={percentage} />
           ) : (
             <Text caption color={COLOR.LIGHTEN}>
               {l10n.WITHOUT_TXS}

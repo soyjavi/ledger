@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
+
 import React, { useEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Button, Dialog, Row, Text } from 'reactor/components';
 
 import { C } from '@common';
-import { useL10N, useSnackBar, useStore } from '@context';
 import { HeatMap } from '@components';
+import { useConnection, useL10N, useSnackBar, useStore } from '@context';
 
 import { FormTransaction, FormTransfer } from './components';
 import { getLocation, handleSubmit } from './modules';
@@ -28,6 +29,7 @@ const INITIAL_STATE_LOCATION = { coords: undefined, place: undefined };
 
 const DialogTransaction = (props = {}) => {
   const { onClose, visible, ...inherit } = props;
+  const { connected } = useConnection();
   const l10n = useL10N();
   const snackbar = useSnackBar();
   const store = useStore();
@@ -39,23 +41,23 @@ const DialogTransaction = (props = {}) => {
 
   useEffect(() => {
     if (visible && props.type !== undefined && props.type !== type) setType(props.type);
-  }, [visible, props.type]);
+  }, [visible, props, type]);
 
   useEffect(() => {
     if (visible) {
       setState(INITIAL_STATE);
       setLocation(INITIAL_STATE_LOCATION);
-      getLocation(setLocation);
+      getLocation({ connected, setLocation });
     }
   }, [visible]);
 
   const onSubmit = handleSubmit.bind(undefined, {
     props,
-    store,
-    snackbar,
     setBusy,
-    state: { ...state, ...location },
     setState,
+    snackbar,
+    state: { ...state, ...location },
+    store,
   });
 
   const { valid } = state;
@@ -68,11 +70,13 @@ const DialogTransaction = (props = {}) => {
       <Text subtitle marginTop="S" marginBottom="M">{`${l10n.NEW} ${l10n.TRANSACTION[type]}`}</Text>
 
       <Form {...props} {...state} type={type} onChange={(value) => setState({ ...state, ...value })} />
-      <HeatMap
-        caption={place || l10n.LOADING_PLACE}
-        points={coords ? [[coords.longitude, coords.latitude]] : undefined}
-        small
-      />
+      {connected && type !== TRANSFER && (
+        <HeatMap
+          caption={place || l10n.LOADING_PLACE}
+          points={coords ? [[coords.longitude, coords.latitude]] : undefined}
+          small
+        />
+      )}
 
       <Row marginTop="L">
         <Button
@@ -84,14 +88,7 @@ const DialogTransaction = (props = {}) => {
           title={l10n.CLOSE}
           wide
         />
-        <Button
-          activity={busy}
-          delay={DELAY_PRESS_MS}
-          disabled={busy || !valid}
-          onPress={onSubmit}
-          title={!busy ? l10n.SAVE : undefined}
-          wide
-        />
+        <Button delay={DELAY_PRESS_MS} disabled={busy || !valid} onPress={onSubmit} title={l10n.SAVE} wide />
       </Row>
     </Dialog>
   );

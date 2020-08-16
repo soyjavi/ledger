@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
+
 import React from 'react';
-import { Col, Row, Text } from 'reactor/components';
 import { THEME } from 'reactor/common';
+import { Col, Row, Text } from 'reactor/components';
 
 const { COLOR } = THEME;
 

@@ -8,11 +8,14 @@ const MS_IN_DAY = 1000 * 24 * 60 * 60;
 const MS_IN_WEEK = MS_IN_DAY * 7;
 
 export default {
+  BUSY_PRESS_MS: 2500,
+
   CURRENCY: 'EUR',
 
   DELAY_PRESS_MS: 500,
 
-  ENDPOINT: IS_DEV ? 'http://192.168.1.102:8080' : 'https://voltvault.glitch.me',
+  // ENDPOINT: IS_DEV ? 'http://192.168.0.106:8080' : 'https://ledger-node.glitch.me',
+  ENDPOINT: IS_DEV ? 'http://localhost:8080' : 'https://ledger-node.glitch.me',
 
   FIXED: {
     BTC: 6,
@@ -31,7 +34,8 @@ export default {
   MS_IN_DAY,
   MS_IN_WEEK,
 
-  NAME: PKG.name,
+  // NAME: PKG.name,
+  NAME: 'ledger',
 
   SCREEN: {
     DASHBOARD: 'dashboard',
@@ -40,6 +44,7 @@ export default {
     VAULT: 'vault',
     VAULTS: 'vaults',
   },
+  STATS_MONTHS_LIMIT: 18,
   SYMBOL: {
     AUD: 'AU$',
     // BGN: '',
@@ -78,6 +83,13 @@ export default {
     XAU: 'gr',
     XAG: 'gr',
     // ZAR: 'R',
+  },
+
+  TIMEOUT: {
+    GET: 10000,
+    POST: 60000,
+    CONNECTION: 30000,
+    SYNC: 15000,
   },
 
   TX: {
