@@ -9,18 +9,19 @@ module.exports = (api) => {
       [
         'module-resolver',
         {
-          // root: ['./src'],
           alias: {
-            // '^@reactor/(.+)': './reactor/\\1',
             '^reactor/(.+)': './src/reactor/\\1',
 
-            // '@assets':  './src/assets',
             '@assets': './src/assets',
             '@common': './src/common',
             '@components': './src/components',
             '@context': './src/context',
             '@screens': './src/screens',
             '@services': './src/services',
+
+            fs: ['./src/common'],
+            path: ['./src/common'],
+            crypto: ['expo-crypto'],
           },
         },
       ],

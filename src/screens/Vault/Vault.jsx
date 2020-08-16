@@ -60,7 +60,7 @@ const Vault = ({ visible, ...inherit }) => {
   const { currency = baseCurrency, title, ...rest } = dataSource;
   const vaultProps = { ...rest, image: FLAGS[currency], title };
 
-  console.log('  <Vault>', { visible, dialog, txs });
+  console.log('  <Vault>', { visible, dialog });
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>

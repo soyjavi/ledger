@@ -7,7 +7,7 @@ import { C } from '@common';
 import NetInfo from '@react-native-community/netinfo';
 import { status } from '@services';
 
-const INTERVAL_CHECK_CONNECTED = 10000;
+const { TIMEOUT } = C;
 
 const ConnectionContext = createContext(`${C.NAME}:context:connection`);
 
@@ -33,13 +33,9 @@ const ConnectionProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    const interval = setInterval(async () => {
-      console.log('>>>> test <<<<', { online, connected });
-      if (!online) clearInterval(interval);
-    }, INTERVAL_CHECK_CONNECTED);
-
-    const checkConnected = async () => setConnected(online ? (await status().catch(() => {})) !== undefined : false);
-    checkConnected();
+    const interval = setInterval(async () => (online ? isConnected() : clearInterval(interval)), TIMEOUT.CONNECTION);
+    const isConnected = async () => setConnected(online ? (await status().catch(() => {})) !== undefined : false);
+    isConnected();
 
     return () => clearInterval(interval);
   }, [online]);

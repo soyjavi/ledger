@@ -4,17 +4,17 @@ import React, { useEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Motion, Snackbar, Text, Touchable } from 'reactor/components';
 
-import { onHardwareBackPress } from '@common';
+import { C, onHardwareBackPress } from '@common';
 import { useConnection, useL10N, useSnackBar, useStore } from '@context';
 
 import { Option } from '../Option';
 import { isSynced, syncNode } from './Footer.controller';
 import styles from './Footer.style';
 
+const { TIMEOUT } = C;
 const { COLOR, ICON, SPACE } = THEME;
 
 const MOTION_HIDE = SPACE.XXL * 2;
-const TIMEOUT_CHECK_SYNC = 10000;
 
 export const Footer = ({ onBack, onHardwareBack }) => {
   const { connected } = useConnection();
@@ -35,7 +35,7 @@ export const Footer = ({ onBack, onHardwareBack }) => {
       setBusy(false);
       if (connected) setSynced(await isSynced({ snackbar, store }));
       else clearTimeout(timeout);
-    }, TIMEOUT_CHECK_SYNC);
+    }, TIMEOUT.SYNC);
 
     return () => clearTimeout(timeout);
     // eslint-disable-next-line react-hooks/exhaustive-deps

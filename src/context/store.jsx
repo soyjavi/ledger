@@ -16,9 +16,16 @@ const StoreContext = createContext(`${NAME}:context:store`);
 const STORE_KEY = 'store';
 
 const StoreProvider = ({ children }) => {
-  const [state, setState] = useState();
+  const [state, setState] = useState({
+    settings: {
+      baseCurrency: CURRENCY,
+    },
+    rates: {},
+    vaults: [],
+    txs: [],
+  });
   const [store, setStore] = useState();
-  const [blockchain, setBlockchain] = useState(undefined);
+  const [blockchain, setBlockchain] = useState();
 
   useLayoutEffect(() => {
     const fetchStorage = async () => {
@@ -87,6 +94,29 @@ const StoreProvider = ({ children }) => {
     return block;
   };
 
+  const fork = async (blockchain) => {
+    const filename = `${C.NAME}:${STORE_KEY}:blockchain`;
+
+    const storage = await new AsyncStorageAdapter({ filename });
+    await storage.wipe();
+
+    const fork = await new AsyncBlockchain({
+      adapter: AsyncStorageAdapter,
+      defaults: blockchain,
+      filename,
+      key: 'vaults',
+    });
+
+    setBlockchain(fork);
+    setState({
+      ...state,
+      vaults: await fork.get('vaults').blocks,
+      txs: await fork.get('txs').blocks,
+    });
+
+    return true;
+  };
+
   return (
     <StoreContext.Provider
       value={{
@@ -94,6 +124,7 @@ const StoreProvider = ({ children }) => {
         ...consolidate(state),
         addVault: (data = {}) => addBlock('vaults', { ...data, balance: parseFloat(data.balance, 10) }),
         addTx: (data = {}) => addBlock('txs', { ...data, value: parseFloat(data.value, 10) }),
+        fork,
         updateSettings: (value) => updateStore('settings', { ...state.settings, ...value }),
         updateRates: (value) => updateStore('rates', value),
       }}

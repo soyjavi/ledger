@@ -12,11 +12,11 @@ const HEADERS = {
 
 if (typeof global.self === 'undefined') global.self = global;
 
-const apiCall = async ({ endpoint = ENDPOINT, headers, method = GET, service, ...props }) => {
+export const apiCall = async ({ endpoint = ENDPOINT, headers, method = GET, service, ...props }) => {
   const controller = new AbortController();
   setTimeout(() => controller.abort(), POST_METHODS.includes(method) ? TIMEOUT.POST : TIMEOUT.GET);
 
-  new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     fetch(`${endpoint}/${service}`, {
       headers: { ...HEADERS, ...headers },
       method,
@@ -37,5 +37,3 @@ const apiCall = async ({ endpoint = ENDPOINT, headers, method = GET, service, ..
       });
   });
 };
-
-export { apiCall };

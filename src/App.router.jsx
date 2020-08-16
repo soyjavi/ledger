@@ -17,17 +17,15 @@ const Router = () => {
     <>
       <Onboarding />
       <Dashboard backward={current !== DASHBOARD} visible={stack.includes(DASHBOARD)} />
-      <>
-        {stack.includes(DASHBOARD) && (
-          <>
-            <Vaults onClose={back} visible={stack.includes(VAULTS)} />
-            <Vault backward={current !== VAULT} onClose={back} visible={stack.includes(VAULT)} />
-            <Stats onClose={back} visible={stack.includes(STATS)} />
+      {stack.includes(DASHBOARD) && (
+        <>
+          <Vaults onClose={back} visible={stack.includes(VAULTS)} />
+          <Vault backward={current !== VAULT} onClose={back} visible={stack.includes(VAULT)} />
+          <Stats onClose={back} visible={stack.includes(STATS)} />
 
-            <Footer onBack={current !== DASHBOARD ? back : undefined} />
-          </>
-        )}
-      </>
+          <Footer onBack={current !== DASHBOARD ? back : undefined} />
+        </>
+      )}
     </>
   );
 };

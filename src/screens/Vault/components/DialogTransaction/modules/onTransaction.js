@@ -8,7 +8,7 @@ export default async ({
   store: { addTx },
 }) =>
   addTx({
-    category,
+    category: parseInt(category, 10),
     title,
     type,
     value: parseFloat(value, 10),

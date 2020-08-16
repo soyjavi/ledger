@@ -6,12 +6,14 @@ import React, { useEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Alert, Button, Dialog, Image, Text, View } from 'reactor/components';
 
+import { C } from '@common';
 import { Heading, SliderCurrencies } from '@components';
 import { useL10N, useSnackBar, useStore } from '@context';
 
 import { askCamera, changeCurrency, getBlockchain } from './DialogSettings.controller';
 import styles from './DialogSettings.style';
 
+const { DELAY_PRESS_MS } = C;
 const { COLOR } = THEME;
 const QR_URI = 'https://chart.googleapis.com/chart?cht=qr&chs=512x512&chld=H|1&chl';
 const CAMERA_PROPS = {
@@ -37,11 +39,8 @@ export const DialogSettings = ({ onClose, visible, ...inherit }) => {
 
   useEffect(() => {
     if (!visible) setCamera(false);
+    else if (hasCamera === undefined) setHasCamera(askCamera());
   }, [visible]);
-
-  useEffect(() => {
-    if (hasCamera === undefined) askCamera({ setHasCamera });
-  }, [hasCamera]);
 
   useEffect(() => {
     const timeout = setTimeout(async () => {
@@ -106,6 +105,7 @@ export const DialogSettings = ({ onClose, visible, ...inherit }) => {
         accept={l10n.IMPORT}
         cancel={l10n.CANCEL}
         caption={l10n.TRANSFER_TXS_IMPORT}
+        delay={DELAY_PRESS_MS}
         onAccept={handleFork}
         onCancel={handleCancel}
         onClose={handleCancel}

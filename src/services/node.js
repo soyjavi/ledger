@@ -12,17 +12,14 @@ export const syncStatus = async ({ settings: { authorization, secret } }) =>
     headers: { authorization, secret },
   });
 
-export const sync = async ({ key, block, blocks, wipe, settings: { authorization, secret } }) => {
+export const sync = async ({ settings: { authorization, secret }, ...others }) => {
   if (!authorization || !secret) return false;
 
   const response = await apiCall({
     method: 'POST',
     service: 'sync',
     headers: { authorization, secret },
-    key,
-    block,
-    blocks,
-    wipe,
+    ...others,
   });
 
   return response ? true : false;

@@ -7,7 +7,7 @@ export class AsyncStorageAdapter {
       this.key = filename;
 
       const store = await AsyncStorage.getItem(this.key);
-      if (!store) await localStorage.setItem(this.key, JSON.stringify(defaults));
+      if (!store) await AsyncStorage.setItem(this.key, JSON.stringify(defaults));
 
       return resolve(this);
     });
@@ -34,5 +34,11 @@ export class AsyncStorageAdapter {
     } catch (error) {
       throw new Error(`${key} could not be saved correctly.`);
     }
+  }
+
+  async wipe() {
+    const { key } = this;
+
+    await AsyncStorage.removeItem(key);
   }
 }
