@@ -17,7 +17,7 @@ const {
     TYPE: { EXPENSE, INCOME },
   },
 } = C;
-const { COLOR, SPACE } = THEME;
+const { COLOR, ICON, SPACE } = THEME;
 
 const TransactionItem = (props) => {
   const {
@@ -32,7 +32,7 @@ const TransactionItem = (props) => {
       <Row align="start" paddingHorizontal="M" paddingVertical="S">
         <Col marginRight="S" width="auto">
           <Box small>
-            <Icon family="MaterialCommunityIcons" size={SPACE.M} value={getIconCategory({ type, category, title })} />
+            <Icon family={ICON.FAMILY} size={SPACE.M} value={getIconCategory({ type, category, title })} />
           </Box>
         </Col>
 
