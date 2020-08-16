@@ -14,7 +14,7 @@ import styles from './Footer.style';
 const { COLOR, ICON, SPACE } = THEME;
 
 const MOTION_HIDE = SPACE.XXL * 2;
-const TIMEOUT_CHECK_SYNC = 1000;
+const TIMEOUT_CHECK_SYNC = 10000;
 
 export const Footer = ({ onBack, onHardwareBack }) => {
   const { connected } = useConnection();
@@ -34,6 +34,7 @@ export const Footer = ({ onBack, onHardwareBack }) => {
     const timeout = setTimeout(async () => {
       setBusy(false);
       if (connected) setSynced(await isSynced({ snackbar, store }));
+      else clearTimeout(timeout);
     }, TIMEOUT_CHECK_SYNC);
 
     return () => clearTimeout(timeout);
@@ -50,8 +51,11 @@ export const Footer = ({ onBack, onHardwareBack }) => {
 
   return (
     <>
-      <Motion style={styles.container} timeline={[{ property: 'translateY', value: synced ? 0 : MOTION_HIDE }]}>
-        {onBack && <Option selected onPress={onBack} icon="arrow-left" />}
+      <Motion
+        style={styles.container}
+        timeline={[{ property: 'translateY', value: synced && onBack ? 0 : MOTION_HIDE }]}
+      >
+        <Option selected onPress={onBack} icon="arrow-left" />
       </Motion>
 
       <Snackbar

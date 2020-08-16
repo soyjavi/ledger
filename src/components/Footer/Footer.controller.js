@@ -23,16 +23,13 @@ export const isSynced = async ({ snackbar, store }) => {
     }
   }
 
-  const response = await syncStatus({ settings, snackbar });
-  if (response) {
-    const { blocks = {}, latestHash = {} } = (await syncStatus({ settings, snackbar })) || {};
-    const synced =
-      blocks.txs === blockchain.txs.length &&
-      blocks.vaults === blockchain.vaults.length &&
-      latestHash.txs === txLatestHash &&
-      latestHash.vaults === vaultLatestHash;
-    return synced;
-  } else return true;
+  const { blocks = {}, latestHash = {} } = (await syncStatus({ settings, snackbar })) || {};
+  const synced =
+    blocks.txs === blockchain.txs.length &&
+    blocks.vaults === blockchain.vaults.length &&
+    latestHash.txs === txLatestHash &&
+    latestHash.vaults === vaultLatestHash;
+  return synced;
 };
 
 export const syncNode = async ({
@@ -46,9 +43,8 @@ export const syncNode = async ({
 
   let synced;
 
-  // Check if needs wipe
-  const wipe = !existsHash(vaults, latestHash.vaults) || !existsHash(txs, latestHash.txs);
-  if (wipe) await sync({ settings, blockchain: { vaults, txs } });
+  const rebase = !existsHash(vaults, latestHash.vaults) || !existsHash(txs, latestHash.txs);
+  if (rebase) await sync({ settings, blockchain: { vaults, txs } });
   else {
     await sync({ settings, key: 'vaults', blocks: blocksToSync(vaults, latestHash.vaults) });
     await sync({ settings, key: 'txs', blocks: blocksToSync(txs, latestHash.txs) });
