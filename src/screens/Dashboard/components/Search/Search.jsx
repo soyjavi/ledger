@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TextInput } from 'react-native';
 import { THEME } from 'reactor/common';
 import { Button, Col, Row } from 'reactor/components';
@@ -11,7 +11,6 @@ import { useL10N, useStore } from '@context';
 import styles from './Search.style';
 
 const { COLOR } = THEME;
-let TIMEOUT;
 
 const querySearchTxs = (next, { txs = [], vaults = [] }, l10n) =>
   groupTxsByDate(
@@ -35,49 +34,37 @@ export const Search = ({ onValue }) => {
   const l10n = useL10N();
   const store = useStore();
 
-  const [busy, setBusy] = useState(false);
   const [focus, setFocus] = useState(false);
-  const [value, setValue] = useState(undefined);
+  const [value, setValue] = useState('');
 
-  const onChangeText = (nextValue) => {
-    clearTimeout(TIMEOUT);
-    setBusy(nextValue.length > 0);
-    setValue(nextValue);
+  useEffect(() => {
+    const timeout = setTimeout(
+      () => onValue(value && value.length > 0 ? querySearchTxs(value.toLowerCase(), store, l10n) : undefined),
+      250,
+    );
 
-    if (nextValue.length === 0) return handleReset();
-
-    TIMEOUT = setTimeout(() => {
-      onValue(querySearchTxs(nextValue, store, l10n));
-      setBusy(false);
-    }, 250);
-  };
-
-  const handleReset = () => {
-    const nextValue = undefined;
-    setValue(nextValue);
-    onValue(nextValue);
-  };
+    return () => clearTimeout(timeout);
+  }, [value]);
 
   return (
     <Row marginHorizontal="M" marginBottom="XS" style={[styles.container, focus && styles.focus]}>
       <TextInput
         autoCapitalize="none"
-        autoCorrect={false}
-        autoFocus
+        autoCorrect
         blurOnSubmit
-        editable={true}
+        editable
         onBlur={() => setFocus(false)}
-        onChangeText={onChangeText}
+        onChangeText={(nextValue) => setValue(nextValue.trim())}
         onFocus={() => setFocus(true)}
         placeholder={`${l10n.SEARCH}...`}
         placeholderTextColor={COLOR.LIGHTEN}
         style={styles.input}
         underlineColorAndroid="transparent"
-        value={value || ''}
+        value={value}
       />
       <Col marginLeft="S" width="auto">
-        {value && !busy && (
-          <Button colorText={COLOR.BACKGROUND} disabled={busy} onPress={handleReset} size="S" title={l10n.CLEAR} />
+        {value.length > 0 && (
+          <Button colorText={COLOR.BACKGROUND} onPress={() => setValue('')} size="S" title={l10n.CLEAR} />
         )}
       </Col>
     </Row>

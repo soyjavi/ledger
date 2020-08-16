@@ -86,10 +86,10 @@ export default {
   },
 
   TIMEOUT: {
-    GET: 5000,
+    GET: 10000,
     POST: 60000,
-    CONNECTION: 20000,
-    SYNC: 10000,
+    CONNECTION: 30000,
+    SYNC: 15000,
   },
 
   TX: {

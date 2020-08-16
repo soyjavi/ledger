@@ -9,7 +9,6 @@ export default StyleSheet.create({
     minWidth: SPACE.XL + SPACE.XS,
     zIndex: 1,
     justifyContent: 'center',
-    // width: '100%',
   },
 
   elevation: ELEVATION,

@@ -31,14 +31,9 @@ export const Dashboard = ({ backward, visible, ...inherit }) => {
   const [dialogSettings, setDialogSettings] = useState(false);
   const [tx, setTx] = useState(undefined);
   const [scroll, setScroll] = useState(false);
-  const [search, setSearch] = useState(false);
   const [searchTxs, setSearchTxs] = useState(undefined);
 
-  const {
-    settings: { baseCurrency },
-    overall,
-    vaults = [],
-  } = store;
+  const { settings: { baseCurrency } = {}, overall, vaults = [] } = store;
 
   useEffect(() => {
     onHardwareBackPress(!backward, () => {
@@ -47,9 +42,9 @@ export const Dashboard = ({ backward, visible, ...inherit }) => {
     });
   }, [backward, dialogVault, dialogSettings]);
 
-  console.log('  <Dashboard>', { visible, vaults });
+  console.log('  <Dashboard>', { visible });
 
-  const lastTxs = queryLastTxs(store);
+  const lastTxs = visible ? queryLastTxs(store) : [];
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
@@ -82,10 +77,8 @@ export const Dashboard = ({ backward, visible, ...inherit }) => {
 
             {lastTxs.length > 0 && (
               <>
-                <Heading paddingLeft="M" paddingRight="S" small value={l10n.LAST_TRANSACTIONS}>
-                  <Button {...buttonProps} title={l10n.SEARCH} onPress={() => setSearch(!search)} />
-                </Heading>
-                {search && <Search onValue={setSearchTxs} />}
+                <Heading paddingLeft="M" paddingRight="S" small value={l10n.LAST_TRANSACTIONS} />
+                <Search onValue={setSearchTxs} />
                 {(searchTxs || lastTxs).map((item) => (
                   <GroupTransactions {...item} key={`${item.timestamp}`} currency={baseCurrency} onPress={setTx} />
                 ))}
@@ -98,8 +91,8 @@ export const Dashboard = ({ backward, visible, ...inherit }) => {
       {visible && (
         <>
           <DialogClone dataSource={tx} onClose={() => setTx(undefined)} visible={tx !== undefined} />
-          <DialogVault onClose={() => setDialogVault(false)} visible={dialogVault} />
           <DialogSettings onClose={() => setDialogSettings(false)} visible={dialogSettings} />
+          <DialogVault onClose={() => setDialogVault(false)} visible={dialogVault} />
         </>
       )}
     </Viewport>
