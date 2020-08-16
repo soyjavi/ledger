@@ -1,22 +1,27 @@
 import { C } from '@common';
 
-const { ENDPOINT } = C;
-const DEFAULT_METHOD = 'GET';
-const FORM_METHODS = ['POST', 'PUT'];
+const { ENDPOINT, TIMEOUT } = C;
+
+const GET = 'GET';
+const POST_METHODS = ['POST', 'PUT'];
+const HEADERS = {
+  Accept: 'application/json',
+  'Content-Type': 'application/json',
+  'X-Requested-With': 'XMLHttpRequest',
+};
 
 if (typeof global.self === 'undefined') global.self = global;
 
-const apiCall = async ({ endpoint = ENDPOINT, headers, method = DEFAULT_METHOD, service, ...props }) =>
+const apiCall = async ({ endpoint = ENDPOINT, headers, method = GET, service, ...props }) => {
+  const controller = new AbortController();
+  setTimeout(() => controller.abort(), POST_METHODS.includes(method) ? TIMEOUT.POST : TIMEOUT.GET);
+
   new Promise((resolve, reject) => {
     fetch(`${endpoint}/${service}`, {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest',
-        ...headers,
-      },
+      headers: { ...HEADERS, ...headers },
       method,
-      ...(FORM_METHODS.includes(method) ? { body: JSON.stringify(props) } : props),
+      signal: controller.signal,
+      ...(POST_METHODS.includes(method) ? { body: JSON.stringify(props) } : props),
     })
       .then(async (response) => {
         const json = await response.json();
@@ -31,5 +36,6 @@ const apiCall = async ({ endpoint = ENDPOINT, headers, method = DEFAULT_METHOD, 
         });
       });
   });
+};
 
 export { apiCall };

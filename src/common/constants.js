@@ -14,7 +14,8 @@ export default {
 
   DELAY_PRESS_MS: 500,
 
-  ENDPOINT: IS_DEV ? 'http://192.168.1.104:8080' : 'https://soyjavi-voltvault.glitch.me',
+  // ENDPOINT: IS_DEV ? 'http://192.168.0.106:8080' : 'https://ledger-node.glitch.me',
+  ENDPOINT: IS_DEV ? 'http://localhost:8080' : 'https://ledger-node.glitch.me',
 
   FIXED: {
     BTC: 6,
@@ -33,7 +34,8 @@ export default {
   MS_IN_DAY,
   MS_IN_WEEK,
 
-  NAME: PKG.name,
+  // NAME: PKG.name,
+  NAME: 'ledger',
 
   SCREEN: {
     DASHBOARD: 'dashboard',
@@ -81,6 +83,13 @@ export default {
     XAU: 'gr',
     XAG: 'gr',
     // ZAR: 'R',
+  },
+
+  TIMEOUT: {
+    GET: 5000,
+    POST: 60000,
+    CONNECTION: 20000,
+    SYNC: 10000,
   },
 
   TX: {
