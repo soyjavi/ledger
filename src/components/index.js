@@ -1,5 +1,6 @@
 export * from './Banner';
 export * from './Box';
+export * from './ButtonBack';
 export * from './Card';
 export * from './Chart';
 export * from './DialogClone';

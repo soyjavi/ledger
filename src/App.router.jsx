@@ -9,7 +9,7 @@ const { SCREEN } = C;
 const { STATS, DASHBOARD, VAULT, VAULTS } = SCREEN;
 
 const Router = () => {
-  const { back, current, stack = [] } = useNavigation();
+  const { current, stack = [] } = useNavigation();
 
   console.log(' <Router>');
 
@@ -19,11 +19,10 @@ const Router = () => {
       <Dashboard backward={current !== DASHBOARD} visible={stack.includes(DASHBOARD)} />
       {stack.includes(DASHBOARD) && (
         <>
-          <Vaults onClose={back} visible={stack.includes(VAULTS)} />
-          <Vault backward={current !== VAULT} onClose={back} visible={stack.includes(VAULT)} />
-          <Stats onClose={back} visible={stack.includes(STATS)} />
-
-          <Footer onBack={current !== DASHBOARD ? back : undefined} />
+          <Vaults backward={current !== VAULTS} visible={stack.includes(VAULTS)} />
+          <Vault visible={stack.includes(VAULT)} />
+          <Stats visible={stack.includes(STATS)} />
+          <Footer />
         </>
       )}
     </>

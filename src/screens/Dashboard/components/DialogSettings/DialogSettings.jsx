@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Alert, Button, Dialog, Image, Text, View } from 'reactor/components';
 
-import { C } from '@common';
+import { C, onHardwareBackPress } from '@common';
 import { Heading, SliderCurrencies } from '@components';
 import { useL10N, useSnackBar, useStore } from '@context';
 
@@ -40,6 +40,10 @@ export const DialogSettings = ({ onClose, visible, ...inherit }) => {
   useEffect(() => {
     if (!visible) setCamera(false);
     else if (hasCamera === undefined) setHasCamera(askCamera());
+    onHardwareBackPress(visible, onClose);
+
+    return () => onHardwareBackPress(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
 
   useEffect(() => {

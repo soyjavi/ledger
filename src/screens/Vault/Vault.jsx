@@ -4,7 +4,17 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Viewport } from 'reactor/components';
 
 import { BANNERS, FLAGS } from '@assets';
-import { Banner, DialogClone, GroupTransactions, Header, Heading, Option, ScrollView, Summary } from '@components';
+import {
+  Banner,
+  ButtonBack,
+  DialogClone,
+  GroupTransactions,
+  Header,
+  Heading,
+  Option,
+  ScrollView,
+  Summary,
+} from '@components';
 import { useL10N, useNavigation, useStore } from '@context';
 
 import { DialogTransaction } from './components';
@@ -99,6 +109,8 @@ const Vault = ({ visible, ...inherit }) => {
           <DialogClone dataSource={tx} onClose={() => setTx(undefined)} visible={tx !== undefined} />
         </>
       )}
+
+      <ButtonBack onPress={navigation.back} visible={visible && dialog === undefined && tx === undefined} />
     </Viewport>
   );
 };

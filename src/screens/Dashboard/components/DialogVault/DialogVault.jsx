@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Button, Dialog, Row, Text } from 'reactor/components';
 
-import { C } from '@common';
+import { C, onHardwareBackPress } from '@common';
 import { FormVault } from '@components';
 import { useNavigation, useL10N, useStore } from '@context';
 
@@ -26,6 +26,9 @@ export const DialogVault = ({ onClose, visible }) => {
 
   useEffect(() => {
     if (visible) setForm({ ...INITIAL_STATE, currency: baseCurrency });
+    onHardwareBackPress(visible, onClose);
+
+    return () => onHardwareBackPress(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
 
