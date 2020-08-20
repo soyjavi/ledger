@@ -4,7 +4,6 @@ export * from './ButtonBack';
 export * from './Card';
 export * from './Chart';
 export * from './DialogClone';
-export * from './Footer';
 export * from './FormVault';
 export * from './GroupTransactions';
 export * from './Header';

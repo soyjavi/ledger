@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { C } from './common';
-import { Footer } from './components';
 import { useNavigation } from './context';
 import { Onboarding, Stats, Dashboard, Vault, Vaults } from './screens';
 
@@ -22,7 +21,6 @@ const Router = () => {
           <Vaults backward={current !== VAULTS} visible={stack.includes(VAULTS)} />
           <Vault visible={stack.includes(VAULT)} />
           <Stats visible={stack.includes(STATS)} />
-          <Footer />
         </>
       )}
     </>

@@ -29,9 +29,9 @@ const SnackBarProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, { color: undefined, caption: undefined });
 
   const events = {
-    error: (caption) => dispatch({ type: 'SHOW', caption, color: COLOR.ERROR, icon: 'ban' }),
-    success: (caption) => dispatch({ type: 'SHOW', caption, color: COLOR.BRAND, icon: 'check' }),
-    warning: (caption) => dispatch({ type: 'SHOW', caption, color: COLOR.CTA, icon: 'info' }),
+    error: (caption) => dispatch({ type: 'SHOW', caption, color: COLOR.ERROR }),
+    success: (caption) => dispatch({ type: 'SHOW', caption, color: COLOR.BRAND }),
+    warning: (caption) => dispatch({ type: 'SHOW', caption, color: COLOR.CTA }),
   };
 
   return (

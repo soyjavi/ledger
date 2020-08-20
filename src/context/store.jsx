@@ -9,6 +9,7 @@ import { C } from '@common';
 import { sync } from '@services';
 
 import { AsyncStorageAdapter } from './adapters';
+import { useConnection } from './connection';
 import { consolidate } from './modules';
 
 const { CURRENCY, NAME } = C;
@@ -16,6 +17,8 @@ const StoreContext = createContext(`${NAME}:context:store`);
 const STORE_KEY = 'store';
 
 const StoreProvider = ({ children }) => {
+  const { connected } = useConnection();
+
   const [state, setState] = useState({
     settings: {
       baseCurrency: CURRENCY,
@@ -83,7 +86,7 @@ const StoreProvider = ({ children }) => {
     const { hash: previousHash } = blockchain.get(key).latestBlock;
 
     const block = await blockchain.addBlock(data, previousHash);
-    sync({ key, block, settings });
+    if (connected) sync({ key, block, settings });
 
     setState({
       ...state,
