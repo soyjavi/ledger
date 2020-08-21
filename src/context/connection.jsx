@@ -1,6 +1,6 @@
 import { node } from 'prop-types';
 
-import React, { useContext, useEffect, useState, createContext } from 'react';
+import React, { useContext, useEffect, useLayoutEffect, useState, createContext } from 'react';
 import { useEnvironment } from 'reactor/hooks';
 
 import { C } from '@common';
@@ -17,7 +17,7 @@ const ConnectionProvider = ({ children }) => {
   const [online, setOnline] = useState(false);
   const [connected, setConnected] = useState(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (IS_NATIVE) {
       NetInfo.fetch().then((state) => setOnline(state.isConnected));
       NetInfo.addEventListener((state) => setOnline(state.isConnected));
@@ -30,14 +30,24 @@ const ConnectionProvider = ({ children }) => {
       if (IS_NATIVE) NetInfo.addEventListener();
       else NetInfo.isConnected.removeEventListener('connectionChange');
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    const interval = setInterval(async () => (online ? isConnected() : clearInterval(interval)), TIMEOUT.CONNECTION);
-    const isConnected = async () => setConnected(online ? (await status().catch(() => {})) !== undefined : false);
-    isConnected();
+    const interval = setInterval(
+      async () => {
+        if (online) setConnected((await status().catch(() => {})) !== undefined);
+        else if (!online && connected) setConnected(true);
+      },
+      connected ? TIMEOUT.CONNECTION_STABLE : TIMEOUT.CONNECTION,
+    );
 
     return () => clearInterval(interval);
+  }, [connected, online]);
+
+  useEffect(() => {
+    const isConnected = async () => setConnected(online ? (await status().catch(() => {})) !== undefined : false);
+    isConnected();
   }, [online]);
 
   return <ConnectionContext.Provider value={{ connected, online }}>{children}</ConnectionContext.Provider>;

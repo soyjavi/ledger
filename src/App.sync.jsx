@@ -1,20 +1,24 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
-import { Motion, Snackbar, Text, Touchable, View } from 'reactor/components';
+import { Motion, Snackbar, Text, Touchable } from 'reactor/components';
 
 import { C } from '@common';
-import { useConnection, useL10N, useSnackBar, useStore } from '@context';
+import { useConnection, useL10N, useNavigation, useSnackBar, useStore } from '@context';
 
 import styles from './App.style';
 import { getSyncStatus, syncNode } from './App.sync.controller';
 
-const { TIMEOUT } = C;
+const {
+  TIMEOUT,
+  SCREEN: { DASHBOARD },
+} = C;
 const { COLOR, ICON, SPACE } = THEME;
 
 const STATE = { UNKNOWN: 0, FETCHING: 1, UNSYNCED: 2, SYNCING: 3, SYNCED: 4 };
 
 export const Sync = () => {
   const { connected } = useConnection();
+  const { current } = useNavigation();
   const l10n = useL10N();
   const snackbar = useSnackBar();
   const store = useStore();
@@ -22,8 +26,8 @@ export const Sync = () => {
   const [state, setState] = useState(STATE.UNKNOWN);
 
   useLayoutEffect(() => {
-    if (connected && state === STATE.UNKNOWN) handleState();
-  }, [connected, handleState, state]);
+    if (connected && current === DASHBOARD && state === STATE.UNKNOWN) handleState();
+  }, [connected, handleState, state, current]);
 
   useEffect(() => {
     const timeout = setTimeout(async () => {
@@ -32,8 +36,7 @@ export const Sync = () => {
     }, TIMEOUT.SYNC);
 
     return () => clearTimeout(timeout);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [connected, state, store]);
+  }, [connected, handleState, state, store]);
 
   const handleState = async () => {
     setState(STATE.FETCHING);
@@ -48,23 +51,23 @@ export const Sync = () => {
     if (synced) snackbar.success(l10n.SYNC_DONE);
   };
 
-  const isSyncing = state === STATE.SYNCING;
-
   return (
     <>
-      <Motion
-        style={[styles.status, { backgroundColor: !connected ? COLOR.ERROR : COLOR.TEXT }]}
-        timeline={[{ property: 'translateY', value: !connected || state === STATE.FETCHING ? 0 : SPACE.XXL }]}
-      >
-        <Text bold caption color={COLOR.BACKGROUND}>
-          {!connected ? 'Not connected' : 'Wait a moment...'}
-        </Text>
-      </Motion>
+      {state !== STATE.UNKNOWN && (
+        <Motion
+          style={[styles.status, { backgroundColor: !connected ? COLOR.ERROR : COLOR.TEXT }]}
+          timeline={[{ property: 'translateY', value: !connected || state === STATE.FETCHING ? 0 : SPACE.XXL }]}
+        >
+          <Text bold caption color={COLOR.BACKGROUND}>
+            {!connected ? 'Not connected' : 'Wait a moment...'}
+          </Text>
+        </Motion>
+      )}
 
       <Snackbar
-        caption={isSyncing ? l10n.SYNC_BUSY : l10n.SYNC_SENTENCE_1}
-        color={isSyncing ? COLOR.TEXT : COLOR.ERROR}
-        icon={isSyncing ? 'hourglass' : undefined}
+        caption={state === STATE.SYNCING ? l10n.SYNC_BUSY : l10n.SYNC_SENTENCE_1}
+        color={state === STATE.SYNCING ? COLOR.TEXT : COLOR.ERROR}
+        icon={state === STATE.SYNCING ? 'hourglass' : undefined}
         iconSize={SPACE.M}
         family={ICON.FAMILY}
         onClose={state === STATE.UNSYNCED ? () => setState(undefined) : undefined}

@@ -6,7 +6,7 @@ const blocksToSync = (blockchain = [], latestHash) => blockchain.slice(findHashI
 
 const existsHash = (blockchain = [], latestHash) => findHashIndex(blockchain, latestHash) > 0;
 
-export const getSyncStatus = async ({ snackbar, store }) => {
+export const getSyncStatus = async ({ setState, STATE, snackbar, store }) => {
   const {
     blockchain = {},
     latestHash: { txs: txLatestHash, vaults: vaultLatestHash } = {},
@@ -23,7 +23,7 @@ export const getSyncStatus = async ({ snackbar, store }) => {
     }
   }
 
-  const { blocks = {}, latestHash = {} } = (await syncStatus({ settings, snackbar })) || {};
+  const { blocks = {}, latestHash = {} } = (await syncStatus({ settings, snackbar }).catch(() => {})) || {};
   const synced =
     blocks.txs === blockchain.txs.length &&
     blocks.vaults === blockchain.vaults.length &&
@@ -42,8 +42,10 @@ export const syncNode = async ({ store, snackbar }) => {
   const rebase = !existsHash(vaults, latestHash.vaults) || !existsHash(txs, latestHash.txs);
   if (rebase) await sync({ settings, blockchain: { vaults, txs } });
   else {
-    await sync({ settings, key: 'vaults', blocks: blocksToSync(vaults, latestHash.vaults) });
-    await sync({ settings, key: 'txs', blocks: blocksToSync(txs, latestHash.txs) });
+    const vaultsToSync = blocksToSync(vaults, latestHash.vaults);
+    if (vaultsToSync.length > 0) await sync({ settings, key: 'vaults', blocks: vaultsToSync });
+    const txsToSync = blocksToSync(txs, latestHash.txs);
+    if (txsToSync.length > 0) await sync({ settings, key: 'txs', blocks: txsToSync });
   }
   return await getSyncStatus({ snackbar, store });
 };
