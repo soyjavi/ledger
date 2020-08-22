@@ -14,8 +14,7 @@ export default {
 
   DELAY_PRESS_MS: 500,
 
-  // ENDPOINT: IS_DEV ? 'http://192.168.0.106:8080' : 'https://ledger-node.glitch.me',
-  ENDPOINT: IS_DEV ? 'http://localhost:8080' : 'https://ledger-node.glitch.me',
+  ENDPOINT: IS_DEV ? 'http://192.168.1.102:8080' : 'https://ledger-node.glitch.me',
 
   FIXED: {
     BTC: 6,

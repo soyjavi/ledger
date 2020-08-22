@@ -37,8 +37,8 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-38.0.0.tar.gz",
     "react-native-fs": "^2.16.6",
     "react-native-web": "~0.11.7",
-    "vanilla-blockchain": "^0.2.6",
-    "vanilla-storage": "^0.3.7"
+    "vanilla-blockchain": "^0.2.8",
+    "vanilla-storage": "^0.3.11"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",

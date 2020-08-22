@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { THEME } from 'reactor/common';
 
 const { COLOR, FONT, SPACE } = THEME;
@@ -21,6 +21,11 @@ export default StyleSheet.create({
     borderWidth: 0,
     flex: 2,
     height: SPACE.XL,
-    outline: 'none',
+    ...Platform.select({
+      web: {
+        userSelect: 'none',
+        outline: 'none',
+      },
+    }),
   },
 });
