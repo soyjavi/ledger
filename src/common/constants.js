@@ -88,8 +88,8 @@ export default {
     GET: 10000,
     POST: 60000,
     CONNECTION: 15000,
-    CONNECTION_STABLE: 30000,
-    SYNC: 45000,
+    CONNECTION_STABLE: 60000,
+    SYNC: 100000,
   },
 
   TX: {

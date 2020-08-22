@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 
 import React, { useState, useLayoutEffect } from 'react';
+import { THEME } from 'reactor/common';
 
 import { C } from '@common';
 import { useNavigation, useStore } from '@context';
@@ -9,6 +10,7 @@ import { FirstVault, Completed, Session, Welcome } from './components';
 import styles from './Onboarding.style';
 
 const { SCREEN } = C;
+const { MOTION } = THEME;
 const style = { scroll: false, styleContent: styles.container };
 
 const WELCOME = 1;
@@ -18,12 +20,14 @@ const COMPLETED = 4;
 
 const Onboarding = () => {
   const navigation = useNavigation();
-  const { settings: { onboarded, pin } = {}, vaults = [] } = useStore();
+  const { settings: { onboarded } = {}, vaults = [] } = useStore();
 
   const [step, setStep] = useState();
+  const [mounted, setMounted] = useState(false);
 
   useLayoutEffect(() => {
     setStep(onboarded ? SESSION : WELCOME);
+    setTimeout(() => setMounted(true), MOTION.EXPAND);
   }, [onboarded]);
 
   const handleComplete = () => {
@@ -39,16 +43,9 @@ const Onboarding = () => {
 
   console.log('<OnBoarding>', { step });
 
-  return (
+  return mounted ? (
     <>
-      {step <= SESSION && (
-        <Welcome
-          {...style}
-          backward={step > WELCOME}
-          onPress={nextStep}
-          visible={pin === undefined && step >= WELCOME}
-        />
-      )}
+      {step <= SESSION && <Welcome {...style} backward={step > WELCOME} onPress={nextStep} visible={step >= WELCOME} />}
       <Session visible={step >= SESSION} backward={step > SESSION} onSession={handleSession} />
       {step > SESSION && (
         <>
@@ -57,6 +54,8 @@ const Onboarding = () => {
         </>
       )}
     </>
+  ) : (
+    <></>
   );
 };
 
