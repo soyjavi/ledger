@@ -19,8 +19,6 @@ module.exports = (api) => {
             '@screens': './src/screens',
             '@services': './src/services',
 
-            fs: ['./src/common'],
-            path: ['./src/common'],
             crypto: ['expo-crypto'],
           },
         },

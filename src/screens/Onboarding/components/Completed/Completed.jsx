@@ -7,6 +7,8 @@ import { BANNERS } from '@assets';
 import { Banner } from '@components';
 import { useL10N } from '@context';
 
+import styles from './Completed.style';
+
 const Completed = ({ onPress, ...inherit }) => {
   const l10n = useL10N();
 
@@ -19,11 +21,7 @@ const Completed = ({ onPress, ...inherit }) => {
         title={l10n.ONBOARDING_COMPLETED_TITLE}
         caption={l10n.ONBOARDING_COMPLETED_CAPTION}
       />
-      <Button
-        onPress={onPress}
-        // style={styles.buttonRight}
-        title={l10n.CONTINUE}
-      />
+      <Button onPress={onPress} style={styles.buttonRight} title={l10n.CONTINUE} />
     </Viewport>
   );
 };

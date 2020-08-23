@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Button, Dialog, Row, Text } from 'reactor/components';
 
-import { C } from '@common';
+import { C, onHardwareBackPress } from '@common';
 import { HeatMap } from '@components';
 import { useConnection, useL10N, useSnackBar, useStore } from '@context';
 
@@ -49,6 +49,9 @@ const DialogTransaction = (props = {}) => {
       setLocation(INITIAL_STATE_LOCATION);
       getLocation({ connected, setLocation });
     }
+    onHardwareBackPress(visible, onClose);
+
+    return () => onHardwareBackPress(false);
   }, [visible]);
 
   const onSubmit = handleSubmit.bind(undefined, {

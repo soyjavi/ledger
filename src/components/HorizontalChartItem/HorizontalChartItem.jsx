@@ -26,7 +26,7 @@ export const HorizontalChartItem = ({ color = COLOR.TEXT, currency, small, title
 
 HorizontalChartItem.propTypes = {
   color: string,
-  currency: string.isRequired,
+  currency: string,
   small: bool,
   title: string.isRequired,
   value: number.isRequired,

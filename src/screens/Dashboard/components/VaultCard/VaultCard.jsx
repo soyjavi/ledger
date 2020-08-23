@@ -9,6 +9,7 @@ export const VaultCard = ({ currency, currentBalance, currentMonth: { progressio
     {...others}
     balance={currentBalance}
     currency={currency}
+    operator
     percentage={
       progression
         ? currentBalance - progression > 0

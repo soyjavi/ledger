@@ -6,7 +6,7 @@ const blocksToSync = (blockchain = [], latestHash) => blockchain.slice(findHashI
 
 const existsHash = (blockchain = [], latestHash) => findHashIndex(blockchain, latestHash) > 0;
 
-export const isSynced = async ({ snackbar, store }) => {
+export const getSyncStatus = async ({ snackbar, store }) => {
   const {
     blockchain = {},
     latestHash: { txs: txLatestHash, vaults: vaultLatestHash } = {},
@@ -14,42 +14,43 @@ export const isSynced = async ({ snackbar, store }) => {
     updateSettings,
   } = store;
   let { settings } = store;
+  let synced;
 
   if (!settings.authorization) {
-    const authorization = await signup({ fingerprint });
+    const authorization = await signup({ fingerprint }).catch(() => {});
     if (authorization) {
       settings.authorization = authorization;
       await updateSettings({ authorization });
     }
   }
 
-  const { blocks = {}, latestHash = {} } = (await syncStatus({ settings, snackbar })) || {};
-  const synced =
-    blocks.txs === blockchain.txs.length &&
-    blocks.vaults === blockchain.vaults.length &&
-    latestHash.txs === txLatestHash &&
-    latestHash.vaults === vaultLatestHash;
+  const response = await syncStatus({ settings, snackbar }).catch(() => {});
+  if (response) {
+    const { blocks = {}, latestHash = {} } = response;
+    synced =
+      blocks.txs === blockchain.txs.length &&
+      blocks.vaults === blockchain.vaults.length &&
+      latestHash.txs === txLatestHash &&
+      latestHash.vaults === vaultLatestHash;
+  }
+
   return synced;
 };
 
-export const syncNode = async ({
-  store: {
+export const syncNode = async ({ store, snackbar }) => {
+  const {
     settings,
     blockchain: { vaults = [], txs = [] },
-  },
-  snackbar,
-}) => {
+  } = store;
   const { latestHash = {} } = (await syncStatus({ settings, snackbar })) || {};
-
-  let synced;
 
   const rebase = !existsHash(vaults, latestHash.vaults) || !existsHash(txs, latestHash.txs);
   if (rebase) await sync({ settings, blockchain: { vaults, txs } });
   else {
-    await sync({ settings, key: 'vaults', blocks: blocksToSync(vaults, latestHash.vaults) });
-    await sync({ settings, key: 'txs', blocks: blocksToSync(txs, latestHash.txs) });
+    const vaultsToSync = blocksToSync(vaults, latestHash.vaults);
+    if (vaultsToSync.length > 0) await sync({ settings, key: 'vaults', blocks: vaultsToSync });
+    const txsToSync = blocksToSync(txs, latestHash.txs);
+    if (txsToSync.length > 0) await sync({ settings, key: 'txs', blocks: txsToSync });
   }
-  synced = true;
-
-  return synced;
+  return await getSyncStatus({ snackbar, store });
 };

@@ -8324,18 +8324,18 @@ validate-npm-package-license@^3.0.1:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
 
-vanilla-blockchain@^0.2.6:
-  version "0.2.6"
-  resolved "https://registry.yarnpkg.com/vanilla-blockchain/-/vanilla-blockchain-0.2.6.tgz#f850362e474616e1dfa2d20b499eb42380576a21"
-  integrity sha512-uzm6cbQ/HCToxAO+Vs+4ZxLjSZ+5ijs4tX3Adb63dA2Tmpj2SUvO6zOObRfKHZUFQdRtPwFXLC3fnqPA7lTh9w==
+vanilla-blockchain@^0.2.8:
+  version "0.2.8"
+  resolved "https://registry.yarnpkg.com/vanilla-blockchain/-/vanilla-blockchain-0.2.8.tgz#41f4b4a4b92cc23fce775675ce09c51c6562a511"
+  integrity sha512-e5Vy7n/VxbYCGpU3vJap2wLzeRmfIliEKosPE14h8WvjoC0Hq7DEB+HW7oE5R1V00YvwFpXSBBGKVG3bbn3clQ==
   dependencies:
     crypto-js "4.0.0"
-    vanilla-storage "0.3.7"
+    vanilla-storage "0.3.11"
 
-vanilla-storage@0.3.7, vanilla-storage@^0.3.7:
-  version "0.3.7"
-  resolved "https://registry.yarnpkg.com/vanilla-storage/-/vanilla-storage-0.3.7.tgz#02d973d30d07c8c2b44f75a4d2a1afa1391760a9"
-  integrity sha512-BlzjT++lW1n8U+k3PagdNoouIC05GLJFUKobdMsw+H5L1cl8MnzB40CCfti0XEmzG/llhDLmFgIrPYiurAUpyw==
+vanilla-storage@0.3.11, vanilla-storage@^0.3.11:
+  version "0.3.11"
+  resolved "https://registry.yarnpkg.com/vanilla-storage/-/vanilla-storage-0.3.11.tgz#22398bb5aa8e1b0c51e1319e113e34026de3ea85"
+  integrity sha512-K5sG3S9YfAFA8OgRqtmhsrfwUqvHiV2K2I75mM126MZAOFpX8YxFWkjARDb2UpVXZ7mBZ0MI4J+MBzFh+h2Hyw==
   dependencies:
     crypto-js "4.0.0"
 

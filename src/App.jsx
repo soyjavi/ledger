@@ -6,6 +6,7 @@ import { L10NProvider, ConnectionProvider, NavigationProvider, StoreProvider, Sn
 
 import { Router } from './App.router';
 import styles from './App.style';
+import { Sync } from './App.sync';
 
 const { LANGUAGE } = C;
 
@@ -20,6 +21,7 @@ const App = () => {
             <SnackBarProvider>
               <LayoutView style={styles.container}>
                 <Router />
+                <Sync />
               </LayoutView>
             </SnackBarProvider>
           </StoreProvider>

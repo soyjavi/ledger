@@ -9,13 +9,17 @@ import { C } from '@common';
 import { sync } from '@services';
 
 import { AsyncStorageAdapter } from './adapters';
+import { useConnection } from './connection';
 import { consolidate } from './modules';
 
 const { CURRENCY, NAME } = C;
+const FILENAME = `${C.NAME}:store`;
+const FILENAME_BLOCKCHAIN = `${C.NAME}:store:blockchain`;
 const StoreContext = createContext(`${NAME}:context:store`);
-const STORE_KEY = 'store';
 
 const StoreProvider = ({ children }) => {
+  const { connected } = useConnection();
+
   const [state, setState] = useState({
     settings: {
       baseCurrency: CURRENCY,
@@ -46,13 +50,13 @@ const StoreProvider = ({ children }) => {
           },
           rates: {},
         },
-        filename: `${C.NAME}:${STORE_KEY}`,
+        filename: FILENAME,
       });
 
       const blockchain = await new AsyncBlockchain({
         adapter: AsyncStorageAdapter,
         defaults: { vaults: [], txs: [] },
-        filename: `${C.NAME}:${STORE_KEY}:blockchain`,
+        filename: FILENAME_BLOCKCHAIN,
         key: 'vaults',
       });
 
@@ -83,7 +87,7 @@ const StoreProvider = ({ children }) => {
     const { hash: previousHash } = blockchain.get(key).latestBlock;
 
     const block = await blockchain.addBlock(data, previousHash);
-    sync({ key, block, settings });
+    if (connected) sync({ key, block, settings });
 
     setState({
       ...state,
@@ -95,17 +99,19 @@ const StoreProvider = ({ children }) => {
   };
 
   const fork = async (blockchain) => {
-    const filename = `${C.NAME}:${STORE_KEY}:blockchain`;
+    const { settings } = state;
 
-    const storage = await new AsyncStorageAdapter({ filename });
+    const storage = await new AsyncStorageAdapter({ filename: FILENAME_BLOCKCHAIN });
     await storage.wipe();
 
     const fork = await new AsyncBlockchain({
       adapter: AsyncStorageAdapter,
       defaults: blockchain,
-      filename,
+      filename: FILENAME_BLOCKCHAIN,
       key: 'vaults',
     });
+
+    if (connected) await sync({ settings, blockchain: { vaults: [], txs: [] } });
 
     setBlockchain(fork);
     setState({

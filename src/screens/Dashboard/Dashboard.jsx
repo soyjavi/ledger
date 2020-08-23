@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Button, Slider, Viewport } from 'reactor/components';
 
-import { C, onHardwareBackPress } from '@common';
+import { C } from '@common';
 import { CARD_WIDTH, DialogClone, GroupTransactions, Header, Heading, Option, ScrollView, Summary } from '@components';
 import { useL10N, useNavigation, useStore } from '@context';
 
@@ -22,7 +22,7 @@ const buttonProps = {
   style: styles.smallButton,
 };
 
-export const Dashboard = ({ backward, visible, ...inherit }) => {
+export const Dashboard = ({ visible, ...inherit }) => {
   const l10n = useL10N();
   const navigation = useNavigation();
   const store = useStore();
@@ -34,13 +34,6 @@ export const Dashboard = ({ backward, visible, ...inherit }) => {
   const [searchTxs, setSearchTxs] = useState(undefined);
 
   const { settings: { baseCurrency } = {}, overall, vaults = [] } = store;
-
-  useEffect(() => {
-    onHardwareBackPress(!backward, () => {
-      if (dialogVault) setDialogVault(false);
-      if (dialogSettings) setDialogSettings(false);
-    });
-  }, [backward, dialogVault, dialogSettings]);
 
   console.log('  <Dashboard>', { visible });
 

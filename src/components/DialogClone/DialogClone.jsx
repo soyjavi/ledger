@@ -1,10 +1,10 @@
 import { bool, shape } from 'prop-types';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Button, Col, Dialog, Row, Text } from 'reactor/components';
 
-import { C, exchange, verboseTime } from '@common';
+import { C, exchange, onHardwareBackPress, verboseTime } from '@common';
 import { useL10N, useStore } from '@context';
 
 import { BoxDate } from '../Box';
@@ -31,6 +31,12 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
   } = store;
 
   const [busy, setBusy] = useState(false);
+
+  useEffect(() => {
+    onHardwareBackPress(inherit.visible, inherit.onClose);
+    return () => onHardwareBackPress(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inherit.visible]);
 
   const handleSubmit = ({ wipe = false } = {}) => {
     setBusy(true);

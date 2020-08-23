@@ -6,7 +6,7 @@ import { Viewport } from 'reactor/components';
 
 import { BANNERS } from '@assets';
 import { C } from '@common';
-import { Banner, Chart, Header, ScrollView } from '@components';
+import { Banner, ButtonBack, Chart, Header, ScrollView } from '@components';
 import { useL10N, useNavigation, useStore } from '@context';
 
 import { ItemGroupCategories, Locations, SliderMonths } from './components';
@@ -123,6 +123,8 @@ export const Stats = ({ visible, ...inherit }) => {
           </>
         )}
       </ScrollView>
+
+      <ButtonBack onPress={navigation.back} visible={visible} />
     </Viewport>
   );
 };

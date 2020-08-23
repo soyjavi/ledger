@@ -15,7 +15,9 @@ const { COLOR, OPACITY } = THEME;
 
 const ItemGroupCategories = ({ dataSource, type }) => {
   const l10n = useL10N();
-  const { baseCurrency } = useStore();
+  const {
+    settings: { baseCurrency },
+  } = useStore();
   const [expand, setExpand] = useState(undefined);
 
   const isExpense = type === 0;
