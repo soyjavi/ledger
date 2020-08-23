@@ -6,7 +6,7 @@ const blocksToSync = (blockchain = [], latestHash) => blockchain.slice(findHashI
 
 const existsHash = (blockchain = [], latestHash) => findHashIndex(blockchain, latestHash) > 0;
 
-export const getSyncStatus = async ({ setState, STATE, snackbar, store }) => {
+export const getSyncStatus = async ({ snackbar, store }) => {
   const {
     blockchain = {},
     latestHash: { txs: txLatestHash, vaults: vaultLatestHash } = {},
@@ -14,21 +14,26 @@ export const getSyncStatus = async ({ setState, STATE, snackbar, store }) => {
     updateSettings,
   } = store;
   let { settings } = store;
+  let synced;
 
   if (!settings.authorization) {
-    const authorization = await signup({ fingerprint });
+    const authorization = await signup({ fingerprint }).catch(() => {});
     if (authorization) {
       settings.authorization = authorization;
       await updateSettings({ authorization });
     }
   }
 
-  const { blocks = {}, latestHash = {} } = (await syncStatus({ settings, snackbar }).catch(() => {})) || {};
-  const synced =
-    blocks.txs === blockchain.txs.length &&
-    blocks.vaults === blockchain.vaults.length &&
-    latestHash.txs === txLatestHash &&
-    latestHash.vaults === vaultLatestHash;
+  const response = await syncStatus({ settings, snackbar }).catch(() => {});
+  if (response) {
+    const { blocks = {}, latestHash = {} } = response;
+    synced =
+      blocks.txs === blockchain.txs.length &&
+      blocks.vaults === blockchain.vaults.length &&
+      latestHash.txs === txLatestHash &&
+      latestHash.vaults === vaultLatestHash;
+  }
+
   return synced;
 };
 

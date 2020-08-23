@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Motion, Snackbar, Text, Touchable } from 'reactor/components';
 
@@ -18,7 +18,7 @@ const STATE = { UNKNOWN: 0, FETCHING: 1, UNSYNCED: 2, SYNCING: 3, SYNCED: 4 };
 
 export const Sync = () => {
   const { connected } = useConnection();
-  const { current } = useNavigation();
+  const { stack = [] } = useNavigation();
   const l10n = useL10N();
   const snackbar = useSnackBar();
   const store = useStore();
@@ -26,8 +26,8 @@ export const Sync = () => {
   const [state, setState] = useState(STATE.UNKNOWN);
 
   useLayoutEffect(() => {
-    if (connected && current === DASHBOARD && state === STATE.UNKNOWN) handleState();
-  }, [connected, handleState, state, current]);
+    if (connected && stack.includes(DASHBOARD) && state === STATE.UNKNOWN) handleState();
+  }, [connected, handleState, stack, state]);
 
   useEffect(() => {
     const timeout = setTimeout(async () => {
@@ -38,11 +38,12 @@ export const Sync = () => {
     return () => clearTimeout(timeout);
   }, [connected, handleState, state, store]);
 
-  const handleState = async () => {
+  const handleState = useCallback(async () => {
     setState(STATE.FETCHING);
-    const synced = await getSyncStatus({ snackbar, store });
-    setState(synced ? STATE.SYNCED : STATE.UNSYNCED);
-  };
+    const synced = await getSyncStatus({ setState, snackbar, STATE, store });
+    if (synced === undefined) setState(STATE.UNKNOWN);
+    else setState(synced ? STATE.SYNCED : STATE.UNSYNCED);
+  }, [snackbar, store]);
 
   const handleSync = async () => {
     setState(STATE.SYNCING);
@@ -51,9 +52,10 @@ export const Sync = () => {
     if (synced) snackbar.success(l10n.SYNC_DONE);
   };
 
+  console.log('>>>>>>>>>>', { connected, state });
   return (
     <>
-      {state !== STATE.UNKNOWN && (
+      {stack.includes(DASHBOARD) && (
         <Motion
           style={[styles.status, { backgroundColor: !connected ? COLOR.ERROR : COLOR.TEXT }]}
           timeline={[{ property: 'translateY', value: !connected || state === STATE.FETCHING ? 0 : SPACE.XXL }]}

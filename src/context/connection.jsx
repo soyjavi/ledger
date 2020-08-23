@@ -1,6 +1,6 @@
 import { node } from 'prop-types';
 
-import React, { useContext, useEffect, useLayoutEffect, useState, createContext } from 'react';
+import React, { useCallback, useContext, useEffect, useLayoutEffect, useState, createContext } from 'react';
 import { useEnvironment } from 'reactor/hooks';
 
 import { C } from '@common';
@@ -34,20 +34,18 @@ const ConnectionProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    const interval = setInterval(
-      async () => {
-        if (online) setConnected((await status().catch(() => {})) !== undefined);
-        else if (!online && connected) setConnected(true);
-      },
-      connected ? TIMEOUT.CONNECTION_STABLE : TIMEOUT.CONNECTION,
-    );
+    const interval = setInterval(handleConnected, connected ? TIMEOUT.CONNECTION_STABLE : TIMEOUT.CONNECTION);
 
     return () => clearInterval(interval);
-  }, [connected, online]);
+  }, [connected, handleConnected, online]);
 
   useEffect(() => {
-    const isConnected = async () => setConnected(online ? (await status().catch(() => {})) !== undefined : false);
-    isConnected();
+    handleConnected();
+  }, [handleConnected, online]);
+
+  const handleConnected = useCallback(async () => {
+    if (!online) setConnected(false);
+    else setConnected((await status().catch(() => {})) ? true : false);
   }, [online]);
 
   return <ConnectionContext.Provider value={{ connected, online }}>{children}</ConnectionContext.Provider>;
