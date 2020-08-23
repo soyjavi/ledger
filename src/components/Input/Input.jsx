@@ -26,7 +26,7 @@ export const Input = ({
   maxValue,
   onChange,
   secure,
-  showExchange,
+  showExchange = true,
   ...others
 }) => {
   const { settings: { baseCurrency } = {}, rates } = useStore();
@@ -40,7 +40,7 @@ export const Input = ({
       const lastRates = getLastRates(rates);
       setExchange(lastRates[currency]);
     } else setExchange(undefined);
-  }, [currency, showExchange]);
+  }, [baseCurrency, currency, rates, showExchange]);
 
   useEffect(() => {
     setValue(others.value);

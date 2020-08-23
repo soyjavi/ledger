@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Row, Text, View, Viewport } from 'reactor/components';
-import { useEnvironment } from 'reactor/hooks';
 
 import { C } from '@common';
 import { useL10N, useStore } from '@context';
@@ -16,7 +15,6 @@ const { IS_DEV, VERSION } = C;
 const { COLOR } = THEME;
 
 const Session = ({ onSession, visible, ...others }) => {
-  const { IS_WEB } = useEnvironment();
   const l10n = useL10N();
   const store = useStore();
 
@@ -30,7 +28,7 @@ const Session = ({ onSession, visible, ...others }) => {
       const { settings, vaults = [] } = store;
 
       if (settings.pin && vaults.length !== 0) {
-        if (IS_DEV && IS_WEB) setPin(settings.pin);
+        if (IS_DEV /* && IS_WEB */) setPin(settings.pin);
         else if (pin === '') askLocalAuthentication({ l10n, setPin, store });
       }
     }

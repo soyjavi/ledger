@@ -29,7 +29,7 @@ export const HeatMap = ({
           color,
           points: JSON.stringify(points),
           precission,
-          resolution: `${MAP_WIDTH}x${small ? MAP_HEIGHT / 2 : MAP_HEIGHT}@2x`,
+          resolution: `${MAP_WIDTH}x${small ? Math.floor(MAP_HEIGHT / 2) : MAP_HEIGHT}@2x`,
         })
       : undefined;
 

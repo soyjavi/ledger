@@ -1,6 +1,10 @@
 import * as LocalAuthentication from 'expo-local-authentication';
 
+import { THEME } from 'reactor/common';
+
 import { signup, getRates } from '@services';
+
+const { MOTION } = THEME;
 
 export const askLocalAuthentication = async ({
   l10n,
@@ -9,23 +13,17 @@ export const askLocalAuthentication = async ({
     settings: { pin },
   },
 }) => {
-  try {
-    const hasHardware = await LocalAuthentication.hasHardwareAsync();
-    const isEnrolled = await LocalAuthentication.isEnrolledAsync();
+  const hasHardware = await LocalAuthentication.hasHardwareAsync();
+  const isEnrolled = await LocalAuthentication.isEnrolledAsync();
 
-    console.log({ hasHardware, isEnrolled });
-    if (hasHardware && isEnrolled) {
-      const { success } = await LocalAuthentication.authenticateAsync({
-        promptMessage: l10n.AUTHENTICATE,
-        cancelLabel: l10n.CANCEL,
-        disableDeviceFallback: true,
-      });
+  if (hasHardware && isEnrolled) {
+    const { success } = await LocalAuthentication.authenticateAsync({
+      promptMessage: l10n.AUTHENTICATE,
+      cancelLabel: l10n.CANCEL,
+      disableDeviceFallback: true,
+    });
 
-      if (success) setPin(pin);
-    }
-  } catch (e) {
-    // @TODO
-    console.log();
+    if (success) setPin(pin);
   }
 };
 
@@ -41,7 +39,9 @@ export const onHandshake = async ({ onSession, setBusy, store: { settings, updat
       authorization: await signup({ fingerprint }),
     });
   } else {
-    updateRates(await getRates({ baseCurrency }).catch(() => {}));
+    setTimeout(async () => {
+      updateRates(await getRates({ baseCurrency }).catch(() => {}));
+    }, MOTION.EXPAND * 2);
   }
 
   onSession();

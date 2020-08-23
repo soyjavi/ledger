@@ -39,8 +39,9 @@ export default {
   BORDER_RADIUS,
 
   COLOR: {
-    BRAND: '#19CEAB',
-    BRAND_HIGHLIGHT: 'rgba(25, 206, 171, 0.075)',
+    // BRAND: '#19CEAB',
+    // BRAND: '#42f2cb',
+    BRAND: '#3DDC84',
     CTA: '#000000',
     // BLACK
     // WHITE
@@ -123,8 +124,9 @@ export default {
   },
 
   MOTION: {
-    // EXPAND: 250,
-    // COLLAPSE: 200,
+    EXPAND: 250,
+    COLLAPSE: 200,
+
     // TYPE: 'standard',
     DEFAULTS: {
       // friction: undefined,
@@ -147,5 +149,8 @@ export default {
     paddingHorizontal: SPACE.M,
     paddingVertical: SPACE.S,
     margin: SPACE.S,
+    ...Platform.select({
+      android: { elevation: 0 },
+    }),
   },
 };

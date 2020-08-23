@@ -7,7 +7,7 @@ const HORIZONTAL_PADDING = SPACE.S;
 
 export default StyleSheet.create({
   highlight: {
-    backgroundColor: COLOR.BRAND_HIGHLIGHT, // @TODO: use
+    backgroundColor: COLOR.BRAND,
     borderRadius: BORDER_RADIUS / 2,
     paddingHorizontal: HORIZONTAL_PADDING,
     paddingVertical: SPACE.XS / 2,

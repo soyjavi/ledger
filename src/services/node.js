@@ -1,7 +1,7 @@
 import { apiCall } from './modules';
 
 export const signup = async ({ fingerprint }) => {
-  const { authorization } = (await apiCall({ method: 'POST', service: 'signup', fingerprint })) || {};
+  const { authorization } = (await apiCall({ method: 'POST', service: 'signup', fingerprint }).catch(() => {})) || {};
 
   return authorization;
 };

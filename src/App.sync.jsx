@@ -52,7 +52,6 @@ export const Sync = () => {
     if (synced) snackbar.success(l10n.SYNC_DONE);
   };
 
-  console.log('>>>>>>>>>>', { connected, state });
   return (
     <>
       {stack.includes(DASHBOARD) && (

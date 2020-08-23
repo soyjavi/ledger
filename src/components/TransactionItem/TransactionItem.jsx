@@ -46,7 +46,7 @@ const TransactionItem = (props) => {
             <Col width="auto" style={type === INCOME && !maskAmount ? styles.highlight : undefined}>
               <PriceFriendly
                 bold
-                color={type === INCOME ? COLOR.BRAND : undefined}
+                color={type === INCOME ? COLOR.BACKGROUND : undefined}
                 currency={currency}
                 operator={type === EXPENSE}
                 value={value * operator}
