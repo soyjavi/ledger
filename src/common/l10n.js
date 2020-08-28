@@ -159,6 +159,9 @@ export default {
     SETTING_1_TITLE: 'Hide amounts',
     SETTING_1_CAPTION: 'Switch visibility just touching it',
     SLOGAN: 'Blockchain personal ledger',
+    SYNC_RATES_SENTENCE_1: 'Last update on',
+    SYNC_RATES_CTA: 'here',
+    SYNC_RATES_SENTENCE_2: ' to update.',
 
     STATS: 'Stats',
     STATS_CAPTION: 'In this summary you can see a breakdown of your operations in the selected category.',

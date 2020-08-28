@@ -4,7 +4,7 @@ import { LAYOUT, THEME } from 'reactor/common';
 const {
   VIEWPORT: { W },
 } = LAYOUT;
-const { BORDER_RADIUS, COLOR, FONT, SPACE } = THEME;
+const { BORDER_RADIUS, COLOR, SPACE } = THEME;
 
 const CONTENT_SIZE = W - SPACE.L * 2;
 const QR_SIZE = W - SPACE.M;
@@ -28,14 +28,11 @@ export default StyleSheet.create({
     display: 'flex',
     height: CONTENT_SIZE,
     width: CONTENT_SIZE,
-    // marginBottom: SPACE.M,
-    // marginTop: SPACE.M,
     borderRadius: BORDER_RADIUS,
     overflow: 'hidden',
   },
 
   legend: {
-    ...FONT.LEGEND,
     textAlign: 'center',
   },
 
