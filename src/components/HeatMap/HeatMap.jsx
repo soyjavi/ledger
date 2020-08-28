@@ -4,12 +4,11 @@ import React from 'react';
 import { THEME } from 'reactor/common';
 import { Col, Image, Text } from 'reactor/components';
 
-import { C, objectToQueryString } from '@common';
 import { useConnection } from '@context';
+import { ServiceLocation } from '@services';
 
 import styles, { MAP_HEIGHT, MAP_WIDTH } from './HeatMap.style';
 
-const { ENDPOINT } = C;
 const { COLOR } = THEME;
 
 export const HeatMap = ({
@@ -23,23 +22,24 @@ export const HeatMap = ({
 }) => {
   const { connected } = useConnection();
 
-  const queryString =
-    connected && points
-      ? objectToQueryString({
-          color,
-          points: JSON.stringify(points),
-          precission,
-          resolution: `${MAP_WIDTH}x${small ? Math.floor(MAP_HEIGHT / 2) : MAP_HEIGHT}@2x`,
-        })
-      : undefined;
-
   return (
     <Col>
       <Image
         resizeMode="cover"
-        source={
-          queryString ? { uri: `${ENDPOINT}/map?${queryString}&style=${darkMode ? 'dark' : 'light'}` } : undefined
-        }
+        source={{
+          uri:
+            connected && points
+              ? ServiceLocation.uriMap({
+                  color,
+                  darkMode,
+                  height: MAP_HEIGHT,
+                  points,
+                  precission,
+                  small,
+                  width: MAP_WIDTH,
+                })
+              : undefined,
+        }}
         style={[styles.container, small && styles.small, inherit.style]}
       />
       {caption && (
