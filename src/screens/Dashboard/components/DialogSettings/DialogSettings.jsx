@@ -9,7 +9,7 @@ import { Alert, Button, Dialog, Image, Row, Text, Touchable, View } from 'reacto
 import { C, onHardwareBackPress } from '@common';
 import { Heading, SliderCurrencies } from '@components';
 import { useL10N, useSnackBar, useStore } from '@context';
-import { ServiceQR, getRates } from '@services';
+import { ServiceQR, ServiceRates } from '@services';
 
 import { askCamera, changeCurrency, getBlockchain } from './DialogSettings.controller';
 import styles from './DialogSettings.style';
@@ -79,7 +79,7 @@ export const DialogSettings = ({ onClose, visible, ...inherit }) => {
 
   const handleUpdateRates = async () => {
     setSyncRates(true);
-    updateRates(await getRates({ baseCurrency }).catch(() => {}));
+    updateRates(await ServiceRates.get({ baseCurrency }).catch(() => {}));
     setSyncRates(false);
   };
 

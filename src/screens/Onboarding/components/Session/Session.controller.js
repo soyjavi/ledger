@@ -2,7 +2,7 @@ import * as LocalAuthentication from 'expo-local-authentication';
 
 import { THEME } from 'reactor/common';
 
-import { signup, getRates } from '@services';
+import { ServiceRates, signup } from '@services';
 
 const { MOTION } = THEME;
 
@@ -40,7 +40,7 @@ export const onHandshake = async ({ onSession, setBusy, store: { settings, updat
     });
   } else {
     setTimeout(async () => {
-      updateRates(await getRates({ baseCurrency }).catch(() => {}));
+      updateRates(await ServiceRates.get({ baseCurrency }).catch(() => {}));
     }, MOTION.EXPAND * 2);
   }
 

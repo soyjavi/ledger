@@ -1,6 +1,6 @@
 import * as Permissions from 'expo-permissions';
 
-import { getRates, blockchain } from '@services';
+import { ServiceRates, blockchain } from '@services';
 
 export const askCamera = async () => {
   const { status } = await Permissions.askAsync(Permissions.CAMERA);
@@ -9,7 +9,9 @@ export const askCamera = async () => {
 
 export const changeCurrency = async ({ currency, l10n, snackbar, store: { updateRates, updateSettings } }) => {
   await updateSettings({ baseCurrency: currency });
-  const rates = await getRates({ baseCurrency: currency }).catch(() => snackbar.error(l10n.ERROR_SERVICE_RATES));
+  const rates = await ServiceRates.get({ baseCurrency: currency }).catch(() =>
+    snackbar.error(l10n.ERROR_SERVICE_RATES),
+  );
   if (rates) await updateRates(rates);
 };
 

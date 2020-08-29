@@ -1,7 +1,7 @@
-import { getRates, sync } from '@services';
+import { ServiceRates, sync } from '@services';
 
 export const fetchRates = async ({ l10n, snackbar, store: { settings, updateRates } }) => {
-  const rates = await getRates(settings).catch(() => snackbar.error(l10n.ERROR_SERVICE_RATES));
+  const rates = await ServiceRates.get(settings).catch(() => snackbar.error(l10n.ERROR_SERVICE_RATES));
   if (rates) updateRates(rates);
 };
 
