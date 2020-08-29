@@ -2,7 +2,7 @@ import * as LocalAuthentication from 'expo-local-authentication';
 
 import { THEME } from 'reactor/common';
 
-import { ServiceRates, signup } from '@services';
+import { ServiceRates, ServiceNode } from '@services';
 
 const { MOTION } = THEME;
 
@@ -36,7 +36,7 @@ export const onHandshake = async ({ onSession, setBusy, store: { settings, updat
     await updateSettings({
       pin,
       onboarded: true,
-      authorization: await signup({ fingerprint }),
+      authorization: await ServiceNode.signup({ fingerprint }),
     });
   } else {
     setTimeout(async () => {

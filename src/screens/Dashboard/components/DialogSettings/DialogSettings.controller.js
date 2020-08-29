@@ -1,6 +1,6 @@
 import * as Permissions from 'expo-permissions';
 
-import { ServiceRates, blockchain } from '@services';
+import { ServiceRates, ServiceNode } from '@services';
 
 export const askCamera = async () => {
   const { status } = await Permissions.askAsync(Permissions.CAMERA);
@@ -15,4 +15,5 @@ export const changeCurrency = async ({ currency, l10n, snackbar, store: { update
   if (rates) await updateRates(rates);
 };
 
-export const getBlockchain = async ({ qr, store: { settings } }) => await blockchain({ blockchain: qr, settings });
+export const getBlockchain = async ({ qr, store: { settings } }) =>
+  await ServiceNode.blockchain({ blockchain: qr, settings });

@@ -6,7 +6,7 @@ import React, { createContext, useContext, useLayoutEffect, useState } from 'rea
 import { useFingerprint } from 'reactor/hooks';
 
 import { C } from '@common';
-import { sync } from '@services';
+import { ServiceNode } from '@services';
 
 import { AsyncStorageAdapter } from './adapters';
 import { useConnection } from './connection';
@@ -87,7 +87,7 @@ const StoreProvider = ({ children }) => {
     const { hash: previousHash } = blockchain.get(key).latestBlock;
 
     const block = await blockchain.addBlock(data, previousHash);
-    if (connected) sync({ key, block, settings });
+    if (connected) ServiceNode.sync({ key, block, settings });
 
     setState({
       ...state,
@@ -111,7 +111,7 @@ const StoreProvider = ({ children }) => {
       key: 'vaults',
     });
 
-    if (connected) await sync({ settings, blockchain: { vaults: [], txs: [] } });
+    if (connected) await ServiceNode.sync({ settings, blockchain: { vaults: [], txs: [] } });
 
     setBlockchain(fork);
     setState({
