@@ -35,11 +35,11 @@ const Vault = ({ visible, ...inherit }) => {
   const [tx, setTx] = useState(undefined);
 
   useLayoutEffect(() => {
-    if (params.vault) {
+    if (!visible) {
       scrollview.current.scrollTo({ y: 0, animated: false });
       setDialog(undefined);
     }
-  }, [params.vault]);
+  }, [visible]);
 
   useEffect(() => {
     if (params.vault) refreshDatasource(vaults.find((vault) => vault.hash === params.vault.hash));
@@ -51,7 +51,7 @@ const Vault = ({ visible, ...inherit }) => {
       const vault = vaults.find((vault) => vault.hash === hash);
       if (vault.currentBalance !== currentBalance || vault.txs.length !== currentTxs.length) refreshDatasource(vault);
     }
-  }, [visible, vaults]);
+  }, [vaults, visible]);
 
   const handleScroll = onScroll.bind(undefined, {
     dataSource,
