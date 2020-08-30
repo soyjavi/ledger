@@ -3,14 +3,12 @@ import { THEME } from 'reactor/common';
 import { useEnvironment } from 'reactor/hooks';
 
 const ENV = useEnvironment();
-const { BORDER_RADIUS, COLOR, SNACKBAR, SPACE } = THEME;
+const { BORDER_RADIUS, COLOR, SPACE } = THEME;
 
 export default StyleSheet.create({
   container: {
     backgroundColor: COLOR.BACKGROUND,
   },
-
-  snackbar: SNACKBAR,
 
   status: {
     bottom: SPACE.M,

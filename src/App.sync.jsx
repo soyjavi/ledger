@@ -72,7 +72,6 @@ export const Sync = () => {
         iconSize={SPACE.M}
         family={ICON.FAMILY}
         onClose={state === STATE.UNSYNCED ? () => setState(undefined) : undefined}
-        style={styles.snackbar}
         visible={[STATE.UNSYNCED, STATE.SYNCING].includes(state)}
       >
         {state === STATE.UNSYNCED && (
