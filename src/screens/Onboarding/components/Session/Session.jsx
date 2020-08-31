@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 import React, { useEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
-import { Row, Text, View, Viewport } from 'reactor/components';
+import { Motion, Row, Text, View, Viewport } from 'reactor/components';
 
 import { C } from '@common';
 import { useL10N, useStore } from '@context';
@@ -53,9 +53,15 @@ const Session = ({ onSession, visible, ...others }) => {
           {!busy ? (
             <>
               {['•', '•', '•', '•'].map((letter, index) => (
-                <Text key={index} headline color={pin.length <= index ? COLOR.LIGHTEN : undefined}>
-                  {letter}
-                </Text>
+                <Motion
+                  key={index}
+                  timeline={[{ property: 'scale', value: pin.length > index ? 1.5 : 1 }]}
+                  type="spring"
+                >
+                  <Text headline color={pin.length <= index ? COLOR.LIGHTEN : undefined}>
+                    {letter}
+                  </Text>
+                </Motion>
               ))}
             </>
           ) : (
