@@ -113,9 +113,14 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
           colorText={COLOR.TEXT}
           onPress={() => handleSubmit({ wipe: true })}
           marginRight="M"
-          title={l10n.WIPE}
+          text={l10n.WIPE.toUpperCase()}
         />
-        <Button {...buttonProps} colorText={COLOR.BACKGROUND} onPress={() => handleSubmit()} title={l10n.CLONE} />
+        <Button
+          {...buttonProps}
+          colorText={COLOR.BACKGROUND}
+          onPress={() => handleSubmit()}
+          text={l10n.CLONE.toUpperCase()}
+        />
       </Row>
     </Dialog>
   );

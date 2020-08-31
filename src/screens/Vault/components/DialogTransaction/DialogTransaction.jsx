@@ -88,10 +88,17 @@ const DialogTransaction = (props = {}) => {
           disabled={busy}
           marginRight="M"
           onPress={onClose}
-          title={l10n.CLOSE}
+          text={l10n.CLOSE.toUpperCase()}
           wide
         />
-        <Button delay={DELAY_PRESS_MS} disabled={busy || !valid} onPress={onSubmit} title={l10n.SAVE} wide />
+        <Button
+          colorText={COLOR.BACKGROUND}
+          delay={DELAY_PRESS_MS}
+          disabled={busy || !valid}
+          onPress={onSubmit}
+          text={l10n.SAVE.toUpperCase()}
+          wide
+        />
       </Row>
     </Dialog>
   );

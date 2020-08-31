@@ -1,25 +1,20 @@
 import { bool } from 'prop-types';
 
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { Viewport } from 'reactor/components';
+import { THEME } from 'reactor/common';
+import { Button, Viewport } from 'reactor/components';
 
 import { BANNERS, FLAGS } from '@assets';
-import {
-  Banner,
-  ButtonBack,
-  DialogClone,
-  GroupTransactions,
-  Header,
-  Heading,
-  Option,
-  ScrollView,
-  Summary,
-} from '@components';
+import { Banner, ButtonBack, DialogClone, GroupTransactions, Header, Heading, ScrollView, Summary } from '@components';
 import { useL10N, useNavigation, useStore } from '@context';
 
 import { DialogTransaction } from './components';
 import { onScroll, query } from './modules';
 import styles from './Vault.style';
+
+const { COLOR } = THEME;
+
+const buttonProps = { color: COLOR.BASE, colorText: COLOR.TEXT };
 
 const Vault = ({ visible, ...inherit }) => {
   const l10n = useL10N();
@@ -78,11 +73,11 @@ const Vault = ({ visible, ...inherit }) => {
 
       <ScrollView onScroll={handleScroll} ref={scrollview} style={styles.container}>
         <Summary {...vaultProps} currency={currency}>
-          <Option icon="arrow-up" onPress={() => setDialog(1)} caption={l10n.INCOME} />
-          <Option icon="arrow-down" onPress={() => setDialog(0)} caption={l10n.EXPENSE} />
-          {vaults.length > 1 ? (
-            <Option icon="shuffle" onPress={() => setDialog(2)} caption={l10n.TRANSFER} />
-          ) : undefined}
+          <Button {...buttonProps} icon="arrow-up" onPress={() => setDialog(1)} text={l10n.INCOME.toUpperCase()} />
+          <Button {...buttonProps} icon="arrow-down" onPress={() => setDialog(0)} text={l10n.EXPENSE.toUpperCase()} />
+          {vaults.length > 1 && (
+            <Button {...buttonProps} icon="shuffle" onPress={() => setDialog(2)} text={l10n.SWAP.toUpperCase()} />
+          )}
         </Summary>
 
         {txs.length > 0 ? (

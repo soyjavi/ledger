@@ -11,8 +11,8 @@ export default StyleSheet.create({
   container: {
     bottom: SPACE.M,
     position: ENV.IS_WEB ? 'fixed' : 'absolute',
-    right: SPACE.M,
-    zIndex: 2,
+    right: 0,
     width: OPTION_SIZE,
+    zIndex: 2,
   },
 });

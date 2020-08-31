@@ -53,14 +53,15 @@ export const DialogVault = ({ onClose, visible }) => {
           disabled={busy}
           marginRight="M"
           onPress={onClose}
-          title={l10n.CLOSE.toUpperCase()}
+          text={l10n.CLOSE.toUpperCase()}
           wide
         />
         <Button
+          colorText={COLOR.BACKGROUND}
           delay={DELAY_PRESS_MS}
           disabled={busy || form.title === undefined}
           onPress={handleSubmit}
-          title={l10n.SAVE.toUpperCase()}
+          text={l10n.SAVE.toUpperCase()}
           wide
         />
       </Row>

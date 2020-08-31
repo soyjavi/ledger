@@ -77,15 +77,15 @@ const Summary = ({ children, currency = CURRENCY, currentBalance, currentMonth =
       </Col>
 
       {children && (
-        <Row justify="center" style={styles.buttons}>
-          {React.Children.map(children, (option, index) =>
-            option
-              ? React.cloneElement(option, {
+        <Row marginTop="S">
+          {React.Children.map(children, (button, index) =>
+            button
+              ? React.cloneElement(button, {
                   key: index,
                   color: COLOR.BACKGROUND,
-                  elevate: true,
-                  marginRight: index < children.length - 1 ? 'M' : undefined,
-                  ...option.props,
+                  marginRight: index < children.length - 1 ? 'S' : undefined,
+                  style: styles.button,
+                  ...button.props,
                 })
               : undefined,
           )}

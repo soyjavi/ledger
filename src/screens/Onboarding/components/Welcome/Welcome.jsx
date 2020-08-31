@@ -13,7 +13,7 @@ const Welcome = ({ onPress, ...inherit }) => {
   return (
     <Viewport {...inherit}>
       <Banner align="left" image={BANNERS.SEND} marginBottom="XL" title={l10n.SLOGAN} caption={l10n.ELEVATOR_PITCH} />
-      <Button onPress={onPress} title={l10n.GET_STARTED} />
+      <Button onPress={onPress} text={l10n.GET_STARTED} />
     </Viewport>
   );
 };

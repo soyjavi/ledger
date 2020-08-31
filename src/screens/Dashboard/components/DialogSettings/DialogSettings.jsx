@@ -42,6 +42,7 @@ export const DialogSettings = ({ onClose, visible, ...inherit }) => {
   useEffect(() => {
     if (!visible) setCamera(false);
     else if (hasCamera === undefined) setHasCamera(askCamera());
+
     onHardwareBackPress(visible, onClose);
 
     return () => onHardwareBackPress(false);
@@ -92,7 +93,7 @@ export const DialogSettings = ({ onClose, visible, ...inherit }) => {
 
         <Heading marginTop="L" small value={l10n.TRANSFER_TXS}>
           {hasCamera && (
-            <Button onPress={() => setCamera(!camera)} size="S" title={camera ? l10n.CLOSE : l10n.QR_READER} />
+            <Button onPress={() => setCamera(!camera)} size="S" text={camera ? l10n.CLOSE : l10n.QR_READER} />
           )}
         </Heading>
 

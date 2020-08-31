@@ -47,7 +47,7 @@ export const Search = ({ onValue }) => {
       />
       <Col marginLeft="S" width="auto">
         {value.length > 0 && (
-          <Button colorText={COLOR.BACKGROUND} onPress={() => setValue('')} size="S" title={l10n.CLEAR} />
+          <Button colorText={COLOR.BACKGROUND} onPress={() => setValue('')} size="S" text={l10n.CLEAR.toUpperCase()} />
         )}
       </Col>
     </Row>
