@@ -3,8 +3,7 @@ import { THEME } from 'reactor/common';
 import { useEnvironment } from 'reactor/hooks';
 
 const ENV = useEnvironment();
-const { BORDER_RADIUS, ELEVATION, UNIT, COLOR, SPACE } = THEME;
-const IMAGE_SIZE = SPACE.M + SPACE.XS;
+const { ELEVATION, UNIT, COLOR } = THEME;
 
 export const HEADER_HEIGHT = UNIT * 8;
 
@@ -21,13 +20,6 @@ export default StyleSheet.create({
   content: {
     flex: 1,
     minWidth: '60%',
-  },
-
-  image: {
-    alignSelf: 'center',
-    borderRadius: BORDER_RADIUS / 2,
-    height: IMAGE_SIZE,
-    width: IMAGE_SIZE,
   },
 
   solid: {

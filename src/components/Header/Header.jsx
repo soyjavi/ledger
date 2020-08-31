@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 
 import React from 'react';
-import { Image } from 'react-native';
 import { THEME } from 'reactor/common';
 import { Col, Icon, Motion, Row, Text, Touchable } from 'reactor/components';
 
@@ -13,7 +12,7 @@ export { HEADER_HEIGHT };
 
 const { ICON, MOTION } = THEME;
 
-export const Header = ({ children, highlight = false, image = LOGO, onBack, title }) => (
+export const Header = ({ children, highlight = false, onBack, title }) => (
   <Row paddingHorizontal="M" style={[styles.container, highlight && styles.solid]}>
     <Col align="start">
       {onBack && (
@@ -27,7 +26,6 @@ export const Header = ({ children, highlight = false, image = LOGO, onBack, titl
         duration={highlight ? MOTION.EXPAND : MOTION.COLLAPSE}
         timeline={[{ property: 'opacity', value: highlight ? 1 : 0 }]}
       >
-        <Image source={image} style={styles.image} />
         <Text subtitle>{title}</Text>
       </Motion>
     </Col>
@@ -38,7 +36,6 @@ export const Header = ({ children, highlight = false, image = LOGO, onBack, titl
 Header.propTypes = {
   children: PropTypes.node,
   highlight: PropTypes.bool,
-  image: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   onBack: PropTypes.func,
   title: PropTypes.string,
 };
