@@ -1,7 +1,7 @@
 {
   "name": "voltvault-app",
   "description": "Your private finance ledger running on your own blockchain",
-  "version": "0.22.12",
+  "version": "0.22.14",
   "license": "LGPL-3.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
