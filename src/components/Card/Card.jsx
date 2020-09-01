@@ -48,7 +48,15 @@ export const Card = ({ balance, currency, disabled, onPress, percentage, title =
           <View style={styles.expand} />
 
           {percentage ? (
-            <PriceFriendly caption currency="%" operator={others.operator} value={percentage} />
+            <PriceFriendly
+              bold={others.bold}
+              caption
+              color={others.color}
+              currency="%"
+              highlight={others.highlight}
+              operator={others.operator}
+              value={percentage}
+            />
           ) : (
             <Text caption color={COLOR.LIGHTEN}>
               {l10n.WITHOUT_TXS}

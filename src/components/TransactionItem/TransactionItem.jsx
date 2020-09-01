@@ -10,7 +10,6 @@ import { useStore } from '@context';
 import { Box } from '../Box';
 import { PriceFriendly } from '../PriceFriendly';
 import { formatCaption } from './modules';
-import styles from './TransactionItem.style';
 
 const {
   TX: {
@@ -21,7 +20,7 @@ const { COLOR, ICON, SPACE } = THEME;
 
 const TransactionItem = (props) => {
   const {
-    settings: { baseCurrency, maskAmount },
+    settings: { baseCurrency },
     rates,
   } = useStore();
   const { category, currency, location, timestamp, title, type = EXPENSE, value, onPress } = props;
@@ -43,11 +42,12 @@ const TransactionItem = (props) => {
                 {title}
               </Text>
             </Col>
-            <Col width="auto" style={type === INCOME && !maskAmount ? styles.highlight : undefined}>
+            <Col width="auto">
               <PriceFriendly
                 bold
-                color={type === INCOME ? COLOR.BACKGROUND : undefined}
+                color={type === INCOME ? COLOR.BRAND : undefined}
                 currency={currency}
+                highlight={type === INCOME}
                 operator={type === EXPENSE}
                 value={value * operator}
               />

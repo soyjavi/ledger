@@ -26,6 +26,7 @@ export default StyleSheet.create({
     flex: 1,
     paddingHorizontal: SPACE.M,
     paddingVertical: SPACE.S + SPACE.XS,
+    alignItems: 'flex-start',
   },
 
   expand: {

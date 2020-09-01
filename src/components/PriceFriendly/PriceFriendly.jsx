@@ -8,6 +8,8 @@ import { format } from 'reactor/components/Price/modules';
 import { C, currencyDecimals } from '@common';
 import { useStore } from '@context';
 
+import styles from './PriceFriendly.style';
+
 const MASK_SYMBOL = '*';
 const { COLOR } = THEME;
 const { SYMBOL } = C;
@@ -16,7 +18,7 @@ const maskValue = ({ value }) =>
     value: value >= 1000 ? 9999 : 9.99,
   }).replace(/[0-9]/gi, MASK_SYMBOL);
 
-const PriceFriendly = ({ currency, fixed, label, operator, maskAmount, value = 0, ...others }) => {
+const PriceFriendly = ({ currency, fixed, highlight, label, operator, maskAmount, value = 0, ...others }) => {
   const { settings } = useStore();
 
   const maskedAmount = maskAmount || settings.maskAmount;
@@ -42,7 +44,7 @@ const PriceFriendly = ({ currency, fixed, label, operator, maskAmount, value = 0
   };
 
   return (
-    <Row width="auto">
+    <Row style={highlight && !maskAmount ? styles.highlight : undefined} width="auto">
       {label && (
         <Text color={color} {...others}>
           {label}
@@ -62,6 +64,7 @@ const PriceFriendly = ({ currency, fixed, label, operator, maskAmount, value = 0
 PriceFriendly.propTypes = {
   currency: string,
   fixed: number,
+  highlight: bool,
   label: string,
   maskAmount: bool,
   operator: bool,

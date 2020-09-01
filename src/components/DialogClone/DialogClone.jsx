@@ -15,7 +15,7 @@ import { createTx } from './DialogClone.controller';
 const {
   DELAY_PRESS_MS,
   TX: {
-    TYPE: { EXPENSE },
+    TYPE: { EXPENSE, INCOME },
   },
 } = C;
 const { COLOR } = THEME;
@@ -67,14 +67,12 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
             <Col width="auto">
               <PriceFriendly
                 bold
-                currency={baseCurrency}
+                color={type === INCOME ? COLOR.BRAND : undefined}
+                currency={currency}
+                highlight={type === INCOME}
                 maskAmount={false}
-                operator
-                value={
-                  baseCurrency !== currency
-                    ? exchange(value * operator, currency, baseCurrency, rates)
-                    : value * operator
-                }
+                operator={type === EXPENSE}
+                value={value * operator}
               />
             </Col>
           </Row>
@@ -89,10 +87,10 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
                 <PriceFriendly
                   caption
                   color={COLOR.LIGHTEN}
-                  currency={currency}
+                  currency={baseCurrency}
                   maskAmount={false}
-                  operator
-                  value={value * operator}
+                  operator={type === EXPENSE}
+                  value={exchange(value * operator, currency, baseCurrency, rates)}
                 />
               )}
             </Col>

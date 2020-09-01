@@ -7,10 +7,11 @@ const HORIZONTAL_PADDING = SPACE.S;
 
 export default StyleSheet.create({
   highlight: {
-    backgroundColor: COLOR.BRAND,
+    backgroundColor: COLOR.BRAND_OPACITY,
     borderRadius: BORDER_RADIUS / 2,
     paddingHorizontal: HORIZONTAL_PADDING,
     paddingVertical: SPACE.XS / 2,
     marginRight: -HORIZONTAL_PADDING,
+    // width: 'auto',
   },
 });
