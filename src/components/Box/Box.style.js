@@ -1,15 +1,13 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from 'reactor/common';
 
-const { ELEVATION, SPACE } = THEME;
+const { SPACE } = THEME;
 
 export default StyleSheet.create({
   container: {
-    minHeight: SPACE.XL + SPACE.XS,
-    minWidth: SPACE.XL + SPACE.XS,
-    zIndex: 1,
+    minHeight: SPACE.XL + SPACE.S,
+    minWidth: SPACE.XL + SPACE.S,
     justifyContent: 'center',
+    zIndex: 1,
   },
-
-  elevation: ELEVATION,
 });

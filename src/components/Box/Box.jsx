@@ -8,13 +8,12 @@ import styles from './Box.style';
 
 const { BORDER_RADIUS, COLOR } = THEME;
 
-const Box = ({ borderRadius = BORDER_RADIUS, children, color = COLOR.BASE, elevate, outlined, ...others }) => (
+const Box = ({ borderRadius = BORDER_RADIUS, children, color = COLOR.BASE, outlined, ...others }) => (
   <Col
     {...others}
     align="center"
     style={[
       styles.container,
-      elevate && styles.elevation,
       outlined ? { borderRadius, borderWidth: 1, borderColor: color } : { borderRadius, backgroundColor: color },
       others.style,
     ]}
@@ -27,7 +26,6 @@ Box.propTypes = {
   borderRadius: number,
   children: node,
   color: string,
-  elevate: bool,
   opacity: number,
   outlined: bool,
 };
