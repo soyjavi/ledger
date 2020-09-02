@@ -13,17 +13,34 @@ const FONT_FAMILY = {
   fontWeight: '400',
 };
 
-const FONT_FAMILY_BOLD = {
-  fontFamily: 'font-family-bold',
+const FONT_FAMILY_MEDIUM = {
+  fontFamily: 'font-family-medium',
   fontWeight: '500',
 };
 
+const FONT_FAMILY_SEMIBOLD = {
+  fontFamily: 'font-family-semibold',
+  fontWeight: '600',
+};
+
+// LIGHT-MODE
 const BACKGROUND = '#ffffff';
 const BASE = '#rgba(246, 246, 249, 1)';
-const BORDER_RADIUS = SPACE.S;
-const LIGHTEN = '#B3B3B3';
+const CTA = '#000000';
+const DIALOG = '#ffffff';
 const OVERLAY = 'rgba(255, 255, 255, 0.8)';
 const TEXT = '#1A1A1A';
+
+// DARK-MODE
+// const BACKGROUND = '#080909';
+// const BASE = '#252525'; //'#262828';
+// const CTA = '#fefdfa';
+// const DIALOG = '#19191B';
+// const OVERLAY = 'rgba(0, 0, 0, 0.8)';
+// const TEXT = '#fefdfa';
+
+const BORDER_RADIUS = SPACE.S;
+const LIGHTEN = '#B3B3B3';
 
 const ELEVATION = {
   shadowColor: '#000000',
@@ -39,10 +56,9 @@ export default {
   BORDER_RADIUS,
 
   COLOR: {
-    // BRAND: '#19CEAB',
-    // BRAND: '#42f2cb',
     BRAND: '#3DDC84',
-    CTA: '#000000',
+    BRAND_OPACITY: 'rgba(0, 192, 123, 0.1)',
+    CTA,
     // BLACK
     // WHITE
     // GRAY
@@ -64,7 +80,8 @@ export default {
   FONT: {
     DEFAULT: FONT_FAMILY,
     SECONDARY: FONT_FAMILY_HEADLINE,
-    BOLD: FONT_FAMILY_BOLD,
+    BOLD: FONT_FAMILY_MEDIUM,
+    EXTRA_BOLD: FONT_FAMILY_SEMIBOLD,
     HEADLINE: {
       ...FONT_FAMILY_HEADLINE,
       fontSize: 36,
@@ -74,8 +91,8 @@ export default {
       fontSize: 24,
     },
     BODY: {
-      fontSize: 13,
-      lineHeight: 13 * 1.5,
+      fontSize: 14,
+      lineHeight: 14 * 1.5,
     },
     CAPTION: {
       fontSize: 11,
@@ -85,13 +102,16 @@ export default {
       lineHeight: 9,
     },
     BUTTON: {
-      ...FONT_FAMILY_BOLD,
-      fontSize: 10,
-      letterSpacing: 1,
+      ...FONT_FAMILY_SEMIBOLD,
+      fontSize: 12,
+      letterSpacing: 0.1,
+    },
+    BUTTON_SMALL: {
+      fontSize: 11,
     },
     INPUT: {
-      ...FONT_FAMILY_BOLD,
-      fontSize: 13,
+      ...FONT_FAMILY_MEDIUM,
+      fontSize: 14,
     },
   },
 
@@ -101,7 +121,7 @@ export default {
 
   DIALOG: {
     ...ELEVATION,
-    backgroundColor: BACKGROUND,
+    backgroundColor: DIALOG,
     borderRadius: SPACE.M,
     padding: SPACE.L,
   },
@@ -111,12 +131,11 @@ export default {
   DIALOG_OVERLAY: {
     backgroundColor: OVERLAY,
   },
-
   INPUT: {
     backgroundColor: BACKGROUND,
     borderColor: BASE,
     borderWidth: 0,
-    borderBottomWidth: 1,
+    borderBottomWidth: 10,
     paddingHorizontal: 0,
   },
   INPUT_FOCUS: {
