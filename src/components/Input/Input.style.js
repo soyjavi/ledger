@@ -22,6 +22,7 @@ export default StyleSheet.create({
   },
 
   input: {
+    color: COLOR.TEXT,
     padding: 0,
     margin: 0,
     height: SPACE.XXL,

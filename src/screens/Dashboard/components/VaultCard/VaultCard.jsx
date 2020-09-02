@@ -1,11 +1,8 @@
 import PropTypes from 'prop-types';
 
 import React from 'react';
-import { THEME } from 'reactor/common';
 
 import { Card } from '@components';
-
-const { COLOR } = THEME;
 
 export const VaultCard = ({ currency, currentBalance, currentMonth: { progression }, title = '', ...others }) => {
   const percentage = progression
@@ -18,11 +15,9 @@ export const VaultCard = ({ currency, currentBalance, currentMonth: { progressio
     <Card
       {...others}
       balance={currentBalance}
-      bold={percentage > 0}
-      color={percentage > 0 ? COLOR.BRAND : COLOR.LIGHTEN}
+      bold
       currency={currency}
-      highlight={percentage > 0}
-      operator={percentage < 0}
+      operator
       percentage={percentage}
       title={title}
     />

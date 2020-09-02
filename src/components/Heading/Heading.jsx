@@ -9,7 +9,7 @@ const { COLOR } = THEME;
 const Heading = ({ children, small, value = '', ...others }) => (
   <Row {...others}>
     <Col>
-      <Text bold={small} color={small ? COLOR.LIGHTEN : undefined} subtitle={!small}>
+      <Text bold={small} caption={small} color={small ? COLOR.LIGHTEN : undefined} subtitle={!small}>
         {small ? value.toUpperCase() : value}
       </Text>
     </Col>

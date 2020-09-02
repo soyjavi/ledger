@@ -10,8 +10,8 @@ import styles from '../Chart.style';
 const ChartHeading = ({ inverted, max, min, title, ...others }) => (
   <Heading marginBottom="XS" style={inverted ? { position: 'absolute', bottom: 0 } : undefined} value={title}>
     <Row marginTop="S" width="auto">
-      {min > 0 && <PriceFriendly {...others} bold label="min " value={min} style={styles.legend} />}
-      {max > 0 && <PriceFriendly {...others} bold label="  max " value={max} style={styles.legend} />}
+      {min > 0 && <PriceFriendly {...others} bold caption label="min " value={min} style={styles.legend} />}
+      {max > 0 && <PriceFriendly {...others} bold caption label="  max " value={max} style={styles.legend} />}
     </Row>
   </Heading>
 );

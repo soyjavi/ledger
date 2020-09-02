@@ -60,6 +60,7 @@ export const Dashboard = ({ visible, ...inherit }) => {
             <Heading paddingLeft="M" paddingRight="S" small value={l10n.VAULTS}>
               <Button
                 color={COLOR.BACKGROUND}
+                colorText={COLOR.TEXT}
                 onPress={() => navigation.go(SCREEN.VAULTS)}
                 size="S"
                 text={l10n.VIEW_ALL.toUpperCase()}

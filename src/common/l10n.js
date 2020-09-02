@@ -46,7 +46,7 @@ export default {
         11: 'Services',
         12: 'Transfer',
         13: 'Others',
-        99: 'Internal Transfer',
+        99: 'Swap',
       },
       {
         // Incomes
@@ -56,7 +56,7 @@ export default {
         3: 'Pasives',
         4: 'Transfer',
         5: 'Others',
-        99: 'Internal Transfer',
+        99: 'Swap',
       },
     ],
     CATEGORY: 'Category',
@@ -171,11 +171,12 @@ export default {
     SYNC_NOW: 'SYNC NOW',
     SYNC_BUSY: 'Wait a bit meanwhile your transactions get sync.',
     SYNC_DONE: 'All your transactions have been synced.',
+    SWAP: 'SWAP',
 
     TAP_TO_UPDATE: 'Tap to update',
     TO: 'to',
     TODAY: 'Today',
-    TRANSACTION: ['Expense', 'Income', 'Transfer'],
+    TRANSACTION: ['Expense', 'Income', 'Swap'],
     TRANSACTIONS: 'Transactions',
     TRANSFER: 'Transfer',
     TRANSFERS: 'Transfers',

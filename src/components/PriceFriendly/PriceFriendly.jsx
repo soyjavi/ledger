@@ -46,7 +46,7 @@ const PriceFriendly = ({ currency, fixed, highlight, label, operator, maskAmount
   return (
     <Row style={highlight && !maskAmount ? styles.highlight : undefined} width="auto">
       {label && (
-        <Text color={color} {...others}>
+        <Text {...others} color={color}>
           {label}
         </Text>
       )}
@@ -55,7 +55,7 @@ const PriceFriendly = ({ currency, fixed, highlight, label, operator, maskAmount
           {maskValue(props)}
         </Text>
       ) : (
-        <Price {...props} />
+        <Price {...props} style={[others.style, others.caption ? styles.bold : undefined]} />
       )}
     </Row>
   );

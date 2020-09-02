@@ -49,6 +49,7 @@ const Vaults = ({ visible, ...inherit }) => {
               {currencies.map(({ base, currency, ...item }, index) => (
                 <Card
                   {...item}
+                  bold
                   currency={currency}
                   disabled={currency !== selected}
                   key={currency}

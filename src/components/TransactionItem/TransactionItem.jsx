@@ -28,9 +28,9 @@ const TransactionItem = (props) => {
 
   return (
     <Touchable onPress={onPress ? () => onPress(props) : undefined}>
-      <Row align="start" paddingHorizontal="M" paddingVertical="S">
+      <Row align="center" paddingHorizontal="M" paddingVertical="S">
         <Col marginRight="S" width="auto">
-          <Box small>
+          <Box>
             <Icon family={ICON.FAMILY} size={SPACE.M} value={getIconCategory({ type, category, title })} />
           </Box>
         </Col>
@@ -62,7 +62,6 @@ const TransactionItem = (props) => {
             <Col width="auto">
               {baseCurrency !== currency && (
                 <PriceFriendly
-                  bold
                   caption
                   color={COLOR.LIGHTEN}
                   currency={baseCurrency}

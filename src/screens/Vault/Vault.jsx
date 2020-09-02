@@ -63,16 +63,15 @@ const Vault = ({ visible, ...inherit }) => {
   };
 
   const { currency = baseCurrency, title, ...rest } = dataSource;
-  const vaultProps = { ...rest, image: FLAGS[currency], title };
 
   console.log('  <Vault>', { visible, dialog });
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
-      <Header highlight={scroll} {...vaultProps} onBack={scroll ? navigation.back : undefined} />
+      <Header highlight={scroll} image={FLAGS[currency]} title={title} onBack={scroll ? navigation.back : undefined} />
 
       <ScrollView onScroll={handleScroll} ref={scrollview} style={styles.container}>
-        <Summary {...vaultProps} currency={currency}>
+        <Summary {...rest} image={FLAGS[currency]} title={title} currency={currency}>
           <Button {...buttonProps} icon="arrow-up" onPress={() => setDialog(1)} text={l10n.INCOME.toUpperCase()} />
           <Button {...buttonProps} icon="arrow-down" onPress={() => setDialog(0)} text={l10n.EXPENSE.toUpperCase()} />
           {vaults.length > 1 && (
