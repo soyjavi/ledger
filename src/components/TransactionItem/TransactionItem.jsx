@@ -30,15 +30,24 @@ const TransactionItem = (props) => {
     <Touchable onPress={onPress ? () => onPress(props) : undefined}>
       <Row align="center" paddingHorizontal="M" paddingVertical="S">
         <Col marginRight="S" width="auto">
-          <Box>
-            <Icon family={ICON.FAMILY} size={SPACE.M} value={getIconCategory({ type, category, title })} />
+          <Box color={type === INCOME ? COLOR.BRAND_OPACITY : undefined}>
+            <Icon
+              color={type === INCOME ? COLOR.BRAND : undefined}
+              family={ICON.FAMILY}
+              size={SPACE.M}
+              value={getIconCategory({ type, category, title })}
+            />
           </Box>
         </Col>
 
         <Col>
           <Row>
             <Col>
-              <Text bold numberOfLines={1}>
+              <Text
+                bold
+                // color={type === INCOME ? COLOR.BRAND : undefined}
+                numberOfLines={1}
+              >
                 {title}
               </Text>
             </Col>

@@ -24,23 +24,24 @@ const FONT_FAMILY_SEMIBOLD = {
 };
 
 // LIGHT-MODE
-const BACKGROUND = '#ffffff';
-const BASE = '#rgba(246, 246, 249, 1)';
-const CTA = '#000000';
-const DIALOG = '#ffffff';
-const OVERLAY = 'rgba(255, 255, 255, 0.8)';
-const TEXT = '#1A1A1A';
+// const BACKGROUND = '#ffffff';
+// const BASE = '#rgba(246, 246, 249, 1)';
+// const CTA = '#000000';
+// const DIALOG = '#ffffff';
+// const OVERLAY = 'rgba(255, 255, 255, 0.8)';
+// const TEXT = '#1A1A1A';
+// const LIGHTEN = '#B3B3B3';
 
 // DARK-MODE
-// const BACKGROUND = '#080909';
-// const BASE = '#252525'; //'#262828';
-// const CTA = '#fefdfa';
-// const DIALOG = '#19191B';
-// const OVERLAY = 'rgba(0, 0, 0, 0.8)';
-// const TEXT = '#fefdfa';
+const BACKGROUND = '#080909';
+const BASE = '#252525'; //'#262828';
+const CTA = '#fefdfa';
+const DIALOG = '#19191B';
+const OVERLAY = 'rgba(0, 0, 0, 0.95)';
+const TEXT = '#fefdfa';
+const LIGHTEN = 'rgba(255,255,255,0.6)';
 
 const BORDER_RADIUS = SPACE.S;
-const LIGHTEN = '#B3B3B3';
 
 const ELEVATION = {
   shadowColor: '#000000',
@@ -56,8 +57,11 @@ export default {
   BORDER_RADIUS,
 
   COLOR: {
-    BRAND: '#3DDC84',
-    BRAND_OPACITY: 'rgba(0, 192, 123, 0.1)',
+    // BRAND: '#3DDC84',
+    // BRAND_OPACITY: 'rgba(0, 192, 123, 0.1)',
+    BRAND: '#01c07b',
+    BRAND_OPACITY: 'rgba(1, 192, 123, 0.1)',
+
     CTA,
     // BLACK
     // WHITE
@@ -65,6 +69,7 @@ export default {
 
     BACKGROUND,
     BASE,
+    DIALOG,
     ERROR: '#fb5662',
     // SUCCESS,
     TEXT,

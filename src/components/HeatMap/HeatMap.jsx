@@ -14,7 +14,7 @@ const { COLOR } = THEME;
 export const HeatMap = ({
   caption,
   color = COLOR.BRAND,
-  darkMode = false,
+  darkMode = true,
   points,
   precission = 0.001,
   small,

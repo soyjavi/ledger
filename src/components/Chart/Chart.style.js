@@ -8,7 +8,7 @@ const COLUMN_HEIGHT = COLUMN_WIDTH * 8;
 
 export default StyleSheet.create({
   bar: {
-    backgroundColor: COLOR.LIGHTEN,
+    backgroundColor: COLOR.BASE,
     borderTopLeftRadius: COLUMN_RADIUS,
     borderTopRightRadius: COLUMN_RADIUS,
     maxHeight: '100%',

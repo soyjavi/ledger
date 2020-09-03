@@ -36,7 +36,7 @@ export const Dashboard = ({ visible, ...inherit }) => {
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
-      <Header highlight={scroll} title={l10n.OVERALL_BALANCE} />
+      <Header highlight={scroll} />
 
       <ScrollView contentContainerStyle={styles.scroll} onScroll={(value) => setScroll(value)}>
         <Summary {...overall} currency={baseCurrency} title={l10n.OVERALL_BALANCE}>
@@ -81,7 +81,7 @@ export const Dashboard = ({ visible, ...inherit }) => {
 
             {lastTxs.length > 0 && (
               <>
-                <Heading paddingLeft="M" paddingRight="S" small value={l10n.LAST_TRANSACTIONS} />
+                <Heading marginTop="M" paddingLeft="M" paddingRight="S" small value={l10n.LAST_TRANSACTIONS} />
                 <Search onValue={setSearchTxs} />
                 {(searchTxs || lastTxs).map((item) => (
                   <GroupTransactions {...item} key={`${item.timestamp}`} currency={baseCurrency} onPress={setTx} />
