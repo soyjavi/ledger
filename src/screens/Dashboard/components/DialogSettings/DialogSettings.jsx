@@ -42,6 +42,7 @@ export const DialogSettings = ({ onClose, visible, ...inherit }) => {
   useEffect(() => {
     if (!visible) setCamera(false);
     else if (hasCamera === undefined) setHasCamera(askCamera());
+    // else setQr('41B17C23-F1A6-46EE-9EEA-6D8AF3EADD33|backup');
 
     onHardwareBackPress(visible, onClose);
 
@@ -87,13 +88,19 @@ export const DialogSettings = ({ onClose, visible, ...inherit }) => {
   return (
     <>
       <Dialog {...inherit} onClose={onClose} position="bottom" visible={visible}>
-        <Text marginTop="S" subtitle>
-          {l10n.SETTINGS}
-        </Text>
+        <Row justify="center" marginVertical="L">
+          <Text headline>{l10n.SETTINGS}</Text>
+        </Row>
 
-        <Heading marginTop="L" small value={l10n.TRANSFER_TXS}>
+        <Heading small value={l10n.TRANSFER_TXS}>
           {hasCamera && (
-            <Button onPress={() => setCamera(!camera)} size="S" text={camera ? l10n.CLOSE : l10n.QR_READER} />
+            <Button
+              color={COLOR.TEXT}
+              onPress={() => setCamera(!camera)}
+              outlined
+              size="S"
+              text={camera ? l10n.CLOSE.toUpperCase() : l10n.QR_READER.toUpperCase()}
+            />
           )}
         </Heading>
 

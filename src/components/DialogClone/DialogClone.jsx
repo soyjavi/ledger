@@ -21,12 +21,13 @@ const {
 const { COLOR } = THEME;
 
 const DialogClone = ({ dataSource = {}, ...inherit }) => {
-  const { category, currency, value, location, title, timestamp, type = EXPENSE } = dataSource;
+  const { category, currency, vault, value, location, title, timestamp, type = EXPENSE } = dataSource;
 
   const l10n = useL10N();
   const store = useStore();
   const {
     settings: { baseCurrency },
+    vaults,
     rates,
   } = store;
 
@@ -48,11 +49,13 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
   const operator = type === EXPENSE ? -1 : 1;
   const buttonProps = { delay: DELAY_PRESS_MS, disabled: busy, wide: true };
 
+  const vaultInfo = vaults.find(({ hash }) => hash === vault);
+
   return (
     <Dialog {...inherit} position="bottom">
-      <Text marginTop="S" marginBottom="M" subtitle>
-        {type === EXPENSE ? l10n.EXPENSE : l10n.INCOME}
-      </Text>
+      <Row justify="center" marginVertical="L">
+        <Text headline>{title ? title : type === EXPENSE ? l10n.EXPENSE : l10n.INCOME}</Text>
+      </Row>
       <Row>
         <Col marginRight="S" width="auto">
           <BoxDate l10n={l10n} timestamp={timestamp} />
@@ -61,7 +64,7 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
           <Row>
             <Col>
               <Text bold numberOfLines={1}>
-                {title}
+                {vaultInfo ? vaultInfo.title : undefined}
               </Text>
             </Col>
             <Col width="auto">
@@ -107,9 +110,9 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
       <Row marginTop="M">
         <Button
           {...buttonProps}
-          color={COLOR.BASE}
-          colorText={COLOR.TEXT}
+          color={COLOR.TEXT}
           onPress={() => handleSubmit({ wipe: true })}
+          outlined
           marginRight="M"
           text={l10n.WIPE.toUpperCase()}
         />
