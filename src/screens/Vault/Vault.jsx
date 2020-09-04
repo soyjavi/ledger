@@ -12,9 +12,9 @@ import { DialogTransaction } from './components';
 import { onScroll, query } from './modules';
 import styles from './Vault.style';
 
-const { COLOR } = THEME;
+const { COLOR, ICON } = THEME;
 
-const buttonProps = { color: COLOR.BASE, colorText: COLOR.TEXT };
+const buttonProps = { color: COLOR.BASE, colorText: COLOR.TEXT, iconFamily: ICON.FAMILY };
 
 const Vault = ({ visible, ...inherit }) => {
   const l10n = useL10N();

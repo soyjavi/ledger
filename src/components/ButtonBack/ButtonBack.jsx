@@ -8,7 +8,7 @@ import { onHardwareBackPress } from '@common';
 
 import styles from './ButtonBack.style';
 
-const { COLOR, SPACE } = THEME;
+const { COLOR, ICON, SPACE } = THEME;
 
 export const ButtonBack = ({ onPress, visible }) => {
   useEffect(() => {
@@ -19,7 +19,7 @@ export const ButtonBack = ({ onPress, visible }) => {
 
   return (
     <Motion style={styles.container} timeline={[{ property: 'translateX', value: visible ? 0 : SPACE.XXL * 2 }]}>
-      <Button color={COLOR.BASE} colorText={COLOR.TEXT} icon="arrow-left" onPress={onPress} />
+      <Button color={COLOR.BASE} colorText={COLOR.TEXT} icon="arrow-left" iconFamily={ICON.FAMILY} onPress={onPress} />
     </Motion>
   );
 };
