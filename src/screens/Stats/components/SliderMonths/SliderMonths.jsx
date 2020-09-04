@@ -37,7 +37,7 @@ const SliderMonths = ({ index, onChange, ...others }) => {
             selected={index === i}
             caption={l10n.MONTHS[month].substr(0, 3).toUpperCase()}
           >
-            <Text bold caption color={index === i ? COLOR.BACKGROUND : COLOR.LIGHTEN}>
+            <Text bold caption color={COLOR.LIGHTEN}>
               {year}
             </Text>
           </Option>

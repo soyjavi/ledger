@@ -48,32 +48,43 @@ const Summary = ({ children, currency = CURRENCY, currentBalance, currentMonth =
   const progressionPercentage =
     currentBalance - progression > 0 ? (progression * 100) / (currentBalance - progression) : progression;
 
+  const showCurrentBalance = currentBalance !== undefined;
+
   return (
     <View style={styles.container}>
       <Col align="center" style={styles.content}>
         <Image source={image} resizeMode="contain" style={styles.image} />
-        <Col align="center" marginBottom="M">
-          <Text subtitle>{title}</Text>
-          <Touchable onPress={() => updateSettings({ maskAmount: !maskAmount })}>
-            <PriceFriendly currency={currency} headline value={Math.abs(currentBalance)} />
-          </Touchable>
-          {baseCurrency !== currency && (
-            <PriceFriendly
-              color={COLOR.LIGHTEN}
-              currency={baseCurrency}
-              subtitle
-              value={exchange(Math.abs(currentBalance), currency, baseCurrency, rates)}
-              style={styles.baseCurrency}
-            />
+        <Col align="center" marginBottom={showCurrentBalance ? 'M' : undefined}>
+          <Text headline={!showCurrentBalance} subtitle>
+            {title}
+          </Text>
+
+          {showCurrentBalance && (
+            <>
+              <Touchable onPress={() => updateSettings({ maskAmount: !maskAmount })}>
+                <PriceFriendly currency={currency} headline value={Math.abs(currentBalance)} />
+              </Touchable>
+              {baseCurrency !== currency && (
+                <PriceFriendly
+                  color={COLOR.LIGHTEN}
+                  currency={baseCurrency}
+                  subtitle
+                  value={exchange(Math.abs(currentBalance), currency, baseCurrency, rates)}
+                  style={styles.baseCurrency}
+                />
+              )}
+            </>
           )}
         </Col>
 
-        <Row justify="space" paddingHorizontal="S">
-          <BoxSummary caption={verboseMonth(new Date(), l10n)} currency="%" operator value={progressionPercentage} />
-          <BoxSummary caption={l10n.INCOMES} currency={baseCurrency} value={incomes} />
-          <BoxSummary caption={l10n.EXPENSES} currency={baseCurrency} value={expenses} />
-          <BoxSummary caption={l10n.TODAY} currency={baseCurrency} operator value={today} />
-        </Row>
+        {showCurrentBalance && (
+          <Row justify="space" paddingHorizontal="S">
+            <BoxSummary caption={verboseMonth(new Date(), l10n)} currency="%" operator value={progressionPercentage} />
+            <BoxSummary caption={l10n.INCOMES} currency={baseCurrency} value={incomes} />
+            <BoxSummary caption={l10n.EXPENSES} currency={baseCurrency} value={expenses} />
+            <BoxSummary caption={l10n.TODAY} currency={baseCurrency} operator value={today} />
+          </Row>
+        )}
       </Col>
 
       {children && (

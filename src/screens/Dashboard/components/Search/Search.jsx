@@ -40,7 +40,7 @@ export const Search = ({ onValue }) => {
         onChangeText={(nextValue) => setValue(nextValue.trim())}
         onFocus={() => setFocus(true)}
         placeholder={`${l10n.SEARCH}...`}
-        placeholderTextColor={COLOR.BASE}
+        placeholderTextColor={COLOR.LIGHTEN}
         style={styles.input}
         underlineColorAndroid="transparent"
         value={value}
