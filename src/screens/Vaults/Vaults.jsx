@@ -49,6 +49,7 @@ const Vaults = ({ visible, ...inherit }) => {
               {currencies.map(({ base, currency, ...item }, index) => (
                 <Card
                   {...item}
+                  bold
                   currency={currency}
                   disabled={currency !== selected}
                   key={currency}
@@ -56,7 +57,7 @@ const Vaults = ({ visible, ...inherit }) => {
                   marginRight="S"
                   onPress={() => setSelected(currency !== selected ? currency : undefined)}
                   operator={false}
-                  percentage={(base * 100) / overall.balance}
+                  percentage={(base * 100) / overall.currentBalance}
                   title={l10n.CURRENCY_NAME[currency] || currency}
                 />
               ))}

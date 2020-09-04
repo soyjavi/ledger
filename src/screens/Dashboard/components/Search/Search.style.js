@@ -12,7 +12,7 @@ export default StyleSheet.create({
   },
 
   focus: {
-    borderBottomColor: COLOR.TEXT,
+    borderBottomColor: COLOR.LIGHTEN,
   },
 
   input: {

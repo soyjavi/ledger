@@ -4,18 +4,18 @@ import PropTypes from 'prop-types';
 
 import React, { useEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
-import { Alert, Button, Dialog, Image, Text, View } from 'reactor/components';
+import { Alert, Button, Dialog, Image, Row, Text, Touchable, View } from 'reactor/components';
 
 import { C, onHardwareBackPress } from '@common';
 import { Heading, SliderCurrencies } from '@components';
 import { useL10N, useSnackBar, useStore } from '@context';
+import { ServiceQR, ServiceRates } from '@services';
 
 import { askCamera, changeCurrency, getBlockchain } from './DialogSettings.controller';
 import styles from './DialogSettings.style';
 
 const { DELAY_PRESS_MS } = C;
 const { COLOR } = THEME;
-const QR_URI = 'https://chart.googleapis.com/chart?cht=qr&chs=512x512&chld=H|1&chl';
 const CAMERA_PROPS = {
   barCodeScannerSettings: { barCodeTypes: [BarCodeScanner.Constants.BarCodeType.qr] },
   type: Camera.Constants.Type.back,
@@ -31,15 +31,19 @@ export const DialogSettings = ({ onClose, visible, ...inherit }) => {
   const [camera, setCamera] = useState(false);
   const [qr, setQr] = useState(undefined);
   const [blockchain, setBlockchain] = useState(undefined);
+  const [syncRates, setSyncRates] = useState(undefined);
 
   const {
     settings: { authorization, baseCurrency, secret },
+    updateRates,
     fork,
   } = store;
 
   useEffect(() => {
     if (!visible) setCamera(false);
     else if (hasCamera === undefined) setHasCamera(askCamera());
+    // else setQr('41B17C23-F1A6-46EE-9EEA-6D8AF3EADD33|backup');
+
     onHardwareBackPress(visible, onClose);
 
     return () => onHardwareBackPress(false);
@@ -75,22 +79,34 @@ export const DialogSettings = ({ onClose, visible, ...inherit }) => {
 
   const handleChangeCurrency = (currency) => changeCurrency({ currency, l10n, snackbar, store });
 
+  const handleUpdateRates = async () => {
+    setSyncRates(true);
+    updateRates(await ServiceRates.get({ baseCurrency }).catch(() => {}));
+    setSyncRates(false);
+  };
+
   return (
     <>
       <Dialog {...inherit} onClose={onClose} position="bottom" visible={visible}>
-        <Text marginTop="S" subtitle>
-          {l10n.SETTINGS}
-        </Text>
+        <Row justify="center" marginVertical="L">
+          <Text headline>{l10n.SETTINGS}</Text>
+        </Row>
 
-        <Heading marginTop="L" small value={l10n.TRANSFER_TXS}>
+        <Heading small value={l10n.TRANSFER_TXS}>
           {hasCamera && (
-            <Button onPress={() => setCamera(!camera)} size="S" title={camera ? l10n.CLOSE : l10n.QR_READER} />
+            <Button
+              color={COLOR.TEXT}
+              onPress={() => setCamera(!camera)}
+              outlined
+              size="S"
+              text={camera ? l10n.CLOSE.toUpperCase() : l10n.QR_READER.toUpperCase()}
+            />
           )}
         </Heading>
 
         <View marginTop="S" marginBottom="XS" style={styles.content}>
           {!camera ? (
-            <Image source={{ uri: `${QR_URI}=${secret}|${authorization}` }} style={styles.qr} />
+            <Image source={{ uri: ServiceQR.uri({ secret, authorization }) }} style={styles.qr} />
           ) : (
             <Camera {...CAMERA_PROPS} onBarCodeScanned={handleQRScanned} style={styles.camera}>
               <View style={styles.cameraViewport} />
@@ -103,6 +119,27 @@ export const DialogSettings = ({ onClose, visible, ...inherit }) => {
 
         <Heading marginTop="L" marginBottom="S" small value={l10n.CHOOSE_CURRENCY}></Heading>
         <SliderCurrencies onChange={handleChangeCurrency} selected={baseCurrency} />
+        <Row marginTop="S">
+          {!syncRates ? (
+            <>
+              <Text caption color={COLOR.LIGHTEN}>
+                {`${l10n.SYNC_RATES_SENTENCE_1} ${new Date().toString().split(' ').slice(0, 5).join(' ')} click `}
+              </Text>
+              <Touchable onPress={handleUpdateRates}>
+                <Text bold caption color={COLOR.LIGHTEN} underlined>
+                  {l10n.SYNC_RATES_CTA}
+                </Text>
+              </Touchable>
+              <Text caption color={COLOR.LIGHTEN}>
+                {l10n.SYNC_RATES_SENTENCE_2}
+              </Text>
+            </>
+          ) : (
+            <Text caption color={COLOR.LIGHTEN}>
+              {l10n.WAIT}
+            </Text>
+          )}
+        </Row>
       </Dialog>
 
       <Alert

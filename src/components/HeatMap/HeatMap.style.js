@@ -5,7 +5,7 @@ const {
   VIEWPORT: { H, W },
 } = LAYOUT;
 const { COLOR, SPACE } = THEME;
-const MAP_HEIGHT = Math.floor(H / 3);
+const MAP_HEIGHT = Math.floor(H / 4);
 const MAP_WIDTH = Math.floor(W - SPACE.L * 2);
 
 export { MAP_HEIGHT, MAP_WIDTH };

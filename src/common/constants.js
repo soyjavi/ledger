@@ -14,7 +14,7 @@ export default {
 
   DELAY_PRESS_MS: 500,
 
-  ENDPOINT: IS_DEV ? 'http://192.168.1.102:8080' : 'https://ledger-node.glitch.me',
+  ENDPOINT: IS_DEV ? 'http://localhost:8080' : 'https://ledger-node.glitch.me',
 
   FIXED: {
     BTC: 6,
@@ -87,9 +87,9 @@ export default {
   TIMEOUT: {
     GET: 10000,
     POST: 60000,
-    CONNECTION: 15000,
-    CONNECTION_STABLE: 60000,
-    SYNC: 100000,
+    CONNECTION: 10000,
+    CONNECTION_STABLE: 30000,
+    SYNC: 60000,
   },
 
   TX: {

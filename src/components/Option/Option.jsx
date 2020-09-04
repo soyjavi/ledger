@@ -29,7 +29,6 @@ export const Option = ({
   return (
     <Box
       {...inherit}
-      elevate={disabled ? false : inherit.elevate}
       borderRadius={BORDER_RADIUS}
       color={selected ? COLOR.CTA : color}
       small

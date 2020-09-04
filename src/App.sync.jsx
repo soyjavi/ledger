@@ -52,7 +52,6 @@ export const Sync = () => {
     if (synced) snackbar.success(l10n.SYNC_DONE);
   };
 
-  console.log('>>>>>>>>>>', { connected, state });
   return (
     <>
       {stack.includes(DASHBOARD) && (
@@ -70,10 +69,9 @@ export const Sync = () => {
         caption={state === STATE.SYNCING ? l10n.SYNC_BUSY : l10n.SYNC_SENTENCE_1}
         color={state === STATE.SYNCING ? COLOR.TEXT : COLOR.ERROR}
         icon={state === STATE.SYNCING ? 'hourglass' : undefined}
+        iconFamily={ICON.FAMILY}
         iconSize={SPACE.M}
-        family={ICON.FAMILY}
         onClose={state === STATE.UNSYNCED ? () => setState(undefined) : undefined}
-        style={styles.snackbar}
         visible={[STATE.UNSYNCED, STATE.SYNCING].includes(state)}
       >
         {state === STATE.UNSYNCED && (

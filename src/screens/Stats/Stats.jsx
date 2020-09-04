@@ -6,7 +6,7 @@ import { Viewport } from 'reactor/components';
 
 import { BANNERS } from '@assets';
 import { C } from '@common';
-import { Banner, ButtonBack, Chart, Header, ScrollView } from '@components';
+import { Banner, ButtonBack, Chart, Header, ScrollView, Summary } from '@components';
 import { useL10N, useNavigation, useStore } from '@context';
 
 import { ItemGroupCategories, Locations, SliderMonths } from './components';
@@ -71,6 +71,8 @@ export const Stats = ({ visible, ...inherit }) => {
       />
 
       <ScrollView contentContainerStyle={styles.scrollView} onScroll={(value) => setScroll(value)} ref={scrollview}>
+        <Summary title={l10n.ACTIVITY} />
+
         <SliderMonths {...slider} onChange={handleSliderChange} marginBottom="M" />
 
         <Chart

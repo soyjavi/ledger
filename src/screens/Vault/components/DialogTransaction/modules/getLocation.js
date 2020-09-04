@@ -1,7 +1,7 @@
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 
-import { getPlace } from '@services';
+import { ServiceLocation } from '@services';
 
 export default async ({ connected, setLocation }) => {
   const { status } = await Permissions.askAsync(Permissions.LOCATION);
@@ -11,7 +11,7 @@ export default async ({ connected, setLocation }) => {
     let location = { coords };
 
     if (coords) {
-      if (connected) location.place = await getPlace(coords);
+      if (connected) location.place = await ServiceLocation.getPlace(coords);
       setLocation(location);
     }
   }

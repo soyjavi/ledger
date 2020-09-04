@@ -59,7 +59,7 @@ const FirstVault = ({ onVault, visible, ...others }) => {
           marginTop="XL"
           onPress={handleSubmit}
           style={styles.button}
-          title={l10n.CREATE}
+          text={l10n.CREATE.toUpperCase()}
         />
       </KeyboardAvoidingView>
     </Viewport>

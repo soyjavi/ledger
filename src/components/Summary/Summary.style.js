@@ -1,30 +1,27 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from 'reactor/common';
 
-import { OPTION_SIZE } from '../Option';
-
 const { BORDER_RADIUS, FONT, COLOR, SPACE } = THEME;
 
 const IMAGE_SIZE = SPACE.XL + SPACE.M;
 const FONT_SIZE_BASE_CURRENCY = FONT.SUBTITLE.fontSize - SPACE.XS;
 
 export default StyleSheet.create({
-  buttons: {
-    position: 'absolute',
-    bottom: -OPTION_SIZE / 2,
+  button: {
+    flex: 1,
   },
 
   container: {
-    marginBottom: OPTION_SIZE / 2 + SPACE.M,
+    marginBottom: SPACE.XL,
     marginTop: SPACE.XL,
-    marginHorizontal: SPACE.XL,
+    marginHorizontal: SPACE.M,
   },
 
   content: {
-    backgroundColor: COLOR.BASE,
+    // backgroundColor: COLOR.BASE,
     borderRadius: BORDER_RADIUS,
-    paddingTop: IMAGE_SIZE / 2 + SPACE.XS,
-    paddingBottom: OPTION_SIZE / 2 + SPACE.M,
+    paddingBottom: SPACE.M,
+    paddingTop: IMAGE_SIZE / 2 + SPACE.M,
   },
 
   legend: FONT.LEGEND,

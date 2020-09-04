@@ -15,7 +15,7 @@ const {
     TYPE: { EXPENSE },
   },
 } = C;
-const { ICON, SPACE } = THEME;
+const { SPACE } = THEME;
 
 const FormTransaction = ({ currency, form = {}, onChange, type, vault: { currentBalance = 0 } = {} }) => {
   const l10n = useL10N();
@@ -37,7 +37,6 @@ const FormTransaction = ({ currency, form = {}, onChange, type, vault: { current
             legend={item.caption}
             key={item.key}
             icon={getIconCategory({ type, category: item.key })}
-            family={ICON.FAMILY}
             marginRight="S"
             onPress={() => handleField('category', item.key)}
             selected={form.category === item.key}

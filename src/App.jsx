@@ -1,4 +1,7 @@
+import { StatusBar } from 'expo-status-bar';
+
 import React from 'react';
+import { THEME } from 'reactor/common';
 import { LayoutView } from 'reactor/components';
 
 import { C, L10N } from '@common';
@@ -9,6 +12,7 @@ import styles from './App.style';
 import { Sync } from './App.sync';
 
 const { LANGUAGE } = C;
+const { COLOR } = THEME;
 
 const App = () => {
   console.log('<App>');
@@ -20,6 +24,7 @@ const App = () => {
           <StoreProvider>
             <SnackBarProvider>
               <LayoutView style={styles.container}>
+                {/* <StatusBar style="light" backgroundColor={COLOR.BACKGROUND} /> */}
                 <Router />
                 <Sync />
               </LayoutView>

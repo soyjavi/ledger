@@ -9,7 +9,7 @@ import { C } from '@common';
 
 const KEY = `${C.NAME}:context:snackbar`;
 const SnackBarContext = createContext(KEY);
-const { COLOR, ICON, SNACKBAR, SPACE } = THEME;
+const { COLOR, ICON, SPACE } = THEME;
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -44,7 +44,6 @@ const SnackBarProvider = ({ children }) => {
         family={ICON.FAMILY}
         onClose={() => dispatch({ type: 'HIDE' })}
         position="top"
-        style={SNACKBAR}
         visible={state.type === 'SHOW'}
       />
     </SnackBarContext.Provider>

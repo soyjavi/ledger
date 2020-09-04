@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 import React from 'react';
 import { THEME } from 'reactor/common';
-import { Icon, Slider } from 'reactor/components';
+import { Slider } from 'reactor/components';
 
 import { FLAGS } from '@assets';
 import { currencyDecimals } from '@common';
@@ -11,7 +11,7 @@ import { useL10N, useStore } from '@context';
 
 import { getVault, queryAvailableVaults } from '../modules';
 
-const { COLOR, ICON, SPACE } = THEME;
+const { COLOR, SPACE } = THEME;
 
 const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
   const l10n = useL10N();
@@ -50,18 +50,10 @@ const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
       <Input
         currency={vault.currency}
         label={l10n.SEND}
+        marginBottom="M"
         maxValue={vault.currentBalance}
         onChange={(value) => handleField('value', value)}
         value={form.value}
-      />
-
-      <Icon
-        color={form.value <= 0 ? COLOR.LIGHTEN : undefined}
-        family={ICON.FAMILY}
-        marginVertical="S"
-        value="arrow-down"
-        size={SPACE.L}
-        style={{ alignSelf: 'center' }}
       />
 
       <Slider itemMargin={SPACE.S} itemWidth={OPTION_SIZE}>
@@ -90,7 +82,7 @@ const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
         disabled={!form.to}
         label={l10n.GET}
         marginTop="M"
-        marginBottom="XL"
+        marginBottom="M"
         onChange={(value) => handleField('exchange', value)}
         value={form.to ? form.exchange : undefined}
       />

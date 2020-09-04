@@ -1,25 +1,20 @@
 import { bool } from 'prop-types';
 
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { Viewport } from 'reactor/components';
+import { THEME } from 'reactor/common';
+import { Button, Viewport } from 'reactor/components';
 
 import { BANNERS, FLAGS } from '@assets';
-import {
-  Banner,
-  ButtonBack,
-  DialogClone,
-  GroupTransactions,
-  Header,
-  Heading,
-  Option,
-  ScrollView,
-  Summary,
-} from '@components';
+import { Banner, ButtonBack, DialogClone, GroupTransactions, Header, Heading, ScrollView, Summary } from '@components';
 import { useL10N, useNavigation, useStore } from '@context';
 
 import { DialogTransaction } from './components';
 import { onScroll, query } from './modules';
 import styles from './Vault.style';
+
+const { COLOR, ICON } = THEME;
+
+const buttonProps = { color: COLOR.BASE, colorText: COLOR.TEXT, iconFamily: ICON.FAMILY };
 
 const Vault = ({ visible, ...inherit }) => {
   const l10n = useL10N();
@@ -35,11 +30,11 @@ const Vault = ({ visible, ...inherit }) => {
   const [tx, setTx] = useState(undefined);
 
   useLayoutEffect(() => {
-    if (params.vault) {
+    if (!visible) {
       scrollview.current.scrollTo({ y: 0, animated: false });
       setDialog(undefined);
     }
-  }, [params.vault]);
+  }, [visible]);
 
   useEffect(() => {
     if (params.vault) refreshDatasource(vaults.find((vault) => vault.hash === params.vault.hash));
@@ -51,7 +46,7 @@ const Vault = ({ visible, ...inherit }) => {
       const vault = vaults.find((vault) => vault.hash === hash);
       if (vault.currentBalance !== currentBalance || vault.txs.length !== currentTxs.length) refreshDatasource(vault);
     }
-  }, [visible, vaults]);
+  }, [vaults, visible]);
 
   const handleScroll = onScroll.bind(undefined, {
     dataSource,
@@ -68,21 +63,20 @@ const Vault = ({ visible, ...inherit }) => {
   };
 
   const { currency = baseCurrency, title, ...rest } = dataSource;
-  const vaultProps = { ...rest, image: FLAGS[currency], title };
 
   console.log('  <Vault>', { visible, dialog });
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
-      <Header highlight={scroll} {...vaultProps} onBack={scroll ? navigation.back : undefined} />
+      <Header highlight={scroll} image={FLAGS[currency]} title={title} onBack={scroll ? navigation.back : undefined} />
 
       <ScrollView onScroll={handleScroll} ref={scrollview} style={styles.container}>
-        <Summary {...vaultProps} currency={currency}>
-          <Option icon="arrow-up" onPress={() => setDialog(1)} caption={l10n.INCOME} />
-          <Option icon="arrow-down" onPress={() => setDialog(0)} caption={l10n.EXPENSE} />
-          {vaults.length > 1 ? (
-            <Option icon="shuffle" onPress={() => setDialog(2)} caption={l10n.TRANSFER} />
-          ) : undefined}
+        <Summary {...rest} image={FLAGS[currency]} title={title} currency={currency}>
+          <Button {...buttonProps} icon="arrow-up" onPress={() => setDialog(1)} text={l10n.INCOME.toUpperCase()} />
+          <Button {...buttonProps} icon="arrow-down" onPress={() => setDialog(0)} text={l10n.EXPENSE.toUpperCase()} />
+          {vaults.length > 1 && (
+            <Button {...buttonProps} icon="shuffle" onPress={() => setDialog(2)} text={l10n.SWAP.toUpperCase()} />
+          )}
         </Summary>
 
         {txs.length > 0 ? (

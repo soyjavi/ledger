@@ -70,7 +70,9 @@ const DialogTransaction = (props = {}) => {
 
   return (
     <Dialog {...inherit} onClose={onClose} position="bottom" visible={visible}>
-      <Text subtitle marginTop="S" marginBottom="M">{`${l10n.NEW} ${l10n.TRANSACTION[type]}`}</Text>
+      <Row justify="center" marginVertical="L">
+        <Text headline>{l10n.TRANSACTION[type]}</Text>
+      </Row>
 
       <Form {...props} {...state} type={type} onChange={(value) => setState({ ...state, ...value })} />
       {connected && type !== TRANSFER && (
@@ -83,15 +85,22 @@ const DialogTransaction = (props = {}) => {
 
       <Row marginTop="L">
         <Button
-          color={COLOR.BASE}
-          colorText={COLOR.TEXT}
+          color={COLOR.TEXT}
           disabled={busy}
           marginRight="M"
           onPress={onClose}
-          title={l10n.CLOSE}
+          outlined
+          text={l10n.CLOSE.toUpperCase()}
           wide
         />
-        <Button delay={DELAY_PRESS_MS} disabled={busy || !valid} onPress={onSubmit} title={l10n.SAVE} wide />
+        <Button
+          colorText={COLOR.BACKGROUND}
+          delay={DELAY_PRESS_MS}
+          disabled={busy || !valid}
+          onPress={onSubmit}
+          text={l10n.SAVE.toUpperCase()}
+          wide
+        />
       </Row>
     </Dialog>
   );

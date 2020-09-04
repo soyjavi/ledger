@@ -10,7 +10,6 @@ import { useStore } from '@context';
 import { Box } from '../Box';
 import { PriceFriendly } from '../PriceFriendly';
 import { formatCaption } from './modules';
-import styles from './TransactionItem.style';
 
 const {
   TX: {
@@ -21,7 +20,7 @@ const { COLOR, ICON, SPACE } = THEME;
 
 const TransactionItem = (props) => {
   const {
-    settings: { baseCurrency, maskAmount },
+    settings: { baseCurrency },
     rates,
   } = useStore();
   const { category, currency, location, timestamp, title, type = EXPENSE, value, onPress } = props;
@@ -29,25 +28,35 @@ const TransactionItem = (props) => {
 
   return (
     <Touchable onPress={onPress ? () => onPress(props) : undefined}>
-      <Row align="start" paddingHorizontal="M" paddingVertical="S">
+      <Row align="center" paddingHorizontal="M" paddingVertical="S">
         <Col marginRight="S" width="auto">
-          <Box small>
-            <Icon family={ICON.FAMILY} size={SPACE.M} value={getIconCategory({ type, category, title })} />
+          <Box color={type === INCOME ? COLOR.BRAND_OPACITY : undefined}>
+            <Icon
+              color={type === INCOME ? COLOR.BRAND : undefined}
+              family={ICON.FAMILY}
+              size={SPACE.M}
+              value={getIconCategory({ type, category, title })}
+            />
           </Box>
         </Col>
 
         <Col>
           <Row>
             <Col>
-              <Text bold numberOfLines={1}>
+              <Text
+                bold
+                // color={type === INCOME ? COLOR.BRAND : undefined}
+                numberOfLines={1}
+              >
                 {title}
               </Text>
             </Col>
-            <Col width="auto" style={type === INCOME && !maskAmount ? styles.highlight : undefined}>
+            <Col width="auto">
               <PriceFriendly
                 bold
                 color={type === INCOME ? COLOR.BRAND : undefined}
                 currency={currency}
+                highlight={type === INCOME}
                 operator={type === EXPENSE}
                 value={value * operator}
               />
@@ -62,7 +71,6 @@ const TransactionItem = (props) => {
             <Col width="auto">
               {baseCurrency !== currency && (
                 <PriceFriendly
-                  bold
                   caption
                   color={COLOR.LIGHTEN}
                   currency={baseCurrency}

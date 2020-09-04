@@ -5,7 +5,7 @@ import { useEnvironment } from 'reactor/hooks';
 
 import { C } from '@common';
 import NetInfo from '@react-native-community/netinfo';
-import { status } from '@services';
+import { ServiceNode } from '@services';
 
 const { TIMEOUT } = C;
 
@@ -45,7 +45,7 @@ const ConnectionProvider = ({ children }) => {
 
   const handleConnected = useCallback(async () => {
     if (!online) setConnected(false);
-    else setConnected((await status().catch(() => {})) ? true : false);
+    else setConnected((await ServiceNode.ready().catch(() => {})) ? true : false);
   }, [online]);
 
   return <ConnectionContext.Provider value={{ connected, online }}>{children}</ConnectionContext.Provider>;

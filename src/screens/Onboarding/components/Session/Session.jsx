@@ -2,8 +2,7 @@ import PropTypes from 'prop-types';
 
 import React, { useEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
-import { Row, Text, View, Viewport } from 'reactor/components';
-import { useEnvironment } from 'reactor/hooks';
+import { Motion, Row, Text, View, Viewport } from 'reactor/components';
 
 import { C } from '@common';
 import { useL10N, useStore } from '@context';
@@ -16,7 +15,6 @@ const { IS_DEV, VERSION } = C;
 const { COLOR } = THEME;
 
 const Session = ({ onSession, visible, ...others }) => {
-  const { IS_WEB } = useEnvironment();
   const l10n = useL10N();
   const store = useStore();
 
@@ -30,7 +28,7 @@ const Session = ({ onSession, visible, ...others }) => {
       const { settings, vaults = [] } = store;
 
       if (settings.pin && vaults.length !== 0) {
-        if (IS_DEV && IS_WEB) setPin(settings.pin);
+        if (IS_DEV /* && IS_WEB */) setPin(settings.pin);
         else if (pin === '') askLocalAuthentication({ l10n, setPin, store });
       }
     }
@@ -55,9 +53,15 @@ const Session = ({ onSession, visible, ...others }) => {
           {!busy ? (
             <>
               {['•', '•', '•', '•'].map((letter, index) => (
-                <Text key={index} headline color={pin.length <= index ? COLOR.LIGHTEN : undefined}>
-                  {letter}
-                </Text>
+                <Motion
+                  key={index}
+                  timeline={[{ property: 'scale', value: pin.length > index ? 1.5 : 1 }]}
+                  type="spring"
+                >
+                  <Text headline color={pin.length <= index ? COLOR.LIGHTEN : undefined}>
+                    {letter}
+                  </Text>
+                </Motion>
               ))}
             </>
           ) : (

@@ -44,23 +44,26 @@ export const DialogVault = ({ onClose, visible }) => {
 
   return (
     <Dialog onClose={vaults.length > 0 ? onClose : undefined} position="bottom" visible={visible}>
-      <Text subtitle marginTop="S" marginBottom="M">{`${l10n.NEW} ${l10n.VAULT}`}</Text>
-      <FormVault form={form} onChange={setForm} rates={{}} />
+      <Row justify="center" marginVertical="L">
+        <Text headline>{`${l10n.NEW} ${l10n.VAULT}`}</Text>
+      </Row>
+      <FormVault form={form} onChange={setForm} />
       <Row marginTop="XL">
         <Button
-          color={COLOR.BASE}
-          colorText={COLOR.TEXT}
+          color={COLOR.TEXT}
           disabled={busy}
           marginRight="M"
           onPress={onClose}
-          title={l10n.CLOSE.toUpperCase()}
+          outlined
+          text={l10n.CLOSE.toUpperCase()}
           wide
         />
         <Button
+          colorText={COLOR.BACKGROUND}
           delay={DELAY_PRESS_MS}
           disabled={busy || form.title === undefined}
           onPress={handleSubmit}
-          title={l10n.SAVE.toUpperCase()}
+          text={l10n.SAVE.toUpperCase()}
           wide
         />
       </Row>

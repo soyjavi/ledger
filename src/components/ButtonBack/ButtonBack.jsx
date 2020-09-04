@@ -2,14 +2,13 @@ import PropTypes from 'prop-types';
 
 import React, { useEffect } from 'react';
 import { THEME } from 'reactor/common';
-import { Motion } from 'reactor/components';
+import { Button, Motion } from 'reactor/components';
 
 import { onHardwareBackPress } from '@common';
 
-import { Option } from '../Option';
 import styles from './ButtonBack.style';
 
-const { SPACE } = THEME;
+const { COLOR, ICON, SPACE } = THEME;
 
 export const ButtonBack = ({ onPress, visible }) => {
   useEffect(() => {
@@ -20,7 +19,7 @@ export const ButtonBack = ({ onPress, visible }) => {
 
   return (
     <Motion style={styles.container} timeline={[{ property: 'translateX', value: visible ? 0 : SPACE.XXL * 2 }]}>
-      <Option selected onPress={onPress} icon="arrow-left" />
+      <Button color={COLOR.BASE} colorText={COLOR.TEXT} icon="arrow-left" iconFamily={ICON.FAMILY} onPress={onPress} />
     </Motion>
   );
 };
