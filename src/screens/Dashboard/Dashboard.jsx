@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Button, Slider, Viewport } from 'reactor/components';
 
@@ -25,20 +25,23 @@ export const Dashboard = ({ visible, ...inherit }) => {
   const [dialogVault, setDialogVault] = useState(false);
   const [dialogSettings, setDialogSettings] = useState(false);
   const [tx, setTx] = useState(undefined);
+  const [lastTxs, setLastTxs] = useState([]);
   const [scroll, setScroll] = useState(false);
   const [searchTxs, setSearchTxs] = useState(undefined);
 
   const { settings: { baseCurrency } = {}, overall, vaults = [] } = store;
 
-  console.log('  <Dashboard>', { visible });
+  useEffect(() => {
+    if (visible) setLastTxs(queryLastTxs(store));
+  }, [store, visible]);
 
-  const lastTxs = visible ? queryLastTxs(store) : [];
+  console.log('  <Dashboard>', { visible });
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
       <Header highlight={scroll} title={l10n.OVERALL_BALANCE} />
 
-      <ScrollView contentContainerStyle={styles.scroll} onScroll={(value) => setScroll(value)}>
+      <ScrollView contentContainerStyle={styles.scroll} onScroll={setScroll}>
         <Summary {...overall} currency={baseCurrency} title={l10n.OVERALL_BALANCE}>
           <Button
             {...buttonProps}
