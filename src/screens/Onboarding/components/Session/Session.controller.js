@@ -40,7 +40,7 @@ export const onHandshake = async ({ onSession, setBusy, store: { settings, updat
     });
   } else {
     setTimeout(async () => {
-      updateRates(await ServiceRates.get({ baseCurrency }).catch(() => {}));
+      updateRates(await ServiceRates.get({ baseCurrency, latest: true }).catch(() => {}));
     }, MOTION.EXPAND * 2);
   }
 

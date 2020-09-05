@@ -5,5 +5,6 @@ import { apiCall } from './modules';
 const { CURRENCY } = C;
 
 export const ServiceRates = {
-  get: async ({ baseCurrency = CURRENCY } = {}) => apiCall({ service: `rates?baseCurrency=${baseCurrency}` }),
+  get: ({ baseCurrency = CURRENCY, latest = false } = {}) =>
+    apiCall({ service: `rates?baseCurrency=${baseCurrency}${latest ? '&latest=true' : ''}` }),
 };
