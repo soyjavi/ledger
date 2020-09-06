@@ -5,6 +5,7 @@ export * from './Card';
 export * from './Chart';
 export * from './DialogClone';
 export * from './FormVault';
+export * from './Footer';
 export * from './GroupTransactions';
 export * from './Header';
 export * from './Heading';
