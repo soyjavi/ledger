@@ -1,6 +1,8 @@
 import { StyleSheet } from 'react-native';
 import { LAYOUT, THEME } from 'reactor/common';
 
+import { HEADER_HEIGHT } from '@components';
+
 const {
   VIEWPORT: { W },
 } = LAYOUT;
@@ -40,5 +42,8 @@ export default StyleSheet.create({
     height: QR_SIZE,
     width: QR_SIZE,
     backgroundColor: COLOR.TRANSPARENT,
+  },
+  scroll: {
+    paddingVertical: HEADER_HEIGHT,
   },
 });
