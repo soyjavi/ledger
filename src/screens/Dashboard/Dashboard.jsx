@@ -2,20 +2,24 @@ import PropTypes from 'prop-types';
 
 import React, { useEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
-import { Button, Slider, Viewport } from 'reactor/components';
+import { Button, Icon, Slider, Touchable, Viewport } from 'reactor/components';
 
 import { C } from '@common';
-import { CARD_WIDTH, DialogClone, GroupTransactions, Header, Heading, ScrollView, Summary } from '@components';
+import { CARD_WIDTH, DialogClone, Footer, GroupTransactions, Header, Heading, ScrollView, Summary } from '@components';
 import { useL10N, useNavigation, useStore } from '@context';
 
-import { DialogSettings, DialogVault, Search, VaultCard } from './components';
+import { DialogVault, Search, VaultCard } from './components';
 import { queryLastTxs, queryVaults } from './Dashboard.controller';
 import styles from './Dashboard.style';
 
 const { SCREEN } = C;
 const { COLOR, ICON, SPACE } = THEME;
 
-const buttonProps = { color: COLOR.BASE, colorText: COLOR.TEXT, iconFamily: ICON.FAMILY };
+const buttonProps = {
+  color: COLOR.BASE,
+  colorText: COLOR.TEXT,
+  iconFamily: ICON.FAMILY,
+};
 
 export const Dashboard = ({ visible, ...inherit }) => {
   const l10n = useL10N();
@@ -23,11 +27,13 @@ export const Dashboard = ({ visible, ...inherit }) => {
   const store = useStore();
 
   const [dialogVault, setDialogVault] = useState(false);
-  const [dialogSettings, setDialogSettings] = useState(false);
   const [tx, setTx] = useState(undefined);
   const [lastTxs, setLastTxs] = useState([]);
   const [scroll, setScroll] = useState(false);
   const [searchTxs, setSearchTxs] = useState(undefined);
+  const [searching, setSearching] = useState(false);
+
+  useEffect(() => {}, [store]);
 
   const { settings: { baseCurrency } = {}, overall, vaults = [] } = store;
 
@@ -39,7 +45,17 @@ export const Dashboard = ({ visible, ...inherit }) => {
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
-      <Header highlight={scroll} title={l10n.OVERALL_BALANCE} />
+      <Header
+        childRight={
+          scroll ? (
+            <Touchable onPress={() => navigation.go(SCREEN.SETTINGS)}>
+              <Icon family={ICON.FAMILY} value="settings" size={SPACE.L} />
+            </Touchable>
+          ) : undefined
+        }
+        highlight={scroll}
+        title={l10n.OVERALL_BALANCE}
+      />
 
       <ScrollView contentContainerStyle={styles.scroll} onScroll={setScroll}>
         <Summary {...overall} currency={baseCurrency} title={l10n.OVERALL_BALANCE}>
@@ -53,7 +69,7 @@ export const Dashboard = ({ visible, ...inherit }) => {
           <Button
             {...buttonProps}
             icon="settings"
-            onPress={() => setDialogSettings(true)}
+            onPress={() => navigation.go(SCREEN.SETTINGS)}
             text={l10n.SETTINGS.toUpperCase()}
           />
         </Summary>
@@ -85,7 +101,6 @@ export const Dashboard = ({ visible, ...inherit }) => {
             {lastTxs.length > 0 && (
               <>
                 <Heading marginTop="M" paddingLeft="M" paddingRight="S" small value={l10n.LAST_TRANSACTIONS} />
-                <Search onValue={setSearchTxs} />
                 {(searchTxs || lastTxs).map((item) => (
                   <GroupTransactions {...item} key={`${item.timestamp}`} currency={baseCurrency} onPress={setTx} />
                 ))}
@@ -95,10 +110,25 @@ export const Dashboard = ({ visible, ...inherit }) => {
         )}
       </ScrollView>
 
+      <Footer visible={scroll}>
+        {lastTxs.length > 0 && <Search onFocus={setSearching} onValue={setSearchTxs} />}
+        <Button
+          icon="chart"
+          iconFamily={ICON.FAMILY}
+          onPress={() => navigation.go(SCREEN.STATS)}
+          text={!searching ? l10n.ACTIVITY.toUpperCase() : undefined}
+        />
+        <Button
+          icon="wallet"
+          iconFamily={ICON.FAMILY}
+          onPress={() => setDialogVault(true)}
+          text={!searching ? l10n.VAULT.toUpperCase() : undefined}
+        />
+      </Footer>
+
       {visible && (
         <>
           <DialogClone dataSource={tx} onClose={() => setTx(undefined)} visible={tx !== undefined} />
-          <DialogSettings onClose={() => setDialogSettings(false)} visible={dialogSettings} />
           <DialogVault onClose={() => setDialogVault(false)} visible={dialogVault} />
         </>
       )}

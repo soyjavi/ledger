@@ -5,7 +5,7 @@ import { THEME } from 'reactor/common';
 import { Button, Viewport } from 'reactor/components';
 
 import { BANNERS, FLAGS } from '@assets';
-import { Banner, ButtonBack, DialogClone, GroupTransactions, Header, Heading, ScrollView, Summary } from '@components';
+import { Banner, DialogClone, Footer, GroupTransactions, Header, Heading, ScrollView, Summary } from '@components';
 import { useL10N, useNavigation, useStore } from '@context';
 
 import { DialogTransaction } from './components';
@@ -14,7 +14,11 @@ import styles from './Vault.style';
 
 const { COLOR, ICON } = THEME;
 
-const buttonProps = { color: COLOR.BASE, colorText: COLOR.TEXT, iconFamily: ICON.FAMILY };
+const buttonProps = {
+  color: COLOR.BASE,
+  colorText: COLOR.TEXT,
+  iconFamily: ICON.FAMILY,
+};
 
 const Vault = ({ visible, ...inherit }) => {
   const l10n = useL10N();
@@ -68,7 +72,7 @@ const Vault = ({ visible, ...inherit }) => {
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
-      <Header highlight={scroll} image={FLAGS[currency]} title={title} onBack={scroll ? navigation.back : undefined} />
+      <Header highlight={scroll} image={FLAGS[currency]} title={title} onBack={navigation.back} />
 
       <ScrollView onScroll={handleScroll} ref={scrollview} style={styles.container}>
         <Summary {...rest} image={FLAGS[currency]} title={title} currency={currency}>
@@ -91,6 +95,24 @@ const Vault = ({ visible, ...inherit }) => {
         )}
       </ScrollView>
 
+      <Footer visible={scroll}>
+        <Button
+          icon="arrow-up"
+          iconFamily={ICON.FAMILY}
+          onPress={() => setDialog(1)}
+          text={l10n.INCOME.toUpperCase()}
+        />
+        <Button
+          icon="arrow-down"
+          iconFamily={ICON.FAMILY}
+          onPress={() => setDialog(0)}
+          text={l10n.EXPENSE.toUpperCase()}
+        />
+        {vaults.length > 1 && (
+          <Button icon="shuffle" iconFamily={ICON.FAMILY} onPress={() => setDialog(2)} text={l10n.SWAP.toUpperCase()} />
+        )}
+      </Footer>
+
       {visible && (
         <>
           <DialogTransaction
@@ -103,8 +125,6 @@ const Vault = ({ visible, ...inherit }) => {
           <DialogClone dataSource={tx} onClose={() => setTx(undefined)} visible={tx !== undefined} />
         </>
       )}
-
-      <ButtonBack onPress={navigation.back} visible={visible && dialog === undefined && tx === undefined} />
     </Viewport>
   );
 };
