@@ -63,9 +63,7 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
         <Col>
           <Row>
             <Col>
-              <Text bold numberOfLines={1}>
-                {vaultInfo ? vaultInfo.title : undefined}
-              </Text>
+              <Text numberOfLines={1}>{vaultInfo ? vaultInfo.title : undefined}</Text>
             </Col>
             <Col width="auto">
               <PriceFriendly
@@ -88,6 +86,7 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
             <Col width="auto">
               {currency !== baseCurrency && (
                 <PriceFriendly
+                  bold
                   caption
                   color={COLOR.LIGHTEN}
                   currency={baseCurrency}

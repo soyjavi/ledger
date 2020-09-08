@@ -12,10 +12,10 @@ const { COLOR } = THEME;
 export const HorizontalChartItem = ({ color = COLOR.TEXT, currency, small, title, value, width = 100, ...others }) => (
   <View {...others}>
     <Row align="end">
-      <Text bold={!small} caption style={styles.text}>
+      <Text caption={small} style={styles.text}>
         {title}
       </Text>
-      <PriceFriendly caption currency={currency} value={value} />
+      <PriceFriendly bold={!small} caption currency={currency} value={value} />
     </Row>
 
     <View style={[styles.bar, styles.barContainer, small && styles.barSmall]}>

@@ -30,7 +30,7 @@ export const Card = ({ balance, currency, disabled, onPress, percentage, title =
         <View style={styles.content}>
           <Row marginBottom="XS">
             <Image source={FLAGS[currency]} style={styles.flag} />
-            <Text caption bold numberOfLines={1} marginLeft="XS">
+            <Text caption numberOfLines={1} marginLeft="XS">
               {title.toUpperCase()}
             </Text>
           </Row>

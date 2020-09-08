@@ -43,13 +43,7 @@ const TransactionItem = (props) => {
         <Col>
           <Row>
             <Col>
-              <Text
-                bold
-                // color={type === INCOME ? COLOR.BRAND : undefined}
-                numberOfLines={1}
-              >
-                {title}
-              </Text>
+              <Text numberOfLines={1}>{title}</Text>
             </Col>
             <Col width="auto">
               <PriceFriendly
@@ -71,6 +65,7 @@ const TransactionItem = (props) => {
             <Col width="auto">
               {baseCurrency !== currency && (
                 <PriceFriendly
+                  bold
                   caption
                   color={COLOR.LIGHTEN}
                   currency={baseCurrency}

@@ -4,7 +4,7 @@ import { THEME } from 'reactor/common';
 const { FONT } = THEME;
 
 export default StyleSheet.create({
-  boxContent: {
+  container: {
     alignSelf: 'flex-start',
     alignItems: 'center',
     justifyContent: 'center',
@@ -14,5 +14,5 @@ export default StyleSheet.create({
     lineHeight: FONT.BODY.fontSize,
   },
 
-  month: FONT.LEGEND,
+  legend: FONT.LEGEND,
 });

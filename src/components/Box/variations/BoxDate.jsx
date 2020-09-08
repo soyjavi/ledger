@@ -12,11 +12,9 @@ import styles from './BoxDate.style';
 const { COLOR } = THEME;
 
 export const BoxDate = ({ l10n, timestamp, ...inherit }) => (
-  <Box {...inherit} bold outlined style={styles.boxContent}>
-    <Text bold style={styles.day}>
-      {new Date(timestamp || null).getDate()}
-    </Text>
-    <Text color={COLOR.LIGHTEN} style={styles.month}>
+  <Box {...inherit} outlined style={styles.container}>
+    <Text style={styles.day}>{new Date(timestamp || null).getDate()}</Text>
+    <Text color={COLOR.LIGHTEN} style={styles.legend}>
       {verboseMonthShort(timestamp, l10n)}
     </Text>
   </Box>
