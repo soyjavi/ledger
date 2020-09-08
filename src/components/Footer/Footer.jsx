@@ -1,14 +1,25 @@
 import PropTypes from 'prop-types';
 
 import React from 'react';
-import { Row } from 'reactor/components';
+import { THEME } from 'reactor/common';
+import { Motion, Row } from 'reactor/components';
 
-import styles, { HEADER_HEIGHT } from './Footer.style';
+import styles from './Footer.style';
 
-export { HEADER_HEIGHT };
+const { MOTION } = THEME;
 
-export const Footer = ({ children }) => <Row style={styles.container}>{children}</Row>;
+export const Footer = ({ children, visible }) => (
+  <Motion
+    duration={visible ? MOTION.EXPAND : MOTION.COLLAPSE}
+    pointerEvents="auto"
+    timeline={[{ property: 'translateY', value: visible ? 0 : 128 }]}
+    type={visible ? 'spring' : undefined}
+  >
+    <Row style={styles.container}>{children}</Row>
+  </Motion>
+);
 
 Footer.propTypes = {
   children: PropTypes.node,
+  visible: PropTypes.bool,
 };

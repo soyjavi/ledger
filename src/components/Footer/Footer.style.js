@@ -3,24 +3,20 @@ import { THEME } from 'reactor/common';
 import { useEnvironment } from 'reactor/hooks';
 
 const ENV = useEnvironment();
-const { BORDER_RADIUS, ELEVATION, UNIT, COLOR, SPACE } = THEME;
-
-export const HEADER_HEIGHT = UNIT * 8;
+const { BORDER_RADIUS, COLOR, SPACE } = THEME;
 
 export default StyleSheet.create({
   container: {
-    borderRadius: BORDER_RADIUS,
-    bottom: SPACE.M,
+    backgroundColor: COLOR.CTA,
+    borderRadius: BORDER_RADIUS + SPACE.S / 2,
+    bottom: SPACE.S,
     justifyContent: 'space-between',
-    paddingHorizontal: SPACE.S,
-    paddingVertical: SPACE.S + SPACE.XS,
+    padding: SPACE.XS,
     position: ENV.IS_WEB ? 'fixed' : 'absolute',
-    left: SPACE.M,
-    right: SPACE.M,
+    left: SPACE.S,
+    right: SPACE.S,
     width: 'auto',
     zIndex: 1,
     overflow: 'hidden',
-    backgroundColor: COLOR.CTA,
-    ...ELEVATION,
   },
 });
