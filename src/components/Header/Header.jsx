@@ -13,9 +13,10 @@ export { HEADER_HEIGHT };
 
 const { ICON, MOTION } = THEME;
 
-export const Header = ({ children, highlight = false, image = LOGO, onBack, title }) => (
-  <Row paddingHorizontal="M" style={[styles.container, highlight && styles.solid]}>
+export const Header = ({ childLeft, childRight, highlight = false, image = LOGO, onBack, title }) => (
+  <Row paddingHorizontal="M" style={[styles.container, highlight && styles.elevate]}>
     <Col align="start">
+      {childLeft}
       {onBack && (
         <Touchable onPress={onBack}>
           <Icon family={ICON.FAMILY} value="arrow-left" />
@@ -24,19 +25,25 @@ export const Header = ({ children, highlight = false, image = LOGO, onBack, titl
     </Col>
     <Col align="center" style={styles.content}>
       <Motion
-        duration={highlight ? MOTION.EXPAND : MOTION.COLLAPSE}
-        timeline={[{ property: 'opacity', value: highlight ? 1 : 0 }]}
+        duration={highlight ? MOTION.EXPAND : MOTION.COLLAPSE / 4}
+        timeline={[
+          { property: 'opacity', value: highlight ? 1 : 0 },
+          { property: 'translateY', value: highlight ? 0 : 16 },
+        ]}
       >
-        <Image source={image} style={styles.image} />
-        <Text subtitle>{title}</Text>
+        <Row>
+          <Image source={image} style={styles.image} />
+          {title && <Text subtitle>{title}</Text>}
+        </Row>
       </Motion>
     </Col>
-    <Col align="end">{children}</Col>
+    <Col align="end">{childRight}</Col>
   </Row>
 );
 
 Header.propTypes = {
-  children: PropTypes.node,
+  childLeft: PropTypes.node,
+  childRight: PropTypes.node,
   highlight: PropTypes.bool,
   image: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   onBack: PropTypes.func,

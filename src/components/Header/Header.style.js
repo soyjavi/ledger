@@ -16,6 +16,9 @@ export default StyleSheet.create({
     top: 0,
     width: '100%',
     zIndex: 1,
+    overflow: 'hidden',
+    // backgroundColor: COLOR.BACKGROUND,
+    backgroundColor: 'rgba(255,255,255,0.95)',
   },
 
   content: {
@@ -24,14 +27,11 @@ export default StyleSheet.create({
   },
 
   image: {
-    alignSelf: 'center',
     borderRadius: BORDER_RADIUS / 2,
+    marginRight: SPACE.S,
     height: IMAGE_SIZE,
     width: IMAGE_SIZE,
   },
 
-  solid: {
-    backgroundColor: COLOR.BACKGROUND,
-    ...ELEVATION,
-  },
+  // elevate: ELEVATION,
 });
