@@ -11,7 +11,7 @@ import styles, { HEADER_HEIGHT } from './Header.style';
 
 export { HEADER_HEIGHT };
 
-const { ICON, MOTION } = THEME;
+const { ICON, MOTION, UNIT } = THEME;
 
 export const Header = ({ childLeft, childRight, highlight = false, image = LOGO, onBack, title }) => (
   <Row paddingHorizontal="M" style={[styles.container, highlight && styles.elevate]}>
@@ -28,7 +28,7 @@ export const Header = ({ childLeft, childRight, highlight = false, image = LOGO,
         duration={highlight ? MOTION.EXPAND : MOTION.COLLAPSE / 4}
         timeline={[
           { property: 'opacity', value: highlight ? 1 : 0 },
-          { property: 'translateY', value: highlight ? 0 : 16 },
+          { property: 'translateY', value: highlight ? 0 : UNIT },
         ]}
       >
         <Row>

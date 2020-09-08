@@ -37,11 +37,4 @@ export default StyleSheet.create({
     height: SPACE.M,
     width: SPACE.M,
   },
-
-  title: {
-    marginTop: SPACE.XS,
-    lineHeight: FONT.BODY.fontSize * 1.35,
-  },
-
-  text: FONT.SECONDARY,
 });

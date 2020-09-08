@@ -12,25 +12,14 @@ const { BORDER_RADIUS, COLOR, ICON, SPACE } = THEME;
 
 export { OPTION_SIZE };
 
-export const Option = ({
-  caption,
-  children,
-  color = COLOR.BASE,
-  disabled,
-  icon,
-  image,
-  onPress,
-  selected,
-  legend,
-  ...inherit
-}) => {
+export const Option = ({ caption, children, disabled, icon, image, onPress, selected, legend, ...inherit }) => {
   const colorContent = disabled ? COLOR.LIGHTEN : selected ? COLOR.BACKGROUND : COLOR.TEXT;
 
   return (
     <Box
       {...inherit}
       borderRadius={BORDER_RADIUS}
-      color={selected ? COLOR.CTA : color}
+      color={selected ? COLOR.CTA : COLOR.BASE}
       small
       style={[styles.container, inherit.style]}
     >
@@ -69,7 +58,6 @@ export const Option = ({
 Option.propTypes = {
   caption: PropTypes.string,
   children: PropTypes.node,
-  color: PropTypes.string,
   disabled: PropTypes.bool,
   icon: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   image: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),

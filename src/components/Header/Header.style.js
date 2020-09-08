@@ -3,7 +3,7 @@ import { THEME } from 'reactor/common';
 import { useEnvironment } from 'reactor/hooks';
 
 const ENV = useEnvironment();
-const { BORDER_RADIUS, ELEVATION, UNIT, COLOR, SPACE } = THEME;
+const { UNIT, SPACE } = THEME;
 const IMAGE_SIZE = SPACE.M + SPACE.XS;
 
 export const HEADER_HEIGHT = UNIT * 8;
@@ -17,7 +17,6 @@ export default StyleSheet.create({
     width: '100%',
     zIndex: 1,
     overflow: 'hidden',
-    // backgroundColor: COLOR.BACKGROUND,
     backgroundColor: 'rgba(255,255,255,0.95)',
   },
 
@@ -27,11 +26,9 @@ export default StyleSheet.create({
   },
 
   image: {
-    borderRadius: BORDER_RADIUS / 2,
+    borderRadius: IMAGE_SIZE / 4,
     marginRight: SPACE.S,
     height: IMAGE_SIZE,
     width: IMAGE_SIZE,
   },
-
-  // elevate: ELEVATION,
 });
