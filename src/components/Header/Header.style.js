@@ -21,8 +21,8 @@ export default StyleSheet.create({
   },
 
   content: {
-    flex: 1,
-    minWidth: '60%',
+    flex: 4,
+    maxWidth: '85%',
   },
 
   image: {
