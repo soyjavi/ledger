@@ -10,6 +10,8 @@ export default StyleSheet.create({
     backgroundColor: COLOR.CTA,
     borderRadius: BORDER_RADIUS + SPACE.S / 2,
     bottom: SPACE.S,
+    display: 'flex',
+    flexDirection: 'row',
     justifyContent: 'space-between',
     padding: SPACE.XS,
     position: ENV.IS_WEB ? 'fixed' : 'absolute',
@@ -17,6 +19,5 @@ export default StyleSheet.create({
     right: SPACE.S,
     width: 'auto',
     zIndex: 1,
-    overflow: 'hidden',
   },
 });
