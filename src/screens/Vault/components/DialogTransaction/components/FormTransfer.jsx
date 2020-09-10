@@ -50,13 +50,13 @@ const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
       <Input
         currency={vault.currency}
         label={l10n.SEND}
-        marginBottom="M"
+        marginBottom="L"
         maxValue={vault.currentBalance}
         onChange={(value) => handleField('value', value)}
         value={form.value}
       />
 
-      <Slider itemMargin={SPACE.S} itemWidth={OPTION_SIZE}>
+      <Slider itemMargin={SPACE.S} itemWidth={OPTION_SIZE} marginBottom="L">
         {queryAvailableVaults(vaults, vault.hash).map(({ currency, currentBalance, hash, title }) => (
           <Option
             key={hash}
@@ -81,8 +81,6 @@ const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
         currency={form.to ? form.to.currency : baseCurrency}
         disabled={!form.to}
         label={l10n.GET}
-        marginTop="M"
-        marginBottom="M"
         onChange={(value) => handleField('exchange', value)}
         value={form.to ? form.exchange : undefined}
       />

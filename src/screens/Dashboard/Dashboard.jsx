@@ -2,13 +2,23 @@ import PropTypes from 'prop-types';
 
 import React, { useEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
-import { Button, Icon, Slider, Touchable, Viewport } from 'reactor/components';
+import { Button, Slider, Viewport } from 'reactor/components';
 
 import { C } from '@common';
-import { CARD_WIDTH, DialogClone, Footer, GroupTransactions, Header, Heading, ScrollView, Summary } from '@components';
+import {
+  CARD_WIDTH,
+  DialogClone,
+  Footer,
+  GroupTransactions,
+  Header,
+  Heading,
+  ScrollView,
+  Search,
+  Summary,
+} from '@components';
 import { useL10N, useNavigation, useStore } from '@context';
 
-import { DialogVault, Search, VaultCard } from './components';
+import { DialogVault, VaultCard } from './components';
 import { queryLastTxs, queryVaults } from './Dashboard.controller';
 import styles from './Dashboard.style';
 
@@ -48,9 +58,15 @@ export const Dashboard = ({ visible, ...inherit }) => {
       <Header
         childRight={
           scroll ? (
-            <Touchable onPress={() => navigation.go(SCREEN.SETTINGS)}>
-              <Icon family={ICON.FAMILY} value="settings" size={SPACE.L} />
-            </Touchable>
+            <Button
+              alignSelf="end"
+              color={COLOR.BACKGROUND}
+              colorText={COLOR.TEXT}
+              iconFamily={ICON.FAMILY}
+              icon="settings"
+              onPress={() => navigation.go(SCREEN.SETTINGS)}
+              size="S"
+            />
           ) : undefined
         }
         highlight={scroll}
@@ -111,7 +127,9 @@ export const Dashboard = ({ visible, ...inherit }) => {
       </ScrollView>
 
       <Footer visible={scroll}>
-        {lastTxs.length > 0 && <Search onFocus={setSearching} onValue={setSearchTxs} />}
+        {lastTxs.length > 0 && (
+          <Search onFocus={setSearching} onSearch={setSearchTxs} text={l10n.SEARCH.toUpperCase()} />
+        )}
         <Button
           icon="chart"
           iconFamily={ICON.FAMILY}

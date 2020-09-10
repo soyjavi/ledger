@@ -20,14 +20,7 @@ const BoxSummary = ({ caption, value, ...inherit }) => (
     <Text caption color={COLOR.LIGHTEN} numberOfLines={1}>
       {caption.toUpperCase()}
     </Text>
-    <PriceFriendly
-      {...inherit}
-      bold
-      caption
-      color={value === 0 ? COLOR.LIGHTEN : undefined}
-      fixed={value >= 1000 ? 0 : undefined}
-      value={value}
-    />
+    <PriceFriendly {...inherit} bold caption fixed={value >= 1000 ? 0 : undefined} value={value} />
   </Col>
 );
 
@@ -54,10 +47,8 @@ const Summary = ({ children, currency = CURRENCY, currentBalance, currentMonth =
     <View style={styles.container}>
       <Col align="center" style={styles.content}>
         <Image source={image} resizeMode="contain" style={styles.image} />
-        <Col align="center" marginBottom={showCurrentBalance ? 'M' : undefined}>
-          <Text headline={!showCurrentBalance} subtitle>
-            {title}
-          </Text>
+        <Col align="center">
+          <Text subtitle>{title}</Text>
 
           {showCurrentBalance && (
             <>
@@ -68,6 +59,7 @@ const Summary = ({ children, currency = CURRENCY, currentBalance, currentMonth =
                 <PriceFriendly
                   color={COLOR.LIGHTEN}
                   currency={baseCurrency}
+                  marginBottom="S"
                   subtitle
                   value={exchange(Math.abs(currentBalance), currency, baseCurrency, rates)}
                   style={styles.baseCurrency}
@@ -78,7 +70,7 @@ const Summary = ({ children, currency = CURRENCY, currentBalance, currentMonth =
         </Col>
 
         {showCurrentBalance && (
-          <Row justify="space" paddingHorizontal="S">
+          <Row marginTop="M" justify="space" paddingHorizontal="S">
             <BoxSummary caption={verboseMonth(new Date(), l10n)} currency="%" operator value={progressionPercentage} />
             <BoxSummary caption={l10n.INCOMES} currency={baseCurrency} value={incomes} />
             <BoxSummary caption={l10n.EXPENSES} currency={baseCurrency} value={expenses} />

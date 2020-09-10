@@ -31,7 +31,7 @@ const FormTransaction = ({ currency, form = {}, onChange, type, vault: { current
 
   return (
     <>
-      <Slider itemMargin={SPACE.S} itemWidth={OPTION_SIZE} marginTop="XS" marginBottom="M">
+      <Slider itemMargin={SPACE.S} itemWidth={OPTION_SIZE} marginBottom="M">
         {queryCategories({ l10n, type }).map((item) => (
           <Option
             legend={item.caption}
@@ -47,7 +47,7 @@ const FormTransaction = ({ currency, form = {}, onChange, type, vault: { current
       <Input
         currency={currency}
         label={l10n.AMOUNT}
-        marginVertical="M"
+        marginBottom="L"
         maxValue={type === EXPENSE ? currentBalance : undefined}
         onChange={(value) => handleField('value', value)}
         value={form.value}
@@ -55,7 +55,7 @@ const FormTransaction = ({ currency, form = {}, onChange, type, vault: { current
 
       <Input
         label={l10n.CONCEPT}
-        marginBottom="M"
+        marginBottom="L"
         onChange={(value) => handleField('title', value)}
         value={form.title}
       />

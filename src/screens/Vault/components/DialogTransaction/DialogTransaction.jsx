@@ -83,7 +83,7 @@ const DialogTransaction = (props = {}) => {
         />
       )}
 
-      <Row marginTop="L">
+      <Row marginTop="XL">
         <Button
           color={COLOR.TEXT}
           disabled={busy}

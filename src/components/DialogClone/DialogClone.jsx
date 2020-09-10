@@ -106,7 +106,7 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
         </Col>
       )}
 
-      <Row marginTop="M">
+      <Row marginTop="XL">
         <Button
           {...buttonProps}
           color={COLOR.TEXT}
