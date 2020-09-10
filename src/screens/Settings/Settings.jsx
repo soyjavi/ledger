@@ -15,7 +15,7 @@ import { askCamera, changeCurrency, getBlockchain } from './Settings.controller'
 import styles from './Settings.style';
 
 const { DELAY_PRESS_MS } = C;
-const { COLOR } = THEME;
+const { COLOR, ICON } = THEME;
 const CAMERA_PROPS = {
   barCodeScannerSettings: { barCodeTypes: [BarCodeScanner.Constants.BarCodeType.qr] },
   type: Camera.Constants.Type.back,
@@ -31,9 +31,9 @@ export const Settings = ({ visible, ...inherit }) => {
 
   const [blockchain, setBlockchain] = useState(undefined);
   const [camera, setCamera] = useState(false);
+  const [scroll, setScroll] = useState(false);
   const [hasCamera, setHasCamera] = useState(undefined);
   const [qr, setQr] = useState(undefined);
-  const [scroll, setScroll] = useState(false);
   const [syncRates, setSyncRates] = useState(undefined);
 
   const {
@@ -86,39 +86,49 @@ export const Settings = ({ visible, ...inherit }) => {
   return (
     <>
       <Viewport {...inherit} scroll={false} visible={visible}>
-        <Header highlight={scroll} onBack={navigation.back} title={l10n.VAULTS} />
+        <Header
+          //
+          childRight={
+            hasCamera ? (
+              <Button
+                alignSelf="end"
+                color={COLOR.BACKGROUND}
+                colorText={COLOR.TEXT}
+                iconFamily={ICON.FAMILY}
+                icon={camera ? 'close' : 'camera'}
+                onPress={() => setCamera(!camera)}
+                size="S"
+              />
+            ) : undefined
+          }
+          highlight={scroll}
+          onBack={navigation.back}
+          title={l10n.SETTINGS}
+        />
 
-        <ScrollView contentContainerStyle={styles.scroll} onScroll={(value) => setScroll(value)} ref={scrollview}>
+        <ScrollView contentContainerStyle={styles.scroll} onScroll={setScroll} ref={scrollview}>
           <Summary title={l10n.SETTINGS} />
 
-          <Heading small value={l10n.TRANSFER_TXS}>
-            {hasCamera && (
-              <Button
-                color={COLOR.TEXT}
-                onPress={() => setCamera(!camera)}
-                outlined
-                size="S"
-                text={camera ? l10n.CLOSE.toUpperCase() : l10n.QR_READER.toUpperCase()}
-              />
-            )}
-          </Heading>
+          <View marginHorizontal="M">
+            <Heading small value={l10n.TRANSFER_TXS} />
 
-          <View marginTop="S" marginBottom="XS" style={styles.content}>
-            {!camera ? (
-              <Image source={{ uri: ServiceQR.uri({ secret, authorization }) }} style={styles.qr} />
-            ) : (
-              <Camera {...CAMERA_PROPS} onBarCodeScanned={handleQRScanned} style={styles.camera}>
-                <View style={styles.cameraViewport} />
-              </Camera>
-            )}
+            <View marginTop="S" marginBottom="XS" style={styles.content}>
+              {!camera ? (
+                <Image source={{ uri: ServiceQR.uri({ secret, authorization }) }} style={styles.qr} />
+              ) : (
+                <Camera {...CAMERA_PROPS} onBarCodeScanned={handleQRScanned} style={styles.camera}>
+                  <View style={styles.cameraViewport} />
+                </Camera>
+              )}
+            </View>
+            <Text caption color={COLOR.LIGHTEN} style={styles.legend}>
+              {camera ? l10n.TRANSFER_TXS_CAMERA : l10n.TRANSFER_TXS_CAPTION}
+            </Text>
           </View>
-          <Text caption color={COLOR.LIGHTEN} style={styles.legend}>
-            {camera ? l10n.TRANSFER_TXS_CAMERA : l10n.TRANSFER_TXS_CAPTION}
-          </Text>
 
-          <Heading marginTop="L" marginBottom="S" small value={l10n.CHOOSE_CURRENCY}></Heading>
-          <SliderCurrencies onChange={handleChangeCurrency} selected={baseCurrency} />
-          <Row marginTop="S">
+          <Heading small marginTop="L" marginBottom="S" marginHorizontal="M" value={l10n.CHOOSE_CURRENCY}></Heading>
+          <SliderCurrencies onChange={handleChangeCurrency} paddingLeft="M" selected={baseCurrency} />
+          <Row marginHorizontal="M" marginTop="S">
             {!syncRates ? (
               <>
                 <Text caption color={COLOR.LIGHTEN}>
