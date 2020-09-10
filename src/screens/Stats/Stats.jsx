@@ -6,7 +6,7 @@ import { Viewport } from 'reactor/components';
 
 import { BANNERS } from '@assets';
 import { C } from '@common';
-import { Banner, ButtonBack, Chart, Header, ScrollView, Summary } from '@components';
+import { Banner, Chart, Header, ScrollView, Summary } from '@components';
 import { useL10N, useNavigation, useStore } from '@context';
 
 import { ItemGroupCategories, Locations, SliderMonths } from './components';
@@ -64,14 +64,13 @@ export const Stats = ({ visible, ...inherit }) => {
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
-      <Header
-        highlight={scroll}
-        onBack={scroll ? navigation.back : undefined}
-        title={`${l10n.MONTHS[slider.month]} ${slider.year}`}
-      />
+      <Header highlight={scroll} onBack={navigation.back} title={`${l10n.MONTHS[slider.month]} ${slider.year}`} />
 
       <ScrollView contentContainerStyle={styles.scrollView} onScroll={(value) => setScroll(value)} ref={scrollview}>
-        <Summary title={l10n.ACTIVITY} />
+        <Summary
+          // title={l10n.ACTIVITY}
+          title={`${l10n.MONTHS[slider.month]} ${slider.year}`}
+        />
 
         <SliderMonths {...slider} onChange={handleSliderChange} marginBottom="M" />
 
@@ -125,8 +124,6 @@ export const Stats = ({ visible, ...inherit }) => {
           </>
         )}
       </ScrollView>
-
-      <ButtonBack onPress={navigation.back} visible={visible} />
     </Viewport>
   );
 };

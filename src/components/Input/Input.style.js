@@ -1,7 +1,9 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from 'reactor/common';
 
-const { COLOR, FONT, SPACE } = THEME;
+const { BORDER_RADIUS, COLOR, FONT, SPACE, UNIT } = THEME;
+
+const HEIGHT = SPACE.XXL + UNIT;
 
 export default StyleSheet.create({
   container: {
@@ -9,35 +11,42 @@ export default StyleSheet.create({
   },
 
   content: {
+    // borderRadius: BORDER_RADIUS,
     borderBottomWidth: 1,
     borderBottomColor: COLOR.BASE,
+    // borderWidth: 1,
+    // borderColor: COLOR.BASE,
+    // backgroundColor: COLOR.BASE,
   },
 
   focus: {
-    borderBottomColor: COLOR.LIGHTEN,
+    borderBottomColor: COLOR.TEXT,
+    // backgroundColor: COLOR.BACKGROUND,
+    // borderColor: COLOR.TEXT,
   },
+
+  filled: {},
 
   value: {
     minWidth: SPACE.L,
+    height: HEIGHT,
+    lineHeight: HEIGHT * 1.1,
   },
 
   input: {
+    ...FONT.SUBTITLE,
     color: COLOR.TEXT,
     padding: 0,
     margin: 0,
-    height: SPACE.XXL,
+    height: HEIGHT,
     width: '100%',
+    textAlign: 'center',
   },
 
   inputCurrency: {
     position: 'absolute',
     left: 0,
-    height: SPACE.XXL,
     opacity: 0,
-  },
-
-  inputText: {
-    ...FONT.SUBTITLE,
-    textAlign: 'center',
+    width: '100%',
   },
 });

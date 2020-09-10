@@ -5,7 +5,7 @@ import { THEME } from 'reactor/common';
 import { Slider, Viewport } from 'reactor/components';
 
 import { C } from '@common';
-import { ButtonBack, Card, CARD_WIDTH, Header, Heading, ScrollView } from '@components';
+import { Card, CARD_WIDTH, Header, Heading, ScrollView, Summary } from '@components';
 import { useL10N, useNavigation, useStore } from '@context';
 
 import { VaultItem } from './components';
@@ -39,9 +39,10 @@ const Vaults = ({ visible, ...inherit }) => {
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
-      <Header highlight={scroll} onBack={scroll ? navigation.back : undefined} title={l10n.VAULTS} />
+      <Header highlight={scroll} onBack={navigation.back} title={l10n.VAULTS} />
 
       <ScrollView contentContainerStyle={styles.scroll} onScroll={(value) => setScroll(value)} ref={scrollview}>
+        <Summary title={l10n.VAULTS} />
         {hasCurrencies && (
           <>
             <Heading marginBottom="XS" paddingHorizontal="M" small value={l10n.CURRENCIES} />
@@ -78,17 +79,12 @@ const Vaults = ({ visible, ...inherit }) => {
           ))}
         </>
       </ScrollView>
-      <ButtonBack visible={visible} onPress={navigation.back} />
     </Viewport>
   );
 };
 
 Vaults.propTypes = {
   visible: bool,
-};
-
-Vaults.defaultProps = {
-  visible: true,
 };
 
 export default Vaults;

@@ -25,11 +25,11 @@ export const Card = ({ balance, currency, disabled, onPress, percentage, title =
   } = useStore();
 
   return (
-    <Touchable {...others} onPress={onPress} rippleColor={COLOR.LIGHTEN} style={styles.container}>
+    <Touchable {...others} onPress={onPress} rippleColor={COLOR.RIPPLE} style={styles.container}>
       <Box outlined={disabled} style={styles.box}>
         <View style={styles.content}>
           <Row marginBottom="XS">
-            <Image source={FLAGS[currency]} style={styles.flag} />
+            <Image source={FLAGS[currency]} style={styles.image} />
             <Text caption numberOfLines={1} marginLeft="XS">
               {title.toUpperCase()}
             </Text>

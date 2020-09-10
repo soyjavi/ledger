@@ -33,7 +33,7 @@ export default StyleSheet.create({
     flex: 1,
   },
 
-  flag: {
+  image: {
     height: SPACE.M,
     width: SPACE.M,
   },

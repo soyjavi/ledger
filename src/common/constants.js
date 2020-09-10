@@ -39,6 +39,7 @@ export default {
   SCREEN: {
     DASHBOARD: 'dashboard',
     SESSION: 'session',
+    SETTINGS: 'settings',
     STATS: 'stats',
     VAULT: 'vault',
     VAULTS: 'vaults',

@@ -12,11 +12,11 @@ import { queryCurrencies } from './modules';
 
 const { SPACE } = THEME;
 
-export const SliderCurrencies = ({ onChange, selected }) => {
+export const SliderCurrencies = ({ onChange, selected, ...others }) => {
   const store = useStore();
 
   return (
-    <Slider itemMargin={SPACE.S} itemWidth={OPTION_SIZE}>
+    <Slider {...others} itemMargin={SPACE.S} itemWidth={OPTION_SIZE}>
       {queryCurrencies(store).map((currency, index) => (
         <Option
           caption={currency}

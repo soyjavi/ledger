@@ -27,10 +27,10 @@ const TransactionItem = (props) => {
   const operator = type === EXPENSE ? -1 : 1;
 
   return (
-    <Touchable onPress={onPress ? () => onPress(props) : undefined}>
+    <Touchable onPress={onPress ? () => onPress(props) : undefined} rippleColor={COLOR.RIPPLE}>
       <Row align="center" paddingHorizontal="M" paddingVertical="S">
         <Col marginRight="S" width="auto">
-          <Box color={type === INCOME ? COLOR.BRAND_OPACITY : undefined}>
+          <Box color={type === INCOME ? COLOR.BRAND_OPACITY : COLOR.BASE}>
             <Icon
               color={type === INCOME ? COLOR.BRAND : undefined}
               family={ICON.FAMILY}

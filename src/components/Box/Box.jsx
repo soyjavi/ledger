@@ -14,7 +14,12 @@ const Box = ({ borderRadius = BORDER_RADIUS, children, color = COLOR.BASE, outli
     align="center"
     style={[
       styles.container,
-      outlined ? { borderRadius, borderWidth: 1, borderColor: color } : { borderRadius, backgroundColor: color },
+      {
+        borderRadius,
+        borderWidth: 1,
+        borderColor: outlined ? color : COLOR.TRANSPARENT,
+        backgroundColor: !outlined ? color : COLOR.TRANSPARENT,
+      },
       others.style,
     ]}
   >

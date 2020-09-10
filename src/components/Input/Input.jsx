@@ -67,12 +67,15 @@ export const Input = ({
 
   return (
     <View {...others} style={[styles.container, others.style]}>
-      <Row justify="center" marginBottom="XS  ">
-        <Text caption color={COLOR.LIGHTEN}>
-          {(others.value || currency) && label ? label : ' '}
-        </Text>
-      </Row>
-      <Row justify="center" style={[styles.content, focus && styles.focus]}>
+      {label && (
+        <Row justify="center">
+          <Text caption color={COLOR.LIGHTEN}>
+            {label.toUpperCase()}
+          </Text>
+        </Row>
+      )}
+
+      <Row justify="center" style={[styles.content, focus && styles.focus, others.value && styles.filled]}>
         {currency && (
           <>
             {LEFT_SYMBOLS.includes(symbol) && <Text {...symbolProps} />}
@@ -95,10 +98,10 @@ export const Input = ({
           onBlur={() => setFocus(false)}
           onChangeText={handleChange}
           onFocus={() => setFocus(true)}
-          placeholder={others.placeholder || label}
+          placeholder="..."
           placeholderTextColor={COLOR.LIGHTEN}
           secureTextEntry={secure}
-          style={[styles.input, currency ? styles.inputCurrency : styles.inputText]}
+          style={[styles.input, currency ? styles.inputCurrency : undefined]}
           underlineColorAndroid="transparent"
           value={others.value || ''}
         />
