@@ -13,7 +13,7 @@ import { Box } from '../Box';
 import { PriceFriendly } from '../PriceFriendly';
 import styles, { CARD_WIDTH } from './Card.style';
 
-const { COLOR } = THEME;
+const { COLOR, SPACE } = THEME;
 
 export { CARD_WIDTH };
 
@@ -26,21 +26,20 @@ export const Card = ({ balance, currency, disabled, onPress, percentage, title =
 
   return (
     <Touchable {...others} onPress={onPress} rippleColor={COLOR.RIPPLE} style={styles.container}>
-      <Box outlined={disabled} style={styles.box}>
+      <Box borderRadius={SPACE.S} outlined={disabled} style={styles.box}>
         <View style={styles.content}>
-          <Row marginBottom="XS">
+          <Row>
             <Image source={FLAGS[currency]} style={styles.image} />
             <Text caption numberOfLines={1} marginLeft="XS">
               {title.toUpperCase()}
             </Text>
           </Row>
-          <PriceFriendly subtitle currency={currency} style={[styles.text, styles.balance]} value={balance} />
+          <PriceFriendly bold subtitle currency={currency} value={balance} />
           {currency !== baseCurrency && (
             <PriceFriendly
-              currency={baseCurrency}
-              bold
               caption
               color={COLOR.LIGHTEN}
+              currency={baseCurrency}
               value={exchange(Math.abs(balance), currency, baseCurrency, rates)}
             />
           )}

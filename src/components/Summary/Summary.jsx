@@ -48,12 +48,17 @@ const Summary = ({ children, currency = CURRENCY, currentBalance, currentMonth =
       <Col align="center" style={styles.content}>
         <Image source={image} resizeMode="contain" style={styles.image} />
         <Col align="center">
-          <Text subtitle>{title}</Text>
+          <Text
+            // bold
+            subtitle
+          >
+            {title}
+          </Text>
 
           {showCurrentBalance && (
             <>
               <Touchable onPress={() => updateSettings({ maskAmount: !maskAmount })}>
-                <PriceFriendly currency={currency} headline value={Math.abs(currentBalance)} />
+                <PriceFriendly bold currency={currency} headline value={Math.abs(currentBalance)} />
               </Touchable>
               {baseCurrency !== currency && (
                 <PriceFriendly
@@ -62,7 +67,7 @@ const Summary = ({ children, currency = CURRENCY, currentBalance, currentMonth =
                   marginBottom="S"
                   subtitle
                   value={exchange(Math.abs(currentBalance), currency, baseCurrency, rates)}
-                  style={styles.baseCurrency}
+                  // style={styles.baseCurrency}
                 />
               )}
             </>

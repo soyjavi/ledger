@@ -30,7 +30,7 @@ const TransactionItem = (props) => {
     <Touchable onPress={onPress ? () => onPress(props) : undefined} rippleColor={COLOR.RIPPLE}>
       <Row align="center" paddingHorizontal="M" paddingVertical="S">
         <Col marginRight="S" width="auto">
-          <Box color={type === INCOME ? COLOR.BRAND_OPACITY : COLOR.BASE}>
+          <Box color={type === INCOME ? COLOR.BRAND_OPACITY : COLOR.BASE} outlined>
             <Icon
               color={type === INCOME ? COLOR.BRAND : undefined}
               family={ICON.FAMILY}
@@ -43,7 +43,9 @@ const TransactionItem = (props) => {
         <Col>
           <Row>
             <Col>
-              <Text numberOfLines={1}>{title}</Text>
+              <Text bold numberOfLines={1}>
+                {title}
+              </Text>
             </Col>
             <Col width="auto">
               <PriceFriendly
@@ -65,7 +67,6 @@ const TransactionItem = (props) => {
             <Col width="auto">
               {baseCurrency !== currency && (
                 <PriceFriendly
-                  bold
                   caption
                   color={COLOR.LIGHTEN}
                   currency={baseCurrency}

@@ -46,7 +46,14 @@ export const Header = ({ childLeft, childRight, highlight = false, image = LOGO,
         >
           <Row>
             <Image source={image} style={styles.image} />
-            {title && <Text subtitle>{title}</Text>}
+            {title && (
+              <Text
+                //  bold
+                subtitle
+              >
+                {title}
+              </Text>
+            )}
           </Row>
         </Motion>
       </Col>

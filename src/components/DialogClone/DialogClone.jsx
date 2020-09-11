@@ -54,7 +54,9 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
   return (
     <Dialog {...inherit} position="bottom">
       <Row justify="center" marginVertical="L">
-        <Text headline>{title ? title : type === EXPENSE ? l10n.EXPENSE : l10n.INCOME}</Text>
+        <Text bold subtitle>
+          {title ? title : type === EXPENSE ? l10n.EXPENSE : l10n.INCOME}
+        </Text>
       </Row>
       <Row>
         <Col marginRight="S" width="auto">
@@ -86,7 +88,6 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
             <Col width="auto">
               {currency !== baseCurrency && (
                 <PriceFriendly
-                  bold
                   caption
                   color={COLOR.LIGHTEN}
                   currency={baseCurrency}

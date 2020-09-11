@@ -33,7 +33,7 @@ export default StyleSheet.create({
   },
 
   image: {
-    borderRadius: IMAGE_SIZE / 4,
+    borderRadius: IMAGE_SIZE,
     position: 'absolute',
     top: -(IMAGE_SIZE / 2),
     height: IMAGE_SIZE,

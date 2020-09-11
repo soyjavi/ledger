@@ -26,7 +26,7 @@ export default StyleSheet.create({
   },
 
   image: {
-    borderRadius: IMAGE_SIZE / 4,
+    borderRadius: IMAGE_SIZE / 2,
     marginRight: SPACE.S,
     height: IMAGE_SIZE,
     width: IMAGE_SIZE,

@@ -16,7 +16,7 @@ const { COLOR } = THEME;
 
 const LEFT_SYMBOLS = ['$', '£'];
 
-const exchangeCaption = { caption: true, color: COLOR.LIGHTEN, maskAmount: false };
+const exchangeCaption = { color: COLOR.LIGHTEN, maskAmount: false };
 
 export const Input = ({
   currency,
@@ -79,7 +79,12 @@ export const Input = ({
         {currency && (
           <>
             {LEFT_SYMBOLS.includes(symbol) && <Text {...symbolProps} />}
-            <Text headline color={symbolProps.color} style={styles.value}>
+            <Text
+              //  bold
+              color={symbolProps.color}
+              headline
+              style={styles.value}
+            >
               {value || '0'}
             </Text>
             {!LEFT_SYMBOLS.includes(symbol) && <Text {...symbolProps} />}
@@ -111,7 +116,6 @@ export const Input = ({
         <Row justify="center" marginTop="XS">
           <PriceFriendly
             {...exchangeCaption}
-            bold
             color={focus || others.value > 0 ? COLOR.TEXT : COLOR.LIGHTEN}
             currency={baseCurrency}
             marginRight="XS"

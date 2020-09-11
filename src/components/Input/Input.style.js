@@ -1,9 +1,9 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from 'reactor/common';
 
-const { BORDER_RADIUS, COLOR, FONT, SPACE, UNIT } = THEME;
+const { COLOR, FONT, SPACE } = THEME;
 
-const HEIGHT = SPACE.XXL + UNIT;
+const HEIGHT = SPACE.XXL;
 
 export default StyleSheet.create({
   container: {
@@ -11,29 +11,22 @@ export default StyleSheet.create({
   },
 
   content: {
-    // borderRadius: BORDER_RADIUS,
     borderBottomWidth: 1,
     borderBottomColor: COLOR.BASE,
-    // borderWidth: 1,
-    // borderColor: COLOR.BASE,
-    // backgroundColor: COLOR.BASE,
   },
 
   focus: {
     borderBottomColor: COLOR.TEXT,
-    // backgroundColor: COLOR.BACKGROUND,
-    // borderColor: COLOR.TEXT,
   },
-
-  filled: {},
 
   value: {
     minWidth: SPACE.L,
     height: HEIGHT,
-    lineHeight: HEIGHT * 1.1,
+    lineHeight: HEIGHT,
   },
 
   input: {
+    ...FONT.DEFAULT,
     ...FONT.SUBTITLE,
     color: COLOR.TEXT,
     padding: 0,

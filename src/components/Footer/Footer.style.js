@@ -3,12 +3,11 @@ import { THEME } from 'reactor/common';
 import { useEnvironment } from 'reactor/hooks';
 
 const ENV = useEnvironment();
-const { BORDER_RADIUS, COLOR, SPACE } = THEME;
+const { COLOR, SPACE } = THEME;
 
 export default StyleSheet.create({
   container: {
     backgroundColor: COLOR.CTA,
-    borderRadius: BORDER_RADIUS + SPACE.S / 2,
     bottom: SPACE.S,
     display: 'flex',
     flexDirection: 'row',

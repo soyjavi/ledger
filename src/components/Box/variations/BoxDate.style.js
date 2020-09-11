@@ -1,7 +1,4 @@
 import { StyleSheet } from 'react-native';
-import { THEME } from 'reactor/common';
-
-const { FONT } = THEME;
 
 export default StyleSheet.create({
   container: {
@@ -9,10 +6,4 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-
-  day: {
-    lineHeight: FONT.BODY.fontSize,
-  },
-
-  legend: FONT.LEGEND,
 });

@@ -8,7 +8,7 @@ import { Icon, Text, Touchable } from 'reactor/components';
 import { Box } from '../Box';
 import styles, { OPTION_SIZE } from './Option.style';
 
-const { BORDER_RADIUS, COLOR, ICON, SPACE } = THEME;
+const { BORDER_RADIUS, COLOR, FONT, ICON, SPACE } = THEME;
 
 export { OPTION_SIZE };
 
@@ -44,7 +44,7 @@ export const Option = ({ caption, children, disabled, icon, image, onPress, sele
             color={colorContent}
             marginTop={icon || image ? 'XS' : undefined}
             numberOfLines={1}
-            style={styles.legend}
+            style={FONT.LEGEND}
           >
             {legend}
           </Text>

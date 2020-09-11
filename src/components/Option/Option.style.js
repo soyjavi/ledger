@@ -29,6 +29,4 @@ export default StyleSheet.create({
     height: SPACE.L,
     width: SPACE.L,
   },
-
-  legend: FONT.LEGEND,
 });

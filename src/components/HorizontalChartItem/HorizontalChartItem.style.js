@@ -7,7 +7,6 @@ const BAR_HEIGHT = SPACE.S + SPACE.XS / 2;
 export default StyleSheet.create({
   bar: {
     backgroundColor: COLOR.BASE,
-    borderRadius: BAR_HEIGHT / 2,
     height: BAR_HEIGHT,
     minWidth: BAR_HEIGHT,
   },
@@ -17,8 +16,8 @@ export default StyleSheet.create({
   },
 
   barSmall: {
-    height: BAR_HEIGHT / 2,
-    minWidth: BAR_HEIGHT / 2,
+    height: BAR_HEIGHT / 4,
+    minWidth: BAR_HEIGHT / 4,
   },
 
   text: {

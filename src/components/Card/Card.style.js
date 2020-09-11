@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { LAYOUT, THEME } from 'reactor/common';
 
-const { FONT, SPACE } = THEME;
+const { SPACE } = THEME;
 
 let CARD_WIDTH = LAYOUT.VIEWPORT.W / 2 - (SPACE.L + SPACE.XS);
 if (CARD_WIDTH > 196) CARD_WIDTH = 196;
@@ -9,10 +9,6 @@ if (CARD_WIDTH > 196) CARD_WIDTH = 196;
 export { CARD_WIDTH };
 
 export default StyleSheet.create({
-  balance: {
-    fontSize: FONT.SUBTITLE.fontSize - SPACE.XS,
-  },
-
   box: {
     alignItems: 'flex-start',
   },

@@ -10,7 +10,7 @@ import styles from './Chart.style';
 import { ChartHeading } from './components';
 import { calcHeight } from './modules';
 
-const { COLOR } = THEME;
+const { COLOR, FONT } = THEME;
 
 export const Chart = ({ captions, highlight, inverted = false, values = [], styleContainer, ...others }) => {
   const { color = COLOR.TEXT, currency, max, min, med: avg } = others;
@@ -32,12 +32,13 @@ export const Chart = ({ captions, highlight, inverted = false, values = [], styl
               <View style={[styles.scaleLine, { backgroundColor: color }]} />
               <View style={[styles.tag, { backgroundColor: color }]}>
                 <PriceFriendly
+                  //
                   bold
+                  caption
                   color={COLOR.BACKGROUND}
                   currency={currency}
                   fixed={0}
                   value={avg}
-                  style={styles.legend}
                 />
               </View>
             </View>
@@ -50,7 +51,6 @@ export const Chart = ({ captions, highlight, inverted = false, values = [], styl
               <View
                 style={[
                   styles.bar,
-                  inverted && styles.barInverted,
                   value !== 0 && { height: `${calcHeight(value, { min, max })}%` },
                   { backgroundColor: highlight !== index ? COLOR.BASE : color },
                 ]}
@@ -65,7 +65,11 @@ export const Chart = ({ captions, highlight, inverted = false, values = [], styl
           <Row justify="space" style={styles.captions}>
             {captions.map((caption, index) => (
               <Col align="center" key={`${caption}-${index}`} paddingTop="S">
-                <Text color={highlight !== index ? COLOR.LIGHTEN : undefined} style={styles.caption}>
+                <Text
+                  bold={highlight === index}
+                  color={highlight !== index ? COLOR.LIGHTEN : undefined}
+                  style={FONT.LEGEND}
+                >
                   {caption.substring(0, 3).toUpperCase()}
                 </Text>
               </Col>
