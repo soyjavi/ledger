@@ -45,7 +45,7 @@ const FirstVault = ({ onVault, visible, ...others }) => {
   return (
     <Viewport {...others} visible={visible}>
       <KeyboardAvoidingView behavior="position" contentContainerStyle={styles.form}>
-        <Text marginBottom="M" headline style={styles.text}>
+        <Text bold marginBottom="M" headline style={styles.text}>
           Your first account
         </Text>
         <Text caption marginBottom="L" style={styles.text}>

@@ -45,12 +45,11 @@ const Vaults = ({ visible, ...inherit }) => {
         <Summary title={l10n.VAULTS} />
         {hasCurrencies && (
           <>
-            <Heading marginBottom="XS" paddingHorizontal="M" small value={l10n.CURRENCIES} />
+            <Heading paddingHorizontal="M" value={l10n.CURRENCIES} />
             <Slider itemWidth={CARD_WIDTH} itemMargin={SPACE.S} style={styles.slider}>
               {currencies.map(({ base, currency, ...item }, index) => (
                 <Card
                   {...item}
-                  bold
                   currency={currency}
                   disabled={currency !== selected}
                   key={currency}
@@ -66,7 +65,7 @@ const Vaults = ({ visible, ...inherit }) => {
           </>
         )}
 
-        {hasCurrencies && <Heading paddingHorizontal="M" small value={l10n.VAULTS} />}
+        {hasCurrencies && <Heading paddingHorizontal="M" value={l10n.VAULTS} />}
         <>
           {filter(vaults, selected).map((vault) => (
             <VaultItem

@@ -43,9 +43,7 @@ const TransactionItem = (props) => {
         <Col>
           <Row>
             <Col>
-              <Text bold numberOfLines={1}>
-                {title}
-              </Text>
+              <Text numberOfLines={1}>{title}</Text>
             </Col>
             <Col width="auto">
               <PriceFriendly

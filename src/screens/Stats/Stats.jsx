@@ -67,12 +67,9 @@ export const Stats = ({ visible, ...inherit }) => {
       <Header highlight={scroll} onBack={navigation.back} title={`${l10n.MONTHS[slider.month]} ${slider.year}`} />
 
       <ScrollView contentContainerStyle={styles.scrollView} onScroll={(value) => setScroll(value)} ref={scrollview}>
-        <Summary
-          // title={l10n.ACTIVITY}
-          title={`${l10n.MONTHS[slider.month]} ${slider.year}`}
-        />
+        <Summary title={`${l10n.MONTHS[slider.month]} ${slider.year}`} />
 
-        <SliderMonths {...slider} onChange={handleSliderChange} marginBottom="M" />
+        <SliderMonths {...slider} onChange={handleSliderChange} marginBottom="XL" />
 
         <Chart
           {...calcScales(chart.balance)}
@@ -112,7 +109,7 @@ export const Stats = ({ visible, ...inherit }) => {
 
         {(hasExpenses || hasIncomes) && (
           <>
-            {hasPoints && <Locations {...inherit} {...locations} />}
+            {hasPoints && <Locations {...locations} />}
             <Chart
               {...calcScales(chart.transfers)}
               {...chartProps}

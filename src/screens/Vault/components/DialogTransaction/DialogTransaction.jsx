@@ -71,7 +71,9 @@ const DialogTransaction = (props = {}) => {
   return (
     <Dialog {...inherit} onClose={onClose} position="bottom" visible={visible}>
       <Row justify="center" marginVertical="L">
-        <Text headline>{l10n.TRANSACTION[type]}</Text>
+        <Text bold subtitle>
+          {l10n.TRANSACTION[type]}
+        </Text>
       </Row>
 
       <Form {...props} {...state} type={type} onChange={(value) => setState({ ...state, ...value })} />

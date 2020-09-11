@@ -48,8 +48,10 @@ const Session = ({ onSession, visible, ...others }) => {
   return (
     <Viewport {...others} visible={visible} scroll={false}>
       <View style={styles.container}>
-        <Text headline>{signup ? l10n.PIN_CHOOSE : l10n.PIN}</Text>
-        <Row justify="center" style={styles.input}>
+        <Text bold headline>
+          {signup ? l10n.PIN_CHOOSE : l10n.PIN}
+        </Text>
+        <Row justify="center">
           {!busy ? (
             <>
               {['•', '•', '•', '•'].map((letter, index) => (
@@ -58,7 +60,7 @@ const Session = ({ onSession, visible, ...others }) => {
                   timeline={[{ property: 'scale', value: pin.length > index ? 1.5 : 1 }]}
                   type="spring"
                 >
-                  <Text headline color={pin.length <= index ? COLOR.LIGHTEN : undefined}>
+                  <Text bold headline color={pin.length <= index ? COLOR.LIGHTEN : undefined}>
                     {letter}
                   </Text>
                 </Motion>

@@ -16,7 +16,7 @@ const { COLOR } = THEME;
 
 const LEFT_SYMBOLS = ['$', '£'];
 
-const exchangeCaption = { color: COLOR.LIGHTEN, maskAmount: false };
+const exchangeCaption = { caption: true, color: COLOR.LIGHTEN, maskAmount: false };
 
 export const Input = ({
   currency,

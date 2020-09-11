@@ -26,7 +26,7 @@ export const VaultItem = ({ active, onChange, onPress, dataSource: { currency, c
       >
         <Row>
           <Col marginRight="S" width="auto">
-            <Box small outlined={!active} styleContent={styles.boxContent}>
+            <Box small outlined styleContent={styles.boxContent}>
               <Image source={FLAGS[currency]} style={styles.flag} />
             </Box>
           </Col>
@@ -34,7 +34,7 @@ export const VaultItem = ({ active, onChange, onPress, dataSource: { currency, c
             <Text color={colorText} numberOfLines={1}>
               {title}
             </Text>
-            <PriceFriendly bold caption color={COLOR.LIGHTEN} currency={currency} value={currentBalance} />
+            <PriceFriendly caption color={COLOR.LIGHTEN} currency={currency} value={currentBalance} />
           </Col>
         </Row>
       </Touchable>

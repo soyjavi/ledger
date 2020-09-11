@@ -5,7 +5,7 @@ const { SPACE } = THEME;
 
 export default StyleSheet.create({
   container: {
-    marginBottom: SPACE.L,
+    marginBottom: SPACE.L + SPACE.XS,
   },
 
   content: {

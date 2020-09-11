@@ -45,7 +45,7 @@ export const DialogVault = ({ onClose, visible }) => {
   return (
     <Dialog onClose={vaults.length > 0 ? onClose : undefined} position="bottom" visible={visible}>
       <Row justify="center" marginVertical="L">
-        <Text headline>{`${l10n.NEW} ${l10n.VAULT}`}</Text>
+        <Text bold subtitle>{`${l10n.NEW} ${l10n.VAULT}`}</Text>
       </Row>
       <FormVault form={form} onChange={setForm} />
       <Row marginTop="XL">

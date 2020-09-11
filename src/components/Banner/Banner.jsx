@@ -8,12 +8,17 @@ import { BANNERS } from '@assets';
 
 import styles from './Banner.style';
 
-export const Banner = ({ align, caption, children, image = BANNERS.NOT_FOUND, title, ...others }) => (
+export const Banner = ({ align, caption, children, image = BANNERS.NOT_FOUND, small, title, ...others }) => (
   <View {...others} style={[styles.container, styles[align], others.style]}>
-    <Image resizeMode="contain" source={image} style={styles.image} />
+    <Image resizeMode="contain" source={image} style={[styles.image, small && styles.imageSmall]} />
     <View marginTop="L">
       {title && (
-        <Text headline style={[styles.text, styles[`text${align}`]]}>
+        <Text
+          bold={!small}
+          headline={!small}
+          // subtitle={small}
+          style={[styles.text, styles[`text${align}`]]}
+        >
           {title}
         </Text>
       )}
@@ -32,5 +37,6 @@ Banner.propTypes = {
   caption: PropTypes.string,
   children: PropTypes.node,
   image: PropTypes.any,
+  small: PropTypes.bool,
   title: PropTypes.string,
 };

@@ -6,11 +6,7 @@ import { Col, Row, Text } from 'reactor/components';
 const Heading = ({ children, value = '', ...others }) => (
   <Row marginBottom="XS" {...others}>
     <Col>
-      <Text
-      // bold
-      >
-        {value}
-      </Text>
+      <Text bold>{value}</Text>
     </Col>
     <Col width="auto">{children}</Col>
   </Row>

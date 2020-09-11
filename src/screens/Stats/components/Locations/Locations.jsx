@@ -26,7 +26,7 @@ const Locations = ({ cities, countries, points, precission }) => {
 
       <View style={styles.content}>
         <Heading value={l10n.CITIES} />
-        <Fragment>
+        <>
           {orderByAmount(cities).map(({ key, amount }) => (
             <HorizontalChartItem
               key={key}
@@ -37,13 +37,13 @@ const Locations = ({ cities, countries, points, precission }) => {
               width={Math.floor((amount / citiesTxs) * 100)}
             />
           ))}
-        </Fragment>
+        </>
       </View>
 
       {Object.keys(countries).length > 1 && (
         <View style={styles.content}>
           <Heading value={l10n.COUNTRIES} />
-          <Fragment>
+          <>
             {orderByAmount(countries).map(({ key, amount }) => (
               <HorizontalChartItem
                 key={key}
@@ -54,7 +54,7 @@ const Locations = ({ cities, countries, points, precission }) => {
                 width={Math.floor((amount / countriesTxs) * 100)}
               />
             ))}
-          </Fragment>
+          </>
         </View>
       )}
     </View>

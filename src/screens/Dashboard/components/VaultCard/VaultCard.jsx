@@ -12,15 +12,7 @@ export const VaultCard = ({ currency, currentBalance, currentMonth: { progressio
     : undefined;
 
   return (
-    <Card
-      {...others}
-      balance={currentBalance}
-      bold
-      currency={currency}
-      operator
-      percentage={percentage}
-      title={title}
-    />
+    <Card {...others} balance={currentBalance} currency={currency} operator percentage={percentage} title={title} />
   );
 };
 

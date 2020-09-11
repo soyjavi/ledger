@@ -20,6 +20,11 @@ export default StyleSheet.create({
     width: '75%',
   },
 
+  imageSmall: {
+    height: IMAGE_HEIGHT / 1.5,
+    width: '75%',
+  },
+
   left: {
     alignItems: 'flex-start',
   },
@@ -31,8 +36,6 @@ export default StyleSheet.create({
 
   text: {
     textAlign: 'center',
-    // maxWidth: '75%',
-    // width: '100%',
   },
 
   textleft: {

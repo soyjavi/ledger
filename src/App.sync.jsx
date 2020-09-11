@@ -12,7 +12,7 @@ const {
   TIMEOUT,
   SCREEN: { DASHBOARD },
 } = C;
-const { COLOR, ICON, SPACE } = THEME;
+const { COLOR, ICON, MOTION, SPACE } = THEME;
 
 const STATE = { UNKNOWN: 0, FETCHING: 1, UNSYNCED: 2, SYNCING: 3, SYNCED: 4 };
 
@@ -52,12 +52,16 @@ export const Sync = () => {
     if (synced) snackbar.success(l10n.SYNC_DONE);
   };
 
+  const showStatus = !connected || state === STATE.FETCHING;
+
   return (
     <>
       {stack.includes(DASHBOARD) && (
         <Motion
+          duration={showStatus ? MOTION.EXPAND : MOTION.COLLAPSE}
           style={[styles.status, { backgroundColor: !connected ? COLOR.ERROR : COLOR.TEXT }]}
-          timeline={[{ property: 'translateY', value: !connected || state === STATE.FETCHING ? 0 : SPACE.XXL }]}
+          timeline={[{ property: 'translateY', value: showStatus ? 0 : -SPACE.XXL }]}
+          type="spring"
         >
           <Text bold caption color={COLOR.BACKGROUND}>
             {!connected ? 'Not connected' : 'Wait a moment...'}
@@ -68,20 +72,22 @@ export const Sync = () => {
       <Snackbar
         caption={state === STATE.SYNCING ? l10n.SYNC_BUSY : l10n.SYNC_SENTENCE_1}
         color={state === STATE.SYNCING ? COLOR.TEXT : COLOR.ERROR}
-        icon={state === STATE.SYNCING ? 'hourglass' : undefined}
         iconFamily={ICON.FAMILY}
         iconSize={SPACE.M}
         onClose={state === STATE.UNSYNCED ? () => setState(undefined) : undefined}
         visible={[STATE.UNSYNCED, STATE.SYNCING].includes(state)}
+        position="top"
       >
         {state === STATE.UNSYNCED && (
           <>
             <Touchable marginHorizontal="XS" onPress={handleSync} size="S">
-              <Text bold color={COLOR.WHITE} underlined>
+              <Text bold caption color={COLOR.WHITE} underlined>
                 {l10n.SYNC_NOW}
               </Text>
             </Touchable>
-            <Text color={COLOR.WHITE}>{l10n.SYNC_SENTENCE_2}</Text>
+            <Text caption color={COLOR.WHITE}>
+              {l10n.SYNC_SENTENCE_2}
+            </Text>
           </>
         )}
       </Snackbar>

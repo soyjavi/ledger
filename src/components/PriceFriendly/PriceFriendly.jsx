@@ -1,7 +1,6 @@
 import { bool, number, string } from 'prop-types';
 
 import React from 'react';
-import { THEME } from 'reactor/common';
 import { Price, Row, Text } from 'reactor/components';
 import { format } from 'reactor/components/Price/modules';
 
@@ -11,7 +10,6 @@ import { useStore } from '@context';
 import styles from './PriceFriendly.style';
 
 const MASK_SYMBOL = '*';
-const { COLOR } = THEME;
 const { SYMBOL } = C;
 const maskValue = ({ value }) =>
   format({
@@ -26,10 +24,6 @@ const PriceFriendly = ({ currency, fixed, highlight, label, operator, maskAmount
   let { color } = others;
   let operatorEnhanced;
 
-  if (operator && !color) {
-    if (value === 0) color = COLOR.LIGHTEN;
-    else color = value > 0 ? COLOR.BRAND : undefined;
-  }
   if (operator && value > 0) operatorEnhanced = '+';
   else if (operator && value < 0) operatorEnhanced = '-';
 
