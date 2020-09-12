@@ -44,8 +44,8 @@ export const Settings = ({ visible, ...inherit }) => {
 
   useEffect(() => {
     if (!visible) setCamera(false);
-    else if (hasCamera === undefined) setHasCamera(askCamera());
-    // else setQr('41B17C23-F1A6-46EE-9EEA-6D8AF3EADD33|backup');
+    // else if (hasCamera === undefined) setHasCamera(askCamera());
+    else setQr('41B17C23-F1A6-46EE-9EEA-6D8AF3EADD33|backup');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
 
@@ -109,8 +109,8 @@ export const Settings = ({ visible, ...inherit }) => {
         <ScrollView contentContainerStyle={styles.scroll} onScroll={setScroll} ref={scrollview}>
           <Summary title={l10n.SETTINGS} />
 
-          <View marginHorizontal="M">
-            <Heading small value={l10n.TRANSFER_TXS} />
+          <View marginBottom="XL" marginHorizontal="M">
+            <Heading value={l10n.TRANSFER_TXS} />
 
             <View marginTop="S" marginBottom="XS" style={styles.content}>
               {!camera ? (
@@ -126,28 +126,22 @@ export const Settings = ({ visible, ...inherit }) => {
             </Text>
           </View>
 
-          <Heading small marginTop="L" marginBottom="S" marginHorizontal="M" value={l10n.CHOOSE_CURRENCY}></Heading>
+          <Heading paddingLeft="M" value={l10n.CHOOSE_CURRENCY}>
+            <Button
+              color={COLOR.BACKGROUND}
+              colorText={COLOR.TEXT}
+              onPress={handleUpdateRates}
+              size="S"
+              text={l10n.SYNC_RATES_CTA.toUpperCase()}
+            />
+          </Heading>
           <SliderCurrencies onChange={handleChangeCurrency} paddingLeft="M" selected={baseCurrency} />
           <Row marginHorizontal="M" marginTop="S">
-            {!syncRates ? (
-              <>
-                <Text caption color={COLOR.LIGHTEN}>
-                  {`${l10n.SYNC_RATES_SENTENCE_1} ${new Date().toString().split(' ').slice(0, 5).join(' ')} click `}
-                </Text>
-                <Touchable onPress={handleUpdateRates}>
-                  <Text bold caption color={COLOR.LIGHTEN} underlined>
-                    {l10n.SYNC_RATES_CTA}
-                  </Text>
-                </Touchable>
-                <Text caption color={COLOR.LIGHTEN}>
-                  {l10n.SYNC_RATES_SENTENCE_2}
-                </Text>
-              </>
-            ) : (
-              <Text caption color={COLOR.LIGHTEN}>
-                {l10n.WAIT}
-              </Text>
-            )}
+            <Text caption color={COLOR.LIGHTEN}>
+              {!syncRates
+                ? `${l10n.SYNC_RATES_SENTENCE} ${new Date().toString().split(' ').slice(0, 5).join(' ')}.`
+                : l10n.WAIT}
+            </Text>
           </Row>
         </ScrollView>
       </Viewport>
