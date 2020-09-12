@@ -5,7 +5,17 @@ import { THEME } from 'reactor/common';
 import { Button, Viewport } from 'reactor/components';
 
 import { BANNERS, FLAGS } from '@assets';
-import { Banner, DialogClone, Footer, GroupTransactions, Header, Heading, ScrollView, Summary } from '@components';
+import {
+  Banner,
+  DialogClone,
+  Footer,
+  GroupTransactions,
+  Header,
+  Heading,
+  ScrollView,
+  Search,
+  Summary,
+} from '@components';
 import { useL10N, useNavigation, useStore } from '@context';
 
 import { DialogTransaction } from './components';
@@ -32,6 +42,8 @@ const Vault = ({ visible, ...inherit }) => {
   const [scrollQuery, setScrollQuery] = useState(false);
   const [txs, setTxs] = useState([]);
   const [tx, setTx] = useState(undefined);
+  const [searchTxs, setSearchTxs] = useState(undefined);
+  const [searching, setSearching] = useState(false);
 
   useLayoutEffect(() => {
     if (!visible) {
@@ -85,31 +97,44 @@ const Vault = ({ visible, ...inherit }) => {
 
         {txs.length > 0 ? (
           <>
-            <Heading paddingHorizontal="M" small value={l10n.TRANSACTIONS} />
+            <Heading paddingHorizontal="M" value={l10n.TRANSACTIONS} />
             {txs.map((item) => (
               <GroupTransactions key={item.timestamp} {...item} currency={currency} onPress={setTx} />
             ))}
           </>
         ) : (
-          <Banner image={BANNERS.NOT_FOUND} paddingHorizontal="M" paddingVertical="M" title={l10n.NO_TRANSACTIONS} />
+          <Banner
+            image={BANNERS.NOT_FOUND}
+            paddingHorizontal="M"
+            paddingVertical="M"
+            small
+            title={l10n.NO_TRANSACTIONS}
+          />
         )}
       </ScrollView>
 
       <Footer visible={scroll}>
+        <Search onFocus={setSearching} onSearch={setSearchTxs} />
+
         <Button
           icon="arrow-up"
           iconFamily={ICON.FAMILY}
           onPress={() => setDialog(1)}
-          text={l10n.INCOME.toUpperCase()}
+          text={!searching ? l10n.INCOME.toUpperCase() : undefined}
         />
         <Button
           icon="arrow-down"
           iconFamily={ICON.FAMILY}
           onPress={() => setDialog(0)}
-          text={l10n.EXPENSE.toUpperCase()}
+          text={!searching ? l10n.EXPENSE.toUpperCase() : undefined}
         />
         {vaults.length > 1 && (
-          <Button icon="shuffle" iconFamily={ICON.FAMILY} onPress={() => setDialog(2)} text={l10n.SWAP.toUpperCase()} />
+          <Button
+            icon="shuffle"
+            iconFamily={ICON.FAMILY}
+            onPress={() => setDialog(2)}
+            text={!searching ? l10n.SWAP.toUpperCase() : undefined}
+          />
         )}
       </Footer>
 
