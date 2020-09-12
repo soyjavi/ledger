@@ -3,45 +3,37 @@ import { THEME } from 'reactor/common';
 
 const { SPACE } = THEME;
 
-const FONT_FAMILY_HEADLINE = {
-  fontFamily: 'font-family-headline',
-  fontWeight: '500',
-};
-
 const FONT_FAMILY = {
   fontFamily: 'font-family',
   fontWeight: '400',
 };
 
-const FONT_FAMILY_MEDIUM = {
-  fontFamily: 'font-family-medium',
-  fontWeight: '500',
-};
-
-const FONT_FAMILY_SEMIBOLD = {
-  fontFamily: 'font-family-semibold',
-  fontWeight: '600',
+const FONT_FAMILY_BOLD = {
+  fontFamily: 'font-family-bold',
+  fontWeight: '800',
 };
 
 // LIGHT-MODE
 const BACKGROUND = '#ffffff';
-const BASE = '#rgba(246, 246, 249, 1)';
+const BASE = '#F5F5F5';
 const CTA = '#000000';
+const CTA_HIGHLIGHT = '#222222';
 const DIALOG = '#ffffff';
 const OVERLAY = 'rgba(255, 255, 255, 0.8)';
-const TEXT = '#1A1A1A';
-const LIGHTEN = '#B3B3B3';
+const TEXT = '#000000';
+const LIGHTEN = '#777';
+const RIPPLE = LIGHTEN;
 
 // DARK-MODE
 // const BACKGROUND = '#080909';
-// const BASE = '#252525'; //'#262828';
+// const BASE = '#212222'; //'#262828';
 // const CTA = '#fefdfa';
+// const CTA_HIGHLIGHT = 'rgba(255, 255, 255, 0.8)';
 // const DIALOG = '#19191B';
-// const OVERLAY = 'rgba(0, 0, 0, 0.95)';
+// const OVERLAY = 'rgba(0, 0, 0, 0.8)';
 // const TEXT = '#fefdfa';
 // const LIGHTEN = 'rgba(255,255,255,0.6)';
-
-const BORDER_RADIUS = SPACE.S;
+// const RIPPLE = LIGHTEN;
 
 const ELEVATION = {
   shadowColor: '#000000',
@@ -54,15 +46,14 @@ const ELEVATION = {
 };
 
 export default {
-  BORDER_RADIUS,
+  BORDER_RADIUS: 0,
 
   COLOR: {
     BRAND: '#3DDC84',
     BRAND_OPACITY: 'rgba(0, 192, 123, 0.1)',
-    // BRAND: '#01c07b',
-    // BRAND_OPACITY: 'rgba(1, 192, 123, 0.1)',
 
     CTA,
+    CTA_HIGHLIGHT,
     // BLACK
     // WHITE
     // GRAY
@@ -78,44 +69,42 @@ export default {
     // -- Custom
     LIGHTEN,
     OVERLAY,
+    RIPPLE,
   },
 
   ELEVATION,
 
   FONT: {
     DEFAULT: FONT_FAMILY,
-    SECONDARY: FONT_FAMILY_HEADLINE,
-    BOLD: FONT_FAMILY_MEDIUM,
-    EXTRA_BOLD: FONT_FAMILY_SEMIBOLD,
+    BOLD: FONT_FAMILY_BOLD,
     HEADLINE: {
-      ...FONT_FAMILY_HEADLINE,
-      fontSize: 36,
+      fontSize: 32,
+      letterSpacing: -0.5,
     },
     SUBTITLE: {
-      ...FONT_FAMILY_HEADLINE,
-      fontSize: 24,
+      fontSize: 20,
+      letterSpacing: -0.25,
     },
     BODY: {
       fontSize: 14,
-      lineHeight: 14 * 1.5,
+      letterSpacing: -0.1,
     },
     CAPTION: {
       fontSize: 11,
+      letterSpacing: -0.05,
     },
     LEGEND: {
-      fontSize: 9,
-      lineHeight: 9,
+      fontSize: 8,
     },
     BUTTON: {
-      ...FONT_FAMILY_SEMIBOLD,
+      ...FONT_FAMILY_BOLD,
       fontSize: 12,
-      letterSpacing: 0.1,
     },
     BUTTON_SMALL: {
       fontSize: 11,
     },
     INPUT: {
-      ...FONT_FAMILY_MEDIUM,
+      ...FONT_FAMILY,
       fontSize: 14,
     },
   },
@@ -127,7 +116,6 @@ export default {
   DIALOG: {
     ...ELEVATION,
     backgroundColor: DIALOG,
-    borderRadius: SPACE.M,
     padding: SPACE.L,
   },
   DIALOG_BUTTON: {
@@ -169,10 +157,10 @@ export default {
   },
 
   SNACKBAR: {
-    borderRadius: SPACE.XS,
     paddingHorizontal: SPACE.M,
     paddingVertical: SPACE.S,
-    margin: SPACE.S,
+    marginHorizontal: SPACE.M,
+    marginVertical: SPACE.M,
     ...Platform.select({
       android: { elevation: 0 },
     }),
