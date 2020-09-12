@@ -6,6 +6,7 @@ import { Button, Slider, Viewport } from 'reactor/components';
 
 import { C } from '@common';
 import {
+  Card,
   CARD_WIDTH,
   DialogClone,
   Footer,
@@ -55,23 +56,7 @@ export const Dashboard = ({ visible, ...inherit }) => {
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
-      <Header
-        childRight={
-          scroll ? (
-            <Button
-              alignSelf="end"
-              color={COLOR.BACKGROUND}
-              colorText={COLOR.TEXT}
-              iconFamily={ICON.FAMILY}
-              icon="settings"
-              onPress={() => navigation.go(SCREEN.SETTINGS)}
-              size="S"
-            />
-          ) : undefined
-        }
-        highlight={scroll}
-        title={l10n.OVERALL_BALANCE}
-      />
+      <Header highlight={scroll} title={l10n.OVERALL_BALANCE} />
 
       <ScrollView contentContainerStyle={styles.scroll} onScroll={setScroll}>
         <Summary {...overall} currency={baseCurrency} title={l10n.OVERALL_BALANCE}>
@@ -81,7 +66,6 @@ export const Dashboard = ({ visible, ...inherit }) => {
             onPress={() => navigation.go(SCREEN.STATS)}
             text={l10n.ACTIVITY.toUpperCase()}
           />
-          <Button {...buttonProps} icon="wallet" onPress={() => setDialogVault(true)} text={l10n.VAULT.toUpperCase()} />
           <Button
             {...buttonProps}
             icon="settings"
@@ -92,7 +76,7 @@ export const Dashboard = ({ visible, ...inherit }) => {
 
         {vaults.length > 0 && (
           <>
-            <Heading paddingLeft="M" paddingRight="S" small value={l10n.VAULTS}>
+            <Heading paddingLeft="M" value={l10n.VAULTS}>
               <Button
                 color={COLOR.BACKGROUND}
                 colorText={COLOR.TEXT}
@@ -112,11 +96,12 @@ export const Dashboard = ({ visible, ...inherit }) => {
                   onPress={() => navigation.go(SCREEN.VAULT, vault)}
                 />
               ))}
+              <Card marginRight="M" onPress={() => setDialogVault(true)} title={`${l10n.NEW} ${l10n.VAULT}`} />
             </Slider>
 
             {lastTxs.length > 0 && (
               <>
-                <Heading marginTop="M" paddingLeft="M" paddingRight="S" small value={l10n.LAST_TRANSACTIONS} />
+                <Heading marginTop="M" paddingLeft="M" paddingRight="S" value={l10n.LAST_TRANSACTIONS} />
                 {(searchTxs || lastTxs).map((item) => (
                   <GroupTransactions {...item} key={`${item.timestamp}`} currency={baseCurrency} onPress={setTx} />
                 ))}
@@ -137,10 +122,10 @@ export const Dashboard = ({ visible, ...inherit }) => {
           text={!searching ? l10n.ACTIVITY.toUpperCase() : undefined}
         />
         <Button
-          icon="wallet"
+          icon="settings"
           iconFamily={ICON.FAMILY}
-          onPress={() => setDialogVault(true)}
-          text={!searching ? l10n.VAULT.toUpperCase() : undefined}
+          onPress={() => navigation.go(SCREEN.SETTINGS)}
+          text={!searching ? l10n.SETTINGS.toUpperCase() : undefined}
         />
       </Footer>
 

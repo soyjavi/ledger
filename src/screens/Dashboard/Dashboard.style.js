@@ -16,5 +16,6 @@ export default StyleSheet.create({
 
   vaults: {
     marginBottom: SPACE.M,
+    alignItems: 'center',
   },
 });
