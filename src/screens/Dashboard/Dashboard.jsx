@@ -20,7 +20,7 @@ import {
 import { useL10N, useNavigation, useStore } from '@context';
 
 import { DialogVault, VaultCard } from './components';
-import { queryLastTxs, queryVaults } from './Dashboard.controller';
+import { queryLastTxs, querySearchTxs, queryVaults } from './Dashboard.controller';
 import styles from './Dashboard.style';
 
 const { SCREEN } = C;
@@ -44,13 +44,17 @@ export const Dashboard = ({ visible, ...inherit }) => {
   const [searchTxs, setSearchTxs] = useState(undefined);
   const [searching, setSearching] = useState(false);
 
-  useEffect(() => {}, [store]);
-
   const { settings: { baseCurrency } = {}, overall, vaults = [] } = store;
+
+  useEffect(() => {}, [store]);
 
   useEffect(() => {
     if (visible) setLastTxs(queryLastTxs(store));
   }, [store, visible]);
+
+  const handleSearch = (query) => {
+    setSearchTxs(query ? querySearchTxs(query, store, l10n) : undefined);
+  };
 
   console.log('  <Dashboard>', { visible });
 
@@ -111,9 +115,9 @@ export const Dashboard = ({ visible, ...inherit }) => {
         )}
       </ScrollView>
 
-      <Footer visible={scroll}>
+      <Footer visible={scroll || searchTxs !== undefined}>
         {lastTxs.length > 0 && (
-          <Search onFocus={setSearching} onSearch={setSearchTxs} text={l10n.SEARCH.toUpperCase()} />
+          <Search onFocus={setSearching} onSearch={handleSearch} text={l10n.SEARCH.toUpperCase()} />
         )}
         <Button
           icon="chart"

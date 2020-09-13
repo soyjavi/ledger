@@ -19,7 +19,7 @@ import {
 import { useL10N, useNavigation, useStore } from '@context';
 
 import { DialogTransaction } from './components';
-import { onScroll, query } from './modules';
+import { onScroll, query, search } from './Vault.controller';
 import styles from './Vault.style';
 
 const { COLOR, ICON } = THEME;
@@ -78,6 +78,9 @@ const Vault = ({ visible, ...inherit }) => {
     setScrollQuery(false);
   };
 
+  const handleSearch = (query) => {
+    setSearchTxs(query ? search(query, dataSource.txs, l10n) : undefined);
+  };
   const { currency = baseCurrency, title, ...rest } = dataSource;
 
   console.log('  <Vault>', { visible, dialog });
@@ -98,7 +101,7 @@ const Vault = ({ visible, ...inherit }) => {
         {txs.length > 0 ? (
           <>
             <Heading paddingHorizontal="M" value={l10n.TRANSACTIONS} />
-            {txs.map((item) => (
+            {(searchTxs || txs).map((item) => (
               <GroupTransactions key={item.timestamp} {...item} currency={currency} onPress={setTx} />
             ))}
           </>
@@ -113,8 +116,8 @@ const Vault = ({ visible, ...inherit }) => {
         )}
       </ScrollView>
 
-      <Footer visible={scroll}>
-        <Search onFocus={setSearching} onSearch={setSearchTxs} />
+      <Footer visible={scroll || searchTxs !== undefined}>
+        <Search onFocus={setSearching} onSearch={handleSearch} />
 
         <Button
           icon="arrow-up"

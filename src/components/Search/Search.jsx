@@ -6,25 +6,25 @@ import { THEME } from 'reactor/common';
 import { Button, Row } from 'reactor/components';
 import { useEnvironment } from 'reactor/hooks';
 
-import { useL10N, useStore } from '@context';
+import { useL10N } from '@context';
 
-import { querySearchTxs } from './Search.controller';
 import styles from './Search.style';
 
 const { COLOR, ICON } = THEME;
 
-export const Search = ({ onFocus, onSearch, text }) => {
+const DELAY_EVENT_SEARCH = 250;
+
+export const Search = ({ onFocus, onSearch, text, ...others }) => {
   const { IS_NATIVE } = useEnvironment();
   const l10n = useL10N();
-  const store = useStore();
 
   const [active, setActive] = useState(false);
   const [value, setValue] = useState('');
 
   useEffect(() => {
     const timeout = setTimeout(
-      () => onSearch(value && value.length > 0 ? querySearchTxs(value.toLowerCase(), store, l10n) : undefined),
-      250,
+      () => onSearch(value && value.length > 0 ? value.toLowerCase() : undefined),
+      DELAY_EVENT_SEARCH,
     );
 
     return () => clearTimeout(timeout);
@@ -41,7 +41,13 @@ export const Search = ({ onFocus, onSearch, text }) => {
   return (
     <KeyboardAvoidingView behavior={IS_NATIVE ? 'padding' : undefined} style={active ? styles.container : undefined}>
       <Row>
-        <Button icon="layers" iconFamily={ICON.FAMILY} onPress={handlePress} text={!active ? text : undefined} />
+        <Button
+          {...others}
+          icon="layers"
+          iconFamily={ICON.FAMILY}
+          onPress={handlePress}
+          text={!active ? text : undefined}
+        />
         {active && (
           <TextInput
             autoCapitalize="none"
