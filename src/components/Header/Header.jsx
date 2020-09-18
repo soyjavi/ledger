@@ -1,20 +1,19 @@
 import PropTypes from 'prop-types';
 
 import React, { useEffect } from 'react';
-import { Image } from 'react-native';
 import { THEME } from 'reactor/common';
 import { Button, Col, Motion, Row, Text } from 'reactor/components';
 
-import { LOGO } from '@assets';
 import { onHardwareBackPress } from '@common';
 
+import { CurrencyLogo } from '../CurrencyLogo';
 import styles, { HEADER_HEIGHT } from './Header.style';
 
 export { HEADER_HEIGHT };
 
 const { COLOR, ICON, MOTION, UNIT } = THEME;
 
-export const Header = ({ childLeft, childRight, highlight = false, image = LOGO, onBack, title }) => {
+export const Header = ({ childLeft, childRight, currency, highlight = false, onBack, title }) => {
   useEffect(() => {
     onHardwareBackPress(onBack !== undefined, onBack);
     return () => onHardwareBackPress(false);
@@ -45,15 +44,8 @@ export const Header = ({ childLeft, childRight, highlight = false, image = LOGO,
           ]}
         >
           <Row>
-            <Image source={image} style={styles.image} />
-            {title && (
-              <Text
-                //  bold
-                subtitle
-              >
-                {title}
-              </Text>
-            )}
+            <CurrencyLogo currency={currency} marginRight="S" _size="S" />
+            {title && <Text subtitle>{title}</Text>}
           </Row>
         </Motion>
       </Col>
@@ -65,8 +57,8 @@ export const Header = ({ childLeft, childRight, highlight = false, image = LOGO,
 Header.propTypes = {
   childLeft: PropTypes.node,
   childRight: PropTypes.node,
+  currency: PropTypes.string,
   highlight: PropTypes.bool,
-  image: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   onBack: PropTypes.func,
   title: PropTypes.string,
 };
