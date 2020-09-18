@@ -2,6 +2,7 @@ export * from './Banner';
 export * from './Box';
 export * from './Card';
 export * from './Chart';
+export * from './CurrencyLogo';
 export * from './DialogClone';
 export * from './FormVault';
 export * from './Footer';

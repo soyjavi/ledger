@@ -13,7 +13,7 @@ const { COLOR, FONT } = THEME;
 
 export const BoxDate = ({ l10n, timestamp, ...inherit }) => (
   <Box {...inherit} outlined style={styles.container}>
-    <Text bold>{new Date(timestamp || null).getDate()}</Text>
+    <Text caption>{new Date(timestamp || null).getDate()}</Text>
     <Text color={COLOR.LIGHTEN} style={FONT.LEGEND}>
       {verboseMonthShort(timestamp, l10n)}
     </Text>

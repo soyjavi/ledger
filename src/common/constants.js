@@ -11,6 +11,25 @@ export default {
   BUSY_PRESS_MS: 2500,
 
   CURRENCY: 'EUR',
+  CURRENCY_COLOR: {
+    AUD: undefined,
+    BTC: '#ff9900',
+    CNY: '#c58293',
+    GBP: '#d1c5db',
+    EUR: '#5d7ea7',
+    HKD: '#dbc1b9',
+    JPY: undefined,
+    KRW: undefined,
+    MXN: undefined,
+    MYR: undefined,
+    RUB: undefined,
+    SGD: undefined,
+    THB: '#b7a092',
+    USD: '#b5cb8f',
+    VND: undefined,
+    XAU: undefined,
+    XAG: undefined,
+  },
 
   DELAY_PRESS_MS: 500,
 

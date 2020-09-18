@@ -4,7 +4,6 @@ import React from 'react';
 import { THEME } from 'reactor/common';
 import { Slider } from 'reactor/components';
 
-import { FLAGS } from '@assets';
 import { currencyDecimals } from '@common';
 import { Input, Option, PriceFriendly, OPTION_SIZE } from '@components';
 import { useL10N, useStore } from '@context';
@@ -60,7 +59,7 @@ const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
         {queryAvailableVaults(vaults, vault.hash).map(({ currency, currentBalance, hash, title }) => (
           <Option
             key={hash}
-            image={FLAGS[currency]}
+            currency={currency}
             legend={title}
             marginRight="S"
             onPress={() => handleField('destination', hash)}

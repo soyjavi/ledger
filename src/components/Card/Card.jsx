@@ -1,23 +1,23 @@
 import PropTypes from 'prop-types';
 
 import React from 'react';
-import { Image, View } from 'react-native';
+import { View } from 'react-native';
 import { THEME } from 'reactor/common';
 import { Row, Text, Touchable } from 'reactor/components';
 
-import { FLAGS, LOGO } from '@assets';
 import { exchange } from '@common';
 import { useL10N, useStore } from '@context';
 
 import { Box } from '../Box';
+import { CurrencyLogo } from '../CurrencyLogo';
 import { PriceFriendly } from '../PriceFriendly';
 import styles, { CARD_WIDTH } from './Card.style';
 
-const { COLOR, SPACE } = THEME;
+const { COLOR } = THEME;
 
 export { CARD_WIDTH };
 
-export const Card = ({ balance, currency, disabled, onPress, percentage, title = '', ...others }) => {
+export const Card = ({ balance, currency, highlight, onPress, percentage, title = '', ...others }) => {
   const l10n = useL10N();
   const {
     settings: { baseCurrency },
@@ -26,22 +26,23 @@ export const Card = ({ balance, currency, disabled, onPress, percentage, title =
 
   return (
     <Touchable {...others} onPress={onPress} rippleColor={COLOR.RIPPLE} style={styles.container}>
-      <Box
-        // borderRadius={SPACE.S}
-        outlined={disabled}
-        style={styles.box}
-      >
+      <Box color={highlight ? COLOR.CTA : undefined} style={styles.box}>
         <View style={styles.content}>
           <Row>
-            <Image source={FLAGS[currency] || LOGO} style={styles.image} />
-            <Text caption numberOfLines={1} marginLeft="XS">
+            <CurrencyLogo currency={currency} size="S" />
+            <Text caption color={highlight ? COLOR.BACKGROUND : undefined} numberOfLines={1} marginLeft="XS">
               {title.toUpperCase()}
             </Text>
           </Row>
 
           {currency && (
             <>
-              <PriceFriendly currency={currency} subtitle value={balance} />
+              <PriceFriendly
+                color={highlight ? COLOR.BACKGROUND : undefined}
+                currency={currency}
+                subtitle
+                value={balance}
+              />
               {currency !== baseCurrency && (
                 <PriceFriendly
                   caption
@@ -56,7 +57,8 @@ export const Card = ({ balance, currency, disabled, onPress, percentage, title =
               {percentage ? (
                 <PriceFriendly
                   caption
-                  color={others.color}
+                  // color={others.color}
+                  color={COLOR.LIGHTEN}
                   currency="%"
                   highlight={others.highlight}
                   operator={others.operator}
@@ -79,7 +81,7 @@ Card.propTypes = {
   balance: PropTypes.number.isRequired,
   currency: PropTypes.string.isRequired,
   currentMonth: PropTypes.shape({}),
-  disabled: PropTypes.bool,
+  highlight: PropTypes.bool,
   onPress: PropTypes.func.isRequired,
   percentage: PropTypes.number,
   title: PropTypes.string,

@@ -9,6 +9,7 @@ import { LOGO } from '@assets';
 import { C, exchange, verboseMonth } from '@common';
 import { useL10N, useStore } from '@context';
 
+import { CurrencyLogo } from '../CurrencyLogo';
 import { PriceFriendly } from '../PriceFriendly';
 import styles from './Summary.style';
 
@@ -46,14 +47,9 @@ const Summary = ({ children, currency = CURRENCY, currentBalance, currentMonth =
   return (
     <View style={styles.container}>
       <Col align="center" style={styles.content}>
-        <Image source={image} resizeMode="contain" style={styles.image} />
+        <CurrencyLogo currency={currency} size="L" />
         <Col align="center">
-          <Text
-            // bold
-            subtitle
-          >
-            {title}
-          </Text>
+          <Text subtitle>{title}</Text>
 
           {showCurrentBalance && (
             <>

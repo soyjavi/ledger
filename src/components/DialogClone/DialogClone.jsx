@@ -69,7 +69,6 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
             </Col>
             <Col width="auto">
               <PriceFriendly
-                bold
                 color={type === INCOME ? COLOR.BRAND : undefined}
                 currency={currency}
                 highlight={type === INCOME}
@@ -110,10 +109,9 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
       <Row marginTop="XL">
         <Button
           {...buttonProps}
-          color={COLOR.TEXT}
+          marginRight="M"
           onPress={() => handleSubmit({ wipe: true })}
           outlined
-          marginRight="M"
           text={l10n.WIPE.toUpperCase()}
         />
         <Button

@@ -4,7 +4,6 @@ import React from 'react';
 import { THEME } from 'reactor/common';
 import { Slider } from 'reactor/components';
 
-import { FLAGS } from '@assets';
 import { Option, OPTION_SIZE } from '@components/Option';
 import { useStore } from '@context';
 
@@ -20,7 +19,7 @@ export const SliderCurrencies = ({ onChange, selected, ...others }) => {
       {queryCurrencies(store).map((currency, index) => (
         <Option
           caption={currency}
-          image={FLAGS[currency]}
+          currency={currency}
           key={index}
           marginRight="S"
           onPress={() => onChange(currency)}

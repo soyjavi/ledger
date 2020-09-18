@@ -4,7 +4,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Button, Viewport } from 'reactor/components';
 
-import { BANNERS, FLAGS } from '@assets';
+import { BANNERS } from '@assets';
 import {
   Banner,
   DialogClone,
@@ -87,10 +87,10 @@ const Vault = ({ visible, ...inherit }) => {
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
-      <Header highlight={scroll} image={FLAGS[currency]} title={title} onBack={navigation.back} />
+      <Header highlight={scroll} title={title} onBack={navigation.back} />
 
       <ScrollView onScroll={handleScroll} ref={scrollview} style={styles.container}>
-        <Summary {...rest} image={FLAGS[currency]} title={title} currency={currency}>
+        <Summary {...rest} title={title} currency={currency}>
           <Button {...buttonProps} icon="arrow-up" onPress={() => setDialog(1)} text={l10n.INCOME.toUpperCase()} />
           <Button {...buttonProps} icon="arrow-down" onPress={() => setDialog(0)} text={l10n.EXPENSE.toUpperCase()} />
           {vaults.length > 1 && (

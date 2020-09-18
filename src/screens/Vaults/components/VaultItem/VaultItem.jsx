@@ -1,16 +1,14 @@
 import { bool, shape, func } from 'prop-types';
 
 import React from 'react';
-import { Image } from 'react-native';
 import { THEME } from 'reactor/common';
 import { Button, Col, Row, Text, Touchable } from 'reactor/components';
 
-import { FLAGS } from '@assets';
-import { Box, PriceFriendly } from '@components';
+import { Box, CurrencyLogo, PriceFriendly } from '@components';
 
 import styles from './VaultItem.style';
 
-const { COLOR, ICON } = THEME;
+const { COLOR, ICON, OPACITY } = THEME;
 
 export const VaultItem = ({ active, onChange, onPress, dataSource: { currency, currentBalance, title } }) => {
   const colorText = active ? COLOR.TEXT : COLOR.LIGHTEN;
@@ -22,12 +20,12 @@ export const VaultItem = ({ active, onChange, onPress, dataSource: { currency, c
         paddingVertical="S"
         onPress={onPress}
         rippleColor={COLOR.RIPPLE}
-        style={styles.container}
+        style={[styles.container, !active && { opacity: OPACITY.M }]}
       >
         <Row>
           <Col marginRight="S" width="auto">
             <Box small outlined styleContent={styles.boxContent}>
-              <Image source={FLAGS[currency]} style={styles.flag} />
+              <CurrencyLogo currency={currency} size="S" />
             </Box>
           </Col>
           <Col>

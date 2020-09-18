@@ -28,10 +28,4 @@ export default StyleSheet.create({
   expand: {
     flex: 1,
   },
-
-  image: {
-    borderRadius: SPACE.M,
-    height: SPACE.M,
-    width: SPACE.M,
-  },
 });
