@@ -67,24 +67,17 @@ export const Input = ({
 
   return (
     <View {...others} style={[styles.container, others.style]}>
-      {label && (
-        <Row justify="center">
-          <Text caption color={COLOR.LIGHTEN}>
-            {label.toUpperCase()}
-          </Text>
-        </Row>
-      )}
+      <Row justify="center">
+        <Text caption color={COLOR.LIGHTEN}>
+          {label && (currency || focus || value) ? label.toUpperCase() : ' '}
+        </Text>
+      </Row>
 
       <Row justify="center" style={[styles.content, focus && styles.focus, others.value && styles.filled]}>
         {currency && (
           <>
             {LEFT_SYMBOLS.includes(symbol) && <Text {...symbolProps} />}
-            <Text
-              //  bold
-              color={symbolProps.color}
-              headline
-              style={styles.value}
-            >
+            <Text color={symbolProps.color} headline style={styles.value}>
               {value || '0'}
             </Text>
             {!LEFT_SYMBOLS.includes(symbol) && <Text {...symbolProps} />}
@@ -103,7 +96,7 @@ export const Input = ({
           onBlur={() => setFocus(false)}
           onChangeText={handleChange}
           onFocus={() => setFocus(true)}
-          placeholder="..."
+          placeholder={!focus ? label : undefined}
           placeholderTextColor={COLOR.LIGHTEN}
           secureTextEntry={secure}
           style={[styles.input, currency ? styles.inputCurrency : undefined]}
@@ -118,9 +111,9 @@ export const Input = ({
             {...exchangeCaption}
             color={focus || others.value > 0 ? COLOR.TEXT : COLOR.LIGHTEN}
             currency={baseCurrency}
-            marginRight="XS"
             value={parseFloat(others.value || 0, 10) / exchange}
           />
+          <View marginRight="XS" />
           <Text {...exchangeCaption}>(</Text>
           <PriceFriendly {...exchangeCaption} currency={baseCurrency} value={1} />
           <Text {...exchangeCaption}>{` = `}</Text>

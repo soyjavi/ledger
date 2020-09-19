@@ -11,12 +11,12 @@ export default StyleSheet.create({
   },
 
   content: {
-    borderBottomWidth: 1,
-    borderBottomColor: COLOR.BASE,
+    // borderBottomWidth: 1,
+    // borderBottomColor: COLOR.BASE,
   },
 
   focus: {
-    borderBottomColor: COLOR.TEXT,
+    // borderBottomColor: COLOR.TEXT,
   },
 
   value: {
