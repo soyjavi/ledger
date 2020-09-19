@@ -13,22 +13,29 @@ const FONT_FAMILY_BOLD = {
   fontWeight: '800',
 };
 
+const FONT_FAMILY_CURRENCY = {
+  fontFamily: 'font-family-currency',
+  fontWeight: '400',
+};
+
 // LIGHT-MODE
 const BACKGROUND = '#ffffff';
-const BASE = '#F5F5F5';
-const CTA = '#000000';
+const BASE = '#F1F1F1'; //'#F5F5F5';
+const CTA = '#23272B'; // #080909  #222222''#353535';
 const CTA_HIGHLIGHT = '#222222';
-const DIALOG = '#ffffff';
+const DIALOG = BACKGROUND;
 const OVERLAY = 'rgba(255, 255, 255, 0.8)';
 const TEXT = '#000000';
-const LIGHTEN = '#777';
+const TEXT_DISABLED = '#C8C9C9';
+const TEXT_LIGHTEN = '#A3A3A3';
+const LIGHTEN = '#A3A3A3';
 const RIPPLE = LIGHTEN;
 
 // DARK-MODE
 // const BACKGROUND = '#080909';
 // const BASE = '#212222'; //'#262828';
 // const CTA = '#fefdfa';
-// const CTA_HIGHLIGHT = 'rgba(255, 255, 255, 0.8)';
+// const CTA_HIGHLIGHT = 'rgba(0, 0, 0, 0.2)';
 // const DIALOG = '#19191B';
 // const OVERLAY = 'rgba(0, 0, 0, 0.8)';
 // const TEXT = '#fefdfa';
@@ -53,7 +60,6 @@ export default {
     BRAND_OPACITY: 'rgba(0, 192, 123, 0.1)',
 
     CTA,
-    CTA_HIGHLIGHT,
     // BLACK
     // WHITE
     // GRAY
@@ -67,6 +73,9 @@ export default {
     // TRANSPARENT
 
     // -- Custom
+    TEXT_DISABLED,
+    TEXT_LIGHTEN,
+    CTA_HIGHLIGHT,
     LIGHTEN,
     OVERLAY,
     RIPPLE,
@@ -78,7 +87,7 @@ export default {
     DEFAULT: FONT_FAMILY,
     BOLD: FONT_FAMILY_BOLD,
     HEADLINE: {
-      fontSize: 32,
+      fontSize: 34,
       letterSpacing: -0.5,
     },
     SUBTITLE: {
@@ -93,11 +102,11 @@ export default {
       fontSize: 11,
       letterSpacing: -0.05,
     },
-    LEGEND: {
-      fontSize: 8,
-    },
+
     BUTTON: {
       ...FONT_FAMILY_BOLD,
+      fontFamily: 'font-family-bold',
+      fontWeight: '800',
       fontSize: 12,
     },
     BUTTON_SMALL: {
@@ -106,6 +115,15 @@ export default {
     INPUT: {
       ...FONT_FAMILY,
       fontSize: 14,
+    },
+
+    // -- Custom
+    LEGEND: {
+      fontSize: 8,
+    },
+    CURRENCY: {
+      ...FONT_FAMILY_CURRENCY,
+      letterSpacing: 0,
     },
   },
 

@@ -23,6 +23,7 @@ const App = () => {
       await Font.loadAsync({
         'font-family': require('./assets/fonts/SpaceMono-Regular.ttf'),
         'font-family-bold': require('./assets/fonts/SpaceMono-Bold.ttf'),
+        'font-family-currency': require('./assets/fonts/IBMPlexMono-Regular.ttf'),
       });
       THEME.extend(theme);
 
