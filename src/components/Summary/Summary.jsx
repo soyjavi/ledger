@@ -20,7 +20,7 @@ const BoxSummary = ({ caption, value, ...inherit }) => (
     <Text caption color={COLOR.LIGHTEN} numberOfLines={1}>
       {caption.toUpperCase()}
     </Text>
-    <PriceFriendly {...inherit} bold caption fixed={value >= 1000 ? 0 : undefined} value={value} />
+    <PriceFriendly {...inherit} caption fixed={value >= 1000 ? 0 : undefined} value={value} />
   </Col>
 );
 
@@ -53,7 +53,7 @@ const Summary = ({ children, currency = CURRENCY, currentBalance, currentMonth =
           {showCurrentBalance && (
             <>
               <Touchable onPress={() => updateSettings({ maskAmount: !maskAmount })}>
-                <PriceFriendly bold currency={currency} headline value={Math.abs(currentBalance)} />
+                <PriceFriendly currency={currency} headline value={Math.abs(currentBalance)} />
               </Touchable>
               {baseCurrency !== currency && (
                 <PriceFriendly
@@ -62,7 +62,6 @@ const Summary = ({ children, currency = CURRENCY, currentBalance, currentMonth =
                   marginBottom="S"
                   subtitle
                   value={exchange(Math.abs(currentBalance), currency, baseCurrency, rates)}
-                  // style={styles.baseCurrency}
                 />
               )}
             </>
