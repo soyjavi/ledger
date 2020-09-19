@@ -53,9 +53,12 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
 
   return (
     <Dialog {...inherit} position="bottom">
-      <Row justify="center" marginVertical="L">
-        <Text bold subtitle>
-          {title ? title : type === EXPENSE ? l10n.EXPENSE : l10n.INCOME}
+      <Row justify="center" marginTop="L">
+        <Text subtitle>{l10n.TRANSACTION[type]}</Text>
+      </Row>
+      <Row justify="center" marginBottom="L">
+        <Text bold headline>
+          {title ? title : ''}
         </Text>
       </Row>
       <Row>

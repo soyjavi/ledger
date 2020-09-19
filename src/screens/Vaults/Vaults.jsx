@@ -51,7 +51,7 @@ const Vaults = ({ visible, ...inherit }) => {
                 <Card
                   {...item}
                   currency={currency}
-                  disabled={currency !== selected}
+                  highlight={currency === selected}
                   key={currency}
                   marginLeft={index === 0 ? 'M' : undefined}
                   marginRight="S"

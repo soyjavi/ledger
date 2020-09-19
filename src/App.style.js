@@ -12,8 +12,7 @@ export default StyleSheet.create({
 
   status: {
     alignSelf: 'center',
-    top: SPACE.M + SPACE.XS,
-    top: 0,
+    top: SPACE.XS,
     position: ENV.IS_WEB ? 'fixed' : 'absolute',
     backgroundColor: COLOR.TEXT,
     paddingHorizontal: SPACE.S,

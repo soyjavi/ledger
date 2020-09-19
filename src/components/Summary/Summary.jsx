@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 
 import React from 'react';
-import { Image } from 'react-native';
 import { THEME } from 'reactor/common';
 import { Col, Row, Text, Touchable, View } from 'reactor/components';
 

@@ -71,9 +71,7 @@ const DialogTransaction = (props = {}) => {
   return (
     <Dialog {...inherit} onClose={onClose} position="bottom" visible={visible}>
       <Row justify="center" marginVertical="L">
-        <Text bold subtitle>
-          {l10n.TRANSACTION[type]}
-        </Text>
+        <Text subtitle>{`${l10n.NEW} ${l10n.TRANSACTION[type]}`}</Text>
       </Row>
 
       <Form {...props} {...state} type={type} onChange={(value) => setState({ ...state, ...value })} />
@@ -86,15 +84,7 @@ const DialogTransaction = (props = {}) => {
       )}
 
       <Row marginTop="XL">
-        <Button
-          color={COLOR.TEXT}
-          disabled={busy}
-          marginRight="M"
-          onPress={onClose}
-          outlined
-          text={l10n.CLOSE.toUpperCase()}
-          wide
-        />
+        <Button disabled={busy} marginRight="M" onPress={onClose} outlined text={l10n.CLOSE.toUpperCase()} wide />
         <Button
           colorText={COLOR.BACKGROUND}
           delay={DELAY_PRESS_MS}
