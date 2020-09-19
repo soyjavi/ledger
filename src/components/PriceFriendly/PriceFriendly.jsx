@@ -1,6 +1,7 @@
 import { bool, number, string } from 'prop-types';
 
 import React from 'react';
+import { THEME } from 'reactor/common';
 import { Price, Row, Text } from 'reactor/components';
 import { format } from 'reactor/components/Price/modules';
 
@@ -9,8 +10,12 @@ import { useStore } from '@context';
 
 import styles from './PriceFriendly.style';
 
-const MASK_SYMBOL = '*';
 const { SYMBOL } = C;
+const { FONT } = THEME;
+
+const MASK_SYMBOL = '*';
+const LEFT_SYMBOLS = ['$', '£'];
+
 const maskValue = ({ value }) =>
   format({
     value: value >= 1000 ? 9999 : 9.99,
@@ -33,8 +38,17 @@ const PriceFriendly = ({ currency, fixed, highlight, label, operator, maskAmount
     fixed: fixed !== undefined ? fixed : currencyDecimals(value, currency),
     numberOfLines: 1,
     operator: operatorEnhanced,
-    symbol: SYMBOL[currency] || currency,
+    // symbol: SYMBOL[currency] || currency,
     value: Math.abs(value),
+  };
+
+  const symbol = SYMBOL[currency] || currency;
+
+  const symbolProps = {
+    ...others,
+    children: symbol,
+    color: color,
+    style: [FONT.CURRENCY, styles.currency, styles[`currency`]],
   };
 
   return (
@@ -49,7 +63,11 @@ const PriceFriendly = ({ currency, fixed, highlight, label, operator, maskAmount
           {maskValue(props)}
         </Text>
       ) : (
-        <Price {...props} style={others.style} />
+        <>
+          {LEFT_SYMBOLS.includes(symbol) && <Text {...symbolProps} />}
+          <Price {...props} style={others.style} />
+          {!LEFT_SYMBOLS.includes(symbol) && <Text {...symbolProps} />}
+        </>
       )}
     </Row>
   );

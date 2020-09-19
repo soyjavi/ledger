@@ -13,4 +13,8 @@ export default StyleSheet.create({
     paddingVertical: SPACE.XS / 2,
     marginRight: -HORIZONTAL_PADDING,
   },
+
+  currency: {
+    transform: [{ scale: 0.8 }],
+  },
 });
