@@ -38,17 +38,24 @@ const PriceFriendly = ({ currency, fixed, highlight, label, operator, maskAmount
     fixed: fixed !== undefined ? fixed : currencyDecimals(value, currency),
     numberOfLines: 1,
     operator: operatorEnhanced,
-    // symbol: SYMBOL[currency] || currency,
     value: Math.abs(value),
   };
 
   const symbol = SYMBOL[currency] || currency;
 
+  const { headline, subtitle, caption } = others;
   const symbolProps = {
     ...others,
     children: symbol,
     color: color,
-    style: [FONT.CURRENCY, styles.currency, styles[`currency`]],
+    style: [
+      //
+      FONT.CURRENCY,
+      headline ? styles.symbolHeadline : subtitle ? styles.symbolSubtitle : caption ? styles.symbolCaption : styles.symbol,
+      (headline || subtitle) && styles.symbol,
+      caption && styles.symbolCaption,
+      !headline && !subtitle && !caption && styles.symbolBody,
+    ],
   };
 
   return (
