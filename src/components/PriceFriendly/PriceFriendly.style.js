@@ -1,11 +1,10 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from 'reactor/common';
 
-const { BORDER_RADIUS, COLOR, FONT, SPACE } = THEME;
+const { BORDER_RADIUS, FONT, SPACE } = THEME;
 
 export default StyleSheet.create({
   highlight: {
-    backgroundColor: COLOR.BRAND_OPACITY,
     borderRadius: BORDER_RADIUS / 2,
     paddingHorizontal: SPACE.S,
     paddingVertical: SPACE.XS / 2,
@@ -28,6 +27,7 @@ export default StyleSheet.create({
   },
 
   symbolCaption: {
+    fontSize: FONT.CAPTION.fontSize * 0.85,
     marginHorizontal: SPACE.XS / 4,
   },
 });

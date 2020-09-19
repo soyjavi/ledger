@@ -1,3 +1,4 @@
+import Color from 'color';
 import { bool, number, string } from 'prop-types';
 
 import React from 'react';
@@ -11,7 +12,7 @@ import { useStore } from '@context';
 import styles from './PriceFriendly.style';
 
 const { SYMBOL } = C;
-const { FONT } = THEME;
+const { COLOR, FONT, OPACITY } = THEME;
 
 const MASK_SYMBOL = '*';
 const LEFT_SYMBOLS = ['$', '£'];
@@ -51,7 +52,13 @@ const PriceFriendly = ({ currency, fixed, highlight, label, operator, maskAmount
     style: [
       //
       FONT.CURRENCY,
-      headline ? styles.symbolHeadline : subtitle ? styles.symbolSubtitle : caption ? styles.symbolCaption : styles.symbol,
+      headline
+        ? styles.symbolHeadline
+        : subtitle
+        ? styles.symbolSubtitle
+        : caption
+        ? styles.symbolCaption
+        : styles.symbol,
       (headline || subtitle) && styles.symbol,
       caption && styles.symbolCaption,
       !headline && !subtitle && !caption && styles.symbolBody,
@@ -59,7 +66,14 @@ const PriceFriendly = ({ currency, fixed, highlight, label, operator, maskAmount
   };
 
   return (
-    <Row style={highlight && !maskAmount ? styles.highlight : undefined} width="auto">
+    <Row
+      style={
+        highlight && !maskAmount
+          ? [styles.highlight, { backgroundColor: Color(COLOR.BRAND).alpha(OPACITY.S) }]
+          : undefined
+      }
+      width="auto"
+    >
       {label && (
         <Text {...others} bold={false} color={color}>
           {label}
@@ -72,7 +86,7 @@ const PriceFriendly = ({ currency, fixed, highlight, label, operator, maskAmount
       ) : (
         <>
           {LEFT_SYMBOLS.includes(symbol) && <Text {...symbolProps} />}
-          <Price {...props} style={others.style} />
+          <Price {...props} bold={highlight} style={others.style} />
           {!LEFT_SYMBOLS.includes(symbol) && <Text {...symbolProps} />}
         </>
       )}
