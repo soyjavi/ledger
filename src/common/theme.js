@@ -57,7 +57,6 @@ export default {
 
   COLOR: {
     BRAND: '#3DDC84',
-    BRAND_OPACITY: 'rgba(0, 192, 123, 0.1)',
 
     CTA,
     // BLACK
