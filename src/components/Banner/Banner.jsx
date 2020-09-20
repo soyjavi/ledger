@@ -13,17 +13,12 @@ export const Banner = ({ align, caption, children, image = BANNERS.NOT_FOUND, sm
     <Image resizeMode="contain" source={image} style={[styles.image, small && styles.imageSmall]} />
     <View marginTop="L">
       {title && (
-        <Text
-          bold={!small}
-          headline={!small}
-          // subtitle={small}
-          style={[styles.text, styles[`text${align}`]]}
-        >
+        <Text bold={!small} subtitle={!small} style={[styles.text, styles[`text${align}`]]}>
           {title}
         </Text>
       )}
       {caption && (
-        <Text marginTop="XS" style={[styles.text, styles.caption, styles[`text${align}`]]}>
+        <Text marginTop="S" style={[styles.text, styles[`text${align}`]]}>
           {caption}
         </Text>
       )}

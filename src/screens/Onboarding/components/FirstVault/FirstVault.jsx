@@ -45,10 +45,10 @@ const FirstVault = ({ onVault, visible, ...others }) => {
   return (
     <Viewport {...others} visible={visible}>
       <KeyboardAvoidingView behavior="position" contentContainerStyle={styles.form}>
-        <Text bold marginBottom="M" headline style={styles.text}>
+        <Text bold subtitle style={styles.text}>
           Your first account
         </Text>
-        <Text caption marginBottom="L" style={styles.text}>
+        <Text caption marginTop="S" marginBottom="L" style={styles.text}>
           {l10n.FIRST_VAULT_CAPTION}
         </Text>
         <FormVault form={form} onChange={setForm} showExchange={false} />

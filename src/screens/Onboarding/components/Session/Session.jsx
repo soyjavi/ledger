@@ -48,27 +48,17 @@ const Session = ({ onSession, visible, ...others }) => {
   return (
     <Viewport {...others} visible={visible} scroll={false}>
       <View style={styles.container}>
-        <Text bold headline>
+        <Text bold subtitle>
           {signup ? l10n.PIN_CHOOSE : l10n.PIN}
         </Text>
         <Row justify="center">
-          {!busy ? (
-            <>
-              {['•', '•', '•', '•'].map((letter, index) => (
-                <Motion
-                  key={index}
-                  timeline={[{ property: 'scale', value: pin.length > index ? 1.5 : 1 }]}
-                  type="spring"
-                >
-                  <Text bold headline color={pin.length <= index ? COLOR.LIGHTEN : undefined}>
-                    {letter}
-                  </Text>
-                </Motion>
-              ))}
-            </>
-          ) : (
-            <Text>{l10n.WAIT}</Text>
-          )}
+          {['•', '•', '•', '•'].map((letter, index) => (
+            <Motion key={index} timeline={[{ property: 'scale', value: pin.length > index ? 1.5 : 1 }]} type="spring">
+              <Text headline color={pin.length <= index ? COLOR.LIGHTEN : undefined}>
+                {letter}
+              </Text>
+            </Motion>
+          ))}
         </Row>
 
         <NumKeyboard onPress={(number) => setPin(`${pin}${number}`)} />

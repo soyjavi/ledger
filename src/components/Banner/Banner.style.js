@@ -40,17 +40,11 @@ export default StyleSheet.create({
 
   textleft: {
     textAlign: 'left',
-    marginRight: SPACE.XXL + SPACE.M,
+    marginRight: SPACE.XXL,
   },
 
   textright: {
     textAlign: 'right',
     marginLeft: SPACE.XXL + SPACE.M,
-  },
-
-  caption: {
-    // @TODO
-    fontSize: 14,
-    lineHeight: 14 * 1.5,
   },
 });
