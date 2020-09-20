@@ -1,6 +1,6 @@
 import { array, arrayOf, number, shape } from 'prop-types';
 
-import React, { Fragment } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 import { THEME } from 'reactor/common';
 

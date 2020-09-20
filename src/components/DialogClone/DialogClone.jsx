@@ -57,9 +57,7 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
         <Text subtitle>{l10n.TRANSACTION[type]}</Text>
       </Row>
       <Row justify="center" marginBottom="L">
-        <Text bold headline>
-          {title ? title : ''}
-        </Text>
+        <Text headline>{title ? title : ''}</Text>
       </Row>
       <Row>
         <Col marginRight="S" width="auto">

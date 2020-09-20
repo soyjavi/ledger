@@ -5,16 +5,13 @@ import { TextInput } from 'react-native';
 import { THEME } from 'reactor/common';
 import { Row, Text, View } from 'reactor/components';
 
-import { C, getLastRates } from '@common';
+import { getLastRates } from '@common';
 import { useStore } from '@context';
 
 import { PriceFriendly } from '../PriceFriendly';
 import styles from './Input.style';
 
-const { SYMBOL } = C;
 const { COLOR } = THEME;
-
-const LEFT_SYMBOLS = ['$', '£'];
 
 const exchangeCaption = { caption: true, color: COLOR.LIGHTEN, maskAmount: false };
 
@@ -57,14 +54,6 @@ export const Input = ({
     onChange && onChange(nextValue);
   };
 
-  const symbol = SYMBOL[currency];
-  const symbolProps = {
-    children: SYMBOL[currency],
-    color: !value && !focus ? COLOR.LIGHTEN : undefined,
-    marginHorizontal: 'XS',
-    subtitle: true,
-  };
-
   return (
     <View {...others} style={[styles.container, others.style]}>
       <Row justify="center">
@@ -75,13 +64,12 @@ export const Input = ({
 
       <Row justify="center" style={[styles.content, focus && styles.focus, others.value && styles.filled]}>
         {currency && (
-          <>
-            {LEFT_SYMBOLS.includes(symbol) && <Text {...symbolProps} />}
-            <Text color={symbolProps.color} headline style={styles.value}>
-              {value || '0'}
-            </Text>
-            {!LEFT_SYMBOLS.includes(symbol) && <Text {...symbolProps} />}
-          </>
+          <PriceFriendly
+            color={!value && !focus ? COLOR.LIGHTEN : undefined}
+            currency={currency}
+            headline
+            value={value}
+          />
         )}
 
         <TextInput

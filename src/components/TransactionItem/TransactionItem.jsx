@@ -30,13 +30,8 @@ const TransactionItem = (props) => {
     <Touchable onPress={onPress ? () => onPress(props) : undefined} rippleColor={COLOR.RIPPLE}>
       <Row align="center" paddingHorizontal="M" paddingVertical="S">
         <Col marginRight="S" width="auto">
-          <Box color={type === INCOME ? COLOR.BRAND_OPACITY : COLOR.BASE} outlined>
-            <Icon
-              color={type === INCOME ? COLOR.BRAND : undefined}
-              family={ICON.FAMILY}
-              size={SPACE.M}
-              value={getIconCategory({ type, category, title })}
-            />
+          <Box outlined>
+            <Icon family={ICON.FAMILY} size={SPACE.M} value={getIconCategory({ type, category, title })} />
           </Box>
         </Col>
 
