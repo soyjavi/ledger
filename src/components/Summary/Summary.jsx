@@ -4,7 +4,6 @@ import React from 'react';
 import { THEME } from 'reactor/common';
 import { Col, Row, Text, Touchable, View } from 'reactor/components';
 
-import { LOGO } from '@assets';
 import { C, exchange, verboseMonth } from '@common';
 import { useL10N, useStore } from '@context';
 
@@ -29,7 +28,7 @@ BoxSummary.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-const Summary = ({ children, currency = CURRENCY, currentBalance, currentMonth = {}, image = LOGO, title = '' }) => {
+const Summary = ({ children, currency = CURRENCY, currentBalance, currentMonth = {}, title = '' }) => {
   const l10n = useL10N();
   const {
     rates,
@@ -102,7 +101,6 @@ Summary.propTypes = {
   currency: PropTypes.string,
   currentBalance: PropTypes.number,
   currentMonth: PropTypes.shape({}),
-  image: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   onSettings: PropTypes.func,
   title: PropTypes.string,
 };

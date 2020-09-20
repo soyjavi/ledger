@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { LAYOUT, THEME } from 'reactor/common';
 
-const { BORDER_RADIUS, FONT, SPACE } = THEME;
+const { BORDER_RADIUS, SPACE } = THEME;
 
 let OPTION_SIZE = LAYOUT.VIEWPORT.W / 6 + SPACE.XS;
 if (OPTION_SIZE > 80) OPTION_SIZE = 80;

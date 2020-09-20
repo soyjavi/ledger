@@ -68,8 +68,8 @@ export const Option = ({
 
 Option.propTypes = {
   caption: PropTypes.string,
-  currency: PropTypes.string,
   children: PropTypes.node,
+  currency: PropTypes.string,
   disabled: PropTypes.bool,
   icon: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   image: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),

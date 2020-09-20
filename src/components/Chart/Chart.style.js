@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from 'reactor/common';
 
-const { BORDER_RADIUS, COLOR, OPACITY, SPACE } = THEME;
+const { COLOR, OPACITY, SPACE } = THEME;
 const COLUMN_WIDTH = SPACE.S + SPACE.XS / 2;
 const COLUMN_HEIGHT = COLUMN_WIDTH * 8;
 
@@ -78,9 +78,6 @@ export default StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'flex-start',
     paddingHorizontal: SPACE.XS,
-    // paddingTop: SPACE.XS,
-    // lineHeight: SPACE.L,
-    // height: SPACE.M,
     borderWidth: 1,
     borderColor: COLOR.BACKGROUND,
     zIndex: 1,
