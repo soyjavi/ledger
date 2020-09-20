@@ -34,22 +34,23 @@ export default StyleSheet.create({
 
   font: {
     height: SIZE.M,
-    lineHeight: SIZE.M,
+    lineHeight: SIZE.M * 1.05,
+    overflow: 'hidden',
     textAlign: 'center',
-    width: SIZE.M,
+    width: SIZE.M * 0.9,
   },
 
   fontS: {
     fontSize: SIZE.S * 0.68,
     height: SIZE.S,
     lineHeight: SIZE.S,
-    width: SIZE.S,
+    width: SIZE.S * 0.9,
   },
 
   fontL: {
     fontSize: SIZE.L * 0.5,
     height: SIZE.L,
-    lineHeight: SIZE.L,
-    width: SIZE.L,
+    lineHeight: SIZE.L * 1.05,
+    width: SIZE.L * 0.9,
   },
 });
