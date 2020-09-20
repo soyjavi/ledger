@@ -12,6 +12,7 @@ import { PriceFriendly } from '../PriceFriendly';
 import { formatCaption } from './modules';
 
 const {
+  CURRENCY_COLOR,
   TX: {
     TYPE: { EXPENSE, INCOME },
   },
@@ -42,7 +43,7 @@ const TransactionItem = (props) => {
             </Col>
             <Col width="auto">
               <PriceFriendly
-                color={type === INCOME ? COLOR.BRAND : undefined}
+                color={type === INCOME ? CURRENCY_COLOR[currency] : undefined}
                 currency={currency}
                 highlight={type === INCOME}
                 operator={type === EXPENSE}

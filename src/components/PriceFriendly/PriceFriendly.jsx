@@ -12,7 +12,7 @@ import { useStore } from '@context';
 import styles from './PriceFriendly.style';
 
 const { SYMBOL } = C;
-const { COLOR, FONT, OPACITY } = THEME;
+const { FONT, OPACITY } = THEME;
 
 const MASK_SYMBOL = '*';
 const LEFT_SYMBOLS = ['$', '£'];
@@ -68,9 +68,7 @@ const PriceFriendly = ({ currency, fixed, highlight, label, operator, maskAmount
   return (
     <Row
       style={
-        highlight && !maskAmount
-          ? [styles.highlight, { backgroundColor: Color(COLOR.BRAND).alpha(OPACITY.S) }]
-          : undefined
+        highlight && !maskAmount ? [styles.highlight, { backgroundColor: Color(color).alpha(OPACITY.S) }] : undefined
       }
       width="auto"
     >

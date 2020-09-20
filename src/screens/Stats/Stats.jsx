@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { THEME } from 'reactor/common';
 import { Viewport } from 'reactor/components';
 
 import { BANNERS } from '@assets';
@@ -13,8 +12,8 @@ import { ItemGroupCategories, Locations, SliderMonths } from './components';
 import { calcScales, orderCaptions, queryMonth, queryChart } from './modules';
 import styles from './Stats.style';
 
-const { COLOR } = THEME;
 const {
+  CURRENCY_COLOR,
   STATS_MONTHS_LIMIT,
   TX: {
     TYPE: { EXPENSE, INCOME },
@@ -59,6 +58,7 @@ export const Stats = ({ visible, ...inherit }) => {
   const hasPoints = locations.points && locations.points.length > 0;
 
   const chartProps = { currency: baseCurrency, highlight: slider.index };
+  const currencyColor = CURRENCY_COLOR[baseCurrency];
 
   console.log('  <Stats>', { visible });
 
@@ -67,7 +67,7 @@ export const Stats = ({ visible, ...inherit }) => {
       <Header highlight={scroll} onBack={navigation.back} title={`${l10n.MONTHS[slider.month]} ${slider.year}`} />
 
       <ScrollView contentContainerStyle={styles.scrollView} onScroll={(value) => setScroll(value)} ref={scrollview}>
-        <Summary title={`${l10n.MONTHS[slider.month]} ${slider.year}`} />
+        <Summary currency={baseCurrency} title={`${l10n.MONTHS[slider.month]} ${slider.year}`} />
 
         <SliderMonths {...slider} onChange={handleSliderChange} marginBottom="XL" />
 
@@ -75,6 +75,7 @@ export const Stats = ({ visible, ...inherit }) => {
           {...calcScales(chart.balance)}
           {...chartProps}
           captions={orderCaptions(l10n)}
+          color={currencyColor}
           styleContainer={[styles.chart, styles.chartMargin]}
           style={styles.chartBalance}
           title={l10n.OVERALL_BALANCE}
@@ -84,7 +85,7 @@ export const Stats = ({ visible, ...inherit }) => {
         <Chart
           {...calcScales(chart.incomes)}
           {...chartProps}
-          color={COLOR.BRAND}
+          color={currencyColor}
           styleContainer={[styles.chart]}
           title={`${l10n.INCOMES} & ${l10n.EXPENSES}`}
           values={chart.incomes}
@@ -100,7 +101,7 @@ export const Stats = ({ visible, ...inherit }) => {
 
         {hasExpenses || hasIncomes ? (
           <>
-            {hasIncomes && <ItemGroupCategories type={INCOME} dataSource={incomes} />}
+            {hasIncomes && <ItemGroupCategories color={currencyColor} type={INCOME} dataSource={incomes} />}
             {hasExpenses && <ItemGroupCategories type={EXPENSE} dataSource={expenses} />}
           </>
         ) : (

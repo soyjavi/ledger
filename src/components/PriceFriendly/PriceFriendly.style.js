@@ -1,14 +1,13 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from 'reactor/common';
 
-const { BORDER_RADIUS, FONT, SPACE } = THEME;
+const { FONT, SPACE } = THEME;
 
 export default StyleSheet.create({
   highlight: {
-    borderRadius: BORDER_RADIUS / 2,
-    paddingHorizontal: SPACE.S,
+    paddingHorizontal: SPACE.S / 1.5,
     paddingVertical: SPACE.XS / 2,
-    marginRight: -SPACE.S,
+    marginRight: -SPACE.S / 1.5,
   },
 
   symbolHeadline: {

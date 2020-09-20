@@ -27,8 +27,8 @@ export default {
     THB: '#B19CD9',
     USD: '#b5cb8f',
     VND: '#bc658d',
-    XAU: '#666666',
-    XAG: '#ffd700',
+    XAU: '#ffd700',
+    XAG: '#666666',
   },
 
   DELAY_PRESS_MS: 500,

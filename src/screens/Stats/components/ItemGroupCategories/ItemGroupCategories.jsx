@@ -1,26 +1,31 @@
-import { shape, number } from 'prop-types';
+import PropTypes from 'prop-types';
 
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import { THEME } from 'reactor/common';
 import { Touchable } from 'reactor/components';
 
+import { C } from '@common';
 import { Heading, HorizontalChartItem, PriceFriendly } from '@components';
 import { useL10N, useStore } from '@context';
 
 import { orderByAmount } from '../../modules';
 import styles from './ItemGroupCategories.style';
 
+const {
+  TX: {
+    TYPE: { EXPENSE },
+  },
+} = C;
 const { COLOR, OPACITY } = THEME;
 
-const ItemGroupCategories = ({ dataSource, type }) => {
+const ItemGroupCategories = ({ color, dataSource, type }) => {
   const l10n = useL10N();
   const {
     settings: { baseCurrency },
   } = useStore();
   const [expand, setExpand] = useState(undefined);
 
-  const isExpense = type === 0;
   const totals = [];
   let total = 0;
   Object.keys(dataSource).forEach((category) => {
@@ -30,11 +35,9 @@ const ItemGroupCategories = ({ dataSource, type }) => {
     }
   });
 
-  const chartColor = !isExpense ? COLOR.BRAND : undefined;
-
   return (
     <View style={styles.container}>
-      <Heading paddingHorizontal="M" value={isExpense ? l10n.EXPENSES : l10n.INCOMES}>
+      <Heading paddingHorizontal="M" value={type === EXPENSE ? l10n.EXPENSES : l10n.INCOMES}>
         <PriceFriendly bold currency={baseCurrency} value={total} />
       </Heading>
       <View>
@@ -46,7 +49,7 @@ const ItemGroupCategories = ({ dataSource, type }) => {
             style={[styles.content, expand && expand !== key && { opacity: OPACITY.S }]}
           >
             <HorizontalChartItem
-              color={chartColor}
+              color={color}
               currency={baseCurrency}
               title={l10n.CATEGORIES[type][key]}
               value={amount}
@@ -59,7 +62,7 @@ const ItemGroupCategories = ({ dataSource, type }) => {
                 {orderByAmount(dataSource[key]).map((item) => (
                   <HorizontalChartItem
                     key={`${key}-${item.key}`}
-                    color={chartColor}
+                    color={color}
                     currency={baseCurrency}
                     small
                     title={item.key}
@@ -77,8 +80,9 @@ const ItemGroupCategories = ({ dataSource, type }) => {
 };
 
 ItemGroupCategories.propTypes = {
-  dataSource: shape({}).isRequired,
-  type: number.isRequired,
+  color: PropTypes.string,
+  dataSource: PropTypes.shape({}).isRequired,
+  type: PropTypes.number.isRequired,
 };
 
 export default ItemGroupCategories;
