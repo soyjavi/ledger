@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 export default {
   'en-EN': {
     ACCEPT: 'Accept',
@@ -9,25 +10,6 @@ export default {
     AUTHENTICATE: 'Authenticate',
 
     BALANCE: 'Balance',
-
-    // CATEGORIES: [
-    //   'Uncategorized',
-    //   'Food & Drinks',
-    //   'Salary',
-    //   'Education',
-    //   'Entertainment',
-    //   'Gift & Donations',
-    //   'Groceries',
-    //   'Health',
-    //   'Insurances',
-    //   'Internet',
-    //   'Bills',
-    //   'Investment',
-    //   'Laundry',
-    //   'Shopping',
-    //   'Transport',
-    //   'Travel',
-    // ],
 
     CANCEL: 'CANCEL',
     CATEGORIES: [

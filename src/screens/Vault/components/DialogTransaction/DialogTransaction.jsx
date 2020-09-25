@@ -52,6 +52,7 @@ const DialogTransaction = (props = {}) => {
     onHardwareBackPress(visible, onClose);
 
     return () => onHardwareBackPress(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
 
   const onSubmit = handleSubmit.bind(undefined, {

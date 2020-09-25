@@ -54,6 +54,7 @@ const Vault = ({ visible, ...inherit }) => {
 
   useEffect(() => {
     if (params.vault) refreshDatasource(vaults.find((vault) => vault.hash === params.vault.hash));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params]);
 
   useEffect(() => {
@@ -62,6 +63,7 @@ const Vault = ({ visible, ...inherit }) => {
       const vault = vaults.find((vault) => vault.hash === hash);
       if (vault.currentBalance !== currentBalance || vault.txs.length !== currentTxs.length) refreshDatasource(vault);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [vaults, visible]);
 
   const handleScroll = onScroll.bind(undefined, {

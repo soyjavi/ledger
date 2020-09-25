@@ -28,6 +28,7 @@ const FirstVault = ({ onVault, visible, ...others }) => {
       setForm({ currency: CURRENCY });
       fetchRates({ l10n, snackbar, store });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
 
   useEffect(() => {

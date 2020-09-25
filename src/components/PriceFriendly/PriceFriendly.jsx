@@ -1,4 +1,3 @@
-import Color from 'color';
 import { bool, number, string } from 'prop-types';
 
 import React from 'react';
@@ -6,13 +5,13 @@ import { THEME } from 'reactor/common';
 import { Price, Row, Text } from 'reactor/components';
 import { format } from 'reactor/components/Price/modules';
 
-import { C, currencyDecimals } from '@common';
+import { C, colorOpacity, currencyDecimals } from '@common';
 import { useStore } from '@context';
 
 import styles from './PriceFriendly.style';
 
 const { SYMBOL } = C;
-const { FONT, OPACITY } = THEME;
+const { FONT } = THEME;
 
 const MASK_SYMBOL = '*';
 const LEFT_SYMBOLS = ['$', '£'];
@@ -67,9 +66,7 @@ const PriceFriendly = ({ currency, fixed, highlight, label, operator, maskAmount
 
   return (
     <Row
-      style={
-        highlight && !maskAmount ? [styles.highlight, { backgroundColor: Color(color).alpha(OPACITY.S) }] : undefined
-      }
+      style={highlight && !maskAmount ? [styles.highlight, { backgroundColor: colorOpacity(color) }] : undefined}
       width="auto"
     >
       {label && (

@@ -18,10 +18,9 @@ const Session = ({ onSession, visible, ...others }) => {
   const l10n = useL10N();
   const store = useStore();
 
-  const [busy, setBusy] = useState(false);
   const [pin, setPin] = useState('');
 
-  const handleHandshake = onHandshake.bind(undefined, { onSession, setBusy, store });
+  const handleHandshake = onHandshake.bind(undefined, { onSession, store });
 
   useEffect(() => {
     if (visible) {
@@ -41,6 +40,7 @@ const Session = ({ onSession, visible, ...others }) => {
       if (settings.pin === undefined || settings.pin === pin) handleHandshake(pin);
       else setPin('');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pin]);
 
   const signup = store.authorization === undefined;

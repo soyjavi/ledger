@@ -110,7 +110,7 @@ export const Stats = ({ visible, ...inherit }) => {
 
         {(hasExpenses || hasIncomes) && (
           <>
-            {hasPoints && <Locations {...locations} />}
+            {hasPoints && <Locations {...locations} color={currencyColor} />}
             <Chart
               {...calcScales(chart.transfers)}
               {...chartProps}

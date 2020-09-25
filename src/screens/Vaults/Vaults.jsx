@@ -21,7 +21,7 @@ const Vaults = ({ visible, ...inherit }) => {
   const scrollview = useRef(null);
   const {
     overall,
-    settings: { visibleVaults = {} },
+    settings: { baseCurrency, visibleVaults = {} },
     updateSettings,
     vaults,
   } = useStore();
@@ -33,6 +33,7 @@ const Vaults = ({ visible, ...inherit }) => {
   useEffect(() => {
     if (visible) setCurrencies(query(vaults));
     else scrollview.current.scrollTo({ y: 0, animated: false });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
 
   const hasCurrencies = currencies.length > 0;
@@ -42,7 +43,7 @@ const Vaults = ({ visible, ...inherit }) => {
       <Header highlight={scroll} onBack={navigation.back} title={l10n.VAULTS} />
 
       <ScrollView contentContainerStyle={styles.scroll} onScroll={(value) => setScroll(value)} ref={scrollview}>
-        <Summary title={l10n.VAULTS} />
+        <Summary currency={baseCurrency} title={l10n.VAULTS} />
         {hasCurrencies && (
           <>
             <Heading paddingHorizontal="M" value={l10n.CURRENCIES} />

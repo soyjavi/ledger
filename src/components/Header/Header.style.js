@@ -2,8 +2,11 @@ import { StyleSheet } from 'react-native';
 import { THEME } from 'reactor/common';
 import { useEnvironment } from 'reactor/hooks';
 
+import { colorOpacity } from '@common';
+
+// eslint-disable-next-line react-hooks/rules-of-hooks
 const ENV = useEnvironment();
-const { UNIT, SPACE } = THEME;
+const { COLOR, UNIT, SPACE } = THEME;
 const IMAGE_SIZE = SPACE.M + SPACE.XS;
 
 export const HEADER_HEIGHT = UNIT * 8;
@@ -17,7 +20,7 @@ export default StyleSheet.create({
     width: '100%',
     zIndex: 1,
     overflow: 'hidden',
-    backgroundColor: 'rgba(255,255,255,0.95)',
+    backgroundColor: colorOpacity(COLOR.BACKGROUND, 0.95),
   },
 
   content: {
