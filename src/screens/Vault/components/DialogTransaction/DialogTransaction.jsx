@@ -13,6 +13,7 @@ import { getLocation, handleSubmit } from './modules';
 
 const { COLOR } = THEME;
 const {
+  CURRENCY_COLOR,
   DELAY_PRESS_MS,
   TX: {
     TYPE: { TRANSFER },
@@ -79,6 +80,7 @@ const DialogTransaction = (props = {}) => {
       {connected && type !== TRANSFER && (
         <HeatMap
           caption={place || l10n.LOADING_PLACE}
+          color={CURRENCY_COLOR[props.currency]}
           points={coords ? [[coords.longitude, coords.latitude]] : undefined}
           small
         />
@@ -100,6 +102,7 @@ const DialogTransaction = (props = {}) => {
 };
 
 DialogTransaction.propTypes = {
+  currency: PropTypes.string,
   onClose: PropTypes.func.isRequired,
   type: PropTypes.number,
   vault: PropTypes.shape({}),
