@@ -13,6 +13,7 @@ import { getLocation, handleSubmit } from './modules';
 
 const { COLOR } = THEME;
 const {
+  CURRENCY_COLOR,
   DELAY_PRESS_MS,
   TX: {
     TYPE: { TRANSFER },
@@ -52,6 +53,7 @@ const DialogTransaction = (props = {}) => {
     onHardwareBackPress(visible, onClose);
 
     return () => onHardwareBackPress(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
 
   const onSubmit = handleSubmit.bind(undefined, {
@@ -71,28 +73,21 @@ const DialogTransaction = (props = {}) => {
   return (
     <Dialog {...inherit} onClose={onClose} position="bottom" visible={visible}>
       <Row justify="center" marginVertical="L">
-        <Text headline>{l10n.TRANSACTION[type]}</Text>
+        <Text subtitle>{`${l10n.NEW} ${l10n.TRANSACTION[type]}`}</Text>
       </Row>
 
       <Form {...props} {...state} type={type} onChange={(value) => setState({ ...state, ...value })} />
       {connected && type !== TRANSFER && (
         <HeatMap
           caption={place || l10n.LOADING_PLACE}
+          color={CURRENCY_COLOR[props.currency]}
           points={coords ? [[coords.longitude, coords.latitude]] : undefined}
           small
         />
       )}
 
-      <Row marginTop="L">
-        <Button
-          color={COLOR.TEXT}
-          disabled={busy}
-          marginRight="M"
-          onPress={onClose}
-          outlined
-          text={l10n.CLOSE.toUpperCase()}
-          wide
-        />
+      <Row marginTop="XL">
+        <Button disabled={busy} marginRight="M" onPress={onClose} outlined text={l10n.CLOSE.toUpperCase()} wide />
         <Button
           colorText={COLOR.BACKGROUND}
           delay={DELAY_PRESS_MS}
@@ -107,6 +102,7 @@ const DialogTransaction = (props = {}) => {
 };
 
 DialogTransaction.propTypes = {
+  currency: PropTypes.string,
   onClose: PropTypes.func.isRequired,
   type: PropTypes.number,
   vault: PropTypes.shape({}),

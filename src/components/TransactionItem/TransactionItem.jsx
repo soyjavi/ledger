@@ -12,6 +12,7 @@ import { PriceFriendly } from '../PriceFriendly';
 import { formatCaption } from './modules';
 
 const {
+  CURRENCY_COLOR,
   TX: {
     TYPE: { EXPENSE, INCOME },
   },
@@ -27,34 +28,22 @@ const TransactionItem = (props) => {
   const operator = type === EXPENSE ? -1 : 1;
 
   return (
-    <Touchable onPress={onPress ? () => onPress(props) : undefined}>
+    <Touchable onPress={onPress ? () => onPress(props) : undefined} rippleColor={COLOR.RIPPLE}>
       <Row align="center" paddingHorizontal="M" paddingVertical="S">
         <Col marginRight="S" width="auto">
-          <Box color={type === INCOME ? COLOR.BRAND_OPACITY : undefined}>
-            <Icon
-              color={type === INCOME ? COLOR.BRAND : undefined}
-              family={ICON.FAMILY}
-              size={SPACE.M}
-              value={getIconCategory({ type, category, title })}
-            />
+          <Box outlined>
+            <Icon family={ICON.FAMILY} size={SPACE.M} value={getIconCategory({ type, category, title })} />
           </Box>
         </Col>
 
         <Col>
           <Row>
             <Col>
-              <Text
-                bold
-                // color={type === INCOME ? COLOR.BRAND : undefined}
-                numberOfLines={1}
-              >
-                {title}
-              </Text>
+              <Text numberOfLines={1}>{title}</Text>
             </Col>
             <Col width="auto">
               <PriceFriendly
-                bold
-                color={type === INCOME ? COLOR.BRAND : undefined}
+                color={type === INCOME ? CURRENCY_COLOR[currency] : undefined}
                 currency={currency}
                 highlight={type === INCOME}
                 operator={type === EXPENSE}

@@ -1,26 +1,24 @@
 import { Platform, StyleSheet } from 'react-native';
 import { THEME } from 'reactor/common';
 
-const { COLOR, FONT, SPACE } = THEME;
+const { BORDER_RADIUS, COLOR, FONT, SPACE } = THEME;
 
 export default StyleSheet.create({
   container: {
-    borderBottomColor: COLOR.BASE,
-    borderBottomWidth: 1,
-    width: 'auto',
-    paddingVertical: SPACE.XS,
-  },
-
-  focus: {
-    borderBottomColor: COLOR.LIGHTEN,
+    flex: 1,
   },
 
   input: {
-    ...FONT.INPUT,
-    color: COLOR.TEXT,
+    ...FONT.BODY,
+    ...FONT.BOLD,
+    backgroundColor: COLOR.CTA_HIGHLIGHT,
+    borderRadius: BORDER_RADIUS / 2,
     borderWidth: 0,
+    color: COLOR.BACKGROUND,
     flex: 2,
-    height: SPACE.XL,
+    height: SPACE.XL + SPACE.S,
+    marginRight: SPACE.S,
+    paddingHorizontal: SPACE.S,
     ...Platform.select({
       web: {
         userSelect: 'none',

@@ -20,6 +20,11 @@ export default StyleSheet.create({
     width: '75%',
   },
 
+  imageSmall: {
+    height: IMAGE_HEIGHT / 1.5,
+    width: '75%',
+  },
+
   left: {
     alignItems: 'flex-start',
   },
@@ -31,23 +36,15 @@ export default StyleSheet.create({
 
   text: {
     textAlign: 'center',
-    // maxWidth: '75%',
-    // width: '100%',
   },
 
   textleft: {
     textAlign: 'left',
-    marginRight: SPACE.XXL + SPACE.M,
+    marginRight: SPACE.XXL,
   },
 
   textright: {
     textAlign: 'right',
     marginLeft: SPACE.XXL + SPACE.M,
-  },
-
-  caption: {
-    // @TODO
-    fontSize: 14,
-    lineHeight: 14 * 1.5,
   },
 });

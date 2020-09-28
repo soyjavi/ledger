@@ -1,44 +1,64 @@
 import PropTypes from 'prop-types';
 
-import React from 'react';
-import { Image } from 'react-native';
+import React, { useEffect } from 'react';
 import { THEME } from 'reactor/common';
-import { Col, Icon, Motion, Row, Text, Touchable } from 'reactor/components';
+import { Button, Col, Motion, Row, Text } from 'reactor/components';
 
-import { LOGO } from '@assets';
+import { onHardwareBackPress } from '@common';
 
+import { CurrencyLogo } from '../CurrencyLogo';
 import styles, { HEADER_HEIGHT } from './Header.style';
 
 export { HEADER_HEIGHT };
 
-const { ICON, MOTION } = THEME;
+const { COLOR, ICON, MOTION, UNIT } = THEME;
 
-export const Header = ({ children, highlight = false, image = LOGO, onBack, title }) => (
-  <Row paddingHorizontal="M" style={[styles.container, highlight && styles.solid]}>
-    <Col align="start">
-      {onBack && (
-        <Touchable onPress={onBack}>
-          <Icon family={ICON.FAMILY} value="arrow-left" />
-        </Touchable>
-      )}
-    </Col>
-    <Col align="center" style={styles.content}>
-      <Motion
-        duration={highlight ? MOTION.EXPAND : MOTION.COLLAPSE}
-        timeline={[{ property: 'opacity', value: highlight ? 1 : 0 }]}
-      >
-        <Image source={image} style={styles.image} />
-        <Text subtitle>{title}</Text>
-      </Motion>
-    </Col>
-    <Col align="end">{children}</Col>
-  </Row>
-);
+export const Header = ({ childLeft, childRight, currency, highlight = false, onBack, title }) => {
+  useEffect(() => {
+    onHardwareBackPress(onBack !== undefined, onBack);
+    return () => onHardwareBackPress(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onBack]);
+
+  return (
+    <Row paddingHorizontal="M" style={[styles.container, highlight && styles.elevate]}>
+      <Col align="start">
+        {childLeft}
+        {onBack && (
+          <Button
+            color={COLOR.BACKGROUND}
+            colorText={COLOR.TEXT}
+            iconFamily={ICON.FAMILY}
+            icon="arrow-left"
+            onPress={onBack}
+            size="S"
+          />
+        )}
+      </Col>
+      <Col align="center" style={styles.content}>
+        <Motion
+          duration={highlight ? MOTION.EXPAND : MOTION.COLLAPSE / 4}
+          timeline={[
+            { property: 'opacity', value: highlight ? 1 : 0 },
+            { property: 'translateY', value: highlight ? 0 : UNIT },
+          ]}
+        >
+          <Row>
+            <CurrencyLogo currency={currency} marginRight="S" _size="S" />
+            {title && <Text subtitle>{title}</Text>}
+          </Row>
+        </Motion>
+      </Col>
+      <Col align="end">{childRight}</Col>
+    </Row>
+  );
+};
 
 Header.propTypes = {
-  children: PropTypes.node,
+  childLeft: PropTypes.node,
+  childRight: PropTypes.node,
+  currency: PropTypes.string,
   highlight: PropTypes.bool,
-  image: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   onBack: PropTypes.func,
   title: PropTypes.string,
 };

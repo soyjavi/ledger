@@ -1,8 +1,7 @@
-import { array, arrayOf, number, shape } from 'prop-types';
+import { array, arrayOf, number, shape, string } from 'prop-types';
 
-import React, { Fragment } from 'react';
+import React from 'react';
 import { View } from 'react-native';
-import { THEME } from 'reactor/common';
 
 import { HeatMap, Heading, HorizontalChartItem } from '@components';
 import { useL10N } from '@context';
@@ -10,9 +9,7 @@ import { useL10N } from '@context';
 import { orderByAmount } from '../../modules';
 import styles from './Locations.style';
 
-const { COLOR } = THEME;
-
-const Locations = ({ cities, countries, points, precission }) => {
+const Locations = ({ cities = {}, color, countries = {}, points = [], precission = 0.001 }) => {
   const l10n = useL10N();
   const citiesTxs = Object.values(cities).length > 0 ? Object.values(cities).reduce((a, b) => a + b) : 1;
   const countriesTxs = Object.values(countries).length > 1 ? Object.values(countries).reduce((a, b) => a + b) : 1;
@@ -21,40 +18,40 @@ const Locations = ({ cities, countries, points, precission }) => {
     <View style={styles.container}>
       <View style={styles.content}>
         <Heading value={l10n.LOCATIONS} />
-        <HeatMap color={COLOR.LOCATION} points={points} precission={precission} style={styles.heatMap} />
+        <HeatMap color={color} points={points} precission={precission} style={styles.heatMap} />
       </View>
 
       <View style={styles.content}>
         <Heading value={l10n.CITIES} />
-        <Fragment>
+        <>
           {orderByAmount(cities).map(({ key, amount }) => (
             <HorizontalChartItem
               key={key}
-              color={COLOR.LOCATION}
+              color={color}
               currency="x"
               title={key}
               value={amount}
               width={Math.floor((amount / citiesTxs) * 100)}
             />
           ))}
-        </Fragment>
+        </>
       </View>
 
       {Object.keys(countries).length > 1 && (
         <View style={styles.content}>
           <Heading value={l10n.COUNTRIES} />
-          <Fragment>
+          <>
             {orderByAmount(countries).map(({ key, amount }) => (
               <HorizontalChartItem
                 key={key}
-                color={COLOR.LOCATION}
+                color={color}
                 currency="x"
                 title={key}
                 value={amount}
                 width={Math.floor((amount / countriesTxs) * 100)}
               />
             ))}
-          </Fragment>
+          </>
         </View>
       )}
     </View>
@@ -63,16 +60,10 @@ const Locations = ({ cities, countries, points, precission }) => {
 
 Locations.propTypes = {
   cities: shape({}),
+  color: string,
   countries: shape({}),
   points: arrayOf(array),
   precission: number,
-};
-
-Locations.defaultProps = {
-  cities: {},
-  countries: {},
-  points: [],
-  precission: 0.001,
 };
 
 export default Locations;

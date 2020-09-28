@@ -14,5 +14,6 @@ export default StyleSheet.create({
 
   heatMap: {
     width: '100%',
+    marginBottom: SPACE.S,
   },
 });

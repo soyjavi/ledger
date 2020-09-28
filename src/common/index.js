@@ -1,3 +1,4 @@
+import colorOpacity from './colorOpacity';
 import C from './constants';
 import currencyDecimals from './currencyDecimals';
 import exchange from './exchange';
@@ -18,6 +19,7 @@ import verboseTime from './verboseTime';
 
 export {
   C,
+  colorOpacity,
   currencyDecimals,
   exchange,
   getIconCategory,

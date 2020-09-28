@@ -1,14 +1,13 @@
 import PropTypes from 'prop-types';
 
 import React from 'react';
-import { Image } from 'react-native';
 import { THEME } from 'reactor/common';
 import { Col, Row, Text, Touchable, View } from 'reactor/components';
 
-import { LOGO } from '@assets';
 import { C, exchange, verboseMonth } from '@common';
 import { useL10N, useStore } from '@context';
 
+import { CurrencyLogo } from '../CurrencyLogo';
 import { PriceFriendly } from '../PriceFriendly';
 import styles from './Summary.style';
 
@@ -20,14 +19,7 @@ const BoxSummary = ({ caption, value, ...inherit }) => (
     <Text caption color={COLOR.LIGHTEN} numberOfLines={1}>
       {caption.toUpperCase()}
     </Text>
-    <PriceFriendly
-      {...inherit}
-      bold
-      caption
-      color={value === 0 ? COLOR.LIGHTEN : undefined}
-      fixed={value >= 1000 ? 0 : undefined}
-      value={value}
-    />
+    <PriceFriendly {...inherit} caption fixed={value >= 1000 ? 0 : undefined} value={value} />
   </Col>
 );
 
@@ -36,7 +28,7 @@ BoxSummary.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-const Summary = ({ children, currency = CURRENCY, currentBalance, currentMonth = {}, image = LOGO, title = '' }) => {
+const Summary = ({ children, currency = CURRENCY, currentBalance, currentMonth = {}, title = '' }) => {
   const l10n = useL10N();
   const {
     rates,
@@ -53,11 +45,9 @@ const Summary = ({ children, currency = CURRENCY, currentBalance, currentMonth =
   return (
     <View style={styles.container}>
       <Col align="center" style={styles.content}>
-        <Image source={image} resizeMode="contain" style={styles.image} />
-        <Col align="center" marginBottom={showCurrentBalance ? 'M' : undefined}>
-          <Text headline={!showCurrentBalance} subtitle>
-            {title}
-          </Text>
+        <CurrencyLogo currency={currency} size="L" />
+        <Col align="center">
+          <Text subtitle>{title}</Text>
 
           {showCurrentBalance && (
             <>
@@ -68,9 +58,9 @@ const Summary = ({ children, currency = CURRENCY, currentBalance, currentMonth =
                 <PriceFriendly
                   color={COLOR.LIGHTEN}
                   currency={baseCurrency}
+                  marginBottom="S"
                   subtitle
                   value={exchange(Math.abs(currentBalance), currency, baseCurrency, rates)}
-                  style={styles.baseCurrency}
                 />
               )}
             </>
@@ -78,7 +68,7 @@ const Summary = ({ children, currency = CURRENCY, currentBalance, currentMonth =
         </Col>
 
         {showCurrentBalance && (
-          <Row justify="space" paddingHorizontal="S">
+          <Row marginTop="M" justify="space" paddingHorizontal="S">
             <BoxSummary caption={verboseMonth(new Date(), l10n)} currency="%" operator value={progressionPercentage} />
             <BoxSummary caption={l10n.INCOMES} currency={baseCurrency} value={incomes} />
             <BoxSummary caption={l10n.EXPENSES} currency={baseCurrency} value={expenses} />
@@ -111,7 +101,6 @@ Summary.propTypes = {
   currency: PropTypes.string,
   currentBalance: PropTypes.number,
   currentMonth: PropTypes.shape({}),
-  image: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   onSettings: PropTypes.func,
   title: PropTypes.string,
 };

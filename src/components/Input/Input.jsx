@@ -5,16 +5,13 @@ import { TextInput } from 'react-native';
 import { THEME } from 'reactor/common';
 import { Row, Text, View } from 'reactor/components';
 
-import { C, getLastRates } from '@common';
+import { getLastRates } from '@common';
 import { useStore } from '@context';
 
 import { PriceFriendly } from '../PriceFriendly';
 import styles from './Input.style';
 
-const { SYMBOL } = C;
 const { COLOR } = THEME;
-
-const LEFT_SYMBOLS = ['$', '£'];
 
 const exchangeCaption = { caption: true, color: COLOR.LIGHTEN, maskAmount: false };
 
@@ -57,30 +54,22 @@ export const Input = ({
     onChange && onChange(nextValue);
   };
 
-  const symbol = SYMBOL[currency];
-  const symbolProps = {
-    children: SYMBOL[currency],
-    color: !value && !focus ? COLOR.LIGHTEN : undefined,
-    marginHorizontal: 'XS',
-    subtitle: true,
-  };
-
   return (
     <View {...others} style={[styles.container, others.style]}>
-      <Row justify="center" marginBottom="XS  ">
+      <Row justify="center">
         <Text caption color={COLOR.LIGHTEN}>
-          {(others.value || currency) && label ? label : ' '}
+          {label && (currency || focus || value) ? label.toUpperCase() : ' '}
         </Text>
       </Row>
-      <Row justify="center" style={[styles.content, focus && styles.focus]}>
+
+      <Row justify="center" style={[styles.content, focus && styles.focus, others.value && styles.filled]}>
         {currency && (
-          <>
-            {LEFT_SYMBOLS.includes(symbol) && <Text {...symbolProps} />}
-            <Text headline color={symbolProps.color} style={styles.value}>
-              {value || '0'}
-            </Text>
-            {!LEFT_SYMBOLS.includes(symbol) && <Text {...symbolProps} />}
-          </>
+          <PriceFriendly
+            color={!value && !focus ? COLOR.LIGHTEN : undefined}
+            currency={currency}
+            headline
+            value={value}
+          />
         )}
 
         <TextInput
@@ -95,10 +84,10 @@ export const Input = ({
           onBlur={() => setFocus(false)}
           onChangeText={handleChange}
           onFocus={() => setFocus(true)}
-          placeholder={others.placeholder || label}
+          placeholder={!focus ? label : undefined}
           placeholderTextColor={COLOR.LIGHTEN}
           secureTextEntry={secure}
-          style={[styles.input, currency ? styles.inputCurrency : styles.inputText]}
+          style={[styles.input, currency ? styles.inputCurrency : undefined]}
           underlineColorAndroid="transparent"
           value={others.value || ''}
         />
@@ -108,12 +97,11 @@ export const Input = ({
         <Row justify="center" marginTop="XS">
           <PriceFriendly
             {...exchangeCaption}
-            bold
             color={focus || others.value > 0 ? COLOR.TEXT : COLOR.LIGHTEN}
             currency={baseCurrency}
-            marginRight="XS"
             value={parseFloat(others.value || 0, 10) / exchange}
           />
+          <View marginRight="XS" />
           <Text {...exchangeCaption}>(</Text>
           <PriceFriendly {...exchangeCaption} currency={baseCurrency} value={1} />
           <Text {...exchangeCaption}>{` = `}</Text>

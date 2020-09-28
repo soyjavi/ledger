@@ -1,20 +1,19 @@
 import PropTypes from 'prop-types';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { THEME } from 'reactor/common';
 import { Viewport } from 'reactor/components';
 
 import { BANNERS } from '@assets';
 import { C } from '@common';
-import { Banner, ButtonBack, Chart, Header, ScrollView, Summary } from '@components';
+import { Banner, Chart, Header, ScrollView, Summary } from '@components';
 import { useL10N, useNavigation, useStore } from '@context';
 
 import { ItemGroupCategories, Locations, SliderMonths } from './components';
 import { calcScales, orderCaptions, queryMonth, queryChart } from './modules';
 import styles from './Stats.style';
 
-const { COLOR } = THEME;
 const {
+  CURRENCY_COLOR,
   STATS_MONTHS_LIMIT,
   TX: {
     TYPE: { EXPENSE, INCOME },
@@ -59,26 +58,24 @@ export const Stats = ({ visible, ...inherit }) => {
   const hasPoints = locations.points && locations.points.length > 0;
 
   const chartProps = { currency: baseCurrency, highlight: slider.index };
+  const currencyColor = CURRENCY_COLOR[baseCurrency];
 
   console.log('  <Stats>', { visible });
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
-      <Header
-        highlight={scroll}
-        onBack={scroll ? navigation.back : undefined}
-        title={`${l10n.MONTHS[slider.month]} ${slider.year}`}
-      />
+      <Header highlight={scroll} onBack={navigation.back} title={`${l10n.MONTHS[slider.month]} ${slider.year}`} />
 
       <ScrollView contentContainerStyle={styles.scrollView} onScroll={(value) => setScroll(value)} ref={scrollview}>
-        <Summary title={l10n.ACTIVITY} />
+        <Summary currency={baseCurrency} title={`${l10n.MONTHS[slider.month]} ${slider.year}`} />
 
-        <SliderMonths {...slider} onChange={handleSliderChange} marginBottom="M" />
+        <SliderMonths {...slider} onChange={handleSliderChange} marginBottom="XL" />
 
         <Chart
           {...calcScales(chart.balance)}
           {...chartProps}
           captions={orderCaptions(l10n)}
+          color={currencyColor}
           styleContainer={[styles.chart, styles.chartMargin]}
           style={styles.chartBalance}
           title={l10n.OVERALL_BALANCE}
@@ -88,7 +85,7 @@ export const Stats = ({ visible, ...inherit }) => {
         <Chart
           {...calcScales(chart.incomes)}
           {...chartProps}
-          color={COLOR.BRAND}
+          color={currencyColor}
           styleContainer={[styles.chart]}
           title={`${l10n.INCOMES} & ${l10n.EXPENSES}`}
           values={chart.incomes}
@@ -104,7 +101,7 @@ export const Stats = ({ visible, ...inherit }) => {
 
         {hasExpenses || hasIncomes ? (
           <>
-            {hasIncomes && <ItemGroupCategories type={INCOME} dataSource={incomes} />}
+            {hasIncomes && <ItemGroupCategories color={currencyColor} type={INCOME} dataSource={incomes} />}
             {hasExpenses && <ItemGroupCategories type={EXPENSE} dataSource={expenses} />}
           </>
         ) : (
@@ -113,7 +110,7 @@ export const Stats = ({ visible, ...inherit }) => {
 
         {(hasExpenses || hasIncomes) && (
           <>
-            {hasPoints && <Locations {...inherit} {...locations} />}
+            {hasPoints && <Locations {...locations} color={currencyColor} />}
             <Chart
               {...calcScales(chart.transfers)}
               {...chartProps}
@@ -125,8 +122,6 @@ export const Stats = ({ visible, ...inherit }) => {
           </>
         )}
       </ScrollView>
-
-      <ButtonBack onPress={navigation.back} visible={visible} />
     </Viewport>
   );
 };

@@ -15,7 +15,7 @@ export default StyleSheet.create({
   },
 
   chartMargin: {
-    marginBottom: SPACE.XL + SPACE.XS,
+    marginBottom: SPACE.XL + SPACE.M,
   },
 
   scrollView: {

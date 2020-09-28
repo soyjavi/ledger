@@ -1,26 +1,16 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from 'reactor/common';
 
-const { BORDER_RADIUS, COLOR, FONT, OPACITY, SPACE, UNIT } = THEME;
+const { COLOR, OPACITY, SPACE } = THEME;
 const COLUMN_WIDTH = SPACE.S + SPACE.XS / 2;
-const COLUMN_RADIUS = COLUMN_WIDTH / 2;
 const COLUMN_HEIGHT = COLUMN_WIDTH * 8;
 
 export default StyleSheet.create({
   bar: {
     backgroundColor: COLOR.BASE,
-    borderTopLeftRadius: COLUMN_RADIUS,
-    borderTopRightRadius: COLUMN_RADIUS,
     maxHeight: '100%',
     minHeight: COLUMN_WIDTH / 1.5,
     width: COLUMN_WIDTH,
-  },
-
-  barInverted: {
-    borderTopLeftRadius: 0,
-    borderTopRightRadius: 0,
-    borderBottomLeftRadius: COLUMN_RADIUS,
-    borderBottomRightRadius: COLUMN_RADIUS,
   },
 
   captions: {
@@ -28,10 +18,6 @@ export default StyleSheet.create({
     height: SPACE.M,
     bottom: -SPACE.M,
     width: '100%',
-  },
-
-  caption: {
-    fontSize: UNIT,
   },
 
   column: {
@@ -62,8 +48,6 @@ export default StyleSheet.create({
     height: COLUMN_HEIGHT,
   },
 
-  legend: FONT.LEGEND,
-
   scales: {
     position: 'absolute',
     left: 0,
@@ -93,11 +77,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'flex-start',
-    borderRadius: BORDER_RADIUS / 2,
-    paddingHorizontal: SPACE.XS * 1.5,
-    // paddingTop: SPACE.XS,
-    // lineHeight: SPACE.L,
-    height: SPACE.M,
+    paddingHorizontal: SPACE.XS,
     borderWidth: 1,
     borderColor: COLOR.BACKGROUND,
     zIndex: 1,

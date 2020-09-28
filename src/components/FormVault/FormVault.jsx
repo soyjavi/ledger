@@ -20,11 +20,15 @@ export const FormVault = ({ form = {}, onChange, showExchange = true }) => {
 
   return (
     <>
-      <SliderCurrencies onChange={(currency) => handleField('currency', currency)} selected={form.currency} />
+      <SliderCurrencies
+        marginBottom="L"
+        onChange={(currency) => handleField('currency', currency)}
+        selected={form.currency}
+      />
       <Input
         currency={form.currency}
         label={l10n.INITIAL_BALANCE}
-        marginVertical="M"
+        marginBottom="L"
         onChange={(value) => handleField('balance', value)}
         showExchange={showExchange}
         value={form.balance}

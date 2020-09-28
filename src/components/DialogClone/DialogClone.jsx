@@ -13,6 +13,7 @@ import { PriceFriendly } from '../PriceFriendly';
 import { createTx } from './DialogClone.controller';
 
 const {
+  CURRENCY_COLOR,
   DELAY_PRESS_MS,
   TX: {
     TYPE: { EXPENSE, INCOME },
@@ -50,11 +51,15 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
   const buttonProps = { delay: DELAY_PRESS_MS, disabled: busy, wide: true };
 
   const vaultInfo = vaults.find(({ hash }) => hash === vault);
+  const currencyColor = CURRENCY_COLOR[currency];
 
   return (
     <Dialog {...inherit} position="bottom">
-      <Row justify="center" marginVertical="L">
-        <Text headline>{title ? title : type === EXPENSE ? l10n.EXPENSE : l10n.INCOME}</Text>
+      <Row justify="center" marginTop="L">
+        <Text subtitle>{l10n.TRANSACTION[type]}</Text>
+      </Row>
+      <Row justify="center" marginBottom="L">
+        <Text headline>{title ? title : ''}</Text>
       </Row>
       <Row>
         <Col marginRight="S" width="auto">
@@ -63,14 +68,11 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
         <Col>
           <Row>
             <Col>
-              <Text bold numberOfLines={1}>
-                {vaultInfo ? vaultInfo.title : undefined}
-              </Text>
+              <Text numberOfLines={1}>{vaultInfo ? vaultInfo.title : undefined}</Text>
             </Col>
             <Col width="auto">
               <PriceFriendly
-                bold
-                color={type === INCOME ? COLOR.BRAND : undefined}
+                color={type === INCOME ? currencyColor : undefined}
                 currency={currency}
                 highlight={type === INCOME}
                 maskAmount={false}
@@ -103,17 +105,21 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
 
       {location && (
         <Col marginTop="S">
-          <HeatMap caption={location.place} points={[[location.longitude, location.latitude]]} small />
+          <HeatMap
+            caption={location.place}
+            color={currencyColor}
+            points={[[location.longitude, location.latitude]]}
+            small
+          />
         </Col>
       )}
 
-      <Row marginTop="M">
+      <Row marginTop="XL">
         <Button
           {...buttonProps}
-          color={COLOR.TEXT}
+          marginRight="M"
           onPress={() => handleSubmit({ wipe: true })}
           outlined
-          marginRight="M"
           text={l10n.WIPE.toUpperCase()}
         />
         <Button

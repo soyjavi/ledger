@@ -27,11 +27,10 @@ export const askLocalAuthentication = async ({
   }
 };
 
-export const onHandshake = async ({ onSession, setBusy, store: { settings, updateRates, updateSettings } }, pin) => {
+export const onHandshake = async ({ onSession, store: { settings, updateRates, updateSettings } }, pin) => {
   const { fingerprint, baseCurrency } = settings;
   const isSignup = settings.pin === undefined;
 
-  setBusy(true);
   if (isSignup) {
     await updateSettings({
       pin,

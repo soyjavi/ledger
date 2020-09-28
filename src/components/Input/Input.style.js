@@ -3,41 +3,43 @@ import { THEME } from 'reactor/common';
 
 const { COLOR, FONT, SPACE } = THEME;
 
+const HEIGHT = SPACE.XXL;
+
 export default StyleSheet.create({
   container: {
     width: '100%',
   },
 
   content: {
-    borderBottomWidth: 1,
-    borderBottomColor: COLOR.BASE,
+    // borderBottomWidth: 1,
+    // borderBottomColor: COLOR.BASE,
   },
 
   focus: {
-    borderBottomColor: COLOR.LIGHTEN,
+    // borderBottomColor: COLOR.TEXT,
   },
 
   value: {
     minWidth: SPACE.L,
+    height: HEIGHT,
+    lineHeight: HEIGHT,
   },
 
   input: {
+    ...FONT.DEFAULT,
+    ...FONT.SUBTITLE,
     color: COLOR.TEXT,
     padding: 0,
     margin: 0,
-    height: SPACE.XXL,
+    height: HEIGHT,
     width: '100%',
+    textAlign: 'center',
   },
 
   inputCurrency: {
     position: 'absolute',
     left: 0,
-    height: SPACE.XXL,
     opacity: 0,
-  },
-
-  inputText: {
-    ...FONT.SUBTITLE,
-    textAlign: 'center',
+    width: '100%',
   },
 });

@@ -2,10 +2,10 @@ import React from 'react';
 
 import { C } from './common';
 import { useNavigation } from './context';
-import { Onboarding, Stats, Dashboard, Vault, Vaults } from './screens';
+import { Dashboard, Onboarding, Settings, Stats, Vault, Vaults } from './screens';
 
 const { SCREEN } = C;
-const { STATS, DASHBOARD, VAULT, VAULTS } = SCREEN;
+const { DASHBOARD, SETTINGS, STATS, VAULT, VAULTS } = SCREEN;
 
 const Router = () => {
   const { current, stack = [] } = useNavigation();
@@ -21,6 +21,7 @@ const Router = () => {
           <Vaults backward={current !== VAULTS} visible={stack.includes(VAULTS)} />
           <Vault visible={stack.includes(VAULT)} />
           <Stats visible={stack.includes(STATS)} />
+          <Settings visible={stack.includes(SETTINGS)} />
         </>
       )}
     </>

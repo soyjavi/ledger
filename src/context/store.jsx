@@ -33,6 +33,7 @@ const StoreProvider = ({ children }) => {
 
   useLayoutEffect(() => {
     const fetchStorage = async () => {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
       const { uuid: secret, device_id: fingerprint } = await useFingerprint();
 
       const store = await new AsyncStorage({
@@ -71,6 +72,7 @@ const StoreProvider = ({ children }) => {
     };
 
     if (!store) fetchStorage();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const updateStore = async (key, value) => {

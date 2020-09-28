@@ -11,6 +11,25 @@ export default {
   BUSY_PRESS_MS: 2500,
 
   CURRENCY: 'EUR',
+  CURRENCY_COLOR: {
+    AUD: '#A3D6D4',
+    BTC: '#ff9900',
+    CNY: '#c58293',
+    GBP: '#d1c5db',
+    EUR: '#5d7ea7',
+    HKD: '#dbc1b9',
+    JPY: '#F47C7C',
+    KRW: '#70A1D7',
+    MXN: '#A1DE93',
+    MYR: '#FFD050',
+    RUB: '#1aa6b7',
+    SGD: '#FF6962',
+    THB: '#B19CD9',
+    USD: '#b5cb8f',
+    VND: '#bc658d',
+    XAU: '#ffd700',
+    XAG: '#666666',
+  },
 
   DELAY_PRESS_MS: 500,
 
@@ -39,6 +58,7 @@ export default {
   SCREEN: {
     DASHBOARD: 'dashboard',
     SESSION: 'session',
+    SETTINGS: 'settings',
     STATS: 'stats',
     VAULT: 'vault',
     VAULTS: 'vaults',

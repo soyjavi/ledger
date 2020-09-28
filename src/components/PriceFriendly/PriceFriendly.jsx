@@ -5,14 +5,17 @@ import { THEME } from 'reactor/common';
 import { Price, Row, Text } from 'reactor/components';
 import { format } from 'reactor/components/Price/modules';
 
-import { C, currencyDecimals } from '@common';
+import { C, colorOpacity, currencyDecimals } from '@common';
 import { useStore } from '@context';
 
 import styles from './PriceFriendly.style';
 
-const MASK_SYMBOL = '*';
-const { COLOR } = THEME;
 const { SYMBOL } = C;
+const { FONT } = THEME;
+
+const MASK_SYMBOL = '*';
+const LEFT_SYMBOLS = ['$', '£'];
+
 const maskValue = ({ value }) =>
   format({
     value: value >= 1000 ? 9999 : 9.99,
@@ -26,10 +29,6 @@ const PriceFriendly = ({ currency, fixed, highlight, label, operator, maskAmount
   let { color } = others;
   let operatorEnhanced;
 
-  if (operator && !color) {
-    if (value === 0) color = COLOR.LIGHTEN;
-    else color = value > 0 ? COLOR.BRAND : undefined;
-  }
   if (operator && value > 0) operatorEnhanced = '+';
   else if (operator && value < 0) operatorEnhanced = '-';
 
@@ -39,14 +38,39 @@ const PriceFriendly = ({ currency, fixed, highlight, label, operator, maskAmount
     fixed: fixed !== undefined ? fixed : currencyDecimals(value, currency),
     numberOfLines: 1,
     operator: operatorEnhanced,
-    symbol: SYMBOL[currency] || currency,
     value: Math.abs(value),
   };
 
+  const symbol = SYMBOL[currency] || currency;
+
+  const { headline, subtitle, caption } = others;
+  const symbolProps = {
+    ...others,
+    children: symbol,
+    color: color,
+    style: [
+      //
+      FONT.CURRENCY,
+      headline
+        ? styles.symbolHeadline
+        : subtitle
+        ? styles.symbolSubtitle
+        : caption
+        ? styles.symbolCaption
+        : styles.symbol,
+      (headline || subtitle) && styles.symbol,
+      caption && styles.symbolCaption,
+      !headline && !subtitle && !caption && styles.symbolBody,
+    ],
+  };
+
   return (
-    <Row style={highlight && !maskAmount ? styles.highlight : undefined} width="auto">
+    <Row
+      style={highlight && !maskAmount ? [styles.highlight, { backgroundColor: colorOpacity(color) }] : undefined}
+      width="auto"
+    >
       {label && (
-        <Text {...others} color={color}>
+        <Text {...others} bold={false} color={color}>
           {label}
         </Text>
       )}
@@ -55,7 +79,11 @@ const PriceFriendly = ({ currency, fixed, highlight, label, operator, maskAmount
           {maskValue(props)}
         </Text>
       ) : (
-        <Price {...props} style={[others.style, others.caption ? styles.bold : undefined]} />
+        <>
+          {LEFT_SYMBOLS.includes(symbol) && <Text {...symbolProps} />}
+          <Price {...props} bold={highlight} style={others.style} />
+          {!LEFT_SYMBOLS.includes(symbol) && <Text {...symbolProps} />}
+        </>
       )}
     </Row>
   );

@@ -1,49 +1,5 @@
-import AUD from './flags/australia.png';
-import BTC from './flags/bitcoin.png';
-import CNY from './flags/china.png';
-import EUR from './flags/europe.png';
-import XAU from './flags/gold.png';
-import HKD from './flags/hong-kong.png';
-import JPY from './flags/japan.png';
-import MYR from './flags/malaysia.png';
-import MXN from './flags/mexico.png';
-import RUB from './flags/rusia.png';
-import XAG from './flags/silver.png';
-import SGD from './flags/singapore.png';
-import KRW from './flags/south-korea.png';
-import THB from './flags/thailand.png';
-import GBP from './flags/united-kingdom.png';
-import USD from './flags/united-states.png';
-import VND from './flags/vietnam.png';
-import LOGO from './logo.png';
 import NOT_FOUND from './notfound.png';
 import RECEIVE from './receive.png';
 import SEND from './send.png';
 
-const FLAGS = {
-  AUD,
-  BTC,
-  CNY,
-  EUR,
-  HKD,
-  JPY,
-  KRW,
-  MXN,
-  MYR,
-  THB,
-  GBP,
-  RUB,
-  SGD,
-  USD,
-  VND,
-  XAU,
-  XAG,
-};
-
-const BANNERS = {
-  NOT_FOUND,
-  RECEIVE,
-  SEND,
-};
-
-export { BANNERS, LOGO, FLAGS };
+export const BANNERS = { NOT_FOUND, RECEIVE, SEND };

@@ -28,6 +28,7 @@ const FirstVault = ({ onVault, visible, ...others }) => {
       setForm({ currency: CURRENCY });
       fetchRates({ l10n, snackbar, store });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
 
   useEffect(() => {
@@ -45,10 +46,10 @@ const FirstVault = ({ onVault, visible, ...others }) => {
   return (
     <Viewport {...others} visible={visible}>
       <KeyboardAvoidingView behavior="position" contentContainerStyle={styles.form}>
-        <Text marginBottom="M" headline style={styles.text}>
+        <Text bold subtitle style={styles.text}>
           Your first account
         </Text>
-        <Text caption marginBottom="L" style={styles.text}>
+        <Text caption marginTop="S" marginBottom="L" style={styles.text}>
           {l10n.FIRST_VAULT_CAPTION}
         </Text>
         <FormVault form={form} onChange={setForm} showExchange={false} />

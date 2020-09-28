@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 export default {
   'en-EN': {
     ACCEPT: 'Accept',
@@ -9,25 +10,6 @@ export default {
     AUTHENTICATE: 'Authenticate',
 
     BALANCE: 'Balance',
-
-    // CATEGORIES: [
-    //   'Uncategorized',
-    //   'Food & Drinks',
-    //   'Salary',
-    //   'Education',
-    //   'Entertainment',
-    //   'Gift & Donations',
-    //   'Groceries',
-    //   'Health',
-    //   'Insurances',
-    //   'Internet',
-    //   'Bills',
-    //   'Investment',
-    //   'Laundry',
-    //   'Shopping',
-    //   'Transport',
-    //   'Travel',
-    // ],
 
     CANCEL: 'CANCEL',
     CATEGORIES: [
@@ -61,7 +43,7 @@ export default {
     ],
     CATEGORY: 'Category',
     CHOOSE_TRANSACTION_TYPE: 'Choose type of transaction',
-    CHOOSE_CURRENCY: 'Choose your base currency',
+    CHOOSE_CURRENCY: 'Your base currency',
     CITIES: 'Cities',
     CLEAR: 'Clear',
     CLONE: 'CLONE',
@@ -97,7 +79,6 @@ export default {
     DAY: 'day',
     DAY_NAMES: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
 
-    ELEVATOR_PITCH: 'Your private finance accounting running on your own blockchain.',
     ENTER_PIN: 'Enter your pin',
     ENTER_PIN_OR_FINGERPRINT: 'Enter your pin or fingerprint',
     ERROR_SERVICE_RATES: 'Something was wrong trying to get updated currencies rates. Check that you are online.',
@@ -105,7 +86,7 @@ export default {
     EXPENSES: 'Expenses',
 
     FIRST_VAULT_CAPTION:
-      'You are about to create your first account, choose the currency you use the most. Later you can create all the accounts you want and in all the available currencies.',
+      'Choose the currency you use the most. Later you can create all the accounts you want and in all the available currencies.',
     FORKED_CORRECTLY: 'All transactions have been successfully transferred to this device.',
     FROM: 'from',
 
@@ -158,10 +139,8 @@ export default {
     SETTINGS: 'Settings',
     SETTING_1_TITLE: 'Hide amounts',
     SETTING_1_CAPTION: 'Switch visibility just touching it',
-    SLOGAN: 'Blockchain personal ledger',
-    SYNC_RATES_SENTENCE_1: 'Last update on',
-    SYNC_RATES_CTA: 'here',
-    SYNC_RATES_SENTENCE_2: ' to update.',
+    SYNC_RATES_SENTENCE: 'Last update on',
+    SYNC_RATES_CTA: 'Update Rates',
 
     STATS: 'Stats',
     STATS_CAPTION: 'In this summary you can see a breakdown of your operations in the selected category.',
@@ -200,6 +179,9 @@ export default {
 
     WAIT: 'Just a moment...',
     WARNING: 'Warning',
+    WELCOME_TITLE: 'Take back control of your money.',
+    WELCOME_CAPTION: 'Your private finance accounting running on your own blockchain.',
+
     WIPE: 'WIPE',
     WITHOUT_TXS: 'No transactions',
 

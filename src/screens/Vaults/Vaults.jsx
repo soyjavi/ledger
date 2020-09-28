@@ -5,7 +5,7 @@ import { THEME } from 'reactor/common';
 import { Slider, Viewport } from 'reactor/components';
 
 import { C } from '@common';
-import { ButtonBack, Card, CARD_WIDTH, Header, Heading, ScrollView } from '@components';
+import { Card, CARD_WIDTH, Header, Heading, ScrollView, Summary } from '@components';
 import { useL10N, useNavigation, useStore } from '@context';
 
 import { VaultItem } from './components';
@@ -21,7 +21,7 @@ const Vaults = ({ visible, ...inherit }) => {
   const scrollview = useRef(null);
   const {
     overall,
-    settings: { visibleVaults = {} },
+    settings: { baseCurrency, visibleVaults = {} },
     updateSettings,
     vaults,
   } = useStore();
@@ -33,25 +33,26 @@ const Vaults = ({ visible, ...inherit }) => {
   useEffect(() => {
     if (visible) setCurrencies(query(vaults));
     else scrollview.current.scrollTo({ y: 0, animated: false });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
 
   const hasCurrencies = currencies.length > 0;
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
-      <Header highlight={scroll} onBack={scroll ? navigation.back : undefined} title={l10n.VAULTS} />
+      <Header highlight={scroll} onBack={navigation.back} title={l10n.VAULTS} />
 
       <ScrollView contentContainerStyle={styles.scroll} onScroll={(value) => setScroll(value)} ref={scrollview}>
+        <Summary currency={baseCurrency} title={l10n.VAULTS} />
         {hasCurrencies && (
           <>
-            <Heading marginBottom="XS" paddingHorizontal="M" small value={l10n.CURRENCIES} />
+            <Heading paddingHorizontal="M" value={l10n.CURRENCIES} />
             <Slider itemWidth={CARD_WIDTH} itemMargin={SPACE.S} style={styles.slider}>
               {currencies.map(({ base, currency, ...item }, index) => (
                 <Card
                   {...item}
-                  bold
                   currency={currency}
-                  disabled={currency !== selected}
+                  highlight={currency === selected}
                   key={currency}
                   marginLeft={index === 0 ? 'M' : undefined}
                   marginRight="S"
@@ -65,7 +66,7 @@ const Vaults = ({ visible, ...inherit }) => {
           </>
         )}
 
-        {hasCurrencies && <Heading paddingHorizontal="M" small value={l10n.VAULTS} />}
+        {hasCurrencies && <Heading paddingHorizontal="M" value={l10n.VAULTS} />}
         <>
           {filter(vaults, selected).map((vault) => (
             <VaultItem
@@ -78,17 +79,12 @@ const Vaults = ({ visible, ...inherit }) => {
           ))}
         </>
       </ScrollView>
-      <ButtonBack visible={visible} onPress={navigation.back} />
     </Viewport>
   );
 };
 
 Vaults.propTypes = {
   visible: bool,
-};
-
-Vaults.defaultProps = {
-  visible: true,
 };
 
 export default Vaults;

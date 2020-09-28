@@ -22,11 +22,10 @@ const LETTERS = {
 
 const NumKeyboard = ({ onPress }) => (
   <View style={styles.container}>
-    {KEYS.map((key) => (
+    {KEYS.map((key, index) => (
       <Touchable
-        key={key}
+        key={index}
         onPress={typeof key === 'number' ? () => onPress(key) : undefined}
-        rippleColor={COLOR.TEXT}
         style={styles.touchable}
       >
         <View style={styles.content}>
