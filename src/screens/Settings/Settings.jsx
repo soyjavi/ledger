@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import React, { useEffect, useRef, useState } from 'react';
 import { THEME } from 'reactor/common';
-import { Alert, Button, Image, Row, Text, Touchable, View, Viewport } from 'reactor/components';
+import { Alert, Button, Image, Row, Text, View, Viewport } from 'reactor/components';
 
 import { C } from '@common';
 import { Header, Heading, ScrollView, SliderCurrencies, Summary } from '@components';
@@ -44,8 +44,10 @@ export const Settings = ({ visible, ...inherit }) => {
 
   useEffect(() => {
     if (!visible) setCamera(false);
-    // else if (hasCamera === undefined) setHasCamera(askCamera());
-    else setQr('41B17C23-F1A6-46EE-9EEA-6D8AF3EADD33|backup');
+    else if (hasCamera === undefined) {
+      // setQr('secret|authorization');
+      setHasCamera(askCamera());
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
 
@@ -56,6 +58,7 @@ export const Settings = ({ visible, ...inherit }) => {
     }, TIMEOUT_CHECK_BLOCKCHAIN);
 
     return () => clearTimeout(timeout);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [qr]);
 
   const handleQRScanned = ({ data } = {}) => {
@@ -107,7 +110,7 @@ export const Settings = ({ visible, ...inherit }) => {
         />
 
         <ScrollView contentContainerStyle={styles.scroll} onScroll={setScroll} ref={scrollview}>
-          <Summary title={l10n.SETTINGS} />
+          <Summary currency={baseCurrency} title={l10n.SETTINGS} />
 
           <View marginBottom="XL" marginHorizontal="M">
             <Heading value={l10n.TRANSFER_TXS} />
