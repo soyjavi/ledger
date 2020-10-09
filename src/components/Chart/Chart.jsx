@@ -5,12 +5,14 @@ import { View } from 'react-native';
 import { THEME } from 'reactor/common';
 import { Col, Row, Text } from 'reactor/components';
 
+import { colorOpacity } from '@common';
+
 import { PriceFriendly } from '../PriceFriendly';
 import styles from './Chart.style';
 import { ChartHeading } from './components';
 import { calcHeight } from './modules';
 
-const { COLOR, FONT } = THEME;
+const { COLOR, FONT, OPACITY } = THEME;
 
 export const Chart = ({ captions, highlight, inverted = false, values = [], styleContainer, ...others }) => {
   const { color = COLOR.TEXT, currency, max, min, med: avg } = others;
@@ -52,7 +54,10 @@ export const Chart = ({ captions, highlight, inverted = false, values = [], styl
                 style={[
                   styles.bar,
                   value !== 0 && { height: `${calcHeight(value, { min, max })}%` },
-                  { backgroundColor: highlight !== index ? COLOR.BASE : color },
+                  {
+                    // backgroundColor: highlight !== index ? COLOR.BASE : color,
+                    backgroundColor: highlight !== index ? colorOpacity(color, OPACITY.S) : color,
+                  },
                 ]}
               />
             </View>
