@@ -54,7 +54,7 @@ const ELEVATION = {
   }),
 };
 
-export default {
+export const theme = {
   BORDER_RADIUS: 0,
 
   COLOR: {

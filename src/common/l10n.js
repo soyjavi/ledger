@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-export default {
+export const L10N = {
   'en-EN': {
     ACCEPT: 'Accept',
     ACCOUNT_NAME: 'Account name',

@@ -1,4 +1,4 @@
-export default (value = 0, currency = 'USD', baseCurrency = 'EUR', rates = {}, timestamp) => {
+export const exchange = (value = 0, currency = 'USD', baseCurrency = 'EUR', rates = {}, timestamp) => {
   if (currency === baseCurrency || value === 0) return value;
 
   const keys = Object.keys(rates);

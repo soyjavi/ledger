@@ -2,7 +2,7 @@ import { BackHandler, Platform } from 'react-native';
 
 const IS_ANDROID = Platform.OS === 'android';
 
-export default (subscribe = true, callback) => {
+export const onHardwareBackPress = (subscribe = true, callback) => {
   if (IS_ANDROID) {
     const method = subscribe ? 'addEventListener' : 'removeEventListener';
 
