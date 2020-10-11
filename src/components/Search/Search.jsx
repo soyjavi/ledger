@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-
 import React, { useEffect, useState } from 'react';
 import { KeyboardAvoidingView, TextInput } from 'react-native';
 import { THEME } from 'reactor/common';

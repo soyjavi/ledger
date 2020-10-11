@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-
 import React from 'react';
 import { Image } from 'react-native';
 import { Text, View } from 'reactor/components';

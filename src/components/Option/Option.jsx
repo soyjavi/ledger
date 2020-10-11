@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-
 import React from 'react';
 import { THEME } from 'reactor/common';
 import { Icon, Text, Touchable } from 'reactor/components';

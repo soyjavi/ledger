@@ -1,5 +1,4 @@
 import { node, number, string, bool } from 'prop-types';
-
 import React from 'react';
 import { THEME } from 'reactor/common';
 import { Col } from 'reactor/components';
