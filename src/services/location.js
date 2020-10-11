@@ -1,6 +1,6 @@
-import { C, objectToQueryString } from '@common';
+import { C } from '@common';
 
-import { apiCall } from './modules';
+import { apiCall, objectToQueryString } from './modules';
 
 const { ENDPOINT } = C;
 

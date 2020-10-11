@@ -4,11 +4,12 @@ import React from 'react';
 import { THEME } from 'reactor/common';
 import { Col, Row, Text, Touchable, View } from 'reactor/components';
 
-import { C, exchange, verboseMonth } from '@common';
+import { C, exchange } from '@common';
 import { useL10N, useStore } from '@context';
 
 import { CurrencyLogo } from '../CurrencyLogo';
 import { PriceFriendly } from '../PriceFriendly';
+import { verboseMonth } from './modules';
 import styles from './Summary.style';
 
 const { CURRENCY } = C;

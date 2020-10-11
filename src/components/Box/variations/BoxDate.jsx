@@ -4,10 +4,9 @@ import React from 'react';
 import { THEME } from 'reactor/common';
 import { Text } from 'reactor/components';
 
-import { verboseMonthShort } from '@common';
-
 import { Box } from '../Box';
 import styles from './BoxDate.style';
+import { verboseMonth } from './modules';
 
 const { COLOR, FONT } = THEME;
 
@@ -15,7 +14,7 @@ export const BoxDate = ({ l10n, timestamp, ...inherit }) => (
   <Box {...inherit} outlined style={styles.container}>
     <Text caption>{new Date(timestamp || null).getDate()}</Text>
     <Text color={COLOR.LIGHTEN} style={FONT.LEGEND}>
-      {verboseMonthShort(timestamp, l10n)}
+      {verboseMonth(timestamp, l10n)}
     </Text>
   </Box>
 );

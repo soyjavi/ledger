@@ -5,11 +5,11 @@ import { TextInput } from 'react-native';
 import { THEME } from 'reactor/common';
 import { Row, Text, View } from 'reactor/components';
 
-import { getLastRates } from '@common';
 import { useStore } from '@context';
 
 import { PriceFriendly } from '../PriceFriendly';
 import styles from './Input.style';
+import { getLastRates } from './modules';
 
 const { COLOR } = THEME;
 
@@ -34,8 +34,8 @@ export const Input = ({
 
   useEffect(() => {
     if (showExchange && currency && currency !== baseCurrency) {
-      const lastRates = getLastRates(rates);
-      setExchange(lastRates[currency]);
+      const latestRates = getLastRates(rates);
+      setExchange(latestRates[currency]);
     } else setExchange(undefined);
   }, [baseCurrency, currency, rates, showExchange]);
 
