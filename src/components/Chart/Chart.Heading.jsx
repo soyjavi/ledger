@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Row } from 'reactor/components';
 
-import { Heading } from '../../Heading';
-import { PriceFriendly } from '../../PriceFriendly';
+import { Heading } from '../Heading';
+import { PriceFriendly } from '../PriceFriendly';
 
 const ChartHeading = ({ inverted, max, min, title, ...others }) => (
   <Heading style={inverted ? { position: 'absolute', bottom: 0 } : undefined} value={title}>

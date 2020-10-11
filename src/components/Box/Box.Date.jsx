@@ -4,14 +4,14 @@ import React from 'react';
 import { THEME } from 'reactor/common';
 import { Text } from 'reactor/components';
 
-import { Box } from '../Box';
-import styles from './BoxDate.style';
+import { Box } from '.';
+import styles from './Box.style';
 import { verboseMonth } from './modules';
 
 const { COLOR, FONT } = THEME;
 
-export const BoxDate = ({ l10n, timestamp, ...inherit }) => (
-  <Box {...inherit} outlined style={styles.container}>
+const BoxDate = ({ l10n, timestamp, ...inherit }) => (
+  <Box {...inherit} outlined style={styles.date}>
     <Text caption>{new Date(timestamp || null).getDate()}</Text>
     <Text color={COLOR.LIGHTEN} style={FONT.LEGEND}>
       {verboseMonth(timestamp, l10n)}
@@ -20,6 +20,8 @@ export const BoxDate = ({ l10n, timestamp, ...inherit }) => (
 );
 
 BoxDate.propTypes = {
-  l10n: PropTypes.shape(),
+  l10n: PropTypes.shape({}),
   timestamp: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.shape()]),
 };
+
+export { BoxDate };

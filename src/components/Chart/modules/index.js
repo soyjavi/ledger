@@ -1,3 +1,1 @@
-import calcHeight from './calcHeight';
-
-export { calcHeight };
+export * from './calcHeight';

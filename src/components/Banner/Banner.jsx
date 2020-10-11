@@ -8,7 +8,7 @@ import { BANNERS } from '@assets';
 
 import styles from './Banner.style';
 
-export const Banner = ({ align, caption, children, image = BANNERS.NOT_FOUND, small, title, ...others }) => (
+const Banner = ({ align, caption, children, image = BANNERS.NOT_FOUND, small, title, ...others }) => (
   <View {...others} style={[styles.container, styles[align], others.style]}>
     <Image resizeMode="contain" source={image} style={[styles.image, small && styles.imageSmall]} />
     <View marginTop="L">
@@ -35,3 +35,5 @@ Banner.propTypes = {
   small: PropTypes.bool,
   title: PropTypes.string,
 };
+
+export { Banner };

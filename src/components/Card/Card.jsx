@@ -15,9 +15,7 @@ import styles, { CARD_WIDTH } from './Card.style';
 
 const { COLOR } = THEME;
 
-export { CARD_WIDTH };
-
-export const Card = ({ balance, currency, highlight, onPress, percentage, title = '', ...others }) => {
+const Card = ({ balance, currency, highlight, onPress, percentage, title = '', ...others }) => {
   const l10n = useL10N();
   const {
     settings: { baseCurrency },
@@ -86,3 +84,5 @@ Card.propTypes = {
   percentage: PropTypes.number,
   title: PropTypes.string,
 };
+
+export { Card, CARD_WIDTH };

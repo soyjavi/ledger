@@ -14,7 +14,7 @@ const { COLOR, ICON } = THEME;
 
 const DELAY_EVENT_SEARCH = 250;
 
-export const Search = ({ onFocus, onSearch, text, ...others }) => {
+const Search = ({ onFocus, onSearch, text, ...others }) => {
   const { IS_NATIVE } = useEnvironment();
   const l10n = useL10N();
 
@@ -72,3 +72,5 @@ Search.propTypes = {
   onSearch: PropTypes.func.isRequired,
   text: PropTypes.string,
 };
+
+export { Search };

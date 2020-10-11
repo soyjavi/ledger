@@ -15,7 +15,7 @@ const { COLOR } = THEME;
 
 const exchangeCaption = { caption: true, color: COLOR.LIGHTEN, maskAmount: false };
 
-export const Input = ({
+const Input = ({
   currency,
   keyboard = 'default',
   label,
@@ -123,3 +123,5 @@ Input.propTypes = {
   secure: PropTypes.bool,
   showExchange: PropTypes.bool,
 };
+
+export { Input };

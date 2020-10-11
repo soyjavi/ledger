@@ -13,7 +13,7 @@ const { COLOR, FONT } = THEME;
 
 const NO_SYMBOL = ['XAG', 'XAU'];
 
-export const CurrencyLogo = ({ currency, highlight, size = 'M', ...others }) => {
+const CurrencyLogo = ({ currency, highlight, size = 'M', ...others }) => {
   const symbol = NO_SYMBOL.includes(currency) ? undefined : currency && SYMBOL[currency];
 
   return (
@@ -43,3 +43,5 @@ CurrencyLogo.propTypes = {
   highlight: PropTypes.bool,
   size: PropTypes.bool,
 };
+
+export { CurrencyLogo };

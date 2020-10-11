@@ -8,13 +8,13 @@ import { Col, Row, Text } from 'reactor/components';
 import { colorOpacity } from '@common';
 
 import { PriceFriendly } from '../PriceFriendly';
+import { ChartHeading } from './Chart.Heading';
 import styles from './Chart.style';
-import { ChartHeading } from './components';
 import { calcHeight } from './modules';
 
 const { COLOR, FONT, OPACITY } = THEME;
 
-export const Chart = ({ captions, highlight, inverted = false, values = [], styleContainer, ...others }) => {
+const Chart = ({ captions, highlight, inverted = false, values = [], styleContainer, ...others }) => {
   const { color = COLOR.TEXT, currency, max, min, med: avg } = others;
   let firstValueIndex = values.findIndex((value) => value !== 0);
   if (firstValueIndex === -1) firstValueIndex = undefined;
@@ -96,3 +96,5 @@ Chart.propTypes = {
   title: PropTypes.string,
   values: PropTypes.arrayOf(PropTypes.number),
 };
+
+export { Chart };

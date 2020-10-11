@@ -87,10 +87,4 @@ TransactionItem.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-TransactionItem.defaultProps = {
-  location: undefined,
-  title: undefined,
-  type: EXPENSE,
-};
-
 export { TransactionItem };

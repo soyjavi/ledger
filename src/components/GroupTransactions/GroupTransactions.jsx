@@ -25,11 +25,6 @@ GroupTransactions.propTypes = {
   onPress: PropTypes.func,
   timestamp: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   txs: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  value: PropTypes.number,
-};
-
-GroupTransactions.defaultProps = {
-  value: 0,
 };
 
 export { GroupTransactions };

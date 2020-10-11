@@ -1,4 +1,4 @@
-import { bool, number, string } from 'prop-types';
+import PropTypes from 'prop-types';
 
 import React from 'react';
 import { THEME } from 'reactor/common';
@@ -9,7 +9,7 @@ import styles from './HorizontalChartItem.style';
 
 const { COLOR } = THEME;
 
-export const HorizontalChartItem = ({ color = COLOR.TEXT, currency, small, title, value, width = 100, ...others }) => (
+const HorizontalChartItem = ({ color = COLOR.TEXT, currency, small, title, value, width = 100, ...others }) => (
   <View {...others}>
     <Row align="end">
       <Text caption style={styles.text}>
@@ -25,10 +25,12 @@ export const HorizontalChartItem = ({ color = COLOR.TEXT, currency, small, title
 );
 
 HorizontalChartItem.propTypes = {
-  color: string,
-  currency: string,
-  small: bool,
-  title: string.isRequired,
-  value: number.isRequired,
-  width: number,
+  color: PropTypes.string,
+  currency: PropTypes.string,
+  small: PropTypes.bool,
+  title: PropTypes.string.isRequired,
+  value: PropTypes.number.isRequired,
+  width: PropTypes.number,
 };
+
+export { HorizontalChartItem };

@@ -11,7 +11,7 @@ import { queryCurrencies } from './modules';
 
 const { SPACE } = THEME;
 
-export const SliderCurrencies = ({ onChange, selected, ...others }) => {
+const SliderCurrencies = ({ onChange, selected, ...others }) => {
   const store = useStore();
 
   return (
@@ -34,3 +34,5 @@ SliderCurrencies.propTypes = {
   onChange: PropTypes.func.isRequired,
   selected: PropTypes.string,
 };
+
+export { SliderCurrencies };
