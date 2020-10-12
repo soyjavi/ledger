@@ -1,3 +1,1 @@
-const composeHeaders = ({ authorization, secret }) => ({ authorization, secret });
-
-export { composeHeaders };
+export const composeHeaders = ({ authorization, secret }) => ({ authorization, secret });
