@@ -3,7 +3,7 @@ import { C, exchange } from '@common';
 const { STATS_MONTHS_LIMIT } = C;
 const KEYS = ['expenses', 'incomes', 'progression', 'today'];
 
-export default ({ baseCurrency, rates, vaults = [] }) => {
+export const calcOverall = ({ baseCurrency, rates, vaults = [] }) => {
   const currentMonth = {
     expenses: 0,
     incomes: 0,

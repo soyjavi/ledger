@@ -1,5 +1,4 @@
-import { node } from 'prop-types';
-
+import PropTypes from 'prop-types';
 import React, { useContext, useReducer, createContext } from 'react';
 
 import { C } from '@common';
@@ -61,13 +60,9 @@ const NavigationProvider = ({ children }) => {
 };
 
 NavigationProvider.propTypes = {
-  children: node,
+  children: PropTypes.node,
 };
 
-NavigationProvider.defaultProps = {
-  children: undefined,
-};
+const useNavigation = () => useContext(NavigationContext);
 
-export { NavigationProvider };
-
-export const useNavigation = () => useContext(NavigationContext);
+export { useNavigation, NavigationProvider };

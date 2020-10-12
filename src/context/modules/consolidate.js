@@ -1,7 +1,7 @@
-import calcOverall from './calcOverall';
-import calcVault from './calcVault';
+import { calcOverall } from './calcOverall';
+import { calcVault } from './calcVault';
 
-export default ({ rates = {}, settings: { baseCurrency } = {}, ...blockchain } = {}) => {
+export const consolidate = ({ rates = {}, settings: { baseCurrency } = {}, ...blockchain } = {}) => {
   const txs = (blockchain.txs || []).slice(1).map(({ data = {}, hash, timestamp }) => ({ timestamp, ...data, hash }));
   const vaults = (blockchain.vaults || []).slice(1).map(({ data = {}, hash, timestamp }) =>
     calcVault({

@@ -1,9 +1,8 @@
-import { node } from 'prop-types';
-import { AsyncBlockchain } from 'vanilla-blockchain';
-import { AsyncStorage } from 'vanilla-storage';
-
+import PropTypes from 'prop-types';
 import React, { createContext, useContext, useLayoutEffect, useState } from 'react';
 import { useFingerprint } from 'reactor/hooks';
+import { AsyncBlockchain } from 'vanilla-blockchain';
+import { AsyncStorage } from 'vanilla-storage';
 
 import { C } from '@common';
 import { ServiceNode } from '@services';
@@ -143,9 +142,9 @@ const StoreProvider = ({ children }) => {
 };
 
 StoreProvider.propTypes = {
-  children: node.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
-export { StoreProvider };
+const useStore = () => useContext(StoreContext);
 
-export const useStore = () => useContext(StoreContext);
+export { StoreProvider, useStore };

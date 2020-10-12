@@ -1,5 +1,4 @@
-import { node } from 'prop-types';
-
+import PropTypes from 'prop-types';
 import React, { useContext, useReducer, createContext } from 'react';
 import { THEME } from 'reactor/common';
 import { Snackbar } from 'reactor/components';
@@ -51,9 +50,9 @@ const SnackBarProvider = ({ children }) => {
 };
 
 SnackBarProvider.propTypes = {
-  children: node.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 const useSnackBar = () => useContext(SnackBarContext);
 
-export { useSnackBar, SnackBarProvider };
+export { SnackBarProvider, useSnackBar };
