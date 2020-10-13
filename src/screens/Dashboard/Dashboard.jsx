@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-
 import React, { useEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Button, Slider, Viewport } from 'reactor/components';
@@ -32,7 +31,7 @@ const buttonProps = {
   iconFamily: ICON.FAMILY,
 };
 
-export const Dashboard = ({ visible, ...inherit }) => {
+const Dashboard = ({ visible, ...inherit }) => {
   const l10n = useL10N();
   const navigation = useNavigation();
   const store = useStore();
@@ -147,3 +146,5 @@ Dashboard.propTypes = {
   backward: PropTypes.bool,
   visible: PropTypes.bool,
 };
+
+export { Dashboard };

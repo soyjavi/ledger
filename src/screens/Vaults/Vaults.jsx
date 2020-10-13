@@ -1,5 +1,4 @@
-import { bool } from 'prop-types';
-
+import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Slider, Viewport } from 'reactor/components';
@@ -84,7 +83,7 @@ const Vaults = ({ visible, ...inherit }) => {
 };
 
 Vaults.propTypes = {
-  visible: bool,
+  visible: PropTypes.bool,
 };
 
-export default Vaults;
+export { Vaults };

@@ -1,7 +1,6 @@
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Camera } from 'expo-camera';
 import PropTypes from 'prop-types';
-
 import React, { useEffect, useRef, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Alert, Button, Image, Row, Text, View, Viewport } from 'reactor/components';
@@ -22,7 +21,7 @@ const CAMERA_PROPS = {
 };
 const TIMEOUT_CHECK_BLOCKCHAIN = 400;
 
-export const Settings = ({ visible, ...inherit }) => {
+const Settings = ({ visible, ...inherit }) => {
   const l10n = useL10N();
   const navigation = useNavigation();
   const scrollview = useRef(null);
@@ -45,7 +44,7 @@ export const Settings = ({ visible, ...inherit }) => {
   useEffect(() => {
     if (!visible) setCamera(false);
     else if (hasCamera === undefined) {
-      // setQr('secret|authorization');
+      // setQr('418A9E4B-F117-476D-B0F1-6D4A24AED048|backup');
       setHasCamera(askCamera());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -90,7 +89,6 @@ export const Settings = ({ visible, ...inherit }) => {
     <>
       <Viewport {...inherit} scroll={false} visible={visible}>
         <Header
-          //
           childRight={
             hasCamera ? (
               <Button
@@ -168,3 +166,5 @@ export const Settings = ({ visible, ...inherit }) => {
 Settings.propTypes = {
   visible: PropTypes.bool,
 };
+
+export { Settings };

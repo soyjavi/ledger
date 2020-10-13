@@ -1,5 +1,3 @@
-import ItemGroupCategories from './ItemGroupCategories';
-import Locations from './Locations';
-import SliderMonths from './SliderMonths';
-
-export { ItemGroupCategories, Locations, SliderMonths };
+export * from './ItemGroupCategories';
+export * from './Locations';
+export * from './SliderMonths';

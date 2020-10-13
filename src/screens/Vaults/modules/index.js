@@ -1,4 +1,2 @@
-import filter from './filter';
-import query from './query';
-
-export { filter, query };
+export * from './filter';
+export * from './query';

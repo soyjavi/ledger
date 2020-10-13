@@ -2,7 +2,7 @@ import { LAYOUT } from 'reactor/common';
 
 import { groupTxsByDate } from '@common';
 
-export const onScroll = ({ dataSource, scrollQuery, setScroll, setScrollQuery, setTxs }, scroll, y) => {
+const onScroll = ({ dataSource, scrollQuery, setScroll, setScrollQuery, setTxs }, scroll, y) => {
   setScroll(scroll);
   if (!scrollQuery && y > LAYOUT.VIEWPORT.H / 2) {
     setScrollQuery(true);
@@ -10,7 +10,7 @@ export const onScroll = ({ dataSource, scrollQuery, setScroll, setScrollQuery, s
   }
 };
 
-export const query = (txs = [], scroll = false) =>
+const query = (txs = [], scroll = false) =>
   groupTxsByDate(
     txs
       .slice()
@@ -18,7 +18,7 @@ export const query = (txs = [], scroll = false) =>
       .slice(0, scroll ? 256 : 16),
   );
 
-export const search = (query, txs = [], l10n) =>
+const search = (query, txs = [], l10n) =>
   groupTxsByDate(
     txs
       .slice()
@@ -31,3 +31,5 @@ export const search = (query, txs = [], l10n) =>
       })
       .slice(0, 16),
   );
+
+export { onScroll, query, search };

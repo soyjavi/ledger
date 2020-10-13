@@ -1,5 +1,4 @@
-import { bool, func } from 'prop-types';
-
+import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Button, Dialog, Row, Text } from 'reactor/components';
@@ -12,7 +11,7 @@ const { DELAY_PRESS_MS, SCREEN } = C;
 const { COLOR, MOTION } = THEME;
 const INITIAL_STATE = { currency: undefined };
 
-export const DialogVault = ({ onClose, visible }) => {
+const DialogVault = ({ onClose, visible }) => {
   const navigation = useNavigation();
   const l10n = useL10N();
   const {
@@ -64,6 +63,8 @@ export const DialogVault = ({ onClose, visible }) => {
 };
 
 DialogVault.propTypes = {
-  onClose: func.isRequired,
-  visible: bool,
+  onClose: PropTypes.func.isRequired,
+  visible: PropTypes.bool,
 };
+
+export { DialogVault };

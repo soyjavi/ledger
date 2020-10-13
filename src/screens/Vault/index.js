@@ -1,1 +1,1 @@
-export { default } from './Vault';
+export * from './Vault';

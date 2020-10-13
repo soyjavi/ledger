@@ -1,1 +1,1 @@
-export { default } from './SliderMonths';
+export * from './SliderMonths';

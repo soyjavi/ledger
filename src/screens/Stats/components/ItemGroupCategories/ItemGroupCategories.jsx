@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import { THEME } from 'reactor/common';
@@ -85,4 +84,4 @@ ItemGroupCategories.propTypes = {
   type: PropTypes.number.isRequired,
 };
 
-export default ItemGroupCategories;
+export { ItemGroupCategories };

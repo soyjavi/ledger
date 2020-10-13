@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-
 import React, { useEffect, useRef, useState } from 'react';
 import { Viewport } from 'reactor/components';
 
@@ -20,7 +19,7 @@ const {
   },
 } = C;
 
-export const Stats = ({ visible, ...inherit }) => {
+const Stats = ({ visible, ...inherit }) => {
   const scrollview = useRef(null);
   const navigation = useNavigation();
   const l10n = useL10N();
@@ -129,3 +128,5 @@ export const Stats = ({ visible, ...inherit }) => {
 Stats.propTypes = {
   visible: PropTypes.bool,
 };
+
+export { Stats };

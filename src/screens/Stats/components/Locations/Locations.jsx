@@ -1,5 +1,4 @@
-import { array, arrayOf, number, shape, string } from 'prop-types';
-
+import PropTypes from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 
@@ -59,11 +58,11 @@ const Locations = ({ cities = {}, color, countries = {}, points = [], precission
 };
 
 Locations.propTypes = {
-  cities: shape({}),
-  color: string,
-  countries: shape({}),
-  points: arrayOf(array),
-  precission: number,
+  cities: PropTypes.shape({}),
+  color: PropTypes.string,
+  countries: PropTypes.shape({}),
+  points: PropTypes.arrayOf(PropTypes.array),
+  precission: PropTypes.number,
 };
 
-export default Locations;
+export { Locations };

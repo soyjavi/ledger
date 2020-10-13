@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-
 import React, { useState, useLayoutEffect } from 'react';
 import { THEME } from 'reactor/common';
 

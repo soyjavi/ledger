@@ -1,5 +1,4 @@
-import { func, number, shape, string } from 'prop-types';
-
+import PropTypes from 'prop-types';
 import React from 'react';
 import { THEME } from 'reactor/common';
 import { Slider } from 'reactor/components';
@@ -65,11 +64,11 @@ const FormTransaction = ({ currency, form = {}, onChange, type, vault: { current
 };
 
 FormTransaction.propTypes = {
-  currency: string,
-  form: shape({}).isRequired,
-  onChange: func.isRequired,
-  type: number,
-  vault: shape({}).isRequired,
+  currency: PropTypes.string,
+  form: PropTypes.shape({}).isRequired,
+  onChange: PropTypes.func.isRequired,
+  type: PropTypes.number,
+  vault: PropTypes.shape({}).isRequired,
 };
 
 export default FormTransaction;

@@ -1,1 +1,1 @@
-export { default } from './ItemGroupCategories';
+export * from './ItemGroupCategories';
