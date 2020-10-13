@@ -40,7 +40,7 @@ const CurrencyLogo = ({ currency, highlight, size = 'M', ...others }) => {
 CurrencyLogo.propTypes = {
   currency: PropTypes.string,
   highlight: PropTypes.bool,
-  size: PropTypes.bool,
+  size: PropTypes.string,
 };
 
 export { CurrencyLogo };
