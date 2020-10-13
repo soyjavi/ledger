@@ -38,18 +38,19 @@ module.exports = {
       {
         groups: ['builtin', 'external', 'internal'],
         pathGroups: [
-          {
-            pattern: '{react,react-native,reactor/**}',
-            group: 'internal',
-            position: 'before',
-          },
+          // {
+          //   pattern: '{react,react-native,reactor/**}',
+          //   group: 'internal',
+          //   position: 'before',
+          // },
           {
             pattern: '{@**,@**/**}',
             group: 'internal',
             position: 'before',
           },
         ],
-        pathGroupsExcludedImportTypes: ['react', 'react-native', 'reactor'],
+        // pathGroupsExcludedImportTypes: ['react', 'react-native', 'reactor'],
+        pathGroupsExcludedImportTypes: ['@'],
         'newlines-between': 'always',
         alphabetize: {
           order: 'asc',

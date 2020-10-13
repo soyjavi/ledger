@@ -16,7 +16,7 @@ const { COLOR, ICON, MOTION, SPACE } = THEME;
 
 const STATE = { UNKNOWN: 0, FETCHING: 1, UNSYNCED: 2, SYNCING: 3, SYNCED: 4 };
 
-export const Sync = () => {
+const Sync = () => {
   const { connected } = useConnection();
   const { stack = [] } = useNavigation();
   const l10n = useL10N();
@@ -64,7 +64,7 @@ export const Sync = () => {
           type="spring"
         >
           <Text bold caption color={COLOR.BACKGROUND}>
-            {!connected ? 'Not connected' : 'Wait a moment...'}
+            {!connected ? l10n.NOT_CONNECTED : l10n.WAIT}
           </Text>
         </Motion>
       )}
@@ -94,3 +94,5 @@ export const Sync = () => {
     </>
   );
 };
+
+export { Sync };

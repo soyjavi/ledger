@@ -1,5 +1,4 @@
 import color from 'color';
-
 import { THEME } from 'reactor/common';
 
 const { OPACITY } = THEME;

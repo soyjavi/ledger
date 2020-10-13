@@ -6,7 +6,7 @@ const blocksToSync = (blockchain = [], latestHash) => blockchain.slice(findHashI
 
 const existsHash = (blockchain = [], latestHash) => findHashIndex(blockchain, latestHash) > 0;
 
-export const getSyncStatus = async ({ snackbar, store }) => {
+const getSyncStatus = async ({ snackbar, store }) => {
   const {
     blockchain = {},
     latestHash: { txs: txLatestHash, vaults: vaultLatestHash } = {},
@@ -37,7 +37,7 @@ export const getSyncStatus = async ({ snackbar, store }) => {
   return synced;
 };
 
-export const syncNode = async ({ store, snackbar }) => {
+const syncNode = async ({ store, snackbar }) => {
   const {
     settings,
     blockchain: { vaults = [], txs = [] },
@@ -54,3 +54,5 @@ export const syncNode = async ({ store, snackbar }) => {
   }
   return await getSyncStatus({ snackbar, store });
 };
+
+export { getSyncStatus, syncNode };
