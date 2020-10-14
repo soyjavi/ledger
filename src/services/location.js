@@ -1,12 +1,22 @@
 import { C } from '@common';
 
-import { apiCall, objectToQueryString } from './modules';
+import { objectToQueryString } from './modules';
 
-const { ENDPOINT } = C;
+const { MAPBOX, ENDPOINT } = C;
+
+const PARAMETERS = 'language=en&limit=1&types=place';
 
 export const ServiceLocation = {
   getPlace: async ({ latitude, longitude }) => {
-    const { place } = await apiCall({ service: `place?latitude=${latitude}&longitude=${longitude}` });
+    const url = `${MAPBOX.URL}/${longitude},${latitude}.json?${PARAMETERS}&access_token=${MAPBOX.ACCESS_TOKEN}`;
+    console.log({ url });
+    const response = await fetch(url);
+    let place;
+
+    if (response) {
+      const { features = [] } = (await response.json()) || {};
+      place = features[0] ? features[0].place_name_en : 'Unknown Place';
+    }
 
     return place;
   },
