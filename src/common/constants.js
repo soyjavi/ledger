@@ -77,6 +77,10 @@ export const C = {
 
   LANGUAGE: 'en-EN',
 
+  MAPBOX: {
+    ACCESS_TOKEN: 'pk.eyJ1Ijoic295amF2aSIsImEiOiJjanBvc2lwMzcwM3A1NDJvNmJjNWxibTFuIn0.p81CI-8_bPN5eAROb3-EjQ',
+    URL: 'https://api.mapbox.com/geocoding/v5/mapbox.places',
+  },
   MS_IN_DAY,
   MS_IN_WEEK,
 
