@@ -76,7 +76,7 @@ const DialogTransaction = (props = {}) => {
       </Row>
 
       <Form {...props} {...state} type={type} onChange={(value) => setState({ ...state, ...value })} />
-      {connected && type !== TRANSFER && (
+      {type !== TRANSFER && (
         <HeatMap
           caption={place || l10n.LOADING_PLACE}
           color={CURRENCY_COLOR[props.currency]}
