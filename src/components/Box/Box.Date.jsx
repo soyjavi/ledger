@@ -3,7 +3,7 @@ import React from 'react';
 import { THEME } from 'reactor/common';
 import { Text } from 'reactor/components';
 
-import { Box } from '.';
+import { Box } from './Box';
 import styles from './Box.style';
 import { verboseMonth } from './modules';
 
