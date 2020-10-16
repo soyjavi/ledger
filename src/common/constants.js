@@ -61,7 +61,7 @@ export const C = {
 
   DELAY_PRESS_MS: 500,
 
-  ENDPOINT: IS_DEV ? 'http://localhost:8080' : 'https://ledger-node.glitch.me',
+  ENDPOINT: IS_DEV ? 'http://192.168.1.60:8080' : 'https://ledger-node.glitch.me',
 
   FIXED: {
     BTC: 6,
@@ -79,6 +79,12 @@ export const C = {
 
   MAPBOX: {
     ACCESS_TOKEN: 'pk.eyJ1Ijoic295amF2aSIsImEiOiJjanBvc2lwMzcwM3A1NDJvNmJjNWxibTFuIn0.p81CI-8_bPN5eAROb3-EjQ',
+    API: 'https://api.mapbox.com',
+    SERVICE: {
+      PLACES: 'geocoding/v5/mapbox.places',
+      STATIC_MAP: 'styles/v1/mapbox/light-v9/static',
+      STATIC_MAP_DARK: 'styles/v1/mapbox/dark-v9/static',
+    },
     URL: 'https://api.mapbox.com/geocoding/v5/mapbox.places',
   },
   MS_IN_DAY,
