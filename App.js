@@ -1,5 +1,4 @@
 import * as Font from 'expo-font';
-
 import React, { useEffect, useState } from 'react';
 import { NativeModules, View } from 'react-native';
 

@@ -1,11 +1,10 @@
 import PropTypes from 'prop-types';
-
 import React from 'react';
 import { View } from 'react-native';
 import { THEME } from 'reactor/common';
 import { Row, Text, Touchable } from 'reactor/components';
 
-import { exchange } from '@common';
+import { C, exchange } from '@common';
 import { useL10N, useStore } from '@context';
 
 import { Box } from '../Box';
@@ -13,11 +12,10 @@ import { CurrencyLogo } from '../CurrencyLogo';
 import { PriceFriendly } from '../PriceFriendly';
 import styles, { CARD_WIDTH } from './Card.style';
 
+const { CURRENCY } = C;
 const { COLOR } = THEME;
 
-export { CARD_WIDTH };
-
-export const Card = ({ balance, currency, highlight, onPress, percentage, title = '', ...others }) => {
+const Card = ({ balance = 0, currency = CURRENCY, highlight, onPress, percentage, title = '', ...others }) => {
   const l10n = useL10N();
   const {
     settings: { baseCurrency },
@@ -78,11 +76,13 @@ export const Card = ({ balance, currency, highlight, onPress, percentage, title 
 };
 
 Card.propTypes = {
-  balance: PropTypes.number.isRequired,
-  currency: PropTypes.string.isRequired,
+  balance: PropTypes.number,
+  currency: PropTypes.string,
   currentMonth: PropTypes.shape({}),
   highlight: PropTypes.bool,
   onPress: PropTypes.func.isRequired,
   percentage: PropTypes.number,
   title: PropTypes.string,
 };
+
+export { Card, CARD_WIDTH };

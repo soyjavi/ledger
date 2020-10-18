@@ -1,32 +1,19 @@
 import PropTypes from 'prop-types';
-
 import React from 'react';
 import { THEME } from 'reactor/common';
 import { Col, Row, Text, Touchable, View } from 'reactor/components';
 
-import { C, exchange, verboseMonth } from '@common';
+import { C, exchange } from '@common';
 import { useL10N, useStore } from '@context';
 
 import { CurrencyLogo } from '../CurrencyLogo';
 import { PriceFriendly } from '../PriceFriendly';
+import { verboseMonth } from './modules';
+import { SummaryBox } from './Summary.Box';
 import styles from './Summary.style';
 
 const { CURRENCY } = C;
 const { COLOR } = THEME;
-
-const BoxSummary = ({ caption, value, ...inherit }) => (
-  <Col align="center" marginHorizontal="S">
-    <Text caption color={COLOR.LIGHTEN} numberOfLines={1}>
-      {caption.toUpperCase()}
-    </Text>
-    <PriceFriendly {...inherit} caption fixed={value >= 1000 ? 0 : undefined} value={value} />
-  </Col>
-);
-
-BoxSummary.propTypes = {
-  caption: PropTypes.string.isRequired,
-  value: PropTypes.number.isRequired,
-};
 
 const Summary = ({ children, currency = CURRENCY, currentBalance, currentMonth = {}, title = '' }) => {
   const l10n = useL10N();
@@ -69,10 +56,10 @@ const Summary = ({ children, currency = CURRENCY, currentBalance, currentMonth =
 
         {showCurrentBalance && (
           <Row marginTop="M" justify="space" paddingHorizontal="S">
-            <BoxSummary caption={verboseMonth(new Date(), l10n)} currency="%" operator value={progressionPercentage} />
-            <BoxSummary caption={l10n.INCOMES} currency={baseCurrency} value={incomes} />
-            <BoxSummary caption={l10n.EXPENSES} currency={baseCurrency} value={expenses} />
-            <BoxSummary caption={l10n.TODAY} currency={baseCurrency} operator value={today} />
+            <SummaryBox caption={verboseMonth(new Date(), l10n)} currency="%" operator value={progressionPercentage} />
+            <SummaryBox caption={l10n.INCOMES} currency={baseCurrency} value={incomes} />
+            <SummaryBox caption={l10n.EXPENSES} currency={baseCurrency} value={expenses} />
+            <SummaryBox caption={l10n.TODAY} currency={baseCurrency} operator value={today} />
           </Row>
         )}
       </Col>

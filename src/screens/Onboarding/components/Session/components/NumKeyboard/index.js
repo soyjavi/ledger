@@ -1,1 +1,1 @@
-export { default } from './NumKeyboard';
+export * from './NumKeyboard';

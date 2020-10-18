@@ -1,5 +1,4 @@
-import { node } from 'prop-types';
-
+import PropTypes from 'prop-types';
 import React, { useCallback, useContext, useEffect, useLayoutEffect, useState, createContext } from 'react';
 import { useEnvironment } from 'reactor/hooks';
 
@@ -52,9 +51,9 @@ const ConnectionProvider = ({ children }) => {
 };
 
 ConnectionProvider.propTypes = {
-  children: node.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
-export { ConnectionProvider };
+const useConnection = () => useContext(ConnectionContext);
 
-export const useConnection = () => useContext(ConnectionContext);
+export { ConnectionProvider, useConnection };

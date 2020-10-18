@@ -1,18 +1,19 @@
 import PropTypes from 'prop-types';
-
 import React from 'react';
 import { View } from 'react-native';
 import { THEME } from 'reactor/common';
 import { Col, Row, Text } from 'reactor/components';
 
+import { colorOpacity } from '@common';
+
 import { PriceFriendly } from '../PriceFriendly';
+import { ChartHeading } from './Chart.Heading';
 import styles from './Chart.style';
-import { ChartHeading } from './components';
 import { calcHeight } from './modules';
 
-const { COLOR, FONT } = THEME;
+const { COLOR, FONT, OPACITY } = THEME;
 
-export const Chart = ({ captions, highlight, inverted = false, values = [], styleContainer, ...others }) => {
+const Chart = ({ captions, highlight, inverted = false, values = [], styleContainer, ...others }) => {
   const { color = COLOR.TEXT, currency, max, min, med: avg } = others;
   let firstValueIndex = values.findIndex((value) => value !== 0);
   if (firstValueIndex === -1) firstValueIndex = undefined;
@@ -52,7 +53,10 @@ export const Chart = ({ captions, highlight, inverted = false, values = [], styl
                 style={[
                   styles.bar,
                   value !== 0 && { height: `${calcHeight(value, { min, max })}%` },
-                  { backgroundColor: highlight !== index ? COLOR.BASE : color },
+                  {
+                    // backgroundColor: highlight !== index ? COLOR.BASE : color,
+                    backgroundColor: highlight !== index ? colorOpacity(color, OPACITY.S) : color,
+                  },
                 ]}
               />
             </View>
@@ -91,3 +95,5 @@ Chart.propTypes = {
   title: PropTypes.string,
   values: PropTypes.arrayOf(PropTypes.number),
 };
+
+export { Chart };

@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-
 import React, { useState, useEffect } from 'react';
 import { KeyboardAvoidingView } from 'react-native';
 import { Button, Text, Viewport } from 'reactor/components';

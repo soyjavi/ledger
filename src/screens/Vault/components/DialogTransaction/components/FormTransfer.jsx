@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-
 import React from 'react';
 import { THEME } from 'reactor/common';
 import { Slider } from 'reactor/components';
@@ -92,10 +91,6 @@ FormTransaction.propTypes = {
   form: PropTypes.shape({}).isRequired,
   onChange: PropTypes.func.isRequired,
   vault: PropTypes.shape({}).isRequired,
-};
-
-FormTransaction.defaultProps = {
-  destination: undefined,
 };
 
 export default FormTransaction;

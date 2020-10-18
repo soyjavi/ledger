@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-
 import React, { useEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Button, Dialog, Row, Text } from 'reactor/components';
@@ -30,7 +29,7 @@ const INITIAL_STATE_LOCATION = { coords: undefined, place: undefined };
 
 const DialogTransaction = (props = {}) => {
   const { onClose, visible, ...inherit } = props;
-  const { connected } = useConnection();
+  const { connected, online } = useConnection();
   const l10n = useL10N();
   const snackbar = useSnackBar();
   const store = useStore();
@@ -77,7 +76,7 @@ const DialogTransaction = (props = {}) => {
       </Row>
 
       <Form {...props} {...state} type={type} onChange={(value) => setState({ ...state, ...value })} />
-      {connected && type !== TRANSFER && (
+      {online && type !== TRANSFER && (
         <HeatMap
           caption={place || l10n.LOADING_PLACE}
           color={CURRENCY_COLOR[props.currency]}

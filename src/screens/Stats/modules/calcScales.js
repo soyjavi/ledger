@@ -1,4 +1,6 @@
-import { C, median } from '@common';
+import { C } from '@common';
+
+import { median } from './median';
 
 const { STATS_MONTHS_LIMIT } = C;
 

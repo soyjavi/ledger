@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-
 import React, { useEffect } from 'react';
 import { THEME } from 'reactor/common';
 import { Button, Col, Motion, Row, Text } from 'reactor/components';
@@ -9,11 +8,9 @@ import { onHardwareBackPress } from '@common';
 import { CurrencyLogo } from '../CurrencyLogo';
 import styles, { HEADER_HEIGHT } from './Header.style';
 
-export { HEADER_HEIGHT };
-
 const { COLOR, ICON, MOTION, UNIT } = THEME;
 
-export const Header = ({ childLeft, childRight, currency, highlight = false, onBack, title }) => {
+const Header = ({ childLeft, childRight, currency, highlight = false, onBack, title }) => {
   useEffect(() => {
     onHardwareBackPress(onBack !== undefined, onBack);
     return () => onHardwareBackPress(false);
@@ -62,3 +59,5 @@ Header.propTypes = {
   onBack: PropTypes.func,
   title: PropTypes.string,
 };
+
+export { Header, HEADER_HEIGHT };

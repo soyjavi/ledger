@@ -1,4 +1,4 @@
-export default (vaults = [], currency, order = true) =>
+export const filter = (vaults = [], currency, order = true) =>
   vaults
     .filter((vault) => !currency || currency === vault.currency)
     .sort((a, b) => {

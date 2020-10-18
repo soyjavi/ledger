@@ -1,5 +1,4 @@
-import { node, number, string, bool } from 'prop-types';
-
+import PropTypes from 'prop-types';
 import React from 'react';
 import { THEME } from 'reactor/common';
 import { Col } from 'reactor/components';
@@ -28,11 +27,11 @@ const Box = ({ borderRadius = BORDER_RADIUS, children, color = COLOR.BASE, outli
 );
 
 Box.propTypes = {
-  borderRadius: number,
-  children: node,
-  color: string,
-  opacity: number,
-  outlined: bool,
+  borderRadius: PropTypes.number,
+  children: PropTypes.node,
+  color: PropTypes.string,
+  opacity: PropTypes.number,
+  outlined: PropTypes.bool,
 };
 
 export { Box };

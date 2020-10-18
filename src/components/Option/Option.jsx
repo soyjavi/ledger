@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-
 import React from 'react';
 import { THEME } from 'reactor/common';
 import { Icon, Text, Touchable } from 'reactor/components';
@@ -10,20 +9,7 @@ import styles, { OPTION_SIZE } from './Option.style';
 
 const { BORDER_RADIUS, COLOR, FONT, ICON, SPACE } = THEME;
 
-export { OPTION_SIZE };
-
-export const Option = ({
-  caption,
-  currency,
-  children,
-  disabled,
-  icon,
-  image,
-  onPress,
-  selected,
-  legend,
-  ...inherit
-}) => {
+const Option = ({ caption, currency, children, disabled, icon, image, onPress, selected, legend, ...inherit }) => {
   const colorContent = disabled ? COLOR.LIGHTEN : selected ? COLOR.BACKGROUND : COLOR.TEXT;
 
   return (
@@ -77,3 +63,5 @@ Option.propTypes = {
   onPress: PropTypes.func,
   selected: PropTypes.bool,
 };
+
+export { Option, OPTION_SIZE };

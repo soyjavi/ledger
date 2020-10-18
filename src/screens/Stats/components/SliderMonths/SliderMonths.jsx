@@ -1,5 +1,4 @@
-import { number, func } from 'prop-types';
-
+import PropTypes from 'prop-types';
 import React, { useEffect, useRef } from 'react';
 import { THEME } from 'reactor/common';
 import { Text, Slider, View } from 'reactor/components';
@@ -49,10 +48,10 @@ const SliderMonths = ({ index, onChange, ...others }) => {
 };
 
 SliderMonths.propTypes = {
-  index: number,
-  month: number,
-  onChange: func,
-  year: number,
+  index: PropTypes.number,
+  month: PropTypes.number,
+  onChange: PropTypes.func,
+  year: PropTypes.number,
 };
 
 SliderMonths.defaultProps = {
@@ -62,4 +61,4 @@ SliderMonths.defaultProps = {
   year: 0,
 };
 
-export default SliderMonths;
+export { SliderMonths };

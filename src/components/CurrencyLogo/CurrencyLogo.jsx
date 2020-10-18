@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-
 import React from 'react';
 import { THEME } from 'reactor/common';
 import { Text, View } from 'reactor/components';
@@ -13,7 +12,7 @@ const { COLOR, FONT } = THEME;
 
 const NO_SYMBOL = ['XAG', 'XAU'];
 
-export const CurrencyLogo = ({ currency, highlight, size = 'M', ...others }) => {
+const CurrencyLogo = ({ currency, highlight, size = 'M', ...others }) => {
   const symbol = NO_SYMBOL.includes(currency) ? undefined : currency && SYMBOL[currency];
 
   return (
@@ -41,5 +40,7 @@ export const CurrencyLogo = ({ currency, highlight, size = 'M', ...others }) => 
 CurrencyLogo.propTypes = {
   currency: PropTypes.string,
   highlight: PropTypes.bool,
-  size: PropTypes.bool,
+  size: PropTypes.string,
 };
+
+export { CurrencyLogo };

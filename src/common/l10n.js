@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-export default {
+export const L10N = {
   'en-EN': {
     ACCEPT: 'Accept',
     ACCOUNT_NAME: 'Account name',
@@ -120,6 +120,7 @@ export default {
     NAME: 'Name',
     NEW: 'New',
     NO_TRANSACTIONS: "You don't have any transaction.",
+    NOT_CONNECTED: 'Not connected',
 
     ONBOARDING_COMPLETED_TITLE: 'You did it!',
     ONBOARDING_COMPLETED_CAPTION: 'Successfully created account',

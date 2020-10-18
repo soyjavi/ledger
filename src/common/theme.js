@@ -54,7 +54,7 @@ const ELEVATION = {
   }),
 };
 
-export default {
+export const theme = {
   BORDER_RADIUS: 0,
 
   COLOR: {
@@ -155,16 +155,15 @@ export default {
   },
 
   MOTION: {
-    EXPAND: 250,
-    COLLAPSE: 200,
-
+    // EXPAND: 250,
+    // COLLAPSE: 200,
     // TYPE: 'standard',
     DEFAULTS: {
-      // friction: undefined,
-      // tension: undefined,
-      // speed: undefined,
-      // bounciness: undefined,
-      // useNativeDriver: Platform.OS !== 'web',
+      //   friction: undefined,
+      //   tension: undefined,
+      //   speed: undefined,
+      //   bounciness: undefined,
+      //   useNativeDriver: Platform.OS !== 'web',
       useNativeDriver: false,
     },
   },

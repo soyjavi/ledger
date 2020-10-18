@@ -10,4 +10,10 @@ export default StyleSheet.create({
     justifyContent: 'center',
     zIndex: 1,
   },
+
+  date: {
+    alignSelf: 'flex-start',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });

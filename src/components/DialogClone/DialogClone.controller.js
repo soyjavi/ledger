@@ -7,7 +7,7 @@ const {
   WIPE,
 } = C;
 
-export const createTx = async ({
+const createTx = async ({
   dataSource: { category, hash, location, value, vault, title, type },
   store: { addTx },
   wipe = false,
@@ -20,3 +20,5 @@ export const createTx = async ({
     vault: vault,
     ...(wipe ? { category: WIPE, tx: hash, type: type === EXPENSE ? INCOME : EXPENSE } : { location }),
   });
+
+export { createTx };

@@ -1,25 +1,18 @@
-import { bool, number, string } from 'prop-types';
-
+import PropTypes from 'prop-types';
 import React from 'react';
 import { THEME } from 'reactor/common';
 import { Price, Row, Text } from 'reactor/components';
-import { format } from 'reactor/components/Price/modules';
 
 import { C, colorOpacity, currencyDecimals } from '@common';
 import { useStore } from '@context';
 
+import { maskValue } from './modules';
 import styles from './PriceFriendly.style';
 
 const { SYMBOL } = C;
 const { FONT } = THEME;
 
-const MASK_SYMBOL = '*';
 const LEFT_SYMBOLS = ['$', '£'];
-
-const maskValue = ({ value }) =>
-  format({
-    value: value >= 1000 ? 9999 : 9.99,
-  }).replace(/[0-9]/gi, MASK_SYMBOL);
 
 const PriceFriendly = ({ currency, fixed, highlight, label, operator, maskAmount, value = 0, ...others }) => {
   const { settings } = useStore();
@@ -90,13 +83,13 @@ const PriceFriendly = ({ currency, fixed, highlight, label, operator, maskAmount
 };
 
 PriceFriendly.propTypes = {
-  currency: string,
-  fixed: number,
-  highlight: bool,
-  label: string,
-  maskAmount: bool,
-  operator: bool,
-  value: number,
+  currency: PropTypes.string,
+  fixed: PropTypes.number,
+  highlight: PropTypes.bool,
+  label: PropTypes.string,
+  maskAmount: PropTypes.bool,
+  operator: PropTypes.bool,
+  value: PropTypes.number,
 };
 
 export { PriceFriendly };

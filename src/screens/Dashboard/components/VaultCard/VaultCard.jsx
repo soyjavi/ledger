@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types';
-
 import React from 'react';
 
 import { Card } from '@components';
 
-export const VaultCard = ({ currency, currentBalance, currentMonth: { progression }, title = '', ...others }) => {
+const VaultCard = ({ currency, currentBalance, currentMonth: { progression }, title = '', ...others }) => {
   const percentage = progression
     ? currentBalance - progression > 0
       ? (progression * 100) / (currentBalance - progression)
@@ -25,3 +24,5 @@ VaultCard.propTypes = {
   onPress: PropTypes.func.isRequired,
   title: PropTypes.string,
 };
+
+export { VaultCard };

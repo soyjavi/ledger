@@ -1,16 +1,16 @@
-import { func, number, shape, string } from 'prop-types';
-
+import PropTypes from 'prop-types';
 import React from 'react';
 import { THEME } from 'reactor/common';
 import { Slider } from 'reactor/components';
 
-import { C, getIconCategory } from '@common';
+import { C } from '@common';
 import { Input, Option, OPTION_SIZE } from '@components';
 import { useL10N } from '@context';
 
 import { queryCategories } from '../modules';
 
 const {
+  CATEGORY_ICON,
   TX: {
     TYPE: { EXPENSE },
   },
@@ -36,7 +36,7 @@ const FormTransaction = ({ currency, form = {}, onChange, type, vault: { current
           <Option
             legend={item.caption}
             key={item.key}
-            icon={getIconCategory({ type, category: item.key })}
+            icon={CATEGORY_ICON[type][item.key]}
             marginRight="S"
             onPress={() => handleField('category', item.key)}
             selected={form.category === item.key}
@@ -64,11 +64,11 @@ const FormTransaction = ({ currency, form = {}, onChange, type, vault: { current
 };
 
 FormTransaction.propTypes = {
-  currency: string,
-  form: shape({}).isRequired,
-  onChange: func.isRequired,
-  type: number,
-  vault: shape({}).isRequired,
+  currency: PropTypes.string,
+  form: PropTypes.shape({}).isRequired,
+  onChange: PropTypes.func.isRequired,
+  type: PropTypes.number,
+  vault: PropTypes.shape({}).isRequired,
 };
 
 export default FormTransaction;

@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-
 import React from 'react';
 import { THEME } from 'reactor/common';
 import { Col, Image, Text } from 'reactor/components';
@@ -11,15 +10,7 @@ import styles, { MAP_HEIGHT, MAP_WIDTH } from './HeatMap.style';
 
 const { COLOR } = THEME;
 
-export const HeatMap = ({
-  caption,
-  color = COLOR.BRAND,
-  darkMode = false,
-  points,
-  precission = 0.001,
-  small,
-  ...inherit
-}) => {
+const HeatMap = ({ caption, color = COLOR.BRAND, darkMode = false, points, precission = 0.001, small, ...inherit }) => {
   const { connected } = useConnection();
 
   return (
@@ -59,3 +50,5 @@ HeatMap.propTypes = {
   precission: PropTypes.number,
   small: PropTypes.bool,
 };
+
+export { HeatMap };

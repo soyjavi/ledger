@@ -3,13 +3,41 @@ import { Platform } from 'react-native';
 import PKG from '../../package.json';
 
 const IS_DEV = __DEV__;
-const IS_ANDROID = Platform.OS === 'android';
 const MS_IN_DAY = 1000 * 24 * 60 * 60;
 const MS_IN_WEEK = MS_IN_DAY * 7;
 
-export default {
+export const C = {
   BUSY_PRESS_MS: 2500,
 
+  CATEGORY_ICON: [
+    {
+      // Expenses
+      0: 'trash',
+      1: 'cup',
+      3: 'plane',
+      4: 'badge',
+      5: 'speedometer',
+      6: 'puzzle',
+      7: 'bag',
+      8: 'energy',
+      9: 'heart',
+      10: 'user',
+      11: 'earphones-alt',
+      12: 'doc',
+      13: 'question',
+      99: 'shuffle',
+    },
+    {
+      // Incomes
+      0: 'trash',
+      1: 'briefcase',
+      2: 'speedometer',
+      3: 'calendar',
+      4: 'doc',
+      5: 'question',
+      99: 'shuffle',
+    },
+  ],
   CURRENCY: 'EUR',
   CURRENCY_COLOR: {
     AUD: '#A3D6D4',
@@ -49,6 +77,16 @@ export default {
 
   LANGUAGE: 'en-EN',
 
+  MAPBOX: {
+    ACCESS_TOKEN: 'pk.eyJ1Ijoic295amF2aSIsImEiOiJjanBvc2lwMzcwM3A1NDJvNmJjNWxibTFuIn0.p81CI-8_bPN5eAROb3-EjQ',
+    API: 'https://api.mapbox.com',
+    SERVICE: {
+      PLACES: 'geocoding/v5/mapbox.places',
+      STATIC_MAP: 'styles/v1/mapbox/light-v9/static',
+      STATIC_MAP_DARK: 'styles/v1/mapbox/dark-v9/static',
+    },
+    URL: 'https://api.mapbox.com/geocoding/v5/mapbox.places',
+  },
   MS_IN_DAY,
   MS_IN_WEEK,
 
@@ -68,7 +106,7 @@ export default {
     AUD: 'AU$',
     // BGN: '',
     // BRL: 'AU$',
-    BTC: IS_ANDROID && Platform.Version < 26 ? 'Ƀ' : '₿',
+    BTC: Platform.OS === 'android' && Platform.Version < 26 ? 'Ƀ' : '₿',
     // CAD: 'CA$',
     // CHF: 'SFr',
     CNY: '¥',

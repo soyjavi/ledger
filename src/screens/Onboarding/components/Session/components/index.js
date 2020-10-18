@@ -1,5 +1,1 @@
-import NumKeyboard from './NumKeyboard';
-
-export {
-  NumKeyboard, //  eslint-disable-line
-};
+export * from './NumKeyboard';

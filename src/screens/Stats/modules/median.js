@@ -1,4 +1,4 @@
-export default (dataSource = []) => {
+export const median = (dataSource = []) => {
   const values = dataSource.filter((value) => value > 0).sort((a, b) => a - b);
   const half = Math.floor(values.length / 2);
 

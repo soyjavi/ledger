@@ -1,5 +1,4 @@
 import * as LocalAuthentication from 'expo-local-authentication';
-
 import { THEME } from 'reactor/common';
 
 import { ServiceRates, ServiceNode } from '@services';

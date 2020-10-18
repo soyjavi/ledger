@@ -2,13 +2,8 @@ import { StyleSheet } from 'react-native';
 import { LAYOUT, THEME } from 'reactor/common';
 
 const { SPACE } = THEME;
-
-const {
-  VIEWPORT: { H },
-} = LAYOUT;
-
-let IMAGE_HEIGHT = H / 4;
-if (IMAGE_HEIGHT > 512) IMAGE_HEIGHT = 512;
+const { VIEWPORT } = LAYOUT;
+const IMAGE_HEIGHT = VIEWPORT.H / 4 > 512 ? 512 : VIEWPORT.H / 4;
 
 export default StyleSheet.create({
   container: {

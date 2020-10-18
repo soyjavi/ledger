@@ -6,7 +6,7 @@ const {
   VAULT_TRANSFER,
 } = C;
 
-export default ({ baseCurrency, rates = {}, txs = [], vault }) => {
+export const calcVault = ({ baseCurrency, rates = {}, txs = [], vault }) => {
   const now = new Date();
   const originDate = new Date(now.getFullYear(), now.getMonth() - STATS_MONTHS_LIMIT, 1, 0, 0);
 

@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types';
-
 import React from 'react';
 import { THEME } from 'reactor/common';
 import { Col, Icon, Row, Text, Touchable } from 'reactor/components';
 
-import { C, exchange, getIconCategory } from '@common';
+import { C, exchange } from '@common';
 import { useStore } from '@context';
 
 import { Box } from '../Box';
@@ -12,6 +11,7 @@ import { PriceFriendly } from '../PriceFriendly';
 import { formatCaption } from './modules';
 
 const {
+  CATEGORY_ICON,
   CURRENCY_COLOR,
   TX: {
     TYPE: { EXPENSE, INCOME },
@@ -32,7 +32,7 @@ const TransactionItem = (props) => {
       <Row align="center" paddingHorizontal="M" paddingVertical="S">
         <Col marginRight="S" width="auto">
           <Box outlined>
-            <Icon family={ICON.FAMILY} size={SPACE.M} value={getIconCategory({ type, category, title })} />
+            <Icon family={ICON.FAMILY} size={SPACE.M} value={CATEGORY_ICON[type][category]} />
           </Box>
         </Col>
 
@@ -84,12 +84,6 @@ TransactionItem.propTypes = {
   title: PropTypes.string,
   type: PropTypes.number,
   value: PropTypes.number.isRequired,
-};
-
-TransactionItem.defaultProps = {
-  location: undefined,
-  title: undefined,
-  type: EXPENSE,
 };
 
 export { TransactionItem };

@@ -1,5 +1,4 @@
-import { bool, shape, func } from 'prop-types';
-
+import PropTypes from 'prop-types';
 import React from 'react';
 import { THEME } from 'reactor/common';
 import { Button, Col, Row, Text, Touchable } from 'reactor/components';
@@ -10,7 +9,7 @@ import styles from './VaultItem.style';
 
 const { COLOR, ICON, OPACITY } = THEME;
 
-export const VaultItem = ({ active, onChange, onPress, dataSource: { currency, currentBalance, title } }) => {
+const VaultItem = ({ active, onChange, onPress, dataSource: { currency, currentBalance, title } }) => {
   const colorText = active ? COLOR.TEXT : COLOR.LIGHTEN;
 
   return (
@@ -49,8 +48,14 @@ export const VaultItem = ({ active, onChange, onPress, dataSource: { currency, c
 };
 
 VaultItem.propTypes = {
-  active: bool,
-  dataSource: shape({}).isRequired,
-  onChange: func.isRequired,
-  onPress: func.isRequired,
+  active: PropTypes.bool,
+  dataSource: PropTypes.shape({
+    currency: PropTypes.string,
+    currentBalance: PropTypes.number,
+    title: PropTypes.string,
+  }).isRequired,
+  onChange: PropTypes.func.isRequired,
+  onPress: PropTypes.func.isRequired,
 };
+
+export { VaultItem };

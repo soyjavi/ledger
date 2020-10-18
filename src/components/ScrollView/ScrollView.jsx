@@ -1,12 +1,11 @@
 /* eslint-disable react/display-name */
 import PropTypes from 'prop-types';
-
 import React, { forwardRef } from 'react';
 import { ScrollView as ScrollViewBase } from 'react-native';
 
 import { HEADER_HEIGHT } from '../Header/Header.style';
 
-export const ScrollView = forwardRef(({ children, onScroll, ...others }, ref) => {
+const ScrollView = forwardRef(({ children, onScroll, ...others }, ref) => {
   const handleScroll = ({
     nativeEvent: {
       contentOffset: { y },
@@ -24,3 +23,5 @@ ScrollView.propTypes = {
   children: PropTypes.node,
   onScroll: PropTypes.func.isRequired,
 };
+
+export { ScrollView };

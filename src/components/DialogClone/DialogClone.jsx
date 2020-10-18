@@ -1,5 +1,4 @@
-import { bool, shape } from 'prop-types';
-
+import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Button, Col, Dialog, Row, Text } from 'reactor/components';
@@ -134,8 +133,8 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
 };
 
 DialogClone.propTypes = {
-  dataSource: shape({}),
-  visible: bool,
+  dataSource: PropTypes.shape({}),
+  visible: PropTypes.bool,
 };
 
 export { DialogClone };

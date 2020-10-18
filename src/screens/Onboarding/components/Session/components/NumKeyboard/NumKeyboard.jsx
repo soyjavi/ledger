@@ -1,5 +1,4 @@
-import { func } from 'prop-types';
-
+import PropTypes from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
 import { THEME } from 'reactor/common';
@@ -44,7 +43,7 @@ const NumKeyboard = ({ onPress }) => (
 );
 
 NumKeyboard.propTypes = {
-  onPress: func.isRequired,
+  onPress: PropTypes.func.isRequired,
 };
 
-export default NumKeyboard;
+export { NumKeyboard };

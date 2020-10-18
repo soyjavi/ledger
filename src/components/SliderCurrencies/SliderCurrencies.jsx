@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-
 import React from 'react';
 import { THEME } from 'reactor/common';
 import { Slider } from 'reactor/components';
@@ -11,7 +10,7 @@ import { queryCurrencies } from './modules';
 
 const { SPACE } = THEME;
 
-export const SliderCurrencies = ({ onChange, selected, ...others }) => {
+const SliderCurrencies = ({ onChange, selected, ...others }) => {
   const store = useStore();
 
   return (
@@ -34,3 +33,5 @@ SliderCurrencies.propTypes = {
   onChange: PropTypes.func.isRequired,
   selected: PropTypes.string,
 };
+
+export { SliderCurrencies };
