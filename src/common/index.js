@@ -1,5 +1,6 @@
 export * from './asyncStorage';
 export * from './constants';
+export * from './colorCurrency';
 export * from './colorOpacity';
 export * from './currencyDecimals';
 export * from './exchange';

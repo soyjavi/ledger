@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Button, Dialog, Row, Text } from 'reactor/components';
 
-import { C, onHardwareBackPress } from '@common';
+import { C, colorCurrency, onHardwareBackPress } from '@common';
 import { HeatMap } from '@components';
 import { useConnection, useL10N, useSnackBar, useStore } from '@context';
 
@@ -12,7 +12,6 @@ import { getLocation, handleSubmit } from './modules';
 
 const { COLOR } = THEME;
 const {
-  CURRENCY_COLOR,
   DELAY_PRESS_MS,
   TX: {
     TYPE: { TRANSFER },
@@ -79,7 +78,7 @@ const DialogTransaction = (props = {}) => {
       {online && type !== TRANSFER && (
         <HeatMap
           caption={place || l10n.LOADING_PLACE}
-          color={CURRENCY_COLOR[props.currency]}
+          color={colorCurrency(props.currency)}
           points={coords ? [[coords.longitude, coords.latitude]] : undefined}
           small
         />

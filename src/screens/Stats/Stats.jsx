@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Viewport } from 'reactor/components';
 
 import { BANNERS } from '@assets';
-import { C } from '@common';
+import { C, colorCurrency } from '@common';
 import { Banner, Chart, Header, ScrollView, Summary } from '@components';
 import { useL10N, useNavigation, useStore } from '@context';
 
@@ -12,7 +12,6 @@ import { calcScales, orderCaptions, queryMonth, queryChart } from './modules';
 import styles from './Stats.style';
 
 const {
-  CURRENCY_COLOR,
   STATS_MONTHS_LIMIT,
   TX: {
     TYPE: { EXPENSE, INCOME },
@@ -57,7 +56,7 @@ const Stats = ({ visible, ...inherit }) => {
   const hasPoints = locations.points && locations.points.length > 0;
 
   const chartProps = { currency: baseCurrency, highlight: slider.index };
-  const currencyColor = CURRENCY_COLOR[baseCurrency];
+  const currencyColor = colorCurrency(baseCurrency);
 
   console.log('  <Stats>', { visible });
 
