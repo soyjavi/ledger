@@ -21,9 +21,8 @@ const FONT_FAMILY_CURRENCY = {
 // LIGHT-MODE
 const BACKGROUND = '#ffffff';
 const BASE = '#F1F1F1'; //'#F5F5F5';
-const CTA = '#23272B'; // #080909  #222222''#353535';
+const CTA = '#23272B';
 const CTA_HIGHLIGHT = '#222222';
-const DIALOG = BACKGROUND;
 const OVERLAY = 'rgba(255, 255, 255, 0.8)';
 const TEXT = '#000000';
 const TEXT_DISABLED = '#C8C9C9';
@@ -32,17 +31,18 @@ const LIGHTEN = '#A3A3A3';
 const RIPPLE = LIGHTEN;
 
 // DARK-MODE
-// const BACKGROUND = '#080909';
-// const BASE = '#212222'; //'#262828';
+// const BACKGROUND = '#121212';
+// const BASE = '#191919'; //'#262828';
 // const CTA = '#fefdfa';
 // const CTA_HIGHLIGHT = 'rgba(0, 0, 0, 0.2)';
-// const DIALOG = '#19191B';
 // const OVERLAY = 'rgba(0, 0, 0, 0.8)';
 // const TEXT = '#fefdfa';
 // const TEXT_DISABLED = '#C8C9C9';
 // const TEXT_LIGHTEN = '#A3A3A3';
 // const LIGHTEN = 'rgba(255,255,255,0.6)';
 // const RIPPLE = LIGHTEN;
+
+const INPUT = '#666';
 
 const ELEVATION = {
   shadowColor: '#000000',
@@ -55,10 +55,10 @@ const ELEVATION = {
 };
 
 export const theme = {
-  BORDER_RADIUS: 0,
+  BORDER_RADIUS: 2,
 
   COLOR: {
-    BRAND: '#3DDC84',
+    BRAND: '#0c8',
 
     CTA,
     // BLACK
@@ -67,13 +67,15 @@ export const theme = {
 
     BACKGROUND,
     BASE,
-    DIALOG,
-    ERROR: '#fb5662',
+    // ERROR: '#fb5662',
+    ERROR: '#f36',
     // SUCCESS,
     TEXT,
     // TRANSPARENT
 
     // -- Custom
+    INCOME: '#0c8',
+    EXPENSE: '#f36',
     TEXT_DISABLED,
     TEXT_LIGHTEN,
     CTA_HIGHLIGHT,
@@ -134,7 +136,7 @@ export const theme = {
 
   DIALOG: {
     ...ELEVATION,
-    backgroundColor: DIALOG,
+    backgroundColor: BACKGROUND,
     padding: SPACE.L,
   },
   DIALOG_BUTTON: {
