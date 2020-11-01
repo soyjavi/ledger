@@ -59,7 +59,7 @@ const Dashboard = ({ visible, ...inherit }) => {
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
-      <Header currency={baseCurrency} highlight={scroll} title={l10n.OVERALL_BALANCE} />
+      <Header highlight={scroll} title={l10n.OVERALL_BALANCE} />
 
       <ScrollView contentContainerStyle={styles.scroll} onScroll={setScroll}>
         <Summary {...overall} currency={baseCurrency} title={l10n.OVERALL_BALANCE}>
@@ -114,17 +114,27 @@ const Dashboard = ({ visible, ...inherit }) => {
         )}
       </ScrollView>
 
-      <Footer visible={scroll || searchTxs !== undefined}>
+      <Footer
+        visible={scroll || searchTxs !== undefined}
+        // visible
+      >
         {lastTxs.length > 0 && (
-          <Search onFocus={setSearching} onSearch={handleSearch} text={l10n.SEARCH.toUpperCase()} />
+          <Search
+            // {...buttonProps}
+            onFocus={setSearching}
+            onSearch={handleSearch}
+            text={l10n.SEARCH.toUpperCase()}
+          />
         )}
         <Button
+          // {...buttonProps}
           icon="chart"
           iconFamily={ICON.FAMILY}
           onPress={() => navigation.go(SCREEN.STATS)}
           text={!searching ? l10n.ACTIVITY.toUpperCase() : undefined}
         />
         <Button
+          // {...buttonProps}
           icon="settings"
           iconFamily={ICON.FAMILY}
           onPress={() => navigation.go(SCREEN.SETTINGS)}

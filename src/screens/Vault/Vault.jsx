@@ -88,7 +88,7 @@ const Vault = ({ visible, ...inherit }) => {
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
-      <Header currency={currency} highlight={scroll} title={title} onBack={navigation.back} />
+      <Header highlight={scroll} title={title} onBack={navigation.back} />
 
       <ScrollView onScroll={handleScroll} ref={scrollview} style={styles.container}>
         <Summary {...rest} title={title} currency={currency}>
