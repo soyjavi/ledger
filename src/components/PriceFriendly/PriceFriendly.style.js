@@ -6,9 +6,9 @@ const { BORDER_RADIUS, FONT, SPACE } = THEME;
 export default StyleSheet.create({
   highlight: {
     borderRadius: BORDER_RADIUS,
-    paddingHorizontal: SPACE.XS,
+    paddingHorizontal: SPACE.S,
     paddingVertical: SPACE.XS / 2,
-    marginRight: -SPACE.XS,
+    marginRight: -SPACE.S,
   },
 
   symbolHeadline: {
