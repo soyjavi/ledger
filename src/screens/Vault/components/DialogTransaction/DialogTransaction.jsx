@@ -28,7 +28,7 @@ const INITIAL_STATE_LOCATION = { coords: undefined, place: undefined };
 
 const DialogTransaction = (props = {}) => {
   const { onClose, visible, ...inherit } = props;
-  const { connected, online } = useConnection();
+  const { online } = useConnection();
   const l10n = useL10N();
   const snackbar = useSnackBar();
   const store = useStore();
@@ -46,7 +46,7 @@ const DialogTransaction = (props = {}) => {
     if (visible) {
       setState(INITIAL_STATE);
       setLocation(INITIAL_STATE_LOCATION);
-      getLocation({ connected, setLocation });
+      getLocation({ online, setLocation });
     }
     onHardwareBackPress(visible, onClose);
 
