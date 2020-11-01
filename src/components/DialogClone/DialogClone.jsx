@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Button, Col, Dialog, Row, Text } from 'reactor/components';
 
-import { C, exchange, onHardwareBackPress, verboseTime } from '@common';
+import { C, colorCurrency, exchange, onHardwareBackPress, verboseTime } from '@common';
 import { useL10N, useStore } from '@context';
 
 import { BoxDate } from '../Box';
@@ -12,7 +12,6 @@ import { PriceFriendly } from '../PriceFriendly';
 import { createTx } from './DialogClone.controller';
 
 const {
-  CURRENCY_COLOR,
   DELAY_PRESS_MS,
   TX: {
     TYPE: { EXPENSE, INCOME },
@@ -50,7 +49,7 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
   const buttonProps = { delay: DELAY_PRESS_MS, disabled: busy, wide: true };
 
   const vaultInfo = vaults.find(({ hash }) => hash === vault);
-  const currencyColor = CURRENCY_COLOR[currency];
+  const currencyColor = colorCurrency(currency);
 
   return (
     <Dialog {...inherit} position="bottom">

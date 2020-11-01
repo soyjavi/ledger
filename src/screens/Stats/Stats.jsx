@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
+import { THEME } from 'reactor/common';
 import { Viewport } from 'reactor/components';
 
 import { BANNERS } from '@assets';
@@ -12,12 +13,12 @@ import { calcScales, orderCaptions, queryMonth, queryChart } from './modules';
 import styles from './Stats.style';
 
 const {
-  CURRENCY_COLOR,
   STATS_MONTHS_LIMIT,
   TX: {
     TYPE: { EXPENSE, INCOME },
   },
 } = C;
+const { COLOR } = THEME;
 
 const Stats = ({ visible, ...inherit }) => {
   const scrollview = useRef(null);
@@ -57,7 +58,6 @@ const Stats = ({ visible, ...inherit }) => {
   const hasPoints = locations.points && locations.points.length > 0;
 
   const chartProps = { currency: baseCurrency, highlight: slider.index };
-  const currencyColor = CURRENCY_COLOR[baseCurrency];
 
   console.log('  <Stats>', { visible });
 
@@ -74,7 +74,6 @@ const Stats = ({ visible, ...inherit }) => {
           {...calcScales(chart.balance)}
           {...chartProps}
           captions={orderCaptions(l10n)}
-          color={currencyColor}
           styleContainer={[styles.chart, styles.chartMargin]}
           style={styles.chartBalance}
           title={l10n.OVERALL_BALANCE}
@@ -84,7 +83,7 @@ const Stats = ({ visible, ...inherit }) => {
         <Chart
           {...calcScales(chart.incomes)}
           {...chartProps}
-          color={currencyColor}
+          color={COLOR.INCOME}
           styleContainer={[styles.chart]}
           title={`${l10n.INCOMES} & ${l10n.EXPENSES}`}
           values={chart.incomes}
@@ -92,6 +91,7 @@ const Stats = ({ visible, ...inherit }) => {
         <Chart
           {...calcScales(chart.expenses)}
           {...chartProps}
+          color={COLOR.EXPENSE}
           captions={orderCaptions(l10n)}
           inverted
           styleContainer={[styles.chart, styles.chartMargin]}
@@ -100,7 +100,7 @@ const Stats = ({ visible, ...inherit }) => {
 
         {hasExpenses || hasIncomes ? (
           <>
-            {hasIncomes && <ItemGroupCategories color={currencyColor} type={INCOME} dataSource={incomes} />}
+            {hasIncomes && <ItemGroupCategories type={INCOME} dataSource={incomes} />}
             {hasExpenses && <ItemGroupCategories type={EXPENSE} dataSource={expenses} />}
           </>
         ) : (
@@ -109,7 +109,7 @@ const Stats = ({ visible, ...inherit }) => {
 
         {(hasExpenses || hasIncomes) && (
           <>
-            {hasPoints && <Locations {...locations} color={currencyColor} />}
+            {hasPoints && <Locations {...locations} />}
             <Chart
               {...calcScales(chart.transfers)}
               {...chartProps}

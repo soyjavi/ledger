@@ -11,7 +11,7 @@ import styles, { MAP_HEIGHT, MAP_WIDTH } from './HeatMap.style';
 const { COLOR } = THEME;
 
 const HeatMap = ({ caption, color = COLOR.BRAND, darkMode = false, points, precission = 0.001, small, ...inherit }) => {
-  const { connected } = useConnection();
+  const { online } = useConnection();
 
   return (
     <Col>
@@ -19,7 +19,7 @@ const HeatMap = ({ caption, color = COLOR.BRAND, darkMode = false, points, preci
         resizeMode="cover"
         source={{
           uri:
-            connected && points
+            online && points
               ? ServiceLocation.uriMap({
                   color,
                   darkMode,

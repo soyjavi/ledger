@@ -41,7 +41,7 @@ const Header = ({ childLeft, childRight, currency, highlight = false, onBack, ti
           ]}
         >
           <Row>
-            <CurrencyLogo currency={currency} marginRight="S" _size="S" />
+            {currency && <CurrencyLogo currency={currency} marginRight="S" _size="S" />}
             {title && <Text subtitle>{title}</Text>}
           </Row>
         </Motion>

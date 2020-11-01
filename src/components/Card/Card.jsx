@@ -15,36 +15,33 @@ import styles, { CARD_WIDTH } from './Card.style';
 const { CURRENCY } = C;
 const { COLOR } = THEME;
 
-const Card = ({ balance = 0, currency = CURRENCY, highlight, onPress, percentage, title = '', ...others }) => {
+const Card = ({ balance = 0, color, currency = CURRENCY, highlight, onPress, percentage, title = '', ...others }) => {
   const l10n = useL10N();
   const {
     settings: { baseCurrency },
     rates,
   } = useStore();
 
+  const textColor = highlight ? COLOR.BACKGROUND : undefined;
+
   return (
-    <Touchable {...others} onPress={onPress} rippleColor={COLOR.RIPPLE} style={styles.container}>
-      <Box color={highlight ? COLOR.CTA : undefined} style={styles.box}>
+    <Touchable {...others} onPress={onPress} rippleColor={color || COLOR.RIPPLE} style={styles.container}>
+      <Box color={highlight ? COLOR.CTA : color} style={styles.box}>
         <View style={styles.content}>
           <Row>
             <CurrencyLogo currency={currency} size="S" />
-            <Text caption color={highlight ? COLOR.BACKGROUND : undefined} numberOfLines={1} marginLeft="XS">
+            <Text caption color={textColor} numberOfLines={1} marginLeft="XS">
               {title.toUpperCase()}
             </Text>
           </Row>
 
           {currency && (
             <>
-              <PriceFriendly
-                color={highlight ? COLOR.BACKGROUND : undefined}
-                currency={currency}
-                subtitle
-                value={balance}
-              />
+              <PriceFriendly color={textColor} currency={currency} subtitle value={balance} />
               {currency !== baseCurrency && (
                 <PriceFriendly
                   caption
-                  color={COLOR.LIGHTEN}
+                  color={textColor}
                   currency={baseCurrency}
                   value={exchange(Math.abs(balance), currency, baseCurrency, rates)}
                 />
@@ -55,8 +52,7 @@ const Card = ({ balance = 0, currency = CURRENCY, highlight, onPress, percentage
               {percentage ? (
                 <PriceFriendly
                   caption
-                  // color={others.color}
-                  color={COLOR.LIGHTEN}
+                  color={textColor}
                   currency="%"
                   highlight={others.highlight}
                   operator={others.operator}
@@ -77,6 +73,7 @@ const Card = ({ balance = 0, currency = CURRENCY, highlight, onPress, percentage
 
 Card.propTypes = {
   balance: PropTypes.number,
+  color: PropTypes.string,
   currency: PropTypes.string,
   currentMonth: PropTypes.shape({}),
   highlight: PropTypes.bool,

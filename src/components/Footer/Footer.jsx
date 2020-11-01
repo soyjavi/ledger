@@ -13,7 +13,7 @@ const Footer = ({ children, visible }) => (
     duration={visible ? MOTION.EXPAND : MOTION.COLLAPSE}
     pointerEvents="auto"
     style={styles.container}
-    timeline={[{ property: 'translateY', value: visible ? 0 : UNIT * 8 }]}
+    timeline={[{ property: 'translateY', value: visible ? 0 : UNIT * 16 }]}
   >
     {children}
   </Motion>

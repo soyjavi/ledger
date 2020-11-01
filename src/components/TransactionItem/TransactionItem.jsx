@@ -3,7 +3,7 @@ import React from 'react';
 import { THEME } from 'reactor/common';
 import { Col, Icon, Row, Text, Touchable } from 'reactor/components';
 
-import { C, exchange } from '@common';
+import { C, colorCurrency, exchange } from '@common';
 import { useStore } from '@context';
 
 import { Box } from '../Box';
@@ -12,7 +12,6 @@ import { formatCaption } from './modules';
 
 const {
   CATEGORY_ICON,
-  CURRENCY_COLOR,
   TX: {
     TYPE: { EXPENSE, INCOME },
   },
@@ -43,7 +42,7 @@ const TransactionItem = (props) => {
             </Col>
             <Col width="auto">
               <PriceFriendly
-                color={type === INCOME ? CURRENCY_COLOR[currency] : undefined}
+                color={type === INCOME ? colorCurrency(currency) : undefined}
                 currency={currency}
                 highlight={type === INCOME}
                 operator={type === EXPENSE}

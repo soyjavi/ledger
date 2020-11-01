@@ -1,5 +1,4 @@
 import { StatusBar } from 'expo-status-bar';
-
 import React from 'react';
 import { THEME } from 'reactor/common';
 import { LayoutView } from 'reactor/components';

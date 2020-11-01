@@ -30,7 +30,6 @@ const Locations = ({ cities = {}, color, countries = {}, points = [], precission
           {orderByAmount(cities).map(({ key, amount }) => (
             <HorizontalChartItem
               key={key}
-              color={color}
               currency="x"
               title={key}
               value={amount}
@@ -47,7 +46,6 @@ const Locations = ({ cities = {}, color, countries = {}, points = [], precission
             {orderByAmount(countries).map(({ key, amount }) => (
               <HorizontalChartItem
                 key={key}
-                color={color}
                 currency="x"
                 title={key}
                 value={amount}
