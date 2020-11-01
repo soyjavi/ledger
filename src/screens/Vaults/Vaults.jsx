@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Slider, Viewport } from 'reactor/components';
 
-import { C } from '@common';
+import { C, colorCurrency, colorOpacity } from '@common';
 import { Card, CARD_WIDTH, Header, Heading, ScrollView, Summary } from '@components';
 import { useL10N, useNavigation, useStore } from '@context';
 
@@ -50,6 +50,7 @@ const Vaults = ({ visible, ...inherit }) => {
               {currencies.map(({ base, currency, ...item }, index) => (
                 <Card
                   {...item}
+                  color={colorOpacity(colorCurrency(currency))}
                   currency={currency}
                   highlight={currency === selected}
                   key={currency}
