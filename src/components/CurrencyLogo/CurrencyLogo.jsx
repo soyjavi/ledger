@@ -3,12 +3,12 @@ import React from 'react';
 import { THEME } from 'reactor/common';
 import { Text, View } from 'reactor/components';
 
-import { C, colorCurrency } from '@common';
+import { C, colorCurrency, colorOpacity } from '@common';
 
 import styles from './CurrencyLogo.style';
 
 const { SYMBOL } = C;
-const { COLOR, FONT } = THEME;
+const { COLOR, FONT, OPACITY } = THEME;
 
 const NO_SYMBOL = ['XAG', 'XAU'];
 
@@ -21,7 +21,7 @@ const CurrencyLogo = ({ currency, highlight, size = 'M', ...others }) => {
       style={[
         styles.container,
         styles[size],
-        { backgroundColor: highlight ? COLOR.BACKGROUND : colorCurrency(currency) },
+        { backgroundColor: highlight ? COLOR.BACKGROUND : colorOpacity(colorCurrency(currency), OPACITY.L) },
       ]}
     >
       {symbol && (
