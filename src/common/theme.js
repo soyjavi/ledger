@@ -19,30 +19,28 @@ const FONT_FAMILY_CURRENCY = {
 };
 
 // LIGHT-MODE
-const BACKGROUND = '#ffffff';
-const BASE = '#F1F1F1'; //'#F5F5F5';
-const CTA = '#23272B';
-const CTA_HIGHLIGHT = '#222222';
-const OVERLAY = 'rgba(255, 255, 255, 0.8)';
-const TEXT = '#000000';
-const TEXT_DISABLED = '#C8C9C9';
-const TEXT_LIGHTEN = '#A3A3A3';
-const LIGHTEN = '#A3A3A3';
-const RIPPLE = LIGHTEN;
-
-// DARK-MODE
-// const BACKGROUND = '#121212';
-// const BASE = '#191919'; //'#262828';
-// const CTA = '#fefdfa';
-// const CTA_HIGHLIGHT = 'rgba(0, 0, 0, 0.2)';
-// const OVERLAY = 'rgba(0, 0, 0, 0.8)';
-// const TEXT = '#fefdfa';
+// const BACKGROUND = '#ffffff';
+// const BASE = '#F1F1F1'; //'#F5F5F5';
+// const CTA = '#23272B';
+// const CTA_HIGHLIGHT = '#222222';
+// const OVERLAY = 'rgba(255, 255, 255, 0.8)';
+// const TEXT = '#000000';
 // const TEXT_DISABLED = '#C8C9C9';
 // const TEXT_LIGHTEN = '#A3A3A3';
-// const LIGHTEN = 'rgba(255,255,255,0.6)';
+// const LIGHTEN = '#A3A3A3';
 // const RIPPLE = LIGHTEN;
 
-const INPUT = '#666';
+// DARK-MODE
+const BACKGROUND = '#121212';
+const BASE = '#262828'; //'#262828'; 262828 191919
+const CTA = '#fefdfa';
+const CTA_HIGHLIGHT = 'rgba(0, 0, 0, 0.2)';
+const OVERLAY = 'rgba(0, 0, 0, 0.8)';
+const TEXT = '#fefdfa';
+const TEXT_DISABLED = '#C8C9C9';
+const TEXT_LIGHTEN = '#A3A3A3';
+const LIGHTEN = 'rgba(255,255,255,0.6)';
+const RIPPLE = LIGHTEN;
 
 const ELEVATION = {
   shadowColor: '#000000',
@@ -58,7 +56,7 @@ export const theme = {
   BORDER_RADIUS: 2,
 
   COLOR: {
-    BRAND: '#0c8',
+    BRAND: '#D29776', //' #D29776  #F5DD7B', #FFD050  #ff9900
 
     CTA,
     // BLACK
@@ -67,15 +65,12 @@ export const theme = {
 
     BACKGROUND,
     BASE,
-    // ERROR: '#fb5662',
-    ERROR: '#f36',
+    ERROR: '#fb5662',
     // SUCCESS,
     TEXT,
     // TRANSPARENT
 
     // -- Custom
-    INCOME: '#0c8',
-    EXPENSE: '#f36',
     TEXT_DISABLED,
     TEXT_LIGHTEN,
     CTA_HIGHLIGHT,
@@ -136,7 +131,8 @@ export const theme = {
 
   DIALOG: {
     ...ELEVATION,
-    backgroundColor: BACKGROUND,
+    // backgroundColor: BACKGROUND,
+    backgroundColor: '#191919',
     padding: SPACE.L,
   },
   DIALOG_BUTTON: {
@@ -171,7 +167,7 @@ export const theme = {
   },
 
   OPACITY: {
-    S: 0.15,
+    S: 0.1,
     M: 0.4,
     L: 0.6,
   },
