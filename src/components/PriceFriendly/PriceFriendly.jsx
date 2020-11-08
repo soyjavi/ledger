@@ -74,7 +74,7 @@ const PriceFriendly = ({ currency, fixed, highlight, label, operator, maskAmount
       ) : (
         <>
           {LEFT_SYMBOLS.includes(symbol) && <Text {...symbolProps} />}
-          <Price {...props} bold={highlight} style={others.style} />
+          <Price {...props} bold={others.bold} style={others.style} />
           {!LEFT_SYMBOLS.includes(symbol) && <Text {...symbolProps} />}
         </>
       )}

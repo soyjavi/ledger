@@ -10,7 +10,7 @@ import styles, { MAP_HEIGHT, MAP_WIDTH } from './HeatMap.style';
 
 const { COLOR } = THEME;
 
-const HeatMap = ({ caption, color = COLOR.BRAND, darkMode = false, points, precission = 0.001, small, ...inherit }) => {
+const HeatMap = ({ caption, color = COLOR.BRAND, darkMode = true, points, precission = 0.001, small, ...inherit }) => {
   const { online } = useConnection();
 
   return (

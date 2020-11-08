@@ -32,15 +32,7 @@ const Chart = ({ captions, highlight, inverted = false, values = [], styleContai
             >
               <View style={[styles.scaleLine, { backgroundColor: color }]} />
               <View style={[styles.tag, { backgroundColor: color }]}>
-                <PriceFriendly
-                  //
-                  bold
-                  caption
-                  color={COLOR.BACKGROUND}
-                  currency={currency}
-                  fixed={0}
-                  value={avg}
-                />
+                <PriceFriendly bold caption color={COLOR.BACKGROUND} currency={currency} fixed={0} value={avg} />
               </View>
             </View>
           </View>
@@ -52,6 +44,7 @@ const Chart = ({ captions, highlight, inverted = false, values = [], styleContai
               <View
                 style={[
                   styles.bar,
+                  inverted && styles.barInverted,
                   value !== 0 && { height: `${calcHeight(value, { min, max })}%` },
                   {
                     // backgroundColor: highlight !== index ? COLOR.BASE : color,

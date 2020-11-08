@@ -8,7 +8,7 @@ const { COLOR, SPACE } = THEME;
 
 export default StyleSheet.create({
   container: {
-    backgroundColor: COLOR.CTA,
+    backgroundColor: COLOR.BASE,
     bottom: SPACE.S,
     display: 'flex',
     flexDirection: 'row',

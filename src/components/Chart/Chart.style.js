@@ -1,16 +1,25 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from 'reactor/common';
 
-const { COLOR, OPACITY, SPACE } = THEME;
+const { BORDER_RADIUS, COLOR, OPACITY, SPACE } = THEME;
 const COLUMN_WIDTH = SPACE.S + SPACE.XS / 2;
 const COLUMN_HEIGHT = COLUMN_WIDTH * 8;
 
 export default StyleSheet.create({
   bar: {
     backgroundColor: COLOR.BASE,
+    borderTopLeftRadius: BORDER_RADIUS,
+    borderTopRightRadius: BORDER_RADIUS,
     maxHeight: '100%',
     minHeight: COLUMN_WIDTH / 1.5,
     width: COLUMN_WIDTH,
+  },
+
+  barInverted: {
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
+    borderBottomLeftRadius: BORDER_RADIUS,
+    borderBottomRightRadius: BORDER_RADIUS,
   },
 
   captions: {
@@ -22,6 +31,7 @@ export default StyleSheet.create({
 
   column: {
     alignItems: 'center',
+
     flex: 1,
     height: '100%',
     justifyContent: 'flex-end',
