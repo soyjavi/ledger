@@ -93,6 +93,7 @@ const Dashboard = ({ visible, ...inherit }) => {
               {queryVaults(store).map((vault, index) => (
                 <VaultCard
                   {...vault}
+                  baseCurrency={baseCurrency}
                   key={vault.hash}
                   marginLeft={index === 0 ? 'M' : undefined}
                   marginRight="S"
@@ -114,27 +115,19 @@ const Dashboard = ({ visible, ...inherit }) => {
         )}
       </ScrollView>
 
-      <Footer
-        visible={scroll || searchTxs !== undefined}
-        // visible
-      >
+      <Footer visible={scroll || searchTxs !== undefined}>
         {lastTxs.length > 0 && (
-          <Search
-            // {...buttonProps}
-            onFocus={setSearching}
-            onSearch={handleSearch}
-            text={l10n.SEARCH.toUpperCase()}
-          />
+          <Search {...buttonProps} onFocus={setSearching} onSearch={handleSearch} text={l10n.SEARCH.toUpperCase()} />
         )}
         <Button
-          // {...buttonProps}
+          {...buttonProps}
           icon="chart"
           iconFamily={ICON.FAMILY}
           onPress={() => navigation.go(SCREEN.STATS)}
           text={!searching ? l10n.ACTIVITY.toUpperCase() : undefined}
         />
         <Button
-          // {...buttonProps}
+          {...buttonProps}
           icon="settings"
           iconFamily={ICON.FAMILY}
           onPress={() => navigation.go(SCREEN.SETTINGS)}
