@@ -59,11 +59,11 @@ const Sync = () => {
       {stack.includes(DASHBOARD) && (
         <Motion
           duration={showStatus ? MOTION.EXPAND : MOTION.COLLAPSE}
-          style={[styles.status, { backgroundColor: !connected ? COLOR.ERROR : COLOR.TEXT }]}
+          style={[styles.status, { backgroundColor: !connected ? COLOR.ERROR : undefined }]}
           timeline={[{ property: 'translateY', value: showStatus ? 0 : -SPACE.XXL }]}
           type="spring"
         >
-          <Text bold caption color={COLOR.BACKGROUND}>
+          <Text bold={!connected} caption color={!connected ? COLOR.BACKGROUND : undefined}>
             {!connected ? l10n.NOT_CONNECTED : l10n.WAIT}
           </Text>
         </Motion>
@@ -71,12 +71,12 @@ const Sync = () => {
 
       <Snackbar
         caption={state === STATE.SYNCING ? l10n.SYNC_BUSY : l10n.SYNC_SENTENCE_1}
-        color={state === STATE.SYNCING ? COLOR.TEXT : COLOR.ERROR}
+        color={state === STATE.SYNCING ? COLOR.BASE : COLOR.ERROR}
         iconFamily={ICON.FAMILY}
         iconSize={SPACE.M}
         onClose={state === STATE.UNSYNCED ? () => setState(undefined) : undefined}
         visible={[STATE.UNSYNCED, STATE.SYNCING].includes(state)}
-        position="top"
+        position="bottom"
       >
         {state === STATE.UNSYNCED && (
           <>
