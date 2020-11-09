@@ -2,13 +2,19 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { THEME } from 'reactor/common';
 
-import { C, colorOpacity } from '@common';
+import { colorOpacity } from '@common';
 import { Card } from '@components';
 
-const { OPACITY } = THEME;
-const { CURRENCY_COLOR } = C;
+const { COLOR, OPACITY } = THEME;
 
-const VaultCard = ({ currency, currentBalance, currentMonth: { progression }, title = '', ...others }) => {
+const VaultCard = ({
+  baseCurrency,
+  currency,
+  currentBalance,
+  currentMonth: { progression },
+  title = '',
+  ...others
+}) => {
   const percentage = progression
     ? currentBalance - progression > 0
       ? (progression * 100) / (currentBalance - progression)
@@ -19,7 +25,7 @@ const VaultCard = ({ currency, currentBalance, currentMonth: { progression }, ti
     <Card
       {...others}
       balance={currentBalance}
-      color={colorOpacity(CURRENCY_COLOR[currency], OPACITY.S)}
+      color={currency === baseCurrency ? colorOpacity(COLOR.BRAND) : undefined}
       currency={currency}
       operator
       percentage={percentage}
@@ -29,6 +35,7 @@ const VaultCard = ({ currency, currentBalance, currentMonth: { progression }, ti
 };
 
 VaultCard.propTypes = {
+  baseCurrency: PropTypes.string.isRequired,
   currency: PropTypes.string.isRequired,
   currentBalance: PropTypes.number.isRequired,
   currentMonth: PropTypes.shape({
