@@ -35,9 +35,8 @@ const SliderMonths = ({ index, onChange, ...others }) => {
             onPress={() => onChange({ index: i, month, year })}
             selected={index === i}
             caption={l10n.MONTHS[month].substr(0, 3).toUpperCase()}
-            // legend={year}
           >
-            <Text color={index === 1 ? COLOR.BACKGROUND : COLOR.LIGHTEN} style={FONT.LEGEND}>
+            <Text color={index === i ? COLOR.BACKGROUND : COLOR.LIGHTEN} style={FONT.LEGEND}>
               {year}
             </Text>
           </Option>

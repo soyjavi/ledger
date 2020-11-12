@@ -22,7 +22,7 @@ const FONT_FAMILY_CURRENCY = {
 // const BACKGROUND = '#ffffff';
 // const BASE = '#F1F1F1'; //'#F5F5F5';
 // const CTA = '#23272B';
-// const CTA_HIGHLIGHT = '#222222';
+// const DIALOG = '#ffffff';
 // const OVERLAY = 'rgba(255, 255, 255, 0.8)';
 // const TEXT = '#000000';
 // const TEXT_DISABLED = '#C8C9C9';
@@ -34,7 +34,7 @@ const FONT_FAMILY_CURRENCY = {
 const BACKGROUND = '#121212';
 const BASE = '#262828'; //'#262828'; 262828 191919
 const CTA = '#fefdfa';
-const CTA_HIGHLIGHT = 'rgba(0, 0, 0, 0.2)';
+const DIALOG = '#191919';
 const OVERLAY = 'rgba(0, 0, 0, 0.8)';
 const TEXT = '#fefdfa';
 const TEXT_DISABLED = '#C8C9C9';
@@ -53,7 +53,7 @@ const ELEVATION = {
 };
 
 export const theme = {
-  BORDER_RADIUS: 2,
+  BORDER_RADIUS: 3,
 
   COLOR: {
     BRAND: '#D29776', //' #D29776  #F5DD7B', #FFD050  #ff9900
@@ -73,7 +73,6 @@ export const theme = {
     // -- Custom
     TEXT_DISABLED,
     TEXT_LIGHTEN,
-    CTA_HIGHLIGHT,
     LIGHTEN,
     OVERLAY,
     RIPPLE,
@@ -131,8 +130,7 @@ export const theme = {
 
   DIALOG: {
     ...ELEVATION,
-    // backgroundColor: BACKGROUND,
-    backgroundColor: '#191919',
+    backgroundColor: DIALOG,
     padding: SPACE.L,
   },
   DIALOG_BUTTON: {

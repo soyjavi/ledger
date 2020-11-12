@@ -102,12 +102,7 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
 
       {location && (
         <Col marginTop="S">
-          <HeatMap
-            caption={location.place}
-            color={COLOR.BRAND}
-            points={[[location.longitude, location.latitude]]}
-            small
-          />
+          <HeatMap caption={location.place} points={[[location.longitude, location.latitude]]} small />
         </Col>
       )}
 
