@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import { THEME } from 'reactor/common';
 import { Row, Text, Touchable } from 'reactor/components';
 
-import { C, exchange } from '@common';
+import { exchange } from '@common';
 import { useL10N, useStore } from '@context';
 
 import { Box } from '../Box';
@@ -12,10 +12,9 @@ import { CurrencyLogo } from '../CurrencyLogo';
 import { PriceFriendly } from '../PriceFriendly';
 import styles, { CARD_WIDTH } from './Card.style';
 
-const { CURRENCY } = C;
 const { COLOR } = THEME;
 
-const Card = ({ balance = 0, color, currency = CURRENCY, highlight, onPress, percentage, title = '', ...others }) => {
+const Card = ({ balance = 0, color, currency, highlight, onPress, percentage, title = '', ...others }) => {
   const l10n = useL10N();
   const {
     settings: { baseCurrency },
