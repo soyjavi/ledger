@@ -66,7 +66,7 @@ const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
           >
             <PriceFriendly
               caption
-              color={COLOR.LIGHTEN}
+              color={hash === form.destination ? COLOR.BACKGROUND : COLOR.TEXT}
               maskAmount={false}
               value={currentBalance}
               currency={currency}
