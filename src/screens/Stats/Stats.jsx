@@ -74,6 +74,7 @@ const Stats = ({ visible, ...inherit }) => {
           {...calcScales(chart.balance)}
           {...chartProps}
           captions={orderCaptions(l10n)}
+          color={COLOR.BRAND}
           styleContainer={[styles.chart, styles.chartMargin]}
           style={styles.chartBalance}
           title={l10n.OVERALL_BALANCE}
@@ -83,7 +84,7 @@ const Stats = ({ visible, ...inherit }) => {
         <Chart
           {...calcScales(chart.incomes)}
           {...chartProps}
-          color={COLOR.INCOME}
+          color={COLOR.BRAND}
           styleContainer={[styles.chart]}
           title={`${l10n.INCOMES} & ${l10n.EXPENSES}`}
           values={chart.incomes}
@@ -91,7 +92,6 @@ const Stats = ({ visible, ...inherit }) => {
         <Chart
           {...calcScales(chart.expenses)}
           {...chartProps}
-          color={COLOR.EXPENSE}
           captions={orderCaptions(l10n)}
           inverted
           styleContainer={[styles.chart, styles.chartMargin]}
@@ -100,7 +100,7 @@ const Stats = ({ visible, ...inherit }) => {
 
         {hasExpenses || hasIncomes ? (
           <>
-            {hasIncomes && <ItemGroupCategories type={INCOME} dataSource={incomes} />}
+            {hasIncomes && <ItemGroupCategories color={COLOR.BRAND} type={INCOME} dataSource={incomes} />}
             {hasExpenses && <ItemGroupCategories type={EXPENSE} dataSource={expenses} />}
           </>
         ) : (

@@ -7,12 +7,13 @@ import styles from './Box.style';
 
 const { BORDER_RADIUS, COLOR } = THEME;
 
-const Box = ({ borderRadius = BORDER_RADIUS, children, color = COLOR.BASE, outlined, ...others }) => (
+const Box = ({ borderRadius = BORDER_RADIUS, children, color = COLOR.BASE, outlined, rounded, ...others }) => (
   <Col
     {...others}
     align="center"
     style={[
       styles.container,
+      rounded && styles.rounded,
       {
         borderRadius,
         borderWidth: 1,
@@ -32,6 +33,7 @@ Box.propTypes = {
   color: PropTypes.string,
   opacity: PropTypes.number,
   outlined: PropTypes.bool,
+  rounded: PropTypes.bool,
 };
 
 export { Box };

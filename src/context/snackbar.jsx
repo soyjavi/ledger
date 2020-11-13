@@ -42,7 +42,7 @@ const SnackBarProvider = ({ children }) => {
         iconSize={SPACE.M}
         family={ICON.FAMILY}
         onClose={() => dispatch({ type: 'HIDE' })}
-        position="top"
+        position="bottom"
         visible={state.type === 'SHOW'}
       />
     </SnackBarContext.Provider>

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Button, Col, Dialog, Row, Text } from 'reactor/components';
 
-import { C, colorCurrency, exchange, onHardwareBackPress, verboseTime } from '@common';
+import { C, exchange, onHardwareBackPress, verboseTime } from '@common';
 import { useL10N, useStore } from '@context';
 
 import { BoxDate } from '../Box';
@@ -49,7 +49,6 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
   const buttonProps = { delay: DELAY_PRESS_MS, disabled: busy, wide: true };
 
   const vaultInfo = vaults.find(({ hash }) => hash === vault);
-  const currencyColor = colorCurrency(currency);
 
   return (
     <Dialog {...inherit} position="bottom">
@@ -70,7 +69,7 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
             </Col>
             <Col width="auto">
               <PriceFriendly
-                color={type === INCOME ? currencyColor : undefined}
+                color={type === INCOME ? COLOR.BRAND : undefined}
                 currency={currency}
                 highlight={type === INCOME}
                 maskAmount={false}
@@ -103,12 +102,7 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
 
       {location && (
         <Col marginTop="S">
-          <HeatMap
-            caption={location.place}
-            color={currencyColor}
-            points={[[location.longitude, location.latitude]]}
-            small
-          />
+          <HeatMap caption={location.place} points={[[location.longitude, location.latitude]]} small />
         </Col>
       )}
 

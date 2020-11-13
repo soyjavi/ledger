@@ -1,12 +1,13 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from 'reactor/common';
 
-const { COLOR, SPACE } = THEME;
+const { BORDER_RADIUS, COLOR, SPACE } = THEME;
 const BAR_HEIGHT = SPACE.S + SPACE.XS / 2;
 
 export default StyleSheet.create({
   bar: {
     backgroundColor: COLOR.BASE,
+    borderRadius: BORDER_RADIUS,
     height: BAR_HEIGHT,
     minWidth: BAR_HEIGHT,
   },

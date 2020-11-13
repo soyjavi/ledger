@@ -118,15 +118,17 @@ const Vault = ({ visible, ...inherit }) => {
       </ScrollView>
 
       <Footer visible={scroll || searchTxs !== undefined}>
-        <Search onFocus={setSearching} onSearch={handleSearch} />
+        <Search {...buttonProps} onFocus={setSearching} onSearch={handleSearch} />
 
         <Button
+          {...buttonProps}
           icon="arrow-up"
           iconFamily={ICON.FAMILY}
           onPress={() => setDialog(1)}
           text={!searching ? l10n.INCOME.toUpperCase() : undefined}
         />
         <Button
+          {...buttonProps}
           icon="arrow-down"
           iconFamily={ICON.FAMILY}
           onPress={() => setDialog(0)}
@@ -134,6 +136,7 @@ const Vault = ({ visible, ...inherit }) => {
         />
         {vaults.length > 1 && (
           <Button
+            {...buttonProps}
             icon="shuffle"
             iconFamily={ICON.FAMILY}
             onPress={() => setDialog(2)}

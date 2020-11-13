@@ -16,15 +16,16 @@ const getSyncStatus = async ({ snackbar, store }) => {
   let { settings } = store;
   let synced;
 
-  if (!settings.authorization) {
-    const authorization = await ServiceNode.signup({ fingerprint }).catch(() => {});
-    if (authorization) {
-      settings.authorization = authorization;
-      await updateSettings({ authorization });
+  const response = await ServiceNode.status({ settings, snackbar }).catch(async (error) => {
+    if (error.code === 403) {
+      const authorization = await ServiceNode.signup({ fingerprint }).catch(() => {});
+      if (authorization) {
+        settings.authorization = authorization;
+        await updateSettings({ authorization });
+      }
     }
-  }
+  });
 
-  const response = await ServiceNode.status({ settings, snackbar }).catch(() => {});
   if (response) {
     const { blocks = {}, latestHash = {} } = response;
     synced =
@@ -42,6 +43,7 @@ const syncNode = async ({ store, snackbar }) => {
     settings,
     blockchain: { vaults = [], txs = [] },
   } = store;
+
   const { latestHash = {} } = (await ServiceNode.status({ settings, snackbar })) || {};
 
   const rebase = !existsHash(vaults, latestHash.vaults) || !existsHash(txs, latestHash.txs);

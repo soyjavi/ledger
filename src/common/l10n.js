@@ -178,7 +178,7 @@ export const L10N = {
     VIEW_ALL: 'View All',
     VISIBILITY: 'Visibility',
 
-    WAIT: 'Just a moment...',
+    WAIT: 'Syncing...',
     WARNING: 'Warning',
     WELCOME_TITLE: 'Take back control of your money.',
     WELCOME_CAPTION: 'Your private finance accounting running on your own blockchain.',

@@ -8,7 +8,7 @@ import { useConnection, useL10N } from '@context';
 import { orderByAmount } from '../../modules';
 import styles from './Locations.style';
 
-const Locations = ({ cities = {}, color, countries = {}, points = [], precission = 0.001 }) => {
+const Locations = ({ cities = {}, countries = {}, points = [], precission = 0.001 }) => {
   const { online } = useConnection();
 
   const l10n = useL10N();
@@ -20,7 +20,7 @@ const Locations = ({ cities = {}, color, countries = {}, points = [], precission
       {online && (
         <View style={styles.content}>
           <Heading value={l10n.LOCATIONS} />
-          <HeatMap color={color} points={points} precission={precission} style={styles.heatMap} />
+          <HeatMap points={points} precission={precission} style={styles.heatMap} />
         </View>
       )}
 
@@ -61,7 +61,6 @@ const Locations = ({ cities = {}, color, countries = {}, points = [], precission
 
 Locations.propTypes = {
   cities: PropTypes.shape({}),
-  color: PropTypes.string,
   countries: PropTypes.shape({}),
   points: PropTypes.arrayOf(PropTypes.array),
   precission: PropTypes.number,

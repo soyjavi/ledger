@@ -9,19 +9,33 @@ import styles, { OPTION_SIZE } from './Option.style';
 
 const { BORDER_RADIUS, COLOR, FONT, ICON, SPACE } = THEME;
 
-const Option = ({ caption, currency, children, disabled, icon, image, onPress, selected, legend, ...inherit }) => {
+const Option = ({
+  caption,
+  children,
+  color = COLOR.BASE,
+  currency,
+  disabled,
+  icon,
+  image,
+  onPress,
+  selected,
+  legend,
+  ...inherit
+}) => {
   const colorContent = disabled ? COLOR.LIGHTEN : selected ? COLOR.BACKGROUND : COLOR.TEXT;
 
   return (
     <Box
       {...inherit}
       borderRadius={BORDER_RADIUS}
-      color={selected ? COLOR.CTA : COLOR.BASE}
+      color={selected ? COLOR.CTA : color}
       small
       style={[styles.container, inherit.style]}
     >
       <Touchable onPress={!disabled ? onPress : undefined} rippleColor={colorContent} style={styles.content}>
-        {currency && <CurrencyLogo currency={currency} highlight={selected} small />}
+        {currency && (
+          <CurrencyLogo color={selected ? COLOR.BRAND : COLOR.TEXT} currency={currency} highlight={selected} small />
+        )}
         {icon && <Icon value={icon} color={colorContent} family={ICON.FAMILY} size={SPACE.L} />}
 
         {caption && (
@@ -55,6 +69,7 @@ const Option = ({ caption, currency, children, disabled, icon, image, onPress, s
 Option.propTypes = {
   caption: PropTypes.string,
   children: PropTypes.node,
+  color: PropTypes.string,
   currency: PropTypes.string,
   disabled: PropTypes.bool,
   icon: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
