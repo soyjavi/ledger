@@ -30,7 +30,6 @@ const PriceFriendly = ({ currency, fixed, highlight, label, operator, maskAmount
     color,
     fixed: fixed !== undefined ? fixed : currencyDecimals(value, currency),
     numberOfLines: 1,
-    operator: operatorEnhanced,
     value: Math.abs(value),
   };
 
@@ -73,8 +72,11 @@ const PriceFriendly = ({ currency, fixed, highlight, label, operator, maskAmount
         </Text>
       ) : (
         <>
+          <Text {...others} color={color}>
+            {operatorEnhanced}
+          </Text>
           {LEFT_SYMBOLS.includes(symbol) && <Text {...symbolProps} />}
-          <Price {...props} bold={others.bold} style={others.style} />
+          <Price {...props} bold={highlight || others.bold} style={others.style} />
           {!LEFT_SYMBOLS.includes(symbol) && <Text {...symbolProps} />}
         </>
       )}
