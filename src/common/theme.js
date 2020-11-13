@@ -26,19 +26,17 @@ const FONT_FAMILY_CURRENCY = {
 // const OVERLAY = 'rgba(255, 255, 255, 0.8)';
 // const TEXT = '#000000';
 // const TEXT_DISABLED = '#C8C9C9';
-// const TEXT_LIGHTEN = '#A3A3A3';
 // const LIGHTEN = '#A3A3A3';
 // const RIPPLE = LIGHTEN;
 
 // DARK-MODE
 const BACKGROUND = '#121212';
-const BASE = '#262828'; //'#262828'; 262828 191919
+const BASE = '#2C2C2C';
 const CTA = '#fefdfa';
 const DIALOG = '#191919';
 const OVERLAY = 'rgba(0, 0, 0, 0.8)';
 const TEXT = '#fefdfa';
 const TEXT_DISABLED = '#C8C9C9';
-const TEXT_LIGHTEN = '#A3A3A3';
 const LIGHTEN = 'rgba(255,255,255,0.6)';
 const RIPPLE = LIGHTEN;
 
@@ -53,7 +51,7 @@ const ELEVATION = {
 };
 
 export const theme = {
-  BORDER_RADIUS: 3,
+  BORDER_RADIUS: 4,
 
   COLOR: {
     BRAND: '#D29776', //' #D29776  #F5DD7B', #FFD050  #ff9900
@@ -72,7 +70,6 @@ export const theme = {
 
     // -- Custom
     TEXT_DISABLED,
-    TEXT_LIGHTEN,
     LIGHTEN,
     OVERLAY,
     RIPPLE,

@@ -3,7 +3,6 @@ import React from 'react';
 import { THEME } from 'reactor/common';
 import { Button, Col, Row, Text, Touchable } from 'reactor/components';
 
-import { colorOpacity } from '@common';
 import { Box, CurrencyLogo, PriceFriendly } from '@components';
 
 import styles from './VaultItem.style';
@@ -25,7 +24,7 @@ const VaultItem = ({ active, onChange, onPress, dataSource: { currency, currentB
         <Row>
           <Col marginRight="S" width="auto">
             <Box styleContent={styles.boxContent}>
-              <CurrencyLogo color={!active ? COLOR.TEXT_LIGHTEN : undefined} currency={currency} size="S" />
+              <CurrencyLogo color={!active ? COLOR.LIGHTEN : undefined} currency={currency} size="S" />
             </Box>
           </Col>
           <Col>
