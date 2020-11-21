@@ -67,7 +67,7 @@ const Input = ({
             color={!value && !focus ? COLOR.LIGHTEN : undefined}
             currency={currency}
             headline
-            value={value}
+            value={value ? parseFloat(value, 10) : undefined}
           />
         )}
 
