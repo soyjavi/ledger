@@ -18,7 +18,6 @@ const VaultItem = ({ active, onChange, onPress, dataSource: { currency, currentB
         paddingHorizontal="M"
         paddingVertical="S"
         onPress={onPress}
-        rippleColor={COLOR.RIPPLE}
         style={[styles.container, !active && { opacity: OPACITY.M }]}
       >
         <Row>

@@ -27,7 +27,6 @@ const FONT_FAMILY_CURRENCY = {
 // const TEXT = '#000000';
 // const TEXT_DISABLED = '#C8C9C9';
 // const LIGHTEN = '#A3A3A3';
-// const RIPPLE = LIGHTEN;
 
 // DARK-MODE
 const BACKGROUND = '#121212';
@@ -38,7 +37,6 @@ const OVERLAY = 'rgba(0, 0, 0, 0.8)';
 const TEXT = '#fefdfa';
 const TEXT_DISABLED = '#C8C9C9';
 const LIGHTEN = 'rgba(255,255,255,0.6)';
-const RIPPLE = LIGHTEN;
 
 const ELEVATION = {
   shadowColor: '#000000',
@@ -72,7 +70,6 @@ export const theme = {
     TEXT_DISABLED,
     LIGHTEN,
     OVERLAY,
-    RIPPLE,
   },
 
   ELEVATION,
