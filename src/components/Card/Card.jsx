@@ -72,7 +72,7 @@ const Card = ({ balance = 0, color, currency, highlight, onPress, percentage, ti
 
 Card.propTypes = {
   balance: PropTypes.number,
-  color: PropTypes.string,
+  color: PropTypes.oneOfType([PropTypes.string, PropTypes.shape({})]),
   currency: PropTypes.string,
   currentMonth: PropTypes.shape({}),
   highlight: PropTypes.bool,
