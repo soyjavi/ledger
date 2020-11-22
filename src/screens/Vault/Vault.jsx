@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Button, Viewport } from 'reactor/components';
 
@@ -29,7 +29,7 @@ const buttonProps = {
   iconFamily: ICON.FAMILY,
 };
 
-const Vault = ({ visible, ...inherit }) => {
+const Vault = ({ visible }) => {
   const l10n = useL10N();
   const { params, ...navigation } = useNavigation();
   const { baseCurrency, vaults } = useStore();
@@ -87,7 +87,7 @@ const Vault = ({ visible, ...inherit }) => {
   console.log('  <Vault>', { visible, dialog });
 
   return (
-    <Viewport {...inherit} scroll={false} visible={visible}>
+    <Viewport scroll={false} visible={visible}>
       <Header highlight={scroll} title={title} onBack={navigation.back} />
 
       <ScrollView onScroll={handleScroll} ref={scrollview} style={styles.container}>

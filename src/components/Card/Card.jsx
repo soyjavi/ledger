@@ -24,7 +24,7 @@ const Card = ({ balance = 0, color, currency, highlight, onPress, percentage, ti
   const textColor = highlight ? COLOR.BACKGROUND : undefined;
 
   return (
-    <Touchable {...others} onPress={onPress} rippleColor={color || COLOR.RIPPLE} style={styles.container}>
+    <Touchable {...others} onPress={onPress} style={styles.container}>
       <Box color={highlight ? COLOR.CTA : color} style={styles.box}>
         <View style={styles.content}>
           <Row>
@@ -72,7 +72,7 @@ const Card = ({ balance = 0, color, currency, highlight, onPress, percentage, ti
 
 Card.propTypes = {
   balance: PropTypes.number,
-  color: PropTypes.string,
+  color: PropTypes.oneOfType([PropTypes.string, PropTypes.shape({})]),
   currency: PropTypes.string,
   currentMonth: PropTypes.shape({}),
   highlight: PropTypes.bool,

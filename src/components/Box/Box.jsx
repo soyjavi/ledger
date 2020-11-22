@@ -30,7 +30,7 @@ const Box = ({ borderRadius = BORDER_RADIUS, children, color = COLOR.BASE, outli
 Box.propTypes = {
   borderRadius: PropTypes.number,
   children: PropTypes.node,
-  color: PropTypes.string,
+  color: PropTypes.oneOfType([PropTypes.string, PropTypes.shape({})]),
   opacity: PropTypes.number,
   outlined: PropTypes.bool,
   rounded: PropTypes.bool,

@@ -34,7 +34,7 @@ const buttonProps = {
 const Dashboard = ({ visible, ...inherit }) => {
   const l10n = useL10N();
   const navigation = useNavigation();
-  const store = useStore();
+  const { settings: { baseCurrency, visibleVaults } = {}, overall, txs = [], vaults = [] } = useStore();
 
   const [dialogVault, setDialogVault] = useState(false);
   const [tx, setTx] = useState(undefined);
@@ -43,19 +43,15 @@ const Dashboard = ({ visible, ...inherit }) => {
   const [searchTxs, setSearchTxs] = useState(undefined);
   const [searching, setSearching] = useState(false);
 
-  const { settings: { baseCurrency } = {}, overall, vaults = [] } = store;
-
-  useEffect(() => {}, [store]);
-
   useEffect(() => {
-    if (visible) setLastTxs(queryLastTxs(store));
-  }, [store, visible]);
+    if (visible) setLastTxs(queryLastTxs({ txs, vaults }));
+  }, [txs, vaults, visible]);
 
   const handleSearch = (query) => {
-    setSearchTxs(query ? querySearchTxs(query, store, l10n) : undefined);
+    setSearchTxs(query ? querySearchTxs({ l10n, query, txs, vaults }) : undefined);
   };
 
-  console.log('  <Dashboard>', { visible });
+  console.log('  <Dashboard>', { visible, txs });
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
@@ -90,7 +86,7 @@ const Dashboard = ({ visible, ...inherit }) => {
             </Heading>
 
             <Slider itemWidth={CARD_WIDTH} itemMargin={SPACE.S} style={styles.vaults}>
-              {queryVaults(store).map((vault, index) => (
+              {queryVaults({ vaults, visibleVaults }).map((vault, index) => (
                 <VaultCard
                   {...vault}
                   baseCurrency={baseCurrency}

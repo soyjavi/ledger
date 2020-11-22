@@ -16,7 +16,7 @@ const {
     TYPE: { EXPENSE },
   },
 } = C;
-const { COLOR, OPACITY } = THEME;
+const { OPACITY } = THEME;
 
 const ItemGroupCategories = ({ color, dataSource, type }) => {
   const l10n = useL10N();
@@ -44,7 +44,6 @@ const ItemGroupCategories = ({ color, dataSource, type }) => {
           <Touchable
             key={key}
             onPress={() => setExpand(expand !== key ? key : undefined)}
-            rippleColor={COLOR.RIPPLE}
             style={[styles.content, expand && expand !== key && { opacity: OPACITY.S }]}
           >
             <HorizontalChartItem

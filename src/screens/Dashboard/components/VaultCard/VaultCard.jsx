@@ -5,7 +5,7 @@ import { THEME } from 'reactor/common';
 import { colorOpacity } from '@common';
 import { Card } from '@components';
 
-const { COLOR, OPACITY } = THEME;
+const { COLOR } = THEME;
 
 const VaultCard = ({
   baseCurrency,

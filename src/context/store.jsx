@@ -20,15 +20,15 @@ const StoreProvider = ({ children }) => {
   const { connected } = useConnection();
 
   const [state, setState] = useState({
+    blockchain: undefined,
     settings: {
       baseCurrency: CURRENCY,
     },
+    store: undefined,
     rates: {},
     vaults: [],
     txs: [],
   });
-  const [store, setStore] = useState();
-  const [blockchain, setBlockchain] = useState();
 
   useLayoutEffect(() => {
     const fetchStorage = async () => {
@@ -60,9 +60,9 @@ const StoreProvider = ({ children }) => {
         key: 'vaults',
       });
 
-      setStore(store);
-      setBlockchain(blockchain);
       setState({
+        store,
+        blockchain,
         settings: await store.get('settings').value,
         rates: await store.get('rates').value,
         vaults: await blockchain.get('vaults').blocks,
@@ -70,30 +70,30 @@ const StoreProvider = ({ children }) => {
       });
     };
 
-    if (!store) fetchStorage();
+    if (!state.store) fetchStorage();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const updateStore = async (key, value) => {
-    await store.get(key).save(value);
+    await state.store.get(key).save(value);
     setState({
       ...state,
-      settings: await store.get('settings').value,
-      rates: await store.get('rates').value,
+      settings: await state.store.get('settings').value,
+      rates: await state.store.get('rates').value,
     });
   };
 
   const addBlock = async (key, data = {}) => {
     const { settings } = state;
-    const { hash: previousHash } = blockchain.get(key).latestBlock;
+    const { hash: previousHash } = state.blockchain.get(key).latestBlock;
 
-    const block = await blockchain.addBlock(data, previousHash);
+    const block = await state.blockchain.addBlock(data, previousHash);
     if (connected) ServiceNode.sync({ key, block, settings });
 
     setState({
       ...state,
-      vaults: await blockchain.get('vaults').blocks,
-      txs: await blockchain.get('txs').blocks,
+      vaults: await state.blockchain.get('vaults').blocks,
+      txs: await state.blockchain.get('txs').blocks,
     });
 
     return block;
@@ -114,9 +114,9 @@ const StoreProvider = ({ children }) => {
 
     if (connected) await ServiceNode.sync({ settings, blockchain: { vaults: [], txs: [] } });
 
-    setBlockchain(fork);
     setState({
       ...state,
+      blockchain: fork,
       vaults: await fork.get('vaults').blocks,
       txs: await fork.get('txs').blocks,
     });
