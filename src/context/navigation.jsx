@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useContext, useReducer, createContext } from 'react';
+import React, { useContext, useMemo, useReducer, createContext } from 'react';
 
 import { C } from '@common';
 
@@ -44,18 +44,21 @@ const reducer = (state, action) => {
 const NavigationProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
 
-  return (
-    <NavigationContext.Provider
-      value={{
-        ...state,
-        current: state.stack[state.stack.length - 1],
-        back: () => dispatch({ type: 'BACK' }),
-        go: (value, params = {}) => dispatch({ type: 'GO', value, params }),
-        showTx: (value) => dispatch({ type: 'TX', value }),
-      }}
-    >
-      {children}
-    </NavigationContext.Provider>
+  return useMemo(
+    () => (
+      <NavigationContext.Provider
+        value={{
+          ...state,
+          back: () => dispatch({ type: 'BACK' }),
+          current: state.stack[state.stack.length - 1],
+          go: (value, params = {}) => dispatch({ type: 'GO', value, params }),
+          showTx: (value) => dispatch({ type: 'TX', value }),
+        }}
+      >
+        {children}
+      </NavigationContext.Provider>
+    ),
+    [children, state],
   );
 };
 
