@@ -15,7 +15,7 @@ export const queryLastTxs = ({ txs = [], vaults = [] }) =>
       }),
   );
 
-export const querySearchTxs = (query, { txs = [], vaults = [] }, l10n) =>
+export const querySearchTxs = ({ l10n, query, txs = [], vaults = [] }) =>
   groupTxsByDate(
     txs
       .slice()
@@ -33,7 +33,7 @@ export const querySearchTxs = (query, { txs = [], vaults = [] }, l10n) =>
       }),
   );
 
-export const queryVaults = ({ settings: { visibleVaults } = {}, vaults = [] }) =>
+export const queryVaults = ({ visibleVaults, vaults = [] }) =>
   vaults
     .filter((vault) => visibleVaults[vault.hash] !== false)
     .sort(({ currentMonth: { txs } }, { currentMonth: { txs: nextTxs } }) => nextTxs - txs);
