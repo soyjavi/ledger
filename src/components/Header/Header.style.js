@@ -6,10 +6,10 @@ import { colorOpacity } from '@common';
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
 const ENV = useEnvironment();
-const { COLOR, UNIT, SPACE } = THEME;
+const { COLOR, SPACE } = THEME;
 const IMAGE_SIZE = SPACE.M + SPACE.XS;
 
-export const HEADER_HEIGHT = UNIT * 8;
+export const HEADER_HEIGHT = SPACE.XXL;
 
 export default StyleSheet.create({
   container: {
