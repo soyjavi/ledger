@@ -23,7 +23,7 @@ const TransactionItem = (props) => {
     settings: { baseCurrency },
     rates,
   } = useStore();
-  const { category, currency, location, timestamp, title, type = EXPENSE, value, onPress } = props;
+  const { category = 99, currency, location, timestamp, title, type = EXPENSE, value, onPress } = props;
   const operator = type === EXPENSE ? -1 : 1;
 
   return (
@@ -75,7 +75,7 @@ const TransactionItem = (props) => {
 };
 
 TransactionItem.propTypes = {
-  category: PropTypes.number.isRequired,
+  category: PropTypes.number,
   currency: PropTypes.string.isRequired,
   location: PropTypes.shape({}),
   onPress: PropTypes.func,

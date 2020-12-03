@@ -18,10 +18,8 @@ const SliderMonths = ({ index, onChange, ...others }) => {
 
   useEffect(() => {
     if (index) {
-      const {
-        current: { scrollview },
-      } = slider;
-      scrollview.current.scrollTo({ x: (index - 3) * (OPTION_SIZE + SPACE.S), animated: true });
+      const { current } = slider;
+      current.scrollTo({ x: (index - 3) * (OPTION_SIZE + SPACE.S), animated: true });
     }
   }, [index]);
 
