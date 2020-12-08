@@ -13,12 +13,13 @@ export default StyleSheet.create({
 
   status: {
     alignSelf: 'center',
-    top: SPACE.XS,
-    position: ENV.IS_WEB ? 'fixed' : 'absolute',
-    backgroundColor: COLOR.TEXT,
-    paddingHorizontal: SPACE.XS,
-    paddingVertical: SPACE.XXS,
+    backgroundColor: COLOR.ERROR,
     borderRadius: BORDER_RADIUS,
+    right: SPACE.M,
+    top: SPACE.S + SPACE.XS,
+    paddingHorizontal: SPACE.S,
+    paddingVertical: SPACE.XS,
+    position: ENV.IS_WEB ? 'fixed' : 'absolute',
     zIndex: 2,
   },
 });

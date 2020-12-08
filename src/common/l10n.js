@@ -99,6 +99,7 @@ export const L10N = {
     INITIAL_BALANCE: 'Initial balance',
 
     LAST_TRANSACTIONS: 'Last transactions',
+    LATER: 'LATER',
     LOADING_PLACE: 'Wait a moment, loading place.',
     LOCATIONS: 'Locations',
 
@@ -120,11 +121,11 @@ export const L10N = {
     NAME: 'Name',
     NEW: 'New',
     NO_TRANSACTIONS: "You don't have any transaction.",
-    NOT_CONNECTED: 'Not connected',
 
     ONBOARDING_COMPLETED_TITLE: 'You did it!',
     ONBOARDING_COMPLETED_CAPTION: 'Successfully created account',
 
+    OFFLINE: 'OFFLINE',
     OTHERS: 'Others',
     OVERALL_BALANCE: 'Overall Balance',
 
@@ -145,9 +146,7 @@ export const L10N = {
 
     STATS: 'Stats',
     STATS_CAPTION: 'In this summary you can see a breakdown of your operations in the selected category.',
-    // SYNC: 'You have ${blocks} blocks out of sync',
-    SYNC_SENTENCE_1: 'You were disconnected',
-    SYNC_SENTENCE_2: 'please.',
+    SYNC_CAPTION: 'It seems like you were offline for a while, you can sync your blockchain now.',
     SYNC_NOW: 'SYNC NOW',
     SYNC_BUSY: 'Wait a bit meanwhile your transactions get sync.',
     SYNC_DONE: 'All your transactions have been synced.',
@@ -166,7 +165,7 @@ export const L10N = {
     TRANSFER_TXS_CAMERA: 'Read the QR code from the device you want get all its transactions and accounts.',
     TRANSFER_TXS_IMPORT:
       // eslint-disable-next-line max-len
-      'You are about to import all transactions and accounts from another device. Keep in mind that all your current data will be deleted from this device.',
+      'You are about to import all transactions and accounts from another device. Keep in mind that all your data will be deleted.',
     TRANSFER_CAPTION: 'Transfer any amount to another of your accounts.',
     TYPE: 'Type',
 
