@@ -19,7 +19,6 @@ const CAMERA_PROPS = {
   barCodeScannerSettings: { barCodeTypes: [BarCodeScanner.Constants.BarCodeType.qr] },
   type: Camera.Constants.Type.back,
 };
-const TIMEOUT_CHECK_BLOCKCHAIN = 400;
 
 const Settings = ({ visible, ...inherit }) => {
   const l10n = useL10N();
@@ -28,7 +27,7 @@ const Settings = ({ visible, ...inherit }) => {
   const store = useStore();
   const snackbar = useSnackBar();
 
-  const [blockchain, setBlockchain] = useState(undefined);
+  const [blockchain, setBlockchain] = useState();
   const [camera, setCamera] = useState(false);
   const [scroll, setScroll] = useState(false);
   const [hasCamera, setHasCamera] = useState(undefined);
@@ -42,8 +41,9 @@ const Settings = ({ visible, ...inherit }) => {
   } = store;
 
   useEffect(() => {
-    if (!visible) setCamera(false);
-    else if (hasCamera === undefined) {
+    if (!visible) {
+      setCamera(false);
+    } else if (hasCamera === undefined) {
       // setQr('418A9E4B-F117-476D-B0F1-6D4A24AED048|backup');
       setHasCamera(askCamera());
     }
@@ -51,14 +51,24 @@ const Settings = ({ visible, ...inherit }) => {
   }, [visible]);
 
   useEffect(() => {
-    const timeout = setTimeout(async () => {
-      if (qr) setBlockchain(await getBlockchain({ qr, store }));
-      else clearTimeout(timeout);
-    }, TIMEOUT_CHECK_BLOCKCHAIN);
+    if (!camera) {
+      setBlockchain(undefined);
+      setQr(false);
+    }
+  }, [camera]);
 
-    return () => clearTimeout(timeout);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    (async () => {
+      if (qr) setBlockchain(await getBlockchain({ qr, store }));
+    })();
   }, [qr]);
+
+  const handleCancel = () => {
+    setBlockchain(undefined);
+    setQr(undefined);
+  };
+
+  const handleChangeCurrency = (currency) => changeCurrency({ currency, l10n, snackbar, store });
 
   const handleQRScanned = ({ data } = {}) => {
     if (data) setQr(data);
@@ -71,13 +81,6 @@ const Settings = ({ visible, ...inherit }) => {
       snackbar.success(l10n.FORKED_CORRECTLY);
     }
   };
-
-  const handleCancel = () => {
-    setBlockchain(undefined);
-    setQr(undefined);
-  };
-
-  const handleChangeCurrency = (currency) => changeCurrency({ currency, l10n, snackbar, store });
 
   const handleUpdateRates = async () => {
     setSyncRates(true);

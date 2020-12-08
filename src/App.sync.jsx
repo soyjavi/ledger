@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
-import { Motion, Snackbar, Text, Touchable } from 'reactor/components';
+import { Alert, Motion, Snackbar, Text } from 'reactor/components';
 
 import { C } from '@common';
 import { useConnection, useL10N, useNavigation, useSnackBar, useStore } from '@context';
@@ -9,6 +9,7 @@ import styles from './App.style';
 import { getSyncStatus, syncNode } from './App.sync.controller';
 
 const {
+  DELAY_PRESS_MS,
   TIMEOUT,
   SCREEN: { DASHBOARD },
 } = C;
@@ -52,22 +53,31 @@ const Sync = () => {
     if (synced) snackbar.success(l10n.SYNC_DONE);
   };
 
-  const showStatus = !connected || state === STATE.FETCHING;
-
   return (
     <>
       {stack.includes(DASHBOARD) && (
         <Motion
-          duration={showStatus ? MOTION.EXPAND : MOTION.COLLAPSE}
-          style={[styles.status, { backgroundColor: !connected ? COLOR.ERROR : undefined }]}
-          timeline={[{ property: 'translateY', value: showStatus ? 0 : -SPACE.XXL }]}
+          duration={!connected ? MOTION.EXPAND : MOTION.COLLAPSE}
+          style={styles.status}
+          timeline={[{ property: 'translateY', value: 1 === 1 || !connected ? 0 : -SPACE.XXL }]}
           type="spring"
         >
-          <Text bold={!connected} caption color={!connected ? COLOR.BACKGROUND : undefined}>
-            {!connected ? l10n.NOT_CONNECTED : l10n.WAIT}
-          </Text>
+          <Text caption>{l10n.OFFLINE}</Text>
         </Motion>
       )}
+
+      <Alert
+        accept={l10n.SYNC_NOW}
+        cancel={l10n.LATER}
+        caption={l10n.SYNC_CAPTION}
+        delay={DELAY_PRESS_MS}
+        position="bottom"
+        title={l10n.WARNING}
+        visible={STATE.UNSYNCED === state}
+        onAccept={handleSync}
+        onCancel={() => setState(undefined)}
+        onClose={() => setState(undefined)}
+      />
 
       <Snackbar
         caption={state === STATE.SYNCING ? l10n.SYNC_BUSY : l10n.SYNC_SENTENCE_1}
@@ -75,22 +85,9 @@ const Sync = () => {
         iconFamily={ICON.FAMILY}
         iconSize={SPACE.M}
         onClose={state === STATE.UNSYNCED ? () => setState(undefined) : undefined}
-        visible={[STATE.UNSYNCED, STATE.SYNCING].includes(state)}
-        position="bottom"
-      >
-        {state === STATE.UNSYNCED && (
-          <>
-            <Touchable marginHorizontal="XS" onPress={handleSync} size="S">
-              <Text bold caption color={COLOR.WHITE} underlined>
-                {l10n.SYNC_NOW}
-              </Text>
-            </Touchable>
-            <Text caption color={COLOR.WHITE}>
-              {l10n.SYNC_SENTENCE_2}
-            </Text>
-          </>
-        )}
-      </Snackbar>
+        visible={STATE.SYNCING === state}
+        position="top"
+      />
     </>
   );
 };

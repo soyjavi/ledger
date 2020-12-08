@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React, { useCallback, useContext, useEffect, useLayoutEffect, useState, createContext } from 'react';
-import { useEnvironment } from 'reactor/hooks';
 
 import { C } from '@common';
 import NetInfo from '@react-native-community/netinfo';
@@ -11,23 +10,15 @@ const { TIMEOUT } = C;
 const ConnectionContext = createContext(`${C.NAME}:context:connection`);
 
 const ConnectionProvider = ({ children }) => {
-  const { IS_NATIVE } = useEnvironment();
-
   const [online, setOnline] = useState(false);
   const [connected, setConnected] = useState(false);
 
   useLayoutEffect(() => {
-    if (IS_NATIVE) {
-      NetInfo.fetch().then((state) => setOnline(state.isConnected));
-      NetInfo.addEventListener((state) => setOnline(state.isConnected));
-    } else {
-      NetInfo.isConnected.fetch().then(setOnline);
-      NetInfo.isConnected.addEventListener('connectionChange', setOnline);
-    }
+    NetInfo.fetch().then((state) => setOnline(state.isConnected));
+    NetInfo.addEventListener((state) => setOnline(state.isConnected));
 
     return () => {
-      if (IS_NATIVE) NetInfo.addEventListener();
-      else NetInfo.isConnected.removeEventListener('connectionChange');
+      NetInfo.addEventListener();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
