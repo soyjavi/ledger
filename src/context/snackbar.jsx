@@ -2,13 +2,12 @@ import PropTypes from 'prop-types';
 import React, { useContext, useReducer, createContext } from 'react';
 import { THEME } from 'reactor/common';
 import { Snackbar } from 'reactor/components';
-import { useL10N } from 'reactor/context/L10N';
 
 import { C } from '@common';
 
 const KEY = `${C.NAME}:context:snackbar`;
 const SnackBarContext = createContext(KEY);
-const { COLOR, ICON, SPACE } = THEME;
+const { COLOR, ICON } = THEME;
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -24,7 +23,6 @@ const reducer = (state, action) => {
 };
 
 const SnackBarProvider = ({ children }) => {
-  const l10n = useL10N();
   const [state, dispatch] = useReducer(reducer, { color: undefined, caption: undefined });
 
   const events = {
@@ -38,12 +36,10 @@ const SnackBarProvider = ({ children }) => {
       {children}
       <Snackbar
         {...state}
-        button={l10n.CLOSE.toUpperCase()}
-        iconSize={SPACE.M}
         family={ICON.FAMILY}
-        onClose={() => dispatch({ type: 'HIDE' })}
-        position="bottom"
+        position="top"
         visible={state.type === 'SHOW'}
+        onClose={() => dispatch({ type: 'HIDE' })}
       />
     </SnackBarContext.Provider>
   );
