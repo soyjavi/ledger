@@ -39,9 +39,11 @@ const Sync = () => {
   const handleState = useCallback(async () => {
     setState(STATE.FETCHING);
     const synced = await getSyncStatus({ setState, snackbar, STATE, store });
+
     if (synced === undefined) setState(STATE.UNKNOWN);
     else setState(synced ? STATE.SYNCED : STATE.UNSYNCED);
-  }, [snackbar, store]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [store]);
 
   const handleSync = async () => {
     setState(STATE.SYNCING);

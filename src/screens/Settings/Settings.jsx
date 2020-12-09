@@ -61,7 +61,7 @@ const Settings = ({ visible, ...inherit }) => {
     (async () => {
       if (qr) setBlockchain(await getBlockchain({ qr, store }));
     })();
-  }, [qr]);
+  }, [qr, store]);
 
   const handleCancel = () => {
     setBlockchain(undefined);
