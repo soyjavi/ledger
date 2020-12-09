@@ -11,7 +11,7 @@ export default StyleSheet.create({
     backgroundColor: COLOR.BACKGROUND,
   },
 
-  status: {
+  connected: {
     alignSelf: 'center',
     backgroundColor: COLOR.ERROR,
     borderRadius: BORDER_RADIUS,
