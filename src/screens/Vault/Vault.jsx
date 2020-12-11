@@ -19,7 +19,6 @@ import { useL10N, useNavigation, useStore } from '@context';
 
 import { DialogTransaction } from './components';
 import { onScroll, query, search } from './Vault.controller';
-import styles from './Vault.style';
 
 const { COLOR, ICON } = THEME;
 
@@ -90,7 +89,7 @@ const Vault = ({ visible }) => {
     <Viewport scroll={false} visible={visible}>
       <Header highlight={scroll} title={title} onBack={navigation.back} />
 
-      <ScrollView onScroll={handleScroll} ref={scrollview} style={styles.container}>
+      <ScrollView onScroll={handleScroll} ref={scrollview}>
         <Summary {...rest} title={title} currency={currency}>
           <Button {...buttonProps} icon="arrow-up" onPress={() => setDialog(1)} text={l10n.INCOME.toUpperCase()} />
           <Button {...buttonProps} icon="arrow-down" onPress={() => setDialog(0)} text={l10n.EXPENSE.toUpperCase()} />

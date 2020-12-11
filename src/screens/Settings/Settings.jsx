@@ -23,7 +23,6 @@ const CAMERA_PROPS = {
 const Settings = ({ visible, ...inherit }) => {
   const l10n = useL10N();
   const navigation = useNavigation();
-  const scrollview = useRef(null);
   const store = useStore();
   const snackbar = useSnackBar();
 
@@ -110,7 +109,7 @@ const Settings = ({ visible, ...inherit }) => {
           title={l10n.SETTINGS}
         />
 
-        <ScrollView contentContainerStyle={styles.scroll} onScroll={setScroll} ref={scrollview}>
+        <ScrollView onScroll={setScroll}>
           <Summary currency={baseCurrency} title={l10n.SETTINGS} />
 
           <View marginBottom="XL" marginHorizontal="M">

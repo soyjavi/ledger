@@ -65,7 +65,7 @@ const Stats = ({ visible, ...inherit }) => {
     <Viewport {...inherit} scroll={false} visible={visible}>
       <Header highlight={scroll} onBack={navigation.back} title={`${l10n.MONTHS[slider.month]} ${slider.year}`} />
 
-      <ScrollView contentContainerStyle={styles.scrollView} onScroll={(value) => setScroll(value)} ref={scrollview}>
+      <ScrollView onScroll={(value) => setScroll(value)} ref={scrollview}>
         <Summary currency={baseCurrency} title={`${l10n.MONTHS[slider.month]} ${slider.year}`} />
 
         <SliderMonths {...slider} onChange={handleSliderChange} marginBottom="XL" />
