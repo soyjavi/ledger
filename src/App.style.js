@@ -15,11 +15,11 @@ export default StyleSheet.create({
     alignSelf: 'center',
     backgroundColor: COLOR.ERROR,
     borderRadius: BORDER_RADIUS,
-    right: SPACE.M,
-    top: SPACE.S + SPACE.XS,
     paddingHorizontal: SPACE.S,
     paddingVertical: SPACE.XS,
     position: ENV.IS_WEB ? 'fixed' : 'absolute',
+    right: SPACE.M,
+    top: ENV.IS_WEB ? SPACE.M - SPACE.XS : SPACE.XXL + SPACE.S,
     zIndex: 2,
   },
 });

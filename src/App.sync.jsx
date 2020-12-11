@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react';
+import { SafeAreaView } from 'react-native';
 import { THEME } from 'reactor/common';
 import { Alert, Motion, Snackbar, Text } from 'reactor/components';
 
@@ -54,14 +55,16 @@ const Sync = () => {
 
   return (
     <>
-      <Motion
-        duration={!connected ? MOTION.EXPAND : MOTION.COLLAPSE}
-        style={[styles.connected]}
-        timeline={[{ property: 'translateY', value: !connected ? 0 : -SPACE.XXL }]}
-        type="spring"
-      >
-        <Text caption>{l10n.OFFLINE}</Text>
-      </Motion>
+      <SafeAreaView>
+        <Motion
+          duration={!connected ? MOTION.EXPAND : MOTION.COLLAPSE}
+          style={[styles.connected]}
+          timeline={[{ property: 'translateY', value: !connected || 1 === 1 ? 0 : -SPACE.XXL }]}
+          type="spring"
+        >
+          <Text caption>{l10n.OFFLINE}</Text>
+        </Motion>
+      </SafeAreaView>
 
       {connected && (
         <>
