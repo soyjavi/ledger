@@ -1,7 +1,7 @@
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Camera } from 'expo-camera';
 import PropTypes from 'prop-types';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Alert, Button, Image, Row, Text, View, Viewport } from 'reactor/components';
 
@@ -23,6 +23,7 @@ const CAMERA_PROPS = {
 const Settings = ({ visible, ...inherit }) => {
   const l10n = useL10N();
   const navigation = useNavigation();
+  const scrollview = useRef(null);
   const store = useStore();
   const snackbar = useSnackBar();
 
@@ -38,6 +39,12 @@ const Settings = ({ visible, ...inherit }) => {
     updateRates,
     fork,
   } = store;
+
+  useLayoutEffect(() => {
+    if (!visible) {
+      scrollview.current.scrollTo({ y: 0, animated: false });
+    }
+  }, [visible]);
 
   useEffect(() => {
     if (!visible) {
@@ -109,7 +116,7 @@ const Settings = ({ visible, ...inherit }) => {
           title={l10n.SETTINGS}
         />
 
-        <ScrollView onScroll={setScroll}>
+        <ScrollView onScroll={setScroll} ref={scrollview}>
           <Summary currency={baseCurrency} title={l10n.SETTINGS} />
 
           <View marginBottom="XL" marginHorizontal="M">
