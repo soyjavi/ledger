@@ -1,11 +1,12 @@
 {
   "name": "ledger",
   "description": "Your private finance ledger running on your own blockchain",
-  "version": "0.25.0",
+  "version": "0.25.1",
   "license": "LGPL-3.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "build:apk": "NODE_ENV=production expo build:android",
+    "build:android": "NODE_ENV=production expo build:android",
+    "build:ios": "NODE_ENV=production expo build:ios",
     "build:ota": "NODE_ENV=production expo publish",
     "start": "expo start --web",
     "start:prod": "expo start --no-dev --minify --web",
