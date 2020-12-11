@@ -9,11 +9,9 @@ const ENV = useEnvironment();
 const { COLOR, OPACITY, SPACE } = THEME;
 const IMAGE_SIZE = SPACE.M + SPACE.XS;
 
-export const HEADER_HEIGHT = SPACE.XXL;
-
 export default StyleSheet.create({
   container: {
-    height: HEADER_HEIGHT,
+    height: SPACE.XXL,
     position: ENV.IS_WEB ? 'fixed' : 'absolute',
     justifyContent: 'space-between',
     top: 0,
