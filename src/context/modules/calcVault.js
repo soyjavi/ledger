@@ -1,33 +1,37 @@
 import { C, exchange, getMonthDiff } from '@common';
 
 const {
-  STATS_MONTHS_LIMIT,
   TX: { TYPE },
   VAULT_TRANSFER,
 } = C;
 
-export const calcVault = ({ baseCurrency, rates = {}, txs = [], vault }) => {
+export const calcVault = ({ baseCurrency, genesisDate, months = 0, rates = {}, txs = [], vault }) => {
   const now = new Date();
-  const originDate = new Date(now.getFullYear(), now.getMonth() - STATS_MONTHS_LIMIT, 1, 0, 0);
 
   const currentDay = now.getDate();
   const { currency } = vault;
   const exchangeProps = [currency, baseCurrency, rates];
-  let { balance = 0 } = vault;
+  let { balance: currentBalance = 0 } = vault;
   let currentMonthTxs = 0;
   let expenses = 0;
   let incomes = 0;
   let progression = 0;
   let today = 0;
 
+  let chartBalance = new Array(months + 1).fill(0);
+  chartBalance[0] = vault.balance > 0 ? vault.balance : 0;
+
   const dataSource = txs.filter((tx) => tx.vault === vault.hash);
-  dataSource.forEach(({ category, timestamp, type, value }) => {
+  dataSource.forEach(({ category, timestamp, type, value = 0 }) => {
     const isExpense = type === TYPE.EXPENSE;
     const date = new Date(timestamp);
-    const monthIndex = getMonthDiff(originDate, date);
+    const monthIndex = getMonthDiff(genesisDate, date);
 
-    balance += isExpense ? -value : value;
-    if (monthIndex === STATS_MONTHS_LIMIT) {
+    currentBalance += isExpense ? -value : value;
+    chartBalance[monthIndex] += isExpense ? -value : value;
+
+    // @TODO: Should revisit this algo
+    if (monthIndex === months) {
       if (category !== VAULT_TRANSFER) {
         currentMonthTxs += 1;
         if (isExpense) expenses += value;
@@ -39,21 +43,19 @@ export const calcVault = ({ baseCurrency, rates = {}, txs = [], vault }) => {
     }
   });
 
+  chartBalance.forEach((value, index) => {
+    if (index > 0) chartBalance[index] += chartBalance[index - 1];
+  });
+
   return {
     ...vault,
-    chartBalance: new Array(STATS_MONTHS_LIMIT)
-      .fill(0)
-      .map((value, index) =>
-        currency !== baseCurrency
-          ? exchange(
-              vault.balance,
-              ...exchangeProps,
-              new Date(originDate.getFullYear(), originDate.getMonth() + index + 1, 1),
-            )
-          : vault.balance,
-      ),
-    currentBalance: balance,
-    currentBalanceBase: exchange(balance, ...exchangeProps),
+    chartBalance: chartBalance.map((value, index) =>
+      currency !== baseCurrency
+        ? exchange(value, ...exchangeProps, new Date(genesisDate.getFullYear(), genesisDate.getMonth() + index + 1, 1))
+        : value,
+    ),
+    currentBalance,
+    currentBalanceBase: exchange(currentBalance, ...exchangeProps),
     currentMonth: {
       expenses: exchange(expenses, ...exchangeProps),
       incomes: exchange(incomes, ...exchangeProps),

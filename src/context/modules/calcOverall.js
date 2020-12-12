@@ -1,6 +1,5 @@
-import { C, exchange } from '@common';
+import { exchange } from '@common';
 
-const { STATS_MONTHS_LIMIT } = C;
 const KEYS = ['expenses', 'incomes', 'progression', 'today'];
 
 export const calcOverall = ({ baseCurrency, rates, vaults = [] }) => {
@@ -12,7 +11,7 @@ export const calcOverall = ({ baseCurrency, rates, vaults = [] }) => {
   };
   let balance = 0;
   let currentBalance = 0;
-  const chartBalance = new Array(STATS_MONTHS_LIMIT).fill(0);
+  const chartBalance = [];
 
   vaults.forEach(
     ({
@@ -33,7 +32,7 @@ export const calcOverall = ({ baseCurrency, rates, vaults = [] }) => {
       });
 
       vaultChartBalance.forEach((value, index) => {
-        chartBalance[index] += vaultChartBalance[index];
+        chartBalance[index] = (chartBalance[index] || 0) + vaultChartBalance[index];
       });
     },
   );
