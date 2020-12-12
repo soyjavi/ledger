@@ -59,7 +59,7 @@ const Sync = () => {
         <Motion
           duration={!connected ? MOTION.EXPAND : MOTION.COLLAPSE}
           style={[styles.connected]}
-          timeline={[{ property: 'translateY', value: !connected || 1 === 1 ? 0 : -SPACE.XXL }]}
+          timeline={[{ property: 'translateY', value: !connected ? 0 : -(SPACE.XXL * 4) }]}
           type="spring"
         >
           <Text caption>{l10n.OFFLINE}</Text>
