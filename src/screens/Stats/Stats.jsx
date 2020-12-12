@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Viewport } from 'reactor/components';
 
@@ -71,7 +71,7 @@ const Stats = ({ visible, ...inherit }) => {
         <SliderMonths {...slider} onChange={handleSliderChange} marginBottom="XL" />
 
         <Chart
-          {...calcScales(chart.balance)}
+          {...useMemo(() => calcScales(chart.balance), [chart.balance])}
           {...chartProps}
           captions={orderCaptions(l10n)}
           color={COLOR.BRAND}
@@ -82,7 +82,7 @@ const Stats = ({ visible, ...inherit }) => {
         />
 
         <Chart
-          {...calcScales(chart.incomes)}
+          {...useMemo(() => calcScales(chart.incomes), [chart.incomes])}
           {...chartProps}
           color={COLOR.BRAND}
           styleContainer={[styles.chart]}
@@ -90,7 +90,7 @@ const Stats = ({ visible, ...inherit }) => {
           values={chart.incomes}
         />
         <Chart
-          {...calcScales(chart.expenses)}
+          {...useMemo(() => calcScales(chart.expenses), [chart.expenses])}
           {...chartProps}
           captions={orderCaptions(l10n)}
           inverted
