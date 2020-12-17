@@ -1,4 +1,4 @@
-export const getMonthDiff = (baseDate, date) => {
+export const getMonthDiff = (baseDate = new Date(), date = new Date()) => {
   let months = (date.getFullYear() - baseDate.getFullYear()) * 12;
   months -= baseDate.getMonth();
   months += date.getMonth();

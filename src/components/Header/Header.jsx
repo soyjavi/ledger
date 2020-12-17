@@ -6,7 +6,7 @@ import { Button, Col, Motion, Row, Text } from 'reactor/components';
 import { onHardwareBackPress } from '@common';
 
 import { CurrencyLogo } from '../CurrencyLogo';
-import styles, { HEADER_HEIGHT } from './Header.style';
+import styles from './Header.style';
 
 const { COLOR, ICON, MOTION, UNIT } = THEME;
 
@@ -60,4 +60,4 @@ Header.propTypes = {
   title: PropTypes.string,
 };
 
-export { Header, HEADER_HEIGHT };
+export { Header };

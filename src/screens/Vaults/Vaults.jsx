@@ -41,7 +41,7 @@ const Vaults = ({ visible, ...inherit }) => {
     <Viewport {...inherit} scroll={false} visible={visible}>
       <Header highlight={scroll} onBack={navigation.back} title={l10n.VAULTS} />
 
-      <ScrollView contentContainerStyle={styles.scroll} onScroll={(value) => setScroll(value)} ref={scrollview}>
+      <ScrollView onScroll={(value) => setScroll(value)} ref={scrollview}>
         <Summary currency={baseCurrency} title={l10n.VAULTS} />
         {hasCurrencies && (
           <>

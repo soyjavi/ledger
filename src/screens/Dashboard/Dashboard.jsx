@@ -57,7 +57,7 @@ const Dashboard = ({ visible, ...inherit }) => {
     <Viewport {...inherit} scroll={false} visible={visible}>
       <Header highlight={scroll} title={l10n.OVERALL_BALANCE} />
 
-      <ScrollView contentContainerStyle={styles.scroll} onScroll={setScroll}>
+      <ScrollView onScroll={setScroll}>
         <Summary {...overall} currency={baseCurrency} title={l10n.OVERALL_BALANCE}>
           <Button
             {...buttonProps}

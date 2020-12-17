@@ -1,7 +1,7 @@
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Camera } from 'expo-camera';
 import PropTypes from 'prop-types';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Alert, Button, Image, Row, Text, View, Viewport } from 'reactor/components';
 
@@ -40,6 +40,12 @@ const Settings = ({ visible, ...inherit }) => {
     fork,
   } = store;
 
+  useLayoutEffect(() => {
+    if (!visible) {
+      scrollview.current.scrollTo({ y: 0, animated: false });
+    }
+  }, [visible]);
+
   useEffect(() => {
     if (!visible) {
       setCamera(false);
@@ -61,7 +67,7 @@ const Settings = ({ visible, ...inherit }) => {
     (async () => {
       if (qr) setBlockchain(await getBlockchain({ qr, store }));
     })();
-  }, [qr]);
+  }, [qr, store]);
 
   const handleCancel = () => {
     setBlockchain(undefined);
@@ -110,7 +116,7 @@ const Settings = ({ visible, ...inherit }) => {
           title={l10n.SETTINGS}
         />
 
-        <ScrollView contentContainerStyle={styles.scroll} onScroll={setScroll} ref={scrollview}>
+        <ScrollView onScroll={setScroll} ref={scrollview}>
           <Summary currency={baseCurrency} title={l10n.SETTINGS} />
 
           <View marginBottom="XL" marginHorizontal="M">

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { Sync } from './App.sync';
 import { C } from './common';
 import { useNavigation } from './context';
 import { Dashboard, Onboarding, Settings, Stats, Vault, Vaults } from './screens';
@@ -22,6 +23,7 @@ const Router = () => {
           <Vault visible={stack.includes(VAULT)} />
           <Stats visible={stack.includes(STATS)} />
           <Settings visible={stack.includes(SETTINGS)} />
+          <Sync />
         </>
       )}
     </>

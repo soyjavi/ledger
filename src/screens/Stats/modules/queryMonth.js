@@ -15,7 +15,6 @@ const RANGE_MONTHS = 12;
 
 export default ({ overall, rates, settings: { baseCurrency }, txs, vaults }, { month, year }) => {
   const chart = {
-    balance: new Array(RANGE_MONTHS).fill(0),
     expenses: new Array(RANGE_MONTHS).fill(0),
     incomes: new Array(RANGE_MONTHS).fill(0),
     transfers: new Array(RANGE_MONTHS).fill(0),
@@ -39,7 +38,6 @@ export default ({ overall, rates, settings: { baseCurrency }, txs, vaults }, { m
     const { currency } = vaults.find(({ hash }) => hash === tx.vault);
     const valueExchange = exchange(value, currency, baseCurrency, rates, timestamp);
 
-    chart.balance[index] += type === EXPENSE ? -valueExchange : valueExchange;
     const isTransfer = category === VAULT_TRANSFER;
 
     if (isTransfer && type === EXPENSE) chart.transfers[index] += valueExchange;
@@ -69,7 +67,6 @@ export default ({ overall, rates, settings: { baseCurrency }, txs, vaults }, { m
     }
   });
 
-  let total = 0;
   vaults.forEach(({ currency, currentBalance: balance, currentBalanceBase: base }) => {
     let item = currencies[currency] || { balance: 0, base: 0 };
     item = { balance: item.balance + balance, base: item.base + base };
@@ -79,18 +76,7 @@ export default ({ overall, rates, settings: { baseCurrency }, txs, vaults }, { m
   });
 
   return {
-    chart: {
-      ...chart,
-      balance: chart.balance
-        .map((value) => {
-          total += value;
-          return total;
-        })
-        .map((value, index) => {
-          const baseBalance = overall.chartBalance[index];
-          return value !== 0 ? baseBalance + value : 0;
-        }),
-    },
+    chart,
     ...values,
     locations: {
       cities,

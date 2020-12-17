@@ -6,21 +6,19 @@ import { colorOpacity } from '@common';
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
 const ENV = useEnvironment();
-const { COLOR, SPACE } = THEME;
+const { COLOR, OPACITY, SPACE } = THEME;
 const IMAGE_SIZE = SPACE.M + SPACE.XS;
-
-export const HEADER_HEIGHT = SPACE.XXL;
 
 export default StyleSheet.create({
   container: {
-    height: HEADER_HEIGHT,
+    height: SPACE.XXL,
     position: ENV.IS_WEB ? 'fixed' : 'absolute',
     justifyContent: 'space-between',
     top: 0,
     width: '100%',
     zIndex: 1,
     overflow: 'hidden',
-    backgroundColor: colorOpacity(COLOR.BACKGROUND, 0.95),
+    backgroundColor: colorOpacity(COLOR.BACKGROUND, OPACITY.L),
   },
 
   content: {

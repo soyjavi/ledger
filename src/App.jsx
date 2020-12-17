@@ -6,7 +6,6 @@ import { L10NProvider, ConnectionProvider, NavigationProvider, StoreProvider, Sn
 
 import { Router } from './App.router';
 import styles from './App.style';
-import { Sync } from './App.sync';
 
 const { LANGUAGE } = C;
 
@@ -15,18 +14,17 @@ const App = () => {
 
   return (
     <L10NProvider dictionary={L10N} language={LANGUAGE}>
-      <NavigationProvider>
-        <ConnectionProvider>
-          <StoreProvider>
-            <SnackBarProvider>
-              <LayoutView style={styles.container}>
+      <ConnectionProvider>
+        <StoreProvider>
+          <SnackBarProvider>
+            <LayoutView style={styles.container}>
+              <NavigationProvider>
                 <Router />
-                <Sync />
-              </LayoutView>
-            </SnackBarProvider>
-          </StoreProvider>
-        </ConnectionProvider>
-      </NavigationProvider>
+              </NavigationProvider>
+            </LayoutView>
+          </SnackBarProvider>
+        </StoreProvider>
+      </ConnectionProvider>
     </L10NProvider>
   );
 };
