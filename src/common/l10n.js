@@ -59,6 +59,7 @@ export const L10N = {
       BTC: 'Bitcoin',
       CNY: 'Chinese Yuan',
       GBP: 'British Pound',
+      ETH: 'Ethereum',
       EUR: 'Euro',
       HKD: 'Hong Kong Dollar',
       JPY: 'Japanese Yen',
