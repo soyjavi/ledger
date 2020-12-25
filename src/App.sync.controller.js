@@ -8,10 +8,11 @@ const existsHash = (blockchain = [], latestHash) => findHashIndex(blockchain, la
 
 const getSyncStatus = async ({ snackbar, store }) => {
   const {
-    blockchain = {},
-    latestHash: { txs: txLatestHash, vaults: vaultLatestHash } = {},
+    latestHash = {},
     settings: { fingerprint },
+    txs = [],
     updateSettings,
+    vaults = [],
   } = store;
   let { settings } = store;
   let synced;
@@ -27,22 +28,22 @@ const getSyncStatus = async ({ snackbar, store }) => {
   });
 
   if (response) {
-    const { blocks = {}, latestHash = {} } = response;
+    const { txs: nodeTxs, vaults: nodeVaults } = response;
+
     synced =
-      blocks.txs === blockchain.txs.length &&
-      blocks.vaults === blockchain.vaults.length &&
-      latestHash.txs === txLatestHash &&
-      latestHash.vaults === vaultLatestHash;
+      nodeTxs.length === txs.length &&
+      nodeVaults.length === vaults.length &&
+      nodeTxs.latestHash === latestHash.txs &&
+      nodeVaults.latestHash === latestHash.vaults;
+
+    console.log({ synced, nodeTxs, nodeVaults, latestHash });
   }
 
   return synced;
 };
 
 const syncNode = async ({ store, snackbar }) => {
-  const {
-    settings,
-    blockchain: { vaults = [], txs = [] },
-  } = store;
+  const { settings, txs = [], vaults = [] } = store;
 
   const { latestHash = {} } = (await ServiceNode.status({ settings, snackbar })) || {};
 

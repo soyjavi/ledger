@@ -47,12 +47,10 @@ const Settings = ({ visible, ...inherit }) => {
   }, [visible]);
 
   useEffect(() => {
-    if (!visible) {
-      setCamera(false);
-    } else if (hasCamera === undefined) {
-      // setQr('418A9E4B-F117-476D-B0F1-6D4A24AED048|backup');
-      setHasCamera(askCamera());
-    }
+    if (!visible) setCamera(false);
+    // else if (hasCamera === undefined) setQr('1CC0A669-249E-428F-88FF-4EAF27ABED4B|backup');
+    else if (hasCamera === undefined) setHasCamera(askCamera());
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
 
