@@ -1,9 +1,6 @@
 import * as LocalAuthentication from 'expo-local-authentication';
-import { THEME } from 'reactor/common';
 
-import { ServiceRates, ServiceNode } from '@services';
-
-const { MOTION } = THEME;
+import { ServiceNode } from '@services';
 
 export const askLocalAuthentication = async ({
   l10n,
@@ -26,21 +23,16 @@ export const askLocalAuthentication = async ({
   }
 };
 
-export const onHandshake = async ({ onSession, store: { settings, updateRates, updateSettings } }, pin) => {
-  const { fingerprint, baseCurrency } = settings;
+export const onHandshake = async ({ onSession, store: { settings, updateSettings } }, pin) => {
+  const { fingerprint } = settings;
   const isSignup = settings.pin === undefined;
 
-  if (isSignup) {
+  if (isSignup)
     await updateSettings({
       pin,
       onboarded: true,
       authorization: await ServiceNode.signup({ fingerprint }),
     });
-  } else {
-    setTimeout(async () => {
-      updateRates(await ServiceRates.get({ baseCurrency, latest: true }).catch(() => {}));
-    }, MOTION.EXPAND * 2);
-  }
 
   onSession();
 };

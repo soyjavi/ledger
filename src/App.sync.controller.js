@@ -1,10 +1,22 @@
-import { ServiceNode } from '@services';
+import { ServiceNode, ServiceRates } from '@services';
 
 const findHashIndex = (blockchain = [], latestHash) => blockchain.findIndex(({ hash }) => hash === latestHash);
 
 const blocksToSync = (blockchain = [], latestHash) => blockchain.slice(findHashIndex(blockchain, latestHash) + 1);
 
 const existsHash = (blockchain = [], latestHash) => findHashIndex(blockchain, latestHash) > 0;
+
+const getRates = async ({
+  l10n,
+  snackbar,
+  store: {
+    settings: { baseCurrency },
+    updateRates,
+  },
+}) => {
+  const rates = await ServiceRates.get({ baseCurrency }).catch(() => snackbar.error(l10n.ERROR_SERVICE_RATES));
+  if (rates) await updateRates(rates);
+};
 
 const getSyncStatus = async ({ snackbar, store }) => {
   const {
@@ -35,8 +47,6 @@ const getSyncStatus = async ({ snackbar, store }) => {
       nodeVaults.length === vaults.length &&
       nodeTxs.latestHash === latestHash.txs &&
       nodeVaults.latestHash === latestHash.vaults;
-
-    console.log({ synced, nodeTxs, nodeVaults, latestHash });
   }
 
   return synced;
@@ -58,4 +68,4 @@ const syncNode = async ({ store, snackbar }) => {
   return await getSyncStatus({ snackbar, store });
 };
 
-export { getSyncStatus, syncNode };
+export { getRates, getSyncStatus, syncNode };

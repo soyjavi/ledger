@@ -7,7 +7,7 @@ import { C } from '@common';
 import { useConnection, useL10N, useSnackBar, useStore } from '@context';
 
 import styles from './App.style';
-import { getSyncStatus, syncNode } from './App.sync.controller';
+import { getRates, getSyncStatus, syncNode } from './App.sync.controller';
 
 const { DELAY_PRESS_MS, TIMEOUT } = C;
 const { COLOR, MOTION, SPACE } = THEME;
@@ -22,7 +22,18 @@ const Sync = () => {
   const snackbar = useSnackBar();
   const store = useStore();
 
-  const [state, setState] = useState(STATE.UNKNOWN);
+  const [state, setState] = useState(undefined);
+
+  useLayoutEffect(() => {
+    (async () => {
+      if (connected) {
+        await getRates({ l10n, snackbar, store });
+        setState(STATE.UNKNOWN);
+      }
+    })();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [connected]);
 
   useLayoutEffect(() => {
     if (connected && state === STATE.UNKNOWN) handleState();
@@ -44,7 +55,7 @@ const Sync = () => {
     if (synced === undefined) setState(STATE.UNKNOWN);
     else setState(synced ? STATE.SYNCED : STATE.UNSYNCED);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [store]);
+  }, [state, store]);
 
   const handleSync = async () => {
     setState(STATE.SYNCING);
@@ -66,7 +77,7 @@ const Sync = () => {
         </Motion>
       </SafeAreaView>
 
-      {connected && (
+      {connected && state !== undefined && (
         <>
           <Alert
             accept={l10n.SYNC_NOW}
