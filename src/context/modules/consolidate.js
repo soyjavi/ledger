@@ -13,8 +13,8 @@ export const consolidate = ({
   let vaults = [];
 
   if (baseVaults.length > 0) {
-    const { data: { timestamp } = {} } = baseVaults[0];
-    const genesisDate = new Date(timestamp);
+    const { timestamp: blockTimestamp, data: { timestamp } = {} } = baseVaults[0];
+    const genesisDate = new Date(timestamp || blockTimestamp);
     const months = getMonthDiff(genesisDate, new Date());
 
     vaults = baseVaults.map(({ data = {}, hash, timestamp }) =>
