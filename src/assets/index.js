@@ -1,5 +1,5 @@
+import COMPLETED from './completed.png';
 import NOT_FOUND from './notfound.png';
-import RECEIVE from './receive.png';
-import SEND from './send.png';
+import WELCOME from './welcome.png';
 
-export const BANNERS = { NOT_FOUND, RECEIVE, SEND };
+export const BANNERS = { COMPLETED, NOT_FOUND, WELCOME };

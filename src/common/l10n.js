@@ -123,8 +123,8 @@ export const L10N = {
     NEW: 'New',
     NO_TRANSACTIONS: "You don't have any transaction.",
 
-    ONBOARDING_COMPLETED_TITLE: 'You did it!',
-    ONBOARDING_COMPLETED_CAPTION: 'Successfully created account',
+    ONBOARDING_COMPLETED_TITLE: 'Everything is ready to go!',
+    ONBOARDING_COMPLETED_CAPTION: 'Your blockchain has been created successfully & is ready for use.',
 
     OFFLINE: 'OFFLINE',
     OTHERS: 'Others',

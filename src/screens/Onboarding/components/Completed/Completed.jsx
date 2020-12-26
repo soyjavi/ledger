@@ -18,7 +18,7 @@ const Completed = ({ onPress, ...inherit }) => {
     <Viewport {...inherit}>
       <Banner
         align="right"
-        image={BANNERS.RECEIVE}
+        image={BANNERS.COMPLETED}
         marginBottom="XL"
         title={l10n.ONBOARDING_COMPLETED_TITLE}
         caption={l10n.ONBOARDING_COMPLETED_CAPTION}
