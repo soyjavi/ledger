@@ -7,15 +7,14 @@ export const consolidate = ({
   rates = {},
   settings: { baseCurrency } = {},
   txs: [, ...baseTxs] = [],
-  vaults: [genesisVault, ...baseVaults] = [],
+  vaults: [, ...baseVaults] = [],
 } = {}) => {
   let txs = baseTxs.map(({ data = {}, hash, timestamp }) => ({ timestamp, ...data, hash }));
   let vaults = [];
 
   if (baseVaults.length > 0) {
-    const { timestamp: genesisTimestamp } = genesisVault;
-
-    const genesisDate = new Date(genesisTimestamp);
+    const { data: { timestamp } = {} } = baseVaults[0];
+    const genesisDate = new Date(timestamp);
     const months = getMonthDiff(genesisDate, new Date());
 
     vaults = baseVaults.map(({ data = {}, hash, timestamp }) =>
