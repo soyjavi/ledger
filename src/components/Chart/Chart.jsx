@@ -61,7 +61,7 @@ const Chart = ({ captions, highlight, inverted = false, values = [], styleContai
         {captions && (
           <Row justify="space" style={styles.captions}>
             {captions.map((caption, index) => (
-              <Col align="center" key={`${caption}-${index}`} paddingTop="S">
+              <Col align="center" key={`${caption}-${index}`}>
                 <Text
                   bold={highlight === index}
                   color={highlight !== index ? COLOR.LIGHTEN : undefined}

@@ -1,9 +1,8 @@
 import { StyleSheet } from 'react-native';
-import { LAYOUT, THEME } from 'reactor/common';
+import { LAYOUT } from 'reactor/common';
 
-const { SPACE } = THEME;
 const { VIEWPORT } = LAYOUT;
-const IMAGE_HEIGHT = VIEWPORT.H / 4 > 512 ? 512 : VIEWPORT.H / 4;
+const IMAGE_HEIGHT = VIEWPORT.H / 3 > 512 ? 512 : VIEWPORT.H / 3;
 
 export default StyleSheet.create({
   container: {
@@ -12,21 +11,17 @@ export default StyleSheet.create({
 
   image: {
     height: IMAGE_HEIGHT,
-    width: '75%',
-  },
-
-  imageSmall: {
-    height: IMAGE_HEIGHT / 1.5,
-    width: '75%',
+    width: '95%',
   },
 
   left: {
     alignItems: 'flex-start',
+    maxWidth: '95%',
   },
 
   right: {
     alignItems: 'flex-end',
-    alignContent: 'flex-end',
+    maxWidth: '95%',
   },
 
   text: {
@@ -35,11 +30,9 @@ export default StyleSheet.create({
 
   textleft: {
     textAlign: 'left',
-    marginRight: SPACE.XXL,
   },
 
   textright: {
     textAlign: 'right',
-    marginLeft: SPACE.XXL + SPACE.M,
   },
 });

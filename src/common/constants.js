@@ -46,6 +46,7 @@ export const C = {
 
   FIXED: {
     BTC: 6,
+    ETH: 4,
     IDR: 0,
     JPY: 0,
     PLN: 0,
@@ -94,6 +95,7 @@ export const C = {
     // CZK: 'Kč',
     // DKK: 'Dkr',
     GBP: '£',
+    ETH: 'Ξ',
     EUR: '€',
     HKD: 'HK$',
     // HRK: '',

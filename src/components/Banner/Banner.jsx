@@ -10,9 +10,9 @@ import styles from './Banner.style';
 const Banner = ({ align, caption, children, image = BANNERS.NOT_FOUND, small, title, ...others }) => (
   <View {...others} style={[styles.container, styles[align], others.style]}>
     <Image resizeMode="contain" source={image} style={[styles.image, small && styles.imageSmall]} />
-    <View marginTop="L">
+    <View marginTop="L" style={styles[align]}>
       {title && (
-        <Text bold={!small} subtitle={!small} style={[styles.text, styles[`text${align}`]]}>
+        <Text bold headline={!small} subtitle={small} style={[styles.text, styles[`text${align}`]]}>
           {title}
         </Text>
       )}

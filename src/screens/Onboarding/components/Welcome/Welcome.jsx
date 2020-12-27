@@ -18,7 +18,7 @@ const Welcome = ({ onPress, ...inherit }) => {
     <Viewport {...inherit}>
       <Banner
         align="left"
-        image={BANNERS.SEND}
+        image={BANNERS.WELCOME}
         marginBottom="XL"
         title={l10n.WELCOME_TITLE}
         caption={l10n.WELCOME_CAPTION}

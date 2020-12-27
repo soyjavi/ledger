@@ -1,4 +1,4 @@
-import { ServiceNode } from '@services';
+import { ServiceNode, ServiceRates } from '@services';
 
 const findHashIndex = (blockchain = [], latestHash) => blockchain.findIndex(({ hash }) => hash === latestHash);
 
@@ -6,12 +6,25 @@ const blocksToSync = (blockchain = [], latestHash) => blockchain.slice(findHashI
 
 const existsHash = (blockchain = [], latestHash) => findHashIndex(blockchain, latestHash) > 0;
 
+const getRates = async ({
+  l10n,
+  snackbar,
+  store: {
+    settings: { baseCurrency },
+    updateRates,
+  },
+}) => {
+  const rates = await ServiceRates.get({ baseCurrency }).catch(() => snackbar.error(l10n.ERROR_SERVICE_RATES));
+  if (rates) await updateRates(rates);
+};
+
 const getSyncStatus = async ({ snackbar, store }) => {
   const {
-    blockchain = {},
-    latestHash: { txs: txLatestHash, vaults: vaultLatestHash } = {},
+    latestHash = {},
     settings: { fingerprint },
+    txs = [],
     updateSettings,
+    vaults = [],
   } = store;
   let { settings } = store;
   let synced;
@@ -27,22 +40,20 @@ const getSyncStatus = async ({ snackbar, store }) => {
   });
 
   if (response) {
-    const { blocks = {}, latestHash = {} } = response;
+    const { txs: nodeTxs, vaults: nodeVaults } = response;
+
     synced =
-      blocks.txs === blockchain.txs.length &&
-      blocks.vaults === blockchain.vaults.length &&
-      latestHash.txs === txLatestHash &&
-      latestHash.vaults === vaultLatestHash;
+      nodeTxs.length === txs.length &&
+      nodeVaults.length === vaults.length &&
+      nodeTxs.latestHash === latestHash.txs &&
+      nodeVaults.latestHash === latestHash.vaults;
   }
 
   return synced;
 };
 
 const syncNode = async ({ store, snackbar }) => {
-  const {
-    settings,
-    blockchain: { vaults = [], txs = [] },
-  } = store;
+  const { settings, txs = [], vaults = [] } = store;
 
   const { latestHash = {} } = (await ServiceNode.status({ settings, snackbar })) || {};
 
@@ -57,4 +68,4 @@ const syncNode = async ({ store, snackbar }) => {
   return await getSyncStatus({ snackbar, store });
 };
 
-export { getSyncStatus, syncNode };
+export { getRates, getSyncStatus, syncNode };
