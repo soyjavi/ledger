@@ -25,7 +25,6 @@ const FONT_FAMILY_CURRENCY = {
 // const DIALOG = '#ffffff';
 // const OVERLAY = 'rgba(255, 255, 255, 0.8)';
 // const TEXT = '#000000';
-// const TEXT_DISABLED = '#C8C9C9';
 // const LIGHTEN = '#A3A3A3';
 
 // DARK-MODE
@@ -35,7 +34,6 @@ const CTA = '#fefdfa';
 const DIALOG = '#191919';
 const OVERLAY = 'rgba(0, 0, 0, 0.8)';
 const TEXT = '#fefdfa';
-const TEXT_DISABLED = '#C8C9C9';
 const LIGHTEN = 'rgba(255,255,255,0.6)';
 
 const ELEVATION = {
