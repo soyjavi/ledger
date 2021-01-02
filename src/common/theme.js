@@ -65,7 +65,6 @@ export const theme = {
     // TRANSPARENT
 
     // -- Custom
-    TEXT_DISABLED,
     LIGHTEN,
     OVERLAY,
   },
