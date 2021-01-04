@@ -28,7 +28,7 @@ const Card = ({ balance = 0, color, currency, highlight, onPress, percentage, ti
       <Box color={highlight ? COLOR.CTA : color} style={styles.box}>
         <View style={styles.content}>
           <Row>
-            <CurrencyLogo currency={currency} size="S" />
+            <CurrencyLogo color={currency !== baseCurrency ? COLOR.LIGHTEN : undefined} currency={currency} size="S" />
             <Text caption color={textColor} numberOfLines={1} marginLeft="XS">
               {title.toUpperCase()}
             </Text>
