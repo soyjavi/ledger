@@ -40,10 +40,7 @@ const Header = ({ childLeft, childRight, currency, highlight = false, onBack, ti
             { property: 'translateY', value: highlight ? 0 : UNIT },
           ]}
         >
-          <Row>
-            {currency && <CurrencyLogo currency={currency} marginRight="S" _size="S" />}
-            {title && <Text subtitle>{title}</Text>}
-          </Row>
+          {title && <Text subtitle>{title}</Text>}
         </Motion>
       </Col>
       <Col align="end">{childRight}</Col>
@@ -54,7 +51,6 @@ const Header = ({ childLeft, childRight, currency, highlight = false, onBack, ti
 Header.propTypes = {
   childLeft: PropTypes.node,
   childRight: PropTypes.node,
-  currency: PropTypes.string,
   highlight: PropTypes.bool,
   onBack: PropTypes.func,
   title: PropTypes.string,
