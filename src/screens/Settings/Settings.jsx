@@ -8,9 +8,9 @@ import { Alert, Button, Image, Row, Text, View, Viewport } from 'reactor/compone
 import { C } from '@common';
 import { Header, Heading, ScrollView, SliderCurrencies, Summary } from '@components';
 import { useL10N, useNavigation, useSnackBar, useStore } from '@context';
-import { ServiceQR, ServiceRates } from '@services';
+import { ServiceQR } from '@services';
 
-import { askCamera, changeCurrency, getBlockchain } from './Settings.controller';
+import { askCamera, changeCurrency, getBlockchain, getLatestRates } from './Settings.controller';
 import styles from './Settings.style';
 
 const { DELAY_PRESS_MS } = C;
@@ -36,7 +36,6 @@ const Settings = ({ visible, ...inherit }) => {
 
   const {
     settings: { authorization, baseCurrency, secret },
-    updateRates,
     fork,
   } = store;
 
@@ -88,7 +87,7 @@ const Settings = ({ visible, ...inherit }) => {
 
   const handleUpdateRates = async () => {
     setSyncRates(true);
-    updateRates(await ServiceRates.get({ baseCurrency }).catch(() => {}));
+    await getLatestRates({ l10n, snackbar, store });
     setSyncRates(false);
   };
 

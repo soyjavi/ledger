@@ -14,7 +14,9 @@ const getRates = async ({
     updateRates,
   },
 }) => {
-  const rates = await ServiceRates.get({ baseCurrency }).catch(() => snackbar.error(l10n.ERROR_SERVICE_RATES));
+  const rates = await ServiceRates.get({ baseCurrency, latest: true }).catch(() =>
+    snackbar.error(l10n.ERROR_SERVICE_RATES),
+  );
   if (rates) await updateRates(rates);
 };
 

@@ -34,7 +34,7 @@ const Option = ({
     >
       <Touchable onPress={!disabled ? onPress : undefined} style={styles.content}>
         {currency && (
-          <CurrencyLogo color={selected ? COLOR.BRAND : COLOR.TEXT} currency={currency} highlight={selected} small />
+          <CurrencyLogo color={selected ? COLOR.BRAND : COLOR.LIGHTEN} currency={currency} highlight={selected} small />
         )}
         {icon && <Icon value={icon} color={colorContent} family={ICON.FAMILY} size={SPACE.L} />}
 
