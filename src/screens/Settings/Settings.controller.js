@@ -9,7 +9,7 @@ const askCamera = async () => {
 
 const changeCurrency = async ({ currency, l10n, snackbar, store: { updateRates, updateSettings } }) => {
   await updateSettings({ baseCurrency: currency });
-  const rates = await ServiceRates.get({ baseCurrency: currency }).catch(() =>
+  const rates = await ServiceRates.get({ baseCurrency: currency, latest: false }).catch(() =>
     snackbar.error(l10n.ERROR_SERVICE_RATES),
   );
   if (rates) await updateRates(rates);
@@ -17,4 +17,18 @@ const changeCurrency = async ({ currency, l10n, snackbar, store: { updateRates, 
 
 const getBlockchain = async ({ qr, store: { settings } }) => await ServiceNode.blockchain({ blockchain: qr, settings });
 
-export { askCamera, changeCurrency, getBlockchain };
+const getLatestRates = async ({
+  l10n,
+  snackbar,
+  store: {
+    settings: { baseCurrency },
+    updateRates,
+  },
+}) => {
+  const rates = await ServiceRates.get({ baseCurrency, latest: true }).catch(() =>
+    snackbar.error(l10n.ERROR_SERVICE_RATES),
+  );
+  if (rates) await updateRates(rates);
+};
+
+export { askCamera, changeCurrency, getBlockchain, getLatestRates };
