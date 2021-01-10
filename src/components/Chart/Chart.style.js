@@ -5,11 +5,13 @@ const { BORDER_RADIUS, COLOR, OPACITY, SPACE } = THEME;
 const COLUMN_WIDTH = SPACE.S + SPACE.XS / 2;
 const COLUMN_HEIGHT = COLUMN_WIDTH * 8;
 
+const RADIUS = BORDER_RADIUS / 2;
+
 export default StyleSheet.create({
   bar: {
     backgroundColor: COLOR.BASE,
-    borderTopLeftRadius: BORDER_RADIUS,
-    borderTopRightRadius: BORDER_RADIUS,
+    borderTopLeftRadius: RADIUS,
+    borderTopRightRadius: RADIUS,
     maxHeight: '100%',
     minHeight: COLUMN_WIDTH / 1.5,
     width: COLUMN_WIDTH,
@@ -18,8 +20,8 @@ export default StyleSheet.create({
   barInverted: {
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
-    borderBottomLeftRadius: BORDER_RADIUS,
-    borderBottomRightRadius: BORDER_RADIUS,
+    borderBottomLeftRadius: RADIUS,
+    borderBottomRightRadius: RADIUS,
   },
 
   captions: {

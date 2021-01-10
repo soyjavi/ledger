@@ -30,6 +30,7 @@ const PriceFriendly = ({ currency, fixed, highlight, label, operator, maskAmount
     color,
     fixed: fixed !== undefined ? fixed : currencyDecimals(value, currency),
     numberOfLines: 1,
+    style: [FONT.CURRENCY, others.style],
     value: Math.abs(value),
   };
 
@@ -38,10 +39,10 @@ const PriceFriendly = ({ currency, fixed, highlight, label, operator, maskAmount
   const { headline, subtitle, caption } = others;
   const symbolProps = {
     ...others,
+    bold: false,
     children: symbol,
     color: color,
     style: [
-      //
       FONT.CURRENCY,
       headline
         ? styles.symbolHeadline
@@ -76,7 +77,7 @@ const PriceFriendly = ({ currency, fixed, highlight, label, operator, maskAmount
             {operatorEnhanced}
           </Text>
           {LEFT_SYMBOLS.includes(symbol) && <Text {...symbolProps} />}
-          <Price {...props} bold={highlight || others.bold} style={others.style} />
+          <Price {...props} />
           {!LEFT_SYMBOLS.includes(symbol) && <Text {...symbolProps} />}
         </>
       )}
