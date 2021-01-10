@@ -36,7 +36,7 @@ const Card = ({ balance = 0, color, currency, highlight, onPress, percentage, ti
 
           {currency && (
             <>
-              <PriceFriendly color={textColor} currency={currency} subtitle value={balance} />
+              <PriceFriendly bold color={textColor} currency={currency} subtitle value={balance} />
               {currency !== baseCurrency && (
                 <PriceFriendly
                   caption

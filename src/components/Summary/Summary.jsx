@@ -39,7 +39,7 @@ const Summary = ({ children, currency = CURRENCY, currentBalance, currentMonth =
           {showCurrentBalance && (
             <>
               <Touchable onPress={() => updateSettings({ maskAmount: !maskAmount })}>
-                <PriceFriendly currency={currency} headline value={Math.abs(currentBalance)} />
+                <PriceFriendly currency={currency} headline bold value={Math.abs(currentBalance)} />
               </Touchable>
               {baseCurrency !== currency && (
                 <PriceFriendly

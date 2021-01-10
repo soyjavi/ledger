@@ -10,12 +10,7 @@ const FONT_FAMILY = {
 
 const FONT_FAMILY_BOLD = {
   fontFamily: 'font-family-bold',
-  fontWeight: '800',
-};
-
-const FONT_FAMILY_CURRENCY = {
-  fontFamily: 'font-family-currency',
-  fontWeight: '400',
+  fontWeight: '700',
 };
 
 // LIGHT-MODE
@@ -76,25 +71,20 @@ export const theme = {
     BOLD: FONT_FAMILY_BOLD,
     HEADLINE: {
       fontSize: 34,
-      letterSpacing: -0.5,
     },
     SUBTITLE: {
       fontSize: 20,
-      letterSpacing: -0.25,
     },
     BODY: {
       fontSize: 14,
-      letterSpacing: -0.1,
+      letterSpacing: 0.25,
     },
     CAPTION: {
       fontSize: 11,
-      letterSpacing: -0.05,
     },
 
     BUTTON: {
       ...FONT_FAMILY_BOLD,
-      fontFamily: 'font-family-bold',
-      fontWeight: '800',
       fontSize: 12,
     },
     BUTTON_SMALL: {
@@ -110,7 +100,6 @@ export const theme = {
       fontSize: 8,
     },
     CURRENCY: {
-      ...FONT_FAMILY_CURRENCY,
       letterSpacing: 0,
     },
   },

@@ -20,9 +20,8 @@ const App = () => {
   useEffect(() => {
     async function loadResources() {
       await Font.loadAsync({
-        'font-family': require('./assets/fonts/SpaceMono-Regular.ttf'),
-        'font-family-bold': require('./assets/fonts/SpaceMono-Bold.ttf'),
-        'font-family-currency': require('./assets/fonts/IBMPlexMono-Regular.ttf'),
+        'font-family': require('./assets/fonts/IBMPlexSans-Regular.ttf'),
+        'font-family-bold': require('./assets/fonts/IBMPlexSans-Bold.ttf'),
       });
       THEME.extend(theme);
 

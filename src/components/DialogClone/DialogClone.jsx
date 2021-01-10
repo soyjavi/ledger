@@ -69,6 +69,7 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
             </Col>
             <Col width="auto">
               <PriceFriendly
+                bold
                 color={type === INCOME ? COLOR.BRAND : undefined}
                 currency={currency}
                 highlight={type === INCOME}

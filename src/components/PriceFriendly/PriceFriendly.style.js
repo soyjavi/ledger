@@ -12,22 +12,22 @@ export default StyleSheet.create({
   },
 
   symbolHeadline: {
-    fontSize: FONT.HEADLINE.fontSize * 0.65,
+    fontSize: FONT.HEADLINE.fontSize * 0.8,
     marginHorizontal: SPACE.XS / 2,
   },
 
   symbolSubtitle: {
-    fontSize: FONT.SUBTITLE.fontSize * 0.7,
+    fontSize: FONT.SUBTITLE.fontSize * 0.8,
     marginHorizontal: SPACE.XS / 3,
   },
 
   symbolBody: {
-    fontSize: FONT.BODY.fontSize * 0.85,
+    fontSize: FONT.BODY.fontSize * 0.8,
     marginHorizontal: SPACE.XS / 3,
   },
 
   symbolCaption: {
-    fontSize: FONT.CAPTION.fontSize * 0.85,
+    fontSize: FONT.CAPTION.fontSize * 0.9,
     marginHorizontal: SPACE.XS / 4,
   },
 });
