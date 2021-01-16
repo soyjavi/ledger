@@ -10,6 +10,7 @@ import { BoxDate } from '../Box';
 import { HeatMap } from '../HeatMap';
 import { PriceFriendly } from '../PriceFriendly';
 import { createTx } from './DialogClone.controller';
+import styles from './DialogClone.style';
 
 const {
   DELAY_PRESS_MS,
@@ -20,7 +21,7 @@ const {
 const { COLOR } = THEME;
 
 const DialogClone = ({ dataSource = {}, ...inherit }) => {
-  const { category, currency, vault, value, location, title, timestamp, type = EXPENSE } = dataSource;
+  const { category, currency, vault, value, location, title = '', timestamp, type = EXPENSE } = dataSource;
 
   const l10n = useL10N();
   const store = useStore();
@@ -56,7 +57,9 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
         <Text subtitle>{l10n.TRANSACTION[type]}</Text>
       </Row>
       <Row justify="center" marginBottom="L">
-        <Text headline>{title ? title : ''}</Text>
+        <Text bold style={styles.title} headline>
+          {title}
+        </Text>
       </Row>
       <Row>
         <Col marginRight="S" width="auto">
