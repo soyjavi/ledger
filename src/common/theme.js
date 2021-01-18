@@ -113,6 +113,7 @@ export const theme = {
   DIALOG: {
     ...ELEVATION,
     backgroundColor: DIALOG,
+    borderRadius: SPACE.M,
     padding: SPACE.L,
   },
   DIALOG_BUTTON: {
