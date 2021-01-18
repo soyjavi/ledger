@@ -34,7 +34,7 @@ export default StyleSheet.create({
 
   font: {
     height: SIZE.M,
-    lineHeight: SIZE.M,
+    lineHeight: SIZE.M * 1.05,
     overflow: 'hidden',
     textAlign: 'center',
     width: SIZE.M,
@@ -43,14 +43,14 @@ export default StyleSheet.create({
   fontS: {
     fontSize: SIZE.S * 0.6,
     height: SIZE.S,
-    lineHeight: SIZE.S,
+    lineHeight: SIZE.S * 1.05,
     width: SIZE.S,
   },
 
   fontL: {
     fontSize: SIZE.L * 0.6,
     height: SIZE.L,
-    lineHeight: SIZE.L,
+    lineHeight: SIZE.L * 1.05,
     width: SIZE.L,
   },
 });
