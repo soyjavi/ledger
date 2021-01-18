@@ -26,7 +26,7 @@ export default StyleSheet.create({
   },
 
   input: {
-    ...FONT.DEFAULT,
+    ...FONT.BOLD,
     ...FONT.SUBTITLE,
     color: COLOR.TEXT,
     padding: 0,

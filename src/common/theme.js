@@ -1,6 +1,7 @@
 import { Platform } from 'react-native';
 import { THEME } from 'reactor/common';
 
+import { colorOpacity } from './colorOpacity';
 const { SPACE } = THEME;
 
 const FONT_FAMILY = {
@@ -23,11 +24,11 @@ const FONT_FAMILY_BOLD = {
 // const LIGHTEN = '#A3A3A3';
 
 // DARK-MODE
-const BACKGROUND = '#121212';
-const BASE = '#2C2C2C';
+const BACKGROUND = '#000000';
+const BASE = '#181818';
 const CTA = '#fefdfa';
-const DIALOG = '#191919';
-const OVERLAY = 'rgba(0, 0, 0, 0.8)';
+const DIALOG = '#111111';
+const OVERLAY = colorOpacity(BACKGROUND, 0.8);
 const TEXT = '#fefdfa';
 const LIGHTEN = 'rgba(255,255,255,0.6)';
 
@@ -42,11 +43,12 @@ const ELEVATION = {
 };
 
 export const theme = {
+  BAR_SIZE: SPACE.S,
+
   BORDER_RADIUS: 4,
 
   COLOR: {
-    BRAND: '#D29776', //' #D29776  #F5DD7B', #FFD050  #ff9900
-
+    BRAND: '#D29776',
     CTA,
     // BLACK
     // WHITE

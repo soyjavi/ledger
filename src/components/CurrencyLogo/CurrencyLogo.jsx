@@ -19,7 +19,7 @@ const CurrencyLogo = ({ color = COLOR.BRAND, currency, size = 'M', ...others }) 
     <View {...others} style={[styles.container, styles[size], { backgroundColor: color }]}>
       {symbol && (
         <Text
-          bold
+          bold={size === 'L'}
           caption={symbol.length > 1}
           color={COLOR.BACKGROUND}
           style={[FONT.CURRENCY, styles.font, styles[`font${size}`]]}

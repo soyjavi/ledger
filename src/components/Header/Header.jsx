@@ -5,12 +5,11 @@ import { Button, Col, Motion, Row, Text } from 'reactor/components';
 
 import { onHardwareBackPress } from '@common';
 
-import { CurrencyLogo } from '../CurrencyLogo';
 import styles from './Header.style';
 
 const { COLOR, ICON, MOTION, UNIT } = THEME;
 
-const Header = ({ childLeft, childRight, currency, highlight = false, onBack, title }) => {
+const Header = ({ childLeft, childRight, highlight = false, onBack, title }) => {
   useEffect(() => {
     onHardwareBackPress(onBack !== undefined, onBack);
     return () => onHardwareBackPress(false);
@@ -40,7 +39,11 @@ const Header = ({ childLeft, childRight, currency, highlight = false, onBack, ti
             { property: 'translateY', value: highlight ? 0 : UNIT },
           ]}
         >
-          {title && <Text subtitle>{title}</Text>}
+          {title && (
+            <Text bold subtitle>
+              {title}
+            </Text>
+          )}
         </Motion>
       </Col>
       <Col align="end">{childRight}</Col>

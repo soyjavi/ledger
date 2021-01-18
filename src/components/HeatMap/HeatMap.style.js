@@ -6,7 +6,7 @@ const {
 } = LAYOUT;
 const { COLOR, SPACE } = THEME;
 const MAP_HEIGHT = Math.floor(H / 4);
-const MAP_WIDTH = Math.floor(W - SPACE.S * 2 - SPACE.L * 2);
+const MAP_WIDTH = Math.floor(W - SPACE.L * 2);
 
 export { MAP_HEIGHT, MAP_WIDTH };
 
