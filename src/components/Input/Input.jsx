@@ -64,6 +64,7 @@ const Input = ({
       <Row justify="center" style={[styles.content, focus && styles.focus, others.value && styles.filled]}>
         {currency && (
           <PriceFriendly
+            bold
             color={!value && !focus ? COLOR.LIGHTEN : undefined}
             currency={currency}
             headline

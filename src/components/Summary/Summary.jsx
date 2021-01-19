@@ -32,7 +32,7 @@ const Summary = ({ children, currency = CURRENCY, currentBalance, currentMonth =
   return (
     <View style={styles.container}>
       <Col align="center" style={styles.content}>
-        <CurrencyLogo currency={currency} size="L" />
+        <CurrencyLogo currency={currency} marginBottom="S" size="L" />
         <Col align="center">
           <Text subtitle>{title}</Text>
 

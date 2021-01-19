@@ -37,20 +37,20 @@ export default StyleSheet.create({
     lineHeight: SIZE.M * 1.05,
     overflow: 'hidden',
     textAlign: 'center',
-    width: SIZE.M * 0.9,
+    width: SIZE.M,
   },
 
   fontS: {
-    fontSize: SIZE.S * 0.68,
+    fontSize: SIZE.S * 0.6,
     height: SIZE.S,
-    lineHeight: SIZE.S,
-    width: SIZE.S * 0.9,
+    lineHeight: SIZE.S * 1.05,
+    width: SIZE.S,
   },
 
   fontL: {
-    fontSize: SIZE.L * 0.5,
+    fontSize: SIZE.L * 0.6,
     height: SIZE.L,
     lineHeight: SIZE.L * 1.05,
-    width: SIZE.L * 0.9,
+    width: SIZE.L,
   },
 });

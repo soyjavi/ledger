@@ -10,7 +10,7 @@ import { useL10N } from '@context';
 import { getLastMonths } from './modules';
 
 const { STATS_MONTHS_LIMIT } = C;
-const { COLOR, FONT, SPACE } = THEME;
+const { COLOR, SPACE } = THEME;
 
 const SliderMonths = ({ index, onChange, ...others }) => {
   const l10n = useL10N();
@@ -34,7 +34,7 @@ const SliderMonths = ({ index, onChange, ...others }) => {
             selected={index === i}
             caption={l10n.MONTHS[month].substr(0, 3).toUpperCase()}
           >
-            <Text color={index === i ? COLOR.BACKGROUND : COLOR.LIGHTEN} style={FONT.LEGEND}>
+            <Text bold caption color={index === i ? COLOR.BACKGROUND : COLOR.LIGHTEN}>
               {year}
             </Text>
           </Option>

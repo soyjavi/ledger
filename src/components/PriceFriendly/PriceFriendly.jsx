@@ -39,7 +39,6 @@ const PriceFriendly = ({ currency, fixed, highlight, label, operator, maskAmount
   const { headline, subtitle, caption } = others;
   const symbolProps = {
     ...others,
-    bold: false,
     children: symbol,
     color: color,
     style: [
