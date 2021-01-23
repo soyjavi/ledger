@@ -14,6 +14,12 @@ const FONT_FAMILY_BOLD = {
   fontWeight: '700',
 };
 
+const OPACITY = {
+  S: 0.15,
+  M: 0.3,
+  L: 0.6,
+};
+
 // LIGHT-MODE
 // const BACKGROUND = '#ffffff';
 // const BASE = '#F1F1F1'; //'#F5F5F5';
@@ -28,7 +34,7 @@ const BACKGROUND = '#000000';
 const BASE = '#181818';
 const CTA = '#fefdfa';
 const DIALOG = '#111111';
-const OVERLAY = colorOpacity(BACKGROUND, 0.8);
+const OVERLAY = colorOpacity(BACKGROUND, OPACITY.L);
 const TEXT = '#fefdfa';
 const LIGHTEN = 'rgba(255,255,255,0.6)';
 
@@ -147,11 +153,7 @@ export const theme = {
     },
   },
 
-  OPACITY: {
-    S: 0.1,
-    M: 0.4,
-    L: 0.6,
-  },
+  OPACITY,
 
   SNACKBAR: {
     paddingHorizontal: SPACE.M,
