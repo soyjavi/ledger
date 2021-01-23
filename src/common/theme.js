@@ -17,7 +17,7 @@ const FONT_FAMILY_BOLD = {
 const OPACITY = {
   S: 0.15,
   M: 0.3,
-  L: 0.6,
+  L: 0.75,
 };
 
 // LIGHT-MODE
@@ -31,7 +31,8 @@ const OPACITY = {
 
 // DARK-MODE
 const BACKGROUND = '#000000';
-const BASE = '#181818';
+// const BASE = '#181818';
+const BASE = '#222222';
 const CTA = '#fefdfa';
 const DIALOG = '#111111';
 const OVERLAY = colorOpacity(BACKGROUND, OPACITY.L);
