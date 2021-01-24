@@ -7,7 +7,7 @@ import { PriceFriendly } from '../PriceFriendly';
 
 const ChartHeading = ({ inverted, max, min, title, ...others }) => (
   <Heading style={inverted ? { position: 'absolute', bottom: 0 } : undefined} value={title}>
-    <Row marginTop="S" width="auto">
+    <Row width="auto">
       {min > 0 && <PriceFriendly {...others} bold caption label="min " value={min} />}
       {max > 0 && <PriceFriendly {...others} bold caption label="  max " value={max} />}
     </Row>
