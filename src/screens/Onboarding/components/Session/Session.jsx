@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
-import { Motion, Row, Text, View, Viewport } from 'reactor/components';
+import { Row, Text, View, Viewport } from 'reactor/components';
 
 import { C } from '@common';
 import { useL10N, useStore } from '@context';
@@ -52,11 +52,10 @@ const Session = ({ onSession, visible, ...others }) => {
         </Text>
         <Row justify="center">
           {['•', '•', '•', '•'].map((letter, index) => (
-            <Motion key={index} timeline={[{ property: 'scale', value: pin.length > index ? 1.5 : 1 }]} type="spring">
-              <Text headline color={pin.length <= index ? COLOR.LIGHTEN : undefined}>
-                {letter}
-              </Text>
-            </Motion>
+            <View
+              key={index}
+              style={[styles.bullet, { backgroundColor: pin.length > index ? COLOR.TEXT : COLOR.BASE }]}
+            />
           ))}
         </Row>
 
