@@ -9,7 +9,7 @@ import { useNavigation, useL10N, useStore } from '@context';
 
 const { DELAY_PRESS_MS, SCREEN } = C;
 const { COLOR, MOTION } = THEME;
-const INITIAL_STATE = { currency: undefined };
+const INITIAL_STATE = { balance: 0, currency: undefined, title: undefined };
 
 const DialogVault = ({ onClose, visible }) => {
   const navigation = useNavigation();

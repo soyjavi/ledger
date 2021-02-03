@@ -129,7 +129,8 @@ const StoreProvider = ({ children }) => {
       value={{
         ...state,
         ...consolidate(state),
-        addVault: (data = {}) => addBlock('vaults', { ...data, balance: parseFloat(data.balance, 10) }),
+        addVault: ({ balance = 0, currency, title } = {}) =>
+          addBlock('vaults', { balance: parseFloat(balance, 10), currency, title }),
         addTx: (data = {}) => addBlock('txs', { ...data, value: parseFloat(data.value, 10) }),
         fork,
         updateSettings: (value) => updateStore('settings', { ...state.settings, ...value }),
