@@ -55,18 +55,23 @@ const getSyncStatus = async ({ snackbar, store }) => {
 };
 
 const syncNode = async ({ store, snackbar }) => {
-  const { settings, txs = [], vaults = [] } = store;
+  const { blockchain, settings } = store;
 
-  const { latestHash = {} } = (await ServiceNode.status({ settings, snackbar })) || {};
+  const txs = blockchain.get('txs').blocks.slice(1);
+  const vaults = blockchain.get('vaults').blocks.slice(1);
 
-  const rebase = !existsHash(vaults, latestHash.vaults) || !existsHash(txs, latestHash.txs);
-  if (rebase) await ServiceNode.sync({ settings, blockchain: { vaults, txs } });
-  else {
-    const vaultsToSync = blocksToSync(vaults, latestHash.vaults);
+  const { txs: nodeTxs = {}, vaults: nodeVaults = {} } = (await ServiceNode.status({ settings, snackbar })) || {};
+
+  const rebase = !existsHash(vaults, nodeVaults.latestHash) || !existsHash(txs, nodeTxs.latestHash);
+  if (rebase) {
+    await ServiceNode.sync({ settings, blockchain: { vaults, txs } });
+  } else {
+    const vaultsToSync = blocksToSync(vaults, nodeVaults.latestHash);
     if (vaultsToSync.length > 0) await ServiceNode.sync({ settings, key: 'vaults', blocks: vaultsToSync });
-    const txsToSync = blocksToSync(txs, latestHash.txs);
+    const txsToSync = blocksToSync(txs, nodeTxs.latestHash);
     if (txsToSync.length > 0) await ServiceNode.sync({ settings, key: 'txs', blocks: txsToSync });
   }
+
   return await getSyncStatus({ snackbar, store });
 };
 
