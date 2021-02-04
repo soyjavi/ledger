@@ -11,6 +11,7 @@ export default StyleSheet.create({
     maxHeight: '100%',
     minHeight: BAR_SIZE,
     width: BAR_SIZE,
+    zIndex: 2,
   },
 
   barInverted: {
@@ -18,9 +19,12 @@ export default StyleSheet.create({
     borderTopRightRadius: 0,
     borderBottomLeftRadius: BORDER_RADIUS,
     borderBottomRightRadius: BORDER_RADIUS,
+    zIndex: 2,
   },
 
   captions: {
+    borderColor: COLOR.BASE,
+    borderTopWidth: 1,
     position: 'absolute',
     height: SPACE.M,
     bottom: -SPACE.M,
@@ -42,18 +46,16 @@ export default StyleSheet.create({
 
   container: {
     borderColor: COLOR.BASE,
-    borderBottomWidth: 1,
     borderTopWidth: 1,
   },
 
   containerInverted: {
     borderTopWidth: 0,
-    marginTop: -1,
   },
 
   content: {
     flex: 1,
-    height: BAR_SIZE * 10,
+    height: BAR_SIZE * 8,
   },
 
   scales: {

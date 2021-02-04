@@ -11,9 +11,9 @@ import { ChartHeading } from './Chart.Heading';
 import styles from './Chart.style';
 import { calcHeight } from './modules';
 
-const { COLOR, FONT, OPACITY } = THEME;
+const { COLOR, FONT } = THEME;
 
-const Chart = ({ captions, highlight, inverted = false, values = [], styleContainer, ...others }) => {
+const Chart = ({ captions, highlight, inverted, values = [], styleContainer, ...others }) => {
   const { color = COLOR.TEXT, currency, max, min, med: avg } = others;
   let firstValueIndex = values.findIndex((value) => value !== 0);
   if (firstValueIndex === -1) firstValueIndex = undefined;
@@ -47,7 +47,7 @@ const Chart = ({ captions, highlight, inverted = false, values = [], styleContai
                   inverted && styles.barInverted,
                   value !== 0 && { height: `${calcHeight(value, { min, max })}%` },
                   {
-                    backgroundColor: highlight !== index ? colorOpacity(color) : color,
+                    backgroundColor: highlight !== index ? (COLOR.BRAND ? colorOpacity(color) : COLOR.BASE) : color,
                   },
                 ]}
               />

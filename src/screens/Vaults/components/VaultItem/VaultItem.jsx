@@ -7,19 +7,14 @@ import { Box, CurrencyLogo, PriceFriendly } from '@components';
 
 import styles from './VaultItem.style';
 
-const { COLOR, ICON, OPACITY } = THEME;
+const { COLOR, ICON } = THEME;
 
 const VaultItem = ({ active, onChange, onPress, dataSource: { currency, currentBalance, title } }) => {
   const colorText = active ? COLOR.TEXT : COLOR.LIGHTEN;
 
   return (
     <Row>
-      <Touchable
-        paddingHorizontal="M"
-        paddingVertical="S"
-        onPress={onPress}
-        style={[styles.container, !active && { opacity: OPACITY.M }]}
-      >
+      <Touchable paddingHorizontal="M" paddingVertical="S" onPress={onPress} style={styles.container}>
         <Row>
           <Col marginRight="S" width="auto">
             <Box styleContent={styles.boxContent}>

@@ -11,6 +11,7 @@ import { fetchRates, createVault } from './FirstVault.controller';
 import styles from './FirstVault.style';
 
 const { CURRENCY, DELAY_PRESS_MS } = C;
+const INITIAL_STATE = { balance: 0, currency: undefined, title: undefined };
 
 const FirstVault = ({ onVault, visible, ...others }) => {
   const l10n = useL10N();
@@ -20,11 +21,11 @@ const FirstVault = ({ onVault, visible, ...others }) => {
   const { updateSettings } = store;
 
   const [busy, setBusy] = useState(false);
-  const [form, setForm] = useState({});
+  const [form, setForm] = useState(INITIAL_STATE);
 
   useEffect(() => {
     if (visible) {
-      setForm({ currency: CURRENCY });
+      setForm({ ...INITIAL_STATE, currency: CURRENCY });
       fetchRates({ l10n, snackbar, store });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
