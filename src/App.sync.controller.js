@@ -6,6 +6,20 @@ const blocksToSync = (blockchain = [], latestHash) => blockchain.slice(findHashI
 
 const existsHash = (blockchain = [], latestHash) => findHashIndex(blockchain, latestHash) > 0;
 
+const parseVaults = (vaults = []) =>
+  vaults.map(({ data: { balance = 0, title = '', valid, ...data }, timestamp, ...others }) => ({
+    ...others,
+    timestamp: new Date(timestamp).getTime(),
+    data: { ...data, balance: balance === null || !balance ? 0 : balance, title },
+  }));
+
+const parseTxs = (txs = []) =>
+  txs.map(({ data: { value = 0, title = '', ...data }, timestamp, ...others }) => ({
+    ...others,
+    timestamp: new Date(timestamp).getTime(),
+    data: { ...data, balance: value === null || !value ? 0 : value, title },
+  }));
+
 const getRates = async ({
   l10n,
   snackbar,
@@ -64,12 +78,12 @@ const syncNode = async ({ store, snackbar }) => {
 
   const rebase = !existsHash(vaults, nodeVaults.latestHash) || !existsHash(txs, nodeTxs.latestHash);
   if (rebase) {
-    await ServiceNode.sync({ settings, blockchain: { vaults, txs } });
+    await ServiceNode.sync({ settings, blockchain: { vaults: parseVaults(vaults), txs: parseTxs(txs) } });
   } else {
     const vaultsToSync = blocksToSync(vaults, nodeVaults.latestHash);
-    if (vaultsToSync.length > 0) await ServiceNode.sync({ settings, key: 'vaults', blocks: vaultsToSync });
+    if (vaultsToSync.length > 0) await ServiceNode.sync({ settings, key: 'vaults', blocks: parseVaults(vaultsToSync) });
     const txsToSync = blocksToSync(txs, nodeTxs.latestHash);
-    if (txsToSync.length > 0) await ServiceNode.sync({ settings, key: 'txs', blocks: txsToSync });
+    if (txsToSync.length > 0) await ServiceNode.sync({ settings, key: 'txs', blocks: parseTxs(txsToSync) });
   }
 
   return await getSyncStatus({ snackbar, store });
