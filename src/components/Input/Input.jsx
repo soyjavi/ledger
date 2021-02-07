@@ -76,10 +76,10 @@ const Input = ({
         )}
 
         <TextInput
+          autoCapitalize="none"
+          autoCorrect={!currency}
           defaultValue={others.defaultValue}
           disabled={others.disabled}
-          autoCapitalize="none"
-          autoCorrect={false}
           blurOnSubmit
           editable
           keyboardType={currency ? 'numeric' : keyboard}
