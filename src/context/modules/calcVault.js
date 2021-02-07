@@ -9,7 +9,7 @@ export const calcVault = ({ baseCurrency, genesisDate, months = 0, rates = {}, t
   const now = new Date();
 
   const currentDay = now.getDate();
-  const { currency } = vault;
+  const { balance, currency } = vault;
   const exchangeProps = [currency, baseCurrency, rates];
   let { balance: currentBalance = 0 } = vault;
   let currentMonthTxs = 0;
@@ -49,6 +49,7 @@ export const calcVault = ({ baseCurrency, genesisDate, months = 0, rates = {}, t
 
   return {
     ...vault,
+    balance: balance > 0 ? balance : 0,
     chartBalance: chartBalance.map((value, index) =>
       currency !== baseCurrency
         ? exchange(value, ...exchangeProps, new Date(genesisDate.getFullYear(), genesisDate.getMonth() + index + 1, 1))

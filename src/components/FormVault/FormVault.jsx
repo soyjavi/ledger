@@ -27,12 +27,12 @@ const FormVault = ({ form = {}, onChange, showExchange = true }) => {
       <Input
         currency={form.currency}
         label={l10n.INITIAL_BALANCE}
-        marginBottom="L"
+        marginBottom="M"
         onChange={(value) => handleChange('balance', value)}
         showExchange={showExchange}
         value={form.balance}
       />
-      <Input label={l10n.ACCOUNT_NAME} onChange={(value) => handleChange('title', value)} value={form.title} />
+      <Input label={l10n.NAME} onChange={(value) => handleChange('title', value)} value={form.title} />
     </>
   );
 };

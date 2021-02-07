@@ -31,7 +31,6 @@ const OPACITY = {
 
 // DARK-MODE
 const BACKGROUND = '#000000';
-// const BASE = '#181818';
 const BASE = '#222222';
 const CTA = '#fefdfa';
 const DIALOG = '#111111';

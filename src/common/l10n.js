@@ -2,7 +2,6 @@
 export const L10N = {
   'en-EN': {
     ACCEPT: 'Accept',
-    ACCOUNT_NAME: 'Account name',
     ACTIVE: 'Active',
     ACTIVITY: 'Activity',
     ADD: 'Add',
