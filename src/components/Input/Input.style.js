@@ -10,15 +10,6 @@ export default StyleSheet.create({
     width: '100%',
   },
 
-  content: {
-    // borderBottomWidth: 1,
-    // borderBottomColor: COLOR.BASE,
-  },
-
-  focus: {
-    // borderBottomColor: COLOR.TEXT,
-  },
-
   value: {
     minWidth: SPACE.L,
     height: HEIGHT,
@@ -27,7 +18,7 @@ export default StyleSheet.create({
 
   input: {
     ...FONT.BOLD,
-    ...FONT.SUBTITLE,
+    ...FONT.INPUT,
     color: COLOR.TEXT,
     padding: 0,
     margin: 0,
@@ -36,10 +27,16 @@ export default StyleSheet.create({
     textAlign: 'center',
   },
 
+  inputFocus: {
+    color: COLOR.TEXT,
+  },
+
   inputCurrency: {
-    position: 'absolute',
+    height: HEIGHT,
     left: 0,
     opacity: 0,
+    position: 'absolute',
+    right: 0,
     width: '100%',
   },
 });

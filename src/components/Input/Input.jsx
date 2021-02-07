@@ -55,19 +55,22 @@ const Input = ({
 
   return (
     <View {...others} style={[styles.container, others.style]}>
-      <Row justify="center">
-        <Text caption color={COLOR.LIGHTEN}>
-          {label && (currency || focus || value) ? label.toUpperCase() : ' '}
-        </Text>
-      </Row>
+      {currency && label && (
+        <Row justify="center">
+          <Text caption color={COLOR.LIGHTEN}>
+            {label.toUpperCase()}
+          </Text>
+        </Row>
+      )}
 
-      <Row justify="center" style={[styles.content, focus && styles.focus, others.value && styles.filled]}>
+      <Row justify="center">
         {currency && (
           <PriceFriendly
             bold
             color={!value && !focus ? COLOR.LIGHTEN : undefined}
             currency={currency}
             headline
+            pointerEvents="none"
             value={value ? parseFloat(value, 10) : undefined}
           />
         )}
@@ -87,7 +90,7 @@ const Input = ({
           placeholder={!focus ? label : undefined}
           placeholderTextColor={COLOR.LIGHTEN}
           secureTextEntry={secure}
-          style={[styles.input, currency ? styles.inputCurrency : undefined]}
+          style={[styles.input, currency && styles.inputCurrency]}
           underlineColorAndroid="transparent"
           value={others.value || ''}
         />
