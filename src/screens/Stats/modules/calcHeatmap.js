@@ -9,7 +9,7 @@ export default (txs = [], cities = [], countries = []) => {
 
   let precission = 0.001;
   if (fixed === 0) precission = 1;
-  if (fixed === 1) precission = 0.02;
+  if (fixed === 1) precission = 0.05;
 
   txs.forEach(({ location: { latitude, longitude } = {} }) => {
     if (latitude && longitude) {
