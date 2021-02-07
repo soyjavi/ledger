@@ -44,10 +44,10 @@ const DialogVault = ({ onClose, visible }) => {
   return (
     <Dialog onClose={vaults.length > 0 ? onClose : undefined} position="bottom" visible={visible}>
       <Row justify="center" marginVertical="L">
-        <Text subtitle>{`${l10n.NEW} ${l10n.VAULT}`}</Text>
+        <Text bold subtitle>{`${l10n.NEW} ${l10n.VAULT}`}</Text>
       </Row>
       <FormVault form={form} onChange={setForm} />
-      <Row marginTop="XL">
+      <Row marginTop="L">
         <Button disabled={busy} marginRight="M" onPress={onClose} outlined text={l10n.CLOSE.toUpperCase()} wide />
         <Button
           colorText={COLOR.BACKGROUND}
