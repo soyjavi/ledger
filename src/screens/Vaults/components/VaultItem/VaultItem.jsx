@@ -4,12 +4,17 @@ import { THEME } from 'reactor/common';
 import { Button, Col, Row, Text, Touchable } from 'reactor/components';
 
 import { Box, CurrencyLogo, PriceFriendly } from '@components';
+import { useStore } from '@context';
 
 import styles from './VaultItem.style';
 
 const { COLOR, ICON } = THEME;
 
 const VaultItem = ({ active, onChange, onPress, dataSource: { currency, currentBalance, title } }) => {
+  const {
+    settings: { baseCurrency },
+  } = useStore();
+
   const colorText = active ? COLOR.TEXT : COLOR.LIGHTEN;
 
   return (
@@ -17,8 +22,12 @@ const VaultItem = ({ active, onChange, onPress, dataSource: { currency, currentB
       <Touchable paddingHorizontal="M" paddingVertical="S" onPress={onPress} style={styles.container}>
         <Row>
           <Col marginRight="S" width="auto">
-            <Box styleContent={styles.boxContent}>
-              <CurrencyLogo color={!active ? COLOR.LIGHTEN : undefined} currency={currency} size="S" />
+            <Box outlined={!active} styleContent={styles.boxContent}>
+              <CurrencyLogo
+                color={currency !== baseCurrency || !active ? COLOR.LIGHTEN : undefined}
+                currency={currency}
+                size="S"
+              />
             </Box>
           </Col>
           <Col>

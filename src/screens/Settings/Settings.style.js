@@ -25,7 +25,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     alignContent: 'center',
     borderWidth: 2,
-    borderColor: COLOR.TEXT,
+    borderColor: COLOR.BASE,
     display: 'flex',
     justifyContent: 'center',
     height: CONTENT_SIZE,
