@@ -24,7 +24,8 @@ export default StyleSheet.create({
   content: {
     alignItems: 'center',
     alignContent: 'center',
-    backgroundColor: COLOR.BASE,
+    borderWidth: 2,
+    borderColor: COLOR.BASE,
     display: 'flex',
     justifyContent: 'center',
     height: CONTENT_SIZE,
@@ -40,7 +41,7 @@ export default StyleSheet.create({
   qr: {
     height: QR_SIZE,
     width: QR_SIZE,
-    backgroundColor: COLOR.TRANSPARENT,
+    backgroundColor: COLOR.BACKGROUND,
     borderRadius: BORDER_RADIUS,
   },
 });

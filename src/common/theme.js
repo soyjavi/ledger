@@ -30,13 +30,16 @@ const OPACITY = {
 // const LIGHTEN = '#A3A3A3';
 
 // DARK-MODE
-const BACKGROUND = '#000000';
-const BASE = '#222222';
+const BACKGROUND = '#0a0d15';
+// const BASE = '#14171f';
+const BASE = '#1e2129';
+
 const CTA = '#fefdfa';
-const DIALOG = '#111111';
+const DIALOG = '#14171f';
+
+const LIGHTEN = 'rgba(255,255,255,0.5)';
 const OVERLAY = colorOpacity(BACKGROUND, OPACITY.L);
 const TEXT = '#fefdfa';
-const LIGHTEN = 'rgba(255,255,255,0.6)';
 
 const ELEVATION = {
   shadowColor: '#000000',
@@ -99,8 +102,7 @@ export const theme = {
       fontSize: 11,
     },
     INPUT: {
-      ...FONT_FAMILY,
-      fontSize: 14,
+      fontSize: 20,
     },
 
     // -- Custom
