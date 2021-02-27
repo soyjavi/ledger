@@ -4,6 +4,7 @@ import { THEME } from 'reactor/common';
 import { Button, Viewport } from 'reactor/components';
 
 import { BANNERS } from '@assets';
+import { C } from '@common';
 import {
   Banner,
   DialogClone,
@@ -20,12 +21,22 @@ import { useL10N, useNavigation, useStore } from '@context';
 import { DialogTransaction } from './components';
 import { onScroll, query, search } from './Vault.controller';
 
+const {
+  TX: {
+    TYPE: { EXPENSE, INCOME, TRANSFER },
+  },
+} = C;
 const { COLOR, ICON } = THEME;
 
 const buttonProps = {
   color: COLOR.BASE,
   colorText: COLOR.TEXT,
   iconFamily: ICON.FAMILY,
+};
+
+const buttonFooter = {
+  ...buttonProps,
+  color: COLOR.DIALOG,
 };
 
 const Vault = ({ visible }) => {
@@ -35,7 +46,7 @@ const Vault = ({ visible }) => {
   const scrollview = useRef(null);
 
   const [dataSource, setDataSource] = useState({});
-  const [dialog, setDialog] = useState(undefined);
+  const [dialog, setDialog] = useState(TRANSFER);
   const [scroll, setScroll] = useState(false);
   const [scrollQuery, setScrollQuery] = useState(false);
   const [txs, setTxs] = useState([]);
@@ -117,28 +128,28 @@ const Vault = ({ visible }) => {
       </ScrollView>
 
       <Footer visible={scroll || searchTxs !== undefined}>
-        <Search {...buttonProps} onFocus={setSearching} onSearch={handleSearch} />
+        <Search {...buttonFooter} onFocus={setSearching} onSearch={handleSearch} />
 
         <Button
-          {...buttonProps}
+          {...buttonFooter}
           icon="arrow-up"
           iconFamily={ICON.FAMILY}
-          onPress={() => setDialog(1)}
+          onPress={() => setDialog(EXPENSE)}
           text={!searching ? l10n.INCOME.toUpperCase() : undefined}
         />
         <Button
-          {...buttonProps}
+          {...buttonFooter}
           icon="arrow-down"
           iconFamily={ICON.FAMILY}
-          onPress={() => setDialog(0)}
+          onPress={() => setDialog(INCOME)}
           text={!searching ? l10n.EXPENSE.toUpperCase() : undefined}
         />
         {vaults.length > 1 && (
           <Button
-            {...buttonProps}
+            {...buttonFooter}
             icon="shuffle"
             iconFamily={ICON.FAMILY}
-            onPress={() => setDialog(2)}
+            onPress={() => setDialog(TRANSFER)}
             text={!searching ? l10n.SWAP.toUpperCase() : undefined}
           />
         )}
