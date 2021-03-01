@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { THEME } from 'reactor/common';
-import { Slider } from 'reactor/components';
+import { Col, Row, Slider } from 'reactor/components';
 
 import { colorOpacity, currencyDecimals } from '@common';
 import { Input, Option, PriceFriendly, OPTION_SIZE } from '@components';
@@ -45,15 +45,6 @@ const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
 
   return (
     <>
-      <Input
-        currency={vault.currency}
-        label={l10n.SEND}
-        marginBottom="L"
-        maxValue={vault.currentBalance}
-        onChange={(value) => handleField('value', value)}
-        value={form.value}
-      />
-
       <Slider itemMargin={SPACE.S} itemWidth={OPTION_SIZE} marginBottom="L">
         {queryAvailableVaults(vaults, vault.hash).map(({ currency, currentBalance, hash, title }) => (
           <Option
@@ -76,13 +67,28 @@ const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
         ))}
       </Slider>
 
-      <Input
-        currency={form.to ? form.to.currency : baseCurrency}
-        disabled={!form.to}
-        label={l10n.GET}
-        onChange={(value) => handleField('exchange', value)}
-        value={form.to ? form.exchange : undefined}
-      />
+      <Row marginBottom="M" align="start">
+        <Col>
+          <Input
+            currency={vault.currency}
+            label={l10n.SEND}
+            maxValue={vault.currentBalance}
+            showExchange={false}
+            value={form.value}
+            onChange={(value) => handleField('value', value)}
+          />
+        </Col>
+        <Col>
+          <Input
+            currency={form.to ? form.to.currency : baseCurrency}
+            disabled={!form.to}
+            label={l10n.GET}
+            showExchange={false}
+            value={form.to ? form.exchange : undefined}
+            onChange={(value) => handleField('exchange', value)}
+          />
+        </Col>
+      </Row>
     </>
   );
 };
