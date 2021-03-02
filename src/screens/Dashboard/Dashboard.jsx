@@ -31,6 +31,11 @@ const buttonProps = {
   iconFamily: ICON.FAMILY,
 };
 
+const buttonFooter = {
+  ...buttonProps,
+  color: COLOR.DIALOG,
+};
+
 const Dashboard = ({ visible, ...inherit }) => {
   const l10n = useL10N();
   const navigation = useNavigation();
@@ -113,17 +118,17 @@ const Dashboard = ({ visible, ...inherit }) => {
 
       <Footer visible={scroll || searchTxs !== undefined}>
         {lastTxs.length > 0 && (
-          <Search {...buttonProps} onFocus={setSearching} onSearch={handleSearch} text={l10n.SEARCH.toUpperCase()} />
+          <Search {...buttonFooter} onFocus={setSearching} onSearch={handleSearch} text={l10n.SEARCH.toUpperCase()} />
         )}
         <Button
-          {...buttonProps}
+          {...buttonFooter}
           icon="chart"
           iconFamily={ICON.FAMILY}
           onPress={() => navigation.go(SCREEN.STATS)}
           text={!searching ? l10n.ACTIVITY.toUpperCase() : undefined}
         />
         <Button
-          {...buttonProps}
+          {...buttonFooter}
           icon="settings"
           iconFamily={ICON.FAMILY}
           onPress={() => navigation.go(SCREEN.SETTINGS)}
