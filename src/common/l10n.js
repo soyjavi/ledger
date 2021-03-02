@@ -90,7 +90,7 @@ export const L10N = {
     FORKED_CORRECTLY: 'All transactions have been successfully transferred to this device.',
     FROM: 'from',
 
-    GET: 'Amount you will get',
+    GET: 'Get',
     GET_STARTED: 'GET STARTED',
 
     IMPORT: 'IMPORT',
