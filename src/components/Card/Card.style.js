@@ -4,7 +4,9 @@ import { LAYOUT, THEME } from 'reactor/common';
 const { SPACE } = THEME;
 
 let CARD_WIDTH = LAYOUT.VIEWPORT.W / 2 - (SPACE.L + SPACE.XS);
-if (CARD_WIDTH > 196) CARD_WIDTH = 196;
+if (CARD_WIDTH > 160) CARD_WIDTH = 160;
+
+const PADDING = SPACE.S + SPACE.XS;
 
 export { CARD_WIDTH };
 
@@ -20,8 +22,8 @@ export default StyleSheet.create({
 
   content: {
     flex: 1,
-    paddingHorizontal: SPACE.M,
-    paddingVertical: SPACE.S + SPACE.XS,
+    paddingHorizontal: PADDING,
+    paddingVertical: PADDING,
     alignItems: 'flex-start',
   },
 
