@@ -6,7 +6,7 @@ import { Text, Touchable } from 'reactor/components';
 
 import styles from './NumKeyboard.style';
 
-const { COLOR } = THEME;
+const { BORDER_RADIUS, COLOR } = THEME;
 const KEYS = [1, 2, 3, 4, 5, 6, 7, 8, 9, undefined, 0, undefined];
 const LETTERS = {
   2: 'ABC',
@@ -24,8 +24,10 @@ const NumKeyboard = ({ onPress }) => (
     {KEYS.map((key, index) => (
       <Touchable
         key={index}
-        onPress={typeof key === 'number' ? () => onPress(key) : undefined}
+        containerBorderRadius={BORDER_RADIUS}
+        rippleColor={COLOR.TEXT}
         style={styles.touchable}
+        onPress={typeof key === 'number' ? () => onPress(key) : undefined}
       >
         <View style={styles.content}>
           {typeof key === 'number' && (
