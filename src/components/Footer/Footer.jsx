@@ -1,3 +1,4 @@
+import { BlurView } from 'expo-blur';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { THEME } from 'reactor/common';
@@ -5,7 +6,7 @@ import { Motion } from 'reactor/components';
 
 import styles from './Footer.style';
 
-const { MOTION, UNIT } = THEME;
+const { BLUR, MOTION, UNIT } = THEME;
 
 const Footer = ({ children, visible }) => (
   <Motion
@@ -15,7 +16,9 @@ const Footer = ({ children, visible }) => (
     style={styles.container}
     timeline={[{ property: 'translateY', value: visible ? 0 : UNIT * 16 }]}
   >
-    {children}
+    <BlurView {...BLUR} style={styles.blur}>
+      {children}
+    </BlurView>
   </Motion>
 );
 

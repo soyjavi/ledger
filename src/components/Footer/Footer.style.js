@@ -4,20 +4,22 @@ import { useEnvironment } from 'reactor/hooks';
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
 const ENV = useEnvironment();
-const { BORDER_RADIUS, COLOR, SPACE } = THEME;
+const { SPACE } = THEME;
 
 export default StyleSheet.create({
-  container: {
-    backgroundColor: COLOR.DIALOG,
-    bottom: SPACE.S,
-    borderRadius: BORDER_RADIUS,
+  blur: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: SPACE.XS,
+    width: '100%',
+  },
+
+  container: {
+    bottom: 0,
     position: ENV.IS_WEB ? 'fixed' : 'absolute',
-    left: SPACE.S,
-    right: SPACE.S,
+    left: 0,
+    right: 0,
     width: 'auto',
     zIndex: 1,
   },
