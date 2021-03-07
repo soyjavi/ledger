@@ -15,7 +15,7 @@ const {
     TYPE: { EXPENSE },
   },
 } = C;
-const { SPACE } = THEME;
+const { COLOR, SPACE } = THEME;
 
 const FormTransaction = ({ currency, form = {}, onChange, type, vault: { currentBalance = 0 } = {} }) => {
   const l10n = useL10N();
@@ -34,6 +34,8 @@ const FormTransaction = ({ currency, form = {}, onChange, type, vault: { current
       <Slider itemMargin={SPACE.S} itemWidth={OPTION_SIZE} marginBottom="L">
         {queryCategories({ l10n, type }).map((item) => (
           <Option
+            color={COLOR.BASE_LIGHTEN}
+            colorSelected={COLOR.TEXT}
             legend={item.caption}
             key={item.key}
             icon={CATEGORY_ICON[type][item.key]}

@@ -8,7 +8,7 @@ import { useStore } from '@context';
 
 import { queryCurrencies } from './modules';
 
-const { SPACE } = THEME;
+const { COLOR, SPACE } = THEME;
 
 const SliderCurrencies = ({ onChange, selected, ...others }) => {
   const store = useStore();
@@ -18,6 +18,7 @@ const SliderCurrencies = ({ onChange, selected, ...others }) => {
       {queryCurrencies(store).map((currency, index) => (
         <Option
           caption={currency}
+          color={COLOR.BASE_LIGHTEN}
           currency={currency}
           key={index}
           marginRight="S"

@@ -3,7 +3,7 @@ import React from 'react';
 import { THEME } from 'reactor/common';
 import { Col, Row, Slider } from 'reactor/components';
 
-import { colorOpacity, currencyDecimals } from '@common';
+import { currencyDecimals } from '@common';
 import { Input, Option, PriceFriendly, OPTION_SIZE } from '@components';
 import { useL10N, useStore } from '@context';
 
@@ -48,9 +48,10 @@ const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
       <Slider itemMargin={SPACE.S} itemWidth={OPTION_SIZE} marginBottom="L">
         {queryAvailableVaults(vaults, vault.hash).map(({ currency, currentBalance, hash, title }) => (
           <Option
-            key={hash}
-            color={currency === baseCurrency ? colorOpacity(COLOR.BRAND) : undefined}
+            color={COLOR.BASE_LIGHTEN}
+            colorSelected={COLOR.TEXT}
             currency={currency}
+            key={hash}
             legend={title}
             marginRight="S"
             onPress={() => handleField('destination', hash)}
