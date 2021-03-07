@@ -137,13 +137,13 @@ export const L10N = {
 
     SAVE: 'SAVE',
     SEARCH: 'Search',
+    SEE_ALL: 'See All',
     SEND: 'Send',
     SETTINGS: 'Settings',
     SETTING_1_TITLE: 'Hide amounts',
     SETTING_1_CAPTION: 'Switch visibility just touching it',
     SYNC_RATES_SENTENCE: 'Last update on',
     SYNC_RATES_CTA: 'Update Rates',
-
     STATS: 'Stats',
     STATS_CAPTION: 'In this summary you can see a breakdown of your operations in the selected category.',
     SYNC_CAPTION: 'It seems like you were offline for a while, you can sync your blockchain now.',
@@ -174,7 +174,6 @@ export const L10N = {
     VAULTS: 'Accounts',
     VAULT_CAPTION:
       'You can create as many accounts as you want. You can continue using your base currency or choose any other.',
-    VIEW_ALL: 'View All',
     VISIBILITY: 'Visibility',
 
     WAIT: 'Syncing...',
