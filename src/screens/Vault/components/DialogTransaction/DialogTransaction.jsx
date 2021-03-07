@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { THEME } from 'reactor/common';
 import { Button, Dialog, Row, Text } from 'reactor/components';
 
 import { C, onHardwareBackPress } from '@common';
@@ -10,7 +9,6 @@ import { useConnection, useL10N, useSnackBar, useStore } from '@context';
 import { FormTransaction, FormTransfer } from './components';
 import { getLocation, handleSubmit } from './modules';
 
-const { COLOR } = THEME;
 const {
   DELAY_PRESS_MS,
   TX: {
@@ -87,14 +85,13 @@ const DialogTransaction = (props = {}) => {
       )}
 
       <Row marginTop="XL">
-        <Button disabled={busy} marginRight="M" onPress={onClose} outlined text={l10n.CLOSE.toUpperCase()} wide />
+        <Button disabled={busy} marginRight="M" outlined text={l10n.CLOSE.toUpperCase()} wide onPress={onClose} />
         <Button
-          colorText={COLOR.BACKGROUND}
           delay={DELAY_PRESS_MS}
           disabled={busy || !valid}
-          onPress={onSubmit}
           text={l10n.SAVE.toUpperCase()}
           wide
+          onPress={onSubmit}
         />
       </Row>
     </Dialog>
