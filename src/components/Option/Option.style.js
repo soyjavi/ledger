@@ -3,8 +3,8 @@ import { LAYOUT, THEME } from 'reactor/common';
 
 const { BORDER_RADIUS, SPACE } = THEME;
 
-let OPTION_SIZE = LAYOUT.VIEWPORT.W / 6 + SPACE.XS;
-if (OPTION_SIZE > 80) OPTION_SIZE = 80;
+let OPTION_SIZE = LAYOUT.VIEWPORT.W / 5 - SPACE.XS;
+if (OPTION_SIZE > 72) OPTION_SIZE = 72;
 
 export { OPTION_SIZE };
 
@@ -28,5 +28,9 @@ export default StyleSheet.create({
   image: {
     height: SPACE.L,
     width: SPACE.L,
+  },
+
+  legend: {
+    fontSize: 9,
   },
 });

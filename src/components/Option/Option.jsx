@@ -7,7 +7,7 @@ import { Box } from '../Box';
 import { CurrencyLogo } from '../CurrencyLogo';
 import styles, { OPTION_SIZE } from './Option.style';
 
-const { BORDER_RADIUS, COLOR, FONT, ICON, SPACE } = THEME;
+const { BORDER_RADIUS, COLOR, ICON, SPACE } = THEME;
 
 const Option = ({
   caption,
@@ -53,7 +53,7 @@ const Option = ({
             color={colorContent}
             marginTop={icon || image ? 'XS' : undefined}
             numberOfLines={1}
-            style={FONT.LEGEND}
+            style={styles.legend}
           >
             {legend}
           </Text>
