@@ -2,9 +2,11 @@ import { StyleSheet } from 'react-native';
 import { THEME } from 'reactor/common';
 import { useEnvironment } from 'reactor/hooks';
 
+import { colorOpacity } from '@common';
+
 // eslint-disable-next-line react-hooks/rules-of-hooks
 const ENV = useEnvironment();
-const { BORDER_RADIUS, COLOR, SPACE } = THEME;
+const { BORDER_RADIUS, COLOR, OPACITY, SPACE } = THEME;
 
 export default StyleSheet.create({
   container: {
@@ -13,8 +15,8 @@ export default StyleSheet.create({
 
   connected: {
     alignSelf: 'center',
-    backgroundColor: COLOR.ERROR,
-    borderRadius: BORDER_RADIUS,
+    backgroundColor: colorOpacity(COLOR.ERROR, OPACITY.S),
+    borderRadius: BORDER_RADIUS / 2,
     paddingHorizontal: SPACE.S,
     paddingVertical: SPACE.XS,
     position: ENV.IS_WEB ? 'fixed' : 'absolute',

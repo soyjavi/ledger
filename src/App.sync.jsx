@@ -69,11 +69,13 @@ const Sync = () => {
       <SafeAreaView>
         <Motion
           duration={!connected ? MOTION.EXPAND : MOTION.COLLAPSE}
-          style={[styles.connected]}
+          style={styles.connected}
           timeline={[{ property: 'translateY', value: !connected ? 0 : -(SPACE.XXL * 4) }]}
           type="spring"
         >
-          <Text caption>{l10n.OFFLINE}</Text>
+          <Text bold caption>
+            {l10n.OFFLINE}
+          </Text>
         </Motion>
       </SafeAreaView>
 
