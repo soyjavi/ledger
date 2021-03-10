@@ -23,25 +23,27 @@ const OPACITY = {
 // LIGHT-MODE
 // const BACKGROUND = '#ffffff';
 // const BASE = '#F1F1F1'; //'#F5F5F5';
-// const CTA = '#23272B';
-// const DIALOG = '#ffffff';
-// const OVERLAY = 'rgba(255, 255, 255, 0.8)';
-// const TEXT = '#000000';
+// const BASE_LIGHTEN = '#242426';
+// const BORDER_RADIUS = SPACE.S;
+// const BRAND = '#D29776';
+// const CTA = BRAND;
+// const DIALOG = '#F5F5F5';
 // const LIGHTEN = '#A3A3A3';
+// const TEXT = '#000000';
 
 // DARK-MODE
 const BACKGROUND = '#000000';
-const BASE = '#2C2C2D';
-const BORDER_RADIUS = SPACE.XS;
-const CTA = '#fefdfa';
-const DIALOG = '#1C1C1D';
-
+const BASE = '#161618';
+const BASE_LIGHTEN = '#242426';
+const BORDER_RADIUS = SPACE.S;
+const BRAND = '#D29776';
+const CTA = BRAND;
+const DIALOG = '#1C1C1E';
 const LIGHTEN = 'rgba(255,255,255,0.5)';
-const OVERLAY = colorOpacity(BACKGROUND, OPACITY.L);
 const TEXT = '#fefdfa';
 
 const ELEVATION = {
-  shadowColor: '#000000',
+  shadowColor: BACKGROUND,
   shadowOffset: { height: 0, width: 0 },
   shadowOpacity: 0.2,
   shadowRadius: 32,
@@ -52,11 +54,14 @@ const ELEVATION = {
 
 export const theme = {
   BAR_SIZE: SPACE.S,
-
+  BLUR: {
+    intensity: 100,
+    tint: 'dark',
+  },
   BORDER_RADIUS,
 
   COLOR: {
-    BRAND: '#D29776',
+    BRAND,
     CTA,
     // BLACK
     // WHITE
@@ -70,9 +75,9 @@ export const theme = {
     // TRANSPARENT
 
     // -- Custom
+    BASE_LIGHTEN,
     DIALOG,
     LIGHTEN,
-    OVERLAY,
   },
 
   ELEVATION,
@@ -128,7 +133,7 @@ export const theme = {
     color: BASE,
   },
   DIALOG_OVERLAY: {
-    backgroundColor: OVERLAY,
+    backgroundColor: colorOpacity(BACKGROUND, OPACITY.L),
   },
   INPUT: {
     backgroundColor: BACKGROUND,
