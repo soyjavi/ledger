@@ -5,17 +5,16 @@ import { THEME } from 'reactor/common';
 import { Row, Text, Touchable } from 'reactor/components';
 
 import { exchange } from '@common';
-import { useL10N, useStore } from '@context';
+import { useStore } from '@context';
 
 import { Box } from '../Box';
 import { CurrencyLogo } from '../CurrencyLogo';
 import { PriceFriendly } from '../PriceFriendly';
-import styles, { CARD_WIDTH } from './Card.style';
+import styles, { CARD_SIZE } from './Card.style';
 
 const { COLOR } = THEME;
 
-const Card = ({ balance = 0, color, currency, highlight, onPress, percentage, title = '', ...others }) => {
-  const l10n = useL10N();
+const Card = ({ balance = 0, currency, highlight, onPress, title = '', ...others }) => {
   const {
     settings: { baseCurrency },
     rates,
@@ -24,42 +23,42 @@ const Card = ({ balance = 0, color, currency, highlight, onPress, percentage, ti
   const textColor = highlight ? COLOR.BACKGROUND : undefined;
 
   return (
-    <Touchable {...others} onPress={onPress} style={styles.container}>
-      <Box color={highlight ? COLOR.CTA : color} style={styles.box}>
+    <Touchable
+      {...others}
+      rippleColor={highlight ? COLOR.TEXT : COLOR.LIGHTEN}
+      style={styles.container}
+      onPress={onPress}
+    >
+      <Box color={highlight ? COLOR.CTA : undefined} style={styles.box}>
         <View style={styles.content}>
           <Row>
-            <CurrencyLogo color={currency !== baseCurrency ? COLOR.LIGHTEN : undefined} currency={currency} size="S" />
-            <Text caption color={textColor} numberOfLines={1} marginLeft="XS">
+            <CurrencyLogo
+              color={currency !== baseCurrency || highlight ? COLOR.LIGHTEN : undefined}
+              currency={currency}
+              size="M"
+            />
+            <Text caption color={textColor} numberOfLines={1} marginLeft="S">
               {title.toUpperCase()}
             </Text>
           </Row>
 
+          <View style={styles.breakline} />
+
           {currency && (
             <>
               <PriceFriendly bold color={textColor} currency={currency} subtitle value={balance} />
-              {currency !== baseCurrency && (
+
+              {currency !== baseCurrency ? (
                 <PriceFriendly
                   caption
                   color={textColor}
                   currency={baseCurrency}
+                  marginTop="XXS"
                   value={exchange(Math.abs(balance), currency, baseCurrency, rates)}
                 />
-              )}
-
-              <View style={styles.expand} />
-
-              {percentage ? (
-                <PriceFriendly
-                  caption
-                  color={textColor}
-                  currency="%"
-                  highlight={others.highlight}
-                  operator={others.operator}
-                  value={percentage}
-                />
               ) : (
-                <Text caption color={COLOR.LIGHTEN}>
-                  {l10n.WITHOUT_TXS}
+                <Text caption color={textColor} marginTop="XXS">
+                  {' '}
                 </Text>
               )}
             </>
@@ -81,4 +80,4 @@ Card.propTypes = {
   title: PropTypes.string,
 };
 
-export { Card, CARD_WIDTH };
+export { Card, CARD_SIZE };
