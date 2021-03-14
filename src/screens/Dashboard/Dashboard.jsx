@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Button, Slider, Viewport } from 'reactor/components';
 
-import { C } from '@common';
+import { C, colorOpacity } from '@common';
 import {
   Card,
-  CARD_WIDTH,
+  CARD_SIZE,
   DialogClone,
   Footer,
   GroupTransactions,
@@ -18,22 +18,23 @@ import {
 } from '@components';
 import { useL10N, useNavigation, useStore } from '@context';
 
-import { DialogVault, VaultCard } from './components';
+import { DialogVault } from './components';
 import { queryLastTxs, querySearchTxs, queryVaults } from './Dashboard.controller';
 import styles from './Dashboard.style';
 
 const { SCREEN } = C;
-const { COLOR, ICON, SPACE } = THEME;
+const { COLOR, ICON, OPACITY, SPACE } = THEME;
 
-const buttonProps = {
-  color: COLOR.BASE,
-  colorText: COLOR.TEXT,
+const button = {
+  color: colorOpacity(COLOR.CTA, OPACITY.S),
+  colorText: COLOR.CTA,
   iconFamily: ICON.FAMILY,
 };
 
 const buttonFooter = {
-  ...buttonProps,
-  color: COLOR.DIALOG,
+  color: COLOR.TRANSPARENT,
+  colorText: COLOR.TEXT,
+  iconFamily: ICON.FAMILY,
 };
 
 const Dashboard = ({ visible, ...inherit }) => {
@@ -65,13 +66,13 @@ const Dashboard = ({ visible, ...inherit }) => {
       <ScrollView onScroll={setScroll}>
         <Summary {...overall} currency={baseCurrency} title={l10n.OVERALL_BALANCE}>
           <Button
-            {...buttonProps}
+            {...button}
             icon="chart"
             onPress={() => navigation.go(SCREEN.STATS)}
             text={l10n.ACTIVITY.toUpperCase()}
           />
           <Button
-            {...buttonProps}
+            {...button}
             icon="settings"
             onPress={() => navigation.go(SCREEN.SETTINGS)}
             text={l10n.SETTINGS.toUpperCase()}
@@ -83,18 +84,21 @@ const Dashboard = ({ visible, ...inherit }) => {
             <Heading paddingLeft="M" value={l10n.VAULTS}>
               <Button
                 color={COLOR.BACKGROUND}
-                colorText={COLOR.TEXT}
+                colorText={COLOR.BRAND}
                 onPress={() => navigation.go(SCREEN.VAULTS)}
                 size="S"
-                text={l10n.VIEW_ALL.toUpperCase()}
+                text={l10n.SEE_ALL}
               />
             </Heading>
 
-            <Slider itemWidth={CARD_WIDTH} itemMargin={SPACE.S} style={styles.vaults}>
+            <Slider itemWidth={CARD_SIZE} itemMargin={SPACE.S} style={styles.vaults}>
               {queryVaults({ vaults, visibleVaults }).map((vault, index) => (
-                <VaultCard
-                  {...vault}
-                  baseCurrency={baseCurrency}
+                <Card
+                  {...vault.others}
+                  balance={vault.currentBalance}
+                  currency={vault.currency}
+                  operator
+                  title={vault.title}
                   key={vault.hash}
                   marginLeft={index === 0 ? 'M' : undefined}
                   marginRight="S"
@@ -123,14 +127,12 @@ const Dashboard = ({ visible, ...inherit }) => {
         <Button
           {...buttonFooter}
           icon="chart"
-          iconFamily={ICON.FAMILY}
           onPress={() => navigation.go(SCREEN.STATS)}
           text={!searching ? l10n.ACTIVITY.toUpperCase() : undefined}
         />
         <Button
           {...buttonFooter}
           icon="settings"
-          iconFamily={ICON.FAMILY}
           onPress={() => navigation.go(SCREEN.SETTINGS)}
           text={!searching ? l10n.SETTINGS.toUpperCase() : undefined}
         />

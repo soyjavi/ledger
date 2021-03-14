@@ -4,7 +4,7 @@ import { THEME } from 'reactor/common';
 import { Button, Viewport } from 'reactor/components';
 
 import { BANNERS } from '@assets';
-import { C } from '@common';
+import { C, colorOpacity } from '@common';
 import {
   Banner,
   DialogClone,
@@ -26,17 +26,18 @@ const {
     TYPE: { EXPENSE, INCOME, TRANSFER },
   },
 } = C;
-const { COLOR, ICON } = THEME;
+const { COLOR, ICON, OPACITY } = THEME;
 
-const buttonProps = {
-  color: COLOR.BASE,
-  colorText: COLOR.TEXT,
+const button = {
+  color: colorOpacity(COLOR.CTA, OPACITY.S),
+  colorText: COLOR.CTA,
   iconFamily: ICON.FAMILY,
 };
 
 const buttonFooter = {
-  ...buttonProps,
-  color: COLOR.DIALOG,
+  color: COLOR.TRANSPARENT,
+  colorText: COLOR.TEXT,
+  iconFamily: ICON.FAMILY,
 };
 
 const Vault = ({ visible }) => {
@@ -46,7 +47,7 @@ const Vault = ({ visible }) => {
   const scrollview = useRef(null);
 
   const [dataSource, setDataSource] = useState({});
-  const [dialog, setDialog] = useState(TRANSFER);
+  const [dialog, setDialog] = useState(undefined);
   const [scroll, setScroll] = useState(false);
   const [scrollQuery, setScrollQuery] = useState(false);
   const [txs, setTxs] = useState([]);
@@ -102,10 +103,10 @@ const Vault = ({ visible }) => {
 
       <ScrollView onScroll={handleScroll} ref={scrollview}>
         <Summary {...rest} title={title} currency={currency}>
-          <Button {...buttonProps} icon="arrow-up" onPress={() => setDialog(1)} text={l10n.INCOME.toUpperCase()} />
-          <Button {...buttonProps} icon="arrow-down" onPress={() => setDialog(0)} text={l10n.EXPENSE.toUpperCase()} />
+          <Button {...button} icon="arrow-up" onPress={() => setDialog(1)} text={l10n.INCOME.toUpperCase()} />
+          <Button {...button} icon="arrow-down" onPress={() => setDialog(0)} text={l10n.EXPENSE.toUpperCase()} />
           {vaults.length > 1 && (
-            <Button {...buttonProps} icon="shuffle" onPress={() => setDialog(2)} text={l10n.SWAP.toUpperCase()} />
+            <Button {...button} icon="shuffle" onPress={() => setDialog(2)} text={l10n.SWAP.toUpperCase()} />
           )}
         </Summary>
 
@@ -133,14 +134,12 @@ const Vault = ({ visible }) => {
         <Button
           {...buttonFooter}
           icon="arrow-up"
-          iconFamily={ICON.FAMILY}
           onPress={() => setDialog(EXPENSE)}
           text={!searching ? l10n.INCOME.toUpperCase() : undefined}
         />
         <Button
           {...buttonFooter}
           icon="arrow-down"
-          iconFamily={ICON.FAMILY}
           onPress={() => setDialog(INCOME)}
           text={!searching ? l10n.EXPENSE.toUpperCase() : undefined}
         />
@@ -148,7 +147,6 @@ const Vault = ({ visible }) => {
           <Button
             {...buttonFooter}
             icon="shuffle"
-            iconFamily={ICON.FAMILY}
             onPress={() => setDialog(TRANSFER)}
             text={!searching ? l10n.SWAP.toUpperCase() : undefined}
           />
