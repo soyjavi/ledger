@@ -71,7 +71,6 @@ const Card = ({ balance = 0, currency, highlight, onPress, title = '', ...others
 
 Card.propTypes = {
   balance: PropTypes.number,
-  color: PropTypes.oneOfType([PropTypes.string, PropTypes.shape({})]),
   currency: PropTypes.string,
   currentMonth: PropTypes.shape({}),
   highlight: PropTypes.bool,
