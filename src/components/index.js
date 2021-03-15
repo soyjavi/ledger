@@ -12,6 +12,7 @@ export * from './Heading';
 export * from './HeatMap';
 export * from './HorizontalChartItem';
 export * from './Input';
+export * from './InputCurrency';
 export * from './Option';
 export * from './PriceFriendly';
 export * from './ScrollView';

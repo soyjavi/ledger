@@ -18,7 +18,7 @@ const {
 
 const INITIAL_STATE = {
   busy: false,
-  form: { value: 0 },
+  form: {},
   valid: false,
 };
 

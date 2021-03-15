@@ -138,7 +138,6 @@ export const L10N = {
     SAVE: 'SAVE',
     SEARCH: 'Search',
     SEE_ALL: 'See All',
-    SEND: 'Send',
     SETTINGS: 'Settings',
     SETTING_1_TITLE: 'Hide amounts',
     SETTING_1_CAPTION: 'Switch visibility just touching it',
