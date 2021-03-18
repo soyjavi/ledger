@@ -24,6 +24,7 @@ const InputCurrency = ({
   const { settings: { baseCurrency } = {}, rates } = useStore();
 
   const [exchange, setExchange] = useState();
+  const [focus, setFocus] = useState(false);
   const [value, setValue] = useState();
 
   useEffect(() => {
@@ -49,7 +50,7 @@ const InputCurrency = ({
     onChange && onChange(nextValue);
   };
 
-  const color = disabled || value === undefined ? COLOR.LIGHTEN : undefined;
+  const color = !focus && (disabled || value === undefined) ? COLOR.LIGHTEN : undefined;
 
   return (
     <Row {...others} align="start" style={[styles.container, others.style]}>
@@ -102,7 +103,9 @@ const InputCurrency = ({
           blurOnSubmit
           editable
           keyboardType="numeric"
+          onBlur={() => setFocus(false)}
           onChangeText={handleChange}
+          onFocus={() => setFocus(true)}
           style={styles.textInput}
           value={others.value || 0}
         />
