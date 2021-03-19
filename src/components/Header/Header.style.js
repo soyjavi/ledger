@@ -7,20 +7,20 @@ const ENV = useEnvironment();
 const { SPACE } = THEME;
 
 export default StyleSheet.create({
-  blur: {
+  container: {
     position: ENV.IS_WEB ? 'fixed' : 'absolute',
     top: 0,
     width: '100%',
     zIndex: 1,
   },
 
-  container: {
+  content: {
     height: SPACE.XXL,
     justifyContent: 'space-between',
     overflow: 'hidden',
   },
 
-  content: {
+  title: {
     flex: 4,
     maxWidth: '85%',
   },

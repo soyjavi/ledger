@@ -2,15 +2,15 @@ import { BlurView } from 'expo-blur';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { THEME } from 'reactor/common';
-import { Button, Col, Motion, Row, Text } from 'reactor/components';
+import { Button, Col, Motion, Row, Text, View } from 'reactor/components';
 
 import { onHardwareBackPress } from '@common';
 
 import styles from './Header.style';
 
-const { BLUR, COLOR, ICON, MOTION, UNIT } = THEME;
+const { BLUR, COLOR, ICON, MOTION } = THEME;
 
-const Header = ({ childLeft, childRight, highlight = false, onBack, title }) => {
+const Header = ({ childLeft, childRight, isVisible, onBack, title }) => {
   useEffect(() => {
     onHardwareBackPress(onBack !== undefined, onBack);
     return () => onHardwareBackPress(false);
@@ -18,46 +18,42 @@ const Header = ({ childLeft, childRight, highlight = false, onBack, title }) => 
   }, [onBack]);
 
   return (
-    <BlurView {...BLUR} style={styles.blur}>
-      <Row paddingHorizontal="M" style={styles.container}>
-        <Col align="start">
-          {childLeft}
-          {onBack && (
-            <Button
-              color={COLOR.TRANSPARENT}
-              colorText={COLOR.TEXT}
-              iconFamily={ICON.FAMILY}
-              icon="arrow-left"
-              onPress={onBack}
-              size="S"
-            />
-          )}
-        </Col>
-        <Col align="center" style={styles.content}>
-          <Motion
-            duration={highlight ? MOTION.EXPAND : MOTION.COLLAPSE / 4}
-            timeline={[
-              { property: 'opacity', value: highlight ? 1 : 0 },
-              { property: 'translateY', value: highlight ? 0 : UNIT },
-            ]}
-          >
-            {title && (
-              <Text bold subtitle>
-                {title}
-              </Text>
+    <View style={styles.container}>
+      <BlurView {...BLUR} intensity={isVisible === false ? 0 : undefined}>
+        <Row paddingHorizontal="M" style={styles.content}>
+          <Col align="start">
+            {childLeft}
+            {onBack && (
+              <Button
+                color={COLOR.TRANSPARENT}
+                colorText={COLOR.TEXT}
+                iconFamily={ICON.FAMILY}
+                icon="arrow-left"
+                onPress={onBack}
+                size="S"
+              />
             )}
-          </Motion>
-        </Col>
-        <Col align="end">{childRight}</Col>
-      </Row>
-    </BlurView>
+          </Col>
+          <Col align="center" style={styles.title}>
+            <Motion duration={MOTION.EXPAND} timeline={[{ property: 'opacity', value: isVisible ? 1 : 0 }]}>
+              {title && (
+                <Text bold subtitle>
+                  {title}
+                </Text>
+              )}
+            </Motion>
+          </Col>
+          <Col align="end">{childRight}</Col>
+        </Row>
+      </BlurView>
+    </View>
   );
 };
 
 Header.propTypes = {
   childLeft: PropTypes.node,
   childRight: PropTypes.node,
-  highlight: PropTypes.bool,
+  isVisible: PropTypes.bool,
   onBack: PropTypes.func,
   title: PropTypes.string,
 };

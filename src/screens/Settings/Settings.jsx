@@ -108,7 +108,7 @@ const Settings = ({ visible, ...inherit }) => {
               />
             ) : undefined
           }
-          highlight={scroll}
+          isVisible={scroll}
           onBack={navigation.back}
           title={l10n.SETTINGS}
         />

@@ -61,7 +61,7 @@ const Dashboard = ({ visible, ...inherit }) => {
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
-      <Header highlight={scroll} title={l10n.OVERALL_BALANCE} />
+      <Header isVisible={scroll} title={l10n.OVERALL_BALANCE} />
 
       <ScrollView onScroll={setScroll}>
         <Summary {...overall} currency={baseCurrency} title={l10n.OVERALL_BALANCE}>
