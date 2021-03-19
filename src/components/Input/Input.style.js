@@ -1,19 +1,17 @@
 import { StyleSheet } from 'react-native';
 import { THEME } from 'reactor/common';
 
-const { COLOR, FONT, SPACE } = THEME;
+const { BORDER_RADIUS, COLOR, FONT, SPACE } = THEME;
 
-const HEIGHT = SPACE.XXL;
+const CONTAINER_HEIGHT = SPACE.XXL + SPACE.L;
 
 export default StyleSheet.create({
   container: {
     width: '100%',
-  },
-
-  value: {
-    minWidth: SPACE.L,
-    height: HEIGHT,
-    lineHeight: HEIGHT,
+    backgroundColor: COLOR.BASE_LIGHTEN,
+    borderRadius: BORDER_RADIUS,
+    padding: SPACE.M,
+    height: CONTAINER_HEIGHT,
   },
 
   input: {
@@ -22,21 +20,10 @@ export default StyleSheet.create({
     color: COLOR.TEXT,
     padding: 0,
     margin: 0,
-    height: HEIGHT,
     width: '100%',
-    textAlign: 'center',
   },
 
   inputFocus: {
     color: COLOR.TEXT,
-  },
-
-  inputCurrency: {
-    height: HEIGHT,
-    left: 0,
-    opacity: 0,
-    position: 'absolute',
-    right: 0,
-    width: '100%',
   },
 });

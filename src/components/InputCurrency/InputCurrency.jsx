@@ -16,9 +16,9 @@ const { COLOR, SPACE } = THEME;
 const InputCurrency = ({
   disabled,
   label = '',
-  vault: { currency, currentBalance, title } = {},
   onChange,
   onVault,
+  vault: { currency, currentBalance, title } = {},
   ...others
 }) => {
   const { settings: { baseCurrency } = {}, rates } = useStore();
@@ -53,24 +53,34 @@ const InputCurrency = ({
   const color = !focus && (disabled || value === undefined) ? COLOR.LIGHTEN : undefined;
 
   return (
-    <Row {...others} align="start" style={[styles.container, others.style]}>
+    <Row {...others} align="center" style={[styles.container, others.style]}>
       <Col>
         <Touchable rippleColor={COLOR.LIGHTEN} onPress={!disabled ? onVault : undefined}>
           <Row marginBottom="XS">
-            <CurrencyLogo
-              color={currency !== baseCurrency ? COLOR.LIGHTEN : undefined}
-              currency={currency}
-              marginRight="XS"
-              size="S"
-            />
+            {title && (
+              <CurrencyLogo
+                color={currency !== baseCurrency ? COLOR.LIGHTEN : undefined}
+                currency={currency}
+                marginRight="XS"
+                size="S"
+              />
+            )}
             <Text color={color}>{(title || label).toUpperCase()}</Text>
           </Row>
-          <Row>
-            <PriceFriendly caption color={COLOR.LIGHTEN} currency={currency} label="Balance: " value={currentBalance} />
-            {onVault && !disabled && (
-              <Icon color={COLOR.LIGHTEN} marginLeft="XS" marginTop="XXS" size={SPACE.S} value="arrow-down" />
-            )}
-          </Row>
+          {title && (
+            <Row>
+              <PriceFriendly
+                caption
+                color={COLOR.LIGHTEN}
+                currency={currency}
+                label="Balance: "
+                value={currentBalance}
+              />
+              {onVault && !disabled && (
+                <Icon color={COLOR.LIGHTEN} marginLeft="XS" marginTop="XXS" size={SPACE.S} value="arrow-down" />
+              )}
+            </Row>
+          )}
         </Touchable>
       </Col>
 
@@ -94,7 +104,6 @@ const InputCurrency = ({
             />
           )}
         </Col>
-
         <TextInput
           autoCapitalize="none"
           autoCorrect={false}

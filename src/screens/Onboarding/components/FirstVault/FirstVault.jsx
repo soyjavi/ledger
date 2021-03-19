@@ -52,7 +52,7 @@ const FirstVault = ({ onVault, visible, ...others }) => {
         <Text caption marginTop="S" marginBottom="L" style={styles.text}>
           {l10n.FIRST_VAULT_CAPTION}
         </Text>
-        <FormVault form={form} onChange={setForm} showExchange={false} />
+        <FormVault form={form} onChange={setForm} />
 
         <Button
           delay={DELAY_PRESS_MS}

@@ -4,20 +4,15 @@ import { THEME } from 'reactor/common';
 import { Slider } from 'reactor/components';
 
 import { C } from '@common';
-import { Input, Option, OPTION_SIZE } from '@components';
+import { Input, InputCurrency, Option, OPTION_SIZE } from '@components';
 import { useL10N } from '@context';
 
 import { queryCategories } from '../modules';
 
-const {
-  CATEGORY_ICON,
-  TX: {
-    TYPE: { EXPENSE },
-  },
-} = C;
+const { CATEGORY_ICON } = C;
 const { COLOR, SPACE } = THEME;
 
-const FormTransaction = ({ currency, form = {}, onChange, type, vault: { currentBalance = 0 } = {} }) => {
+const FormTransaction = ({ currency, form = {}, onChange, type, vault = {} }) => {
   const l10n = useL10N();
 
   const handleField = (field, fieldValue) => {
@@ -46,18 +41,18 @@ const FormTransaction = ({ currency, form = {}, onChange, type, vault: { current
         ))}
       </Slider>
 
-      <Input
+      <InputCurrency
         currency={currency}
-        label={l10n.AMOUNT}
-        marginBottom="M"
-        maxValue={type === EXPENSE ? currentBalance : undefined}
+        marginBottom="L"
+        type={type}
         onChange={(value) => handleField('value', value)}
         value={form.value}
+        vault={vault}
       />
 
       <Input
         label={l10n.CONCEPT}
-        marginBottom="M"
+        marginBottom="L"
         onChange={(value) => handleField('title', value)}
         value={form.title}
       />
