@@ -65,7 +65,7 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
       </Row>
       <Row>
         <Col marginRight="S" width="auto">
-          <BoxDate l10n={l10n} timestamp={timestamp} />
+          <BoxDate color={COLOR.BASE_LIGHTEN} l10n={l10n} timestamp={timestamp} />
         </Col>
         <Col>
           <Row>
