@@ -39,7 +39,6 @@ const InputCurrency = ({
   }, [others.value]);
 
   const handleChange = (value = '') => {
-    console.log('handleChange');
     let nextValue = value && value.toString().length > 0 ? value : undefined;
 
     if (currency) {
