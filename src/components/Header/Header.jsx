@@ -1,14 +1,15 @@
 import { BlurView } from 'expo-blur';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
+import { StatusBar } from 'react-native';
 import { THEME } from 'reactor/common';
-import { Button, Col, Motion, Row, Text, View } from 'reactor/components';
+import { Button, Col, Row, Text, View } from 'reactor/components';
 
 import { onHardwareBackPress } from '@common';
 
 import styles from './Header.style';
 
-const { BLUR, COLOR, ICON, MOTION } = THEME;
+const { BLUR, COLOR, ICON } = THEME;
 
 const Header = ({ childLeft, childRight, isVisible, onBack, title }) => {
   useEffect(() => {
@@ -18,8 +19,9 @@ const Header = ({ childLeft, childRight, isVisible, onBack, title }) => {
   }, [onBack]);
 
   return (
-    <View style={styles.container}>
-      <BlurView {...BLUR} intensity={isVisible === false ? 0 : undefined}>
+    <View style={[styles.container, isVisible && styles.visible]}>
+      <StatusBar animated translucent backgroundColor={COLOR.TRANSPARENT} />
+      <BlurView {...BLUR} intensity={isVisible === false ? 0 : 90} style={styles.blur}>
         <Row paddingHorizontal="M" style={styles.content}>
           <Col align="start">
             {childLeft}
@@ -35,13 +37,11 @@ const Header = ({ childLeft, childRight, isVisible, onBack, title }) => {
             )}
           </Col>
           <Col align="center" style={styles.title}>
-            <Motion duration={MOTION.EXPAND} timeline={[{ property: 'opacity', value: isVisible ? 1 : 0 }]}>
-              {title && (
-                <Text bold subtitle>
-                  {title}
-                </Text>
-              )}
-            </Motion>
+            {title && isVisible && (
+              <Text bold subtitle>
+                {title}
+              </Text>
+            )}
           </Col>
           <Col align="end">{childRight}</Col>
         </Row>

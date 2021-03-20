@@ -55,7 +55,7 @@ const ELEVATION = {
 export const theme = {
   BAR_SIZE: SPACE.S,
   BLUR: {
-    intensity: 100,
+    intensity: 90,
     tint: 'dark',
   },
   BORDER_RADIUS,

@@ -4,23 +4,28 @@ import { useEnvironment } from 'reactor/hooks';
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
 const ENV = useEnvironment();
-const { SPACE } = THEME;
+const { COLOR, SPACE } = THEME;
 
 export default StyleSheet.create({
   blur: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: SPACE.XS,
+    height: '100%',
     width: '100%',
   },
 
   container: {
+    height: 80,
     bottom: 0,
+    borderTopColor: COLOR.BASE_LIGHTEN,
+    borderTopWidth: 1,
     position: ENV.IS_WEB ? 'fixed' : 'absolute',
-    left: 0,
-    right: 0,
-    width: 'auto',
+    width: '100%',
     zIndex: 1,
+  },
+
+  content: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: SPACE.XS,
   },
 });

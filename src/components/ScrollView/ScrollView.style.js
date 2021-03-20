@@ -8,4 +8,8 @@ export default StyleSheet.create({
     paddingTop: SPACE.XXL,
     paddingBottom: SPACE.XL * 2,
   },
+
+  safeAreaView: {
+    flex: 1,
+  },
 });
