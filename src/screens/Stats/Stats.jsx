@@ -62,7 +62,7 @@ const Stats = ({ visible, ...inherit }) => {
   console.log('  <Stats>', { visible });
 
   return (
-    <Viewport {...inherit} scroll={false} visible={visible}>
+    <Viewport {...inherit} scroll={false} visible={visible} onClose={navigation.back}>
       <Header isVisible={scroll} onBack={navigation.back} title={`${l10n.MONTHS[slider.month]} ${slider.year}`} />
 
       <ScrollView onScroll={(value) => setScroll(value)} ref={scrollview}>

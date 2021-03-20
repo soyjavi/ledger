@@ -93,7 +93,7 @@ const Settings = ({ visible, ...inherit }) => {
 
   return (
     <>
-      <Viewport {...inherit} scroll={false} visible={visible}>
+      <Viewport {...inherit} scroll={false} visible={visible} onClose={navigation.back}>
         <Header
           childRight={
             hasCamera ? (
