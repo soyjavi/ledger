@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { THEME } from 'reactor/common';
 import { useEnvironment } from 'reactor/hooks';
 
@@ -15,7 +15,7 @@ export default StyleSheet.create({
   },
 
   container: {
-    height: 88,
+    height: Platform.OS === 'ios' ? 88 : SPACE.XXL,
     position: ENV.IS_WEB ? 'fixed' : 'absolute',
     top: 0,
     width: '100%',

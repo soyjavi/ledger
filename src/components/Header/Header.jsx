@@ -21,7 +21,7 @@ const Header = ({ childLeft, childRight, isVisible, onBack, title }) => {
   return (
     <View style={[styles.container, isVisible && styles.visible]}>
       <StatusBar animated translucent backgroundColor={COLOR.TRANSPARENT} />
-      <BlurView {...BLUR} intensity={isVisible === false ? 0 : 90} style={styles.blur}>
+      <BlurView {...BLUR} intensity={isVisible === false ? 0 : BLUR.intensity} style={styles.blur}>
         <Row paddingHorizontal="M" style={styles.content}>
           <Col align="start">
             {childLeft}
