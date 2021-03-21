@@ -98,7 +98,7 @@ const Vault = ({ visible }) => {
   console.log('  <Vault>', { visible, dialog });
 
   return (
-    <Viewport scroll={false} visible={visible} onClose={navigation.back}>
+    <Viewport scroll={false} visible={visible}>
       <Header isVisible={scroll} title={title} onBack={navigation.back} />
 
       <ScrollView onScroll={handleScroll} ref={scrollview}>

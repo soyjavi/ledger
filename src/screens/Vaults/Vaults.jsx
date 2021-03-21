@@ -38,7 +38,7 @@ const Vaults = ({ visible, ...inherit }) => {
   const hasCurrencies = currencies.length > 0;
 
   return (
-    <Viewport {...inherit} scroll={false} visible={visible} onClose={navigation.back}>
+    <Viewport {...inherit} scroll={false} visible={visible}>
       <Header isVisible={scroll} onBack={navigation.back} title={l10n.VAULTS} />
 
       <ScrollView onScroll={(value) => setScroll(value)} ref={scrollview}>

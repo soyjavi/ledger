@@ -55,7 +55,7 @@ const ELEVATION = {
 export const theme = {
   BAR_SIZE: SPACE.S,
   BLUR: {
-    intensity: 90,
+    intensity: 95,
     tint: 'dark',
   },
   BORDER_RADIUS,
@@ -133,7 +133,7 @@ export const theme = {
     color: BASE,
   },
   DIALOG_OVERLAY: {
-    backgroundColor: colorOpacity(BACKGROUND, OPACITY.L),
+    backgroundColor: colorOpacity(BACKGROUND, OPACITY.M),
   },
   INPUT: {
     backgroundColor: BACKGROUND,

@@ -15,7 +15,7 @@ export default StyleSheet.create({
 
   connected: {
     alignSelf: 'center',
-    backgroundColor: colorOpacity(COLOR.ERROR, OPACITY.S),
+    backgroundColor: colorOpacity(COLOR.ERROR, OPACITY.M),
     borderRadius: BORDER_RADIUS / 2,
     paddingHorizontal: SPACE.S,
     paddingVertical: SPACE.XS,
