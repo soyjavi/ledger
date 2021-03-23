@@ -3,12 +3,10 @@ import { LAYOUT, THEME } from 'reactor/common';
 
 const { SPACE } = THEME;
 
-let CARD_WIDTH = LAYOUT.VIEWPORT.W / 2 - (SPACE.L + SPACE.XS);
-if (CARD_WIDTH > 160) CARD_WIDTH = 160;
+let CARD_SIZE = LAYOUT.VIEWPORT.W / 2 - (SPACE.L + SPACE.XS);
+if (CARD_SIZE > 144) CARD_SIZE = 144;
 
-const PADDING = SPACE.S + SPACE.XS;
-
-export { CARD_WIDTH };
+export { CARD_SIZE };
 
 export default StyleSheet.create({
   box: {
@@ -16,18 +14,17 @@ export default StyleSheet.create({
   },
 
   container: {
-    height: CARD_WIDTH * 0.68,
-    width: CARD_WIDTH,
+    height: CARD_SIZE,
+    width: CARD_SIZE,
   },
 
   content: {
     flex: 1,
-    paddingHorizontal: PADDING,
-    paddingVertical: PADDING,
+    padding: SPACE.M,
     alignItems: 'flex-start',
   },
 
-  expand: {
+  breakline: {
     flex: 1,
   },
 });

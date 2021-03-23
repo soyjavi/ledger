@@ -7,23 +7,26 @@ const CONTAINER_HEIGHT = SPACE.XXL + SPACE.L;
 
 export default StyleSheet.create({
   container: {
-    width: '100%',
     backgroundColor: COLOR.BASE_LIGHTEN,
     borderRadius: BORDER_RADIUS,
-    padding: SPACE.M,
     height: CONTAINER_HEIGHT,
+    padding: SPACE.M,
+    width: '100%',
   },
 
   input: {
     ...FONT.BOLD,
     ...FONT.INPUT,
-    color: COLOR.TEXT,
-    padding: 0,
-    margin: 0,
-    width: '100%',
   },
 
-  inputFocus: {
-    color: COLOR.TEXT,
+  textInput: {
+    height: CONTAINER_HEIGHT,
+    margin: 0,
+    opacity: 0,
+    padding: 0,
+    position: 'absolute',
+    right: -SPACE.M,
+    top: -SPACE.M,
+    width: '100%',
   },
 });

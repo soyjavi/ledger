@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
-import { Col, Row, Slider } from 'reactor/components';
+import { Slider } from 'reactor/components';
 
-import { colorOpacity, currencyDecimals } from '@common';
-import { Input, Option, PriceFriendly, OPTION_SIZE } from '@components';
+import { currencyDecimals } from '@common';
+import { InputCurrency, Option, OPTION_SIZE } from '@components';
 import { useL10N, useStore } from '@context';
 
 import { getVault, queryAvailableVaults } from '../modules';
@@ -18,6 +18,18 @@ const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
     vaults,
     rates,
   } = useStore();
+
+  const [selectVault, setSelectVault] = useState();
+
+  const availableVaults = queryAvailableVaults(vaults, vault);
+
+  useEffect(() => {
+    if (form.to === undefined) {
+      const [firstVault = {}] = availableVaults;
+      onChange({ form: { destination: firstVault.hash, to: firstVault } });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form]);
 
   const handleField = (field, fieldValue) => {
     const next = { ...form, [field]: fieldValue };
@@ -45,50 +57,42 @@ const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
 
   return (
     <>
-      <Slider itemMargin={SPACE.S} itemWidth={OPTION_SIZE} marginBottom="L">
-        {queryAvailableVaults(vaults, vault.hash).map(({ currency, currentBalance, hash, title }) => (
-          <Option
-            key={hash}
-            color={currency === baseCurrency ? colorOpacity(COLOR.BRAND) : undefined}
-            currency={currency}
-            legend={title}
-            marginRight="S"
-            onPress={() => handleField('destination', hash)}
-            selected={hash === form.destination}
-          >
-            <PriceFriendly
-              caption
-              color={hash === form.destination ? COLOR.BACKGROUND : COLOR.TEXT}
-              maskAmount={false}
-              value={currentBalance}
-              currency={currency}
-            />
-          </Option>
-        ))}
-      </Slider>
+      <InputCurrency
+        marginBottom="L"
+        value={form.value}
+        vault={vault}
+        onChange={(value) => handleField('value', value)}
+      />
 
-      <Row marginBottom="M" align="start">
-        <Col>
-          <Input
-            currency={vault.currency}
-            label={l10n.SEND}
-            maxValue={vault.currentBalance}
-            showExchange={false}
-            value={form.value}
-            onChange={(value) => handleField('value', value)}
-          />
-        </Col>
-        <Col>
-          <Input
-            currency={form.to ? form.to.currency : baseCurrency}
-            disabled={!form.to}
-            label={l10n.GET}
-            showExchange={false}
-            value={form.to ? form.exchange : undefined}
-            onChange={(value) => handleField('exchange', value)}
-          />
-        </Col>
-      </Row>
+      {selectVault ? (
+        <Slider itemMargin={SPACE.S} itemWidth={OPTION_SIZE} marginBottom="S">
+          {availableVaults.map(({ currency, hash, title }) => (
+            <Option
+              color={COLOR.BASE_LIGHTEN}
+              colorSelected={COLOR.TEXT}
+              currency={currency}
+              key={hash}
+              legend={title}
+              marginRight="S"
+              onPress={() => {
+                handleField('destination', hash);
+                setSelectVault(false);
+              }}
+              selected={hash === form.destination}
+            />
+          ))}
+        </Slider>
+      ) : (
+        <InputCurrency
+          currency={form.to ? form.to.currency : baseCurrency}
+          label={l10n.GET}
+          marginBottom="S"
+          value={form.to ? form.exchange : undefined}
+          vault={getVault(form.destination, vaults)}
+          onChange={(value) => handleField('exchange', value)}
+          onVault={() => setSelectVault(true)}
+        />
+      )}
     </>
   );
 };

@@ -1,35 +1,41 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { THEME } from 'reactor/common';
 import { useEnvironment } from 'reactor/hooks';
 
-import { colorOpacity } from '@common';
-
 // eslint-disable-next-line react-hooks/rules-of-hooks
 const ENV = useEnvironment();
-const { COLOR, OPACITY, SPACE } = THEME;
-const IMAGE_SIZE = SPACE.M + SPACE.XS;
+const { COLOR, SPACE } = THEME;
 
 export default StyleSheet.create({
+  blur: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    height: '100%',
+    width: '100%',
+  },
+
   container: {
-    height: SPACE.XXL,
+    height: Platform.OS === 'ios' ? 88 : SPACE.XXL,
     position: ENV.IS_WEB ? 'fixed' : 'absolute',
-    justifyContent: 'space-between',
     top: 0,
     width: '100%',
     zIndex: 1,
-    overflow: 'hidden',
-    backgroundColor: colorOpacity(COLOR.BACKGROUND, OPACITY.L),
+  },
+
+  visible: {
+    borderBottomColor: COLOR.BASE_LIGHTEN,
+    borderBottomWidth: 1,
   },
 
   content: {
-    flex: 4,
-    maxWidth: '85%',
+    alignSelf: 'flex-end',
+    height: SPACE.XXL,
+    justifyContent: 'space-between',
+    overflow: 'hidden',
   },
 
-  image: {
-    borderRadius: IMAGE_SIZE / 2,
-    marginRight: SPACE.S,
-    height: IMAGE_SIZE,
-    width: IMAGE_SIZE,
+  title: {
+    flex: 4,
+    maxWidth: '85%',
   },
 });

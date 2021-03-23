@@ -8,7 +8,7 @@ import { FormVault } from '@components';
 import { useNavigation, useL10N, useStore } from '@context';
 
 const { DELAY_PRESS_MS, SCREEN } = C;
-const { COLOR, MOTION } = THEME;
+const { MOTION } = THEME;
 const INITIAL_STATE = { balance: 0, currency: undefined, title: undefined };
 
 const DialogVault = ({ onClose, visible }) => {
@@ -48,14 +48,13 @@ const DialogVault = ({ onClose, visible }) => {
       </Row>
       <FormVault form={form} onChange={setForm} />
       <Row marginTop="L">
-        <Button disabled={busy} marginRight="M" onPress={onClose} outlined text={l10n.CLOSE.toUpperCase()} wide />
+        <Button disabled={busy} marginRight="M" outlined text={l10n.CLOSE.toUpperCase()} wide onPress={onClose} />
         <Button
-          colorText={COLOR.BACKGROUND}
           delay={DELAY_PRESS_MS}
           disabled={busy || form.title === undefined}
-          onPress={handleSubmit}
           text={l10n.SAVE.toUpperCase()}
           wide
+          onPress={handleSubmit}
         />
       </Row>
     </Dialog>

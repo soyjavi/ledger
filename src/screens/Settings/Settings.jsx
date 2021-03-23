@@ -108,7 +108,7 @@ const Settings = ({ visible, ...inherit }) => {
               />
             ) : undefined
           }
-          highlight={scroll}
+          isVisible={scroll}
           onBack={navigation.back}
           title={l10n.SETTINGS}
         />
@@ -153,18 +153,20 @@ const Settings = ({ visible, ...inherit }) => {
         </ScrollView>
       </Viewport>
 
-      <Alert
-        accept={l10n.IMPORT}
-        cancel={l10n.CANCEL}
-        caption={l10n.TRANSFER_TXS_IMPORT}
-        delay={DELAY_PRESS_MS}
-        onAccept={handleFork}
-        onCancel={handleCancel}
-        onClose={handleCancel}
-        position="bottom"
-        title={l10n.WARNING}
-        visible={blockchain !== undefined}
-      />
+      {visible && (
+        <Alert
+          accept={l10n.IMPORT}
+          cancel={l10n.CANCEL}
+          caption={l10n.TRANSFER_TXS_IMPORT}
+          delay={DELAY_PRESS_MS}
+          onAccept={handleFork}
+          onCancel={handleCancel}
+          onClose={handleCancel}
+          position="bottom"
+          title={l10n.WARNING}
+          visible={blockchain !== undefined}
+        />
+      )}
     </>
   );
 };

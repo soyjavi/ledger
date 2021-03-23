@@ -31,7 +31,7 @@ const Onboarding = () => {
 
   const handleComplete = () => {
     navigation.go(SCREEN.DASHBOARD);
-    // navigation.go(SCREEN.STATS, vaults[0]);
+    // navigation.go(SCREEN.VAULT, vaults[0]);
   };
 
   const handleSession = () => {

@@ -1,11 +1,16 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { THEME } from 'reactor/common';
 import { Col, Row, Text } from 'reactor/components';
 
-const Heading = ({ children, value = '', ...others }) => (
+const { COLOR } = THEME;
+
+const Heading = ({ children, color = COLOR.LIGHTEN, value = '', ...others }) => (
   <Row marginBottom="XS" {...others}>
     <Col>
-      <Text bold>{value}</Text>
+      <Text bold color={color}>
+        {value}
+      </Text>
     </Col>
     <Col width="auto">{children}</Col>
   </Row>
@@ -13,6 +18,7 @@ const Heading = ({ children, value = '', ...others }) => (
 
 Heading.propTypes = {
   children: PropTypes.node,
+  color: PropTypes.string,
   value: PropTypes.string,
 };
 

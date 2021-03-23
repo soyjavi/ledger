@@ -27,7 +27,11 @@ const TransactionItem = (props) => {
   const operator = type === EXPENSE ? -1 : 1;
 
   return (
-    <Touchable onPress={onPress ? () => onPress(props) : undefined}>
+    <Touchable
+      containerBorderRadius={0}
+      rippleColor={COLOR.LIGHTEN}
+      onPress={onPress ? () => onPress(props) : undefined}
+    >
       <Row align="center" paddingHorizontal="M" paddingVertical="S">
         <Col marginRight="S" width="auto">
           <Box outlined>

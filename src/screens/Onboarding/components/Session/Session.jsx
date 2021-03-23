@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
+import { Image } from 'react-native';
 import { THEME } from 'reactor/common';
 import { Row, Text, View, Viewport } from 'reactor/components';
 
+import { LOGO } from '@assets';
 import { C } from '@common';
 import { useL10N, useStore } from '@context';
 
@@ -26,7 +28,7 @@ const Session = ({ onSession, visible, ...others }) => {
       const { settings, vaults = [] } = store;
 
       if (settings.pin && vaults.length !== 0) {
-        if (IS_DEV /* && IS_WEB */) setPin(settings.pin);
+        if (IS_DEV) setPin(settings.pin);
         else if (pin === '') askLocalAuthentication({ l10n, setPin, store });
       }
     }
@@ -47,14 +49,15 @@ const Session = ({ onSession, visible, ...others }) => {
   return (
     <Viewport {...others} visible={visible} scroll={false}>
       <View style={styles.container}>
-        <Text bold subtitle>
+        <Image resizeMode="contain" source={LOGO} style={styles.image} />
+        <Text bold subtitle marginTop="S">
           {signup ? l10n.PIN_CHOOSE : l10n.PIN}
         </Text>
-        <Row justify="center">
+        <Row justify="center" marginVertical="XXL">
           {['•', '•', '•', '•'].map((letter, index) => (
             <View
               key={index}
-              style={[styles.bullet, { backgroundColor: pin.length > index ? COLOR.TEXT : COLOR.BASE }]}
+              style={[styles.bullet, { backgroundColor: pin.length > index ? COLOR.TEXT : COLOR.LIGHTEN }]}
             />
           ))}
         </Row>

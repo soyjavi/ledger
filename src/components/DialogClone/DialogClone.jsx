@@ -47,7 +47,7 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
   };
 
   const operator = type === EXPENSE ? -1 : 1;
-  const buttonProps = { delay: DELAY_PRESS_MS, disabled: busy, wide: true };
+  const button = { delay: DELAY_PRESS_MS, disabled: busy, wide: true };
 
   const vaultInfo = vaults.find(({ hash }) => hash === vault);
 
@@ -65,7 +65,7 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
       </Row>
       <Row>
         <Col marginRight="S" width="auto">
-          <BoxDate l10n={l10n} timestamp={timestamp} />
+          <BoxDate color={COLOR.BASE_LIGHTEN} l10n={l10n} timestamp={timestamp} />
         </Col>
         <Col>
           <Row>
@@ -114,18 +114,13 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
 
       <Row marginTop="XL">
         <Button
-          {...buttonProps}
+          {...button}
           marginRight="M"
-          onPress={() => handleSubmit({ wipe: true })}
           outlined
           text={l10n.WIPE.toUpperCase()}
+          onPress={() => handleSubmit({ wipe: true })}
         />
-        <Button
-          {...buttonProps}
-          colorText={COLOR.BACKGROUND}
-          onPress={() => handleSubmit()}
-          text={l10n.CLONE.toUpperCase()}
-        />
+        <Button {...button} text={l10n.CLONE.toUpperCase()} onPress={() => handleSubmit()} />
       </Row>
     </Dialog>
   );

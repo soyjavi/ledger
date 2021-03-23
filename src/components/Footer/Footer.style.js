@@ -1,24 +1,31 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { THEME } from 'reactor/common';
 import { useEnvironment } from 'reactor/hooks';
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
 const ENV = useEnvironment();
-const { BORDER_RADIUS, COLOR, SPACE } = THEME;
+const { COLOR, SPACE } = THEME;
 
 export default StyleSheet.create({
+  blur: {
+    height: '100%',
+    width: '100%',
+  },
+
   container: {
-    backgroundColor: COLOR.DIALOG,
-    bottom: SPACE.S,
-    borderRadius: BORDER_RADIUS,
+    height: Platform.OS === 'ios' ? 80 : SPACE.XXL,
+    bottom: 0,
+    borderTopColor: COLOR.BASE_LIGHTEN,
+    borderTopWidth: 1,
+    position: ENV.IS_WEB ? 'fixed' : 'absolute',
+    width: '100%',
+    zIndex: 1,
+  },
+
+  content: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: SPACE.XS,
-    position: ENV.IS_WEB ? 'fixed' : 'absolute',
-    left: SPACE.S,
-    right: SPACE.S,
-    width: 'auto',
-    zIndex: 1,
+    paddingHorizontal: SPACE.XS,
   },
 });

@@ -3,8 +3,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Slider, Viewport } from 'reactor/components';
 
-import { C, colorOpacity } from '@common';
-import { Card, CARD_WIDTH, Header, Heading, ScrollView, Summary } from '@components';
+import { C } from '@common';
+import { Card, CARD_SIZE, Header, Heading, ScrollView, Summary } from '@components';
 import { useL10N, useNavigation, useStore } from '@context';
 
 import { VaultItem } from './components';
@@ -12,7 +12,7 @@ import { filter, query } from './modules';
 import styles from './Vaults.style';
 
 const { SCREEN } = C;
-const { COLOR, SPACE } = THEME;
+const { SPACE } = THEME;
 
 const Vaults = ({ visible, ...inherit }) => {
   const navigation = useNavigation();
@@ -39,18 +39,17 @@ const Vaults = ({ visible, ...inherit }) => {
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
-      <Header highlight={scroll} onBack={navigation.back} title={l10n.VAULTS} />
+      <Header isVisible={scroll} onBack={navigation.back} title={l10n.VAULTS} />
 
       <ScrollView onScroll={(value) => setScroll(value)} ref={scrollview}>
         <Summary currency={baseCurrency} title={l10n.VAULTS} />
         {hasCurrencies && (
           <>
             <Heading paddingHorizontal="M" value={l10n.CURRENCIES} />
-            <Slider itemWidth={CARD_WIDTH} itemMargin={SPACE.S} style={styles.slider}>
+            <Slider itemWidth={CARD_SIZE} itemMargin={SPACE.S} style={styles.slider}>
               {currencies.map(({ base, currency, ...item }, index) => (
                 <Card
                   {...item}
-                  color={currency === baseCurrency ? colorOpacity(COLOR.BRAND) : undefined}
                   currency={currency}
                   highlight={currency === selected}
                   key={currency}

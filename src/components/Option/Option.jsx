@@ -7,35 +7,33 @@ import { Box } from '../Box';
 import { CurrencyLogo } from '../CurrencyLogo';
 import styles, { OPTION_SIZE } from './Option.style';
 
-const { BORDER_RADIUS, COLOR, FONT, ICON, SPACE } = THEME;
+const { BORDER_RADIUS, COLOR, ICON, SPACE } = THEME;
 
 const Option = ({
   caption,
   children,
   color = COLOR.BASE,
+  colorSelected = COLOR.CTA,
   currency,
-  disabled,
   icon,
   image,
-  onPress,
-  selected,
   legend,
+  selected,
+  onPress,
   ...inherit
 }) => {
-  const colorContent = disabled ? COLOR.LIGHTEN : selected ? COLOR.BACKGROUND : COLOR.TEXT;
+  const colorContent = selected ? COLOR.BACKGROUND : COLOR.TEXT;
 
   return (
     <Box
       {...inherit}
       borderRadius={BORDER_RADIUS}
-      color={selected ? COLOR.CTA : color}
+      color={selected ? colorSelected : color}
       small
       style={[styles.container, inherit.style]}
     >
-      <Touchable onPress={!disabled ? onPress : undefined} style={styles.content}>
-        {currency && (
-          <CurrencyLogo color={selected ? COLOR.BRAND : COLOR.LIGHTEN} currency={currency} highlight={selected} small />
-        )}
+      <Touchable rippleColor={selected ? COLOR.TEXT : COLOR.LIGHTEN} style={styles.content} onPress={onPress}>
+        {currency && <CurrencyLogo color={COLOR.LIGHTEN} currency={currency} highlight={selected} small />}
         {icon && <Icon value={icon} color={colorContent} family={ICON.FAMILY} size={SPACE.L} />}
 
         {caption && (
@@ -55,7 +53,7 @@ const Option = ({
             color={colorContent}
             marginTop={icon || image ? 'XS' : undefined}
             numberOfLines={1}
-            style={FONT.LEGEND}
+            style={styles.legend}
           >
             {legend}
           </Text>
@@ -70,8 +68,8 @@ Option.propTypes = {
   caption: PropTypes.string,
   children: PropTypes.node,
   color: PropTypes.string,
+  colorSelected: PropTypes.string,
   currency: PropTypes.string,
-  disabled: PropTypes.bool,
   icon: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   image: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   legend: PropTypes.string,
