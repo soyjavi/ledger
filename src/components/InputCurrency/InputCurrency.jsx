@@ -41,7 +41,7 @@ const InputCurrency = ({
   const handleChange = (value = '') => {
     let nextValue = value && value.toString().length > 0 ? value : undefined;
 
-    if (currency) {
+    if (currency && !onVault) {
       nextValue = parseFloat(nextValue, 10) > currentBalance ? currentBalance.toString() : nextValue;
       setValue(nextValue);
     }
