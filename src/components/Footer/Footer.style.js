@@ -13,8 +13,8 @@ export default StyleSheet.create({
   },
 
   container: {
-    height: Platform.OS === 'ios' ? 80 : undefined,
     bottom: 0,
+    height: Platform.OS === 'ios' ? 88 : undefined,
     position: ENV.IS_WEB ? 'fixed' : 'absolute',
     width: '100%',
     zIndex: 1,
