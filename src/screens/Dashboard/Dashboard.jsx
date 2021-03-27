@@ -1,14 +1,12 @@
-import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
-import { Button, Slider, Viewport } from 'reactor/components';
+import { Button, Slider } from 'reactor/components';
 
-import { C, colorOpacity } from '@common';
+import { C } from '@common';
 import {
   Card,
   CARD_SIZE,
   DialogClone,
-  Footer,
   GroupTransactions,
   Header,
   Heading,
@@ -23,21 +21,9 @@ import { queryLastTxs, querySearchTxs, queryVaults } from './Dashboard.controlle
 import styles from './Dashboard.style';
 
 const { SCREEN } = C;
-const { COLOR, ICON, OPACITY, SPACE } = THEME;
+const { COLOR, SPACE } = THEME;
 
-const button = {
-  color: colorOpacity(COLOR.CTA, OPACITY.S),
-  colorText: COLOR.CTA,
-  iconFamily: ICON.FAMILY,
-};
-
-const buttonFooter = {
-  color: COLOR.TRANSPARENT,
-  colorText: COLOR.TEXT,
-  iconFamily: ICON.FAMILY,
-};
-
-const Dashboard = ({ visible, ...inherit }) => {
+const Dashboard = () => {
   const l10n = useL10N();
   const navigation = useNavigation();
   const { settings: { baseCurrency, visibleVaults } = {}, overall, txs = [], vaults = [] } = useStore();
@@ -50,33 +36,23 @@ const Dashboard = ({ visible, ...inherit }) => {
   const [searching, setSearching] = useState(false);
 
   useEffect(() => {
-    if (visible) setLastTxs(queryLastTxs({ txs, vaults }));
-  }, [txs, vaults, visible]);
+    setLastTxs(queryLastTxs({ txs, vaults }));
+  }, [txs, vaults]);
 
   const handleSearch = (query) => {
     setSearchTxs(query ? querySearchTxs({ l10n, query, txs, vaults }) : undefined);
   };
 
-  console.log('  <Dashboard>', { visible, txs });
+  console.log('  <Dashboard>', { txs });
 
   return (
-    <Viewport {...inherit} scroll={false} visible={visible}>
-      <Header isVisible={scroll} title={l10n.OVERALL_BALANCE} />
+    <>
+      <Header visible={scroll} title={l10n.OVERALL_BALANCE} />
 
       <ScrollView onScroll={setScroll}>
         <Summary {...overall} currency={baseCurrency} title={l10n.OVERALL_BALANCE}>
-          <Button
-            {...button}
-            icon="chart"
-            onPress={() => navigation.go(SCREEN.STATS)}
-            text={l10n.ACTIVITY.toUpperCase()}
-          />
-          <Button
-            {...button}
-            icon="settings"
-            onPress={() => navigation.go(SCREEN.SETTINGS)}
-            text={l10n.SETTINGS.toUpperCase()}
-          />
+          {/* @TODO: Search */}
+          <Search onFocus={setSearching} onSearch={handleSearch} text={l10n.SEARCH.toUpperCase()} />
         </Summary>
 
         {vaults.length > 0 && (
@@ -120,37 +96,12 @@ const Dashboard = ({ visible, ...inherit }) => {
         )}
       </ScrollView>
 
-      <Footer visible={scroll || searchTxs !== undefined}>
-        {lastTxs.length > 0 && (
-          <Search {...buttonFooter} onFocus={setSearching} onSearch={handleSearch} text={l10n.SEARCH.toUpperCase()} />
-        )}
-        <Button
-          {...buttonFooter}
-          icon="chart"
-          onPress={() => navigation.go(SCREEN.STATS)}
-          text={!searching ? l10n.ACTIVITY.toUpperCase() : undefined}
-        />
-        <Button
-          {...buttonFooter}
-          icon="settings"
-          onPress={() => navigation.go(SCREEN.SETTINGS)}
-          text={!searching ? l10n.SETTINGS.toUpperCase() : undefined}
-        />
-      </Footer>
-
-      {visible && (
-        <>
-          <DialogClone dataSource={tx} onClose={() => setTx(undefined)} visible={tx !== undefined} />
-          <DialogVault onClose={() => setDialogVault(false)} visible={dialogVault} />
-        </>
-      )}
-    </Viewport>
+      <DialogClone dataSource={tx} onClose={() => setTx(undefined)} visible={tx !== undefined} />
+      <DialogVault onClose={() => setDialogVault(false)} visible={dialogVault} />
+    </>
   );
 };
 
-Dashboard.propTypes = {
-  backward: PropTypes.bool,
-  visible: PropTypes.bool,
-};
+Dashboard.propTypes = {};
 
 export { Dashboard };

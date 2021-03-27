@@ -7,7 +7,7 @@ const {
 const { BORDER_RADIUS, COLOR, SPACE } = THEME;
 
 const CONTENT_SIZE = W - SPACE.M * 2;
-const QR_SIZE = W / 1.5;
+const QR_SIZE = W / 1.6;
 
 export default StyleSheet.create({
   camera: {

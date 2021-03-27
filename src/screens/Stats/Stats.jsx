@@ -1,11 +1,9 @@
-import PropTypes from 'prop-types';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { THEME } from 'reactor/common';
-import { Viewport } from 'reactor/components';
 
 import { C } from '@common';
-import { Chart, Header, ScrollView, Summary } from '@components';
-import { useL10N, useNavigation, useStore } from '@context';
+import { Chart, Header, ScrollView } from '@components';
+import { useL10N, useStore } from '@context';
 
 import { ItemGroupCategories, Locations, SliderMonths } from './components';
 import { calcScales, orderCaptions, queryMonth, queryChart } from './modules';
@@ -19,9 +17,8 @@ const {
 } = C;
 const { COLOR } = THEME;
 
-const Stats = ({ visible, ...inherit }) => {
+const Stats = () => {
   const scrollview = useRef(null);
-  const navigation = useNavigation();
   const l10n = useL10N();
   const store = useStore();
 
@@ -35,18 +32,16 @@ const Stats = ({ visible, ...inherit }) => {
   } = store;
 
   useEffect(() => {
-    if (visible) {
-      const today = new Date();
-      setChart(queryChart(store));
-      setSlider({ month: today.getMonth(), year: today.getFullYear(), index: STATS_MONTHS_LIMIT - 1 });
-    } else if (scroll) scrollview.current.scrollTo({ y: 0, animated: false });
+    const today = new Date();
+    setChart(queryChart(store));
+    setSlider({ month: today.getMonth(), year: today.getFullYear(), index: STATS_MONTHS_LIMIT - 1 });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [visible]);
+  }, []);
 
   useEffect(() => {
-    if (visible && Object.keys(slider).length > 0) setMonth(queryMonth(store, slider));
+    if (Object.keys(slider).length > 0) setMonth(queryMonth(store, slider));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [visible, slider]);
+  }, [slider]);
 
   const handleSliderChange = (next) => {
     if (next.index !== slider.index) setSlider(next);
@@ -59,16 +54,14 @@ const Stats = ({ visible, ...inherit }) => {
 
   const chartProps = { currency: baseCurrency, highlight: slider.index };
 
-  console.log('  <Stats>', { visible });
+  console.log('  <Stats>');
 
   return (
-    <Viewport {...inherit} scroll={false} visible={visible}>
-      <Header isVisible={scroll} onBack={navigation.back} title={`${l10n.MONTHS[slider.month]} ${slider.year}`} />
+    <>
+      <Header visible={scroll} title={`${l10n.MONTHS[slider.month]} ${slider.year}`} />
 
       <ScrollView onScroll={(value) => setScroll(value)} ref={scrollview}>
-        <Summary currency={baseCurrency} title={`${l10n.MONTHS[slider.month]} ${slider.year}`} />
-
-        <SliderMonths {...slider} onChange={handleSliderChange} marginBottom="XL" />
+        <SliderMonths {...slider} onChange={handleSliderChange} marginTop="M" marginBottom="L" />
 
         <Chart
           {...useMemo(() => calcScales(chart.balance), [chart.balance])}
@@ -115,12 +108,10 @@ const Stats = ({ visible, ...inherit }) => {
           values={chart.transfers}
         />
       </ScrollView>
-    </Viewport>
+    </>
   );
 };
 
-Stats.propTypes = {
-  visible: PropTypes.bool,
-};
+Stats.propTypes = {};
 
 export { Stats };
