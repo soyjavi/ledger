@@ -1,4 +1,4 @@
-import { Platform, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { THEME } from 'reactor/common';
 import { useEnvironment } from 'reactor/hooks';
 
@@ -7,15 +7,8 @@ const ENV = useEnvironment();
 const { COLOR, SPACE } = THEME;
 
 export default StyleSheet.create({
-  blur: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    height: '100%',
-    width: '100%',
-  },
-
   container: {
-    height: Platform.OS === 'ios' ? 88 : SPACE.XXL,
+    backgroundColor: COLOR.BACKGROUND,
     position: ENV.IS_WEB ? 'fixed' : 'absolute',
     top: 0,
     width: '100%',
@@ -29,7 +22,7 @@ export default StyleSheet.create({
 
   content: {
     alignSelf: 'flex-end',
-    height: SPACE.XXL,
+    height: SPACE.XL + SPACE.S,
     justifyContent: 'space-between',
     overflow: 'hidden',
   },
