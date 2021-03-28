@@ -21,7 +21,7 @@ import { queryLastTxs, querySearchTxs, queryVaults } from './Dashboard.controlle
 import styles from './Dashboard.style';
 
 const { SCREEN } = C;
-const { COLOR, SPACE } = THEME;
+const { SPACE } = THEME;
 
 const Dashboard = () => {
   const l10n = useL10N();
@@ -33,7 +33,6 @@ const Dashboard = () => {
   const [lastTxs, setLastTxs] = useState([]);
   const [scroll, setScroll] = useState(false);
   const [searchTxs, setSearchTxs] = useState(undefined);
-  const [searching, setSearching] = useState(false);
 
   useEffect(() => {
     setLastTxs(queryLastTxs({ txs, vaults }));
@@ -51,21 +50,12 @@ const Dashboard = () => {
 
       <ScrollView onScroll={setScroll}>
         <Summary {...overall} currency={baseCurrency} title={l10n.OVERALL_BALANCE}>
-          {/* @TODO: Search */}
-          <Search onFocus={setSearching} onSearch={handleSearch} text={l10n.SEARCH.toUpperCase()} />
+          <Search onChange={handleSearch} />
         </Summary>
 
         {vaults.length > 0 && (
           <>
-            <Heading paddingLeft="M" value={l10n.VAULTS}>
-              <Button
-                color={COLOR.BACKGROUND}
-                colorText={COLOR.BRAND}
-                onPress={() => navigation.go(SCREEN.VAULTS)}
-                size="S"
-                text={l10n.SEE_ALL}
-              />
-            </Heading>
+            <Heading paddingLeft="M" value={l10n.VAULTS} />
 
             <Slider itemWidth={CARD_SIZE} itemMargin={SPACE.S} style={styles.vaults}>
               {queryVaults({ vaults, visibleVaults }).map((vault, index) => (
