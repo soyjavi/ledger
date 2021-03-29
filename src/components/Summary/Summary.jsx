@@ -6,7 +6,6 @@ import { Col, Row, Text, Touchable, View } from 'reactor/components';
 import { C, exchange } from '@common';
 import { useL10N, useStore } from '@context';
 
-import { CurrencyLogo } from '../CurrencyLogo';
 import { PriceFriendly } from '../PriceFriendly';
 import { verboseMonth } from './modules';
 import { SummaryBox } from './Summary.Box';
@@ -32,10 +31,9 @@ const Summary = ({ children, currency = CURRENCY, currentBalance, currentMonth =
   return (
     <View style={styles.container}>
       <Col align="center" style={styles.content}>
-        <CurrencyLogo currency={currency} marginBottom="S" size="L" />
         <Col align="center">
-          <Text bold subtitle>
-            {title}
+          <Text bold color={COLOR.LIGHTEN}>
+            {title.toUpperCase()}
           </Text>
 
           {showCurrentBalance && (
@@ -47,8 +45,8 @@ const Summary = ({ children, currency = CURRENCY, currentBalance, currentMonth =
                 <PriceFriendly
                   color={COLOR.LIGHTEN}
                   currency={baseCurrency}
+                  marginTop="XS"
                   marginBottom="S"
-                  subtitle
                   value={exchange(Math.abs(currentBalance), currency, baseCurrency, rates)}
                 />
               )}
