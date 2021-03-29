@@ -32,25 +32,22 @@ const Dashboard = () => {
   const [tx, setTx] = useState(undefined);
   const [lastTxs, setLastTxs] = useState([]);
   const [scroll, setScroll] = useState(false);
-  const [searchTxs, setSearchTxs] = useState(undefined);
+  const [query, setQuery] = useState();
 
   useEffect(() => {
     setLastTxs(queryLastTxs({ txs, vaults }));
-  }, [txs, vaults]);
-
-  const handleSearch = (query) => {
-    setSearchTxs(query ? querySearchTxs({ l10n, query, txs, vaults }) : undefined);
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [txs]);
 
   console.log('  <Dashboard>', { txs });
 
   return (
     <>
-      <Header visible={scroll} title={l10n.OVERALL_BALANCE} />
+      <Header visible={scroll} title={scroll ? l10n.DASHBOARD : undefined} />
 
       <ScrollView onScroll={setScroll}>
         <Summary {...overall} currency={baseCurrency} title={l10n.OVERALL_BALANCE}>
-          <Search onChange={handleSearch} />
+          <Search onChange={setQuery} />
         </Summary>
 
         {vaults.length > 0 && (
@@ -58,7 +55,7 @@ const Dashboard = () => {
             <Heading paddingLeft="M" value={l10n.VAULTS} />
 
             <Slider itemWidth={CARD_SIZE} itemMargin={SPACE.S} style={styles.vaults}>
-              {queryVaults({ vaults, visibleVaults }).map((vault, index) => (
+              {queryVaults({ query, vaults, visibleVaults }).map((vault, index) => (
                 <Card
                   {...vault.others}
                   balance={vault.currentBalance}
@@ -77,7 +74,7 @@ const Dashboard = () => {
             {lastTxs.length > 0 && (
               <>
                 <Heading marginTop="M" paddingLeft="M" paddingRight="S" value={l10n.LAST_TRANSACTIONS} />
-                {(searchTxs || lastTxs).map((item) => (
+                {(querySearchTxs({ l10n, query, txs, vaults }) || lastTxs).map((item) => (
                   <GroupTransactions {...item} key={`${item.timestamp}`} currency={baseCurrency} onPress={setTx} />
                 ))}
               </>
