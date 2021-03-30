@@ -25,7 +25,7 @@ const NumKeyboard = ({ onPress }) => (
       <Touchable
         key={index}
         containerBorderRadius={BORDER_RADIUS}
-        rippleColor={COLOR.TEXT}
+        rippleColor={COLOR.LIGHTEN}
         style={styles.touchable}
         onPress={typeof key === 'number' ? () => onPress(key) : undefined}
       >

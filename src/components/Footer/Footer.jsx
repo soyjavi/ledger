@@ -34,7 +34,13 @@ const Footer = ({ current, visible, onScreen }) => {
       <BlurView {...BLUR} style={styles.blur}>
         <View style={styles.content}>
           {OPTIONS.map(({ icon, text, screen }, index) => (
-            <Touchable key={index} rippleColor={COLOR.LIGHTEN} style={styles.option} onPress={() => onScreen(screen)}>
+            <Touchable
+              containerBorderRadius={0}
+              key={index}
+              rippleColor={COLOR.LIGHTEN}
+              style={styles.option}
+              onPress={() => onScreen(screen)}
+            >
               <Icon color={screen === current ? COLOR.BRAND : COLOR.LIGHTEN} value={icon} family={ICON.FAMILY} />
               <Text bold caption color={screen === current ? COLOR.TEXT : COLOR.LIGHTEN} marginTop="S">
                 {text}

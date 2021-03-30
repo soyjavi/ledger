@@ -11,7 +11,8 @@ export default StyleSheet.create({
   input: {
     ...FONT.BODY,
     ...FONT.BOLD,
-    borderColor: COLOR.LIGHTEN,
+    borderColor: COLOR.BASE,
+    backgroundColor: COLOR.BASE,
     borderRadius: BORDER_RADIUS,
     borderWidth: 1,
     color: COLOR.TEXT,
@@ -27,5 +28,6 @@ export default StyleSheet.create({
 
   focus: {
     borderColor: COLOR.TEXT,
+    backgroundColor: COLOR.BACKGROUND,
   },
 });

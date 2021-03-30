@@ -4,39 +4,17 @@ import { THEME } from 'reactor/common';
 import { Button, Viewport } from 'reactor/components';
 
 import { BANNERS } from '@assets';
-import { C, colorOpacity } from '@common';
-import {
-  Banner,
-  DialogClone,
-  Footer,
-  GroupTransactions,
-  Header,
-  Heading,
-  ScrollView,
-  Search,
-  Summary,
-} from '@components';
+import { Banner, DialogClone, GroupTransactions, Header, Heading, ScrollView, Summary } from '@components';
 import { useL10N, useNavigation, useStore } from '@context';
 
 import { DialogTransaction } from './components';
 import { onScroll, query, search } from './Vault.controller';
 
-const {
-  TX: {
-    TYPE: { EXPENSE, INCOME, TRANSFER },
-  },
-} = C;
-const { COLOR, ICON, OPACITY } = THEME;
+const { COLOR, ICON } = THEME;
 
 const button = {
-  color: colorOpacity(COLOR.CTA, OPACITY.S),
-  colorText: COLOR.CTA,
-  iconFamily: ICON.FAMILY,
-};
-
-const buttonFooter = {
-  color: COLOR.TRANSPARENT,
-  colorText: COLOR.TEXT,
+  color: COLOR.BRAND,
+  outlined: true,
   iconFamily: ICON.FAMILY,
 };
 
@@ -52,8 +30,6 @@ const Vault = ({ visible }) => {
   const [scrollQuery, setScrollQuery] = useState(false);
   const [txs, setTxs] = useState([]);
   const [tx, setTx] = useState(undefined);
-  const [searchTxs, setSearchTxs] = useState(undefined);
-  const [searching, setSearching] = useState(false);
 
   useLayoutEffect(() => {
     if (!visible) {
@@ -90,9 +66,6 @@ const Vault = ({ visible }) => {
     setScrollQuery(false);
   };
 
-  const handleSearch = (query) => {
-    setSearchTxs(query ? search(query, dataSource.txs, l10n) : undefined);
-  };
   const { currency = baseCurrency, title, ...rest } = dataSource;
 
   console.log('  <Vault>', { visible, dialog });
@@ -113,7 +86,7 @@ const Vault = ({ visible }) => {
         {txs.length > 0 ? (
           <>
             <Heading paddingHorizontal="M" value={l10n.TRANSACTIONS} />
-            {(searchTxs || txs).map((item) => (
+            {txs.map((item) => (
               <GroupTransactions key={item.timestamp} {...item} currency={currency} onPress={setTx} />
             ))}
           </>
@@ -127,31 +100,6 @@ const Vault = ({ visible }) => {
           />
         )}
       </ScrollView>
-
-      <Footer visible={scroll || searchTxs !== undefined}>
-        <Search {...buttonFooter} onFocus={setSearching} onSearch={handleSearch} />
-
-        <Button
-          {...buttonFooter}
-          icon="arrow-up"
-          onPress={() => setDialog(EXPENSE)}
-          text={!searching ? l10n.INCOME.toUpperCase() : undefined}
-        />
-        <Button
-          {...buttonFooter}
-          icon="arrow-down"
-          onPress={() => setDialog(INCOME)}
-          text={!searching ? l10n.EXPENSE.toUpperCase() : undefined}
-        />
-        {vaults.length > 1 && (
-          <Button
-            {...buttonFooter}
-            icon="shuffle"
-            onPress={() => setDialog(TRANSFER)}
-            text={!searching ? l10n.SWAP.toUpperCase() : undefined}
-          />
-        )}
-      </Footer>
 
       {visible && (
         <>

@@ -34,7 +34,7 @@ const TransactionItem = (props) => {
     >
       <Row align="center" paddingHorizontal="M" paddingVertical="S">
         <Col marginRight="S" width="auto">
-          <Box outlined>
+          <Box color={COLOR.BASE_LIGHTEN} outlined>
             <Icon family={ICON.FAMILY} size={SPACE.M} value={CATEGORY_ICON[type][category]} />
           </Box>
         </Col>

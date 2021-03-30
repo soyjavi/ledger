@@ -43,7 +43,7 @@ const Vaults = () => {
         {hasCurrencies && (
           <>
             <Slider marginTop="M" itemWidth={CARD_SIZE} itemMargin={SPACE.S} style={styles.slider}>
-              {currencies.map(({ base, currency, ...item }, index) => (
+              {currencies.map(({ base, currency, ...item }) => (
                 <Card
                   {...item}
                   currency={currency}
