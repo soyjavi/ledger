@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
-import { Button, Slider } from 'reactor/components';
+import { Slider } from 'reactor/components';
 
 import { C } from '@common';
 import {
@@ -26,7 +26,7 @@ const { SPACE } = THEME;
 const Dashboard = () => {
   const l10n = useL10N();
   const navigation = useNavigation();
-  const { settings: { baseCurrency, visibleVaults } = {}, overall, txs = [], vaults = [] } = useStore();
+  const { settings: { baseCurrency } = {}, overall, txs = [], vaults = [] } = useStore();
 
   const [dialogVault, setDialogVault] = useState(false);
   const [tx, setTx] = useState(undefined);
@@ -55,14 +55,14 @@ const Dashboard = () => {
             <Heading paddingLeft="M" value={l10n.VAULTS} />
 
             <Slider itemWidth={CARD_SIZE} itemMargin={SPACE.S} style={styles.vaults}>
-              {queryVaults({ query, vaults, visibleVaults }).map((vault, index) => (
+              {queryVaults({ query, vaults }).map((vault, index) => (
                 <Card
                   {...vault.others}
+                  key={vault.hash}
                   balance={vault.currentBalance}
                   currency={vault.currency}
                   operator
                   title={vault.title}
-                  key={vault.hash}
                   marginLeft={index === 0 ? 'M' : undefined}
                   marginRight="S"
                   onPress={() => navigation.go(SCREEN.VAULT, vault)}

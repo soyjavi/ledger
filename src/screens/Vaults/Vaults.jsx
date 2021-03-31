@@ -16,13 +16,7 @@ const { SPACE } = THEME;
 const Vaults = () => {
   const navigation = useNavigation();
   const l10n = useL10N();
-  const scrollview = useRef(null);
-  const {
-    overall,
-    settings: { visibleVaults = {} },
-    updateSettings,
-    vaults,
-  } = useStore();
+  const { overall, vaults } = useStore();
 
   const [currencies, setCurrencies] = useState([]);
   const [scroll, setScroll] = useState(false);
@@ -39,21 +33,24 @@ const Vaults = () => {
     <>
       <Header visible={scroll} title={l10n.VAULTS} />
 
-      <ScrollView onScroll={(value) => setScroll(value)} ref={scrollview}>
+      <ScrollView onScroll={(value) => setScroll(value)}>
         {hasCurrencies && (
           <>
-            <Slider marginTop="M" itemWidth={CARD_SIZE} itemMargin={SPACE.S} style={styles.slider}>
-              {currencies.map(({ base, currency, ...item }) => (
+            <Heading marginTop="S" paddingLeft="M" value={l10n.CURRENCIES} />
+
+            <Slider itemWidth={CARD_SIZE} itemMargin={SPACE.S} style={styles.slider}>
+              {currencies.map(({ base, currency, ...item }, index) => (
                 <Card
                   {...item}
+                  key={currency}
                   currency={currency}
                   highlight={currency === selected}
-                  key={currency}
+                  marginLeft={index === 0 ? 'M' : undefined}
                   marginRight="S"
-                  onPress={() => setSelected(currency !== selected ? currency : undefined)}
                   operator={false}
                   percentage={(base * 100) / overall.currentBalance}
                   title={l10n.CURRENCY_NAME[currency] || currency}
+                  onPress={() => setSelected(currency !== selected ? currency : undefined)}
                 />
               ))}
             </Slider>
@@ -63,13 +60,7 @@ const Vaults = () => {
         {hasCurrencies && <Heading paddingHorizontal="M" value={l10n.VAULTS} />}
         <>
           {filter(vaults, selected).map((vault) => (
-            <VaultItem
-              key={vault.hash}
-              active={visibleVaults[vault.hash] !== false}
-              dataSource={vault}
-              onChange={(value) => updateSettings({ visibleVaults: { ...visibleVaults, [vault.hash]: value } })}
-              onPress={() => navigation.go(SCREEN.VAULT, vault)}
-            />
+            <VaultItem key={vault.hash} dataSource={vault} onPress={() => navigation.go(SCREEN.VAULT, vault)} />
           ))}
         </>
       </ScrollView>

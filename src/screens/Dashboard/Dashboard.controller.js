@@ -38,9 +38,8 @@ const querySearchTxs = ({ l10n, query, txs = [], vaults = [] }) =>
       )
     : undefined;
 
-const queryVaults = ({ query, vaults = [], visibleVaults }) =>
+const queryVaults = ({ query, vaults = [] }) =>
   vaults
-    // .filter((vault) => visibleVaults[vault.hash] !== false)
     .filter((tx = {}) => {
       const title = tx.title ? tx.title.toLowerCase() : undefined;
       return !query || (title && title.includes(query));

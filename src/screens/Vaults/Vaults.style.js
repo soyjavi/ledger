@@ -5,8 +5,7 @@ const { SPACE } = THEME;
 
 export default StyleSheet.create({
   slider: {
+    alignItems: 'center',
     marginBottom: SPACE.L,
-    paddingLeft: SPACE.S,
-    paddingRight: SPACE.M,
   },
 });
