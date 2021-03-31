@@ -112,7 +112,7 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
         </Col>
       )}
 
-      <Row marginTop="XL">
+      <Row marginTop="XL" marginBottom="M">
         <Button
           {...button}
           marginRight="M"

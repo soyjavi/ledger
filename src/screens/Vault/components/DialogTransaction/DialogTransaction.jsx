@@ -84,7 +84,7 @@ const DialogTransaction = (props = {}) => {
         />
       )}
 
-      <Row marginTop="XL">
+      <Row marginTop="XL" marginBottom="M">
         <Button disabled={busy} marginRight="M" outlined text={l10n.CLOSE.toUpperCase()} wide onPress={onClose} />
         <Button
           delay={DELAY_PRESS_MS}
