@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import { TextInput } from 'react-native';
+import { Keyboard, TextInput } from 'react-native';
 import { THEME } from 'reactor/common';
 import { Col, Text } from 'reactor/components';
 
@@ -32,6 +32,7 @@ const Input = ({ keyboard = 'default', label, maxLength, onChange, secure, ...ot
         onBlur={() => setFocus(false)}
         onChangeText={handleChange}
         onFocus={() => setFocus(true)}
+        onSubmitEditing={Keyboard.dismiss}
         placeholder={!focus ? '...' : undefined}
         placeholderTextColor={COLOR.LIGHTEN}
         secureTextEntry={secure}

@@ -12,6 +12,7 @@ export default StyleSheet.create({
     borderRadius: BORDER_RADIUS,
     padding: SPACE.M,
     height: CONTAINER_HEIGHT,
+    minHeight: CONTAINER_HEIGHT,
   },
 
   input: {

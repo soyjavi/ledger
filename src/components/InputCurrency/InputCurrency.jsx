@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { TextInput } from 'react-native';
+import { Keyboard, TextInput } from 'react-native';
 import { THEME } from 'reactor/common';
 import { Col, Icon, Row, Text, Touchable } from 'reactor/components';
 
@@ -114,6 +114,7 @@ const InputCurrency = ({
           onBlur={() => setFocus(false)}
           onChangeText={handleChange}
           onFocus={() => setFocus(true)}
+          onSubmitEditing={Keyboard.dismiss}
           style={styles.textInput}
           value={others.value || 0}
         />
