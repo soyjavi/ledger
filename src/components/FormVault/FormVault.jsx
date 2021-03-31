@@ -34,7 +34,7 @@ const FormVault = ({ form = {}, onChange }) => {
         onChange={(value) => handleChange('balance', value)}
       />
 
-      <Input label={l10n.NAME} onChange={(value) => handleChange('title', value)} value={form.title} />
+      <Input label={l10n.NAME} value={form.title} onChange={(value) => handleChange('title', value)} />
     </>
   );
 };

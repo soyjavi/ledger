@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
-import { KeyboardAvoidingView } from 'react-native';
+import { Keyboard, KeyboardAvoidingView, SafeAreaView, TouchableWithoutFeedback } from 'react-native';
 import { Button, Text, Viewport } from 'reactor/components';
+import { useEnvironment } from 'reactor/hooks';
 
 import { C } from '@common';
 import { FormVault } from '@components';
@@ -14,6 +15,7 @@ const { CURRENCY, DELAY_PRESS_MS } = C;
 const INITIAL_STATE = { balance: 0, currency: undefined, title: undefined };
 
 const FirstVault = ({ onVault, visible, ...others }) => {
+  const { IS_NATIVE } = useEnvironment();
   const l10n = useL10N();
   const store = useStore();
   const snackbar = useSnackBar();
@@ -45,23 +47,28 @@ const FirstVault = ({ onVault, visible, ...others }) => {
 
   return (
     <Viewport {...others} visible={visible}>
-      <KeyboardAvoidingView behavior="position" contentContainerStyle={styles.form}>
-        <Text bold subtitle style={styles.text}>
-          Your first account
-        </Text>
-        <Text caption marginTop="S" marginBottom="L" style={styles.text}>
-          {l10n.FIRST_VAULT_CAPTION}
-        </Text>
-        <FormVault form={form} onChange={setForm} />
+      <KeyboardAvoidingView behavior={IS_NATIVE ? 'padding' : undefined}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <SafeAreaView>
+            <Text bold subtitle style={styles.text}>
+              Your first account
+            </Text>
+            <Text caption marginTop="S" marginBottom="L" style={styles.text}>
+              {l10n.FIRST_VAULT_CAPTION}
+            </Text>
+            <FormVault form={form} onChange={setForm} />
 
-        <Button
-          delay={DELAY_PRESS_MS}
-          disabled={busy || !form.valid}
-          marginTop="XL"
-          onPress={handleSubmit}
-          style={styles.button}
-          text={l10n.CREATE.toUpperCase()}
-        />
+            <Button
+              delay={DELAY_PRESS_MS}
+              disabled={busy || !form.valid}
+              marginBottom="M"
+              marginTop="XL"
+              onPress={handleSubmit}
+              style={styles.button}
+              text={l10n.CREATE.toUpperCase()}
+            />
+          </SafeAreaView>
+        </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
     </Viewport>
   );
