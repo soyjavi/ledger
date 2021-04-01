@@ -25,11 +25,11 @@ const Card = ({ balance = 0, currency, highlight, onPress, title = '', ...others
   return (
     <Touchable
       {...others}
-      rippleColor={highlight ? COLOR.TEXT : COLOR.LIGHTEN}
+      rippleColor={!highlight ? COLOR.LIGHTEN : undefined}
       style={styles.container}
       onPress={onPress}
     >
-      <Box color={highlight ? COLOR.CTA : undefined} style={styles.box}>
+      <Box color={highlight ? COLOR.BRAND : undefined} style={styles.box}>
         <View style={styles.content}>
           <Row>
             <CurrencyLogo

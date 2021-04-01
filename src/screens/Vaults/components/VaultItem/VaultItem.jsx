@@ -16,7 +16,13 @@ const VaultItem = ({ onPress, dataSource: { currency, currentBalance, title } })
   } = useStore();
 
   return (
-    <Touchable paddingHorizontal="M" paddingVertical="S" onPress={onPress} style={styles.container}>
+    <Touchable
+      paddingHorizontal="M"
+      paddingVertical="S"
+      rippleColor={COLOR.LIGHTEN}
+      onPress={onPress}
+      style={styles.container}
+    >
       <Row>
         <Col marginRight="S" width="auto">
           <Box styleContent={styles.boxContent}>

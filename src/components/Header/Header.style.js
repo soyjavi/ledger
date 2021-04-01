@@ -16,7 +16,7 @@ export default StyleSheet.create({
   },
 
   visible: {
-    borderBottomColor: COLOR.BASE_LIGHTEN,
+    borderBottomColor: COLOR.BASE,
     borderBottomWidth: 1,
   },
 

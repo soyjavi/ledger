@@ -32,7 +32,7 @@ const Option = ({
       small
       style={[styles.container, inherit.style]}
     >
-      <Touchable rippleColor={selected ? COLOR.TEXT : COLOR.LIGHTEN} style={styles.content} onPress={onPress}>
+      <Touchable rippleColor={!selected ? COLOR.LIGHTEN : undefined} style={styles.content} onPress={onPress}>
         {currency && <CurrencyLogo color={COLOR.LIGHTEN} currency={currency} highlight={selected} small />}
         {icon && <Icon value={icon} color={colorContent} family={ICON.FAMILY} size={SPACE.L} />}
 
