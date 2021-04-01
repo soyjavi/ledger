@@ -23,7 +23,6 @@ const OPACITY = {
 // LIGHT-MODE
 // const BACKGROUND = '#ffffff';
 // const BASE = '#F1F1F1'; //'#F5F5F5';
-// const BASE_LIGHTEN = '#242426';
 // const BORDER_RADIUS = SPACE.S;
 // const BRAND = '#D29776';
 // const CTA = BRAND;
@@ -32,15 +31,14 @@ const OPACITY = {
 // const TEXT = '#000000';
 
 // DARK-MODE
-const BACKGROUND = '#000000';
-const BASE = '#161618';
-const BASE_LIGHTEN = '#242426';
+const BACKGROUND = '#101010';
+const BASE = '#1D1D1D';
 const BORDER_RADIUS = SPACE.S;
 const BRAND = '#D29776';
-const CTA = BRAND;
-const DIALOG = '#1C1C1E';
-const LIGHTEN = 'rgba(255,255,255,0.5)';
+const CTA = '#fefdfa';
+const DIALOG = '#171717';
 const TEXT = '#fefdfa';
+const LIGHTEN = colorOpacity(TEXT, 0.4);
 
 const ELEVATION = {
   shadowColor: BACKGROUND,
@@ -75,7 +73,6 @@ export const theme = {
     // TRANSPARENT
 
     // -- Custom
-    BASE_LIGHTEN,
     DIALOG,
     LIGHTEN,
   },
