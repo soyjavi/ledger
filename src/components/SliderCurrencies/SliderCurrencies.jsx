@@ -18,7 +18,6 @@ const SliderCurrencies = ({ onChange, selected, ...others }) => {
       {queryCurrencies(store).map((currency, index) => (
         <Option
           caption={currency}
-          color={COLOR.BASE}
           currency={currency}
           key={index}
           marginRight="S"

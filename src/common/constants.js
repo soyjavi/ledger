@@ -45,7 +45,7 @@ export const C = {
   ENDPOINT: IS_DEV ? 'http://localhost:8080' : 'https://ledgernode.soyjavi.com',
 
   FIXED: {
-    BTC: 6,
+    BTC: 8,
     ETH: 4,
     IDR: 0,
     JPY: 0,

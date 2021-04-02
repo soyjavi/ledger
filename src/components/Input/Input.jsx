@@ -12,7 +12,7 @@ const Input = ({ color, keyboard = 'default', label, maxLength, onChange, secure
   const [focus, setFocus] = useState(false);
 
   const handleChange = (next = '') => {
-    onChange && onChange(next.toString().length > 0 ? next.trim() : undefined);
+    onChange && onChange(next.toString().length > 0 ? next : undefined);
   };
 
   const active = focus || value !== undefined;

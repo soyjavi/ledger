@@ -68,8 +68,6 @@ const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
         <Slider itemMargin={SPACE.S} itemWidth={OPTION_SIZE} marginBottom="S">
           {availableVaults.map(({ currency, hash, title }) => (
             <Option
-              color={COLOR.BASE_LIGHTEN}
-              colorSelected={COLOR.TEXT}
               currency={currency}
               key={hash}
               legend={title}

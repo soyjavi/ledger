@@ -58,7 +58,7 @@ const Stats = () => {
 
   return (
     <>
-      <Header visible={scroll} title={`${l10n.MONTHS[slider.month]} ${slider.year}`} />
+      <Header visible={scroll} title={scroll ? `${l10n.MONTHS[slider.month]} ${slider.year}` : l10n.ACTIVITY} />
 
       <ScrollView onScroll={(value) => setScroll(value)} ref={scrollview}>
         <SliderMonths {...slider} onChange={handleSliderChange} marginTop="M" marginBottom="L" />

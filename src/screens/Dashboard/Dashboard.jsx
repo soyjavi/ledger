@@ -54,7 +54,7 @@ const Dashboard = () => {
           <>
             <Heading paddingLeft="M" value={l10n.VAULTS} />
 
-            <Slider itemWidth={CARD_SIZE} itemMargin={SPACE.S} style={styles.vaults}>
+            <Slider itemWidth={CARD_SIZE} itemMargin={SPACE.S} marginBottom="L" style={styles.vaults}>
               {queryVaults({ query, vaults }).map((vault, index) => (
                 <Card
                   {...vault.others}
@@ -73,7 +73,7 @@ const Dashboard = () => {
 
             {lastTxs.length > 0 && (
               <>
-                <Heading marginTop="M" paddingLeft="M" paddingRight="S" value={l10n.LAST_TRANSACTIONS} />
+                <Heading paddingLeft="M" paddingRight="S" value={l10n.LAST_TRANSACTIONS} />
                 {(querySearchTxs({ l10n, query, txs, vaults }) || lastTxs).map((item) => (
                   <GroupTransactions {...item} key={`${item.timestamp}`} currency={baseCurrency} onPress={setTx} />
                 ))}

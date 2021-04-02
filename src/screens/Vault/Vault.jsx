@@ -4,6 +4,7 @@ import { THEME } from 'reactor/common';
 import { Button, Viewport } from 'reactor/components';
 
 import { BANNERS } from '@assets';
+import { C } from '@common';
 import { Banner, DialogClone, GroupTransactions, Header, Heading, ScrollView, Summary } from '@components';
 import { useL10N, useNavigation, useStore } from '@context';
 
@@ -12,8 +13,14 @@ import { onScroll, query, search } from './Vault.controller';
 
 const { COLOR, ICON } = THEME;
 
+const {
+  TX: {
+    TYPE: { INCOME, EXPENSE, TRANSFER },
+  },
+} = C;
+
 const button = {
-  color: COLOR.BRAND,
+  color: COLOR.CTA,
   outlined: true,
   iconFamily: ICON.FAMILY,
 };
@@ -72,14 +79,14 @@ const Vault = ({ visible }) => {
 
   return (
     <Viewport scroll={false} visible={visible}>
-      <Header isVisible={scroll} title={title} onBack={navigation.back} />
+      <Header visible={scroll} title={scroll ? title : undefined} onBack={navigation.back} />
 
       <ScrollView onScroll={handleScroll} ref={scrollview}>
         <Summary {...rest} title={title} currency={currency}>
-          <Button {...button} icon="arrow-up" onPress={() => setDialog(1)} text={l10n.INCOME.toUpperCase()} />
-          <Button {...button} icon="arrow-down" onPress={() => setDialog(0)} text={l10n.EXPENSE.toUpperCase()} />
+          <Button {...button} icon="arrow-up" onPress={() => setDialog(INCOME)} text={l10n.INCOME.toUpperCase()} />
+          <Button {...button} icon="arrow-down" onPress={() => setDialog(EXPENSE)} text={l10n.EXPENSE.toUpperCase()} />
           {vaults.length > 1 && (
-            <Button {...button} icon="shuffle" onPress={() => setDialog(2)} text={l10n.SWAP.toUpperCase()} />
+            <Button {...button} icon="shuffle" onPress={() => setDialog(TRANSFER)} text={l10n.SWAP.toUpperCase()} />
           )}
         </Summary>
 

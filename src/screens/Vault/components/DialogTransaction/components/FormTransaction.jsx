@@ -10,9 +10,9 @@ import { useL10N } from '@context';
 import { queryCategories } from '../modules';
 
 const { CATEGORY_ICON } = C;
-const { COLOR, SPACE } = THEME;
+const { SPACE } = THEME;
 
-const FormTransaction = ({ currency, form = {}, onChange, type, vault = {} }) => {
+const FormTransaction = ({ color, currency, form = {}, onChange, type, vault = {} }) => {
   const l10n = useL10N();
 
   const handleField = (field, fieldValue) => {
@@ -29,8 +29,7 @@ const FormTransaction = ({ currency, form = {}, onChange, type, vault = {} }) =>
       <Slider itemMargin={SPACE.S} itemWidth={OPTION_SIZE} marginBottom="L">
         {queryCategories({ l10n, type }).map((item) => (
           <Option
-            color={COLOR.BASE_LIGHTEN}
-            colorSelected={COLOR.TEXT}
+            colorSelected={color}
             legend={item.caption}
             key={item.key}
             icon={CATEGORY_ICON[type][item.key]}
@@ -42,6 +41,7 @@ const FormTransaction = ({ currency, form = {}, onChange, type, vault = {} }) =>
       </Slider>
 
       <InputCurrency
+        color={color}
         currency={currency}
         marginBottom="L"
         type={type}
@@ -51,6 +51,7 @@ const FormTransaction = ({ currency, form = {}, onChange, type, vault = {} }) =>
       />
 
       <Input
+        color={color}
         label={l10n.CONCEPT}
         marginBottom="L"
         onChange={(value) => handleField('title', value)}
@@ -61,6 +62,7 @@ const FormTransaction = ({ currency, form = {}, onChange, type, vault = {} }) =>
 };
 
 FormTransaction.propTypes = {
+  color: PropTypes.string,
   currency: PropTypes.string,
   form: PropTypes.shape({}).isRequired,
   onChange: PropTypes.func.isRequired,

@@ -22,7 +22,7 @@ export default StyleSheet.create({
 
   content: {
     alignSelf: 'flex-end',
-    height: SPACE.XL + SPACE.S,
+    height: SPACE.XL + SPACE.M,
     justifyContent: 'space-between',
     overflow: 'hidden',
   },
