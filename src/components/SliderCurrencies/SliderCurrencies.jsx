@@ -8,7 +8,7 @@ import { useStore } from '@context';
 
 import { queryCurrencies } from './modules';
 
-const { COLOR, SPACE } = THEME;
+const { SPACE } = THEME;
 
 const SliderCurrencies = ({ onChange, selected, ...others }) => {
   const store = useStore();

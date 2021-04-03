@@ -6,7 +6,7 @@ import { Alert, Button, Image, Row, Text, View } from 'reactor/components';
 
 import { C } from '@common';
 import { Header, Heading, ScrollView, SliderCurrencies } from '@components';
-import { useL10N, useNavigation, useSnackBar, useStore } from '@context';
+import { useL10N, useSnackBar, useStore } from '@context';
 import { ServiceQR } from '@services';
 
 import { askCamera, changeCurrency, getBlockchain, getLatestRates } from './Settings.controller';

@@ -9,7 +9,7 @@ import { useL10N, useStore } from '@context';
 
 import { getVault, queryAvailableVaults } from '../modules';
 
-const { COLOR, SPACE } = THEME;
+const { SPACE } = THEME;
 
 const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
   const l10n = useL10N();
