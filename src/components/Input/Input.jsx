@@ -8,7 +8,7 @@ import styles from './Input.style';
 
 const { COLOR } = THEME;
 
-const Input = ({ color, keyboard = 'default', label, maxLength, onChange, secure, value, ...others }) => {
+const Input = ({ color, keyboard = 'default', label, maxLength, onChange, secure, value = '', ...others }) => {
   const [focus, setFocus] = useState(false);
 
   const handleChange = (next = '') => {
@@ -28,7 +28,7 @@ const Input = ({ color, keyboard = 'default', label, maxLength, onChange, secure
       <TextInput
         autoCapitalize="none"
         autoCorrect
-        defaultValue={others.defaultValue}
+        // defaultValue={others.defaultValue}
         disabled={others.disabled}
         blurOnSubmit
         editable
