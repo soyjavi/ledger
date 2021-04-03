@@ -3,10 +3,10 @@ import React from 'react';
 import { Sync } from './App.sync';
 import { C } from './common';
 import { useNavigation } from './context';
-import { Dashboard, Onboarding, Settings, Stats, Vault, Vaults } from './screens';
+import { Main, Onboarding, Vault } from './screens';
 
 const { SCREEN } = C;
-const { DASHBOARD, SETTINGS, STATS, VAULT, VAULTS } = SCREEN;
+const { DASHBOARD, VAULT } = SCREEN;
 
 const Router = () => {
   const { current, stack = [] } = useNavigation();
@@ -16,13 +16,10 @@ const Router = () => {
   return (
     <>
       <Onboarding />
-      <Dashboard backward={current !== DASHBOARD} visible={stack.includes(DASHBOARD)} />
+      <Main backward={current !== DASHBOARD} visible={stack.includes(DASHBOARD)} />
       {stack.includes(DASHBOARD) && (
         <>
-          <Vaults backward={current !== VAULTS} visible={stack.includes(VAULTS)} />
           <Vault visible={stack.includes(VAULT)} />
-          <Stats visible={stack.includes(STATS)} />
-          <Settings visible={stack.includes(SETTINGS)} />
           <Sync />
         </>
       )}

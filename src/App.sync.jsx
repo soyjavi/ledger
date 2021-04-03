@@ -65,19 +65,21 @@ const Sync = () => {
   };
 
   return (
-    <SafeAreaView>
-      <Motion
-        duration={!connected ? MOTION.EXPAND : MOTION.COLLAPSE}
-        style={styles.connected}
-        timeline={[{ property: 'translateY', value: !connected ? 0 : -(SPACE.XXL * 4) }]}
-        type="spring"
-      >
-        <Text bold caption>
-          {l10n.OFFLINE}
-        </Text>
-      </Motion>
+    <>
+      <SafeAreaView>
+        <Motion
+          duration={!connected ? MOTION.EXPAND : MOTION.COLLAPSE}
+          style={styles.connected}
+          timeline={[{ property: 'translateY', value: !connected ? 0 : -(SPACE.XXL * 4) }]}
+          type="spring"
+        >
+          <Text bold caption>
+            {l10n.OFFLINE}
+          </Text>
+        </Motion>
+      </SafeAreaView>
 
-      {connected && state !== undefined && (
+      {connected && (
         <>
           <Alert
             accept={l10n.SYNC_NOW}
@@ -89,13 +91,12 @@ const Sync = () => {
             visible={state === STATE.UNSYNCED}
             onAccept={handleSync}
             onCancel={() => setState(undefined)}
-            onClose={() => setState(undefined)}
           />
 
           <Snackbar caption={l10n.SYNC_BUSY} color={COLOR.BASE} position="top" visible={STATE.SYNCING === state} />
         </>
       )}
-    </SafeAreaView>
+    </>
   );
 };
 

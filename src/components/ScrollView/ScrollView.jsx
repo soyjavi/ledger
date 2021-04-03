@@ -22,7 +22,7 @@ const ScrollView = forwardRef(({ children, onScroll, ...others }, ref) => {
         contentContainerStyle={style.container}
         ref={ref}
         scrollEventThrottle={40}
-        onScroll={handleScroll}
+        onScroll={onScroll ? handleScroll : undefined}
       >
         {children}
       </ScrollViewBase>
@@ -32,7 +32,7 @@ const ScrollView = forwardRef(({ children, onScroll, ...others }, ref) => {
 
 ScrollView.propTypes = {
   children: PropTypes.node,
-  onScroll: PropTypes.func.isRequired,
+  onScroll: PropTypes.func,
 };
 
 export { ScrollView };

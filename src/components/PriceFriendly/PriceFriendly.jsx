@@ -28,7 +28,7 @@ const PriceFriendly = ({ currency, fixed, highlight, label, operator, maskAmount
   const props = {
     ...others,
     color,
-    fixed: fixed !== undefined ? fixed : currencyDecimals(value, currency),
+    fixed: fixed || currencyDecimals(value, currency),
     numberOfLines: 1,
     style: [FONT.CURRENCY, others.style],
     value: Math.abs(value),

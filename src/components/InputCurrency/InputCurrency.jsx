@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { TextInput } from 'react-native';
+import { Keyboard, TextInput } from 'react-native';
 import { THEME } from 'reactor/common';
 import { Col, Icon, Row, Text, Touchable } from 'reactor/components';
 
@@ -14,6 +14,7 @@ import { getLastRates } from './modules';
 const { COLOR, SPACE } = THEME;
 
 const InputCurrency = ({
+  color,
   disabled,
   label = '',
   onChange,
@@ -41,7 +42,7 @@ const InputCurrency = ({
   const handleChange = (value = '') => {
     let nextValue = value && value.toString().length > 0 ? value : undefined;
 
-    if (currency) {
+    if (currency && !onVault) {
       nextValue = parseFloat(nextValue, 10) > currentBalance ? currentBalance.toString() : nextValue;
       setValue(nextValue);
     }
@@ -49,22 +50,28 @@ const InputCurrency = ({
     onChange && onChange(nextValue);
   };
 
-  const color = !focus && (disabled || value === undefined) ? COLOR.LIGHTEN : undefined;
+  const active = !disabled && (focus || value !== undefined);
 
   return (
-    <Row {...others} align="center" style={[styles.container, others.style]}>
+    <Row
+      {...others}
+      align="center"
+      style={[styles.container, active && styles.focus, active && color && { borderColor: color }, others.style]}
+    >
       <Col>
         <Touchable rippleColor={COLOR.LIGHTEN} onPress={!disabled ? onVault : undefined}>
           <Row marginBottom="XS">
             {title && (
               <CurrencyLogo
-                color={currency !== baseCurrency ? COLOR.LIGHTEN : undefined}
+                color={active ? COLOR.TEXT : currency !== baseCurrency ? COLOR.LIGHTEN : undefined}
                 currency={currency}
                 marginRight="XS"
                 size="S"
               />
             )}
-            <Text color={color}>{(title || label).toUpperCase()}</Text>
+            <Text bold caption color={!active ? COLOR.LIGHTEN : undefined}>
+              {(title || label).toUpperCase()}
+            </Text>
           </Row>
           {title && (
             <Row>
@@ -87,7 +94,7 @@ const InputCurrency = ({
         <Col align="end">
           <PriceFriendly
             bold
-            color={color}
+            color={!active ? COLOR.LIGHTEN : undefined}
             currency={currency}
             pointerEvents="none"
             style={styles.input}
@@ -114,6 +121,7 @@ const InputCurrency = ({
           onBlur={() => setFocus(false)}
           onChangeText={handleChange}
           onFocus={() => setFocus(true)}
+          onSubmitEditing={Keyboard.dismiss}
           style={styles.textInput}
           value={others.value || 0}
         />
@@ -123,6 +131,7 @@ const InputCurrency = ({
 };
 
 InputCurrency.propTypes = {
+  color: PropTypes.string,
   disabled: PropTypes.bool,
   label: PropTypes.string,
   onChange: PropTypes.func,

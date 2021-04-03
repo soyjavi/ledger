@@ -47,7 +47,7 @@ const DialogVault = ({ onClose, visible }) => {
         <Text bold subtitle>{`${l10n.NEW} ${l10n.VAULT}`}</Text>
       </Row>
       <FormVault form={form} onChange={setForm} />
-      <Row marginTop="L">
+      <Row marginTop="L" marginBottom="M">
         <Button disabled={busy} marginRight="M" outlined text={l10n.CLOSE.toUpperCase()} wide onPress={onClose} />
         <Button
           delay={DELAY_PRESS_MS}

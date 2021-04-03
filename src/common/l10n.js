@@ -98,7 +98,7 @@ export const L10N = {
     INCOMES: 'Incomes',
     INITIAL_BALANCE: 'Initial balance',
 
-    LAST_TRANSACTIONS: 'Last transactions',
+    LAST_TRANSACTIONS: 'Recent activity',
     LATER: 'LATER',
     LOADING_PLACE: 'Wait a moment, loading place.',
     LOCATIONS: 'Locations',

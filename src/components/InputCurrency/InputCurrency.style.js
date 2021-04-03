@@ -7,11 +7,18 @@ const CONTAINER_HEIGHT = SPACE.XXL + SPACE.L;
 
 export default StyleSheet.create({
   container: {
-    backgroundColor: COLOR.BASE_LIGHTEN,
+    backgroundColor: COLOR.BASE,
+    borderColor: COLOR.BASE,
     borderRadius: BORDER_RADIUS,
+    borderWidth: 1,
     height: CONTAINER_HEIGHT,
     padding: SPACE.M,
     width: '100%',
+  },
+
+  focus: {
+    backgroundColor: COLOR.TRANSPARENT,
+    borderColor: COLOR.TEXT,
   },
 
   input: {

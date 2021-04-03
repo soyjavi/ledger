@@ -1,9 +1,7 @@
 import { Platform, StyleSheet } from 'react-native';
 import { THEME } from 'reactor/common';
 
-import { colorOpacity } from '@common';
-
-const { BORDER_RADIUS, COLOR, FONT, OPACITY, SPACE } = THEME;
+const { BORDER_RADIUS, COLOR, FONT, SPACE } = THEME;
 
 export default StyleSheet.create({
   container: {
@@ -13,18 +11,23 @@ export default StyleSheet.create({
   input: {
     ...FONT.BODY,
     ...FONT.BOLD,
-    backgroundColor: colorOpacity(COLOR.BACKGROUND, OPACITY.M),
-    borderRadius: BORDER_RADIUS / 2,
-    borderWidth: 0,
+    borderColor: COLOR.BASE,
+    backgroundColor: COLOR.BASE,
+    borderRadius: BORDER_RADIUS,
+    borderWidth: 1,
     color: COLOR.TEXT,
-    flex: 2,
-    height: SPACE.XL + SPACE.S,
-    marginRight: SPACE.S,
-    paddingHorizontal: SPACE.S,
+    height: SPACE.XXL,
+    paddingHorizontal: SPACE.M,
+    width: '100%',
     ...Platform.select({
       web: {
         userSelect: 'none',
       },
     }),
+  },
+
+  focus: {
+    borderColor: COLOR.TEXT,
+    backgroundColor: COLOR.BACKGROUND,
   },
 });

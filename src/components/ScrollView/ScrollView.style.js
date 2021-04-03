@@ -6,7 +6,7 @@ const { SPACE } = THEME;
 export default StyleSheet.create({
   container: {
     paddingTop: SPACE.XXL,
-    paddingBottom: SPACE.XL * 2,
+    paddingBottom: SPACE.XXL * 2,
   },
 
   safeAreaView: {

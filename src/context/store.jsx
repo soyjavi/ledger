@@ -46,7 +46,6 @@ const StoreProvider = ({ children }) => {
             onboarded: false,
             pin: undefined,
             secret,
-            visibleVaults: {},
           },
           rates: {},
         },

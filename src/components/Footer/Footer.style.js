@@ -4,7 +4,7 @@ import { useEnvironment } from 'reactor/hooks';
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
 const ENV = useEnvironment();
-const { COLOR, SPACE } = THEME;
+const { SPACE } = THEME;
 
 export default StyleSheet.create({
   blur: {
@@ -13,10 +13,8 @@ export default StyleSheet.create({
   },
 
   container: {
-    height: Platform.OS === 'ios' ? 80 : SPACE.XXL,
     bottom: 0,
-    borderTopColor: COLOR.BASE_LIGHTEN,
-    borderTopWidth: 1,
+    height: Platform.OS === 'ios' ? 88 : undefined,
     position: ENV.IS_WEB ? 'fixed' : 'absolute',
     width: '100%',
     zIndex: 1,
@@ -26,6 +24,13 @@ export default StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: SPACE.XS,
+  },
+
+  option: {
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    paddingVertical: SPACE.M,
   },
 });
