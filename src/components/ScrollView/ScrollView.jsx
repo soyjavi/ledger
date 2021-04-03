@@ -20,6 +20,7 @@ const ScrollView = forwardRef(({ children, onScroll, ...others }, ref) => {
       <ScrollViewBase
         {...others}
         contentContainerStyle={style.container}
+        keyboardShouldPersistTaps="never"
         ref={ref}
         scrollEventThrottle={40}
         onScroll={onScroll ? handleScroll : undefined}
