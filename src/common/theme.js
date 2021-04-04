@@ -32,7 +32,7 @@ const BRAND = '#D29776';
 // const LIGHTEN = colorOpacity(TEXT, 0.4);
 
 // DARK-MODE
-const BACKGROUND = '#101010';
+const BACKGROUND = '#000';
 const BASE = '#1D1D1D';
 const BORDER_RADIUS = SPACE.S;
 const CTA = '#fefdfa';
