@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 import PropTypes from 'prop-types';
 import React, { forwardRef } from 'react';
-import { SafeAreaView, ScrollView as ScrollViewBase } from 'react-native';
+import { ScrollView as ScrollViewBase } from 'react-native';
 import { THEME } from 'reactor/common';
 
 import style from './ScrollView.style';
@@ -16,18 +16,16 @@ const ScrollView = forwardRef(({ children, onScroll, ...others }, ref) => {
   }) => onScroll(y > SPACE.XXL, y);
 
   return (
-    <SafeAreaView style={style.safeAreaView}>
-      <ScrollViewBase
-        {...others}
-        contentContainerStyle={style.container}
-        keyboardShouldPersistTaps="never"
-        ref={ref}
-        scrollEventThrottle={40}
-        onScroll={onScroll ? handleScroll : undefined}
-      >
-        {children}
-      </ScrollViewBase>
-    </SafeAreaView>
+    <ScrollViewBase
+      {...others}
+      contentContainerStyle={style.container}
+      keyboardShouldPersistTaps="never"
+      ref={ref}
+      scrollEventThrottle={40}
+      onScroll={onScroll ? handleScroll : undefined}
+    >
+      {children}
+    </ScrollViewBase>
   );
 });
 
