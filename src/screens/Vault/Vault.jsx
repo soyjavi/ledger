@@ -9,7 +9,7 @@ import { Banner, DialogClone, GroupTransactions, Header, Heading, ScrollView, Su
 import { useL10N, useNavigation, useStore } from '@context';
 
 import { DialogTransaction } from './components';
-import { onScroll, query, search } from './Vault.controller';
+import { onScroll, query } from './Vault.controller';
 
 const { COLOR, ICON } = THEME;
 
