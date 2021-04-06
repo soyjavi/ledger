@@ -9,7 +9,7 @@ export default StyleSheet.create({
   container: {
     width: '100%',
     backgroundColor: COLOR.BASE,
-    borderColor: COLOR.BASE,
+    borderColor: COLOR.TRANSPARENT,
     borderRadius: BORDER_RADIUS,
     borderWidth: 1,
     padding: SPACE.M,

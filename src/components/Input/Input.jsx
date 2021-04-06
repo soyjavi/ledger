@@ -15,7 +15,7 @@ const Input = ({ color, keyboard = 'default', label, maxLength, onChange, secure
     onChange && onChange(next.toString().length > 0 ? next : undefined);
   };
 
-  const active = focus || value !== undefined;
+  const active = focus || value.length > 0;
 
   return (
     <Col
@@ -38,7 +38,7 @@ const Input = ({ color, keyboard = 'default', label, maxLength, onChange, secure
         onChangeText={handleChange}
         onFocus={() => setFocus(true)}
         onSubmitEditing={Keyboard.dismiss}
-        placeholder={!focus ? '...' : undefined}
+        placeholder={!focus ? 'Type something...' : undefined}
         placeholderTextColor={COLOR.LIGHTEN}
         secureTextEntry={secure}
         style={styles.input}
