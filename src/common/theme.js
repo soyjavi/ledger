@@ -22,23 +22,14 @@ const OPACITY = {
 
 const BRAND = '#D29776';
 
-// LIGHT-MODE
-// const BACKGROUND = '#ffffff';
-// const BASE = '#F1F1F1';
-// const BORDER_RADIUS = SPACE.S;
-// const CTA = '#111111';
-// const DIALOG = '#F5F5F5';
-// const TEXT = '#111111';
-// const LIGHTEN = colorOpacity(TEXT, 0.4);
-
 // DARK-MODE
 const BACKGROUND = '#000';
-const BASE = '#1D1D1D';
-const BORDER_RADIUS = SPACE.S;
-const CTA = '#fefdfa';
-const DIALOG = '#171717';
-const TEXT = '#fefdfa';
-const LIGHTEN = colorOpacity(TEXT, 0.4);
+const TEXT = '#ffffff';
+// const BASE = '#222';
+const BASE = colorOpacity(TEXT, 0.1);
+const CTA = '#ffffff';
+const DIALOG = '#1C1C1C';
+const LIGHTEN = '#888888';
 
 const ELEVATION = {
   shadowColor: BACKGROUND,
@@ -56,7 +47,7 @@ export const theme = {
     intensity: 95,
     tint: 'dark',
   },
-  BORDER_RADIUS,
+  BORDER_RADIUS: SPACE.S,
 
   COLOR: {
     BRAND,
@@ -123,14 +114,13 @@ export const theme = {
   DIALOG: {
     ...ELEVATION,
     backgroundColor: DIALOG,
-    borderRadius: BORDER_RADIUS * 2,
     padding: SPACE.L,
   },
   DIALOG_BUTTON: {
     color: BASE,
   },
   DIALOG_OVERLAY: {
-    backgroundColor: colorOpacity(BACKGROUND, OPACITY.M),
+    backgroundColor: colorOpacity(BACKGROUND, OPACITY.L),
   },
   INPUT: {
     backgroundColor: BACKGROUND,
