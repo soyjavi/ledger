@@ -8,7 +8,7 @@ const CONTAINER_HEIGHT = SPACE.XXL + SPACE.L;
 export default StyleSheet.create({
   container: {
     backgroundColor: COLOR.BASE,
-    borderColor: COLOR.BASE,
+    borderColor: COLOR.TRANSPARENT,
     borderRadius: BORDER_RADIUS,
     borderWidth: 1,
     height: CONTAINER_HEIGHT,
@@ -16,9 +16,12 @@ export default StyleSheet.create({
     width: '100%',
   },
 
-  focus: {
-    backgroundColor: COLOR.TRANSPARENT,
+  active: {
     borderColor: COLOR.TEXT,
+  },
+
+  fulfilled: {
+    backgroundColor: COLOR.TRANSPARENT,
   },
 
   input: {
@@ -33,6 +36,7 @@ export default StyleSheet.create({
     padding: 0,
     position: 'absolute',
     right: -SPACE.M,
+    textAlign: 'left',
     top: -SPACE.M,
     width: '100%',
   },

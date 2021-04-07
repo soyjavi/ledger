@@ -4,6 +4,7 @@ import { Keyboard, TextInput } from 'react-native';
 import { THEME } from 'reactor/common';
 import { Col, Icon, Row, Text, Touchable } from 'reactor/components';
 
+import { C } from '@common';
 import { useStore } from '@context';
 
 import { CurrencyLogo } from '../CurrencyLogo';
@@ -11,12 +12,18 @@ import { PriceFriendly } from '../PriceFriendly';
 import styles from './InputCurrency.style';
 import { getLastRates } from './modules';
 
+const {
+  TX: {
+    TYPE: { EXPENSE, INCOME },
+  },
+} = C;
 const { COLOR, SPACE } = THEME;
 
 const InputCurrency = ({
   color,
   disabled,
   label = '',
+  type = EXPENSE,
   onChange,
   onVault,
   vault: { currency, currentBalance, title } = {},
@@ -42,7 +49,7 @@ const InputCurrency = ({
   const handleChange = (value = '') => {
     let nextValue = value && value.toString().length > 0 ? value : undefined;
 
-    if (currency && !onVault) {
+    if (currency && type === EXPENSE) {
       nextValue = parseFloat(nextValue, 10) > currentBalance ? currentBalance.toString() : nextValue;
       setValue(nextValue);
     }
@@ -56,7 +63,13 @@ const InputCurrency = ({
     <Row
       {...others}
       align="center"
-      style={[styles.container, active && styles.focus, active && color && { borderColor: color }, others.style]}
+      style={[
+        styles.container,
+        active && styles.active,
+        active && !focus && styles.fulfilled,
+        active && color && { borderColor: color },
+        others.style,
+      ]}
     >
       <Col>
         <Touchable rippleColor={COLOR.LIGHTEN} onPress={!disabled ? onVault : undefined}>
@@ -91,7 +104,7 @@ const InputCurrency = ({
       </Col>
 
       <Col align="end">
-        <Col align="end">
+        <Col align="end" pointerEvents="none">
           <PriceFriendly
             bold
             color={!active ? COLOR.LIGHTEN : undefined}
@@ -136,6 +149,7 @@ InputCurrency.propTypes = {
   label: PropTypes.string,
   onChange: PropTypes.func,
   onVault: PropTypes.func,
+  type: PropTypes.oneOf([EXPENSE, INCOME]),
   vault: PropTypes.shape({}),
 };
 
