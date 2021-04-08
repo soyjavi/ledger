@@ -3,12 +3,17 @@ import React, { useEffect, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Slider } from 'reactor/components';
 
-import { currencyDecimals } from '@common';
+import { C, currencyDecimals } from '@common';
 import { InputCurrency, Option, OPTION_SIZE } from '@components';
 import { useL10N, useStore } from '@context';
 
 import { getVault, queryAvailableVaults } from '../modules';
 
+const {
+  TX: {
+    TYPE: { EXPENSE, INCOME },
+  },
+} = C;
 const { SPACE } = THEME;
 
 const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
@@ -59,6 +64,7 @@ const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
     <>
       <InputCurrency
         marginBottom="L"
+        type={EXPENSE}
         value={form.value}
         vault={vault}
         onChange={(value) => handleField('value', value)}
@@ -85,6 +91,7 @@ const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
           currency={form.to ? form.to.currency : baseCurrency}
           label={l10n.GET}
           marginBottom="S"
+          type={INCOME}
           value={form.to ? form.exchange : undefined}
           vault={getVault(form.destination, vaults)}
           onChange={(value) => handleField('exchange', value)}
