@@ -20,15 +20,20 @@ const Input = ({ color, keyboard = 'default', label, maxLength, onChange, secure
   return (
     <Col
       {...others}
-      style={[styles.container, active && styles.focus, active && color && { borderColor: color }, others.style]}
+      style={[
+        styles.container,
+        active && styles.active,
+        active && !focus && styles.fulfilled,
+        active && color && { borderColor: color },
+        others.style,
+      ]}
     >
-      <Text bold caption color={!active ? COLOR.LIGHTEN : undefined}>
+      <Text bold caption color={!active ? COLOR.LIGHTEN : undefined} pointerEvents="none" style={styles.label}>
         {label.toUpperCase()}
       </Text>
       <TextInput
         autoCapitalize="none"
         autoCorrect
-        // defaultValue={others.defaultValue}
         disabled={others.disabled}
         blurOnSubmit
         editable
