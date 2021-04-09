@@ -20,16 +20,13 @@ const OPACITY = {
   L: 0.75,
 };
 
-const BRAND = '#D29776';
-
 // DARK-MODE
 const BACKGROUND = '#000';
 const TEXT = '#ffffff';
-// const BASE = '#222';
-const BASE = colorOpacity(TEXT, 0.1);
+const BASE = '#1F1F1F';
 const CTA = '#ffffff';
-const DIALOG = '#1C1C1C';
-const LIGHTEN = '#888888';
+const DIALOG = '#121212';
+const LIGHTEN = colorOpacity(TEXT, OPACITY.M + OPACITY.S);
 
 const ELEVATION = {
   shadowColor: BACKGROUND,
@@ -50,7 +47,7 @@ export const theme = {
   BORDER_RADIUS: SPACE.S,
 
   COLOR: {
-    BRAND,
+    BRAND: '#D29776',
     CTA,
     // BLACK
     // WHITE
@@ -114,10 +111,8 @@ export const theme = {
   DIALOG: {
     ...ELEVATION,
     backgroundColor: DIALOG,
+    borderRadius: SPACE.M,
     padding: SPACE.L,
-  },
-  DIALOG_BUTTON: {
-    color: BASE,
   },
   DIALOG_OVERLAY: {
     backgroundColor: colorOpacity(BACKGROUND, OPACITY.L),
