@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import React, { useEffect, useRef, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Slider } from 'reactor/components';
 
@@ -13,9 +14,10 @@ import styles from './Vaults.style';
 const { SCREEN } = C;
 const { SPACE } = THEME;
 
-const Vaults = () => {
+const Vaults = ({ timestamp }) => {
   const navigation = useNavigation();
   const l10n = useL10N();
+  const scrollview = useRef(null);
   const { overall, vaults } = useStore();
 
   const [currencies, setCurrencies] = useState([]);
@@ -27,13 +29,17 @@ const Vaults = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    if (timestamp) scrollview.current.scrollTo({ y: 0, animated: true });
+  }, [timestamp]);
+
   const hasCurrencies = currencies.length > 0;
 
   return (
     <>
       <Header visible={scroll} title={l10n.VAULTS} />
 
-      <ScrollView onScroll={(value) => setScroll(value)}>
+      <ScrollView onScroll={setScroll} ref={scrollview}>
         {hasCurrencies && (
           <>
             <Heading marginTop="S" paddingLeft="M" value={l10n.CURRENCIES} />
@@ -68,6 +74,9 @@ const Vaults = () => {
   );
 };
 
-Vaults.propTypes = {};
+Vaults.propTypes = {
+  timestamp: PropTypes.number,
+  visible: PropTypes.boolean,
+};
 
 export { Vaults };
