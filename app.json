@@ -8,13 +8,13 @@
     "version": "0.25.0",
     "orientation": "portrait",
     "userInterfaceStyle": "dark",
-    "backgroundColor": "#101010",
+    "backgroundColor": "#000000",
     "primaryColor": "#D29776",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#101010"
+      "backgroundColor": "#000000"
     },
     "updates": {
       "enabled": true,
@@ -30,13 +30,13 @@
       "package": "com.soyjavi.ledger"
     },
     "androidStatusBar": {
-      "backgroundColor": "#101010",
+      "backgroundColor": "#000000",
       "barStyle": "light-content",
       "translucent": false
     },
     "androidNavigationBar": {
       "barStyle": "light-content",
-      "backgroundColor": "#101010"
+      "backgroundColor": "#000000"
     },
     "githubUrl": "https://github.com/soyjavi/voltvault-app"
   }
