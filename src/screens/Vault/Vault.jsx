@@ -21,8 +21,8 @@ const {
 
 const button = {
   color: COLOR.CTA,
-  outlined: true,
   iconFamily: ICON.FAMILY,
+  outlined: true,
 };
 
 const Vault = ({ visible }) => {
@@ -32,7 +32,7 @@ const Vault = ({ visible }) => {
   const scrollview = useRef(null);
 
   const [dataSource, setDataSource] = useState({});
-  const [dialog, setDialog] = useState(undefined);
+  const [dialog, setDialog] = useState();
   const [scroll, setScroll] = useState(false);
   const [scrollQuery, setScrollQuery] = useState(false);
   const [txs, setTxs] = useState([]);
