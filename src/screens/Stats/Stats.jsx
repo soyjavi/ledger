@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { THEME } from 'reactor/common';
 
 import { C } from '@common';
@@ -32,8 +32,9 @@ const Stats = ({ timestamp }) => {
     settings: { baseCurrency },
   } = store;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const today = new Date();
+
     setChart(queryChart(store));
     setSlider({ month: today.getMonth(), year: today.getFullYear(), index: STATS_MONTHS_LIMIT - 1 });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -44,7 +45,7 @@ const Stats = ({ timestamp }) => {
   }, [timestamp]);
 
   useEffect(() => {
-    if (Object.keys(slider).length > 0) setMonth(queryMonth(store, slider));
+    setMonth(queryMonth(store, slider));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slider]);
 
