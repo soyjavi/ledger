@@ -7,7 +7,7 @@ const blocksToSync = (blockchain = [], latestHash) => blockchain.slice(findHashI
 const existsHash = (blockchain = [], latestHash) => findHashIndex(blockchain, latestHash) > 0;
 
 const parseVaults = (vaults = []) =>
-  vaults.map(({ data: { balance = 0, title = '', valid, ...data }, timestamp, ...others }) => ({
+  vaults.map(({ data: { balance = 0, title = '', ...data }, timestamp, ...others }) => ({
     ...others,
     timestamp: new Date(timestamp).getTime(),
     data: { ...data, balance: balance === null || !balance ? 0 : balance, title },

@@ -83,11 +83,11 @@ TransactionItem.propTypes = {
   category: PropTypes.number,
   currency: PropTypes.string.isRequired,
   location: PropTypes.shape({}),
-  onPress: PropTypes.func,
   timestamp: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   title: PropTypes.string,
   type: PropTypes.number,
   value: PropTypes.number.isRequired,
+  onPress: PropTypes.func,
 };
 
 export { TransactionItem };

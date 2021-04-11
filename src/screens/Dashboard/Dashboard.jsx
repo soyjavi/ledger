@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import React, { useEffect, useRef, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Slider } from 'reactor/components';
 
@@ -23,9 +24,10 @@ import styles from './Dashboard.style';
 const { SCREEN } = C;
 const { SPACE } = THEME;
 
-const Dashboard = () => {
+const Dashboard = ({ timestamp }) => {
   const l10n = useL10N();
   const navigation = useNavigation();
+  const scrollview = useRef(null);
   const { settings: { baseCurrency } = {}, overall, txs = [], vaults = [] } = useStore();
 
   const [dialogVault, setDialogVault] = useState(false);
@@ -33,6 +35,10 @@ const Dashboard = () => {
   const [lastTxs, setLastTxs] = useState([]);
   const [scroll, setScroll] = useState(false);
   const [query, setQuery] = useState();
+
+  useEffect(() => {
+    if (timestamp) scrollview.current.scrollTo({ y: 0, animated: true });
+  }, [timestamp]);
 
   useEffect(() => {
     setLastTxs(queryLastTxs({ txs, vaults }));
@@ -45,7 +51,7 @@ const Dashboard = () => {
     <>
       <Header visible={scroll} title={scroll ? l10n.DASHBOARD : undefined} />
 
-      <ScrollView onScroll={setScroll}>
+      <ScrollView onScroll={setScroll} ref={scrollview}>
         <Summary {...overall} currency={baseCurrency} title={l10n.OVERALL_BALANCE}>
           <Search onChange={setQuery} />
         </Summary>
@@ -89,6 +95,9 @@ const Dashboard = () => {
   );
 };
 
-Dashboard.propTypes = {};
+Dashboard.propTypes = {
+  timestamp: PropTypes.number,
+  visible: PropTypes.boolean,
+};
 
 export { Dashboard };

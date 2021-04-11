@@ -11,7 +11,7 @@ export default StyleSheet.create({
   input: {
     ...FONT.BODY,
     ...FONT.BOLD,
-    borderColor: COLOR.BASE,
+    borderColor: COLOR.TRANSPARENT,
     backgroundColor: COLOR.BASE,
     borderRadius: BORDER_RADIUS,
     borderWidth: 1,

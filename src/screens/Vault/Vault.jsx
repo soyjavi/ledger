@@ -9,7 +9,7 @@ import { Banner, DialogClone, GroupTransactions, Header, Heading, ScrollView, Su
 import { useL10N, useNavigation, useStore } from '@context';
 
 import { DialogTransaction } from './components';
-import { onScroll, query, search } from './Vault.controller';
+import { onScroll, query } from './Vault.controller';
 
 const { COLOR, ICON } = THEME;
 
@@ -21,8 +21,8 @@ const {
 
 const button = {
   color: COLOR.CTA,
-  outlined: true,
   iconFamily: ICON.FAMILY,
+  outlined: true,
 };
 
 const Vault = ({ visible }) => {
@@ -32,7 +32,7 @@ const Vault = ({ visible }) => {
   const scrollview = useRef(null);
 
   const [dataSource, setDataSource] = useState({});
-  const [dialog, setDialog] = useState(undefined);
+  const [dialog, setDialog] = useState();
   const [scroll, setScroll] = useState(false);
   const [scrollQuery, setScrollQuery] = useState(false);
   const [txs, setTxs] = useState([]);

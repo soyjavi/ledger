@@ -55,8 +55,8 @@ const Footer = ({ current, visible, onScreen }) => {
 
 Footer.propTypes = {
   current: PropTypes.string,
-  onScreen: PropTypes.func,
   visible: PropTypes.bool,
+  onScreen: PropTypes.func,
 };
 
 export { Footer };

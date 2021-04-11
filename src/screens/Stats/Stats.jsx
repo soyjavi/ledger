@@ -1,4 +1,5 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { THEME } from 'reactor/common';
 
 import { C } from '@common';
@@ -17,7 +18,7 @@ const {
 } = C;
 const { COLOR } = THEME;
 
-const Stats = () => {
+const Stats = ({ timestamp }) => {
   const scrollview = useRef(null);
   const l10n = useL10N();
   const store = useStore();
@@ -31,15 +32,20 @@ const Stats = () => {
     settings: { baseCurrency },
   } = store;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const today = new Date();
+
     setChart(queryChart(store));
     setSlider({ month: today.getMonth(), year: today.getFullYear(), index: STATS_MONTHS_LIMIT - 1 });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    if (Object.keys(slider).length > 0) setMonth(queryMonth(store, slider));
+    if (timestamp) scrollview.current.scrollTo({ y: 0, animated: true });
+  }, [timestamp]);
+
+  useEffect(() => {
+    setMonth(queryMonth(store, slider));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slider]);
 
@@ -60,7 +66,7 @@ const Stats = () => {
     <>
       <Header visible={scroll} title={scroll ? `${l10n.MONTHS[slider.month]} ${slider.year}` : l10n.ACTIVITY} />
 
-      <ScrollView onScroll={(value) => setScroll(value)} ref={scrollview}>
+      <ScrollView onScroll={setScroll} ref={scrollview}>
         <SliderMonths {...slider} onChange={handleSliderChange} marginTop="M" marginBottom="L" />
 
         <Chart
@@ -112,6 +118,9 @@ const Stats = () => {
   );
 };
 
-Stats.propTypes = {};
+Stats.propTypes = {
+  timestamp: PropTypes.number,
+  visible: PropTypes.boolean,
+};
 
 export { Stats };

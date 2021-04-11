@@ -26,7 +26,7 @@ module.exports = {
     'react/sort-prop-types': [
       'error',
       {
-        callbacksLast: false,
+        callbacksLast: true,
         ignoreCase: true,
         requiredFirst: false,
         sortShapeProp: true,
@@ -44,12 +44,11 @@ module.exports = {
           //   position: 'before',
           // },
           {
-            pattern: '{@**,@**/**}',
+            pattern: '{@**,@**/**,}',
             group: 'internal',
-            position: 'before',
+            position: 'after',
           },
         ],
-        // pathGroupsExcludedImportTypes: ['react', 'react-native', 'reactor'],
         pathGroupsExcludedImportTypes: ['@'],
         'newlines-between': 'always',
         alphabetize: {

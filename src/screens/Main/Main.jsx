@@ -14,21 +14,29 @@ const { SCREEN } = C;
 
 const Main = ({ visible, ...inherit }) => {
   const [screen, setScreen] = useState(SCREEN.DASHBOARD);
+  const [timestamp, setTimestamp] = useState();
+
+  const handlePress = (next) => {
+    setScreen(next);
+    setTimestamp(next === screen ? new Date().getTime() : undefined);
+  };
 
   console.log('  <Main>', { visible, screen });
+
+  const props = { timestamp };
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
       {visible && (
         <>
-          {screen === SCREEN.DASHBOARD && <Dashboard />}
-          {screen === SCREEN.STATS && <Stats />}
-          {screen === SCREEN.VAULTS && <Vaults />}
-          {screen === SCREEN.SETTINGS && <Settings />}
+          {screen === SCREEN.DASHBOARD && <Dashboard {...props} />}
+          {screen === SCREEN.STATS && <Stats {...props} />}
+          {screen === SCREEN.VAULTS && <Vaults {...props} />}
+          {screen === SCREEN.SETTINGS && <Settings {...props} />}
         </>
       )}
 
-      <Footer current={screen} visible={visible} onScreen={setScreen} />
+      <Footer current={screen} visible={visible} onScreen={handlePress} />
     </Viewport>
   );
 };

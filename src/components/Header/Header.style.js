@@ -1,30 +1,32 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { THEME } from 'reactor/common';
 import { useEnvironment } from 'reactor/hooks';
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
 const ENV = useEnvironment();
-const { COLOR, SPACE } = THEME;
+const { SPACE } = THEME;
 
 export default StyleSheet.create({
+  blur: {
+    height: '100%',
+    width: '100%',
+  },
+
   container: {
-    backgroundColor: COLOR.BACKGROUND,
     position: ENV.IS_WEB ? 'fixed' : 'absolute',
     top: 0,
     width: '100%',
     zIndex: 1,
   },
 
-  visible: {
-    borderBottomColor: COLOR.BASE,
-    borderBottomWidth: 1,
-  },
-
   content: {
     alignSelf: 'flex-end',
-    height: SPACE.XL + SPACE.M,
+    paddingBottom: SPACE.S + SPACE.XS,
     justifyContent: 'space-between',
     overflow: 'hidden',
+    ...Platform.select({
+      web: { paddingTop: SPACE.S + SPACE.XS },
+    }),
   },
 
   title: {

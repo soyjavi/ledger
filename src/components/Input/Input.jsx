@@ -8,27 +8,32 @@ import styles from './Input.style';
 
 const { COLOR } = THEME;
 
-const Input = ({ color, keyboard = 'default', label, maxLength, onChange, secure, value, ...others }) => {
+const Input = ({ color, keyboard = 'default', label, maxLength, onChange, secure, value = '', ...others }) => {
   const [focus, setFocus] = useState(false);
 
   const handleChange = (next = '') => {
     onChange && onChange(next.toString().length > 0 ? next : undefined);
   };
 
-  const active = focus || value !== undefined;
+  const active = focus || value.length > 0;
 
   return (
     <Col
       {...others}
-      style={[styles.container, active && styles.focus, active && color && { borderColor: color }, others.style]}
+      style={[
+        styles.container,
+        active && styles.active,
+        active && !focus && styles.fulfilled,
+        active && color && { borderColor: color },
+        others.style,
+      ]}
     >
-      <Text bold caption color={!active ? COLOR.LIGHTEN : undefined}>
+      <Text bold caption color={!active ? COLOR.LIGHTEN : undefined} pointerEvents="none" style={styles.label}>
         {label.toUpperCase()}
       </Text>
       <TextInput
         autoCapitalize="none"
         autoCorrect
-        defaultValue={others.defaultValue}
         disabled={others.disabled}
         blurOnSubmit
         editable
@@ -38,7 +43,7 @@ const Input = ({ color, keyboard = 'default', label, maxLength, onChange, secure
         onChangeText={handleChange}
         onFocus={() => setFocus(true)}
         onSubmitEditing={Keyboard.dismiss}
-        placeholder={!focus ? '...' : undefined}
+        placeholder={!focus ? 'Type something...' : undefined}
         placeholderTextColor={COLOR.LIGHTEN}
         secureTextEntry={secure}
         style={styles.input}
@@ -54,9 +59,9 @@ Input.propTypes = {
   keyboard: PropTypes.string,
   label: PropTypes.string.isRequired,
   maxLength: PropTypes.number,
-  onChange: PropTypes.func,
   secure: PropTypes.bool,
   value: PropTypes.string,
+  onChange: PropTypes.func,
 };
 
 export { Input };

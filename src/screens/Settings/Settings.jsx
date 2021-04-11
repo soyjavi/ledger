@@ -1,12 +1,13 @@
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Camera } from 'expo-camera';
+import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
 import { THEME } from 'reactor/common';
 import { Alert, Button, Image, Row, Text, View } from 'reactor/components';
 
 import { C } from '@common';
 import { Header, Heading, ScrollView, SliderCurrencies } from '@components';
-import { useL10N, useNavigation, useSnackBar, useStore } from '@context';
+import { useL10N, useSnackBar, useStore } from '@context';
 import { ServiceQR } from '@services';
 
 import { askCamera, changeCurrency, getBlockchain, getLatestRates } from './Settings.controller';
@@ -19,7 +20,7 @@ const CAMERA_PROPS = {
   type: Camera.Constants.Type.back,
 };
 
-const Settings = () => {
+const Settings = ({ timestamp }) => {
   const l10n = useL10N();
   const scrollview = useRef(null);
   const store = useStore();
@@ -43,6 +44,10 @@ const Settings = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (timestamp) scrollview.current.scrollTo({ y: 0, animated: true });
+  }, [timestamp]);
 
   useEffect(() => {
     if (!camera) {
@@ -155,6 +160,9 @@ const Settings = () => {
   );
 };
 
-Settings.propTypes = {};
+Settings.propTypes = {
+  timestamp: PropTypes.number,
+  visible: PropTypes.boolean,
+};
 
 export { Settings };

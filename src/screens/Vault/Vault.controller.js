@@ -18,18 +18,4 @@ const query = (txs = [], scroll = false) =>
       .slice(0, scroll ? 256 : 16),
   );
 
-const search = (query, txs = [], l10n) =>
-  groupTxsByDate(
-    txs
-      .slice()
-      .reverse()
-      .filter((tx) => {
-        const title = tx.title ? tx.title.toLowerCase() : undefined;
-        const category = l10n.CATEGORIES[tx.type] ? l10n.CATEGORIES[tx.type][tx.category].toLowerCase() : undefined;
-
-        return (title && title.includes(query)) || (category && category.includes(query));
-      })
-      .slice(0, 16),
-  );
-
-export { onScroll, query, search };
+export { onScroll, query };

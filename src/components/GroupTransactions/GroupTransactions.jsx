@@ -21,9 +21,9 @@ const GroupTransactions = ({ currency, onPress, timestamp, txs = [] }) => {
 
 GroupTransactions.propTypes = {
   currency: PropTypes.string.isRequired,
-  onPress: PropTypes.func,
   timestamp: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   txs: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  onPress: PropTypes.func,
 };
 
 export { GroupTransactions };

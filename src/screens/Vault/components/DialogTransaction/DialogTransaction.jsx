@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { THEME } from 'reactor/common';
 import { Button, Dialog, Row, Text } from 'reactor/components';
 
 import { C, onHardwareBackPress } from '@common';
@@ -13,11 +12,9 @@ import { getLocation, handleSubmit } from './modules';
 const {
   DELAY_PRESS_MS,
   TX: {
-    TYPE: { INCOME, TRANSFER },
+    TYPE: { TRANSFER },
   },
 } = C;
-
-const { COLOR } = THEME;
 
 const INITIAL_STATE = {
   busy: false,
@@ -68,7 +65,6 @@ const DialogTransaction = (props = {}) => {
   const { coords, place } = location;
 
   const Form = type === TRANSFER ? FormTransfer : FormTransaction;
-  const color = type === INCOME ? COLOR.BRAND : undefined;
 
   return (
     <Dialog {...inherit} onClose={onClose} position="bottom" visible={visible}>
@@ -78,7 +74,7 @@ const DialogTransaction = (props = {}) => {
         </Text>
       </Row>
 
-      <Form {...props} {...state} color={color} type={type} onChange={(value) => setState({ ...state, ...value })} />
+      <Form {...props} {...state} type={type} onChange={(value) => setState({ ...state, ...value })} />
 
       {online && type !== TRANSFER && (
         <HeatMap
@@ -89,17 +85,8 @@ const DialogTransaction = (props = {}) => {
       )}
 
       <Row marginTop="XL" marginBottom="M">
+        <Button disabled={busy} marginRight="M" outlined text={l10n.CLOSE.toUpperCase()} wide onPress={onClose} />
         <Button
-          color={color}
-          disabled={busy}
-          marginRight="M"
-          outlined
-          text={l10n.CLOSE.toUpperCase()}
-          wide
-          onPress={onClose}
-        />
-        <Button
-          color={color}
           delay={DELAY_PRESS_MS}
           disabled={busy || !valid}
           text={l10n.SAVE.toUpperCase()}
@@ -113,10 +100,10 @@ const DialogTransaction = (props = {}) => {
 
 DialogTransaction.propTypes = {
   currency: PropTypes.string,
-  onClose: PropTypes.func.isRequired,
   type: PropTypes.number,
   vault: PropTypes.shape({}),
   visible: PropTypes.bool,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default DialogTransaction;

@@ -9,25 +9,35 @@ export default StyleSheet.create({
   container: {
     width: '100%',
     backgroundColor: COLOR.BASE,
-    borderColor: COLOR.BASE,
+    borderColor: COLOR.TRANSPARENT,
     borderRadius: BORDER_RADIUS,
     borderWidth: 1,
-    padding: SPACE.M,
     height: CONTAINER_HEIGHT,
     minHeight: CONTAINER_HEIGHT,
   },
 
-  focus: {
-    backgroundColor: COLOR.TRANSPARENT,
+  active: {
     borderColor: COLOR.TEXT,
+  },
+
+  fulfilled: {
+    backgroundColor: COLOR.TRANSPARENT,
   },
 
   input: {
     ...FONT.BOLD,
     ...FONT.INPUT,
     color: COLOR.TEXT,
-    padding: 0,
+    height: '100%',
+    paddingHorizontal: SPACE.M,
+    paddingTop: SPACE.M + (SPACE.XS - SPACE.XS / 2),
     margin: 0,
     width: '100%',
+  },
+
+  label: {
+    position: 'absolute',
+    top: SPACE.M,
+    left: SPACE.M,
   },
 });

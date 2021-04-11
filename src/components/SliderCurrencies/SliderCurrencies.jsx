@@ -8,7 +8,7 @@ import { useStore } from '@context';
 
 import { queryCurrencies } from './modules';
 
-const { COLOR, SPACE } = THEME;
+const { SPACE } = THEME;
 
 const SliderCurrencies = ({ onChange, selected, ...others }) => {
   const store = useStore();
@@ -30,8 +30,8 @@ const SliderCurrencies = ({ onChange, selected, ...others }) => {
 };
 
 SliderCurrencies.propTypes = {
-  onChange: PropTypes.func.isRequired,
   selected: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
 };
 
 export { SliderCurrencies };

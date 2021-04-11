@@ -70,9 +70,9 @@ const Session = ({ onSession, visible, ...others }) => {
 };
 
 Session.propTypes = {
-  onSession: PropTypes.func,
   signup: PropTypes.bool,
   visible: PropTypes.bool,
+  onSession: PropTypes.func,
 };
 
 export { Session };

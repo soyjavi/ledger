@@ -46,7 +46,7 @@ export default ({ overall, rates, settings: { baseCurrency }, txs = [], vaults =
     else if (!isTransfer) chart.incomes[index] += valueExchange;
 
     if (month === dMonth && year === dYear) {
-      const categoryKey = title ? title.toLowerCase() : 'Unknown';
+      const categoryKey = title ? title.toLowerCase().trim() : 'Unknown';
 
       if (!isTransfer && place) {
         const parts = place.split(',');

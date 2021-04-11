@@ -88,8 +88,8 @@ Summary.propTypes = {
   currency: PropTypes.string,
   currentBalance: PropTypes.number,
   currentMonth: PropTypes.shape({}),
-  onSettings: PropTypes.func,
   title: PropTypes.string,
+  onSettings: PropTypes.func,
 };
 
 export { Summary };

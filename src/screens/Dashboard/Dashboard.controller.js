@@ -24,9 +24,10 @@ const querySearchTxs = ({ l10n, query, txs = [], vaults = [] }) =>
           .filter((tx) => {
             const title = tx.title ? tx.title.toLowerCase() : undefined;
 
-            const category = l10n.CATEGORIES[tx.type][tx.category]
-              ? l10n.CATEGORIES[tx.type][tx.category].toLowerCase()
-              : undefined;
+            const category =
+              l10n.CATEGORIES[tx.type] && l10n.CATEGORIES[tx.type][tx.category]
+                ? l10n.CATEGORIES[tx.type][tx.category].toLowerCase()
+                : undefined;
 
             return (title && title.includes(query)) || (category && category.includes(query));
           })

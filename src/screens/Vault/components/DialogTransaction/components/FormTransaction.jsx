@@ -65,9 +65,9 @@ FormTransaction.propTypes = {
   color: PropTypes.string,
   currency: PropTypes.string,
   form: PropTypes.shape({}).isRequired,
-  onChange: PropTypes.func.isRequired,
   type: PropTypes.number,
   vault: PropTypes.shape({}).isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default FormTransaction;
