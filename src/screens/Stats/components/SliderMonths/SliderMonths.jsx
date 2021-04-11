@@ -19,7 +19,7 @@ const SliderMonths = ({ index, onChange, ...others }) => {
   useEffect(() => {
     if (index) {
       const { current } = slider;
-      current.scrollTo({ x: (index - 3) * (OPTION_SIZE + SPACE.S), animated: true });
+      current.scrollTo({ x: (index - 3) * (OPTION_SIZE + SPACE.S), animated: index < STATS_MONTHS_LIMIT - 1 });
     }
   }, [index]);
 
