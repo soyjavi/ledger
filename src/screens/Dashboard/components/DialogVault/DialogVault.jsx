@@ -62,8 +62,8 @@ const DialogVault = ({ onClose, visible }) => {
 };
 
 DialogVault.propTypes = {
-  onClose: PropTypes.func.isRequired,
   visible: PropTypes.bool,
+  onClose: PropTypes.func.isRequired,
 };
 
 export { DialogVault };

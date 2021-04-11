@@ -30,8 +30,8 @@ const SliderCurrencies = ({ onChange, selected, ...others }) => {
 };
 
 SliderCurrencies.propTypes = {
-  onChange: PropTypes.func.isRequired,
   selected: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
 };
 
 export { SliderCurrencies };

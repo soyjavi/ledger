@@ -75,8 +75,8 @@ const FirstVault = ({ onVault, visible, ...others }) => {
 };
 
 FirstVault.propTypes = {
-  onVault: PropTypes.func,
   visible: PropTypes.bool,
+  onVault: PropTypes.func,
 };
 
 export { FirstVault };

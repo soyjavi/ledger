@@ -50,8 +50,8 @@ const Search = ({ onChange }) => {
 };
 
 Search.propTypes = {
-  onChange: PropTypes.func.isRequired,
   text: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
 };
 
 export { Search };

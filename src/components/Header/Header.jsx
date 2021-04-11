@@ -56,9 +56,9 @@ const Header = ({ button, visible, onBack, title }) => {
 
 Header.propTypes = {
   button: PropTypes.node,
-  onBack: PropTypes.func,
   title: PropTypes.string,
   visible: PropTypes.bool,
+  onBack: PropTypes.func,
 };
 
 export { Header };

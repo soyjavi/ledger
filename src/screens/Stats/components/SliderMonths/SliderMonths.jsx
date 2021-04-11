@@ -47,8 +47,8 @@ const SliderMonths = ({ index, onChange, ...others }) => {
 SliderMonths.propTypes = {
   index: PropTypes.number,
   month: PropTypes.number,
-  onChange: PropTypes.func,
   year: PropTypes.number,
+  onChange: PropTypes.func,
 };
 
 SliderMonths.defaultProps = {

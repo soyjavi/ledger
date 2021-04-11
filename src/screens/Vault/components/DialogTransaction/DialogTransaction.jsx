@@ -100,10 +100,10 @@ const DialogTransaction = (props = {}) => {
 
 DialogTransaction.propTypes = {
   currency: PropTypes.string,
-  onClose: PropTypes.func.isRequired,
   type: PropTypes.number,
   vault: PropTypes.shape({}),
   visible: PropTypes.bool,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default DialogTransaction;

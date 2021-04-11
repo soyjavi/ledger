@@ -105,8 +105,8 @@ const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
 FormTransaction.propTypes = {
   destination: PropTypes.string,
   form: PropTypes.shape({}).isRequired,
-  onChange: PropTypes.func.isRequired,
   vault: PropTypes.shape({}).isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default FormTransaction;

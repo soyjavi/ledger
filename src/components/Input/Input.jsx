@@ -59,9 +59,9 @@ Input.propTypes = {
   keyboard: PropTypes.string,
   label: PropTypes.string.isRequired,
   maxLength: PropTypes.number,
-  onChange: PropTypes.func,
   secure: PropTypes.bool,
   value: PropTypes.string,
+  onChange: PropTypes.func,
 };
 
 export { Input };

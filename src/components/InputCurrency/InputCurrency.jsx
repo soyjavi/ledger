@@ -147,10 +147,10 @@ InputCurrency.propTypes = {
   color: PropTypes.string,
   disabled: PropTypes.bool,
   label: PropTypes.string,
-  onChange: PropTypes.func,
-  onVault: PropTypes.func,
   type: PropTypes.oneOf([EXPENSE, INCOME]),
   vault: PropTypes.shape({}),
+  onChange: PropTypes.func,
+  onVault: PropTypes.func,
 };
 
 export { InputCurrency };

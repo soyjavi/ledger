@@ -41,8 +41,8 @@ const FormVault = ({ form = {}, onChange }) => {
 
 FormVault.propTypes = {
   form: PropTypes.shape({}),
-  onChange: PropTypes.func.isRequired,
   showExchange: PropTypes.bool,
+  onChange: PropTypes.func.isRequired,
 };
 
 export { FormVault };

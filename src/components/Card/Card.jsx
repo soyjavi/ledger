@@ -74,9 +74,9 @@ Card.propTypes = {
   currency: PropTypes.string,
   currentMonth: PropTypes.shape({}),
   highlight: PropTypes.bool,
-  onPress: PropTypes.func.isRequired,
   percentage: PropTypes.number,
   title: PropTypes.string,
+  onPress: PropTypes.func.isRequired,
 };
 
 export { Card, CARD_SIZE };

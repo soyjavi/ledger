@@ -73,8 +73,8 @@ Option.propTypes = {
   icon: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   image: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   legend: PropTypes.string,
-  onPress: PropTypes.func,
   selected: PropTypes.bool,
+  onPress: PropTypes.func,
 };
 
 export { Option, OPTION_SIZE };
