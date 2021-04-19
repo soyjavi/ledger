@@ -22,10 +22,10 @@ const OPACITY = {
 
 // DARK-MODE
 const BACKGROUND = '#000';
-const TEXT = '#ffffff';
+const TEXT = '#FFFFFF';
 const BASE = '#1F1F1F';
-const CTA = '#ffffff';
-const DIALOG = '#121212';
+const CTA = '#FFFFFF';
+const DIALOG = '#29292E';
 const LIGHTEN = colorOpacity(TEXT, OPACITY.M + OPACITY.S);
 
 const ELEVATION = {
@@ -47,7 +47,7 @@ export const theme = {
   BORDER_RADIUS: SPACE.S,
 
   COLOR: {
-    BRAND: '#D29776',
+    BRAND: '#D29776', //'#FFC491',
     CTA,
     // BLACK
     // WHITE
