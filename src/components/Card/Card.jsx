@@ -20,7 +20,9 @@ const Card = ({ balance = 0, currency, highlight, onPress, title = '', ...others
     rates,
   } = useStore();
 
-  const textColor = highlight ? COLOR.BACKGROUND : undefined;
+  const hasBalance = parseFloat(balance.toFixed(2)) > 0;
+
+  const textColor = highlight ? COLOR.BACKGROUND : !hasBalance ? COLOR.LIGHTEN : undefined;
 
   return (
     <Touchable
@@ -29,11 +31,11 @@ const Card = ({ balance = 0, currency, highlight, onPress, title = '', ...others
       style={styles.container}
       onPress={onPress}
     >
-      <Box color={highlight ? COLOR.BRAND : undefined} style={styles.box}>
+      <Box color={highlight ? COLOR.BRAND : undefined} outlined={!hasBalance & !highlight} style={styles.box}>
         <View style={styles.content}>
           <Row>
             <CurrencyLogo
-              color={currency !== baseCurrency || highlight ? COLOR.LIGHTEN : undefined}
+              color={currency !== baseCurrency || highlight || !hasBalance ? COLOR.LIGHTEN : undefined}
               currency={currency}
               size="M"
             />
