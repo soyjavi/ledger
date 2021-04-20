@@ -14,7 +14,7 @@ import { askCamera, changeCurrency, getBlockchain, getLatestRates } from './Sett
 import styles from './Settings.style';
 
 const { DELAY_PRESS_MS } = C;
-const { COLOR, ICON } = THEME;
+const { COLOR } = THEME;
 const CAMERA_PROPS = {
   barCodeScannerSettings: { barCodeTypes: [BarCodeScanner.Constants.BarCodeType.qr] },
   type: Camera.Constants.Type.back,
@@ -89,29 +89,23 @@ const Settings = ({ timestamp }) => {
 
   return (
     <>
-      <Header
-        button={
-          hasCamera ? (
-            <Button
-              alignSelf="end"
-              color={COLOR.BACKGROUND}
-              colorText={COLOR.TEXT}
-              iconFamily={ICON.FAMILY}
-              icon={camera ? 'close' : 'camera'}
-              onPress={() => setCamera(!camera)}
-              size="S"
-            />
-          ) : undefined
-        }
-        visible={scroll}
-        title={l10n.SETTINGS}
-      />
+      <Header visible={scroll} title={l10n.SETTINGS} />
 
       <ScrollView onScroll={setScroll} ref={scrollview}>
-        <View marginBottom="XL" marginHorizontal="M">
-          <Heading value={l10n.TRANSFER_TXS} />
+        <Heading paddingLeft="M" value={l10n.TRANSFER_TXS}>
+          {hasCamera && (
+            <Button
+              color={COLOR.BACKGROUND}
+              colorText={COLOR.TEXT}
+              size="S"
+              text={camera ? l10n.CLOSE : l10n.QR_READER}
+              onPress={() => setCamera(!camera)}
+            />
+          )}
+        </Heading>
 
-          <View marginTop="S" marginBottom="XS" style={styles.content}>
+        <View marginBottom="XL" marginHorizontal="M">
+          <View style={styles.content}>
             {!camera ? (
               <Image source={{ uri: ServiceQR.uri({ secret, authorization }) }} style={styles.qr} />
             ) : (
@@ -129,9 +123,9 @@ const Settings = ({ timestamp }) => {
           <Button
             color={COLOR.BACKGROUND}
             colorText={COLOR.TEXT}
-            onPress={handleUpdateRates}
             size="S"
             text={l10n.SYNC_RATES_CTA.toUpperCase()}
+            onPress={handleUpdateRates}
           />
         </Heading>
         <SliderCurrencies onChange={handleChangeCurrency} paddingLeft="M" selected={baseCurrency} />
