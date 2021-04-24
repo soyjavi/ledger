@@ -7,12 +7,16 @@ import { THEME } from 'reactor/common';
 import { Button, Col, Row, Text, View } from 'reactor/components';
 
 import { onHardwareBackPress } from '@common';
+import { useConnection, useL10N } from '@context';
 
 import styles from './Header.style';
 
 const { BLUR, COLOR, ICON } = THEME;
 
-const Header = ({ button, visible, onBack, title }) => {
+const Header = ({ visible, onBack, title = ' ' }) => {
+  const { connected } = useConnection();
+  const l10n = useL10N();
+
   useEffect(() => {
     onHardwareBackPress(onBack !== undefined, onBack);
     return () => onHardwareBackPress(false);
@@ -39,13 +43,19 @@ const Header = ({ button, visible, onBack, title }) => {
                 )}
               </Col>
               <Col align="center" style={styles.title}>
-                {title && (
-                  <Text bold color={visible ? COLOR.TEXT : COLOR.LIGHTEN} subtitle>
-                    {title}
-                  </Text>
+                <Text bold color={visible ? COLOR.TEXT : COLOR.LIGHTEN} subtitle>
+                  {title}
+                </Text>
+              </Col>
+              <Col align="end">
+                {!connected && (
+                  <View style={styles.offline}>
+                    <Text bold caption color={COLOR.ERROR}>
+                      {l10n.OFFLINE}
+                    </Text>
+                  </View>
                 )}
               </Col>
-              <Col align="end">{button}</Col>
             </Row>
           </SafeAreaView>
         </BlurView>
@@ -55,7 +65,6 @@ const Header = ({ button, visible, onBack, title }) => {
 };
 
 Header.propTypes = {
-  button: PropTypes.node,
   title: PropTypes.string,
   visible: PropTypes.bool,
   onBack: PropTypes.func,
