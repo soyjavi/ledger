@@ -9,8 +9,8 @@ import { verboseMonth } from './modules';
 
 const { COLOR, FONT } = THEME;
 
-const BoxDate = ({ l10n, timestamp, ...inherit }) => (
-  <Box {...inherit} style={styles.date}>
+const BoxDate = ({ color = COLOR.BASE, l10n, timestamp, ...inherit }) => (
+  <Box {...inherit} color={color} style={styles.date}>
     <Text caption bold>
       {new Date(timestamp || null).getDate()}
     </Text>
@@ -21,6 +21,7 @@ const BoxDate = ({ l10n, timestamp, ...inherit }) => (
 );
 
 BoxDate.propTypes = {
+  color: PropTypes.string,
   l10n: PropTypes.shape({}),
   timestamp: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.shape()]),
 };
