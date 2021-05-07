@@ -23,10 +23,12 @@ const OPACITY = {
 // DARK-MODE
 const BACKGROUND = '#000';
 const TEXT = '#FFFFFF';
-const BASE = '#1F1F1F';
+const BASE = '#1C1C1D';
+// const BASE = '#262626';
 const CTA = '#FFFFFF';
-const DIALOG = '#29292E';
-const LIGHTEN = colorOpacity(TEXT, OPACITY.M + OPACITY.S);
+// Custom
+const BASE_LIGHTEN = colorOpacity(TEXT, 0.08);
+const LIGHTEN = colorOpacity(TEXT, 0.45);
 
 const ELEVATION = {
   shadowColor: BACKGROUND,
@@ -39,7 +41,7 @@ const ELEVATION = {
 };
 
 export const theme = {
-  BAR_SIZE: SPACE.S,
+  BAR_SIZE: SPACE.S + SPACE.XS / 4,
   BLUR: {
     intensity: 95,
     tint: 'dark',
@@ -61,7 +63,7 @@ export const theme = {
     // TRANSPARENT
 
     // -- Custom
-    DIALOG,
+    BASE_LIGHTEN,
     LIGHTEN,
   },
 
@@ -110,8 +112,9 @@ export const theme = {
 
   DIALOG: {
     ...ELEVATION,
-    backgroundColor: DIALOG,
-    borderRadius: SPACE.M,
+    backgroundColor: BASE,
+    borderTopLeftRadius: SPACE.M,
+    borderTopRightRadius: SPACE.M,
     padding: SPACE.L,
   },
   DIALOG_OVERLAY: {
@@ -145,10 +148,10 @@ export const theme = {
   OPACITY,
 
   SNACKBAR: {
-    paddingHorizontal: SPACE.M,
-    paddingVertical: SPACE.S,
-    marginHorizontal: SPACE.M,
-    marginVertical: SPACE.M,
+    // paddingHorizontal: SPACE.M,
+    // paddingVertical: SPACE.S,
+    // marginHorizontal: SPACE.M,
+    // marginVertical: SPACE.M,
     ...Platform.select({
       android: { elevation: 0 },
     }),
