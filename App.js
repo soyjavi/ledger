@@ -20,8 +20,12 @@ const App = () => {
   useEffect(() => {
     async function loadResources() {
       await Font.loadAsync({
-        'font-family': require('./assets/fonts/IBMPlexSans-Regular.ttf'),
-        'font-family-bold': require('./assets/fonts/IBMPlexSans-Bold.ttf'),
+        // 'font-family': require('./assets/fonts/IBMPlexSans-Regular.ttf'),
+        // 'font-family-bold': require('./assets/fonts/IBMPlexSans-Bold.ttf'),
+        // 'font-family': require('./assets/fonts/CPMono-Plain.otf'),
+        // 'font-family-bold': require('./assets/fonts/CPMono-Bold.otf'),
+        'font-family': require('./assets/fonts/JetBrainsMono-Regular.ttf'),
+        'font-family-bold': require('./assets/fonts/JetBrainsMono-Bold.ttf'),
       });
       THEME.extend(theme);
 

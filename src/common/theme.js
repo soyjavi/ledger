@@ -49,7 +49,8 @@ export const theme = {
   BORDER_RADIUS: SPACE.S,
 
   COLOR: {
-    BRAND: '#D29776', //'#FFC491',
+    // BRAND: '#D29776', //'#FFC491',
+    BRAND: 'rgba(242, 255, 55, 0.9)',
     CTA,
     // BLACK
     // WHITE
@@ -80,7 +81,7 @@ export const theme = {
     },
     BODY: {
       fontSize: 14,
-      letterSpacing: 0.25,
+      // letterSpacing: -0.25,
     },
     CAPTION: {
       fontSize: 11,
@@ -102,7 +103,8 @@ export const theme = {
       fontSize: 8,
     },
     CURRENCY: {
-      letterSpacing: 0,
+      ...FONT_FAMILY_CURRENCY,
+      // letterSpacing: 0,
     },
   },
 
