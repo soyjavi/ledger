@@ -34,7 +34,7 @@ const TransactionItem = (props) => {
     >
       <Row align="center" paddingHorizontal="M" paddingVertical="S">
         <Col marginRight="S" width="auto">
-          <Box outlined>
+          <Box color={COLOR.BASE}>
             <Icon family={ICON.FAMILY} size={SPACE.M} value={CATEGORY_ICON[type][category]} />
           </Box>
         </Col>
@@ -46,7 +46,6 @@ const TransactionItem = (props) => {
             </Col>
             <Col width="auto">
               <PriceFriendly
-                bold
                 color={type === INCOME ? COLOR.BRAND : undefined}
                 currency={currency}
                 highlight={type === INCOME}

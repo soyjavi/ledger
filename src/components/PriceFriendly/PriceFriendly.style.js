@@ -8,26 +8,26 @@ export default StyleSheet.create({
     borderRadius: BORDER_RADIUS,
     paddingHorizontal: SPACE.S,
     paddingVertical: SPACE.XS / 2,
-    marginRight: -SPACE.S,
+    marginRight: -SPACE.S / 2,
   },
 
   symbolHeadline: {
-    fontSize: FONT.HEADLINE.fontSize * 0.8,
-    marginHorizontal: SPACE.XS / 2,
+    fontSize: FONT.HEADLINE.fontSize * 0.75,
+    marginHorizontal: SPACE.XS,
   },
 
   symbolSubtitle: {
-    fontSize: FONT.SUBTITLE.fontSize * 0.8,
-    marginHorizontal: SPACE.XS / 3,
+    fontSize: FONT.SUBTITLE.fontSize * 0.75,
+    marginHorizontal: SPACE.XS / 2,
   },
 
   symbolBody: {
-    fontSize: FONT.BODY.fontSize * 0.8,
+    fontSize: FONT.BODY.fontSize * 0.75,
     marginHorizontal: SPACE.XS / 3,
   },
 
   symbolCaption: {
-    fontSize: FONT.CAPTION.fontSize * 0.9,
+    fontSize: FONT.CAPTION.fontSize * 0.85,
     marginHorizontal: SPACE.XS / 4,
   },
 });

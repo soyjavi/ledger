@@ -40,7 +40,7 @@ const PriceFriendly = ({ currency, fixed, highlight, label, operator, maskAmount
   const symbolProps = {
     ...others,
     children: symbol,
-    color: color,
+    color,
     style: [
       FONT.CURRENCY,
       headline

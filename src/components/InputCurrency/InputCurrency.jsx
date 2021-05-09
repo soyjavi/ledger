@@ -106,7 +106,6 @@ const InputCurrency = ({
       <Col align="end">
         <Col align="end" pointerEvents="none">
           <PriceFriendly
-            bold
             color={!active ? COLOR.LIGHTEN : undefined}
             currency={currency}
             pointerEvents="none"

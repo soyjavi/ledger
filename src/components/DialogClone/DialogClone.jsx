@@ -59,7 +59,7 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
         </Text>
       </Row>
       <Row justify="center" marginBottom="L">
-        <Text bold style={styles.title} headline>
+        <Text style={styles.title} headline>
           {title}
         </Text>
       </Row>
@@ -74,7 +74,6 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
             </Col>
             <Col width="auto">
               <PriceFriendly
-                bold
                 color={type === INCOME ? COLOR.BRAND : undefined}
                 currency={currency}
                 highlight={type === INCOME}

@@ -37,7 +37,7 @@ const ItemGroupCategories = ({ color, dataSource, type }) => {
   return (
     <View style={styles.container}>
       <Heading paddingHorizontal="M" value={type === EXPENSE ? l10n.EXPENSES : l10n.INCOMES}>
-        <PriceFriendly bold currency={baseCurrency} value={total} />
+        <PriceFriendly currency={baseCurrency} value={total} />
       </Heading>
       <View>
         {orderByAmount(totals).map(({ key, amount }) => (
