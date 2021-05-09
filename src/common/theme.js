@@ -14,6 +14,11 @@ const FONT_FAMILY_BOLD = {
   fontWeight: '700',
 };
 
+const FONT_FAMILY_CURRENCY = {
+  fontFamily: 'font-family-currency',
+  fontWeight: '900',
+};
+
 const OPACITY = {
   S: 0.15,
   M: 0.3,
@@ -23,8 +28,7 @@ const OPACITY = {
 // DARK-MODE
 const BACKGROUND = '#000';
 const TEXT = '#FFFFFF';
-const BASE = '#1C1C1D';
-// const BASE = '#262626';
+const BASE = '#262626';
 const CTA = '#FFFFFF';
 // Custom
 const BASE_LIGHTEN = colorOpacity(TEXT, 0.08);
@@ -46,11 +50,12 @@ export const theme = {
     intensity: 95,
     tint: 'dark',
   },
-  BORDER_RADIUS: SPACE.S,
+  BORDER_RADIUS: SPACE.XS,
 
   COLOR: {
-    // BRAND: '#D29776', //'#FFC491',
-    BRAND: 'rgba(242, 255, 55, 0.9)',
+    // BRAND: '#D29776',
+    // BRAND: 'rgba(242, 255, 55, 0.9)',
+    BRAND: '#FFC491',
     CTA,
     // BLACK
     // WHITE
@@ -58,7 +63,7 @@ export const theme = {
 
     BACKGROUND,
     BASE,
-    ERROR: '#fb5662',
+    ERROR: '#ff8056',
     // SUCCESS,
     TEXT,
     // TRANSPARENT
@@ -75,13 +80,15 @@ export const theme = {
     BOLD: FONT_FAMILY_BOLD,
     HEADLINE: {
       fontSize: 34,
+      letterSpacing: -1,
     },
     SUBTITLE: {
       fontSize: 20,
+      letterSpacing: -0.5,
     },
     BODY: {
       fontSize: 14,
-      // letterSpacing: -0.25,
+      letterSpacing: -0.25,
     },
     CAPTION: {
       fontSize: 11,
@@ -104,7 +111,7 @@ export const theme = {
     },
     CURRENCY: {
       ...FONT_FAMILY_CURRENCY,
-      // letterSpacing: 0,
+      letterSpacing: 0,
     },
   },
 
