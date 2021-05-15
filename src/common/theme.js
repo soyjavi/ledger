@@ -14,6 +14,11 @@ const FONT_FAMILY_BOLD = {
   fontWeight: '700',
 };
 
+const FONT_FAMILY_CURRENCY = {
+  fontFamily: 'font-family-currency',
+  fontWeight: '900',
+};
+
 const OPACITY = {
   S: 0.15,
   M: 0.3,
@@ -22,11 +27,13 @@ const OPACITY = {
 
 // DARK-MODE
 const BACKGROUND = '#000';
-const TEXT = '#ffffff';
-const BASE = '#1F1F1F';
-const CTA = '#ffffff';
-const DIALOG = '#121212';
-const LIGHTEN = colorOpacity(TEXT, OPACITY.M + OPACITY.S);
+const TEXT = '#FFFFFF';
+const BASE = '#282828';
+const CTA = '#FFFFFF';
+// Custom
+const BASE_LIGHTEN = '#282828';
+const DIALOG = '#181818';
+const LIGHTEN = colorOpacity(TEXT, 0.5);
 
 const ELEVATION = {
   shadowColor: BACKGROUND,
@@ -39,15 +46,17 @@ const ELEVATION = {
 };
 
 export const theme = {
-  BAR_SIZE: SPACE.S,
+  BAR_SIZE: SPACE.S + SPACE.XS / 4,
   BLUR: {
     intensity: 95,
     tint: 'dark',
   },
-  BORDER_RADIUS: SPACE.S,
+  BORDER_RADIUS: SPACE.XS,
 
   COLOR: {
-    BRAND: '#D29776',
+    // BRAND: '#D29776',
+    // BRAND: 'rgba(242, 255, 55, 0.9)',
+    BRAND: '#FFC491',
     CTA,
     // BLACK
     // WHITE
@@ -55,13 +64,13 @@ export const theme = {
 
     BACKGROUND,
     BASE,
-    ERROR: '#fb5662',
+    ERROR: '#ff8056',
     // SUCCESS,
     TEXT,
     // TRANSPARENT
 
     // -- Custom
-    DIALOG,
+    BASE_LIGHTEN,
     LIGHTEN,
   },
 
@@ -72,13 +81,15 @@ export const theme = {
     BOLD: FONT_FAMILY_BOLD,
     HEADLINE: {
       fontSize: 34,
+      letterSpacing: -1,
     },
     SUBTITLE: {
       fontSize: 20,
+      letterSpacing: -0.5,
     },
     BODY: {
       fontSize: 14,
-      letterSpacing: 0.25,
+      letterSpacing: -0.25,
     },
     CAPTION: {
       fontSize: 11,
@@ -100,6 +111,7 @@ export const theme = {
       fontSize: 8,
     },
     CURRENCY: {
+      ...FONT_FAMILY_CURRENCY,
       letterSpacing: 0,
     },
   },
@@ -111,7 +123,8 @@ export const theme = {
   DIALOG: {
     ...ELEVATION,
     backgroundColor: DIALOG,
-    borderRadius: SPACE.M,
+    borderTopLeftRadius: SPACE.M,
+    borderTopRightRadius: SPACE.M,
     padding: SPACE.L,
   },
   DIALOG_OVERLAY: {
@@ -145,10 +158,6 @@ export const theme = {
   OPACITY,
 
   SNACKBAR: {
-    paddingHorizontal: SPACE.M,
-    paddingVertical: SPACE.S,
-    marginHorizontal: SPACE.M,
-    marginVertical: SPACE.M,
     ...Platform.select({
       android: { elevation: 0 },
     }),

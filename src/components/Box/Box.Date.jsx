@@ -9,18 +9,34 @@ import { verboseMonth } from './modules';
 
 const { COLOR, FONT } = THEME;
 
-const BoxDate = ({ l10n, timestamp, ...inherit }) => (
-  <Box {...inherit} style={styles.date}>
-    <Text caption bold>
+const BoxDate = ({ highlight = false, l10n, timestamp, ...inherit }) => (
+  <Box
+    //
+    {...inherit}
+    outlined={highlight}
+    color={highlight ? COLOR.TEXT : COLOR.BASE}
+    style={styles.date}
+  >
+    <Text
+      caption
+      bold
+
+      // color={highlight ? COLOR.BACKGROUND : undefined}
+    >
       {new Date(timestamp || null).getDate()}
     </Text>
-    <Text color={COLOR.LIGHTEN} style={FONT.LEGEND}>
+    <Text
+      // color={highlight ? COLOR.BACKGROUND : COLOR.LIGHTEN}
+      style={FONT.LEGEND}
+    >
       {verboseMonth(timestamp, l10n)}
     </Text>
   </Box>
 );
 
 BoxDate.propTypes = {
+  color: PropTypes.string,
+  highlight: PropTypes.bool,
   l10n: PropTypes.shape({}),
   timestamp: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.shape()]),
 };

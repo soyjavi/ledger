@@ -133,7 +133,7 @@ export const L10N = {
     PIN_CHOOSE: 'Choose PIN code',
     PROGRESSION: 'Progression',
 
-    QR_READER: 'Open camera',
+    QR_READER: 'OPEN CAMERA',
 
     SAVE: 'SAVE',
     SEARCH: 'Search',

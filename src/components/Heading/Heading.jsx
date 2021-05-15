@@ -9,7 +9,7 @@ const Heading = ({ children, color = COLOR.LIGHTEN, value = '', ...others }) => 
   <Row marginBottom="XS" {...others}>
     <Col>
       <Text bold color={color}>
-        {value}
+        {value.toUpperCase()}
       </Text>
     </Col>
     <Col width="auto">{children}</Col>

@@ -28,6 +28,7 @@ const SliderMonths = ({ index, onChange, ...others }) => {
       {getLastMonths(STATS_MONTHS_LIMIT).map(({ month, year }, i) => (
         <Option
           key={`${month}-${year}`}
+          color={COLOR.BASE}
           marginRight="S"
           onPress={() => onChange({ index: i, month, year })}
           selected={index === i}

@@ -26,9 +26,10 @@ const SnackBarProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, { color: undefined, caption: undefined });
 
   const events = {
-    error: (caption) => dispatch({ type: 'SHOW', caption, color: COLOR.ERROR }),
-    success: (caption) => dispatch({ type: 'SHOW', caption, color: COLOR.BRAND }),
-    warning: (caption) => dispatch({ type: 'SHOW', caption, color: COLOR.CTA }),
+    error: (caption, closable = true) => dispatch({ type: 'SHOW', caption, closable, color: COLOR.ERROR }),
+    success: (caption, closable = true) => dispatch({ type: 'SHOW', caption, closable, color: COLOR.BRAND }),
+    info: (caption, closable = true) => dispatch({ type: 'SHOW', caption, closable, color: COLOR.BASE }),
+    close: () => dispatch({ type: 'HIDE' }),
   };
 
   return (
@@ -39,7 +40,7 @@ const SnackBarProvider = ({ children }) => {
         family={ICON.FAMILY}
         position="top"
         visible={state.type === 'SHOW'}
-        onClose={() => dispatch({ type: 'HIDE' })}
+        onClose={state.closable ? () => dispatch({ type: 'HIDE' }) : undefined}
       />
     </SnackBarContext.Provider>
   );

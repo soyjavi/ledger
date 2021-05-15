@@ -66,7 +66,7 @@ const InputCurrency = ({
       style={[
         styles.container,
         active && styles.active,
-        active && !focus && styles.fulfilled,
+        active && styles.fulfilled,
         active && color && { borderColor: color },
         others.style,
       ]}
@@ -106,7 +106,6 @@ const InputCurrency = ({
       <Col align="end">
         <Col align="end" pointerEvents="none">
           <PriceFriendly
-            bold
             color={!active ? COLOR.LIGHTEN : undefined}
             currency={currency}
             pointerEvents="none"

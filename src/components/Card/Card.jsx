@@ -12,7 +12,7 @@ import { CurrencyLogo } from '../CurrencyLogo';
 import { PriceFriendly } from '../PriceFriendly';
 import styles, { CARD_SIZE } from './Card.style';
 
-const { COLOR } = THEME;
+const { BORDER_RADIUS, COLOR } = THEME;
 
 const Card = ({ balance = 0, currency, highlight, onPress, title = '', ...others }) => {
   const {
@@ -20,7 +20,9 @@ const Card = ({ balance = 0, currency, highlight, onPress, title = '', ...others
     rates,
   } = useStore();
 
-  const textColor = highlight ? COLOR.BACKGROUND : undefined;
+  const hasBalance = parseFloat(balance.toFixed(2)) > 0;
+
+  const textColor = highlight ? COLOR.BACKGROUND : !hasBalance ? COLOR.LIGHTEN : undefined;
 
   return (
     <Touchable
@@ -29,7 +31,7 @@ const Card = ({ balance = 0, currency, highlight, onPress, title = '', ...others
       style={styles.container}
       onPress={onPress}
     >
-      <Box color={highlight ? COLOR.BRAND : undefined} style={styles.box}>
+      <Box borderRadius={BORDER_RADIUS * 2} color={highlight ? COLOR.BRAND : COLOR.BASE} style={styles.box}>
         <View style={styles.content}>
           <Row>
             <CurrencyLogo
@@ -46,7 +48,7 @@ const Card = ({ balance = 0, currency, highlight, onPress, title = '', ...others
 
           {currency && (
             <>
-              <PriceFriendly bold color={textColor} currency={currency} subtitle value={balance} />
+              <PriceFriendly color={textColor} currency={currency} subtitle value={balance} />
 
               {currency !== baseCurrency ? (
                 <PriceFriendly

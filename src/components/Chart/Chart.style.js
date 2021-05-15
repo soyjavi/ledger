@@ -55,7 +55,8 @@ export default StyleSheet.create({
 
   content: {
     flex: 1,
-    height: BAR_SIZE * 8,
+    minHeight: BAR_SIZE * 8,
+    maxHeight: BAR_SIZE * 8,
   },
 
   scales: {

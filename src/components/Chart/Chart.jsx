@@ -32,7 +32,7 @@ const Chart = ({ captions, highlight, inverted, values = [], styleContainer, ...
             >
               <View style={[styles.scaleLine, { backgroundColor: color }]} />
               <View style={[styles.tag, { backgroundColor: color }]}>
-                <PriceFriendly bold caption color={COLOR.BACKGROUND} currency={currency} fixed={0} value={avg} />
+                <PriceFriendly caption color={COLOR.BACKGROUND} currency={currency} fixed={0} value={avg} />
               </View>
             </View>
           </View>

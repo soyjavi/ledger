@@ -59,13 +59,13 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
         </Text>
       </Row>
       <Row justify="center" marginBottom="L">
-        <Text bold style={styles.title} headline>
+        <Text style={styles.title} headline>
           {title}
         </Text>
       </Row>
       <Row>
         <Col marginRight="S" width="auto">
-          <BoxDate color={COLOR.BASE} l10n={l10n} timestamp={timestamp} />
+          <BoxDate l10n={l10n} timestamp={timestamp} />
         </Col>
         <Col>
           <Row>
@@ -74,7 +74,6 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
             </Col>
             <Col width="auto">
               <PriceFriendly
-                bold
                 color={type === INCOME ? COLOR.BRAND : undefined}
                 currency={currency}
                 highlight={type === INCOME}

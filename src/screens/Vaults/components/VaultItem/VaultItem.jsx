@@ -10,10 +10,12 @@ import styles from './VaultItem.style';
 
 const { COLOR } = THEME;
 
-const VaultItem = ({ onPress, dataSource: { currency, currentBalance, title } }) => {
+const VaultItem = ({ onPress, dataSource: { currency, currentBalance = 0, title, ...others } }) => {
   const {
     settings: { baseCurrency },
   } = useStore();
+
+  const hasBalance = currentBalance !== undefined && parseFloat(currentBalance.toFixed(2)) > 0;
 
   return (
     <Touchable
@@ -25,12 +27,18 @@ const VaultItem = ({ onPress, dataSource: { currency, currentBalance, title } })
     >
       <Row>
         <Col marginRight="S" width="auto">
-          <Box styleContent={styles.boxContent}>
-            <CurrencyLogo color={currency !== baseCurrency ? COLOR.LIGHTEN : undefined} currency={currency} size="S" />
+          <Box outlined={!hasBalance} styleContent={styles.boxContent}>
+            <CurrencyLogo
+              color={currency !== baseCurrency || !hasBalance ? COLOR.LIGHTEN : undefined}
+              currency={currency}
+              size="S"
+            />
           </Box>
         </Col>
         <Col>
-          <Text numberOfLines={1}>{title}</Text>
+          <Text color={!hasBalance ? COLOR.LIGHTEN : undefined} numberOfLines={1}>
+            {title}
+          </Text>
           <PriceFriendly caption color={COLOR.LIGHTEN} currency={currency} value={currentBalance} />
         </Col>
       </Row>

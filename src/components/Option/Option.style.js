@@ -13,6 +13,7 @@ export default StyleSheet.create({
     width: OPTION_SIZE,
     maxWidth: OPTION_SIZE,
     height: OPTION_SIZE,
+    minHeight: OPTION_SIZE,
   },
 
   content: {

@@ -22,7 +22,7 @@ const Vaults = ({ timestamp }) => {
 
   const [currencies, setCurrencies] = useState([]);
   const [scroll, setScroll] = useState(false);
-  const [selected, setSelected] = useState(undefined);
+  const [selected, setSelected] = useState();
 
   useEffect(() => {
     setCurrencies(query(vaults));

@@ -10,7 +10,7 @@ import { queryCurrencies } from './modules';
 
 const { SPACE } = THEME;
 
-const SliderCurrencies = ({ onChange, selected, ...others }) => {
+const SliderCurrencies = ({ color, onChange, selected, ...others }) => {
   const store = useStore();
 
   return (
@@ -18,6 +18,7 @@ const SliderCurrencies = ({ onChange, selected, ...others }) => {
       {queryCurrencies(store).map((currency, index) => (
         <Option
           caption={currency}
+          color={color}
           currency={currency}
           key={index}
           marginRight="S"
@@ -30,6 +31,7 @@ const SliderCurrencies = ({ onChange, selected, ...others }) => {
 };
 
 SliderCurrencies.propTypes = {
+  color: PropTypes.string,
   selected: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 };

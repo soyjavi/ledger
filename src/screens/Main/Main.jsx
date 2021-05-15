@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Viewport } from 'reactor/components';
 
 import { C } from '@common';
@@ -10,29 +10,45 @@ import { Settings } from '../Settings';
 import { Stats } from '../Stats';
 import { Vaults } from '../Vaults';
 
-const { SCREEN } = C;
+const {
+  SCREEN: { DASHBOARD, STATS, VAULTS, SETTINGS },
+} = C;
 
 const Main = ({ visible, ...inherit }) => {
-  const [screen, setScreen] = useState(SCREEN.DASHBOARD);
+  const [screen, setScreen] = useState(DASHBOARD);
+  const [screens, setScreens] = useState({
+    [DASHBOARD]: Dashboard,
+    [SETTINGS]: Settings,
+    [STATS]: Stats,
+    [VAULTS]: Vaults,
+  });
   const [timestamp, setTimestamp] = useState();
+
+  useEffect(() => {
+    if (!screens[screen]) {
+      setScreens({ ...screens, [screen]: undefined });
+    }
+  }, [screen]);
 
   const handlePress = (next) => {
     setScreen(next);
     setTimestamp(next === screen ? new Date().getTime() : undefined);
   };
 
-  console.log('  <Main>', { visible, screen });
+  console.log('  <Main>', { visible, screen, screens });
 
   const props = { timestamp };
+
+  Object.keys((screens) => {});
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
       {visible && (
         <>
-          {screen === SCREEN.DASHBOARD && <Dashboard {...props} />}
-          {screen === SCREEN.STATS && <Stats {...props} />}
-          {screen === SCREEN.VAULTS && <Vaults {...props} />}
-          {screen === SCREEN.SETTINGS && <Settings {...props} />}
+          {screen === DASHBOARD && <Dashboard {...props} />}
+          {screen === STATS && <Stats {...props} />}
+          {screen === VAULTS && <Vaults {...props} />}
+          {screen === SETTINGS && <Settings {...props} />}
         </>
       )}
 

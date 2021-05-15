@@ -21,7 +21,7 @@ const querySearchTxs = ({ l10n, query, txs = [], vaults = [] }) =>
         txs
           .slice()
           .reverse()
-          .filter((tx) => {
+          .filter((tx = {}) => {
             const title = tx.title ? tx.title.toLowerCase() : undefined;
 
             const category =
@@ -33,7 +33,7 @@ const querySearchTxs = ({ l10n, query, txs = [], vaults = [] }) =>
           })
           .slice(0, 16)
           .map((tx = {}) => {
-            const { currency } = vaults.find(({ hash }) => hash === tx.vault);
+            const { currency } = vaults.find(({ hash }) => hash === tx.vault) || {};
             return { ...tx, currency };
           }),
       )

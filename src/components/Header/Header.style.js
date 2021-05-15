@@ -2,9 +2,11 @@ import { Platform, StyleSheet } from 'react-native';
 import { THEME } from 'reactor/common';
 import { useEnvironment } from 'reactor/hooks';
 
+import { colorOpacity } from '@common';
+
 // eslint-disable-next-line react-hooks/rules-of-hooks
 const ENV = useEnvironment();
-const { SPACE } = THEME;
+const { BORDER_RADIUS, COLOR, SPACE } = THEME;
 
 export default StyleSheet.create({
   blur: {
@@ -32,5 +34,12 @@ export default StyleSheet.create({
   title: {
     flex: 4,
     maxWidth: '85%',
+  },
+
+  offline: {
+    backgroundColor: colorOpacity(COLOR.ERROR),
+    borderRadius: BORDER_RADIUS / 2,
+    paddingHorizontal: SPACE.S,
+    paddingVertical: SPACE.XS,
   },
 });

@@ -12,18 +12,13 @@ const { COLOR, FONT } = THEME;
 
 const NO_SYMBOL = ['XAG', 'XAU'];
 
-const CurrencyLogo = ({ color = COLOR.BRAND, currency, size = 'M', ...others }) => {
+const CurrencyLogo = ({ color = COLOR.BRAND, currency, ...others }) => {
   const symbol = NO_SYMBOL.includes(currency) ? undefined : currency && SYMBOL[currency];
 
   return (
-    <View {...others} style={[styles.container, styles[size], { backgroundColor: color }]}>
+    <View {...others} style={[styles.container, { backgroundColor: color }]}>
       {symbol && (
-        <Text
-          bold={size === 'L'}
-          caption={symbol.length > 1}
-          color={COLOR.BACKGROUND}
-          style={[FONT.CURRENCY, styles.font, styles[`font${size}`]]}
-        >
+        <Text bold caption={symbol.length > 1} color={COLOR.BASE} style={[FONT.CURRENCY, styles.font]}>
           {symbol}
         </Text>
       )}
@@ -34,7 +29,6 @@ const CurrencyLogo = ({ color = COLOR.BRAND, currency, size = 'M', ...others }) 
 CurrencyLogo.propTypes = {
   color: PropTypes.string,
   currency: PropTypes.string,
-  size: PropTypes.string,
 };
 
 export { CurrencyLogo };

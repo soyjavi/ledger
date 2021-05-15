@@ -11,7 +11,7 @@ const GroupTransactions = ({ currency, onPress, timestamp, txs = [] }) => {
 
   return (
     <>
-      <BoxDate l10n={l10n} timestamp={timestamp} marginHorizontal="M" marginVertical="S" />
+      <BoxDate highlight l10n={l10n} timestamp={timestamp} marginHorizontal="M" marginVertical="S" />
       {txs.map((tx) => (
         <TransactionItem key={tx.hash} currency={currency} onPress={onPress} {...tx} />
       ))}

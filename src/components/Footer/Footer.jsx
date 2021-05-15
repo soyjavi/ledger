@@ -42,7 +42,12 @@ const Footer = ({ current, visible, onScreen }) => {
               onPress={() => onScreen(screen)}
             >
               <Icon color={screen === current ? COLOR.BRAND : COLOR.LIGHTEN} value={icon} family={ICON.FAMILY} />
-              <Text bold caption color={screen === current ? COLOR.TEXT : COLOR.LIGHTEN} marginTop="S">
+              <Text
+                bold={screen === current}
+                caption
+                color={screen === current ? COLOR.TEXT : COLOR.LIGHTEN}
+                marginTop="S"
+              >
                 {text}
               </Text>
             </Touchable>

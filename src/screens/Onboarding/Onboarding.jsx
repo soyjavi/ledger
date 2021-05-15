@@ -44,12 +44,12 @@ const Onboarding = () => {
 
   return mounted ? (
     <>
-      {step <= SESSION && <Welcome {...style} backward={step > WELCOME} onPress={nextStep} visible={step >= WELCOME} />}
-      <Session visible={step >= SESSION} backward={step > SESSION} onSession={handleSession} />
+      {step <= SESSION && <Welcome {...style} backward={step > WELCOME} visible={step >= WELCOME} onPress={nextStep} />}
+      <Session backward={step > SESSION} visible={step >= SESSION} onSession={handleSession} />
       {step > SESSION && (
         <>
-          <FirstVault {...style} visible={step >= VAULT} backward={step > VAULT} onVault={nextStep} />
-          <Completed {...style} visible={step >= COMPLETED} backward={step > COMPLETED} onPress={handleComplete} />
+          <FirstVault {...style} backward={step > VAULT} visible={step >= VAULT} onVault={nextStep} />
+          <Completed {...style} backward={step > COMPLETED} visible={step >= COMPLETED} onPress={handleComplete} />
         </>
       )}
     </>
