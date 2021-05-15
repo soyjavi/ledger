@@ -157,10 +157,6 @@ export const theme = {
   OPACITY,
 
   SNACKBAR: {
-    // paddingHorizontal: SPACE.M,
-    // paddingVertical: SPACE.S,
-    // marginHorizontal: SPACE.M,
-    // marginVertical: SPACE.M,
     ...Platform.select({
       android: { elevation: 0 },
     }),

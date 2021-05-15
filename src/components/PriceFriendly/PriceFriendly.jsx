@@ -30,7 +30,7 @@ const PriceFriendly = ({ currency, fixed, highlight, label, operator, maskAmount
     color,
     fixed: fixed || currencyDecimals(value, currency),
     numberOfLines: 1,
-    style: [FONT.CURRENCY, others.style],
+    style: [FONT.BOLD, others.style],
     value: Math.abs(value),
   };
 
