@@ -66,7 +66,7 @@ const InputCurrency = ({
       style={[
         styles.container,
         active && styles.active,
-        active && !focus && styles.fulfilled,
+        active && styles.fulfilled,
         active && color && { borderColor: color },
         others.style,
       ]}
