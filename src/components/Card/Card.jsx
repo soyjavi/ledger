@@ -12,7 +12,7 @@ import { CurrencyLogo } from '../CurrencyLogo';
 import { PriceFriendly } from '../PriceFriendly';
 import styles, { CARD_SIZE } from './Card.style';
 
-const { COLOR } = THEME;
+const { BORDER_RADIUS, COLOR } = THEME;
 
 const Card = ({ balance = 0, currency, highlight, onPress, title = '', ...others }) => {
   const {
@@ -31,11 +31,11 @@ const Card = ({ balance = 0, currency, highlight, onPress, title = '', ...others
       style={styles.container}
       onPress={onPress}
     >
-      <Box color={highlight ? COLOR.BRAND : undefined} outlined={!hasBalance & !highlight} style={styles.box}>
+      <Box borderRadius={BORDER_RADIUS * 2} color={highlight ? COLOR.BRAND : COLOR.BASE} style={styles.box}>
         <View style={styles.content}>
           <Row>
             <CurrencyLogo
-              color={currency !== baseCurrency || highlight || !hasBalance ? COLOR.LIGHTEN : undefined}
+              color={currency !== baseCurrency || highlight ? COLOR.LIGHTEN : undefined}
               currency={currency}
               size="M"
             />
@@ -48,7 +48,7 @@ const Card = ({ balance = 0, currency, highlight, onPress, title = '', ...others
 
           {currency && (
             <>
-              <PriceFriendly bold color={textColor} currency={currency} subtitle value={balance} />
+              <PriceFriendly color={textColor} currency={currency} subtitle value={balance} />
 
               {currency !== baseCurrency ? (
                 <PriceFriendly
