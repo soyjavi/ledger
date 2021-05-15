@@ -19,11 +19,7 @@ const {
   },
 } = C;
 
-const button = {
-  color: COLOR.CTA,
-  iconFamily: ICON.FAMILY,
-  outlined: true,
-};
+const button = { color: COLOR.BRAND, iconFamily: ICON.FAMILY, outlined: true };
 
 const Vault = ({ visible }) => {
   const l10n = useL10N();

@@ -28,11 +28,12 @@ const OPACITY = {
 // DARK-MODE
 const BACKGROUND = '#000';
 const TEXT = '#FFFFFF';
-const BASE = '#262626';
+const BASE = '#282828';
 const CTA = '#FFFFFF';
 // Custom
-const BASE_LIGHTEN = colorOpacity(TEXT, 0.08);
-const LIGHTEN = colorOpacity(TEXT, 0.45);
+const BASE_LIGHTEN = '#282828';
+const DIALOG = '#181818';
+const LIGHTEN = colorOpacity(TEXT, 0.5);
 
 const ELEVATION = {
   shadowColor: BACKGROUND,
@@ -121,7 +122,7 @@ export const theme = {
 
   DIALOG: {
     ...ELEVATION,
-    backgroundColor: BASE,
+    backgroundColor: DIALOG,
     borderTopLeftRadius: SPACE.M,
     borderTopRightRadius: SPACE.M,
     padding: SPACE.L,

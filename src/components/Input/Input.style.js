@@ -8,7 +8,7 @@ const CONTAINER_HEIGHT = SPACE.XXL + SPACE.L;
 export default StyleSheet.create({
   container: {
     width: '100%',
-    backgroundColor: COLOR.BASE_LIGHTEN,
+    backgroundColor: COLOR.BASE,
     borderColor: COLOR.TRANSPARENT,
     borderRadius: BORDER_RADIUS,
     borderWidth: 1,

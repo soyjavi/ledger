@@ -44,7 +44,7 @@ const Header = ({ visible, onBack, title = ' ' }) => {
               </Col>
               <Col align="center" style={styles.title}>
                 <Text bold color={visible ? COLOR.TEXT : COLOR.LIGHTEN} subtitle>
-                  {title}
+                  {title.toUpperCase()}
                 </Text>
               </Col>
               <Col align="end">

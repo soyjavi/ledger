@@ -14,7 +14,7 @@ const BoxDate = ({ highlight = false, l10n, timestamp, ...inherit }) => (
     //
     {...inherit}
     outlined={highlight}
-    color={highlight ? COLOR.TEXT : COLOR.BASE_LIGHTEN}
+    color={highlight ? COLOR.TEXT : COLOR.BASE}
     style={styles.date}
   >
     <Text
