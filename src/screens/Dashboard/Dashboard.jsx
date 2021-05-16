@@ -30,7 +30,7 @@ const Dashboard = ({ timestamp }) => {
   const scrollview = useRef(null);
   const { settings: { baseCurrency } = {}, overall, txs = [], vaults = [] } = useStore();
 
-  const [dialogVault, setDialogVault] = useState(false);
+  const [dialogVault, setDialogVault] = useState(undefined);
   const [tx, setTx] = useState(undefined);
   const [lastTxs, setLastTxs] = useState([]);
   const [scroll, setScroll] = useState(false);
@@ -63,7 +63,7 @@ const Dashboard = ({ timestamp }) => {
             <Heading paddingLeft="M" value={l10n.VAULTS}>
               <Button
                 color={COLOR.BACKGROUND}
-                colorText={COLOR.TEXT}
+                colorText={COLOR.BRAND}
                 size="S"
                 text={`${l10n.NEW} ${l10n.VAULT}`.toUpperCase()}
                 onPress={() => setDialogVault(true)}
@@ -99,7 +99,7 @@ const Dashboard = ({ timestamp }) => {
       </ScrollView>
 
       <DialogClone dataSource={tx} onClose={() => setTx(undefined)} visible={tx !== undefined} />
-      <DialogVault onClose={() => setDialogVault(false)} visible={dialogVault} />
+      {dialogVault !== undefined && <DialogVault onClose={() => setDialogVault(false)} visible={dialogVault} />}
     </>
   );
 };
