@@ -47,15 +47,16 @@ const FirstVault = ({ onVault, visible, ...others }) => {
 
   return (
     <Viewport {...others} visible={visible}>
-      <KeyboardAvoidingView behavior={IS_NATIVE ? 'padding' : undefined}>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <SafeAreaView>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <KeyboardAvoidingView behavior={IS_NATIVE ? 'padding' : undefined}>
+          <>
             <Text bold subtitle style={styles.text}>
               Your first account
             </Text>
             <Text caption marginTop="S" marginBottom="L" style={styles.text}>
               {l10n.FIRST_VAULT_CAPTION}
             </Text>
+
             <FormVault form={form} onChange={setForm} />
 
             <Button
@@ -67,9 +68,9 @@ const FirstVault = ({ onVault, visible, ...others }) => {
               style={styles.button}
               text={l10n.CREATE.toUpperCase()}
             />
-          </SafeAreaView>
-        </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
+          </>
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
     </Viewport>
   );
 };
