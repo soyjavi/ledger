@@ -1,4 +1,9 @@
+# Folders
+.expo/*
 node_modules/
-.expo/
 
-.DS_Store
+# Files
+**/.DS_Store
+.eslintcache
+.vscode
+yarn-error.log

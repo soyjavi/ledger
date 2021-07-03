@@ -4,14 +4,21 @@ import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { SafeAreaView } from 'react-native';
 import { THEME } from 'reactor/common';
-import { Button, Col, Row, Text, View } from 'reactor/components';
+
+import {
+  // helpers
+  COLOR,
+  // components
+  Text,
+} from '@lookiero/aurora';
+import { Button, Col, Row, View } from 'reactor/components';
 
 import { onHardwareBackPress } from '@common';
 import { useConnection, useL10N } from '@context';
 
 import styles from './Header.style';
 
-const { BLUR, COLOR, ICON } = THEME;
+const { BLUR = {}, COLOR, ICON = {} } = THEME;
 
 const Header = ({ visible, onBack, title = ' ' }) => {
   const { connected } = useConnection();
@@ -43,14 +50,12 @@ const Header = ({ visible, onBack, title = ' ' }) => {
                 )}
               </Col>
               <Col align="center" style={styles.title}>
-                <Text bold color={visible ? COLOR.TEXT : COLOR.LIGHTEN} subtitle>
-                  {title.toUpperCase()}
-                </Text>
+                <Text heading>{title}</Text>
               </Col>
               <Col align="end">
                 {!connected && (
                   <View style={styles.offline}>
-                    <Text bold caption color={COLOR.ERROR}>
+                    <Text action color={COLOR.BASE}>
                       {l10n.OFFLINE}
                     </Text>
                   </View>

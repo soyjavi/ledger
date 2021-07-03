@@ -16,7 +16,7 @@ const {
     TYPE: { EXPENSE, INCOME },
   },
 } = C;
-const { COLOR, ICON, SPACE } = THEME;
+const { COLOR, ICON = {}, SPACE } = THEME;
 
 const TransactionItem = (props) => {
   const {

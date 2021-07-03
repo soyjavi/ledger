@@ -11,7 +11,7 @@ import { useL10N, useNavigation, useStore } from '@context';
 import { DialogTransaction } from './components';
 import { onScroll, query } from './Vault.controller';
 
-const { COLOR, ICON } = THEME;
+const { COLOR, ICON = {} } = THEME;
 
 const {
   TX: {

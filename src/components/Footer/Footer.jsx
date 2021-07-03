@@ -11,7 +11,7 @@ import { useL10N } from '@context';
 import styles from './Footer.style';
 
 const { SCREEN } = C;
-const { BLUR, COLOR, ICON, MOTION, UNIT } = THEME;
+const { BLUR = {}, COLOR, ICON = {}, MOTION, UNIT } = THEME;
 
 const Footer = ({ current, visible, onScreen }) => {
   const l10n = useL10N();

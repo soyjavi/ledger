@@ -7,7 +7,7 @@ import { C } from '@common';
 
 const KEY = `${C.NAME}:context:snackbar`;
 const SnackBarContext = createContext(KEY);
-const { COLOR, ICON } = THEME;
+const { COLOR, ICON = {} } = THEME;
 
 const reducer = (state, action) => {
   switch (action.type) {
