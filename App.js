@@ -22,8 +22,8 @@ const App = () => {
       await Font.loadAsync({
         // 'font-family': require('./assets/fonts/IBMPlexSans-Regular.ttf'),
         // 'font-family-bold': require('./assets/fonts/IBMPlexSans-Bold.ttf'),
-        'font-family': require('./assets/fonts/Spotify-Circular-Book.ttf'),
-        'font-family-bold': require('./assets/fonts/Spotify-Circular-Bold.ttf'),
+        'font-family': require('./assets/fonts/Circular-SP-Book.ttf'),
+        'font-family-bold': require('./assets/fonts/Circular-SP-Bold.ttf'),
         'font-family-currency': require('./assets/fonts/IBMPlexSans-Bold.ttf'),
       });
       THEME.extend(theme);
