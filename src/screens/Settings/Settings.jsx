@@ -39,7 +39,7 @@ const Settings = ({ timestamp }) => {
   } = store;
 
   useEffect(() => {
-    // else if (hasCamera === undefined) setQr('1CC0A669-249E-428F-88FF-4EAF27ABED4B|backup');
+    // setQr('1CC0A669-249E-428F-88FF-4EAF27ABED4B|backup');
     if (hasCamera === undefined) setHasCamera(askCamera());
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -87,6 +87,8 @@ const Settings = ({ timestamp }) => {
     setSyncRates(false);
   };
 
+  console.log({ qr });
+
   return (
     <>
       <Header visible={scroll} title={l10n.SETTINGS} />
@@ -96,7 +98,7 @@ const Settings = ({ timestamp }) => {
           {hasCamera && (
             <Button
               color={COLOR.BACKGROUND}
-              colorText={COLOR.TEXT}
+              colorText={COLOR.BRAND}
               size="S"
               text={camera ? l10n.CLOSE : l10n.QR_READER}
               onPress={() => setCamera(!camera)}
@@ -114,7 +116,7 @@ const Settings = ({ timestamp }) => {
               </Camera>
             )}
           </View>
-          <Text caption color={COLOR.LIGHTEN} style={styles.legend}>
+          <Text caption color={COLOR.LIGHTEN} marginTop="S" style={styles.legend}>
             {camera ? l10n.TRANSFER_TXS_CAMERA : l10n.TRANSFER_TXS_CAPTION}
           </Text>
         </View>
@@ -122,13 +124,13 @@ const Settings = ({ timestamp }) => {
         <Heading paddingLeft="M" value={l10n.CHOOSE_CURRENCY}>
           <Button
             color={COLOR.BACKGROUND}
-            colorText={COLOR.TEXT}
+            colorText={COLOR.BRAND}
             size="S"
             text={l10n.SYNC_RATES_CTA.toUpperCase()}
             onPress={handleUpdateRates}
           />
         </Heading>
-        <SliderCurrencies onChange={handleChangeCurrency} paddingLeft="M" selected={baseCurrency} />
+        <SliderCurrencies color={COLOR.BASE} onChange={handleChangeCurrency} paddingLeft="M" selected={baseCurrency} />
         <Row marginHorizontal="M" marginTop="S">
           <Text caption color={COLOR.LIGHTEN}>
             {!syncRates

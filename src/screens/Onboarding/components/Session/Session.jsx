@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { Image } from 'react-native';
+import { Image, SafeAreaView } from 'react-native';
 import { THEME } from 'reactor/common';
 import { Row, Text, View, Viewport } from 'reactor/components';
 
@@ -48,7 +48,7 @@ const Session = ({ onSession, visible, ...others }) => {
 
   return (
     <Viewport {...others} visible={visible} scroll={false}>
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <Image resizeMode="contain" source={LOGO} style={styles.image} />
         <Text bold subtitle marginTop="S">
           {signup ? l10n.PIN_CHOOSE : l10n.PIN}
@@ -64,7 +64,7 @@ const Session = ({ onSession, visible, ...others }) => {
 
         <NumKeyboard onPress={(number) => setPin(`${pin}${number}`)} />
         <Text caption color={COLOR.LIGHTEN} marginBottom="M">{`v${VERSION}`}</Text>
-      </View>
+      </SafeAreaView>
     </Viewport>
   );
 };
