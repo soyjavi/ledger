@@ -1,23 +1,32 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Keyboard, TextInput } from 'react-native';
-import { THEME } from 'reactor/common';
-import { Col, Icon, Row, Text, Touchable } from 'reactor/components';
+import {
+  // helpers
+  ALIGN,
+  COLOR,
+  FLEX_DIRECTION,
+  SIZE,
+  // components
+  Icon,
+  Text,
+  Touchable,
+  View,
+} from '@lookiero/aurora';
 
 import { C } from '@common';
 import { useStore } from '@context';
 
 import { CurrencyLogo } from '../CurrencyLogo';
 import { PriceFriendly } from '../PriceFriendly';
-import styles from './InputCurrency.style';
-import { getLastRates } from './modules';
+import { style } from './InputCurrency.style';
+import { getLastRates } from './helpers';
 
 const {
   TX: {
     TYPE: { EXPENSE, INCOME },
   },
 } = C;
-const { COLOR, SPACE } = THEME;
 
 const InputCurrency = ({
   color,
@@ -57,88 +66,81 @@ const InputCurrency = ({
     onChange && onChange(nextValue);
   };
 
-  const active = !disabled && (focus || value !== undefined);
+  const active = !disabled && (focus || parseFloat(value, 10) > 0);
 
   return (
-    <Row
+    <View
       {...others}
-      align="center"
-      style={[
-        styles.container,
-        active && styles.active,
-        active && styles.fulfilled,
-        active && color && { borderColor: color },
-        others.style,
-      ]}
+      borderColor={active ? COLOR.CONTENT : COLOR.GRAYSCALE_XL}
+      customStyle={[style.container, others.customStyle]}
+      wide
     >
-      <Col>
-        <Touchable rippleColor={COLOR.LIGHTEN} onPress={!disabled ? onVault : undefined}>
-          <Row marginBottom="XS">
-            {title && (
-              <CurrencyLogo
-                color={active ? COLOR.TEXT : currency !== baseCurrency ? COLOR.LIGHTEN : undefined}
-                currency={currency}
-                marginRight="XS"
-                size="S"
-              />
-            )}
-            <Text bold caption color={!active ? COLOR.LIGHTEN : undefined}>
-              {(title || label).toUpperCase()}
-            </Text>
-          </Row>
-          {title && (
-            <Row>
-              <PriceFriendly
-                caption
-                color={COLOR.LIGHTEN}
-                currency={currency}
-                label="Balance: "
-                value={currentBalance}
-              />
-              {onVault && !disabled && (
-                <Icon color={COLOR.LIGHTEN} marginLeft="XS" marginTop="XXS" size={SPACE.S} value="arrow-down" />
+      <View customStyle={style.content} flexDirection={FLEX_DIRECTION.ROW}>
+        <View flexDirection={FLEX_DIRECTION.COL}>
+          <Touchable onPress={!disabled ? onVault : undefined}>
+            <View customStyle={style.label}>
+              {title && (
+                <CurrencyLogo
+                  color={active ? COLOR.CONTENT : currency !== baseCurrency ? COLOR.GRAYSCALE_XL : undefined}
+                  currency={currency}
+                  marginRight={SIZE.XS}
+                />
               )}
-            </Row>
-          )}
-        </Touchable>
-      </Col>
+              <Text color={!active ? COLOR.GRAYSCALE_XL : undefined} detail pointerEvents="none">
+                {(title || label).toUpperCase()}
+              </Text>
+            </View>
 
-      <Col align="end">
-        <Col align="end" pointerEvents="none">
+            {title && (
+              <Row>
+                <PriceFriendly
+                  color={COLOR.GRAYSCALE_XL}
+                  currency={currency}
+                  detail
+                  label="Balance: "
+                  value={currentBalance}
+                />
+                {onVault && !disabled && (
+                  <Icon color={COLOR.GRAYSCALE_XL} marginLeft="XS" marginTop="XXS" size={SPACE.S} value="arrow-down" />
+                )}
+              </Row>
+            )}
+          </Touchable>
+        </View>
+
+        <View alignItems={ALIGN.END} flex={SIZE.XS} flexDirection={FLEX_DIRECTION.COL} pointerEvents="none">
           <PriceFriendly
-            color={!active ? COLOR.LIGHTEN : undefined}
+            color={!active ? COLOR.GRAYSCALE_XL : undefined}
             currency={currency}
-            pointerEvents="none"
-            style={styles.input}
             value={value ? parseFloat(value, 10) : undefined}
           />
           {exchange && (
             <PriceFriendly
-              caption
-              color={COLOR.LIGHTEN}
-              pointerEvents="none"
+              color={COLOR.GRAYSCALE_XL}
+              detail
               currency={baseCurrency}
               value={parseFloat(others.value || 0, 10) / exchange}
             />
           )}
-        </Col>
-        <TextInput
-          autoCapitalize="none"
-          autoCorrect={false}
-          defaultValue={others.defaultValue}
-          disabled={others.disabled}
-          blurOnSubmit
-          editable
-          keyboardType="numeric"
-          onBlur={() => setFocus(false)}
-          onChangeText={handleChange}
-          onFocus={() => setFocus(true)}
-          onSubmitEditing={Keyboard.dismiss}
-          style={styles.textInput}
-          value={others.value || 0}
-        />
-      </Col>
-    </Row>
+        </View>
+      </View>
+
+      <TextInput
+        autoCapitalize="none"
+        autoCorrect={false}
+        defaultValue={others.defaultValue}
+        disabled={disabled}
+        blurOnSubmit
+        editable
+        keyboardType="numeric"
+        onBlur={() => setFocus(false)}
+        onChangeText={handleChange}
+        onFocus={() => setFocus(true)}
+        onSubmitEditing={Keyboard.dismiss}
+        style={style.input}
+        value={others.value || 0}
+      />
+    </View>
   );
 };
 
