@@ -1,74 +1,68 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { THEME } from 'reactor/common';
-import { Price, Row, Text } from 'reactor/components';
+import {
+  // helpers
+  FLEX_DIRECTION,
+  Theme,
+  // components
+  Text,
+  View,
+} from '@lookiero/aurora';
 
 import { C, colorOpacity, currencyDecimals } from '@common';
 import { useStore } from '@context';
 
-import { maskValue } from './modules';
-import styles from './PriceFriendly.style';
+import { format } from './modules';
+import { style } from './PriceFriendly.style';
 
 const { SYMBOL } = C;
-const { FONT } = THEME;
+const { colorPrimary } = Theme.get();
 
 const LEFT_SYMBOLS = ['$', '£'];
 
-const PriceFriendly = ({ currency, fixed, highlight, label, operator, maskAmount, value = 0, ...others }) => {
+const PriceFriendly = ({ currency, fixed, highlight, label, maskAmount, operator, value = 0, ...others }) => {
   const { settings } = useStore();
 
   const maskedAmount = maskAmount || settings.maskAmount;
-
+  const operatorEnhanced = operator && value !== 0 ? (value > 0 ? '+' : '-') : '';
+  const symbol = SYMBOL[currency] || currency;
   let { color } = others;
-  let operatorEnhanced;
 
-  if (operator && value > 0) operatorEnhanced = '+';
-  else if (operator && value < 0) operatorEnhanced = '-';
-
-  const props = {
-    ...others,
-    color,
+  const valueProps = {
     fixed: fixed || currencyDecimals(value, currency),
     numberOfLines: 1,
-    style: [FONT.BOLD, others.style],
     value: Math.abs(value),
   };
 
-  const symbol = SYMBOL[currency] || currency;
-
-  const { headline, subtitle, caption } = others;
   const symbolProps = {
     ...others,
     children: symbol,
     color,
-    style: [
-      FONT.CURRENCY,
-      headline
-        ? styles.symbolHeadline
-        : subtitle
-        ? styles.symbolSubtitle
-        : caption
-        ? styles.symbolCaption
-        : styles.symbol,
-      (headline || subtitle) && styles.symbol,
-      caption && styles.symbolCaption,
-      !headline && !subtitle && !caption && styles.symbolBody,
-    ],
+    customStyle: [style.symbol],
   };
 
+  const formatedValue = format({
+    fixed: fixed || currencyDecimals(value, currency),
+    mask: maskedAmount,
+    numberOfLines: 1,
+    value: Math.abs(value),
+  });
+
   return (
-    <Row
-      style={highlight && !maskAmount ? [styles.highlight, { backgroundColor: colorOpacity(color) }] : undefined}
-      width="auto"
+    <View
+      customStyle={
+        highlight && !maskAmount ? [style.highlight, { backgroundColor: colorOpacity(colorPrimary) }] : undefined
+      }
+      flexDirection={FLEX_DIRECTION.ROW}
     >
       {label && (
-        <Text {...others} bold={false} color={color}>
+        <Text {...others} color={color}>
           {label}
         </Text>
       )}
       {maskedAmount ? (
         <Text {...others} color={color}>
-          {maskValue(props)}
+          {formatedValue}
         </Text>
       ) : (
         <>
@@ -76,11 +70,13 @@ const PriceFriendly = ({ currency, fixed, highlight, label, operator, maskAmount
             {operatorEnhanced}
           </Text>
           {LEFT_SYMBOLS.includes(symbol) && <Text {...symbolProps} />}
-          <Price {...props} />
+          <Text {...others} customStyle={[style.value, others.customStyle]} color={color}>
+            {formatedValue}
+          </Text>
           {!LEFT_SYMBOLS.includes(symbol) && <Text {...symbolProps} />}
         </>
       )}
-    </Row>
+    </View>
   );
 };
 
