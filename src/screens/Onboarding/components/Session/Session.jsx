@@ -1,19 +1,29 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { Image, SafeAreaView } from 'react-native';
-import { THEME } from 'reactor/common';
-import { Row, Text, View, Viewport } from 'reactor/components';
+
+import {
+  // helpers
+  ALIGN,
+  COLOR,
+  FLEX_DIRECTION,
+  SIZE,
+  // components
+  Image,
+  SafeAreaView,
+  Text,
+  View,
+} from '@lookiero/aurora';
 
 import { LOGO } from '@assets';
 import { C } from '@common';
+import { Viewport } from '@components';
 import { useL10N, useStore } from '@context';
 
 import { NumKeyboard } from './components';
 import { onHandshake, askLocalAuthentication } from './Session.controller';
-import styles from './Session.style';
+import { style } from './Session.style';
 
 const { IS_DEV, VERSION } = C;
-const { COLOR } = THEME;
 
 const Session = ({ onSession, visible, ...others }) => {
   const l10n = useL10N();
@@ -47,23 +57,26 @@ const Session = ({ onSession, visible, ...others }) => {
   const signup = store.authorization === undefined;
 
   return (
-    <Viewport {...others} visible={visible} scroll={false}>
-      <SafeAreaView style={styles.container}>
-        <Image resizeMode="contain" source={LOGO} style={styles.image} />
-        <Text bold subtitle marginTop="S">
-          {signup ? l10n.PIN_CHOOSE : l10n.PIN}
-        </Text>
-        <Row justify="center" marginVertical="XXL">
-          {['•', '•', '•', '•'].map((letter, index) => (
-            <View
-              key={index}
-              style={[styles.bullet, { backgroundColor: pin.length > index ? COLOR.TEXT : COLOR.LIGHTEN }]}
-            />
-          ))}
-        </Row>
+    <Viewport {...others} visible={visible}>
+      <SafeAreaView flex={SIZE.XS}>
+        <View alignItems={ALIGN.CENTER} customStyle={style.content} justifyContent={ALIGN.END} padding={SIZE.M}>
+          <Image customStyle={style.image} resizeMode="cover" src={LOGO} />
+          <Text color={COLOR.GRAYSCALE_XL} detail level={1} marginTop={SIZE.XXL}>
+            {signup ? l10n.PIN_CHOOSE : l10n.PIN}
+          </Text>
+          <View flexDirection={FLEX_DIRECTION.ROW} marginVertical={SIZE.L}>
+            {['•', '•', '•', '•'].map((letter, index) => (
+              <View
+                key={index}
+                backgroundColor={pin.length > index ? COLOR.CONTENT : COLOR.GRAYSCALE_XL}
+                customStyle={style.bullet}
+              />
+            ))}
+          </View>
 
-        <NumKeyboard onPress={(number) => setPin(`${pin}${number}`)} />
-        <Text caption color={COLOR.LIGHTEN} marginBottom="M">{`v${VERSION}`}</Text>
+          <NumKeyboard marginVertical={SIZE.M} onPress={(number) => setPin(`${pin}${number}`)} />
+          <Text color={COLOR.GRAYSCALE_XL} detail>{`v${VERSION}`}</Text>
+        </View>
       </SafeAreaView>
     </Viewport>
   );
