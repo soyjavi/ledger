@@ -1,14 +1,11 @@
-import { StyleSheet } from 'react-native';
-import { THEME } from 'reactor/common';
+import StyleSheet from 'react-native-extended-stylesheet';
 
-const { SPACE } = THEME;
-
-export default StyleSheet.create({
+export const style = StyleSheet.create({
   container: {
-    minHeight: SPACE.XL + SPACE.S,
-    minWidth: SPACE.XL + SPACE.S,
-    justifyContent: 'center',
-    zIndex: 1,
+    height: '$layoutM',
+    width: '$layoutM',
+    borderWidth: '$borderSize',
+    borderStyle: '$borderStyle',
   },
 
   date: {
