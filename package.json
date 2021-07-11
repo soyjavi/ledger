@@ -20,8 +20,8 @@
     "release-it": "yarn version --patch && git push --follow-tags"
   },
   "dependencies": {
-    "@expo/vector-icons": "^12.0.0",
     "@lookiero/aurora-next": "^3.0",
+    "@lookiero/event-next": "^0.3",
     "@react-native-community/async-storage": "~1.12.0",
     "@react-native-community/netinfo": "5.9.7",
     "color": "^3.1.2",
@@ -46,7 +46,6 @@
   "devDependencies": {
     "@babel/core": "~7.9.0",
     "@lookiero/eslint": "^0.1",
-    "@lookiero/router": "^0.1",
     "@testing-library/react-hooks": "^5.1.1",
     "@testing-library/react-native": "^7.2.0",
     "@types/react": "~16.9.35",
@@ -55,6 +54,7 @@
     "@typescript-eslint/eslint-plugin": "3.5.0",
     "@typescript-eslint/parser": "^4.22.0",
     "babel-plugin-module-resolver": "^4.0.0",
+    "core-js": "^3.15.2",
     "eslint": "7.3.1",
     "eslint-config-prettier": "6.11.0",
     "eslint-plugin-babel": "^5.3.1",

@@ -12,6 +12,7 @@ module.exports = (api) => {
           alias: {
             // -- packages
             '@lookiero/aurora': '@lookiero/aurora-next',
+            '@lookiero/event': '@lookiero/event-next',
 
             // -- sources
             '@assets': './src/assets',

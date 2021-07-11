@@ -1,4 +1,5 @@
 import { Aurora } from '@lookiero/aurora';
+import { EventProvider } from '@lookiero/event';
 import { useFonts } from 'expo-font';
 import React from 'react';
 
@@ -15,22 +16,22 @@ const App = () => {
     'shield-icons': require('../assets/fonts/Shield-Icons.ttf'),
   });
 
-  return (
-    <Aurora theme={ShieldTheme} useProviders={true}>
-      {ready ? (
-        <ConnectionProvider>
-          <StoreProvider>
-            <SnackBarProvider>
+  return ready ? (
+    <Aurora theme={ShieldTheme}>
+      <EventProvider>
+        <SnackBarProvider>
+          <ConnectionProvider>
+            <StoreProvider>
               <NavigationProvider>
                 <Router />
               </NavigationProvider>
-            </SnackBarProvider>
-          </StoreProvider>
-        </ConnectionProvider>
-      ) : (
-        <></>
-      )}
+            </StoreProvider>
+          </ConnectionProvider>
+        </SnackBarProvider>
+      </EventProvider>
     </Aurora>
+  ) : (
+    <></>
   );
 };
 
