@@ -72,7 +72,7 @@ const DialogClone = () => {
   const vaultInfo = vaults.find(({ hash }) => hash === vault);
 
   return (
-    <Modal isVisible={visible} color={COLOR.INFO} swipeable onClose={handleClose}>
+    <Modal color={COLOR.INFO} isVisible={visible} swipeable onClose={handleClose}>
       <View alignItems={ALIGN.CENTER} marginBottom={SPACE.L}>
         <Text color={COLOR.GRAYSCALE_L} heading level={2}>
           {L10N.TRANSACTION[type]}
@@ -128,5 +128,7 @@ const DialogClone = () => {
     </Modal>
   );
 };
+
+DialogClone.propTypes = {};
 
 export { DialogClone };

@@ -4,24 +4,25 @@ import {
   COLOR,
   FLEX_DIRECTION,
   SIZE,
-  Theme,
   // components
   Button,
   Modal,
   Text,
   View,
 } from '@lookiero/aurora';
-import PropTypes from 'prop-types';
+import { useEvent } from '@lookiero/event';
 import React, { useEffect, useState } from 'react';
 
-import { C, L10N, onHardwareBackPress } from '@common';
-import { FormVault } from '@components';
+import { C, EVENTS, L10N, onHardwareBackPress } from '@common';
 import { useNavigation, useStore } from '@context';
+
+import { FormVault } from '../FormVault';
 
 const { SCREEN } = C;
 const INITIAL_STATE = { balance: 0, currency: undefined, title: undefined };
 
-const DialogVault = ({ onClose, isVisible }) => {
+const DialogVault = () => {
+  const { subscribe } = useEvent();
   const navigation = useNavigation();
   const {
     addVault,
@@ -30,27 +31,36 @@ const DialogVault = ({ onClose, isVisible }) => {
 
   const [busy, setBusy] = useState(false);
   const [form, setForm] = useState(INITIAL_STATE);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    if (isVisible) setForm({ ...INITIAL_STATE, currency: baseCurrency });
-    onHardwareBackPress(isVisible, onClose);
+    subscribe({ event: EVENTS.NEW_VAULT }, () => setVisible(true));
+  }, []);
+
+  useEffect(() => {
+    if (visible) setForm({ ...INITIAL_STATE, currency: baseCurrency });
+    onHardwareBackPress(visible, handleClose);
 
     return () => onHardwareBackPress(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isVisible]);
+  }, [visible]);
+
+  const handleClose = () => {
+    setVisible(false);
+  };
 
   const handleSubmit = async () => {
     setBusy(true);
     const vault = await addVault(form);
     if (vault) {
-      onClose();
-      setTimeout(() => navigation.go(SCREEN.VAULT, vault), Theme.get('motionCollapse'));
+      handleClose();
+      navigation.go(SCREEN.VAULT, vault);
     }
     setBusy(false);
   };
 
   return (
-    <Modal color={COLOR.INFO} isVisible={isVisible} swipeable onClose={onClose}>
+    <Modal color={COLOR.INFO} isVisible={visible} swipeable onClose={handleClose}>
       <View alignItems={ALIGN.CENTER} marginBottom={SIZE.L}>
         <Text heading level={2}>
           {`${L10N.NEW} ${L10N.VAULT}`}
@@ -60,7 +70,7 @@ const DialogVault = ({ onClose, isVisible }) => {
       <FormVault form={form} optionColor={COLOR.GRAYSCALE_XL} onChange={setForm} />
 
       <View flexDirection={FLEX_DIRECTION.ROW} marginTop={SIZE.XL}>
-        <Button disabled={busy} marginRight={SIZE.M} outlined onPress={onClose}>
+        <Button disabled={busy} marginRight={SIZE.M} outlined onPress={handleClose}>
           {L10N.CLOSE.toUpperCase()}
         </Button>
         <Button busy={busy} color={COLOR.CONTENT} disabled={busy || form.title === undefined} onPress={handleSubmit}>
@@ -71,9 +81,6 @@ const DialogVault = ({ onClose, isVisible }) => {
   );
 };
 
-DialogVault.propTypes = {
-  isVisible: PropTypes.bool,
-  onClose: PropTypes.func.isRequired,
-};
+DialogVault.propTypes = {};
 
 export { DialogVault };

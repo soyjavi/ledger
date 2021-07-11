@@ -5,6 +5,7 @@ export * from './Chart';
 export * from './CurrencyLogo';
 export * from './Dialog';
 export * from './DialogClone';
+export * from './DialogVault';
 export * from './FormVault';
 export * from './GroupTransactions';
 export * from './Header';

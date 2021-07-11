@@ -5,25 +5,25 @@ import {
   Touchable,
   Slider,
 } from '@lookiero/aurora';
+import { useEvent } from '@lookiero/event';
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
 
-import { C, L10N } from '@common';
+import { C, EVENTS, L10N } from '@common';
 import { Card, CARD_SIZE, GroupTransactions, Header, Heading, ScrollView, Search, Summary } from '@components';
 import { useNavigation, useStore } from '@context';
 
-import { DialogVault } from './components';
 import { queryLastTxs, querySearchTxs, queryVaults } from './Dashboard.controller';
 import { style } from './Dashboard.style';
 
 const { SCREEN } = C;
 
 const Dashboard = ({ timestamp }) => {
+  const { publish } = useEvent();
   const navigation = useNavigation();
   const scrollview = useRef(null);
   const { settings: { baseCurrency } = {}, overall, txs = [], vaults = [] } = useStore();
 
-  const [dialogVault, setDialogVault] = useState(false);
   const [lastTxs, setLastTxs] = useState([]);
   const [scroll, setScroll] = useState(false);
   const [query, setQuery] = useState();
@@ -53,7 +53,7 @@ const Dashboard = ({ timestamp }) => {
         {visibleVaults.length > 0 && (
           <>
             <Heading value={L10N.VAULTS}>
-              <Touchable onPress={() => setDialogVault(true)}>
+              <Touchable onPress={() => publish({ event: EVENTS.NEW_VAULT })}>
                 <Text action>{`${L10N.NEW} ${L10N.VAULT}`.toUpperCase()}</Text>
               </Touchable>
             </Heading>
@@ -84,8 +84,6 @@ const Dashboard = ({ timestamp }) => {
           </>
         )}
       </ScrollView>
-
-      <DialogVault onClose={() => setDialogVault(false)} isVisible={dialogVault} />
     </>
   );
 };
