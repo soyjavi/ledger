@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React, { createContext, useContext, useLayoutEffect, useState } from 'react';
-import { useFingerprint } from 'reactor/hooks';
 import { AsyncBlockchain } from 'vanilla-blockchain';
 import { AsyncStorage } from 'vanilla-storage';
 
@@ -9,7 +8,7 @@ import { ServiceNode } from '@services';
 
 import { AsyncStorageAdapter } from './adapters';
 import { useConnection } from './connection';
-import { consolidate } from './modules';
+import { consolidate, getFingerprint } from './modules';
 
 const { CURRENCY, NAME } = C;
 const FILENAME = `${C.NAME}:store`;
@@ -32,20 +31,16 @@ const StoreProvider = ({ children }) => {
 
   useLayoutEffect(() => {
     const fetchStorage = async () => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      const { uuid: secret, device_id: fingerprint } = await useFingerprint();
-
       const store = await new AsyncStorage({
         adapter: AsyncStorageAdapter,
         defaults: {
           settings: {
+            ...getFingerprint(),
             authorization: undefined,
             baseCurrency: CURRENCY,
-            fingerprint,
             maskAmount: false,
             onboarded: false,
             pin: undefined,
-            secret,
           },
           rates: {},
         },

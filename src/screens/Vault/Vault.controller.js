@@ -1,10 +1,12 @@
-import { LAYOUT } from 'reactor/common';
+import { Dimensions } from 'react-native';
 
 import { groupTxsByDate } from '@common';
 
+const { height } = Dimensions.get('window');
+
 const onScroll = ({ dataSource, scrollQuery, setScroll, setScrollQuery, setTxs }, scroll, y) => {
   setScroll(scroll);
-  if (!scrollQuery && y > LAYOUT.VIEWPORT.H / 2) {
+  if (!scrollQuery && y > height / 2) {
     setScrollQuery(true);
     setTxs(query(dataSource.txs, true));
   }

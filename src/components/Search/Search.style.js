@@ -1,24 +1,33 @@
-import { Platform, StyleSheet } from 'react-native';
-import { THEME } from 'reactor/common';
+import { Platform } from 'react-native';
+import StyleSheet from 'react-native-extended-stylesheet';
 
-const { BORDER_RADIUS, COLOR, FONT, SPACE } = THEME;
-
-export default StyleSheet.create({
+export const style = StyleSheet.create({
+  button: {
+    alignSelf: 'center',
+  },
   container: {
     flex: 1,
   },
 
-  input: {
-    ...FONT.BODY,
-    ...FONT.BOLD,
-    borderColor: COLOR.TRANSPARENT,
-    backgroundColor: COLOR.BASE,
-    borderRadius: BORDER_RADIUS,
-    borderWidth: 1,
-    color: COLOR.TEXT,
-    height: SPACE.XXL,
-    paddingHorizontal: SPACE.M,
+  content: {
+    alignItems: 'center',
+    backgroundColor: '$colorInfo',
+    borderRadius: '$borderRadius',
+    borderWidth: '$borderSize',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: '$spaceM',
     width: '100%',
+  },
+
+  input: {
+    fontFamily: '$fontInput',
+    fontSize: '$fontInputSize',
+    borderColor: '$colorBase',
+    color: '$colorContent',
+    height: '$inputSize',
+    flex: 1,
+    marginRight: '$spaceM',
     ...Platform.select({
       web: {
         userSelect: 'none',
@@ -27,7 +36,7 @@ export default StyleSheet.create({
   },
 
   focus: {
-    borderColor: COLOR.TEXT,
-    backgroundColor: COLOR.BACKGROUND,
+    borderColor: '$colorContent',
+    backgroundColor: '$colorBase',
   },
 });

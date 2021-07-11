@@ -1,16 +1,7 @@
-import { StyleSheet } from 'react-native';
+import StyleSheet from 'react-native-extended-stylesheet';
 
-export default StyleSheet.create({
-  form: {
-    alignItems: 'center',
-  },
-
-  text: {
-    textAlign: 'center',
-  },
-
-  button: {
-    marginHorizontal: 'auto',
-    alignSelf: 'center',
+export const style = StyleSheet.create({
+  content: {
+    height: '100%',
   },
 });

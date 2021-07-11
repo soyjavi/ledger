@@ -1,3 +1,4 @@
+import { L10N } from '@common';
 import { ServiceNode, ServiceRates } from '@services';
 
 const findHashIndex = (blockchain = [], latestHash) => blockchain.findIndex(({ hash }) => hash === latestHash);
@@ -21,7 +22,6 @@ const parseTxs = (txs = []) =>
   }));
 
 const getRates = async ({
-  l10n,
   snackbar,
   store: {
     settings: { baseCurrency },
@@ -29,7 +29,7 @@ const getRates = async ({
   },
 }) => {
   const rates = await ServiceRates.get({ baseCurrency, latest: true }).catch(() =>
-    snackbar.error(l10n.ERROR_SERVICE_RATES),
+    snackbar.alert({ text: L10N.ERROR_SERVICE_RATES }),
   );
   if (rates) await updateRates(rates);
 };

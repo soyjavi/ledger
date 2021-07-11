@@ -1,7 +1,3 @@
-import { StyleSheet } from 'react-native';
+import StyleSheet from 'react-native-extended-stylesheet';
 
-export default StyleSheet.create({
-  title: {
-    textAlign: 'center',
-  },
-});
+export const style = StyleSheet.create({});

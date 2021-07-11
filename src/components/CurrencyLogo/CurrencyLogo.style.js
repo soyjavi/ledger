@@ -1,26 +1,13 @@
-import { StyleSheet } from 'react-native';
-import { THEME } from 'reactor/common';
+import StyleSheet from 'react-native-extended-stylesheet';
 
-const { COLOR, SPACE } = THEME;
-
-const SIZE = SPACE.M + SPACE.XS;
-
-export default StyleSheet.create({
+export const style = StyleSheet.create({
   container: {
-    backgroundColor: COLOR.TEXT,
-    borderRadius: SIZE,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: SIZE,
-    width: SIZE,
+    borderRadius: '$iconSize / 2',
+    height: '$iconSize',
+    width: '$iconSize',
   },
 
-  font: {
-    height: SIZE,
-    lineHeight: SIZE * 1.05,
-    overflow: 'hidden',
-    textAlign: 'center',
-    width: SIZE,
+  currency: {
+    fontFamily: 'font-currency',
   },
 });

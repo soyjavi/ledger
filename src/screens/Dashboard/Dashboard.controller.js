@@ -1,4 +1,4 @@
-import { C, groupTxsByDate } from '@common';
+import { C, L10N, groupTxsByDate } from '@common';
 
 const { CURRENCY } = C;
 
@@ -15,7 +15,7 @@ const queryLastTxs = ({ txs = [], vaults = [] }) =>
       }),
   );
 
-const querySearchTxs = ({ l10n, query, txs = [], vaults = [] }) =>
+const querySearchTxs = ({ query, txs = [], vaults = [] }) =>
   query
     ? groupTxsByDate(
         txs
@@ -25,8 +25,8 @@ const querySearchTxs = ({ l10n, query, txs = [], vaults = [] }) =>
             const title = tx.title ? tx.title.toLowerCase() : undefined;
 
             const category =
-              l10n.CATEGORIES[tx.type] && l10n.CATEGORIES[tx.type][tx.category]
-                ? l10n.CATEGORIES[tx.type][tx.category].toLowerCase()
+              L10N.CATEGORIES[tx.type] && L10N.CATEGORIES[tx.type][tx.category]
+                ? L10N.CATEGORIES[tx.type][tx.category].toLowerCase()
                 : undefined;
 
             return (title && title.includes(query)) || (category && category.includes(query));

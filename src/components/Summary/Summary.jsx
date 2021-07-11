@@ -1,21 +1,26 @@
+import {
+  // helpers
+  ALIGN,
+  COLOR,
+  // components
+  Text,
+  Touchable,
+  View,
+} from '@lookiero/aurora';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { THEME } from 'reactor/common';
-import { Col, Row, Text, Touchable, View } from 'reactor/components';
 
-import { C, exchange } from '@common';
-import { useL10N, useStore } from '@context';
+import { C, exchange, L10N } from '@common';
+import { useStore } from '@context';
 
 import { PriceFriendly } from '../PriceFriendly';
 import { verboseMonth } from './modules';
 import { SummaryBox } from './Summary.Box';
-import styles from './Summary.style';
+import { style } from './Summary.style';
 
 const { CURRENCY } = C;
-const { COLOR } = THEME;
 
 const Summary = ({ children, currency = CURRENCY, currentBalance, currentMonth = {}, title = '' }) => {
-  const l10n = useL10N();
   const {
     rates,
     settings: { baseCurrency, maskAmount },
@@ -26,59 +31,31 @@ const Summary = ({ children, currency = CURRENCY, currentBalance, currentMonth =
   const progressionPercentage =
     currentBalance - progression > 0 ? (progression * 100) / (currentBalance - progression) : progression;
 
-  const showCurrentBalance = currentBalance !== undefined;
-
   return (
-    <View style={styles.container}>
-      <Col align="center" style={styles.content}>
-        <Col align="center">
-          <Text bold color={COLOR.LIGHTEN}>
-            {title.toUpperCase()}
-          </Text>
+    <View style={style.container}>
+      <Text heading level={2} color={COLOR.GRAYSCALE_L}>
+        {title}
+      </Text>
 
-          {showCurrentBalance && (
-            <>
-              <Touchable onPress={() => updateSettings({ maskAmount: !maskAmount })}>
-                <PriceFriendly currency={currency} headline value={Math.abs(currentBalance)} />
-              </Touchable>
-              {baseCurrency !== currency && (
-                <PriceFriendly
-                  color={COLOR.LIGHTEN}
-                  currency={baseCurrency}
-                  marginTop="XS"
-                  marginBottom="S"
-                  value={exchange(Math.abs(currentBalance), currency, baseCurrency, rates)}
-                />
-              )}
-            </>
-          )}
-        </Col>
-
-        {showCurrentBalance && (
-          <Row marginTop="M" justify="space" paddingHorizontal="S">
-            <SummaryBox caption={verboseMonth(new Date(), l10n)} currency="%" operator value={progressionPercentage} />
-            <SummaryBox caption={l10n.INCOMES} currency={baseCurrency} value={incomes} />
-            <SummaryBox caption={l10n.EXPENSES} currency={baseCurrency} value={expenses} />
-            <SummaryBox caption={l10n.TODAY} currency={baseCurrency} operator value={today} />
-          </Row>
-        )}
-      </Col>
-
-      {children && (
-        <Row marginTop="S">
-          {React.Children.map(children, (button, index) =>
-            button
-              ? React.cloneElement(button, {
-                  key: index,
-                  color: COLOR.BACKGROUND,
-                  marginRight: index < children.length - 1 ? 'S' : undefined,
-                  style: styles.button,
-                  ...button.props,
-                })
-              : undefined,
-          )}
-        </Row>
+      <Touchable alignSelf={ALIGN.CENTER} onPress={() => updateSettings({ maskAmount: !maskAmount })}>
+        <PriceFriendly currency={currency} heading level={1} value={Math.abs(currentBalance)} />
+      </Touchable>
+      {baseCurrency !== currency && (
+        <PriceFriendly
+          color={COLOR.GRAYSCALE_L}
+          currency={baseCurrency}
+          value={exchange(Math.abs(currentBalance), currency, baseCurrency, rates)}
+        />
       )}
+
+      <View style={style.summary}>
+        <SummaryBox caption={verboseMonth(new Date(), L10N)} currency="%" operator value={progressionPercentage} />
+        <SummaryBox caption={L10N.INCOMES} currency={baseCurrency} value={incomes} />
+        <SummaryBox caption={L10N.EXPENSES} currency={baseCurrency} value={expenses} />
+        <SummaryBox caption={L10N.TODAY} currency={baseCurrency} operator value={today} />
+      </View>
+
+      {children && <View style={style.children}>{children}</View>}
     </View>
   );
 };

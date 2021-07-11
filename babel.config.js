@@ -11,7 +11,6 @@ module.exports = (api) => {
         {
           alias: {
             // -- packages
-            '^reactor/(.+)': './src/reactor/\\1',
             '@lookiero/aurora': '@lookiero/aurora-next',
 
             // -- sources

@@ -1,9 +1,14 @@
+import {
+  // helpers
+  // components
+  Text,
+  Touchable,
+  Slider,
+} from '@lookiero/aurora';
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
-import { THEME } from 'reactor/common';
-import { Button, Slider } from 'reactor/components';
 
-import { C } from '@common';
+import { C, L10N } from '@common';
 import {
   Card,
   CARD_SIZE,
@@ -15,22 +20,20 @@ import {
   Search,
   Summary,
 } from '@components';
-import { useL10N, useNavigation, useStore } from '@context';
+import { useNavigation, useStore } from '@context';
 
 import { DialogVault } from './components';
 import { queryLastTxs, querySearchTxs, queryVaults } from './Dashboard.controller';
-import styles from './Dashboard.style';
+import { style } from './Dashboard.style';
 
 const { SCREEN } = C;
-const { COLOR, SPACE } = THEME;
 
 const Dashboard = ({ timestamp }) => {
-  const l10n = useL10N();
   const navigation = useNavigation();
   const scrollview = useRef(null);
   const { settings: { baseCurrency } = {}, overall, txs = [], vaults = [] } = useStore();
 
-  const [dialogVault, setDialogVault] = useState(undefined);
+  const [dialogVault, setDialogVault] = useState(false);
   const [tx, setTx] = useState(undefined);
   const [lastTxs, setLastTxs] = useState([]);
   const [scroll, setScroll] = useState(false);
@@ -45,32 +48,28 @@ const Dashboard = ({ timestamp }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txs]);
 
-  console.log('  <Dashboard>', { txs });
+  console.log('  <Dashboard>', { scroll, txs });
 
   const visibleVaults = queryVaults({ query, vaults });
 
   return (
     <>
-      <Header visible={scroll} title={scroll ? l10n.DASHBOARD : undefined} />
+      <Header isVisible={scroll} title={L10N.DASHBOARD} />
 
       <ScrollView onScroll={setScroll} ref={scrollview}>
-        <Summary {...overall} currency={baseCurrency} title={l10n.OVERALL_BALANCE}>
+        <Summary {...overall} currency={baseCurrency} title={L10N.OVERALL_BALANCE}>
           <Search onChange={setQuery} />
         </Summary>
 
         {visibleVaults.length > 0 && (
           <>
-            <Heading paddingLeft="M" value={l10n.VAULTS}>
-              <Button
-                color={COLOR.BACKGROUND}
-                colorText={COLOR.BRAND}
-                size="S"
-                text={`${l10n.NEW} ${l10n.VAULT}`.toUpperCase()}
-                onPress={() => setDialogVault(true)}
-              />
+            <Heading value={L10N.VAULTS}>
+              <Touchable onPress={() => setDialogVault(true)}>
+                <Text action>{`${L10N.NEW} ${L10N.VAULT}`.toUpperCase()}</Text>
+              </Touchable>
             </Heading>
 
-            <Slider itemWidth={CARD_SIZE} itemMargin={SPACE.S} marginBottom="L" style={styles.vaults}>
+            <Slider horizontal snapInterval={CARD_SIZE} style={style.slider}>
               {visibleVaults.map((vault, index) => (
                 <Card
                   {...vault.others}
@@ -78,9 +77,8 @@ const Dashboard = ({ timestamp }) => {
                   balance={vault.currentBalance}
                   currency={vault.currency}
                   operator
+                  style={index === 0 ? style.firstCard : style.card}
                   title={vault.title}
-                  marginLeft={index === 0 ? 'M' : undefined}
-                  marginRight="S"
                   onPress={() => navigation.go(SCREEN.VAULT, vault)}
                 />
               ))}
@@ -90,16 +88,16 @@ const Dashboard = ({ timestamp }) => {
 
         {lastTxs.length > 0 && (
           <>
-            <Heading paddingLeft="M" paddingRight="S" value={l10n.LAST_TRANSACTIONS} />
-            {(querySearchTxs({ l10n, query, txs, vaults }) || lastTxs).map((item) => (
+            <Heading value={L10N.LAST_TRANSACTIONS} />
+            {(querySearchTxs({ L10N, query, txs, vaults }) || lastTxs).map((item) => (
               <GroupTransactions {...item} key={`${item.timestamp}`} currency={baseCurrency} onPress={setTx} />
             ))}
           </>
         )}
       </ScrollView>
 
-      <DialogClone dataSource={tx} onClose={() => setTx(undefined)} visible={tx !== undefined} />
-      {dialogVault !== undefined && <DialogVault onClose={() => setDialogVault(false)} visible={dialogVault} />}
+      <DialogClone dataSource={tx} onClose={() => setTx(undefined)} isVisible={tx !== undefined} />
+      <DialogVault onClose={() => setDialogVault(false)} isVisible={dialogVault} />
     </>
   );
 };

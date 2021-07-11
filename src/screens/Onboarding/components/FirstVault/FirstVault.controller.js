@@ -1,7 +1,8 @@
+import { L10N } from '@common';
 import { ServiceRates, ServiceNode } from '@services';
 
-export const fetchRates = async ({ l10n, snackbar, store: { settings, updateRates } }) => {
-  const rates = await ServiceRates.get(settings).catch(() => snackbar.error(l10n.ERROR_SERVICE_RATES));
+export const fetchRates = async ({ snackbar, store: { settings, updateRates } }) => {
+  const rates = await ServiceRates.get(settings).catch(() => snackbar.alert({ text: L10N.ERROR_SERVICE_RATES }));
   if (rates) updateRates(rates);
 };
 

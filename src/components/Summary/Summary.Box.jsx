@@ -1,19 +1,23 @@
+import {
+  // helpers
+  COLOR,
+  // components
+  Text,
+  View,
+} from '@lookiero/aurora';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { THEME } from 'reactor/common';
-import { Col, Text } from 'reactor/components';
 
 import { PriceFriendly } from '../PriceFriendly';
-
-const { COLOR } = THEME;
+import { style } from './Summary.style';
 
 const SummaryBox = ({ caption, value, ...inherit }) => (
-  <Col align="center" marginHorizontal="S">
-    <Text caption color={COLOR.LIGHTEN} numberOfLines={1}>
+  <View style={style.summaryBox}>
+    <Text color={COLOR.GRAYSCALE_L} detail level={2} numberOfLines={1}>
       {caption.toUpperCase()}
     </Text>
-    <PriceFriendly {...inherit} caption fixed={value >= 1000 ? 0 : undefined} value={value} />
-  </Col>
+    <PriceFriendly {...inherit} detail level={2} fixed={value >= 1000 ? 0 : undefined} value={value} />
+  </View>
 );
 
 SummaryBox.propTypes = {

@@ -1,45 +1,44 @@
+import {
+  // components
+  ScrollView,
+  // hooks
+  useDevice,
+} from '@lookiero/aurora';
 import PropTypes from 'prop-types';
-import React, { useEffect, useRef } from 'react';
-import { THEME } from 'reactor/common';
-import { Text, Slider } from 'reactor/components';
+import React from 'react';
 
-import { C } from '@common';
+import { C, L10N } from '@common';
 import { Option, OPTION_SIZE } from '@components';
-import { useL10N } from '@context';
 
 import { getLastMonths } from './modules';
+import { style } from './SliderMonths.style';
 
 const { STATS_MONTHS_LIMIT } = C;
-const { COLOR, SPACE } = THEME;
 
 const SliderMonths = ({ index, onChange, ...others }) => {
-  const l10n = useL10N();
-  const slider = useRef(null);
-
-  useEffect(() => {
-    if (index) {
-      const { current } = slider;
-      current.scrollTo({ x: (index - 3) * (OPTION_SIZE + SPACE.S), animated: index < STATS_MONTHS_LIMIT - 1 });
-    }
-  }, [index]);
+  const {
+    screen: { width },
+  } = useDevice();
 
   return (
-    <Slider ref={slider} itemWidth={OPTION_SIZE} itemMargin={SPACE.S} {...others}>
+    <ScrollView
+      horizontal
+      scrollTo={(index - 1) * OPTION_SIZE}
+      snapInterval={OPTION_SIZE}
+      style={[style.slider, others.style]}
+      width={width}
+    >
       {getLastMonths(STATS_MONTHS_LIMIT).map(({ month, year }, i) => (
         <Option
           key={`${month}-${year}`}
-          color={COLOR.BASE}
-          marginRight="S"
-          onPress={() => onChange({ index: i, month, year })}
+          caption={L10N.MONTHS[month].substr(0, 3).toUpperCase()}
+          legend={year}
           selected={index === i}
-          caption={l10n.MONTHS[month].substr(0, 3).toUpperCase()}
-        >
-          <Text bold caption color={index === i ? COLOR.BACKGROUND : COLOR.LIGHTEN}>
-            {year}
-          </Text>
-        </Option>
+          style={i === 0 ? style.firstCard : style.card}
+          onPress={() => onChange({ index: i, month, year })}
+        />
       ))}
-    </Slider>
+    </ScrollView>
   );
 };
 

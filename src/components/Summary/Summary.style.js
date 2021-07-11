@@ -1,32 +1,28 @@
-import { StyleSheet } from 'react-native';
-import { THEME } from 'reactor/common';
+import StyleSheet from 'react-native-extended-stylesheet';
 
-const { BORDER_RADIUS, FONT, SPACE } = THEME;
-
-const FONT_SIZE_BASE_CURRENCY = FONT.SUBTITLE.fontSize - SPACE.S;
-
-export default StyleSheet.create({
-  button: {
-    flex: 1,
+export const style = StyleSheet.create({
+  children: {
+    marginTop: '$spaceL',
+    width: '100%',
   },
 
   container: {
-    marginBottom: SPACE.XL,
-    marginTop: SPACE.XL,
-    marginHorizontal: SPACE.M,
+    alignItems: 'center',
+    alignContent: 'center',
+    justifyContent: 'center',
+    marginBottom: '$spaceXL',
+    marginHorizontal: '$spaceM',
+  },
+  summary: {
+    flexDirection: 'row',
+    marginTop: '$spaceL',
+    paddingHorizontal: '$spaceXS',
+    width: '100%',
   },
 
-  content: {
-    // backgroundColor: COLOR.BASE,
-    borderRadius: BORDER_RADIUS,
-    paddingBottom: SPACE.M,
-  },
-
-  legend: FONT.LEGEND,
-
-  baseCurrency: {
-    fontSize: FONT_SIZE_BASE_CURRENCY,
-    lineHeight: FONT_SIZE_BASE_CURRENCY * 1.2,
-    height: FONT_SIZE_BASE_CURRENCY,
+  summaryBox: {
+    alignItems: 'center',
+    flex: 1,
+    marginHorizontal: '$spaceXS',
   },
 });

@@ -1,17 +1,15 @@
+import { View } from '@lookiero/aurora';
 import PropTypes from 'prop-types';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { THEME } from 'reactor/common';
-import { Button, Viewport } from 'reactor/components';
 
 import { BANNERS } from '@assets';
-import { C } from '@common';
-import { Banner, DialogClone, GroupTransactions, Header, Heading, ScrollView, Summary } from '@components';
-import { useL10N, useNavigation, useStore } from '@context';
+import { C, L10N } from '@common';
+import { Banner, DialogClone, GroupTransactions, Header, Heading, ScrollView, Summary, Viewport } from '@components';
+import { useNavigation, useStore } from '@context';
 
-import { DialogTransaction } from './components';
+import { ButtonSummary, DialogTransaction } from './components';
 import { onScroll, query } from './Vault.controller';
-
-const { COLOR, ICON = {} } = THEME;
+import { style } from './Vault.style';
 
 const {
   TX: {
@@ -19,10 +17,7 @@ const {
   },
 } = C;
 
-const button = { color: COLOR.BRAND, iconFamily: ICON.FAMILY, outlined: true };
-
 const Vault = ({ visible }) => {
-  const l10n = useL10N();
   const { params, ...navigation } = useNavigation();
   const { baseCurrency, vaults } = useStore();
   const scrollview = useRef(null);
@@ -79,28 +74,24 @@ const Vault = ({ visible }) => {
 
       <ScrollView onScroll={handleScroll} ref={scrollview}>
         <Summary {...rest} title={title} currency={currency}>
-          <Button {...button} icon="arrow-up" onPress={() => setDialog(INCOME)} text={l10n.INCOME.toUpperCase()} />
-          <Button {...button} icon="arrow-down" onPress={() => setDialog(EXPENSE)} text={l10n.EXPENSE.toUpperCase()} />
-          {vaults.length > 1 && (
-            <Button {...button} icon="shuffle" onPress={() => setDialog(TRANSFER)} text={l10n.SWAP.toUpperCase()} />
-          )}
+          <View style={style.buttons}>
+            <ButtonSummary icon="arrow-right-up" text={L10N.INCOME} onPress={() => setDialog(INCOME)} />
+            <ButtonSummary icon="arrow-left-down" text={L10N.EXPENSE} onPress={() => setDialog(EXPENSE)} />
+            {vaults.length > 1 && (
+              <ButtonSummary icon="arrow-left-right" text={L10N.SWAP} onPress={() => setDialog(TRANSFER)} />
+            )}
+          </View>
         </Summary>
 
         {txs.length > 0 ? (
           <>
-            <Heading paddingHorizontal="M" value={l10n.TRANSACTIONS} />
+            <Heading paddingHorizontal="M" value={L10N.TRANSACTIONS} />
             {txs.map((item) => (
               <GroupTransactions key={item.timestamp} {...item} currency={currency} onPress={setTx} />
             ))}
           </>
         ) : (
-          <Banner
-            image={BANNERS.NOT_FOUND}
-            paddingHorizontal="M"
-            paddingVertical="M"
-            small
-            title={l10n.NO_TRANSACTIONS}
-          />
+          <Banner image={BANNERS.NOT_FOUND} title={L10N.NO_TRANSACTIONS} />
         )}
       </ScrollView>
 
@@ -111,7 +102,7 @@ const Vault = ({ visible }) => {
             onClose={() => setDialog(undefined)}
             type={dialog}
             vault={dataSource}
-            visible={visible && dialog !== undefined}
+            isVisible={visible && dialog !== undefined}
           />
           <DialogClone dataSource={tx} onClose={() => setTx(undefined)} visible={tx !== undefined} />
         </>

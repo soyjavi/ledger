@@ -1,28 +1,16 @@
+import { COLOR, Theme, Header as AuroraHeader, Text, View } from '@lookiero/aurora';
 import { BlurView } from 'expo-blur';
 import { StatusBar } from 'expo-status-bar';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
-import { SafeAreaView } from 'react-native';
-import { THEME } from 'reactor/common';
 
-import {
-  // helpers
-  COLOR,
-  // components
-  Text,
-} from '@lookiero/aurora';
-import { Button, Col, Row, View } from 'reactor/components';
+import { colorOpacity, L10N, onHardwareBackPress } from '@common';
+import { useConnection } from '@context';
 
-import { onHardwareBackPress } from '@common';
-import { useConnection, useL10N } from '@context';
+import { style } from './Header.style';
 
-import styles from './Header.style';
-
-const { BLUR = {}, COLOR, ICON = {} } = THEME;
-
-const Header = ({ visible, onBack, title = ' ' }) => {
+const Header = ({ isVisible = true, onBack, title = ' ' }) => {
   const { connected } = useConnection();
-  const l10n = useL10N();
 
   useEffect(() => {
     onHardwareBackPress(onBack !== undefined, onBack);
@@ -33,45 +21,36 @@ const Header = ({ visible, onBack, title = ' ' }) => {
   return (
     <>
       <StatusBar style="light" translucent />
-      <View style={styles.container}>
-        <BlurView {...BLUR} intensity={visible ? BLUR.intensity : 0} style={styles.blur}>
-          <SafeAreaView>
-            <Row paddingHorizontal="M" style={styles.content}>
-              <Col align="start">
-                {onBack && (
-                  <Button
-                    color={COLOR.TRANSPARENT}
-                    colorText={COLOR.TEXT}
-                    iconFamily={ICON.FAMILY}
-                    icon="arrow-left"
-                    onPress={onBack}
-                    size="S"
-                  />
-                )}
-              </Col>
-              <Col align="center" style={styles.title}>
-                <Text heading>{title}</Text>
-              </Col>
-              <Col align="end">
-                {!connected && (
-                  <View style={styles.offline}>
-                    <Text action color={COLOR.BASE}>
-                      {l10n.OFFLINE}
-                    </Text>
-                  </View>
-                )}
-              </Col>
-            </Row>
-          </SafeAreaView>
-        </BlurView>
-      </View>
+
+      <AuroraHeader
+        container={({ children }) => (
+          <BlurView intensity={!isVisible ? 0 : undefined} style={style.blur} tint="dark">
+            {children}
+          </BlurView>
+        )}
+        style={style.header}
+        onBack={onBack}
+      >
+        {isVisible && (
+          <Text heading level={2} style={style.title}>
+            {title}
+          </Text>
+        )}
+        {!connected && (
+          <View style={[style.offline, { backgroundColor: colorOpacity(Theme.get('colorAlert'), 0.25) }]}>
+            <Text action color={COLOR.ALERT}>
+              {L10N.OFFLINE}
+            </Text>
+          </View>
+        )}
+      </AuroraHeader>
     </>
   );
 };
 
 Header.propTypes = {
+  isVisible: PropTypes.bool,
   title: PropTypes.string,
-  visible: PropTypes.bool,
   onBack: PropTypes.func,
 };
 

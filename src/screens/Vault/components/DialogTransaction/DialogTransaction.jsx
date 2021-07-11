@@ -1,16 +1,26 @@
+import {
+  // helpers
+  ALIGN,
+  COLOR,
+  FLEX_DIRECTION,
+  SIZE,
+  // components
+  Button,
+  Modal,
+  Text,
+  View,
+} from '@lookiero/aurora';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { Button, Dialog, Row, Text } from 'reactor/components';
 
-import { C, onHardwareBackPress } from '@common';
+import { C, L10N, onHardwareBackPress } from '@common';
 import { HeatMap } from '@components';
-import { useConnection, useL10N, useSnackBar, useStore } from '@context';
+import { useConnection, useSnackBar, useStore } from '@context';
 
 import { FormTransaction, FormTransfer } from './components';
 import { getLocation, handleSubmit } from './modules';
 
 const {
-  DELAY_PRESS_MS,
   TX: {
     TYPE: { TRANSFER },
   },
@@ -25,9 +35,8 @@ const INITIAL_STATE = {
 const INITIAL_STATE_LOCATION = { coords: undefined, place: undefined };
 
 const DialogTransaction = (props = {}) => {
-  const { onClose, visible, ...inherit } = props;
+  const { onClose, isVisible, ...inherit } = props;
   const { online } = useConnection();
-  const l10n = useL10N();
   const snackbar = useSnackBar();
   const store = useStore();
 
@@ -37,20 +46,20 @@ const DialogTransaction = (props = {}) => {
   const [type, setType] = useState();
 
   useEffect(() => {
-    if (visible && props.type !== undefined && props.type !== type) setType(props.type);
-  }, [visible, props, type]);
+    if (isVisible && props.type !== undefined && props.type !== type) setType(props.type);
+  }, [isVisible, props, type]);
 
   useEffect(() => {
-    if (visible) {
+    if (isVisible) {
       setState(INITIAL_STATE);
       setLocation(INITIAL_STATE_LOCATION);
       getLocation({ online, setLocation });
     }
-    onHardwareBackPress(visible, onClose);
+    onHardwareBackPress(isVisible, onClose);
 
     return () => onHardwareBackPress(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [visible]);
+  }, [isVisible]);
 
   const onSubmit = handleSubmit.bind(undefined, {
     props,
@@ -67,43 +76,41 @@ const DialogTransaction = (props = {}) => {
   const Form = type === TRANSFER ? FormTransfer : FormTransaction;
 
   return (
-    <Dialog {...inherit} onClose={onClose} position="bottom" visible={visible}>
-      <Row justify="center" marginVertical="L">
-        <Text bold subtitle>
-          {l10n.TRANSACTION[type]}
+    <Modal {...inherit} color={COLOR.INFO} isVisible={isVisible} swipeable onClose={onClose}>
+      <View alignItems={ALIGN.CENTER} marginBottom={SIZE.L}>
+        <Text heading level={2}>
+          {L10N.TRANSACTION[type]}
         </Text>
-      </Row>
+      </View>
 
       <Form {...props} {...state} type={type} onChange={(value) => setState({ ...state, ...value })} />
 
       {online && type !== TRANSFER && (
         <HeatMap
-          caption={place || l10n.LOADING_PLACE}
+          caption={place || L10N.LOADING_PLACE}
           points={coords ? [[coords.longitude, coords.latitude]] : undefined}
           small
         />
       )}
 
-      <Row marginTop="XL" marginBottom="M">
-        <Button disabled={busy} marginRight="M" outlined text={l10n.CLOSE.toUpperCase()} wide onPress={onClose} />
-        <Button
-          delay={DELAY_PRESS_MS}
-          disabled={busy || !valid}
-          text={l10n.SAVE.toUpperCase()}
-          wide
-          onPress={onSubmit}
-        />
-      </Row>
-    </Dialog>
+      <View flexDirection={FLEX_DIRECTION.ROW} marginTop={SIZE.XL}>
+        <Button disabled={busy} marginRight={SIZE.M} outlined onPress={onClose}>
+          {L10N.CLOSE.toUpperCase()}
+        </Button>
+        <Button color={COLOR.CONTENT} disabled={busy || !valid} onPress={onSubmit}>
+          {L10N.SAVE.toUpperCase()}
+        </Button>
+      </View>
+    </Modal>
   );
 };
 
 DialogTransaction.propTypes = {
   currency: PropTypes.string,
+  isVisible: PropTypes.bool,
   type: PropTypes.number,
   vault: PropTypes.shape({}),
-  visible: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
 };
 
-export default DialogTransaction;
+export { DialogTransaction };

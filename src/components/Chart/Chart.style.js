@@ -1,39 +1,55 @@
-import { StyleSheet } from 'react-native';
-import { THEME } from 'reactor/common';
+import StyleSheet from 'react-native-extended-stylesheet';
 
-const { BAR_SIZE, BORDER_RADIUS, COLOR, OPACITY, SPACE } = THEME;
+const BAR_SIZE = 8; // S
 
-export default StyleSheet.create({
+export const style = StyleSheet.create({
+  bars: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'space-between',
+    height: BAR_SIZE * 8,
+  },
+
   bar: {
-    backgroundColor: COLOR.BASE,
-    borderTopLeftRadius: BORDER_RADIUS,
-    borderTopRightRadius: BORDER_RADIUS,
+    borderTopLeftRadius: '$borderRadius',
+    borderTopRightRadius: '$borderRadius',
     maxHeight: '100%',
     minHeight: BAR_SIZE,
     width: BAR_SIZE,
     zIndex: 2,
   },
 
+  border: {
+    borderColor: '$colorGrayscaleXL',
+    borderTopWidth: 1,
+  },
+
+  content: {
+    marginHorizontal: '$spaceM',
+  },
+
   barInverted: {
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
-    borderBottomLeftRadius: BORDER_RADIUS,
-    borderBottomRightRadius: BORDER_RADIUS,
+    borderBottomLeftRadius: '$borderRadius',
+    borderBottomRightRadius: '$borderRadius',
     zIndex: 2,
   },
 
   captions: {
-    borderColor: COLOR.BASE,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderColor: '$colorGrayscaleXL',
     borderTopWidth: 1,
-    position: 'absolute',
-    height: SPACE.M,
-    bottom: -SPACE.M,
-    width: '100%',
+    paddingTop: '$spaceXS',
+  },
+
+  caption: {
+    // transform: [{ scale: 0.7 }],
   },
 
   column: {
     alignItems: 'center',
-
     flex: 1,
     height: '100%',
     justifyContent: 'flex-end',
@@ -42,21 +58,6 @@ export default StyleSheet.create({
 
   columnInverted: {
     justifyContent: 'flex-start',
-  },
-
-  container: {
-    borderColor: COLOR.BASE,
-    borderTopWidth: 1,
-  },
-
-  containerInverted: {
-    borderTopWidth: 0,
-  },
-
-  content: {
-    flex: 1,
-    minHeight: BAR_SIZE * 8,
-    maxHeight: BAR_SIZE * 8,
   },
 
   scales: {
@@ -69,29 +70,25 @@ export default StyleSheet.create({
   },
 
   scaleAvg: {
-    marginTop: -(SPACE.M - SPACE.XS),
-
+    marginTop: '$spaceS * -1',
     top: '100%',
   },
 
   scaleLine: {
-    backgroundColor: COLOR.LIGHTEN,
     height: 1,
-    opacity: OPACITY.L,
+    opacity: 0.25,
     width: '100%',
     top: '50%',
   },
 
   tag: {
-    display: 'flex',
     alignContent: 'center',
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'flex-start',
-    borderRadius: BORDER_RADIUS,
-    paddingHorizontal: SPACE.XS,
+    borderRadius: '$borderRadius',
+    paddingHorizontal: '$spaceXS',
     borderWidth: 1,
-    borderColor: COLOR.BACKGROUND,
-    zIndex: 1,
+    borderColor: '$colorBase',
   },
 });

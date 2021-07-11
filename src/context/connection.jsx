@@ -1,8 +1,8 @@
+import NetInfo from '@react-native-community/netinfo';
 import PropTypes from 'prop-types';
 import React, { useCallback, useContext, useEffect, useLayoutEffect, useState, createContext } from 'react';
 
 import { C } from '@common';
-import NetInfo from '@react-native-community/netinfo';
 import { ServiceNode } from '@services';
 
 const { TIMEOUT } = C;

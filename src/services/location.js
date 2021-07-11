@@ -1,11 +1,10 @@
-import { THEME } from 'reactor/common';
+import { Theme } from '@lookiero/aurora';
 
 import { C } from '@common';
 
 const {
   MAPBOX: { ACCESS_TOKEN, API, SERVICE },
 } = C;
-const { COLOR } = THEME;
 
 export const ServiceLocation = {
   getPlace: async ({ latitude, longitude }) => {
@@ -45,7 +44,7 @@ export const ServiceLocation = {
 
   uriMap: ({
     center = 'auto',
-    color = COLOR.BRAND,
+    color = Theme.get('colorPrimary'),
     darkMode = false,
     height = 0,
     points = [],

@@ -1,29 +1,41 @@
+import {
+  // helpers
+  ALIGN,
+  SIZE,
+  LAYOUT,
+  // components
+  Button,
+  SafeAreaView,
+  View,
+} from '@lookiero/aurora';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Button, Viewport } from 'reactor/components';
 
 import { BANNERS } from '@assets';
-import { C } from '@common';
-import { Banner } from '@components';
-import { useL10N } from '@context';
+import { L10N } from '@common';
+import { Banner, Viewport } from '@components';
 
-import styles from './Completed.style';
-
-const { DELAY_PRESS_MS } = C;
+import { style } from './Completed.style';
 
 const Completed = ({ onPress, ...inherit }) => {
-  const l10n = useL10N();
-
   return (
     <Viewport {...inherit}>
-      <Banner
-        align="right"
-        image={BANNERS.COMPLETED}
-        marginBottom="XL"
-        title={l10n.ONBOARDING_COMPLETED_TITLE}
-        caption={l10n.ONBOARDING_COMPLETED_CAPTION}
-      />
-      <Button delay={DELAY_PRESS_MS} onPress={onPress} style={styles.buttonRight} text={l10n.CONTINUE.toUpperCase()} />
+      <SafeAreaView flex={SIZE.XS}>
+        <View style={style.content} justifyContent={ALIGN.END} padding={SIZE.M}>
+          <Banner
+            aling={ALIGN.RIGHT}
+            image={BANNERS.COMPLETED}
+            marginBottom={LAYOUT.XS}
+            title={L10N.ONBOARDING_COMPLETED_TITLE}
+            caption={L10N.ONBOARDING_COMPLETED_CAPTION}
+          />
+          <View alignSelf={ALIGN.END}>
+            <Button wide={false} onPress={onPress}>
+              {L10N.CONTINUE}
+            </Button>
+          </View>
+        </View>
+      </SafeAreaView>
     </Viewport>
   );
 };

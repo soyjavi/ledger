@@ -1,3 +1,4 @@
+import { View, useDevice } from '@lookiero/aurora';
 import React from 'react';
 
 import { Sync } from './App.sync';
@@ -9,12 +10,13 @@ const { SCREEN } = C;
 const { DASHBOARD, VAULT } = SCREEN;
 
 const Router = () => {
+  const {
+    screen: { height, width },
+  } = useDevice();
   const { current, stack = [] } = useNavigation();
 
-  console.log(' <Router>');
-
   return (
-    <>
+    <View style={{ height, width, overflow: 'hidden' }}>
       <Onboarding />
       <Main backward={current !== DASHBOARD} visible={stack.includes(DASHBOARD)} />
       {stack.includes(DASHBOARD) && (
@@ -23,7 +25,7 @@ const Router = () => {
           <Sync />
         </>
       )}
-    </>
+    </View>
   );
 };
 

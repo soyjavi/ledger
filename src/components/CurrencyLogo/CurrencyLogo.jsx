@@ -1,24 +1,35 @@
+import {
+  // helpers
+  ALIGN,
+  COLOR,
+  // components
+  Text,
+  View,
+} from '@lookiero/aurora';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { THEME } from 'reactor/common';
-import { Text, View } from 'reactor/components';
 
 import { C } from '@common';
 
-import styles from './CurrencyLogo.style';
+import { style } from './CurrencyLogo.style';
 
 const { SYMBOL } = C;
-const { COLOR, FONT } = THEME;
 
-const NO_SYMBOL = ['XAG', 'XAU'];
+const WITHOUT_SYMBOL = ['XAG', 'XAU'];
 
-const CurrencyLogo = ({ color = COLOR.BRAND, currency, ...others }) => {
-  const symbol = NO_SYMBOL.includes(currency) ? undefined : currency && SYMBOL[currency];
+const CurrencyLogo = ({ color = COLOR.PRIMARY, currency, ...others }) => {
+  const symbol = WITHOUT_SYMBOL.includes(currency) ? undefined : currency && SYMBOL[currency];
 
   return (
-    <View {...others} style={[styles.container, { backgroundColor: color }]}>
+    <View
+      {...others}
+      alignItems={ALIGN.CENTER}
+      backgroundColor={color}
+      justifyContent={ALIGN.CENTER}
+      style={[style.container, others.style]}
+    >
       {symbol && (
-        <Text bold caption={symbol.length > 1} color={COLOR.BASE} style={[FONT.CURRENCY, styles.font]}>
+        <Text detail level={symbol.length === 1 ? 2 : undefined} color={COLOR.BASE} style={style.currency}>
           {symbol}
         </Text>
       )}

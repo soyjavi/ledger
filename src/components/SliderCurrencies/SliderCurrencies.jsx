@@ -1,32 +1,38 @@
+import {
+  // components
+  ScrollView,
+  // hooks
+  useDevice,
+} from '@lookiero/aurora';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { THEME } from 'reactor/common';
-import { Slider } from 'reactor/components';
 
-import { Option, OPTION_SIZE } from '@components/Option';
 import { useStore } from '@context';
 
+import { Option, OPTION_SIZE } from '../Option';
 import { queryCurrencies } from './modules';
-
-const { SPACE } = THEME;
+import { style } from './SliderCurrencies.style';
 
 const SliderCurrencies = ({ color, onChange, selected, ...others }) => {
+  const {
+    screen: { width },
+  } = useDevice();
   const store = useStore();
 
   return (
-    <Slider {...others} itemMargin={SPACE.S} itemWidth={OPTION_SIZE}>
+    <ScrollView {...others} horizontal snapInterval={OPTION_SIZE} style={[others.style]} width={width}>
       {queryCurrencies(store).map((currency, index) => (
         <Option
           caption={currency}
           color={color}
           currency={currency}
           key={index}
-          marginRight="S"
+          style={index === 0 ? style.firstCard : style.card}
           onPress={() => onChange(currency)}
           selected={selected === currency}
         />
       ))}
-    </Slider>
+    </ScrollView>
   );
 };
 

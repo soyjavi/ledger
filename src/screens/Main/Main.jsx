@@ -1,14 +1,16 @@
+import { Footer, FooterItem } from '@lookiero/aurora';
+import { BlurView } from 'expo-blur';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { Viewport } from 'reactor/components';
 
-import { C } from '@common';
-import { Footer } from '@components';
+import { C, L10N } from '@common';
+import { Viewport } from '@components';
 
 import { Dashboard } from '../Dashboard';
 import { Settings } from '../Settings';
 import { Stats } from '../Stats';
 import { Vaults } from '../Vaults';
+import { style } from './Main.style';
 
 const {
   SCREEN: { DASHBOARD, STATS, VAULTS, SETTINGS },
@@ -25,12 +27,11 @@ const Main = ({ visible, ...inherit }) => {
   const [timestamp, setTimestamp] = useState();
 
   useEffect(() => {
-    if (!screens[screen]) {
-      setScreens({ ...screens, [screen]: undefined });
-    }
+    if (!screens[screen]) setScreens({ ...screens, [screen]: undefined });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [screen]);
 
-  const handlePress = (next) => {
+  const handleChange = (next) => {
     setScreen(next);
     setTimestamp(next === screen ? new Date().getTime() : undefined);
   };
@@ -38,8 +39,6 @@ const Main = ({ visible, ...inherit }) => {
   console.log('  <Main>', { visible, screen, screens });
 
   const props = { timestamp };
-
-  Object.keys((screens) => {});
 
   return (
     <Viewport {...inherit} scroll={false} visible={visible}>
@@ -52,7 +51,22 @@ const Main = ({ visible, ...inherit }) => {
         </>
       )}
 
-      <Footer current={screen} visible={visible} onScreen={handlePress} />
+      <Footer
+        container={({ children }) => (
+          <BlurView style={style.blur} tint="dark">
+            {children}
+          </BlurView>
+        )}
+        style={style.footer}
+        value={screen}
+        onChange={handleChange}
+      >
+        {/* <BlurView tint="dark" intensity={visible ? 95 : 0} style={styles.blur}> */}
+        <FooterItem icon="home" text={L10N.DASHBOARD} value={DASHBOARD} />
+        <FooterItem icon="bar-chart" text={L10N.ACTIVITY} value={STATS} />
+        <FooterItem icon="stack" text={L10N.VAULTS} value={VAULTS} />
+        <FooterItem icon="settings" text={L10N.SETTINGS} value={SETTINGS} />
+      </Footer>
     </Viewport>
   );
 };

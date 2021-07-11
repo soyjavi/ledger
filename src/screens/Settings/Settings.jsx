@@ -1,27 +1,31 @@
+import {
+  // helpers
+  COLOR,
+  // components
+  Image,
+  Text,
+  Touchable,
+  View,
+} from '@lookiero/aurora';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Camera } from 'expo-camera';
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
-import { THEME } from 'reactor/common';
-import { Alert, Button, Image, Row, Text, View } from 'reactor/components';
 
-import { C } from '@common';
-import { Header, Heading, ScrollView, SliderCurrencies } from '@components';
-import { useL10N, useSnackBar, useStore } from '@context';
+import { L10N } from '@common';
+import { Dialog, Header, Heading, ScrollView, SliderCurrencies } from '@components';
+import { useSnackBar, useStore } from '@context';
 import { ServiceQR } from '@services';
 
 import { askCamera, changeCurrency, getBlockchain, getLatestRates } from './Settings.controller';
-import styles from './Settings.style';
+import { style } from './Settings.style';
 
-const { DELAY_PRESS_MS } = C;
-const { COLOR } = THEME;
 const CAMERA_PROPS = {
   barCodeScannerSettings: { barCodeTypes: [BarCodeScanner.Constants.BarCodeType.qr] },
   type: Camera.Constants.Type.back,
 };
 
 const Settings = ({ timestamp }) => {
-  const l10n = useL10N();
   const scrollview = useRef(null);
   const store = useStore();
   const snackbar = useSnackBar();
@@ -67,7 +71,7 @@ const Settings = ({ timestamp }) => {
     setQr(undefined);
   };
 
-  const handleChangeCurrency = (currency) => changeCurrency({ currency, l10n, snackbar, store });
+  const handleChangeCurrency = (currency) => changeCurrency({ currency, L10N, snackbar, store });
 
   const handleQRScanned = ({ data } = {}) => {
     if (data) setQr(data);
@@ -77,80 +81,66 @@ const Settings = ({ timestamp }) => {
     const success = await fork(blockchain);
     if (success) {
       setBlockchain(undefined);
-      snackbar.success(l10n.FORKED_CORRECTLY);
+      snackbar.success({ text: L10N.FORKED_CORRECTLY });
     }
   };
 
   const handleUpdateRates = async () => {
     setSyncRates(true);
-    await getLatestRates({ l10n, snackbar, store });
+    await getLatestRates({ snackbar, store });
     setSyncRates(false);
   };
 
-  console.log({ qr });
-
   return (
     <>
-      <Header visible={scroll} title={l10n.SETTINGS} />
+      <Header visible={scroll} title={L10N.SETTINGS} />
 
       <ScrollView onScroll={setScroll} ref={scrollview}>
-        <Heading paddingLeft="M" value={l10n.TRANSFER_TXS}>
+        <Heading value={L10N.TRANSFER_TXS}>
           {hasCamera && (
-            <Button
-              color={COLOR.BACKGROUND}
-              colorText={COLOR.BRAND}
-              size="S"
-              text={camera ? l10n.CLOSE : l10n.QR_READER}
-              onPress={() => setCamera(!camera)}
-            />
+            <Touchable onPress={() => setCamera(!camera)}>
+              <Text action>{(camera ? L10N.CLOSE : L10N.QR_READER).toUpperCase()}</Text>
+            </Touchable>
           )}
         </Heading>
 
-        <View marginBottom="XL" marginHorizontal="M">
-          <View style={styles.content}>
-            {!camera ? (
-              <Image source={{ uri: ServiceQR.uri({ secret, authorization }) }} style={styles.qr} />
-            ) : (
-              <Camera {...CAMERA_PROPS} onBarCodeScanned={handleQRScanned} style={styles.camera}>
-                <View style={styles.cameraViewport} />
-              </Camera>
-            )}
-          </View>
-          <Text caption color={COLOR.LIGHTEN} marginTop="S" style={styles.legend}>
-            {camera ? l10n.TRANSFER_TXS_CAMERA : l10n.TRANSFER_TXS_CAPTION}
+        <View style={[style.qrBackground, style.offset]}>
+          {!camera ? (
+            <Image src={ServiceQR.uri({ secret, authorization })} style={style.qr} />
+          ) : (
+            <Camera {...CAMERA_PROPS} onBarCodeScanned={handleQRScanned} style={style.camera}>
+              <View style={style.cameraViewport} />
+            </Camera>
+          )}
+
+          <Text color={camera ? COLOR.CONTENT : COLOR.GRAYSCALE_L} detail level={2} style={style.qrHint}>
+            {camera ? L10N.TRANSFER_TXS_CAMERA : L10N.TRANSFER_TXS_CAPTION}
           </Text>
         </View>
 
-        <Heading paddingLeft="M" value={l10n.CHOOSE_CURRENCY}>
-          <Button
-            color={COLOR.BACKGROUND}
-            colorText={COLOR.BRAND}
-            size="S"
-            text={l10n.SYNC_RATES_CTA.toUpperCase()}
-            onPress={handleUpdateRates}
-          />
+        <Heading value={L10N.CHOOSE_CURRENCY}>
+          <Touchable onPress={handleUpdateRates}>
+            <Text action>{L10N.SYNC_RATES_CTA.toUpperCase()}</Text>
+          </Touchable>
         </Heading>
-        <SliderCurrencies color={COLOR.BASE} onChange={handleChangeCurrency} paddingLeft="M" selected={baseCurrency} />
-        <Row marginHorizontal="M" marginTop="S">
-          <Text caption color={COLOR.LIGHTEN}>
-            {!syncRates
-              ? `${l10n.SYNC_RATES_SENTENCE} ${new Date().toString().split(' ').slice(0, 5).join(' ')}.`
-              : l10n.WAIT}
-          </Text>
-        </Row>
+
+        <SliderCurrencies style={style.slider} selected={baseCurrency} onChange={handleChangeCurrency} />
+
+        <Text color={COLOR.GRAYSCALE_L} detail level={2} style={style.offset}>
+          {!syncRates
+            ? `${L10N.SYNC_RATES_SENTENCE} ${new Date().toString().split(' ').slice(0, 5).join(' ')}.`
+            : L10N.WAIT}
+        </Text>
       </ScrollView>
 
-      <Alert
-        accept={l10n.IMPORT}
-        cancel={l10n.CANCEL}
-        caption={l10n.TRANSFER_TXS_IMPORT}
-        delay={DELAY_PRESS_MS}
+      <Dialog
+        accept={L10N.IMPORT}
+        cancel={L10N.CANCEL}
+        text={L10N.TRANSFER_TXS_IMPORT}
+        title={L10N.WARNING}
+        isVisible={blockchain !== undefined}
         onAccept={handleFork}
         onCancel={handleCancel}
-        onClose={handleCancel}
-        position="bottom"
-        title={l10n.WARNING}
-        visible={blockchain !== undefined}
       />
     </>
   );

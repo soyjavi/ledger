@@ -1,6 +1,3 @@
-import { array, bool, func, node, number, object, oneOfType } from 'prop-types';
-import React, { useEffect, useState } from 'react';
-
 import {
   // helpers
   POSITION,
@@ -15,8 +12,11 @@ import {
   useDevice,
   useSwipe,
 } from '@lookiero/aurora';
-import { style } from './Viewport.style';
 import { MOTION } from 'expo-permissions';
+import { array, bool, func, node, number, object, oneOfType } from 'prop-types';
+import React, { useEffect, useState } from 'react';
+
+import { style } from './Viewport.style';
 
 const { motionCollapse } = Theme.get();
 
@@ -49,10 +49,9 @@ export const Viewport = ({ backward = false, children, visible = true, onClose }
     if (visible) setRight(0);
   }, [visible]);
 
-  console.log({ right, swiping });
   return (
     <Motion
-      customStyle={[style.container, { height, width }]}
+      style={[style.container, { height, width }]}
       disabled={right !== 0}
       duration={visible ? MOTION.EXPAND : MOTION.COLLAPSE}
       position={POSITION.ABSOLUTE}
@@ -61,11 +60,7 @@ export const Viewport = ({ backward = false, children, visible = true, onClose }
     >
       <SafeAreaView flex={SIZE.XS}>
         {children}
-        <View
-          {...(onClose && visible ? handleSwipe : undefined)}
-          customStyle={style.swipper}
-          position={POSITION.ABSOLUTE}
-        />
+        <View {...(onClose && visible ? handleSwipe : undefined)} style={style.swipper} position={POSITION.ABSOLUTE} />
       </SafeAreaView>
     </Motion>
   );

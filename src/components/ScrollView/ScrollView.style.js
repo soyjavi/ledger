@@ -1,10 +1,9 @@
-import { Platform, StyleSheet } from 'react-native';
-import { THEME } from 'reactor/common';
+import StyleSheet from 'react-native-extended-stylesheet';
 
-const { SPACE } = THEME;
-
-export default StyleSheet.create({
+export const style = StyleSheet.create({
   container: {
-    paddingVertical: SPACE.XXL * (Platform.OS === 'web' ? 1 : 2),
+    backgroundColor: '$colorBase',
+    paddingTop: '$layoutL',
+    paddingBottom: '$layoutXL',
   },
 });

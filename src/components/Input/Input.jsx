@@ -1,6 +1,3 @@
-import PropTypes from 'prop-types';
-import React, { useState } from 'react';
-import { Keyboard, TextInput } from 'react-native';
 import {
   // helpers
   COLOR,
@@ -8,6 +5,9 @@ import {
   Text,
   View,
 } from '@lookiero/aurora';
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import { Keyboard, TextInput } from 'react-native';
 
 import { style } from './Input.style';
 
@@ -23,11 +23,11 @@ const Input = ({ disabled, keyboard = 'default', label, value = '', onChange, ..
   return (
     <View
       {...others}
-      borderColor={active ? COLOR.CONTENT : COLOR.GRAYSCALE_XL}
-      customStyle={[style.container, others.customStyle]}
+      borderColor={active ? COLOR.CONTENT : COLOR.GRAYSCALE_L}
+      style={[style.container, others.customStyle]}
       wide
     >
-      <Text color={!active ? COLOR.GRAYSCALE_XL : undefined} customStyle={style.label} detail pointerEvents="none">
+      <Text color={!active ? COLOR.GRAYSCALE_L : undefined} style={style.label} detail level={2} pointerEvents="none">
         {label.toUpperCase()}
       </Text>
       <TextInput
@@ -38,7 +38,7 @@ const Input = ({ disabled, keyboard = 'default', label, value = '', onChange, ..
         editable
         keyboardType={keyboard}
         placeholder={!focus ? 'Type something...' : undefined}
-        placeholderTextColor={COLOR.LIGHTEN}
+        placeholderTextColor={COLOR.GRAYSCALE_L}
         style={style.input}
         underlineColorAndroid="transparent"
         value={value}

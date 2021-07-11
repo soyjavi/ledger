@@ -1,19 +1,25 @@
+import {
+  // helpers
+  COLOR,
+  SIZE,
+  // components
+  ScrollView,
+  // hooks
+  useDevice,
+} from '@lookiero/aurora';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { THEME } from 'reactor/common';
-import { Slider } from 'reactor/components';
 
-import { C } from '@common';
+import { getIcon, L10N } from '@common';
 import { Input, InputCurrency, Option, OPTION_SIZE } from '@components';
-import { useL10N } from '@context';
 
 import { queryCategories } from '../modules';
-
-const { CATEGORY_ICON } = C;
-const { SPACE } = THEME;
+import { style } from './FormTransaction.style';
 
 const FormTransaction = ({ color, currency, form = {}, onChange, type, vault = {} }) => {
-  const l10n = useL10N();
+  const {
+    screen: { width },
+  } = useDevice();
 
   const handleField = (field, fieldValue) => {
     const next = { ...form, [field]: fieldValue };
@@ -26,24 +32,24 @@ const FormTransaction = ({ color, currency, form = {}, onChange, type, vault = {
 
   return (
     <>
-      <Slider itemMargin={SPACE.S} itemWidth={OPTION_SIZE} marginBottom="L">
-        {queryCategories({ l10n, type }).map((item) => (
+      <ScrollView horizontal snapInterval={OPTION_SIZE} style={style.slider} width={width}>
+        {queryCategories({ type }).map((item, index) => (
           <Option
-            colorSelected={color}
+            color={COLOR.GRAYSCALE_XL}
             legend={item.caption}
             key={item.key}
-            icon={CATEGORY_ICON[type][item.key]}
-            marginRight="S"
-            onPress={() => handleField('category', item.key)}
+            icon={getIcon({ type, category: item.key })}
             selected={form.category === item.key}
+            style={index === 0 ? style.firstCard : style.card}
+            onPress={() => handleField('category', item.key)}
           />
         ))}
-      </Slider>
+      </ScrollView>
 
       <InputCurrency
         color={color}
         currency={currency}
-        marginBottom="L"
+        marginBottom={SIZE.M}
         type={type}
         onChange={(value) => handleField('value', value)}
         value={form.value}
@@ -52,8 +58,8 @@ const FormTransaction = ({ color, currency, form = {}, onChange, type, vault = {
 
       <Input
         color={color}
-        label={l10n.CONCEPT}
-        marginBottom="L"
+        label={L10N.CONCEPT}
+        marginBottom={SIZE.M}
         onChange={(value) => handleField('title', value)}
         value={form.title}
       />

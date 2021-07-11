@@ -1,14 +1,14 @@
+import { COLOR, View } from '@lookiero/aurora';
 import PropTypes from 'prop-types';
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { THEME } from 'reactor/common';
 
-import { C } from '@common';
+import { C, L10N } from '@common';
 import { Chart, Header, ScrollView } from '@components';
-import { useL10N, useStore } from '@context';
+import { useStore } from '@context';
 
 import { ItemGroupCategories, Locations, SliderMonths } from './components';
 import { calcScales, orderCaptions, queryMonth, queryChart } from './modules';
-import styles from './Stats.style';
+import { style } from './Stats.style';
 
 const {
   STATS_MONTHS_LIMIT,
@@ -16,17 +16,14 @@ const {
     TYPE: { EXPENSE, INCOME },
   },
 } = C;
-const { COLOR } = THEME;
 
 const Stats = ({ timestamp }) => {
   const scrollview = useRef(null);
-  const l10n = useL10N();
   const store = useStore();
 
   const [chart, setChart] = useState({});
   const [slider, setSlider] = useState({});
   const [month, setMonth] = useState(undefined);
-  const [scroll, setScroll] = useState(false);
 
   const {
     settings: { baseCurrency },
@@ -64,36 +61,34 @@ const Stats = ({ timestamp }) => {
 
   return (
     <>
-      <Header visible={scroll} title={scroll ? `${l10n.MONTHS[slider.month]} ${slider.year}` : l10n.ACTIVITY} />
+      <Header title={`${L10N.MONTHS[slider.month]} ${slider.year}`} />
 
-      <ScrollView onScroll={setScroll} ref={scrollview}>
-        <SliderMonths {...slider} onChange={handleSliderChange} marginTop="M" marginBottom="L" />
+      <ScrollView ref={scrollview}>
+        <SliderMonths {...slider} onChange={handleSliderChange} />
 
         <Chart
           {...useMemo(() => calcScales(chart.balance), [chart.balance])}
           {...chartProps}
-          captions={orderCaptions(l10n)}
-          color={COLOR.BRAND}
-          styleContainer={[styles.chart, styles.chartMargin]}
-          style={styles.chartBalance}
-          title={l10n.OVERALL_BALANCE}
+          captions={orderCaptions(L10N)}
+          color={COLOR.PRIMARY}
+          style={style.chartMargin}
+          title={L10N.OVERALL_BALANCE}
           values={chart.balance}
         />
 
         <Chart
           {...useMemo(() => calcScales(chart.incomes), [chart.incomes])}
           {...chartProps}
-          color={COLOR.BRAND}
-          styleContainer={[styles.chart]}
-          title={`${l10n.INCOMES} & ${l10n.EXPENSES}`}
+          color={COLOR.PRIMARY}
+          title={`${L10N.INCOMES} & ${L10N.EXPENSES}`}
           values={chart.incomes}
         />
         <Chart
           {...useMemo(() => calcScales(chart.expenses), [chart.expenses])}
           {...chartProps}
-          captions={orderCaptions(l10n)}
+          captions={orderCaptions(L10N)}
           inverted
-          styleContainer={[styles.chart, styles.chartMargin]}
+          style={style.chartMargin}
           values={chart.expenses}
         />
 
@@ -105,12 +100,13 @@ const Stats = ({ timestamp }) => {
           </>
         )}
 
+        <View style={style.chartMargin} />
+
         <Chart
           {...useMemo(() => calcScales(chart.transfers), [chart.transfers])}
           {...chartProps}
-          captions={orderCaptions(l10n)}
-          styleContainer={[styles.chart, styles.chartMargin]}
-          title={l10n.TRANSFERS}
+          captions={orderCaptions(L10N)}
+          title={L10N.TRANSFERS}
           values={chart.transfers}
         />
       </ScrollView>

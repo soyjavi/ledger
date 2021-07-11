@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-import React from 'react';
 import {
   // helpers
   ALIGN,
@@ -10,6 +8,8 @@ import {
   Touchable,
   View,
 } from '@lookiero/aurora';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import { style } from './NumKeyboard.style';
 
@@ -26,11 +26,11 @@ const LETTERS = {
 };
 
 const NumKeyboard = ({ onPress, ...others }) => (
-  <View {...others} customStyle={style.container} wide>
+  <View {...others} style={style.container} wide>
     {KEYS.map((key, index) => (
       <Touchable
         key={index}
-        customStyle={style.touchable}
+        style={style.touchable}
         paddingVertical={SIZE.S}
         onPress={typeof key === 'number' ? () => onPress(key) : undefined}
       >

@@ -1,11 +1,15 @@
+import {
+  // helpers
+  SIZE,
+  // components
+  ScrollView,
+} from '@lookiero/aurora';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { THEME } from 'reactor/common';
-import { Slider } from 'reactor/components';
 
-import { C, currencyDecimals } from '@common';
+import { C, currencyDecimals, L10N } from '@common';
 import { InputCurrency, Option, OPTION_SIZE } from '@components';
-import { useL10N, useStore } from '@context';
+import { useStore } from '@context';
 
 import { getVault, queryAvailableVaults } from '../modules';
 
@@ -14,10 +18,8 @@ const {
     TYPE: { EXPENSE, INCOME },
   },
 } = C;
-const { SPACE } = THEME;
 
 const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
-  const l10n = useL10N();
   const {
     settings: { baseCurrency },
     vaults,
@@ -63,7 +65,6 @@ const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
   return (
     <>
       <InputCurrency
-        marginBottom="L"
         type={EXPENSE}
         value={form.value}
         vault={vault}
@@ -71,13 +72,19 @@ const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
       />
 
       {selectVault ? (
-        <Slider itemMargin={SPACE.S} itemWidth={OPTION_SIZE} marginBottom="S">
+        <ScrollView
+          horizontal
+          snapInterval={OPTION_SIZE}
+          // style={style.slider}
+          // width={width}
+          marginBottom={SIZE.M}
+        >
           {availableVaults.map(({ currency, hash, title }) => (
             <Option
               currency={currency}
               key={hash}
               legend={title}
-              marginRight="S"
+              // marginRight={SIZE.M}
               onPress={() => {
                 handleField('destination', hash);
                 setSelectVault(false);
@@ -85,12 +92,12 @@ const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
               selected={hash === form.destination}
             />
           ))}
-        </Slider>
+        </ScrollView>
       ) : (
         <InputCurrency
           currency={form.to ? form.to.currency : baseCurrency}
-          label={l10n.GET}
-          marginBottom="S"
+          label={L10N.GET}
+          marginBottom={SIZE.M}
           type={INCOME}
           value={form.to ? form.exchange : undefined}
           vault={getVault(form.destination, vaults)}

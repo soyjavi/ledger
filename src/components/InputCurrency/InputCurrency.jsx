@@ -1,6 +1,3 @@
-import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
-import { Keyboard, TextInput } from 'react-native';
 import {
   // helpers
   ALIGN,
@@ -13,14 +10,17 @@ import {
   Touchable,
   View,
 } from '@lookiero/aurora';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
+import { Keyboard, TextInput } from 'react-native';
 
 import { C } from '@common';
 import { useStore } from '@context';
 
 import { CurrencyLogo } from '../CurrencyLogo';
 import { PriceFriendly } from '../PriceFriendly';
-import { style } from './InputCurrency.style';
 import { getLastRates } from './helpers';
+import { style } from './InputCurrency.style';
 
 const {
   TX: {
@@ -29,7 +29,6 @@ const {
 } = C;
 
 const InputCurrency = ({
-  color,
   disabled,
   label = '',
   type = EXPENSE,
@@ -71,52 +70,50 @@ const InputCurrency = ({
   return (
     <View
       {...others}
-      borderColor={active ? COLOR.CONTENT : COLOR.GRAYSCALE_XL}
-      customStyle={[style.container, others.customStyle]}
+      borderColor={active ? COLOR.CONTENT : COLOR.GRAYSCALE_L}
+      style={[style.container, others.style]}
       wide
     >
-      <View customStyle={style.content} flexDirection={FLEX_DIRECTION.ROW}>
+      <View style={style.content} flexDirection={FLEX_DIRECTION.ROW}>
         <View flexDirection={FLEX_DIRECTION.COL}>
           <Touchable onPress={!disabled ? onVault : undefined}>
-            <View customStyle={style.label}>
+            <View style={style.row}>
               {title && (
                 <CurrencyLogo
-                  color={active ? COLOR.CONTENT : currency !== baseCurrency ? COLOR.GRAYSCALE_XL : undefined}
+                  color={active ? COLOR.CONTENT : currency !== baseCurrency ? COLOR.GRAYSCALE_L : undefined}
                   currency={currency}
                   marginRight={SIZE.XS}
                 />
               )}
-              <Text color={!active ? COLOR.GRAYSCALE_XL : undefined} detail pointerEvents="none">
+              <Text color={!active ? COLOR.GRAYSCALE_L : undefined} detail level={2} pointerEvents="none">
                 {(title || label).toUpperCase()}
               </Text>
             </View>
 
             {title && (
-              <Row>
+              <View style={style.row}>
                 <PriceFriendly
-                  color={COLOR.GRAYSCALE_XL}
+                  color={COLOR.GRAYSCALE_L}
                   currency={currency}
                   detail
                   label="Balance: "
                   value={currentBalance}
                 />
-                {onVault && !disabled && (
-                  <Icon color={COLOR.GRAYSCALE_XL} marginLeft="XS" marginTop="XXS" size={SPACE.S} value="arrow-down" />
-                )}
-              </Row>
+                {onVault && !disabled && <Icon color={COLOR.GRAYSCALE_L} name="arrow-down" />}
+              </View>
             )}
           </Touchable>
         </View>
 
         <View alignItems={ALIGN.END} flex={SIZE.XS} flexDirection={FLEX_DIRECTION.COL} pointerEvents="none">
           <PriceFriendly
-            color={!active ? COLOR.GRAYSCALE_XL : undefined}
+            color={!active ? COLOR.GRAYSCALE_L : undefined}
             currency={currency}
             value={value ? parseFloat(value, 10) : undefined}
           />
           {exchange && (
             <PriceFriendly
-              color={COLOR.GRAYSCALE_XL}
+              color={COLOR.GRAYSCALE_L}
               detail
               currency={baseCurrency}
               value={parseFloat(others.value || 0, 10) / exchange}
@@ -145,7 +142,6 @@ const InputCurrency = ({
 };
 
 InputCurrency.propTypes = {
-  color: PropTypes.string,
   disabled: PropTypes.bool,
   label: PropTypes.string,
   type: PropTypes.oneOf([EXPENSE, INCOME]),

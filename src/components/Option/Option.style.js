@@ -1,37 +1,18 @@
-import { StyleSheet } from 'react-native';
-import { LAYOUT, THEME } from 'reactor/common';
+import { Theme } from '@lookiero/aurora';
+import StyleSheet from 'react-native-extended-stylesheet';
 
-const { BORDER_RADIUS, SPACE } = THEME;
+const { spaceXS, layoutXL } = Theme.get();
 
-let OPTION_SIZE = LAYOUT.VIEWPORT.W / 5 - SPACE.XS;
-if (OPTION_SIZE > 72) OPTION_SIZE = 72;
+const OPTION_SIZE = layoutXL - spaceXS;
 
-export { OPTION_SIZE };
-
-export default StyleSheet.create({
+const style = StyleSheet.create({
   container: {
-    width: OPTION_SIZE,
-    maxWidth: OPTION_SIZE,
-    height: OPTION_SIZE,
-    minHeight: OPTION_SIZE,
-  },
-
-  content: {
-    alignItems: 'center',
-    alignContent: 'center',
-    justifyContent: 'center',
-    borderRadius: BORDER_RADIUS,
-    paddingHorizontal: SPACE.XS,
-    height: '100%',
-    width: '100%',
-  },
-
-  image: {
-    height: SPACE.L,
-    width: SPACE.L,
-  },
-
-  legend: {
-    fontSize: 9,
+    height: '$layoutXL',
+    minHeight: '$layoutXL',
+    minWidth: '$layoutXL',
+    padding: '$spaceXS',
+    width: '$layoutXL',
   },
 });
+
+export { OPTION_SIZE, style };

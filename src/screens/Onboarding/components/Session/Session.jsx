@@ -1,6 +1,3 @@
-import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
-
 import {
   // helpers
   ALIGN,
@@ -13,11 +10,13 @@ import {
   Text,
   View,
 } from '@lookiero/aurora';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 
 import { LOGO } from '@assets';
-import { C } from '@common';
+import { C, L10N } from '@common';
 import { Viewport } from '@components';
-import { useL10N, useStore } from '@context';
+import { useStore } from '@context';
 
 import { NumKeyboard } from './components';
 import { onHandshake, askLocalAuthentication } from './Session.controller';
@@ -26,7 +25,6 @@ import { style } from './Session.style';
 const { IS_DEV, VERSION } = C;
 
 const Session = ({ onSession, visible, ...others }) => {
-  const l10n = useL10N();
   const store = useStore();
 
   const [pin, setPin] = useState('');
@@ -39,7 +37,7 @@ const Session = ({ onSession, visible, ...others }) => {
 
       if (settings.pin && vaults.length !== 0) {
         if (IS_DEV) setPin(settings.pin);
-        else if (pin === '') askLocalAuthentication({ l10n, setPin, store });
+        else if (pin === '') askLocalAuthentication({ setPin, store });
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -59,17 +57,17 @@ const Session = ({ onSession, visible, ...others }) => {
   return (
     <Viewport {...others} visible={visible}>
       <SafeAreaView flex={SIZE.XS}>
-        <View alignItems={ALIGN.CENTER} customStyle={style.content} justifyContent={ALIGN.END} padding={SIZE.M}>
-          <Image customStyle={style.image} resizeMode="cover" src={LOGO} />
+        <View alignItems={ALIGN.CENTER} style={style.content} justifyContent={ALIGN.END} padding={SIZE.M}>
+          <Image style={style.image} resizeMode="cover" src={LOGO} />
           <Text color={COLOR.GRAYSCALE_XL} detail level={1} marginTop={SIZE.XXL}>
-            {signup ? l10n.PIN_CHOOSE : l10n.PIN}
+            {signup ? L10N.PIN_CHOOSE : L10N.PIN}
           </Text>
           <View flexDirection={FLEX_DIRECTION.ROW} marginVertical={SIZE.L}>
             {['•', '•', '•', '•'].map((letter, index) => (
               <View
                 key={index}
                 backgroundColor={pin.length > index ? COLOR.CONTENT : COLOR.GRAYSCALE_XL}
-                customStyle={style.bullet}
+                style={style.bullet}
               />
             ))}
           </View>

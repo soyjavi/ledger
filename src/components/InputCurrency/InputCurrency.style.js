@@ -5,6 +5,7 @@ export const style = StyleSheet.create({
     borderStyle: '$borderStyle',
     borderWidth: '$borderSize',
     paddingTop: '$spaceM',
+    marginBottom: '$spaceM',
   },
 
   content: {
@@ -23,5 +24,10 @@ export const style = StyleSheet.create({
     left: 0,
     bottom: 0,
     width: '100%',
+  },
+
+  row: {
+    alignItems: 'center',
+    flexDirection: 'row',
   },
 });

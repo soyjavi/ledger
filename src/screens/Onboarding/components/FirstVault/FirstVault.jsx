@@ -1,22 +1,31 @@
+import {
+  // helpers
+  ALIGN,
+  COLOR,
+  SIZE,
+  // components
+  Button,
+  SafeAreaView,
+  Text,
+  View,
+} from '@lookiero/aurora';
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
-import { Keyboard, KeyboardAvoidingView, SafeAreaView, TouchableWithoutFeedback } from 'react-native';
-import { Button, Text, Viewport } from 'reactor/components';
-import { useEnvironment } from 'reactor/hooks';
+import { Platform, KeyboardAvoidingView } from 'react-native';
 
-import { C } from '@common';
-import { FormVault } from '@components';
-import { useL10N, useSnackBar, useStore } from '@context';
+import { C, L10N } from '@common';
+import { FormVault, Viewport } from '@components';
+import { useSnackBar, useStore } from '@context';
 
 import { fetchRates, createVault } from './FirstVault.controller';
-import styles from './FirstVault.style';
+import { style } from './FirstVault.style';
 
-const { CURRENCY, DELAY_PRESS_MS } = C;
+const { CURRENCY } = C;
 const INITIAL_STATE = { balance: 0, currency: undefined, title: undefined };
 
+const IS_NATIVE = ['ios', 'android'].includes(Platform.OS);
+
 const FirstVault = ({ onVault, visible, ...others }) => {
-  const { IS_NATIVE } = useEnvironment();
-  const l10n = useL10N();
   const store = useStore();
   const snackbar = useSnackBar();
 
@@ -28,7 +37,7 @@ const FirstVault = ({ onVault, visible, ...others }) => {
   useEffect(() => {
     if (visible) {
       setForm({ ...INITIAL_STATE, currency: CURRENCY });
-      fetchRates({ l10n, snackbar, store });
+      fetchRates({ L10N, snackbar, store });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
@@ -47,30 +56,26 @@ const FirstVault = ({ onVault, visible, ...others }) => {
 
   return (
     <Viewport {...others} visible={visible}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <KeyboardAvoidingView behavior={IS_NATIVE ? 'padding' : undefined}>
-          <>
-            <Text bold subtitle style={styles.text}>
+      <SafeAreaView flex={SIZE.XS}>
+        <View alignItems={ALIGN.CENTER} style={style.content} justifyContent={ALIGN.END} padding={SIZE.M}>
+          <KeyboardAvoidingView behavior={IS_NATIVE ? 'padding' : undefined}>
+            <Text align={ALIGN.CENTER} heading level={1}>
               Your first account
             </Text>
-            <Text caption marginTop="S" marginBottom="L" style={styles.text}>
-              {l10n.FIRST_VAULT_CAPTION}
-            </Text>
 
-            <FormVault form={form} onChange={setForm} />
+            <View marginVertical={SIZE.L}>
+              <FormVault form={form} onChange={setForm} />
+              <Text align={ALIGN.CENTER} color={COLOR.GRAYSCALE_XL} detail marginTop={SIZE.S}>
+                {L10N.FIRST_VAULT_CAPTION}
+              </Text>
+            </View>
 
-            <Button
-              delay={DELAY_PRESS_MS}
-              disabled={busy || !form.valid}
-              marginBottom="M"
-              marginTop="XL"
-              onPress={handleSubmit}
-              style={styles.button}
-              text={l10n.CREATE.toUpperCase()}
-            />
-          </>
-        </KeyboardAvoidingView>
-      </TouchableWithoutFeedback>
+            <Button busy={busy} disabled={busy || !form.valid} outlined={!form.valid && !busy} onPress={handleSubmit}>
+              {L10N.CREATE.toUpperCase()}
+            </Button>
+          </KeyboardAvoidingView>
+        </View>
+      </SafeAreaView>
     </Viewport>
   );
 };

@@ -1,47 +1,58 @@
-import { StyleSheet } from 'react-native';
-import { LAYOUT, THEME } from 'reactor/common';
+import { Theme } from '@lookiero/aurora';
+import { Dimensions } from 'react-native';
+import StyleSheet from 'react-native-extended-stylesheet';
 
-const {
-  VIEWPORT: { W },
-} = LAYOUT;
-const { BORDER_RADIUS, COLOR, SPACE } = THEME;
+const { width } = Dimensions.get('window');
+const { spaceM } = Theme.get();
 
-const CONTENT_SIZE = W - SPACE.M * 2;
-const QR_SIZE = W / 1.6;
+const CONTENT_SIZE = width - spaceM * 2;
+const QR_SIZE = width / 1.6;
 
-export default StyleSheet.create({
+export const style = StyleSheet.create({
   camera: {
-    backgroundColor: COLOR.BACKGROUND,
+    backgroundColor: '$colorInfo',
     height: CONTENT_SIZE,
     width: CONTENT_SIZE,
   },
 
   cameraViewport: {
-    borderRadius: SPACE.M,
+    borderRadius: '$borderRadius',
     flex: 1,
   },
 
-  content: {
-    alignItems: 'center',
-    alignContent: 'center',
-    borderWidth: 2,
-    borderColor: COLOR.BASE,
-    display: 'flex',
-    justifyContent: 'center',
-    height: CONTENT_SIZE,
-    width: CONTENT_SIZE,
-    borderRadius: BORDER_RADIUS,
-    overflow: 'hidden',
-  },
-
-  legend: {
-    textAlign: 'center',
+  offset: {
+    marginHorizontal: '$spaceM',
   },
 
   qr: {
     height: QR_SIZE,
     width: QR_SIZE,
-    backgroundColor: COLOR.BACKGROUND,
-    borderRadius: BORDER_RADIUS,
+    backgroundColor: '$colorContent',
+    borderRadius: '$borderRadius',
+  },
+
+  qrBackground: {
+    backgroundColor: '$colorInfo',
+    borderRadius: '$borderRadius',
+    alignItems: 'center',
+    alignContent: 'center',
+    height: CONTENT_SIZE,
+    justifyContent: 'center',
+    marginBottom: '$spaceL',
+    overflow: 'hidden',
+    width: CONTENT_SIZE,
+  },
+
+  qrHint: {
+    bottom: '$spaceM',
+    marginHorizontal: '$spaceM',
+    position: 'absolute',
+    textAlign: 'center',
+  },
+
+  slider: {
+    paddingLeft: '$spaceM',
+    marginBottom: '$spaceXS',
+    backgroundColor: 'green',
   },
 });

@@ -1,16 +1,20 @@
+import {
+  //helpers
+  COLOR,
+  // components
+  Touchable,
+  View,
+  Text,
+} from '@lookiero/aurora';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { THEME } from 'reactor/common';
-import { Col, Row, Text, Touchable } from 'reactor/components';
 
 import { Box, CurrencyLogo, PriceFriendly } from '@components';
 import { useStore } from '@context';
 
-import styles from './VaultItem.style';
+import { style } from './VaultItem.style';
 
-const { COLOR } = THEME;
-
-const VaultItem = ({ onPress, dataSource: { currency, currentBalance = 0, title, ...others } }) => {
+const VaultItem = ({ onPress, dataSource: { currency, currentBalance = 0, title } }) => {
   const {
     settings: { baseCurrency },
   } = useStore();
@@ -18,30 +22,19 @@ const VaultItem = ({ onPress, dataSource: { currency, currentBalance = 0, title,
   const hasBalance = currentBalance !== undefined && parseFloat(currentBalance.toFixed(2)) > 0;
 
   return (
-    <Touchable
-      paddingHorizontal="M"
-      paddingVertical="S"
-      rippleColor={COLOR.LIGHTEN}
-      onPress={onPress}
-      style={styles.container}
-    >
-      <Row>
-        <Col marginRight="S" width="auto">
-          <Box outlined={!hasBalance} styleContent={styles.boxContent}>
-            <CurrencyLogo
-              color={currency !== baseCurrency || !hasBalance ? COLOR.LIGHTEN : undefined}
-              currency={currency}
-              size="S"
-            />
-          </Box>
-        </Col>
-        <Col>
-          <Text color={!hasBalance ? COLOR.LIGHTEN : undefined} numberOfLines={1}>
-            {title}
-          </Text>
-          <PriceFriendly caption color={COLOR.LIGHTEN} currency={currency} value={currentBalance} />
-        </Col>
-      </Row>
+    <Touchable style={style.container} onPress={onPress}>
+      <Box rounded style={style.box}>
+        <CurrencyLogo
+          color={currency !== baseCurrency || !hasBalance ? COLOR.GRAYSCALE_L : undefined}
+          currency={currency}
+        />
+      </Box>
+      <View>
+        <Text color={!hasBalance ? COLOR.GRAYSCALE_L : undefined} numberOfLines={1}>
+          {title}
+        </Text>
+        <PriceFriendly color={COLOR.GRAYSCALE_L} currency={currency} detail level={2} value={currentBalance} />
+      </View>
     </Touchable>
   );
 };

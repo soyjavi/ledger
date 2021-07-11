@@ -1,22 +1,19 @@
+import { Slider } from '@lookiero/aurora';
 import PropTypes from 'prop-types';
-import React, { useEffect, useRef, useState } from 'react';
-import { THEME } from 'reactor/common';
-import { Slider } from 'reactor/components';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
-import { C } from '@common';
+import { C, L10N } from '@common';
 import { Card, CARD_SIZE, Header, Heading, ScrollView } from '@components';
-import { useL10N, useNavigation, useStore } from '@context';
+import { useNavigation, useStore } from '@context';
 
 import { VaultItem } from './components';
 import { filter, query } from './modules';
-import styles from './Vaults.style';
+import { style } from './Vaults.style';
 
 const { SCREEN } = C;
-const { SPACE } = THEME;
 
 const Vaults = ({ timestamp }) => {
   const navigation = useNavigation();
-  const l10n = useL10N();
   const scrollview = useRef(null);
   const { overall, vaults } = useStore();
 
@@ -24,7 +21,7 @@ const Vaults = ({ timestamp }) => {
   const [scroll, setScroll] = useState(false);
   const [selected, setSelected] = useState();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setCurrencies(query(vaults));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -37,25 +34,24 @@ const Vaults = ({ timestamp }) => {
 
   return (
     <>
-      <Header visible={scroll} title={l10n.VAULTS} />
+      <Header visible={scroll} title={L10N.VAULTS} />
 
       <ScrollView onScroll={setScroll} ref={scrollview}>
         {hasCurrencies && (
           <>
-            <Heading marginTop="S" paddingLeft="M" value={l10n.CURRENCIES} />
+            <Heading value={L10N.CURRENCIES} />
 
-            <Slider itemWidth={CARD_SIZE} itemMargin={SPACE.S} style={styles.slider}>
+            <Slider horizontal snapInterval={CARD_SIZE} style={style.slider}>
               {currencies.map(({ base, currency, ...item }, index) => (
                 <Card
                   {...item}
                   key={currency}
                   currency={currency}
                   highlight={currency === selected}
-                  marginLeft={index === 0 ? 'M' : undefined}
-                  marginRight="S"
                   operator={false}
                   percentage={(base * 100) / overall.currentBalance}
-                  title={l10n.CURRENCY_NAME[currency] || currency}
+                  title={L10N.CURRENCY_NAME[currency] || currency}
+                  style={index === 0 ? style.firstCard : style.card}
                   onPress={() => setSelected(currency !== selected ? currency : undefined)}
                 />
               ))}
@@ -63,12 +59,10 @@ const Vaults = ({ timestamp }) => {
           </>
         )}
 
-        {hasCurrencies && <Heading paddingHorizontal="M" value={l10n.VAULTS} />}
-        <>
-          {filter(vaults, selected).map((vault) => (
-            <VaultItem key={vault.hash} dataSource={vault} onPress={() => navigation.go(SCREEN.VAULT, vault)} />
-          ))}
-        </>
+        {hasCurrencies && <Heading value={L10N.VAULTS} />}
+        {filter(vaults, selected).map((vault) => (
+          <VaultItem key={vault.hash} dataSource={vault} onPress={() => navigation.go(SCREEN.VAULT, vault)} />
+        ))}
       </ScrollView>
     </>
   );

@@ -1,21 +1,22 @@
+import {
+  // helpers
+  COLOR,
+  Theme,
+  // components
+  ButtonIcon,
+  View,
+} from '@lookiero/aurora';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { KeyboardAvoidingView, TextInput } from 'react-native';
-import { THEME } from 'reactor/common';
-import { useEnvironment } from 'reactor/hooks';
+import { KeyboardAvoidingView, Platform, TextInput } from 'react-native';
 
-import { useL10N } from '@context';
+import { L10N } from '@common';
 
-import styles from './Search.style';
-
-const { COLOR } = THEME;
+import { style } from './Search.style';
 
 const DELAY_EVENT_SEARCH = 250;
 
 const Search = ({ onChange }) => {
-  const { IS_NATIVE } = useEnvironment();
-  const l10n = useL10N();
-
   const [focus, setFocus] = useState(false);
   const [value, setValue] = useState();
 
@@ -29,22 +30,34 @@ const Search = ({ onChange }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
+  const handleReset = () => setValue('');
+
+  const hasValue = value && value.trim().length > 0;
+
   return (
-    <KeyboardAvoidingView behavior={IS_NATIVE ? 'padding' : undefined} style={styles.container}>
-      <TextInput
-        autoCapitalize="none"
-        autoCorrect
-        blurOnSubmit
-        editable
-        placeholder={`${l10n.SEARCH}...`}
-        placeholderTextColor={COLOR.LIGHTEN}
-        style={[styles.input, (focus || (value && value.length > 0)) && styles.focus]}
-        underlineColorAndroid="transparent"
-        value={value}
-        onBlur={() => setFocus(false)}
-        onChangeText={(nextValue) => setValue(nextValue.trim())}
-        onFocus={() => setFocus(true)}
-      />
+    <KeyboardAvoidingView behavior={Platform.OS !== 'web' ? 'padding' : undefined} style={style.container}>
+      <View style={[style.content, (focus || (value && value.length > 0)) && style.focus]}>
+        <TextInput
+          autoCapitalize="none"
+          autoCorrect
+          blurOnSubmit
+          editable
+          placeholder={`${L10N.SEARCH}...`}
+          placeholderTextColor={Theme.get('colorGrayscaleL')}
+          style={style.input}
+          underlineColorAndroid="transparent"
+          value={value}
+          onBlur={() => setFocus(false)}
+          onChangeText={(nextValue) => setValue(nextValue.trim())}
+          onFocus={() => setFocus(true)}
+        />
+        <ButtonIcon
+          color={hasValue ? COLOR.CONTENT : COLOR.GRAYSCALE_L}
+          name={hasValue ? 'close' : 'search'}
+          onPress={hasValue ? handleReset : undefined}
+          style={style.button}
+        />
+      </View>
     </KeyboardAvoidingView>
   );
 };

@@ -2,7 +2,7 @@
   "expo": {
     "name": "SHIELD",
     "description": "Your private finance ledger running on your own blockchain",
-    "slug": "soyjavi.shield",
+    "slug": "soyjavi-shield",
     "privacy": "public",
     "platforms": ["ios", "android", "web"],
     "version": "0.27.0",

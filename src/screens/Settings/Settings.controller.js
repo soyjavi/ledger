@@ -1,5 +1,6 @@
 import * as Permissions from 'expo-permissions';
 
+import { L10N } from '@common';
 import { ServiceRates, ServiceNode } from '@services';
 
 const askCamera = async () => {
@@ -7,10 +8,10 @@ const askCamera = async () => {
   return status === 'granted';
 };
 
-const changeCurrency = async ({ currency, l10n, snackbar, store: { updateRates, updateSettings } }) => {
+const changeCurrency = async ({ currency, snackbar, store: { updateRates, updateSettings } }) => {
   await updateSettings({ baseCurrency: currency });
   const rates = await ServiceRates.get({ baseCurrency: currency, latest: false }).catch(() =>
-    snackbar.error(l10n.ERROR_SERVICE_RATES),
+    snackbar.alert({ text: L10N.ERROR_SERVICE_RATES }),
   );
   if (rates) await updateRates(rates);
 };
@@ -18,7 +19,6 @@ const changeCurrency = async ({ currency, l10n, snackbar, store: { updateRates, 
 const getBlockchain = async ({ qr, store: { settings } }) => await ServiceNode.blockchain({ blockchain: qr, settings });
 
 const getLatestRates = async ({
-  l10n,
   snackbar,
   store: {
     settings: { baseCurrency },
@@ -26,7 +26,7 @@ const getLatestRates = async ({
   },
 }) => {
   const rates = await ServiceRates.get({ baseCurrency, latest: true }).catch(() =>
-    snackbar.error(l10n.ERROR_SERVICE_RATES),
+    snackbar.alert({ text: L10N.ERROR_SERVICE_RATES }),
   );
   if (rates) await updateRates(rates);
 };

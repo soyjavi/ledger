@@ -1,9 +1,9 @@
 import * as LocalAuthentication from 'expo-local-authentication';
 
+import { L10N } from '@common';
 import { ServiceNode } from '@services';
 
 export const askLocalAuthentication = async ({
-  l10n,
   setPin,
   store: {
     settings: { pin },
@@ -14,8 +14,8 @@ export const askLocalAuthentication = async ({
 
   if (hasHardware && isEnrolled) {
     const { success } = await LocalAuthentication.authenticateAsync({
-      promptMessage: l10n.AUTHENTICATE,
-      cancelLabel: l10n.CANCEL,
+      promptMessage: L10N.AUTHENTICATE,
+      cancelLabel: L10N.CANCEL,
       disableDeviceFallback: true,
     });
 
