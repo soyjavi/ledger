@@ -4,7 +4,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import { BANNERS } from '@assets';
 import { C, L10N } from '@common';
-import { Banner, DialogClone, GroupTransactions, Header, Heading, ScrollView, Summary, Viewport } from '@components';
+import { Banner, GroupTransactions, Header, Heading, ScrollView, Summary, Viewport } from '@components';
 import { useNavigation, useStore } from '@context';
 
 import { ButtonSummary, DialogTransaction } from './components';
@@ -27,7 +27,6 @@ const Vault = ({ visible }) => {
   const [scroll, setScroll] = useState(false);
   const [scrollQuery, setScrollQuery] = useState(false);
   const [txs, setTxs] = useState([]);
-  const [tx, setTx] = useState(undefined);
 
   useLayoutEffect(() => {
     if (!visible) {
@@ -87,7 +86,7 @@ const Vault = ({ visible }) => {
           <>
             <Heading paddingHorizontal="M" value={L10N.TRANSACTIONS} />
             {txs.map((item) => (
-              <GroupTransactions key={item.timestamp} {...item} currency={currency} onPress={setTx} />
+              <GroupTransactions key={item.timestamp} {...item} currency={currency} />
             ))}
           </>
         ) : (
@@ -96,16 +95,13 @@ const Vault = ({ visible }) => {
       </ScrollView>
 
       {visible && (
-        <>
-          <DialogTransaction
-            currency={currency}
-            onClose={() => setDialog(undefined)}
-            type={dialog}
-            vault={dataSource}
-            isVisible={visible && dialog !== undefined}
-          />
-          <DialogClone dataSource={tx} onClose={() => setTx(undefined)} visible={tx !== undefined} />
-        </>
+        <DialogTransaction
+          currency={currency}
+          onClose={() => setDialog(undefined)}
+          type={dialog}
+          vault={dataSource}
+          isVisible={visible && dialog !== undefined}
+        />
       )}
     </Viewport>
   );

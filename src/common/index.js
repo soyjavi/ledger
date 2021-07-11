@@ -2,6 +2,7 @@ export * from './asyncStorage';
 export * from './constants';
 export * from './colorOpacity';
 export * from './currencyDecimals';
+export * from './events';
 export * from './exchange';
 export * from './getIcon';
 export * from './getMonthDiff';

@@ -9,17 +9,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
 
 import { C, L10N } from '@common';
-import {
-  Card,
-  CARD_SIZE,
-  DialogClone,
-  GroupTransactions,
-  Header,
-  Heading,
-  ScrollView,
-  Search,
-  Summary,
-} from '@components';
+import { Card, CARD_SIZE, GroupTransactions, Header, Heading, ScrollView, Search, Summary } from '@components';
 import { useNavigation, useStore } from '@context';
 
 import { DialogVault } from './components';
@@ -34,7 +24,6 @@ const Dashboard = ({ timestamp }) => {
   const { settings: { baseCurrency } = {}, overall, txs = [], vaults = [] } = useStore();
 
   const [dialogVault, setDialogVault] = useState(false);
-  const [tx, setTx] = useState(undefined);
   const [lastTxs, setLastTxs] = useState([]);
   const [scroll, setScroll] = useState(false);
   const [query, setQuery] = useState();
@@ -90,13 +79,12 @@ const Dashboard = ({ timestamp }) => {
           <>
             <Heading value={L10N.LAST_TRANSACTIONS} />
             {(querySearchTxs({ L10N, query, txs, vaults }) || lastTxs).map((item) => (
-              <GroupTransactions {...item} key={`${item.timestamp}`} currency={baseCurrency} onPress={setTx} />
+              <GroupTransactions {...item} key={`${item.timestamp}`} currency={baseCurrency} />
             ))}
           </>
         )}
       </ScrollView>
 
-      <DialogClone dataSource={tx} onClose={() => setTx(undefined)} isVisible={tx !== undefined} />
       <DialogVault onClose={() => setDialogVault(false)} isVisible={dialogVault} />
     </>
   );

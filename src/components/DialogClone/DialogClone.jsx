@@ -9,10 +9,10 @@ import {
   Modal,
   View,
 } from '@lookiero/aurora';
-import PropTypes from 'prop-types';
+import { useEvent } from '@lookiero/event';
 import React, { useEffect, useState } from 'react';
 
-import { C, exchange, L10N, onHardwareBackPress, verboseTime } from '@common';
+import { C, EVENTS, exchange, L10N, onHardwareBackPress, verboseTime } from '@common';
 import { useStore } from '@context';
 
 import { BoxDate } from '../Box';
@@ -27,10 +27,10 @@ const {
   },
 } = C;
 
-const DialogClone = ({ dataSource = {}, ...inherit }) => {
-  const { category, currency, vault, value, location, title = '', timestamp, type = EXPENSE } = dataSource;
-
+const DialogClone = () => {
+  const { subscribe } = useEvent();
   const store = useStore();
+
   const {
     settings: { baseCurrency },
     vaults,
@@ -38,25 +38,41 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
   } = store;
 
   const [busy, setBusy] = useState(false);
+  const [dataSource, setDataSource] = useState({});
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    onHardwareBackPress(inherit.visible, inherit.onClose);
+    subscribe({ event: EVENTS.SHOW_TRANSACTION }, (props) => {
+      setVisible(() => {
+        setDataSource(props);
+        return true;
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    onHardwareBackPress(visible, handleClose);
     return () => onHardwareBackPress(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inherit.visible]);
+  }, [visible]);
+
+  const handleClose = () => {
+    setVisible(false);
+  };
 
   const handleSubmit = ({ wipe = false } = {}) => {
     setBusy(true);
     createTx({ dataSource, store, wipe });
-    inherit.onClose();
+    handleClose();
     setBusy(false);
   };
 
+  const { category, currency, vault, value, location, title = '', timestamp, type = EXPENSE } = dataSource;
   const operator = type === EXPENSE ? -1 : 1;
   const vaultInfo = vaults.find(({ hash }) => hash === vault);
 
   return (
-    <Modal {...inherit} color={COLOR.INFO} swipeable>
+    <Modal isVisible={visible} color={COLOR.INFO} swipeable onClose={handleClose}>
       <View alignItems={ALIGN.CENTER} marginBottom={SPACE.L}>
         <Text color={COLOR.GRAYSCALE_L} heading level={2}>
           {L10N.TRANSACTION[type]}
@@ -111,11 +127,6 @@ const DialogClone = ({ dataSource = {}, ...inherit }) => {
       </View>
     </Modal>
   );
-};
-
-DialogClone.propTypes = {
-  dataSource: PropTypes.shape({}),
-  visible: PropTypes.bool,
 };
 
 export { DialogClone };

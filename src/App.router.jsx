@@ -1,6 +1,8 @@
 import { View, useDevice } from '@lookiero/aurora';
 import React from 'react';
 
+import { DialogClone } from '@components';
+
 import { Sync } from './App.sync';
 import { C } from './common';
 import { useNavigation } from './context';
@@ -23,6 +25,7 @@ const Router = () => {
         <>
           <Vault visible={stack.includes(VAULT)} />
           <Sync />
+          <DialogClone />
         </>
       )}
     </View>

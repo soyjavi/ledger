@@ -7,10 +7,11 @@ import {
   Touchable,
   View,
 } from '@lookiero/aurora';
+import { useEvent } from '@lookiero/event';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { C, exchange, getIcon } from '@common';
+import { C, EVENTS, exchange, getIcon } from '@common';
 import { useStore } from '@context';
 
 import { Box } from '../Box';
@@ -25,15 +26,21 @@ const {
 } = C;
 
 const TransactionItem = (props) => {
+  const { publish } = useEvent();
   const {
     settings: { baseCurrency },
     rates,
   } = useStore();
-  const { category = 99, currency, location, timestamp, title, type = EXPENSE, value, onPress } = props;
+
+  const { category = 99, currency, location, timestamp, title, type = EXPENSE, value } = props;
   const operator = type === EXPENSE ? -1 : 1;
 
+  const handlePress = () => {
+    publish({ event: EVENTS.SHOW_TRANSACTION }, props);
+  };
+
   return (
-    <Touchable style={[style.offset, style.touchable]} onPress={onPress ? () => onPress(props) : undefined}>
+    <Touchable style={[style.offset, style.touchable]} onPress={handlePress}>
       <View style={style.row}>
         <Box rounded style={style.icon}>
           <Icon name={getIcon({ category, type, title })} />
@@ -82,7 +89,6 @@ TransactionItem.propTypes = {
   title: PropTypes.string,
   type: PropTypes.number,
   value: PropTypes.number.isRequired,
-  onPress: PropTypes.func,
 };
 
 export { TransactionItem };
