@@ -1,4 +1,5 @@
 import { Touchable } from '@lookiero/aurora';
+import { COLOR } from '@lookiero/aurora';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { View } from 'react-native';
@@ -34,7 +35,7 @@ const ItemGroupCategories = ({ color, dataSource, type }) => {
   return (
     <>
       <Heading value={type === EXPENSE ? L10N.EXPENSES : L10N.INCOMES}>
-        <PriceFriendly currency={baseCurrency} value={total} />
+        <PriceFriendly color={COLOR.GRAYSCALE_L} currency={baseCurrency} value={total} />
       </Heading>
       <View style={style.container}>
         {orderByAmount(totals).map(({ key, amount }) => (

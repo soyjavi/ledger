@@ -3,7 +3,8 @@ import StyleSheet from 'react-native-extended-stylesheet';
 export const style = StyleSheet.create({
   container: {
     marginHorizontal: '$spaceM',
-    marginVertical: '$spaceXS',
+    marginTop: '$spaceXS',
+    marginBottom: '$spaceM',
   },
 
   touchable: {

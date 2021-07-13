@@ -1,4 +1,6 @@
 import {
+  // helpers
+  styles,
   // components
   ScrollView,
   // hooks
@@ -20,6 +22,8 @@ const SliderMonths = ({ index, onChange, ...others }) => {
     screen: { width },
   } = useDevice();
 
+  const months = getLastMonths(STATS_MONTHS_LIMIT);
+
   return (
     <ScrollView
       horizontal
@@ -28,13 +32,13 @@ const SliderMonths = ({ index, onChange, ...others }) => {
       style={[style.slider, others.style]}
       width={width}
     >
-      {getLastMonths(STATS_MONTHS_LIMIT).map(({ month, year }, i) => (
+      {months.map(({ month, year }, i) => (
         <Option
           key={`${month}-${year}`}
           caption={L10N.MONTHS[month].substr(0, 3).toUpperCase()}
           legend={year}
           selected={index === i}
-          style={i === 0 ? style.firstCard : style.card}
+          style={styles(style.card, i === 0 && style.firstCard, i === months.length - 1 && style.lastCard)}
           onPress={() => onChange({ index: i, month, year })}
         />
       ))}
