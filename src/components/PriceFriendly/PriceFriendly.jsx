@@ -20,7 +20,7 @@ const { SYMBOL } = C;
 const LEFT_SYMBOLS = ['$', '£'];
 
 const PriceFriendly = ({ currency, fixed, highlight, label, maskAmount, operator, value = 0, ...others }) => {
-  const { settings } = useStore();
+  const { settings = {} } = useStore();
 
   const maskedAmount = maskAmount || settings.maskAmount;
   const operatorEnhanced = operator && value !== 0 ? (value > 0 ? '+' : '-') : '';
@@ -45,7 +45,7 @@ const PriceFriendly = ({ currency, fixed, highlight, label, maskAmount, operator
     <View
       style={
         highlight && !maskAmount
-          ? [style.highlight, { backgroundColor: colorOpacity(Theme.get('colorPrimary'), 0.25) }]
+          ? [style.highlight, { backgroundColor: colorOpacity(Theme.get('colorPrimary'), 0.2) }]
           : undefined
       }
       flexDirection={FLEX_DIRECTION.ROW}

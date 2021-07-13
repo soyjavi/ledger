@@ -1,19 +1,19 @@
 import StyleSheet from 'react-native-extended-stylesheet';
 
-const BAR_SIZE = 8; // S
-
 export const style = StyleSheet.create({
+  $barSize: 8,
   bar: {
-    borderRadius: '$borderRadius',
-    height: BAR_SIZE,
+    borderBottomRightRadius: '$borderRadius',
+    borderTopRightRadius: '$borderRadius',
+    height: '$barSize',
     marginTop: '$spaceXS',
     marginBottom: '$spaceS',
-    minWidth: BAR_SIZE,
+    minWidth: '$barSize',
   },
 
   barSmall: {
-    height: BAR_SIZE / 2,
-    minWidth: BAR_SIZE / 2,
+    height: '$barSize / 2',
+    minWidth: '$barSize / 2',
   },
 
   row: {

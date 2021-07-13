@@ -37,7 +37,7 @@ const Header = ({ isVisible = true, onBack, title = ' ' }) => {
           </Text>
         )}
         {!connected && (
-          <View style={[style.offline, { backgroundColor: colorOpacity(Theme.get('colorAlert'), 0.25) }]}>
+          <View style={[style.offline, { backgroundColor: colorOpacity(Theme.get('colorAlert'), 0.2) }]}>
             <Text action color={COLOR.ALERT}>
               {L10N.OFFLINE}
             </Text>

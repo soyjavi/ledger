@@ -1,6 +1,8 @@
 import {
   // helpers
   COLOR,
+  Theme,
+  styles,
   // components
   Icon,
   Text,
@@ -11,7 +13,7 @@ import { useEvent } from '@lookiero/event';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { C, EVENTS, exchange, getIcon } from '@common';
+import { C, colorOpacity, EVENTS, exchange, getIcon } from '@common';
 import { useStore } from '@context';
 
 import { Box } from '../Box';
@@ -39,11 +41,19 @@ const TransactionItem = (props) => {
     publish({ event: EVENTS.SHOW_TRANSACTION }, props);
   };
 
+  const is = {
+    income: type === INCOME,
+    expense: type === EXPENSE,
+  };
+
   return (
     <Touchable style={[style.offset, style.touchable]} onPress={handlePress}>
       <View style={style.row}>
-        <Box rounded style={style.icon}>
-          <Icon name={getIcon({ category, type, title })} />
+        <Box
+          rounded
+          style={styles(style.icon, is.income && { backgroundColor: colorOpacity(Theme.get('colorPrimary'), 0.2) })}
+        >
+          <Icon color={is.income ? COLOR.PRIMARY : undefined} name={getIcon({ category, type, title })} />
         </Box>
 
         <View style={style.content}>
@@ -52,10 +62,10 @@ const TransactionItem = (props) => {
               {title}
             </Text>
             <PriceFriendly
-              color={type === INCOME ? COLOR.BRAND : undefined}
+              color={is.income ? COLOR.PRIMARY : undefined}
               currency={currency}
-              highlight={type === INCOME}
-              operator={type === EXPENSE}
+              highlight={is.income}
+              operator={is.expense}
               value={value * operator}
             />
           </View>
@@ -70,7 +80,7 @@ const TransactionItem = (props) => {
                 currency={baseCurrency}
                 detail
                 level={2}
-                operator={type === EXPENSE}
+                operator={is.expense}
                 value={exchange(value, currency, baseCurrency, rates, timestamp) * operator}
               />
             )}
