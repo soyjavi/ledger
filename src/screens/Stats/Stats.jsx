@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 import { C, L10N } from '@common';
-import { Chart, Header, ScrollView } from '@components';
+import { Header, ScrollView } from '@components';
 import { useStore } from '@context';
 
-import { ItemGroupCategories, Locations, SliderMonths } from './components';
+import { Chart, ItemGroupCategories, Locations, SliderMonths } from './components';
 import { calcScales, orderCaptions, queryMonth, queryChart } from './modules';
 import { style } from './Stats.style';
 

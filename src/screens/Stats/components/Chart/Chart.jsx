@@ -8,10 +8,11 @@ import {
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { PriceFriendly } from '../PriceFriendly';
+import { PriceFriendly } from '@components';
+
 import { ChartHeading } from './Chart.Heading';
 import { style } from './Chart.style';
-import { calcHeight } from './modules';
+import { calcHeight } from './helpers';
 
 const Chart = ({ captions, highlight, inverted, values = [], style: styleContainer, ...others }) => {
   const { color = COLOR.CONTENT, currency, max, min, med: avg } = others;
@@ -22,7 +23,7 @@ const Chart = ({ captions, highlight, inverted, values = [], style: styleContain
     <View style={styleContainer}>
       {!inverted && <ChartHeading {...others} />}
 
-      <View style={[style.content, !inverted && style.border]}>
+      <View style={[style.offset, !inverted && style.border]}>
         {avg > 0 && (
           <View style={style.scales}>
             <View
@@ -33,8 +34,8 @@ const Chart = ({ captions, highlight, inverted, values = [], style: styleContain
                 },
               ]}
             >
-              <View backgroundColor={color} style={style.scaleLine} />
-              <View backgroundColor={color} style={style.tag}>
+              <View backgroundColor={color} style={[style.scaleLine, style.scaleBorder]} />
+              <View backgroundColor={color} style={[style.tag, style.scaleBorder]}>
                 <PriceFriendly detail level={2} color={COLOR.BASE} currency={currency} fixed={0} value={avg} />
               </View>
             </View>
@@ -61,7 +62,7 @@ const Chart = ({ captions, highlight, inverted, values = [], style: styleContain
       {inverted && <ChartHeading {...others} inverted />}
 
       {captions && (
-        <View style={[style.content, style.captions]}>
+        <View style={[style.offset, style.captions]}>
           {captions.map((caption, index) => (
             <Text
               key={`${caption}-${index}`}

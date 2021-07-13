@@ -1,21 +1,23 @@
+import { Theme } from '@lookiero/aurora';
 import StyleSheet from 'react-native-extended-stylesheet';
 
-const BAR_SIZE = 8; // S
+import { colorOpacity } from '@common';
 
 export const style = StyleSheet.create({
+  $barSize: 8,
   bars: {
     flexDirection: 'row',
     alignItems: 'flex-end',
     justifyContent: 'space-between',
-    height: BAR_SIZE * 8,
+    height: '$barSize * 8',
   },
 
   bar: {
     borderTopLeftRadius: '$borderRadius',
     borderTopRightRadius: '$borderRadius',
     maxHeight: '100%',
-    minHeight: BAR_SIZE,
-    width: BAR_SIZE,
+    minHeight: '$barSize',
+    width: '$barSize',
     zIndex: 2,
   },
 
@@ -24,8 +26,9 @@ export const style = StyleSheet.create({
     borderTopWidth: 1,
   },
 
-  content: {
+  offset: {
     marginHorizontal: '$spaceM',
+    zIndex: 1,
   },
 
   barInverted: {
@@ -33,7 +36,6 @@ export const style = StyleSheet.create({
     borderTopRightRadius: 0,
     borderBottomLeftRadius: '$borderRadius',
     borderBottomRightRadius: '$borderRadius',
-    zIndex: 2,
   },
 
   captions: {
@@ -42,10 +44,11 @@ export const style = StyleSheet.create({
     borderColor: '$colorGrayscaleXL',
     borderTopWidth: 1,
     paddingTop: '$spaceXS',
+    zIndex: 0,
   },
 
   caption: {
-    // transform: [{ scale: 0.7 }],
+    fontSize: '$fontDetailSize3 * 0.8',
   },
 
   column: {
@@ -60,13 +63,19 @@ export const style = StyleSheet.create({
     justifyContent: 'flex-start',
   },
 
+  headingInverted: {
+    bottom: '$spaceM',
+    position: 'absolute',
+    right: 0,
+  },
+
   scales: {
     position: 'absolute',
     left: 0,
     right: 0,
     top: 0,
     bottom: 0,
-    zIndex: 2,
+    zIndex: 1,
   },
 
   scaleAvg: {
@@ -75,8 +84,7 @@ export const style = StyleSheet.create({
   },
 
   scaleLine: {
-    height: 1,
-    opacity: 0.25,
+    height: 3,
     width: '100%',
     top: '50%',
   },
@@ -88,7 +96,10 @@ export const style = StyleSheet.create({
     alignSelf: 'flex-start',
     borderRadius: '$borderRadius',
     paddingHorizontal: '$spaceXS',
-    borderWidth: 1,
-    borderColor: '$colorBase',
+  },
+
+  scaleBorder: {
+    borderColor: () => colorOpacity(Theme.get('colorBase'), 0.75),
+    borderWidth: '$borderSize',
   },
 });
