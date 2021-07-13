@@ -29,6 +29,7 @@ const {
 } = C;
 
 const InputCurrency = ({
+  backgroundColor = COLOR.GRAYSCALE_XL,
   disabled,
   label = '',
   type = EXPENSE,
@@ -69,9 +70,9 @@ const InputCurrency = ({
 
   return (
     <View
-      {...others}
-      borderColor={active ? COLOR.CONTENT : COLOR.GRAYSCALE_L}
-      style={[style.container, others.style]}
+      backgroundColor={backgroundColor}
+      borderColor={focus ? COLOR.CONTENT : backgroundColor}
+      style={style.container}
       wide
     >
       <View style={style.content} flexDirection={FLEX_DIRECTION.ROW}>
@@ -109,6 +110,7 @@ const InputCurrency = ({
           <PriceFriendly
             color={!active ? COLOR.GRAYSCALE_L : undefined}
             currency={currency}
+            level={2}
             value={value ? parseFloat(value, 10) : undefined}
           />
           {exchange && (
@@ -142,6 +144,7 @@ const InputCurrency = ({
 };
 
 InputCurrency.propTypes = {
+  backgroundColor: PropTypes.string,
   disabled: PropTypes.bool,
   label: PropTypes.string,
   type: PropTypes.oneOf([EXPENSE, INCOME]),

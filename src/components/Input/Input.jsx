@@ -11,7 +11,14 @@ import { Keyboard, TextInput } from 'react-native';
 
 import { style } from './Input.style';
 
-const Input = ({ disabled, keyboard = 'default', label, value = '', onChange, ...others }) => {
+const Input = ({
+  backgroundColor = COLOR.GRAYSCALE_XL,
+  disabled,
+  keyboard = 'default',
+  label,
+  value = '',
+  onChange,
+}) => {
   const [focus, setFocus] = useState(false);
 
   const handleChange = (next = '') => {
@@ -22,9 +29,9 @@ const Input = ({ disabled, keyboard = 'default', label, value = '', onChange, ..
 
   return (
     <View
-      {...others}
-      borderColor={active ? COLOR.CONTENT : COLOR.GRAYSCALE_L}
-      style={[style.container, others.customStyle]}
+      backgroundColor={backgroundColor}
+      borderColor={focus ? COLOR.CONTENT : backgroundColor}
+      style={style.container}
       wide
     >
       <Text color={!active ? COLOR.GRAYSCALE_L : undefined} style={style.label} detail level={2} pointerEvents="none">
@@ -52,6 +59,7 @@ const Input = ({ disabled, keyboard = 'default', label, value = '', onChange, ..
 };
 
 Input.propTypes = {
+  backgroundColor: PropTypes.string,
   disabled: PropTypes.bool,
   keyboard: PropTypes.string,
   label: PropTypes.string.isRequired,
