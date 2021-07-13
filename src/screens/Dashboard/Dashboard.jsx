@@ -10,9 +10,10 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
 
 import { C, EVENTS, L10N } from '@common';
-import { Card, CARD_SIZE, GroupTransactions, Header, Heading, ScrollView, Search, Summary } from '@components';
+import { Card, CARD_SIZE, GroupTransactions, Header, Heading, ScrollView, Summary } from '@components';
 import { useNavigation, useStore } from '@context';
 
+import { Search } from './components';
 import { queryLastTxs, querySearchTxs, queryVaults } from './Dashboard.controller';
 import { style } from './Dashboard.style';
 

@@ -55,7 +55,7 @@ const Search = ({ onChange }) => {
           color={hasValue ? COLOR.CONTENT : COLOR.GRAYSCALE_L}
           name={hasValue ? 'close' : 'search'}
           onPress={hasValue ? handleReset : undefined}
-          style={style.button}
+          customStyle={style.button}
         />
       </View>
     </KeyboardAvoidingView>

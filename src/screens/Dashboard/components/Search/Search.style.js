@@ -5,12 +5,14 @@ export const style = StyleSheet.create({
   button: {
     alignSelf: 'center',
   },
+
   container: {
     flex: 1,
   },
 
   content: {
     alignItems: 'center',
+    alignContent: 'center',
     backgroundColor: '$colorInfo',
     borderRadius: '$borderRadius',
     borderWidth: '$borderSize',
