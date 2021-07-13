@@ -40,7 +40,7 @@ const NumKeyboard = ({ onPress, ...others }) => (
               <Text heading level={2}>
                 {key}
               </Text>
-              <Text detail color={COLOR.GRAYSCALE_XL}>
+              <Text detail color={COLOR.GRAYSCALE_L}>
                 {LETTERS[key] || ' '}
               </Text>
             </>

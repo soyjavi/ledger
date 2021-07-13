@@ -23,7 +23,7 @@ const Completed = ({ onPress, ...inherit }) => {
       <SafeAreaView flex={SIZE.XS}>
         <View style={style.content} justifyContent={ALIGN.END} padding={SIZE.M}>
           <Banner
-            aling={ALIGN.RIGHT}
+            align={ALIGN.END}
             image={BANNERS.COMPLETED}
             marginBottom={LAYOUT.XS}
             title={L10N.ONBOARDING_COMPLETED_TITLE}

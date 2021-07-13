@@ -28,7 +28,7 @@ const Onboarding = () => {
   const [mounted, setMounted] = useState(false);
 
   useLayoutEffect(() => {
-    setStep(onboarded ? VAULT : SESSION);
+    setStep(onboarded ? VAULT : WELCOME);
     setTimeout(() => setMounted(true), 300);
   }, [onboarded]);
 
@@ -47,9 +47,9 @@ const Onboarding = () => {
       {navigation.stack.length <= 1 && (
         <Progress
           active={step - 1}
-          length={4}
           activeColor={COLOR.PRIMARY}
           inactiveColor={COLOR.GRAYSCALE_XL}
+          length={4}
           style={style.progress}
         />
       )}

@@ -59,21 +59,21 @@ const Session = ({ onSession, visible, ...others }) => {
       <SafeAreaView flex={SIZE.XS}>
         <View alignItems={ALIGN.CENTER} style={style.content} justifyContent={ALIGN.END} padding={SIZE.M}>
           <Image style={style.image} resizeMode="cover" src={LOGO} />
-          <Text color={COLOR.GRAYSCALE_XL} detail level={1} marginTop={SIZE.XXL}>
+          <Text color={COLOR.GRAYSCALE_L} detail level={1} marginTop={SIZE.XXL}>
             {signup ? L10N.PIN_CHOOSE : L10N.PIN}
           </Text>
           <View flexDirection={FLEX_DIRECTION.ROW} marginVertical={SIZE.L}>
             {['•', '•', '•', '•'].map((letter, index) => (
               <View
                 key={index}
-                backgroundColor={pin.length > index ? COLOR.CONTENT : COLOR.GRAYSCALE_XL}
+                backgroundColor={pin.length > index ? COLOR.PRIMARY : COLOR.GRAYSCALE_XL}
                 style={style.bullet}
               />
             ))}
           </View>
 
           <NumKeyboard marginVertical={SIZE.M} onPress={(number) => setPin(`${pin}${number}`)} />
-          <Text color={COLOR.GRAYSCALE_XL} detail>{`v${VERSION}`}</Text>
+          <Text color={COLOR.GRAYSCALE_L} detail>{`v${VERSION}`}</Text>
         </View>
       </SafeAreaView>
     </Viewport>

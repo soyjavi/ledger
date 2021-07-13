@@ -57,20 +57,24 @@ const FirstVault = ({ onVault, visible, ...others }) => {
   return (
     <Viewport {...others} visible={visible}>
       <SafeAreaView flex={SIZE.XS}>
-        <View alignItems={ALIGN.CENTER} style={style.content} justifyContent={ALIGN.END} padding={SIZE.M}>
+        <View justifyContent={ALIGN.END} style={style.content}>
           <KeyboardAvoidingView behavior={IS_NATIVE ? 'padding' : undefined}>
             <Text align={ALIGN.CENTER} heading level={1}>
-              Your first account
+              {L10N.FIRST_VAULT}
+            </Text>
+            <Text align={ALIGN.CENTER} color={COLOR.GRAYSCALE_L} detail level={1}>
+              {L10N.FIRST_VAULT_CAPTION}
             </Text>
 
-            <View marginVertical={SIZE.L}>
-              <FormVault form={form} onChange={setForm} />
-              <Text align={ALIGN.CENTER} color={COLOR.GRAYSCALE_XL} detail marginTop={SIZE.S}>
-                {L10N.FIRST_VAULT_CAPTION}
-              </Text>
-            </View>
+            <FormVault marginTop={SIZE.XL} form={form} onChange={setForm} />
 
-            <Button busy={busy} disabled={busy || !form.valid} outlined={!form.valid && !busy} onPress={handleSubmit}>
+            <Button
+              busy={busy}
+              disabled={busy || !form.valid}
+              marginTop={SIZE.M}
+              outlined={!form.valid && !busy}
+              onPress={handleSubmit}
+            >
               {L10N.CREATE.toUpperCase()}
             </Button>
           </KeyboardAvoidingView>
