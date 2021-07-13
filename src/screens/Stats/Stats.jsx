@@ -94,7 +94,7 @@ const Stats = ({ timestamp }) => {
 
         {(hasExpenses || hasIncomes || hasPoints) && (
           <>
-            {hasIncomes && <ItemGroupCategories color={COLOR.BRAND} type={INCOME} dataSource={incomes} />}
+            {hasIncomes && <ItemGroupCategories color={COLOR.PRIMARY} type={INCOME} dataSource={incomes} />}
             {hasExpenses && <ItemGroupCategories type={EXPENSE} dataSource={expenses} />}
             {hasPoints && <Locations {...locations} />}
           </>

@@ -99,7 +99,7 @@ export const style = StyleSheet.create({
   },
 
   scaleBorder: {
-    borderColor: () => colorOpacity(Theme.get('colorBase'), 0.75),
+    borderColor: () => colorOpacity(Theme.get('colorBase'), 0.5),
     borderWidth: '$borderSize',
   },
 });
