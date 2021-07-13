@@ -6,29 +6,29 @@ const CATEGORY_ICON = [
   {
     // Expenses
     0: 'trash',
-    1: 'cup',
+    1: 'restaurant',
     3: 'plane',
-    4: 'badge',
-    5: 'speedometer',
-    6: 'puzzle',
+    4: 'bank',
+    5: 'percent',
+    6: 'game',
     7: 'shopping',
-    8: 'energy',
+    8: 'lightbulb',
     9: 'hospital',
-    10: 'user',
-    11: 'earphones-alt',
-    12: 'doctor',
+    10: 'heart',
+    11: 'customer-service',
+    12: 'arrow-left-right',
     13: 'question',
-    99: 'shuffle',
+    99: 'error',
   },
   {
     // Incomes
     0: 'trash',
-    1: 'briefcase',
-    2: 'speedometer',
+    1: 'building',
+    2: 'percent',
     3: 'calendar',
-    4: 'doc',
+    4: 'arrow-left-right',
     5: 'question',
-    99: 'shuffle',
+    99: 'error',
   },
 ];
 
@@ -51,7 +51,7 @@ export const getIcon = ({ type, category, title } = {}) => {
     if (contains(['movie', 'film', 'cinema'])) return 'film';
     if (contains(['music', 'concert'])) return 'music';
 
-    if (contains(['villa', 'house'])) return 'house';
+    if (contains(['villa', 'house', 'condo'])) return 'house';
     // Brands
     else if (contains(['apple', 'iphone', 'icloud'])) return 'apple';
     else if (contains(['spotify'])) return 'spotify';
