@@ -20,15 +20,15 @@ const SESSION = 2;
 const VAULT = 3;
 const COMPLETED = 4;
 
-const Onboarding = () => {
+const Onboarding = ({ backward }) => {
   const navigation = useNavigation();
-  const { settings: { onboarded } = {}, vaults = [] } = useStore();
+  const { settings: { onboarded } = {}, vaults = [], ...store } = useStore();
 
   const [step, setStep] = useState();
   const [mounted, setMounted] = useState(false);
 
   useLayoutEffect(() => {
-    setStep(onboarded ? VAULT : WELCOME);
+    setStep(onboarded ? SESSION : WELCOME);
     setTimeout(() => setMounted(true), 300);
   }, [onboarded]);
 
@@ -44,7 +44,7 @@ const Onboarding = () => {
 
   return mounted ? (
     <>
-      {navigation.stack.length <= 1 && (
+      {(!onboarded || vaults.length === 0 || step === COMPLETED) && !backward && (
         <Progress
           active={step - 1}
           activeColor={COLOR.PRIMARY}
@@ -53,14 +53,10 @@ const Onboarding = () => {
           style={style.progress}
         />
       )}
-      {step <= SESSION && <Welcome backward={step > WELCOME} visible={step >= WELCOME} onPress={nextStep} />}
-      <Session backward={step > SESSION} visible={step >= SESSION} onSession={handleSession} />
-      {step > SESSION && (
-        <>
-          <FirstVault backward={step > VAULT} visible={step >= VAULT} onVault={nextStep} />
-          <Completed backward={step > COMPLETED} visible={step >= COMPLETED} onPress={handleComplete} />
-        </>
-      )}
+      <Welcome backward={backward || step > WELCOME} visible={step >= WELCOME} onPress={nextStep} />
+      <Session backward={backward || step > SESSION} visible={step >= SESSION} onSession={handleSession} />
+      <FirstVault backward={backward || step > VAULT} visible={step >= VAULT} onVault={nextStep} />
+      <Completed backward={backward || step > COMPLETED} visible={step >= COMPLETED} onPress={handleComplete} />
     </>
   ) : (
     <></>

@@ -36,7 +36,7 @@ const Session = ({ onSession, visible, ...others }) => {
       const { settings, vaults = [] } = store;
 
       if (settings.pin && vaults.length !== 0) {
-        if (IS_DEV) setPin(settings.pin);
+        if (IS_DEV) setTimeout(() => setPin(settings.pin), 1000);
         else if (pin === '') askLocalAuthentication({ setPin, store });
       }
     }
