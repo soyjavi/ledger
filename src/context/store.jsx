@@ -18,6 +18,7 @@ const StoreContext = createContext(`${NAME}:context:store`);
 const StoreProvider = ({ children }) => {
   const { connected } = useConnection();
 
+  const [ready, setReady] = useState(false);
   const [state, setState] = useState({
     blockchain: undefined,
     settings: {
@@ -30,7 +31,8 @@ const StoreProvider = ({ children }) => {
   });
 
   useLayoutEffect(() => {
-    const fetchStorage = async () => {
+    setReady(async () => {
+      console.log('INITIATE');
       const store = await new AsyncStorage({
         adapter: AsyncStorageAdapter,
         defaults: {
@@ -62,9 +64,9 @@ const StoreProvider = ({ children }) => {
         vaults: await blockchain.get('vaults').blocks,
         txs: await blockchain.get('txs').blocks,
       });
-    };
 
-    if (!state.store) fetchStorage();
+      return true;
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -131,7 +133,7 @@ const StoreProvider = ({ children }) => {
         updateRates: (value) => updateStore('rates', { ...state.rates, ...value }),
       }}
     >
-      {children}
+      {ready && children}
     </StoreContext.Provider>
   );
 };
