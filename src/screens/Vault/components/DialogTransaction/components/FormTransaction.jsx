@@ -2,6 +2,7 @@ import {
   // helpers
   COLOR,
   SIZE,
+  styles,
   // components
   ScrollView,
   // hooks
@@ -30,17 +31,22 @@ const FormTransaction = ({ color, currency, form = {}, onChange, type, vault = {
     });
   };
 
+  const categories = queryCategories({ type });
   return (
     <>
       <ScrollView horizontal snapInterval={OPTION_SIZE} style={style.slider} width={width}>
-        {queryCategories({ type }).map((item, index) => (
+        {categories.map((item, index) => (
           <Option
             color={COLOR.GRAYSCALE_XL}
             legend={item.caption}
             key={item.key}
             icon={getIcon({ type, category: item.key })}
             selected={form.category === item.key}
-            style={index === 0 ? style.firstCard : style.card}
+            style={styles(
+              style.card,
+              index === 0 && style.firstCard,
+              index === categories.length - 1 && style.lastCard,
+            )}
             onPress={() => handleField('category', item.key)}
           />
         ))}

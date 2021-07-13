@@ -1,4 +1,9 @@
-import { View } from '@lookiero/aurora';
+import {
+  // helpers
+  ALIGN,
+  // components
+  View,
+} from '@lookiero/aurora';
 import PropTypes from 'prop-types';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
@@ -90,7 +95,7 @@ const Vault = ({ visible }) => {
             ))}
           </>
         ) : (
-          <Banner image={BANNERS.NOT_FOUND} title={L10N.NO_TRANSACTIONS} />
+          <Banner align={ALIGN.CENTER} image={BANNERS.NOT_FOUND} title={L10N.NO_TRANSACTIONS} />
         )}
       </ScrollView>
 

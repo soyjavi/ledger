@@ -14,4 +14,8 @@ export const style = StyleSheet.create({
   firstCard: {
     marginLeft: '$spaceXL',
   },
+
+  lastCard: {
+    marginRight: '$spaceXL',
+  },
 });
