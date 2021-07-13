@@ -15,21 +15,25 @@ import React from 'react';
 
 import { BANNERS } from '@assets';
 
+import { style } from './Banner.style';
+
 const Banner = ({ align, caption, children, image = BANNERS.NOT_FOUND, title, ...others }) => {
   const {
-    screen: { height, width },
+    screen: { width },
   } = useDevice();
 
+  const textAlign = align === ALIGN.END ? ALIGN.RIGHT : align;
+
   return (
-    <View {...others} alignItems={align}>
-      <Image resizeMode="contain" src={image} style={{ height: height / 3, width: width * 0.9 }} />
+    <View {...others} alignItems={align} alignContent={align} justifyContent={align}>
+      <Image align={align} resizeMode="contain" src={image} style={[style.content, { height: width * 0.6 }]} />
       {title && (
-        <Text align={align} heading level={1} marginTop={SPACE.L}>
+        <Text align={textAlign} heading level={1} marginTop={SPACE.L} style={style.content}>
           {title}
         </Text>
       )}
       {caption && (
-        <Text align={align} color={COLOR.GRAYSCALE_L} marginTop={SPACE.S}>
+        <Text align={textAlign} color={COLOR.GRAYSCALE_L} marginTop={SPACE.S} style={style.content}>
           {caption}
         </Text>
       )}
