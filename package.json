@@ -22,7 +22,7 @@
   "dependencies": {
     "@lookiero/aurora-next": "^3.0",
     "@lookiero/event-next": "^0.3",
-    "@react-native-community/async-storage": "~1.12.0",
+    "@react-native-async-storage/async-storage": "^1.15.5",
     "@react-native-community/netinfo": "5.9.7",
     "color": "^3.1.2",
     "expo-barcode-scanner": "~9.1.0",
