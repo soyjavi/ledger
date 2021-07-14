@@ -14,10 +14,10 @@ import React from 'react';
 import { getIcon, L10N } from '@common';
 import { Input, InputCurrency, Option, OPTION_SIZE } from '@components';
 
-import { queryCategories } from '../modules';
+import { queryCategories } from '../helpers';
 import { style } from './FormTransaction.style';
 
-const FormTransaction = ({ color, currency, form = {}, onChange, type, vault = {} }) => {
+const FormTransaction = ({ form = {}, onChange, type, vault = {} }) => {
   const {
     screen: { width },
   } = useDevice();
@@ -30,6 +30,8 @@ const FormTransaction = ({ color, currency, form = {}, onChange, type, vault = {
       valid: next.category !== undefined && next.title !== '' && next.value > 0,
     });
   };
+
+  console.log('<FormTransactino>', type);
 
   const categories = queryCategories({ type });
   return (
@@ -53,8 +55,7 @@ const FormTransaction = ({ color, currency, form = {}, onChange, type, vault = {
       </ScrollView>
 
       <InputCurrency
-        color={color}
-        currency={currency}
+        currency={vault.currency}
         marginBottom={SIZE.M}
         type={type}
         onChange={(value) => handleField('value', value)}
@@ -63,7 +64,6 @@ const FormTransaction = ({ color, currency, form = {}, onChange, type, vault = {
       />
 
       <Input
-        color={color}
         label={L10N.CONCEPT}
         marginBottom={SIZE.M}
         onChange={(value) => handleField('title', value)}
@@ -74,8 +74,6 @@ const FormTransaction = ({ color, currency, form = {}, onChange, type, vault = {
 };
 
 FormTransaction.propTypes = {
-  color: PropTypes.string,
-  currency: PropTypes.string,
   form: PropTypes.shape({}).isRequired,
   type: PropTypes.number,
   vault: PropTypes.shape({}).isRequired,

@@ -1,4 +1,4 @@
-export default async ({
+export const createTransaction = async ({
   props: { vault = {}, type },
   state: {
     coords: { latitude, longitude } = {},

@@ -11,7 +11,7 @@ import { C, currencyDecimals, L10N } from '@common';
 import { InputCurrency, Option, OPTION_SIZE } from '@components';
 import { useStore } from '@context';
 
-import { getVault, queryAvailableVaults } from '../modules';
+import { getVault, queryAvailableVaults } from '../helpers';
 
 const {
   TX: {
@@ -72,19 +72,12 @@ const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
       />
 
       {selectVault ? (
-        <ScrollView
-          horizontal
-          snapInterval={OPTION_SIZE}
-          // style={style.slider}
-          // width={width}
-          marginBottom={SIZE.M}
-        >
+        <ScrollView horizontal snapInterval={OPTION_SIZE} marginBottom={SIZE.M}>
           {availableVaults.map(({ currency, hash, title }) => (
             <Option
               currency={currency}
               key={hash}
               legend={title}
-              // marginRight={SIZE.M}
               onPress={() => {
                 handleField('destination', hash);
                 setSelectVault(false);
@@ -110,7 +103,6 @@ const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
 };
 
 FormTransaction.propTypes = {
-  destination: PropTypes.string,
   form: PropTypes.shape({}).isRequired,
   vault: PropTypes.shape({}).isRequired,
   onChange: PropTypes.func.isRequired,

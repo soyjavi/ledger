@@ -7,7 +7,7 @@ const {
   },
 } = C;
 
-export default async ({
+export const createTransfer = async ({
   props: { vault = {} },
   state: {
     form: { from, to, exchange, value },

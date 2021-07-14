@@ -7,6 +7,7 @@ import {
   // components
   Button,
   Modal,
+  Portal,
   Text,
   View,
 } from '@lookiero/aurora';
@@ -21,7 +22,7 @@ import { FormVault } from '../FormVault';
 const { SCREEN } = C;
 const INITIAL_STATE = { balance: 0, currency: undefined, title: undefined };
 
-const DialogVault = () => {
+const ModalVault = () => {
   const { subscribe } = useEvent();
   const navigation = useNavigation();
   const {
@@ -60,27 +61,31 @@ const DialogVault = () => {
   };
 
   return (
-    <Modal color={COLOR.INFO} isVisible={visible} swipeable onClose={handleClose}>
-      <View alignItems={ALIGN.CENTER} marginBottom={SIZE.L}>
-        <Text heading level={2}>
-          {`${L10N.NEW} ${L10N.VAULT}`}
-        </Text>
-      </View>
+    <Portal id="modal-vault">
+      <Modal color={COLOR.INFO} isVisible={visible} swipeable onClose={handleClose}>
+        <View alignItems={ALIGN.CENTER} marginBottom={SIZE.L}>
+          <Text heading level={2}>
+            {`${L10N.NEW} ${L10N.VAULT}`}
+          </Text>
+        </View>
 
-      <FormVault form={form} optionColor={COLOR.GRAYSCALE_XL} onChange={setForm} />
+        <FormVault form={form} modal onChange={setForm} />
 
-      <View flexDirection={FLEX_DIRECTION.ROW} marginTop={SIZE.XL}>
-        <Button disabled={busy} marginRight={SIZE.M} outlined onPress={handleClose}>
-          {L10N.CLOSE.toUpperCase()}
-        </Button>
-        <Button busy={busy} color={COLOR.CONTENT} disabled={busy || form.title === undefined} onPress={handleSubmit}>
-          {L10N.SAVE.toUpperCase()}
-        </Button>
-      </View>
-    </Modal>
+        <View flexDirection={FLEX_DIRECTION.ROW} marginTop={SIZE.M}>
+          <Button disabled={busy} marginRight={SIZE.M} outlined onPress={handleClose}>
+            {L10N.CLOSE.toUpperCase()}
+          </Button>
+          <Button busy={busy} color={COLOR.CONTENT} disabled={busy || form.title === undefined} onPress={handleSubmit}>
+            {L10N.SAVE.toUpperCase()}
+          </Button>
+        </View>
+      </Modal>
+    </Portal>
   );
 };
 
-DialogVault.propTypes = {};
+ModalVault.displayName = 'ModalVault';
 
-export { DialogVault };
+ModalVault.propTypes = {};
+
+export { ModalVault };

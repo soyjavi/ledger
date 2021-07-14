@@ -1,7 +1,7 @@
 import { View, useDevice } from '@lookiero/aurora';
 import React from 'react';
 
-import { DialogClone, DialogVault } from '@components';
+import { ModalClone, ModalTransaction, ModalVault } from '@components';
 
 import { Sync } from './App.sync';
 import { C } from './common';
@@ -19,14 +19,15 @@ const Router = () => {
 
   return (
     <View style={{ height, width, overflow: 'hidden' }}>
-      <Onboarding />
+      <Onboarding backward={current === DASHBOARD} />
       <Main backward={current !== DASHBOARD} visible={stack.includes(DASHBOARD)} />
       {stack.includes(DASHBOARD) && (
         <>
           <Vault visible={stack.includes(VAULT)} />
           <Sync />
-          <DialogClone />
-          <DialogVault />
+          <ModalClone />
+          <ModalTransaction />
+          <ModalVault />
         </>
       )}
     </View>

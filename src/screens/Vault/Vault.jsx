@@ -4,15 +4,16 @@ import {
   // components
   View,
 } from '@lookiero/aurora';
+import { useEvent } from '@lookiero/event';
 import PropTypes from 'prop-types';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import { BANNERS } from '@assets';
-import { C, L10N } from '@common';
+import { C, EVENTS, L10N } from '@common';
 import { Banner, GroupTransactions, Header, Heading, ScrollView, Summary, Viewport } from '@components';
 import { useNavigation, useStore } from '@context';
 
-import { ButtonSummary, DialogTransaction } from './components';
+import { ButtonSummary } from './components';
 import { onScroll, query } from './Vault.controller';
 import { style } from './Vault.style';
 
@@ -23,21 +24,18 @@ const {
 } = C;
 
 const Vault = ({ visible }) => {
+  const { publish } = useEvent();
   const { params, ...navigation } = useNavigation();
   const { baseCurrency, vaults } = useStore();
   const scrollview = useRef(null);
 
   const [dataSource, setDataSource] = useState({});
-  const [dialog, setDialog] = useState();
   const [scroll, setScroll] = useState(false);
   const [scrollQuery, setScrollQuery] = useState(false);
   const [txs, setTxs] = useState([]);
 
   useLayoutEffect(() => {
-    if (!visible) {
-      scrollview.current.scrollTo({ y: 0, animated: false });
-      setDialog(undefined);
-    }
+    if (!visible) scrollview.current.scrollTo({ y: 0, animated: false });
   }, [visible]);
 
   useEffect(() => {
@@ -68,9 +66,13 @@ const Vault = ({ visible }) => {
     setScrollQuery(false);
   };
 
+  const handleTransaction = (type) => {
+    publish({ event: EVENTS.NEW_TRANSACTION }, { type, vault: dataSource });
+  };
+
   const { currency = baseCurrency, title, ...rest } = dataSource;
 
-  console.log('  <Vault>', { visible, dialog });
+  console.log('  <Vault>', { visible });
 
   return (
     <Viewport scroll={false} visible={visible}>
@@ -79,10 +81,10 @@ const Vault = ({ visible }) => {
       <ScrollView onScroll={handleScroll} ref={scrollview}>
         <Summary {...rest} title={title} currency={currency}>
           <View style={style.buttons}>
-            <ButtonSummary icon="arrow-right-up" text={L10N.INCOME} onPress={() => setDialog(INCOME)} />
-            <ButtonSummary icon="arrow-left-down" text={L10N.EXPENSE} onPress={() => setDialog(EXPENSE)} />
+            <ButtonSummary icon="arrow-right-up" text={L10N.INCOME} onPress={() => handleTransaction(INCOME)} />
+            <ButtonSummary icon="arrow-left-down" text={L10N.EXPENSE} onPress={() => handleTransaction(EXPENSE)} />
             {vaults.length > 1 && (
-              <ButtonSummary icon="arrow-left-right" text={L10N.SWAP} onPress={() => setDialog(TRANSFER)} />
+              <ButtonSummary icon="arrow-left-right" text={L10N.SWAP} onPress={() => handleTransaction(TRANSFER)} />
             )}
           </View>
         </Summary>
@@ -98,16 +100,6 @@ const Vault = ({ visible }) => {
           <Banner align={ALIGN.CENTER} image={BANNERS.NOT_FOUND} title={L10N.NO_TRANSACTIONS} />
         )}
       </ScrollView>
-
-      {visible && (
-        <DialogTransaction
-          currency={currency}
-          onClose={() => setDialog(undefined)}
-          type={dialog}
-          vault={dataSource}
-          isVisible={visible && dialog !== undefined}
-        />
-      )}
     </Viewport>
   );
 };
