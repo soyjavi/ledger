@@ -29,7 +29,12 @@ const CurrencyLogo = ({ color = COLOR.PRIMARY, currency, ...others }) => {
       style={[style.container, others.style]}
     >
       {symbol && (
-        <Text detail level={symbol.length === 1 ? 2 : undefined} color={COLOR.BASE} style={style.currency}>
+        <Text
+          color={color !== COLOR.BASE ? COLOR.BASE : undefined}
+          detail
+          level={symbol.length === 1 ? 2 : undefined}
+          style={style.currency}
+        >
           {symbol}
         </Text>
       )}

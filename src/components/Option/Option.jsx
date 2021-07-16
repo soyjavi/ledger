@@ -40,7 +40,7 @@ const Option = ({
   return (
     <Touchable onPress={onPress} style={others.style}>
       <Box color={selected ? colorSelected : color} style={style.container}>
-        {currency && <CurrencyLogo color={!selected ? COLOR.PRIMARY : COLOR.TOUCHABLE} currency={currency} />}
+        {currency && <CurrencyLogo color={selected ? COLOR.BASE : COLOR.CONTENT} currency={currency} />}
         {icon && <Icon color={colorContent} name={icon} />}
 
         {caption && (

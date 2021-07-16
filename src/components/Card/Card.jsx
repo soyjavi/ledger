@@ -34,7 +34,10 @@ const Card = ({ balance = 0, currency, highlight, onPress, title = '', ...others
       <Box color={highlight ? COLOR.PRIMARY : COLOR.INFO} style={style.box}>
         <View style={style.content}>
           <View alignItems={ALIGN.CENTER} flexDirection={FLEX_DIRECTION.ROW}>
-            <CurrencyLogo color={!hasBalance ? COLOR.GRAYSCALE_L : undefined} currency={currency} />
+            <CurrencyLogo
+              color={highlight ? COLOR.BASE : !hasBalance ? COLOR.GRAYSCALE_L : undefined}
+              currency={currency}
+            />
             <Text color={textColor} detail level={2} marginLeft={SPACE.S} numberOfLines={1}>
               {title.toUpperCase()}
             </Text>
