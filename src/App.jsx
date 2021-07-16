@@ -3,7 +3,7 @@ import { EventProvider } from '@lookiero/event';
 import { useFonts } from 'expo-font';
 import React from 'react';
 
-import { ConnectionProvider, NavigationProvider, StoreProvider, SnackBarProvider } from '@context';
+import { ConnectionProvider, NavigationProvider, StoreProvider } from '@context';
 import { ShieldTheme } from '@theming';
 
 import { Router } from './App.router';
@@ -17,19 +17,17 @@ const App = () => {
   });
 
   return ready ? (
-    <Aurora theme={ShieldTheme}>
-      <EventProvider>
-        <SnackBarProvider>
-          <ConnectionProvider>
-            <StoreProvider>
-              <NavigationProvider>
-                <Router />
-              </NavigationProvider>
-            </StoreProvider>
-          </ConnectionProvider>
-        </SnackBarProvider>
-      </EventProvider>
-    </Aurora>
+    <EventProvider>
+      <ConnectionProvider>
+        <StoreProvider>
+          <Aurora theme={ShieldTheme}>
+            <NavigationProvider>
+              <Router />
+            </NavigationProvider>
+          </Aurora>
+        </StoreProvider>
+      </ConnectionProvider>
+    </EventProvider>
   ) : (
     <></>
   );

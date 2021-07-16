@@ -1,3 +1,5 @@
+import { Notification } from '@lookiero/aurora';
+
 import { L10N } from '@common';
 import { ServiceNode, ServiceRates } from '@services';
 
@@ -22,19 +24,19 @@ const parseTxs = (txs = []) =>
   }));
 
 const getRates = async ({
-  snackbar,
+  Stack,
   store: {
     settings: { baseCurrency },
     updateRates,
   },
 }) => {
   const rates = await ServiceRates.get({ baseCurrency, latest: true }).catch(() =>
-    snackbar.alert({ text: L10N.ERROR_SERVICE_RATES }),
+    Stack.alert('rates', Notification, { text: L10N.ERROR_SERVICE_RATES, timeoutClose: 10000 }),
   );
   if (rates) await updateRates(rates);
 };
 
-const getSyncStatus = async ({ snackbar, store }) => {
+const getSyncStatus = async ({ store }) => {
   const {
     latestHash = {},
     settings: { fingerprint },
@@ -45,7 +47,7 @@ const getSyncStatus = async ({ snackbar, store }) => {
   let { settings } = store;
   let synced;
 
-  const response = await ServiceNode.status({ settings, snackbar }).catch(async (error) => {
+  const response = await ServiceNode.status({ settings }).catch(async (error) => {
     if (error.code === 403) {
       const authorization = await ServiceNode.signup({ fingerprint }).catch(() => {});
       if (authorization) {
@@ -68,13 +70,13 @@ const getSyncStatus = async ({ snackbar, store }) => {
   return synced;
 };
 
-const syncNode = async ({ store, snackbar }) => {
+const syncNode = async ({ store }) => {
   const { blockchain, settings } = store;
 
   const txs = blockchain.get('txs').blocks.slice(1);
   const vaults = blockchain.get('vaults').blocks.slice(1);
 
-  const { txs: nodeTxs = {}, vaults: nodeVaults = {} } = (await ServiceNode.status({ settings, snackbar })) || {};
+  const { txs: nodeTxs = {}, vaults: nodeVaults = {} } = (await ServiceNode.status({ settings })) || {};
 
   const rebase = !existsHash(vaults, nodeVaults.latestHash) || !existsHash(txs, nodeTxs.latestHash);
   if (rebase) {
@@ -86,7 +88,7 @@ const syncNode = async ({ store, snackbar }) => {
     if (txsToSync.length > 0) await ServiceNode.sync({ settings, key: 'txs', blocks: parseTxs(txsToSync) });
   }
 
-  return await getSyncStatus({ snackbar, store });
+  return await getSyncStatus({ store });
 };
 
 export { getRates, getSyncStatus, syncNode };

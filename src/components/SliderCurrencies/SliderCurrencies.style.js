@@ -8,4 +8,16 @@ export const style = StyleSheet.create({
   firstCard: {
     marginLeft: '$spaceM',
   },
+
+  firstCardModal: {
+    marginLeft: '$spaceXL',
+  },
+
+  lastCard: {
+    marginRight: '$spaceM',
+  },
+
+  lastCardModal: {
+    marginRight: '$spaceXL',
+  },
 });

@@ -2,7 +2,6 @@ import {
   // helpers
   COLOR,
   // components
-  Motion,
   Text,
   View,
 } from '@lookiero/aurora';
@@ -46,14 +45,16 @@ const Chart = ({ captions, highlight, inverted, values = [], style: styleContain
         <View style={style.bars}>
           {values.map((value, index) => (
             <View key={`${value}-${index.toString()}`} style={[style.column, inverted && style.columnInverted]}>
-              <Motion
+              <View
                 backgroundColor={color}
                 style={[
                   style.bar,
                   inverted && style.barInverted,
-                  value !== 0 && { height: `${calcHeight(value, { min, max })}%` },
+                  value !== 0 && {
+                    height: `${calcHeight(value, { min, max })}%`,
+                    opacity: highlight !== index ? 0.2 : 1,
+                  },
                 ]}
-                value={{ opacity: highlight !== index ? 0.2 : 1 }}
               />
             </View>
           ))}

@@ -1,6 +1,7 @@
 import {
   // helpers
-  SIZE,
+  COLOR,
+  styles,
   // components
   View,
 } from '@lookiero/aurora';
@@ -14,7 +15,7 @@ import { InputCurrency } from '../InputCurrency';
 import { SliderCurrencies } from '../SliderCurrencies';
 import { style } from './FormVault.style';
 
-const FormVault = ({ optionColor, form = {}, onChange, ...others }) => {
+const FormVault = ({ form = {}, modal = false, onChange, ...others }) => {
   const handleChange = (field, value) => {
     const next = { ...form, [field]: value };
 
@@ -24,31 +25,38 @@ const FormVault = ({ optionColor, form = {}, onChange, ...others }) => {
     });
   };
 
+  const backgroundColorInput = modal ? COLOR.GRAYSCALE_XL : COLOR.INFO;
+
   return (
     <View {...others}>
       <SliderCurrencies
-        color={optionColor}
+        modal={modal}
         selected={form.currency}
+        style={styles(style.slider, modal ? style.sliderModal : style.sliderFullScreen)}
         onChange={(currency) => handleChange('currency', currency)}
-        style={style.slider}
       />
 
       <InputCurrency
+        backgroundColor={backgroundColorInput}
         label={L10N.INITIAL_BALANCE}
-        marginBottom={SIZE.M}
         value={form.balance}
         vault={{ currency: form.currency }}
         onChange={(value) => handleChange('balance', value)}
       />
 
-      <Input label={L10N.NAME} value={form.title} onChange={(value) => handleChange('title', value)} />
+      <Input
+        backgroundColor={backgroundColorInput}
+        label={L10N.NAME}
+        value={form.title}
+        onChange={(value) => handleChange('title', value)}
+      />
     </View>
   );
 };
 
 FormVault.propTypes = {
   form: PropTypes.shape({}),
-  optionColor: PropTypes.string,
+  modal: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
 };
 

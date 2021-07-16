@@ -19,7 +19,8 @@ const VaultItem = ({ onPress, dataSource: { currency, currentBalance = 0, title 
     settings: { baseCurrency },
   } = useStore();
 
-  const hasBalance = currentBalance !== undefined && parseFloat(currentBalance.toFixed(2)) > 0;
+  const hasBalance =
+    currentBalance !== undefined && currentBalance !== null && parseFloat(currentBalance.toFixed(2)) > 0;
 
   return (
     <Touchable style={style.container} onPress={onPress}>

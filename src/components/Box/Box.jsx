@@ -1,6 +1,7 @@
 import {
   // helpers
   COLOR,
+  styles,
   // components
   View,
 } from '@lookiero/aurora';
@@ -10,7 +11,7 @@ import React from 'react';
 import { style } from './Box.style';
 
 const Box = ({ children, color = COLOR.INFO, rounded, ...others }) => (
-  <View {...others} backgroundColor={color} style={[style.container, rounded && style.rounded, others.style]}>
+  <View {...others} backgroundColor={color} style={styles(style.container, rounded && style.rounded, others.style)}>
     {children}
   </View>
 );

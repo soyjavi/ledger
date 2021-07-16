@@ -13,7 +13,7 @@ import { verboseMonth } from './helpers';
 
 const BoxDate = ({ timestamp, ...inherit }) => (
   <Box {...inherit} color={COLOR.CONTENT} style={style.date}>
-    <Text color={COLOR.BASE} action>
+    <Text color={COLOR.BASE} action level={2}>
       {new Date(timestamp || null).getDate()}
     </Text>
     <Text color={COLOR.BASE} detail>

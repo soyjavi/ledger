@@ -7,7 +7,7 @@ const CARD_SIZE = spaceM * 10;
 
 const style = StyleSheet.create({
   box: {
-    alingContent: 'flex-start',
+    alignContent: 'flex-start',
     alignItems: 'flex-start',
     height: CARD_SIZE * 0.75,
     justifyContent: 'flex-start',

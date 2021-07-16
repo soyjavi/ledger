@@ -83,8 +83,9 @@ export const L10N = {
   EXPENSE: 'Expense',
   EXPENSES: 'Expenses',
 
+  FIRST_VAULT: 'Your first account',
   FIRST_VAULT_CAPTION:
-    'Choose the currency you use the most. Later you can create all the accounts you want and in all the available currencies.',
+    'Choose the currency you use the most. Later you can create more accounts with different currencies.',
   FORKED_CORRECTLY: 'All transactions have been successfully transferred to this device.',
   FROM: 'from',
 

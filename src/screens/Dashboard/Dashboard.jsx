@@ -91,7 +91,6 @@ const Dashboard = ({ timestamp }) => {
 
 Dashboard.propTypes = {
   timestamp: PropTypes.number,
-  visible: PropTypes.boolean,
 };
 
 export { Dashboard };

@@ -26,7 +26,7 @@ const Card = ({ balance = 0, currency, highlight, onPress, title = '', ...others
     rates,
   } = useStore();
 
-  const hasBalance = parseFloat(balance.toFixed(2)) > 0;
+  const hasBalance = balance !== null && parseFloat(balance.toFixed(2)) > 0;
   const textColor = highlight ? COLOR.BASE : !hasBalance ? COLOR.GRAYSCALE_L : undefined;
 
   return (

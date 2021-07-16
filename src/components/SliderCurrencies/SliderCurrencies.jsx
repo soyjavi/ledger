@@ -1,4 +1,7 @@
 import {
+  // helpers
+  COLOR,
+  styles,
   // components
   ScrollView,
   // hooks
@@ -13,21 +16,28 @@ import { Option, OPTION_SIZE } from '../Option';
 import { queryCurrencies } from './modules';
 import { style } from './SliderCurrencies.style';
 
-const SliderCurrencies = ({ color, onChange, selected, ...others }) => {
+const SliderCurrencies = ({ modal, selected, onChange, ...others }) => {
   const {
     screen: { width },
   } = useDevice();
   const store = useStore();
 
+  const color = modal ? COLOR.GRAYSCALE_XL : COLOR.INFO;
+  const currencies = queryCurrencies(store);
+
   return (
-    <ScrollView {...others} horizontal snapInterval={OPTION_SIZE} style={[others.style]} width={width}>
-      {queryCurrencies(store).map((currency, index) => (
+    <ScrollView {...others} horizontal snapInterval={OPTION_SIZE} width={width}>
+      {currencies.map((currency, index) => (
         <Option
           caption={currency}
           color={color}
           currency={currency}
           key={index}
-          style={index === 0 ? style.firstCard : style.card}
+          style={styles(
+            style.card,
+            index === 0 && (modal ? style.firstCardModal : style.firstCard),
+            index === currencies.length - 1 && (modal ? style.lastCardModal : style.lastCard),
+          )}
           onPress={() => onChange(currency)}
           selected={selected === currency}
         />
@@ -37,7 +47,7 @@ const SliderCurrencies = ({ color, onChange, selected, ...others }) => {
 };
 
 SliderCurrencies.propTypes = {
-  color: PropTypes.string,
+  modal: PropTypes.bool,
   selected: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 };

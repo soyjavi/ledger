@@ -51,8 +51,6 @@ export const style = StyleSheet.create({
   },
 
   slider: {
-    paddingLeft: '$spaceM',
     marginBottom: '$spaceXS',
-    backgroundColor: 'green',
   },
 });

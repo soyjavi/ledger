@@ -1,3 +1,4 @@
+import { Notification } from '@lookiero/aurora';
 import * as Permissions from 'expo-permissions';
 
 import { L10N } from '@common';
@@ -8,10 +9,10 @@ const askCamera = async () => {
   return status === 'granted';
 };
 
-const changeCurrency = async ({ currency, snackbar, store: { updateRates, updateSettings } }) => {
+const changeCurrency = async ({ currency, Stack, store: { updateRates, updateSettings } }) => {
   await updateSettings({ baseCurrency: currency });
   const rates = await ServiceRates.get({ baseCurrency: currency, latest: false }).catch(() =>
-    snackbar.alert({ text: L10N.ERROR_SERVICE_RATES }),
+    Stack.alert('rates', Notification, { text: L10N.ERROR_SERVICE_RATES, timeoutClose: 10000 }),
   );
   if (rates) await updateRates(rates);
 };
@@ -19,14 +20,14 @@ const changeCurrency = async ({ currency, snackbar, store: { updateRates, update
 const getBlockchain = async ({ qr, store: { settings } }) => await ServiceNode.blockchain({ blockchain: qr, settings });
 
 const getLatestRates = async ({
-  snackbar,
+  Stack,
   store: {
     settings: { baseCurrency },
     updateRates,
   },
 }) => {
   const rates = await ServiceRates.get({ baseCurrency, latest: true }).catch(() =>
-    snackbar.alert({ text: L10N.ERROR_SERVICE_RATES }),
+    Stack.alert('rates', Notification, { text: L10N.ERROR_SERVICE_RATES, timeoutClose: 10000 }),
   );
   if (rates) await updateRates(rates);
 };

@@ -22,7 +22,7 @@ const Welcome = ({ onPress, ...inherit }) => (
     <SafeAreaView flex={SPACE.XS}>
       <View style={style.content} justifyContent={ALIGN.END} padding={SPACE.M}>
         <Banner
-          aling={ALIGN.LEFT}
+          align={ALIGN.LEFT}
           image={BANNERS.WELCOME}
           marginBottom={LAYOUT.XS}
           title={L10N.WELCOME_TITLE}

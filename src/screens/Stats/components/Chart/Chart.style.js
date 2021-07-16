@@ -4,6 +4,7 @@ import StyleSheet from 'react-native-extended-stylesheet';
 import { colorOpacity } from '@common';
 
 export const style = StyleSheet.create({
+  $barRadius: 0,
   $barSize: 8,
   bars: {
     flexDirection: 'row',
@@ -13,8 +14,8 @@ export const style = StyleSheet.create({
   },
 
   bar: {
-    borderTopLeftRadius: '$borderRadius',
-    borderTopRightRadius: '$borderRadius',
+    borderTopLeftRadius: '$barRadius',
+    borderTopRightRadius: '$barRadius',
     maxHeight: '100%',
     minHeight: '$barSize',
     width: '$barSize',
@@ -34,8 +35,8 @@ export const style = StyleSheet.create({
   barInverted: {
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
-    borderBottomLeftRadius: '$borderRadius',
-    borderBottomRightRadius: '$borderRadius',
+    borderBottomLeftRadius: '$barRadius',
+    borderBottomRightRadius: '$barRadius',
   },
 
   captions: {

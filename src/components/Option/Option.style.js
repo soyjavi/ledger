@@ -6,12 +6,13 @@ const { spaceXS, layoutXL } = Theme.get();
 const OPTION_SIZE = layoutXL - spaceXS;
 
 const style = StyleSheet.create({
+  $optionSize: '$layoutXL - $spaceXS',
   container: {
-    height: '$layoutXL',
-    minHeight: '$layoutXL',
-    minWidth: '$layoutXL',
+    height: '$optionSize',
+    minHeight: '$optionSize',
+    minWidth: '$optionSize',
     padding: '$spaceXS',
-    width: '$layoutXL',
+    width: '$optionSize',
   },
 });
 

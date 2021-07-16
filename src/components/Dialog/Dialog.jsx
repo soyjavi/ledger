@@ -1,8 +1,6 @@
 import {
   // helpers
   COLOR,
-  FLEX_DIRECTION,
-  SIZE,
   // components
   Button,
   Modal,
@@ -17,14 +15,14 @@ import { style } from './Dialog.style';
 const Dialog = ({ accept, cancel, text, onAccept, onCancel, title, ...others }) => (
   <Modal {...others} color={COLOR.INFO} swipeable onClose={onCancel}>
     <View>
-      <Text heading level={2}>
+      <Text heading level={2} style={style.title}>
         {title}
       </Text>
-      {text && <Text>{text}</Text>}
+      {text && <Text color={COLOR.GRAYSCALE_M}>{text}</Text>}
     </View>
-    <View flexDirection={FLEX_DIRECTION.ROW} marginTop={SIZE.XL}>
+    <View style={style.buttons}>
       {cancel && onCancel && (
-        <Button marginRight={SIZE.M} outlined onPress={onCancel}>
+        <Button outlined style={[style.button, style.buttonMargin]} onPress={onCancel}>
           {cancel}
         </Button>
       )}

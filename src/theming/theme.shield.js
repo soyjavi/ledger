@@ -1,37 +1,38 @@
-import { Platform, Easing } from 'react-native';
-
 import { colorOpacity } from '@common';
 
 const FONT_XXL = 36;
 const FONT_XL = 32;
-const FONT_L = 18;
+const FONT_L = 20;
 const FONT_M = 16;
 const FONT_S = 14;
 const FONT_XS = 12;
 const FONT_XXS = 10;
-const LINE_HEIGHT = 1.25;
+const LINE_HEIGHT = 1.2;
+
+const COLOR_BASE = '#000000';
 
 export const ShieldTheme = {
   $theme: 'shield',
+
   /* BORDER */
   $borderRadius: 4,
   $borderSize: 1,
   $borderStyle: 'solid',
 
   /* COLOR */
-  $colorBase: 'black',
-  $colorContent: 'white',
-  // $colorContent: '#0f0',
+  $colorBase: COLOR_BASE,
+  $colorContent: '#ffffff',
   // $colorAccent: '#ffd9c7',
   $colorPrimary: '#FFC491',
+  // $colorPrimary: '#E9983D',
   $colorAlert: '#ff8056',
-  // $colorInfo: '#f2e8d9',
-  $colorInfo: '#181818',
+  // $colorInfo: '#181818',
+  $colorInfo: '#1C1C1D',
   $colorGrayscaleXL: '#282828',
   $colorGrayscaleL: '#999999',
   // $colorGrayscaleM: '#cfcfcf',
   // $colorGrayscaleS: '#e7e7e7',
-  $colorOverlay: colorOpacity('#000000', 0.8),
+  $colorOverlay: colorOpacity(COLOR_BASE, 0.8),
   // $colorTouchable: 'rgba(255, 255, 255, 0.15)',
 
   /* ELEVATION */
@@ -205,8 +206,8 @@ export const ShieldTheme = {
   $fontInputStyle: 'normal',
   $fontInputVariant: ['normal'],
   $fontInputWeight: '800',
-  $fontInputSize: 18,
-  $fontInputHeight: 18,
+  $fontInputSize: FONT_M,
+  $fontInputHeight: FONT_M * LINE_HEIGHT,
   $fontInputPaddingTop: 0,
   $fontInputPaddingRight: 16,
   $fontInputPaddingBottom: 0,

@@ -3,9 +3,12 @@ import {
   COLOR,
   // components
   Image,
+  Notification,
   Text,
   Touchable,
   View,
+  // hooks
+  useStack,
 } from '@lookiero/aurora';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Camera } from 'expo-camera';
@@ -14,7 +17,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import { L10N } from '@common';
 import { Dialog, Header, Heading, ScrollView, SliderCurrencies } from '@components';
-import { useSnackBar, useStore } from '@context';
+import { useStore } from '@context';
 import { ServiceQR } from '@services';
 
 import { askCamera, changeCurrency, getBlockchain, getLatestRates } from './Settings.controller';
@@ -28,7 +31,7 @@ const CAMERA_PROPS = {
 const Settings = ({ timestamp }) => {
   const scrollview = useRef(null);
   const store = useStore();
-  const snackbar = useSnackBar();
+  const Stack = useStack();
 
   const [blockchain, setBlockchain] = useState();
   const [camera, setCamera] = useState(false);
@@ -71,7 +74,7 @@ const Settings = ({ timestamp }) => {
     setQr(undefined);
   };
 
-  const handleChangeCurrency = (currency) => changeCurrency({ currency, L10N, snackbar, store });
+  const handleChangeCurrency = (currency) => changeCurrency({ currency, L10N, Stack, store });
 
   const handleQRScanned = ({ data } = {}) => {
     if (data) setQr(data);
@@ -81,13 +84,13 @@ const Settings = ({ timestamp }) => {
     const success = await fork(blockchain);
     if (success) {
       setBlockchain(undefined);
-      snackbar.success({ text: L10N.FORKED_CORRECTLY });
+      Stack.success('forked', Notification, { text: L10N.FORKED_CORRECTLY });
     }
   };
 
   const handleUpdateRates = async () => {
     setSyncRates(true);
-    await getLatestRates({ snackbar, store });
+    await getLatestRates({ Stack, store });
     setSyncRates(false);
   };
 

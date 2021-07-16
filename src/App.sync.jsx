@@ -1,8 +1,9 @@
+import { Notification, useStack } from '@lookiero/aurora';
 import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 
 import { C, L10N } from '@common';
 import { Dialog } from '@components';
-import { useConnection, useSnackBar, useStore } from '@context';
+import { useConnection, useStore } from '@context';
 
 import { getRates, getSyncStatus, syncNode } from './App.sync.controller';
 
@@ -14,7 +15,7 @@ let syncTimeout;
 
 const Sync = () => {
   const { connected } = useConnection();
-  const snackbar = useSnackBar();
+  const Stack = useStack();
   const store = useStore();
 
   const [state, setState] = useState(undefined);
@@ -22,7 +23,7 @@ const Sync = () => {
   useLayoutEffect(() => {
     (async () => {
       if (connected) {
-        await getRates({ L10N, snackbar, store });
+        await getRates({ L10N, Stack, store });
         setState(STATE.UNKNOWN);
       }
     })();
@@ -40,8 +41,8 @@ const Sync = () => {
     else syncTimeout = setTimeout(handleState, TIMEOUT.SYNC);
 
     if (connected) {
-      if (state === STATE.SYNCING) snackbar.info({ id: 'snackbar-syncing', text: L10N.SYNC_BUSY });
-      else if (state !== STATE.SYNCED) snackbar.hide('snackbar-syncing');
+      if (state === STATE.SYNCING) Stack.info('syncing', Notification, { text: L10N.SYNC_BUSY });
+      else if (state !== STATE.SYNCED) Stack.hide('syncing');
     }
 
     return () => clearTimeout(syncTimeout);
@@ -50,7 +51,7 @@ const Sync = () => {
 
   const handleState = useCallback(async () => {
     setState(STATE.FETCHING);
-    const synced = await getSyncStatus({ setState, snackbar, STATE, store });
+    const synced = await getSyncStatus({ store });
 
     if (synced === undefined && state !== STATE.UNKNOWN) setState(STATE.UNKNOWN);
     else setState(synced ? STATE.SYNCED : STATE.UNSYNCED);
@@ -60,10 +61,10 @@ const Sync = () => {
   const handleSync = async () => {
     setState(STATE.SYNCING);
 
-    const synced = await syncNode({ store, snackbar });
+    const synced = await syncNode({ store });
     setState(synced ? STATE.SYNCED : STATE.UNSYNCED);
 
-    if (synced) snackbar.success({ text: L10N.SYNC_DONE });
+    if (synced) Stack.success('synced', Notification, { text: L10N.SYNC_DONE, timeoutClose: 10000 });
   };
 
   return (

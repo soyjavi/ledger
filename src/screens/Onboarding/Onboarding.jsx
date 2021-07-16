@@ -22,7 +22,7 @@ const COMPLETED = 4;
 
 const Onboarding = ({ backward }) => {
   const navigation = useNavigation();
-  const { settings: { onboarded } = {}, vaults = [], ...store } = useStore();
+  const { settings: { onboarded } = {}, vaults = [] } = useStore();
 
   const [step, setStep] = useState();
   const [mounted, setMounted] = useState(false);

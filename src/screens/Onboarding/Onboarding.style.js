@@ -4,6 +4,6 @@ export const style = StyleSheet.create({
   progress: {
     position: 'absolute',
     padding: '$layoutXS',
-    zIndex: '1000',
+    zIndex: 1,
   },
 });

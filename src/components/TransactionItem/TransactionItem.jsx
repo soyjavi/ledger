@@ -34,7 +34,7 @@ const TransactionItem = (props) => {
     rates,
   } = useStore();
 
-  const { category = 99, currency, location, timestamp, title, type = EXPENSE, value } = props;
+  const { category = 99, currency, location, timestamp, title, type = EXPENSE, value = 0 } = props;
   const operator = type === EXPENSE ? -1 : 1;
 
   const handlePress = () => {
@@ -98,7 +98,7 @@ TransactionItem.propTypes = {
   timestamp: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   title: PropTypes.string,
   type: PropTypes.number,
-  value: PropTypes.number.isRequired,
+  value: PropTypes.number,
 };
 
 export { TransactionItem };
