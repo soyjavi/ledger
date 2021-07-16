@@ -11,14 +11,7 @@ import { Keyboard, TextInput } from 'react-native';
 
 import { style } from './Input.style';
 
-const Input = ({
-  backgroundColor = COLOR.GRAYSCALE_XL,
-  disabled,
-  keyboard = 'default',
-  label,
-  value = '',
-  onChange,
-}) => {
+const Input = ({ backgroundColor = COLOR.GRAYSCALE_XL, keyboard = 'default', label, value = '', onChange }) => {
   const [focus, setFocus] = useState(false);
 
   const handleChange = (next = '') => {
@@ -40,7 +33,6 @@ const Input = ({
       <TextInput
         autoCapitalize="none"
         autoCorrect
-        disabled={disabled}
         blurOnSubmit
         editable
         keyboardType={keyboard}
@@ -60,7 +52,6 @@ const Input = ({
 
 Input.propTypes = {
   backgroundColor: PropTypes.string,
-  disabled: PropTypes.bool,
   keyboard: PropTypes.string,
   label: PropTypes.string.isRequired,
   value: PropTypes.string,

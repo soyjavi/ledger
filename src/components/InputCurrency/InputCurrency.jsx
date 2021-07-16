@@ -1,13 +1,10 @@
 import {
   // helpers
-  ALIGN,
   COLOR,
-  FLEX_DIRECTION,
   SIZE,
+  styles,
   // components
-  Icon,
   Text,
-  Touchable,
   View,
 } from '@lookiero/aurora';
 import PropTypes from 'prop-types';
@@ -30,11 +27,9 @@ const {
 
 const InputCurrency = ({
   backgroundColor = COLOR.GRAYSCALE_XL,
-  disabled,
   label = '',
   type = EXPENSE,
   onChange,
-  onVault,
   vault: { currency, currentBalance, title } = {},
   ...others
 }) => {
@@ -66,69 +61,63 @@ const InputCurrency = ({
     onChange && onChange(nextValue);
   };
 
-  const active = !disabled && (focus || parseFloat(value, 10) > 0);
+  const active = focus || parseFloat(value, 10) > 0;
 
   return (
     <View
       backgroundColor={backgroundColor}
       borderColor={focus ? COLOR.CONTENT : backgroundColor}
-      style={style.container}
+      style={styles(style.container, others.style)}
       wide
     >
-      <View style={style.content} flexDirection={FLEX_DIRECTION.ROW}>
-        <View flexDirection={FLEX_DIRECTION.COL}>
-          <Touchable onPress={!disabled ? onVault : undefined}>
-            <View style={style.row}>
-              {title && (
-                <CurrencyLogo
-                  color={active ? COLOR.CONTENT : currency !== baseCurrency ? COLOR.GRAYSCALE_L : undefined}
-                  currency={currency}
-                  marginRight={SIZE.XS}
-                />
-              )}
-              <Text color={!active ? COLOR.GRAYSCALE_L : undefined} detail level={2} pointerEvents="none">
-                {(title || label).toUpperCase()}
-              </Text>
-            </View>
-
-            {title && (
-              <View style={style.row}>
-                <PriceFriendly
-                  color={COLOR.GRAYSCALE_L}
-                  currency={currency}
-                  detail
-                  label="Balance: "
-                  value={currentBalance}
-                />
-                {onVault && !disabled && <Icon color={COLOR.GRAYSCALE_L} name="arrow-down" />}
-              </View>
-            )}
-          </Touchable>
-        </View>
-
-        <View alignItems={ALIGN.END} flex={SIZE.XS} flexDirection={FLEX_DIRECTION.COL} pointerEvents="none">
+      {title && (
+        <CurrencyLogo
+          color={active ? COLOR.CONTENT : currency !== baseCurrency ? COLOR.GRAYSCALE_L : undefined}
+          currency={currency}
+          marginRight={SIZE.S}
+        />
+      )}
+      <View>
+        <Text color={!active ? COLOR.GRAYSCALE_L : undefined} detail level={2}>
+          {(title || label).toUpperCase()}
+        </Text>
+        {title && (
           <PriceFriendly
-            color={!active ? COLOR.GRAYSCALE_L : undefined}
+            color={COLOR.GRAYSCALE_L}
             currency={currency}
+            detail
+            maskAmount={false}
+            marginTop={SIZE.XXS}
             level={2}
-            value={value ? parseFloat(value, 10) : undefined}
+            value={currentBalance}
           />
-          {exchange && (
-            <PriceFriendly
-              color={COLOR.GRAYSCALE_L}
-              detail
-              currency={baseCurrency}
-              value={parseFloat(others.value || 0, 10) / exchange}
-            />
-          )}
-        </View>
+        )}
+      </View>
+
+      <View style={style.amounts}>
+        <PriceFriendly
+          color={!active ? COLOR.GRAYSCALE_L : undefined}
+          currency={currency}
+          level={2}
+          maskAmount={false}
+          value={value ? parseFloat(value, 10) : undefined}
+        />
+        {exchange && (
+          <PriceFriendly
+            color={COLOR.GRAYSCALE_L}
+            detail
+            currency={baseCurrency}
+            level={2}
+            maskAmount={false}
+            value={parseFloat(others.value || 0, 10) / exchange}
+          />
+        )}
       </View>
 
       <TextInput
         autoCapitalize="none"
         autoCorrect={false}
         defaultValue={others.defaultValue}
-        disabled={disabled}
         blurOnSubmit
         editable
         keyboardType="numeric"
@@ -145,12 +134,10 @@ const InputCurrency = ({
 
 InputCurrency.propTypes = {
   backgroundColor: PropTypes.string,
-  disabled: PropTypes.bool,
   label: PropTypes.string,
   type: PropTypes.oneOf([EXPENSE, INCOME]),
   vault: PropTypes.shape({}),
   onChange: PropTypes.func,
-  onVault: PropTypes.func,
 };
 
 export { InputCurrency };

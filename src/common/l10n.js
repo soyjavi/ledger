@@ -39,6 +39,8 @@ export const L10N = {
     },
   ],
   CATEGORY: 'Category',
+  CHANGE_ACCOUNT_DESTINATION: 'Change account destination',
+  CHOOSE: 'Choose one...',
   CHOOSE_TRANSACTION_TYPE: 'Choose type of transaction',
   CHOOSE_CURRENCY: 'Your base currency',
   CITIES: 'Cities',

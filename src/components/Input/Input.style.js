@@ -2,12 +2,13 @@ import { Platform } from 'react-native';
 import StyleSheet from 'react-native-extended-stylesheet';
 
 export const style = StyleSheet.create({
+  $optionSize: '$layoutXL - $spaceXS',
   container: {
+    height: '$optionSize',
     borderStyle: '$borderStyle',
     borderRadius: '$borderRadius',
     borderWidth: '$borderSize',
     marginBottom: '$spaceM',
-    paddingTop: '$spaceM',
   },
 
   input: {
@@ -17,8 +18,8 @@ export const style = StyleSheet.create({
     fontSize: '$fontInputSize',
     height: '$inputSize',
     margin: 0,
-    minHeight: '$inputSize',
-    paddingTop: '$fontInputPaddingTop',
+    minHeight: '$optionSize',
+    paddingTop: '$fontInputPaddingTop + $spaceXS',
     paddingRight: '$fontInputPaddingRight',
     paddingBottom: '$fontInputPaddingBottom',
     paddingLeft: '$fontInputPaddingLeft',
@@ -33,7 +34,7 @@ export const style = StyleSheet.create({
 
   label: {
     position: 'absolute',
-    top: '$spaceM',
-    left: '$spaceM',
+    top: '$spaceM - $spaceXS',
+    left: '$fontInputPaddingLeft',
   },
 });

@@ -1,8 +1,13 @@
 import {
   // helpers
+  ALIGN,
+  COLOR,
   SIZE,
+  styles,
   // components
   ScrollView,
+  Text,
+  Touchable,
 } from '@lookiero/aurora';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
@@ -12,6 +17,7 @@ import { InputCurrency, Option, OPTION_SIZE } from '@components';
 import { useStore } from '@context';
 
 import { getVault, queryAvailableVaults } from '../helpers';
+import { style } from './FormTransfer.style';
 
 const {
   TX: {
@@ -26,7 +32,7 @@ const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
     rates,
   } = useStore();
 
-  const [selectVault, setSelectVault] = useState();
+  const [selectVault, setSelectVault] = useState(false);
 
   const availableVaults = queryAvailableVaults(vaults, vault);
 
@@ -72,17 +78,23 @@ const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
       />
 
       {selectVault ? (
-        <ScrollView horizontal snapInterval={OPTION_SIZE} marginBottom={SIZE.M}>
-          {availableVaults.map(({ currency, hash, title }) => (
+        <ScrollView horizontal snapInterval={OPTION_SIZE} style={style.slider}>
+          {availableVaults.map(({ currency, hash, title }, index) => (
             <Option
+              color={COLOR.GRAYSCALE_XL}
               currency={currency}
               key={hash}
               legend={title}
+              selected={hash === form.destination}
+              style={styles(
+                style.card,
+                index === 0 && style.firstCard,
+                index === availableVaults.length - 1 && style.lastCard,
+              )}
               onPress={() => {
                 handleField('destination', hash);
                 setSelectVault(false);
               }}
-              selected={hash === form.destination}
             />
           ))}
         </ScrollView>
@@ -91,13 +103,24 @@ const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
           currency={form.to ? form.to.currency : baseCurrency}
           label={L10N.GET}
           marginBottom={SIZE.M}
+          style={style.inputDestination}
           type={INCOME}
           value={form.to ? form.exchange : undefined}
           vault={getVault(form.destination, vaults)}
           onChange={(value) => handleField('exchange', value)}
-          onVault={() => setSelectVault(true)}
         />
       )}
+
+      <Touchable
+        alignItems={ALIGN.CENTER}
+        paddingVertical={SIZE.S}
+        wide
+        onPress={!selectVault ? () => setSelectVault(true) : undefined}
+      >
+        <Text color={COLOR.GRAYSCALE_L} detail level={2}>
+          {selectVault ? L10N.CHOOSE : L10N.CHANGE_ACCOUNT_DESTINATION}
+        </Text>
+      </Touchable>
     </>
   );
 };

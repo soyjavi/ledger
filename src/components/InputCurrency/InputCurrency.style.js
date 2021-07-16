@@ -1,34 +1,43 @@
 import StyleSheet from 'react-native-extended-stylesheet';
 
 export const style = StyleSheet.create({
+  $optionSize: '$layoutXL - $spaceXS',
+  $iconHeight: '$spaceS + $spaceXS',
+
+  amounts: {
+    alignItems: 'flex-end',
+    flex: 1,
+  },
+
   container: {
+    alignItems: 'center',
     borderStyle: '$borderStyle',
     borderRadius: '$borderRadius',
     borderWidth: '$borderSize',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    height: '$optionSize',
     marginBottom: '$spaceM',
-    paddingTop: '$spaceM',
-  },
-
-  content: {
-    minHeight: '$inputSize',
-    paddingTop: '$fontInputPaddingTop',
-    paddingRight: '$fontInputPaddingRight',
     paddingBottom: '$fontInputPaddingBottom',
     paddingLeft: '$fontInputPaddingLeft',
+    paddingRight: '$fontInputPaddingRight',
+    paddingTop: '$fontInputPaddingTop',
+  },
+
+  icon: {
+    lineHeight: '$iconHeight',
+    maxHeight: '$iconHeight',
+    minHeight: '$iconHeight',
   },
 
   input: {
+    height: '$optionSize',
     opacity: 0,
     position: 'absolute',
-    top: 0,
     right: 0,
-    left: 0,
-    bottom: 0,
+    textAlign: 'right',
+    top: 0,
     width: '100%',
-  },
-
-  row: {
-    alignItems: 'center',
-    flexDirection: 'row',
+    zIndex: 1,
   },
 });

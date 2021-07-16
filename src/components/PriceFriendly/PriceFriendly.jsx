@@ -22,7 +22,7 @@ const LEFT_SYMBOLS = ['$', '£'];
 const PriceFriendly = ({ currency, fixed, highlight, label, maskAmount, operator, value = 0, ...others }) => {
   const { settings = {} } = useStore();
 
-  const maskedAmount = maskAmount || settings.maskAmount;
+  const maskedAmount = maskAmount !== undefined ? maskAmount : settings.maskAmount;
   const operatorEnhanced = operator && value !== 0 ? (value > 0 ? '+' : '-') : '';
   const symbol = SYMBOL[currency] || currency;
   let { color } = others;
