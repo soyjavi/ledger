@@ -1,6 +1,7 @@
 import {
   // helpers
   COLOR,
+  Theme,
   // components
   Text,
   View,
@@ -37,7 +38,7 @@ const Input = ({ backgroundColor = COLOR.GRAYSCALE_XL, keyboard = 'default', lab
         editable
         keyboardType={keyboard}
         placeholder={!focus ? 'Type something...' : undefined}
-        placeholderTextColor={COLOR.GRAYSCALE_L}
+        placeholderTextColor={Theme.get('colorGrayscaleL')}
         style={style.input}
         underlineColorAndroid="transparent"
         value={value}

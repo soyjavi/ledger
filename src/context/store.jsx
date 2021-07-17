@@ -32,7 +32,6 @@ const StoreProvider = ({ children }) => {
 
   useLayoutEffect(() => {
     setReady(async () => {
-      console.log('INITIATE');
       const store = await new AsyncStorage({
         adapter: AsyncStorageAdapter,
         defaults: {

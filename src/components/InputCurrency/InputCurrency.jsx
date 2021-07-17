@@ -126,7 +126,7 @@ const InputCurrency = ({
         onFocus={() => setFocus(true)}
         onSubmitEditing={Keyboard.dismiss}
         style={style.input}
-        value={others.value || 0}
+        value={others.value || '0'}
       />
     </View>
   );

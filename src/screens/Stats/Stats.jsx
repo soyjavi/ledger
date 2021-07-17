@@ -116,7 +116,6 @@ const Stats = ({ timestamp }) => {
 
 Stats.propTypes = {
   timestamp: PropTypes.number,
-  visible: PropTypes.boolean,
 };
 
 export { Stats };

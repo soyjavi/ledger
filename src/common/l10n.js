@@ -4,6 +4,7 @@ export const L10N = {
   ACTIVITY: 'Activity',
   ADD: 'Add',
   AMOUNT: 'Amount',
+  APPEARANCE: 'Appearance',
   AUTHENTICATE: 'Authenticate',
 
   BALANCE: 'Balance',

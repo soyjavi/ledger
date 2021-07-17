@@ -31,8 +31,6 @@ const FormTransaction = ({ form = {}, onChange, type, vault = {} }) => {
     });
   };
 
-  console.log('<FormTransactino>', type);
-
   const categories = queryCategories({ type });
   return (
     <>

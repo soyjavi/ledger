@@ -70,7 +70,6 @@ const Vaults = ({ timestamp }) => {
 
 Vaults.propTypes = {
   timestamp: PropTypes.number,
-  visible: PropTypes.boolean,
 };
 
 export { Vaults };
