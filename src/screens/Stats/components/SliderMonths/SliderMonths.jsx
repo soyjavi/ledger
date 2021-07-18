@@ -36,7 +36,7 @@ const SliderMonths = ({ index, onChange, ...others }) => {
         <Option
           key={`${month}-${year}`}
           caption={L10N.MONTHS[month].substr(0, 3).toUpperCase()}
-          legend={year}
+          legend={year.toString()}
           selected={index === i}
           style={styles(style.card, i === 0 && style.firstCard, i === months.length - 1 && style.lastCard)}
           onPress={() => onChange({ index: i, month, year })}

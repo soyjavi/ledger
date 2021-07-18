@@ -13,9 +13,10 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 
 import { C, currencyDecimals, L10N } from '@common';
-import { InputCurrency, Option, OPTION_SIZE } from '@components';
 import { useStore } from '@context';
 
+import { InputCurrency } from '../../InputCurrency';
+import { Option, OPTION_SIZE } from '../../Option';
 import { getVault, queryAvailableVaults } from '../helpers';
 import { style } from './FormTransfer.style';
 

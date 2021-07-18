@@ -12,8 +12,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import { getIcon, L10N } from '@common';
-import { Input, InputCurrency, Option, OPTION_SIZE } from '@components';
 
+import { Input } from '../../Input';
+import { InputCurrency } from '../../InputCurrency';
+import { Option, OPTION_SIZE } from '../../Option';
 import { queryCategories } from '../helpers';
 import { style } from './FormTransaction.style';
 

@@ -75,7 +75,7 @@ const Vault = ({ visible }) => {
   console.log('  <Vault>', { visible });
 
   return (
-    <Viewport scroll={false} visible={visible}>
+    <Viewport visible={visible}>
       <Header visible={scroll} title={scroll ? title : undefined} onBack={navigation.back} />
 
       <ScrollView onScroll={handleScroll} ref={scrollview}>

@@ -1,5 +1,6 @@
 import {
   // helpers
+  COLOR,
   // components
   Text,
   Touchable,
@@ -55,7 +56,9 @@ const Dashboard = ({ timestamp }) => {
           <>
             <Heading value={L10N.VAULTS}>
               <Touchable onPress={() => publish({ event: EVENTS.NEW_VAULT })}>
-                <Text action>{`${L10N.NEW} ${L10N.VAULT}`.toUpperCase()}</Text>
+                <Text action color={COLOR.PRIMARY}>
+                  {`${L10N.NEW} ${L10N.VAULT}`.toUpperCase()}
+                </Text>
               </Touchable>
             </Heading>
 

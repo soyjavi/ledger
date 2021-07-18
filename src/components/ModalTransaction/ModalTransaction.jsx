@@ -14,9 +14,9 @@ import { useEvent } from '@lookiero/event';
 import React, { useEffect, useState } from 'react';
 
 import { C, EVENTS, L10N, onHardwareBackPress } from '@common';
-import { HeatMap } from '@components';
 import { useConnection, useStore } from '@context';
 
+import { HeatMap } from '../HeatMap';
 import { FormTransaction, FormTransfer } from './components';
 import { createTransaction, createTransfer, getLocation } from './helpers';
 
@@ -71,12 +71,10 @@ const ModalTransaction = () => {
 
   const handleSubmit = async () => {
     setBusy(true);
-
     const method = type === TRANSFER ? createTransfer : createTransaction;
     const value = await method({ props: dataSource, state, store });
-    setBusy(false);
-
     if (value) handleClose();
+    setBusy(false);
   };
 
   const { type } = dataSource;

@@ -60,9 +60,9 @@ const ModalClone = () => {
     setVisible(false);
   };
 
-  const handleSubmit = ({ wipe = false } = {}) => {
+  const handleSubmit = async ({ wipe = false } = {}) => {
     setBusy(true);
-    cloneTx({ dataSource, store, wipe });
+    await cloneTx({ dataSource, store, wipe });
     handleClose();
     setBusy(false);
   };
