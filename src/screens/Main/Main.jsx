@@ -41,33 +41,35 @@ const Main = ({ visible, ...inherit }) => {
   const props = { timestamp };
 
   return (
-    <Viewport {...inherit} scroll={false} visible={visible}>
-      {visible && (
-        <>
-          {screen === DASHBOARD && <Dashboard {...props} />}
-          {screen === STATS && <Stats {...props} />}
-          {screen === VAULTS && <Vaults {...props} />}
-          {screen === SETTINGS && <Settings {...props} />}
-        </>
-      )}
+    <>
+      <Viewport {...inherit} visible={visible}>
+        {visible && (
+          <>
+            {screen === DASHBOARD && <Dashboard {...props} />}
+            {screen === STATS && <Stats {...props} />}
+            {screen === VAULTS && <Vaults {...props} />}
+            {screen === SETTINGS && <Settings {...props} />}
 
-      <Footer
-        container={({ children }) => (
-          <BlurView style={style.blur} tint="dark">
-            {children}
-          </BlurView>
+            <Footer
+              // ? TODO: Research the way for get a <BlurView> with a fixed height
+              // container={({ children }) => (
+              //   <BlurView intensity={100} style={style.blur} tint="dark">
+              //     {children}
+              //   </BlurView>
+              // )}
+              style={style.footer}
+              value={screen}
+              onChange={handleChange}
+            >
+              <FooterItem icon="home" text={L10N.DASHBOARD} value={DASHBOARD} />
+              <FooterItem icon="bar-chart" text={L10N.ACTIVITY} value={STATS} />
+              <FooterItem icon="stack" text={L10N.VAULTS} value={VAULTS} />
+              <FooterItem icon="settings" text={L10N.SETTINGS} value={SETTINGS} />
+            </Footer>
+          </>
         )}
-        style={style.footer}
-        value={screen}
-        onChange={handleChange}
-      >
-        {/* <BlurView tint="dark" intensity={visible ? 95 : 0} style={styles.blur}> */}
-        <FooterItem icon="home" text={L10N.DASHBOARD} value={DASHBOARD} />
-        <FooterItem icon="bar-chart" text={L10N.ACTIVITY} value={STATS} />
-        <FooterItem icon="stack" text={L10N.VAULTS} value={VAULTS} />
-        <FooterItem icon="settings" text={L10N.SETTINGS} value={SETTINGS} />
-      </Footer>
-    </Viewport>
+      </Viewport>
+    </>
   );
 };
 

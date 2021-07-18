@@ -23,11 +23,12 @@ const Header = ({ isVisible = true, onBack, title = ' ' }) => {
       <StatusBar style="light" translucent />
 
       <AuroraHeader
-        container={({ children }) => (
-          <BlurView intensity={!isVisible ? 0 : undefined} style={style.blur} tint="dark">
-            {children}
-          </BlurView>
-        )}
+        // ? TODO: Research the way for get a <BlurView> with a fixed height
+        // container={({ children }) => (
+        //   <BlurView intensity={!isVisible ? 0 : undefined} style={style.blur} tint="dark">
+        //     {children}
+        //   </BlurView>
+        // )}
         style={style.header}
         onBack={onBack}
       >
