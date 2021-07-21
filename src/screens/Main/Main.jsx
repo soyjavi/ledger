@@ -1,10 +1,10 @@
 import { Footer, FooterItem } from '@lookiero/aurora';
-import { BlurView } from 'expo-blur';
-import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import { Router } from '@lookiero/router';
+import { useRouter } from '@lookiero/router';
+import React, { useRef, useState } from 'react';
 
-import { C, L10N } from '@common';
-import { Viewport } from '@components';
+import { L10N, ROUTE } from '@common';
+import { Header, ScrollView, Viewport } from '@components';
 
 import { Dashboard } from '../Dashboard';
 import { Settings } from '../Settings';
@@ -12,70 +12,46 @@ import { Stats } from '../Stats';
 import { Vaults } from '../Vaults';
 import { style } from './Main.style';
 
-const {
-  SCREEN: { DASHBOARD, STATS, VAULTS, SETTINGS },
-} = C;
+const Container = (inherit) => {
+  const scrollview = useRef(null);
+  const { basePath, go, route: { params: { tab } } = {} } = useRouter();
 
-const Main = ({ visible, ...inherit }) => {
-  const [screen, setScreen] = useState(DASHBOARD);
-  const [screens, setScreens] = useState({
-    [DASHBOARD]: Dashboard,
-    [SETTINGS]: Settings,
-    [STATS]: Stats,
-    [VAULTS]: Vaults,
-  });
-  const [timestamp, setTimestamp] = useState();
-
-  useEffect(() => {
-    if (!screens[screen]) setScreens({ ...screens, [screen]: undefined });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [screen]);
+  const [scroll, setScroll] = useState(false);
 
   const handleChange = (next) => {
-    setScreen(next);
-    setTimestamp(next === screen ? new Date().getTime() : undefined);
+    const isDifferent = next !== `/${tab}`;
+
+    if (isDifferent) go({ path: `${basePath}${next}` });
+    scrollview.current.scrollTo({ y: 0, animated: !isDifferent });
   };
 
-  console.log('  <Main>', { visible, screen, screens });
-
-  const props = { timestamp };
-
   return (
-    <>
-      <Viewport {...inherit} visible={visible}>
-        {visible && (
-          <>
-            {screen === DASHBOARD && <Dashboard {...props} />}
-            {screen === STATS && <Stats {...props} />}
-            {screen === VAULTS && <Vaults {...props} />}
-            {screen === SETTINGS && <Settings {...props} />}
+    <Viewport path={ROUTE.MAIN_TAB}>
+      <Header title={scroll ? tab : undefined} />
 
-            <Footer
-              // ? TODO: Research the way for get a <BlurView> with a fixed height
-              // container={({ children }) => (
-              //   <BlurView intensity={100} style={style.blur} tint="dark">
-              //     {children}
-              //   </BlurView>
-              // )}
-              style={style.footer}
-              value={screen}
-              onChange={handleChange}
-            >
-              <FooterItem icon="home" text={L10N.DASHBOARD} value={DASHBOARD} />
-              <FooterItem icon="bar-chart" text={L10N.ACTIVITY} value={STATS} />
-              <FooterItem icon="stack" text={L10N.VAULTS} value={VAULTS} />
-              <FooterItem icon="settings" text={L10N.SETTINGS} value={SETTINGS} />
-            </Footer>
-          </>
-        )}
-      </Viewport>
-    </>
+      <ScrollView onScroll={setScroll} ref={scrollview}>
+        {inherit.children}
+      </ScrollView>
+
+      <Footer style={style.footer} value={`/${tab}`} onChange={handleChange}>
+        <FooterItem icon="home" text={L10N.DASHBOARD} value={ROUTE.TAB_DASHBOARD} />
+        <FooterItem icon="bar-chart" text={L10N.ACTIVITY} value={ROUTE.TAB_STATS} />
+        <FooterItem icon="stack" text={L10N.VAULTS} value={ROUTE.TAB_ACCOUNTS} />
+        <FooterItem icon="settings" text={L10N.SETTINGS} value={ROUTE.TAB_SETTINGS} />
+      </Footer>
+    </Viewport>
   );
 };
 
-Main.propTypes = {
-  backward: PropTypes.bool,
-  visible: PropTypes.bool,
-};
-
-export { Main };
+export const Main = () => (
+  <Router
+    basePath="/main"
+    container={Container}
+    routes={[
+      { path: '/dashboard', component: Dashboard },
+      { path: '/stats', component: Stats },
+      { path: '/accounts', component: Vaults },
+      { path: '/settings', component: Settings },
+    ]}
+  />
+);

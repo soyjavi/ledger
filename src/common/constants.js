@@ -44,16 +44,8 @@ export const C = {
   MS_IN_WEEK,
 
   // NAME: PKG.name,
-  NAME: 'ledger',
+  NAME: 'shield',
 
-  SCREEN: {
-    DASHBOARD: 'dashboard',
-    SESSION: 'session',
-    SETTINGS: 'settings',
-    STATS: 'stats',
-    VAULT: 'vault',
-    VAULTS: 'vaults',
-  },
   STATS_MONTHS_LIMIT: 18,
   SYMBOL: {
     AUD: 'AU$',

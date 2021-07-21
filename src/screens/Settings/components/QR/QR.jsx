@@ -3,6 +3,7 @@ import {
   COLOR,
   // components
   Image,
+  Notification,
   Portal,
   Text,
   Touchable,
@@ -36,8 +37,10 @@ const QR = () => {
   const [qr, setQr] = useState(undefined);
 
   useEffect(() => {
-    // setQr('1CC0A669-249E-428F-88FF-4EAF27ABED4B|backup');
-    if (hasCamera === undefined) setHasCamera(askCamera());
+    if (hasCamera === undefined) {
+      setHasCamera(askCamera());
+      // setQr('1CC0A669-249E-428F-88FF-4EAF27ABED4B|backup');
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -45,7 +48,7 @@ const QR = () => {
   useEffect(() => {
     if (!camera) {
       setBlockchain(undefined);
-      setQr(false);
+      setQr(undefined);
     }
   }, [camera]);
 

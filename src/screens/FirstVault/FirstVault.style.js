@@ -1,8 +1,16 @@
 import StyleSheet from 'react-native-extended-stylesheet';
 
 export const style = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+
   content: {
-    height: '100%',
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+
+  offset: {
     padding: '$spaceM',
   },
 });

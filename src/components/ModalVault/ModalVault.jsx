@@ -12,19 +12,19 @@ import {
   View,
 } from '@lookiero/aurora';
 import { useEvent } from '@lookiero/event';
+import { useRouter } from '@lookiero/router';
 import React, { useEffect, useState } from 'react';
 
-import { C, EVENTS, L10N, onHardwareBackPress } from '@common';
-import { useNavigation, useStore } from '@context';
+import { EVENTS, L10N, ROUTE, onHardwareBackPress } from '@common';
+import { useStore } from '@context';
 
 import { FormVault } from '../FormVault';
 
-const { SCREEN } = C;
 const INITIAL_STATE = { balance: 0, currency: undefined, title: undefined };
 
 const ModalVault = () => {
   const { subscribe } = useEvent();
-  const navigation = useNavigation();
+  const { go } = useRouter();
   const {
     addVault,
     settings: { baseCurrency },
@@ -55,7 +55,7 @@ const ModalVault = () => {
     const vault = await addVault(form);
     if (vault) {
       handleClose();
-      navigation.go(SCREEN.VAULT, vault);
+      go({ path: `${ROUTE.VAULT}/${vault.hash}`, props: vault });
     }
     setBusy(false);
   };

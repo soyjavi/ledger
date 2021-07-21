@@ -4,10 +4,10 @@ import { useFonts } from 'expo-font';
 import React from 'react';
 import { useWindowDimensions } from 'react-native';
 
-import { ConnectionProvider, NavigationProvider, StoreProvider } from '@context';
+import { ConnectionProvider, StoreProvider } from '@context';
 import { ShieldTheme } from '@theming';
 
-import { Router } from './App.router';
+import { Router } from './App.Router';
 import { style } from './App.style';
 
 const App = () => {
@@ -24,9 +24,7 @@ const App = () => {
       <ConnectionProvider>
         <StoreProvider>
           <Aurora theme={ShieldTheme} style={[style.container, { height, width }]}>
-            <NavigationProvider>
-              <Router />
-            </NavigationProvider>
+            <Router />
           </Aurora>
         </StoreProvider>
       </ConnectionProvider>

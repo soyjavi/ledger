@@ -7,19 +7,31 @@ import {
   Button,
   SafeAreaView,
   View,
+  //
+  Theme,
 } from '@lookiero/aurora';
-import PropTypes from 'prop-types';
+import { useRouter } from '@lookiero/router';
 import React from 'react';
 
 import { BANNERS } from '@assets';
-import { L10N } from '@common';
+import { L10N, ROUTE } from '@common';
 import { Banner, Viewport } from '@components';
+import { useStore } from '@context';
 
 import { style } from './Completed.style';
 
-const Completed = ({ onPress, ...inherit }) => {
+export const Completed = () => {
+  const { go } = useRouter();
+  const { updateSettings } = useStore();
+
+  const handlePress = async () => {
+    // await updateSettings({ onboarded: true });
+    setTimeout(() => updateSettings({ onboarded: true }), Theme.get('motionExpand') * 2);
+    go({ path: `${ROUTE.MAIN}${ROUTE.TAB_DASHBOARD}` });
+  };
+
   return (
-    <Viewport {...inherit}>
+    <Viewport path={ROUTE.COMPLETED}>
       <SafeAreaView flex={SIZE.XS}>
         <View style={style.content} justifyContent={ALIGN.END} padding={SIZE.M}>
           <Banner
@@ -30,7 +42,7 @@ const Completed = ({ onPress, ...inherit }) => {
             caption={L10N.ONBOARDING_COMPLETED_CAPTION}
           />
           <View alignSelf={ALIGN.END}>
-            <Button wide={false} onPress={onPress}>
+            <Button wide={false} onPress={handlePress}>
               {L10N.CONTINUE}
             </Button>
           </View>
@@ -39,9 +51,3 @@ const Completed = ({ onPress, ...inherit }) => {
     </Viewport>
   );
 };
-
-Completed.propTypes = {
-  onPress: PropTypes.func,
-};
-
-export { Completed };

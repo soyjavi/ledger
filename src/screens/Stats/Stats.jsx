@@ -1,9 +1,7 @@
 import { COLOR, View } from '@lookiero/aurora';
-import PropTypes from 'prop-types';
-import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 
 import { C, L10N } from '@common';
-import { Header, ScrollView } from '@components';
 import { useStore } from '@context';
 
 import { Chart, ItemGroupCategories, Locations, SliderMonths } from './components';
@@ -17,8 +15,7 @@ const {
   },
 } = C;
 
-const Stats = ({ timestamp }) => {
-  const scrollview = useRef(null);
+const Stats = () => {
   const store = useStore();
 
   const [chart, setChart] = useState({});
@@ -36,10 +33,6 @@ const Stats = ({ timestamp }) => {
     setSlider({ month: today.getMonth(), year: today.getFullYear(), index: STATS_MONTHS_LIMIT - 1 });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    if (timestamp) scrollview.current.scrollTo({ y: 0, animated: true });
-  }, [timestamp]);
 
   useEffect(() => {
     setMonth(queryMonth(store, slider));
@@ -61,61 +54,55 @@ const Stats = ({ timestamp }) => {
 
   return (
     <>
-      <Header title={`${L10N.MONTHS[slider.month]} ${slider.year}`} />
+      <SliderMonths {...slider} onChange={handleSliderChange} />
 
-      <ScrollView ref={scrollview}>
-        <SliderMonths {...slider} onChange={handleSliderChange} />
+      <Chart
+        {...useMemo(() => calcScales(chart.balance), [chart.balance])}
+        {...chartProps}
+        captions={orderCaptions(L10N)}
+        color={COLOR.PRIMARY}
+        style={style.chartMargin}
+        title={L10N.OVERALL_BALANCE}
+        values={chart.balance}
+      />
 
-        <Chart
-          {...useMemo(() => calcScales(chart.balance), [chart.balance])}
-          {...chartProps}
-          captions={orderCaptions(L10N)}
-          color={COLOR.PRIMARY}
-          style={style.chartMargin}
-          title={L10N.OVERALL_BALANCE}
-          values={chart.balance}
-        />
+      <Chart
+        {...useMemo(() => calcScales(chart.incomes), [chart.incomes])}
+        {...chartProps}
+        color={COLOR.PRIMARY}
+        title={`${L10N.INCOMES} & ${L10N.EXPENSES}`}
+        values={chart.incomes}
+      />
+      <Chart
+        {...useMemo(() => calcScales(chart.expenses), [chart.expenses])}
+        {...chartProps}
+        captions={orderCaptions(L10N)}
+        inverted
+        style={style.chartMargin}
+        values={chart.expenses}
+      />
 
-        <Chart
-          {...useMemo(() => calcScales(chart.incomes), [chart.incomes])}
-          {...chartProps}
-          color={COLOR.PRIMARY}
-          title={`${L10N.INCOMES} & ${L10N.EXPENSES}`}
-          values={chart.incomes}
-        />
-        <Chart
-          {...useMemo(() => calcScales(chart.expenses), [chart.expenses])}
-          {...chartProps}
-          captions={orderCaptions(L10N)}
-          inverted
-          style={style.chartMargin}
-          values={chart.expenses}
-        />
+      {(hasExpenses || hasIncomes || hasPoints) && (
+        <>
+          {hasIncomes && <ItemGroupCategories color={COLOR.PRIMARY} type={INCOME} dataSource={incomes} />}
+          {hasExpenses && <ItemGroupCategories type={EXPENSE} dataSource={expenses} />}
+          {hasPoints && <Locations {...locations} />}
+        </>
+      )}
 
-        {(hasExpenses || hasIncomes || hasPoints) && (
-          <>
-            {hasIncomes && <ItemGroupCategories color={COLOR.PRIMARY} type={INCOME} dataSource={incomes} />}
-            {hasExpenses && <ItemGroupCategories type={EXPENSE} dataSource={expenses} />}
-            {hasPoints && <Locations {...locations} />}
-          </>
-        )}
+      <View style={style.chartMargin} />
 
-        <View style={style.chartMargin} />
-
-        <Chart
-          {...useMemo(() => calcScales(chart.transfers), [chart.transfers])}
-          {...chartProps}
-          captions={orderCaptions(L10N)}
-          title={L10N.TRANSFERS}
-          values={chart.transfers}
-        />
-      </ScrollView>
+      <Chart
+        {...useMemo(() => calcScales(chart.transfers), [chart.transfers])}
+        {...chartProps}
+        captions={orderCaptions(L10N)}
+        title={L10N.TRANSFERS}
+        values={chart.transfers}
+      />
     </>
   );
 };
 
-Stats.propTypes = {
-  timestamp: PropTypes.number,
-};
+Stats.displayName = 'Stats';
 
 export { Stats };

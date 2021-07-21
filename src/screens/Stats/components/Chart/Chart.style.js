@@ -4,7 +4,7 @@ import StyleSheet from 'react-native-extended-stylesheet';
 import { colorOpacity } from '@common';
 
 export const style = StyleSheet.create({
-  $barRadius: 0,
+  $barRadius: '$borderRadius',
   $barSize: 8,
   bars: {
     flexDirection: 'row',
@@ -100,7 +100,7 @@ export const style = StyleSheet.create({
   },
 
   scaleBorder: {
-    borderColor: () => colorOpacity(Theme.get('colorBase'), 0.5),
+    borderColor: () => colorOpacity(Theme.get('colorBase'), 0.75),
     borderWidth: '$borderSize',
   },
 });

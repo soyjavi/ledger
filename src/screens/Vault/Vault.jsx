@@ -5,13 +5,14 @@ import {
   View,
 } from '@lookiero/aurora';
 import { useEvent } from '@lookiero/event';
+import { useRouter } from '@lookiero/router';
 import PropTypes from 'prop-types';
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { BANNERS } from '@assets';
 import { C, EVENTS, L10N } from '@common';
 import { Banner, GroupTransactions, Header, Heading, ScrollView, Summary, Viewport } from '@components';
-import { useNavigation, useStore } from '@context';
+import { useStore } from '@context';
 
 import { ButtonSummary } from './components';
 import { onScroll, query } from './Vault.controller';
@@ -23,9 +24,9 @@ const {
   },
 } = C;
 
-const Vault = ({ visible }) => {
+const Vault = () => {
+  const { back, route: { params: { hash } = {} } = {} } = useRouter();
   const { publish } = useEvent();
-  const { params, ...navigation } = useNavigation();
   const { baseCurrency, vaults } = useStore();
   const scrollview = useRef(null);
 
@@ -34,23 +35,23 @@ const Vault = ({ visible }) => {
   const [scrollQuery, setScrollQuery] = useState(false);
   const [txs, setTxs] = useState([]);
 
-  useLayoutEffect(() => {
-    if (!visible) scrollview.current.scrollTo({ y: 0, animated: false });
-  }, [visible]);
-
   useEffect(() => {
-    if (params.vault) refreshDatasource(vaults.find((vault) => vault.hash === params.vault.hash));
+    if (hash) {
+      scrollview.current.scrollTo({ y: 0, animated: false });
+      refreshDatasource(vaults.find((vault) => vault.hash === hash));
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params]);
+  }, [hash]);
 
   useEffect(() => {
-    const { currentBalance, txs: currentTxs, hash } = dataSource;
-    if (visible && params.vault.hash === hash) {
+    const { currentBalance, txs: currentTxs, hash } = dataSource || {};
+
+    if (hash) {
       const vault = vaults.find((vault) => vault.hash === hash);
       if (vault.currentBalance !== currentBalance || vault.txs.length !== currentTxs.length) refreshDatasource(vault);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [vaults, visible]);
+  }, [vaults]);
 
   const handleScroll = onScroll.bind(undefined, {
     dataSource,
@@ -72,11 +73,9 @@ const Vault = ({ visible }) => {
 
   const { currency = baseCurrency, title, ...rest } = dataSource;
 
-  console.log('  <Vault>', { visible });
-
   return (
-    <Viewport visible={visible}>
-      <Header visible={scroll} title={scroll ? title : undefined} onBack={navigation.back} />
+    <Viewport path="/vault">
+      <Header title={scroll ? title : undefined} onBack={back} />
 
       <ScrollView onScroll={handleScroll} ref={scrollview}>
         <Summary {...rest} title={title} currency={currency}>

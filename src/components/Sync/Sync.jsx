@@ -5,7 +5,7 @@ import { C, L10N } from '@common';
 import { Dialog } from '@components';
 import { useConnection, useStore } from '@context';
 
-import { getRates, getSyncStatus, syncNode } from './App.sync.controller';
+import { getRates, getSyncStatus, syncNode } from './Sync.controller';
 
 const { TIMEOUT } = C;
 
@@ -67,19 +67,21 @@ const Sync = () => {
     if (synced) Stack.success('synced', Notification, { text: L10N.SYNC_DONE, timeoutClose: 10000 });
   };
 
-  return (
-    connected && (
-      <Dialog
-        accept={L10N.SYNC_NOW}
-        cancel={L10N.LATER}
-        text={L10N.SYNC_CAPTION}
-        title={L10N.WARNING}
-        isVisible={state === STATE.UNSYNCED}
-        onAccept={handleSync}
-        onCancel={() => setState(undefined)}
-      />
-    )
+  return connected ? (
+    <Dialog
+      accept={L10N.SYNC_NOW}
+      cancel={L10N.LATER}
+      text={L10N.SYNC_CAPTION}
+      title={L10N.WARNING}
+      isVisible={state === STATE.UNSYNCED}
+      onAccept={handleSync}
+      onCancel={() => setState(undefined)}
+    />
+  ) : (
+    <></>
   );
 };
+
+Sync.displayName = 'Sync';
 
 export { Sync };

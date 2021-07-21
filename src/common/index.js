@@ -8,4 +8,5 @@ export * from './getMonthDiff';
 export * from './groupTxsByDate';
 export * from './l10n';
 export * from './onHardwareBackPress';
+export * from './route';
 export * from './verboseTime';
