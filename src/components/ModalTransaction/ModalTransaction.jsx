@@ -4,6 +4,7 @@ import {
   COLOR,
   FLEX_DIRECTION,
   SIZE,
+  Theme,
   // components
   Button,
   Modal,
@@ -71,10 +72,13 @@ const ModalTransaction = () => {
 
   const handleSubmit = async () => {
     setBusy(true);
-    const method = type === TRANSFER ? createTransfer : createTransaction;
-    const value = await method({ props: dataSource, state, store });
-    if (value) handleClose();
-    setBusy(false);
+    // ! @TODO: Research why we need this
+    setTimeout(async () => {
+      const method = type === TRANSFER ? createTransfer : createTransaction;
+      const value = await method({ props: dataSource, state, store });
+      if (value) handleClose();
+      setBusy(false);
+    }, Theme.get('motionExpand'));
   };
 
   const { type } = dataSource;
@@ -102,7 +106,7 @@ const ModalTransaction = () => {
       )}
 
       <View flexDirection={FLEX_DIRECTION.ROW} marginTop={SIZE.XL}>
-        <Button busy={busy} marginRight={SIZE.M} outlined onPress={handleClose}>
+        <Button disabled={busy} marginRight={SIZE.M} outlined onPress={handleClose}>
           {L10N.CLOSE.toUpperCase()}
         </Button>
         <Button busy={busy} color={COLOR.CONTENT} disabled={!valid} onPress={handleSubmit}>

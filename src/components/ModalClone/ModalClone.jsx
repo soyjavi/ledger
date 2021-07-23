@@ -3,6 +3,7 @@ import {
   COLOR,
   FLEX_DIRECTION,
   SIZE as SPACE,
+  Theme,
   // components
   Button,
   Portal,
@@ -62,9 +63,12 @@ const ModalClone = () => {
 
   const handleSubmit = async ({ wipe = false } = {}) => {
     setBusy(true);
-    await cloneTx({ dataSource, store, wipe });
-    handleClose();
-    setBusy(false);
+    // ! @TODO: Research why we need this
+    setTimeout(async () => {
+      await cloneTx({ dataSource, store, wipe });
+      setBusy(false);
+      handleClose();
+    }, Theme.get('motionExpand'));
   };
 
   const { category, currency, vault, value, location, title = '', timestamp, type = EXPENSE } = dataSource;

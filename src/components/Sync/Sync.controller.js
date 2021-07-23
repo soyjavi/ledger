@@ -1,6 +1,5 @@
-import { Notification } from '@lookiero/aurora';
-
 import { L10N } from '@common';
+import { Notification } from '@components';
 import { ServiceNode, ServiceRates } from '@services';
 
 const findHashIndex = (blockchain = [], latestHash) => blockchain.findIndex(({ hash }) => hash === latestHash);

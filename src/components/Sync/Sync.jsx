@@ -1,10 +1,11 @@
-import { Notification, useStack } from '@lookiero/aurora';
+import { useStack } from '@lookiero/aurora';
 import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 
 import { C, L10N } from '@common';
-import { Dialog } from '@components';
 import { useConnection, useStore } from '@context';
 
+import { Dialog } from '../Dialog';
+import { Notification } from '../Notification';
 import { getRates, getSyncStatus, syncNode } from './Sync.controller';
 
 const { TIMEOUT } = C;
