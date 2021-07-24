@@ -43,15 +43,20 @@ const Container = (inherit) => {
   );
 };
 
-export const Main = () => (
-  <Router
-    basePath="/main"
-    container={Container}
-    routes={[
-      { path: '/dashboard', component: Dashboard },
-      { path: '/stats', component: Stats },
-      { path: '/accounts', component: Vaults },
-      { path: '/settings', component: Settings },
-    ]}
-  />
-);
+export const Main = () => {
+  const { route: { path } = {} } = useRouter();
+
+  return (
+    <Router
+      basePath={ROUTE.MAIN}
+      container={Container}
+      memoize
+      routes={[
+        { path: '/dashboard', component: Dashboard, preload: path === ROUTE.MAIN_TAB },
+        { path: '/stats', component: Stats },
+        { path: '/accounts', component: Vaults },
+        { path: '/settings', component: Settings },
+      ]}
+    />
+  );
+};

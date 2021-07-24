@@ -1,4 +1,14 @@
-import { SIZE, Motion, POINTER, usePortal } from '@lookiero/aurora';
+import {
+  // helpers
+  DISPLAY,
+  POINTER,
+  SIZE,
+  // components
+  Motion,
+  View,
+  // hooks
+  usePortal,
+} from '@lookiero/aurora';
 import { useRouter } from '@lookiero/router';
 import { MOTION } from 'expo-permissions';
 import PropTypes from 'prop-types';
@@ -18,7 +28,7 @@ export const Viewport = ({ children, path, stackMode = true }) => {
   const behind = !visible && history.find((route) => route.path.includes(rootPath)) !== undefined;
   const backward = behind && history[history.length - 2] && !history[history.length - 2].path.includes(rootPath);
 
-  console.log(visible ? '🟢' : backward ? '🔴' : behind ? '🟠' : '⚫️', path, route.path, history);
+  console.log(visible ? '🟢' : backward ? '🔴' : behind ? '🟠' : '⚫️', path);
 
   return stackMode ? (
     <Motion
@@ -36,10 +46,17 @@ export const Viewport = ({ children, path, stackMode = true }) => {
     >
       {!backward ? children : undefined}
     </Motion>
-  ) : visible ? (
-    children
   ) : (
-    <></>
+    <Motion
+      display={!visible ? DISPLAY.NONE : undefined}
+      pointerEvents={!visible ? POINTER.NONE : undefined}
+      value={{
+        opacity: visible ? 1 : 0,
+        translateY: visible ? 0 : 16,
+      }}
+    >
+      {children}
+    </Motion>
   );
 };
 

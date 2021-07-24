@@ -1,7 +1,8 @@
 import { COLOR, View } from '@lookiero/aurora';
 import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 
-import { C, L10N } from '@common';
+import { C, L10N, ROUTE } from '@common';
+import { Viewport } from '@components';
 import { useStore } from '@context';
 
 import { Chart, ItemGroupCategories, Locations, SliderMonths } from './components';
@@ -50,10 +51,8 @@ const Stats = () => {
 
   const chartProps = { currency: baseCurrency, highlight: slider.index };
 
-  console.log('  <Stats>');
-
   return (
-    <>
+    <Viewport path={ROUTE.TAB_STATS} stackMode={false}>
       <SliderMonths {...slider} onChange={handleSliderChange} />
 
       <Chart
@@ -99,7 +98,7 @@ const Stats = () => {
         title={L10N.TRANSFERS}
         values={chart.transfers}
       />
-    </>
+    </Viewport>
   );
 };
 

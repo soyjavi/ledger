@@ -11,7 +11,7 @@ import { useRouter } from '@lookiero/router';
 import React, { useEffect, useState } from 'react';
 
 import { EVENTS, L10N, ROUTE } from '@common';
-import { Card, CARD_SIZE, GroupTransactions, Heading, Summary } from '@components';
+import { Card, CARD_SIZE, GroupTransactions, Heading, Summary, Viewport } from '@components';
 import { useStore } from '@context';
 
 import { Search } from './components';
@@ -34,7 +34,7 @@ const Dashboard = () => {
   const visibleVaults = queryVaults({ query, vaults });
 
   return (
-    <>
+    <Viewport path={ROUTE.TAB_DASHBOARD} stackMode={false}>
       <Summary {...overall} currency={baseCurrency} title={L10N.OVERALL_BALANCE}>
         <Search onChange={setQuery} />
       </Summary>
@@ -74,7 +74,7 @@ const Dashboard = () => {
           ))}
         </>
       )}
-    </>
+    </Viewport>
   );
 };
 
