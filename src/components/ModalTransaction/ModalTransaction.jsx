@@ -109,7 +109,7 @@ const ModalTransaction = () => {
         <Button disabled={busy} marginRight={SIZE.M} outlined onPress={handleClose}>
           {L10N.CLOSE.toUpperCase()}
         </Button>
-        <Button busy={busy} color={COLOR.CONTENT} disabled={!valid} onPress={handleSubmit}>
+        <Button color={COLOR.CONTENT} disabled={busy || !valid} onPress={handleSubmit}>
           {L10N.SAVE.toUpperCase()}
         </Button>
       </View>

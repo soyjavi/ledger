@@ -72,7 +72,7 @@ export const FirstVault = () => {
 
             <FormVault marginTop={SIZE.XL} form={form} onChange={setForm} />
 
-            <Button busy={busy} disabled={busy || !form.valid} marginTop={SIZE.M} onPress={handleSubmit}>
+            <Button disabled={busy || !form.valid} marginTop={SIZE.M} onPress={handleSubmit}>
               {L10N.CREATE.toUpperCase()}
             </Button>
           </View>

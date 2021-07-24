@@ -75,7 +75,7 @@ const ModalVault = () => {
           <Button disabled={busy} marginRight={SIZE.M} outlined onPress={handleClose}>
             {L10N.CLOSE.toUpperCase()}
           </Button>
-          <Button busy={busy} color={COLOR.CONTENT} disabled={busy || form.title === undefined} onPress={handleSubmit}>
+          <Button color={COLOR.CONTENT} disabled={busy || form.title === undefined} onPress={handleSubmit}>
             {L10N.SAVE.toUpperCase()}
           </Button>
         </View>
