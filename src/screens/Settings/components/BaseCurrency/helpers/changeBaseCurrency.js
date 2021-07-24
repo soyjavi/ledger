@@ -1,6 +1,5 @@
-import { Notification } from '@lookiero/aurora';
-
 import { L10N } from '@common';
+import { Notification } from '@components';
 import { ServiceRates } from '@services';
 
 export const changeBaseCurrency = async ({ currency, Stack, store: { updateRates, updateSettings } }) => {

@@ -149,7 +149,7 @@ export const L10N = {
   STATS_CAPTION: 'In this summary you can see a breakdown of your operations in the selected category.',
   SYNC_CAPTION: 'It seems like you were offline for a while, you can sync your blockchain now.',
   SYNC_NOW: 'SYNC NOW',
-  SYNC_BUSY: 'Wait a bit meanwhile your transactions get sync.',
+  SYNC_BUSY: 'Please wait a bit meanwhile all your transactions get sync.',
   SYNC_DONE: 'All your transactions have been synced.',
   SWAP: 'Swap',
 

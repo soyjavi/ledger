@@ -7,8 +7,6 @@ import {
   Button,
   SafeAreaView,
   View,
-  //
-  Theme,
 } from '@lookiero/aurora';
 import { useRouter } from '@lookiero/router';
 import React from 'react';
@@ -25,8 +23,8 @@ export const Completed = () => {
   const { updateSettings } = useStore();
 
   const handlePress = async () => {
-    // await updateSettings({ onboarded: true });
-    setTimeout(() => updateSettings({ onboarded: true }), Theme.get('motionExpand') * 2);
+    await updateSettings({ onboarded: true });
+
     go({ path: `${ROUTE.MAIN}${ROUTE.TAB_DASHBOARD}` });
   };
 

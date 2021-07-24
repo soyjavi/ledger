@@ -5,7 +5,6 @@ import {
   SIZE,
   // components
   Button,
-  Notification,
   SafeAreaView,
   Text,
   View,
@@ -17,7 +16,7 @@ import React, { useLayoutEffect, useState } from 'react';
 import { Platform, KeyboardAvoidingView } from 'react-native';
 
 import { C, L10N, ROUTE } from '@common';
-import { FormVault, Viewport } from '@components';
+import { FormVault, Notification, Viewport } from '@components';
 import { useStore } from '@context';
 import { ServiceNode, ServiceRates } from '@services';
 
@@ -62,8 +61,8 @@ export const FirstVault = () => {
   return (
     <Viewport path={ROUTE.FIRST_VAULT}>
       <KeyboardAvoidingView behavior={IS_NATIVE ? 'padding' : undefined} style={style.container}>
-        <SafeAreaView style={style.content}>
-          <View style={style.offset}>
+        <SafeAreaView style={style.container}>
+          <View style={[style.content, style.offset]}>
             <Text align={ALIGN.CENTER} heading level={1}>
               {L10N.FIRST_VAULT}
             </Text>

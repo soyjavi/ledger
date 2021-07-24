@@ -22,7 +22,7 @@ import { ServiceNode } from '@services';
 import { NumKeyboard } from './components';
 import { style } from './Session.style';
 
-const { IS_DEV, VERSION } = C;
+const { VERSION } = C;
 
 export const Session = () => {
   const { settings, updateSettings, vaults = [] } = useStore();
@@ -36,11 +36,6 @@ export const Session = () => {
   };
 
   useEffect(() => {
-    if (IS_DEV && is.visible && !is.signup) setTimeout(() => setPin(settings.pin), 1000);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [is]);
-
-  useEffect(() => {
     if (!is.visible || pin.length !== 4) return;
 
     if (settings.pin === undefined || settings.pin === pin) handleSubmit();
@@ -48,16 +43,11 @@ export const Session = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pin]);
 
-  const handleSubmit = () => {
-    if (is.signup)
-      setTimeout(
-        async () =>
-          updateSettings({
-            pin,
-            authorization: await ServiceNode.signup({ fingerprint: settings.fingerprint }),
-          }),
-        1000,
-      );
+  const handleSubmit = async () => {
+    if (is.signup) {
+      const authorization = await ServiceNode.signup({ fingerprint: settings.fingerprint });
+      await updateSettings({ pin, authorization });
+    }
 
     go({ path: vaults.length === 0 ? ROUTE.FIRST_VAULT : `${ROUTE.MAIN}${ROUTE.TAB_DASHBOARD}` });
   };

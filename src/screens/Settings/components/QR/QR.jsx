@@ -3,7 +3,6 @@ import {
   COLOR,
   // components
   Image,
-  Notification,
   Portal,
   Text,
   Touchable,
@@ -15,7 +14,7 @@ import { Camera } from 'expo-camera';
 import React, { useEffect, useState } from 'react';
 
 import { L10N } from '@common';
-import { Dialog, Heading } from '@components';
+import { Dialog, Heading, Notification } from '@components';
 import { useStore } from '@context';
 import { ServiceQR } from '@services';
 
@@ -37,11 +36,7 @@ const QR = () => {
   const [qr, setQr] = useState(undefined);
 
   useEffect(() => {
-    if (hasCamera === undefined) {
-      setHasCamera(askCamera());
-      // setQr('1CC0A669-249E-428F-88FF-4EAF27ABED4B|backup');
-    }
-
+    if (hasCamera === undefined) setHasCamera(askCamera());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -49,6 +44,7 @@ const QR = () => {
     if (!camera) {
       setBlockchain(undefined);
       setQr(undefined);
+      // setQr('1CC0A669-249E-428F-88FF-4EAF27ABED4B|backup');
     }
   }, [camera]);
 
@@ -74,6 +70,8 @@ const QR = () => {
       Stack.success('forked', Notification, { text: L10N.FORKED_CORRECTLY });
     }
   };
+
+  console.log('>>>>>>', { hasCamera, camera, qr });
 
   return (
     <View style={style.container}>

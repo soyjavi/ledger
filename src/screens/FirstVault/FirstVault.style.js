@@ -7,6 +7,7 @@ export const style = StyleSheet.create({
 
   content: {
     flex: 1,
+    flexDirection: 'column',
     justifyContent: 'flex-end',
   },
 

@@ -1,10 +1,4 @@
-import {
-  // helpers
-  SIZE,
-  //
-  Notification as AuroraNotification,
-  Text,
-} from '@lookiero/aurora';
+import { Notification as AuroraNotification, Text } from '@lookiero/aurora';
 import PropTypes from 'prop-types';
 import React from 'react';
 

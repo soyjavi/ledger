@@ -1,17 +1,18 @@
 import { useRouter, Router } from '@lookiero/router';
 import React, { useMemo } from 'react';
 
-import { ROUTE } from '@common';
+import { C, ROUTE } from '@common';
 import { ModalClone, ModalTransaction, ModalVault, Sync } from '@components';
 import { useStore } from '@context';
 
 import { Welcome, Session, FirstVault, Completed, Main, Vault } from './screens';
 
+const { IS_DEV } = C;
+
 const Container = (inherit) => {
   const { route: { path = '' } = {} } = useRouter();
 
-  const rootPath = `/${path.split('/')[1]}`;
-  const isReady = [ROUTE.MAIN, ROUTE.VAULT].includes(rootPath);
+  const isReady = [ROUTE.MAIN, ROUTE.VAULT].includes(`/${path.split('/')[1]}`);
 
   return (
     <>
@@ -35,11 +36,13 @@ const Container = (inherit) => {
 const AppRouter = () => {
   const { settings: { authorization, onboarded = false } = {} } = useStore();
 
+  const routeFallback = authorization ? (IS_DEV ? '/main/dashboard' : ROUTE.SESSION) : ROUTE.WELCOME;
+
   return useMemo(
     () => (
       <Router
         container={Container}
-        entryRoute={{ path: authorization ? '/session' : '/welcome' }}
+        entryRoute={{ path: authorization ? (IS_DEV ? '/main/dashboard' : ROUTE.SESSION) : ROUTE.WELCOME }}
         memoize
         routes={[
           { path: ROUTE.SESSION, component: Session, preload: true },
@@ -51,13 +54,12 @@ const AppRouter = () => {
           { path: ROUTE.MAIN_TAB, component: Main, preload: authorization },
           { path: ROUTE.VAULT_HASH, component: Vault, preload: authorization },
           //
-          { path: '*', redirect: authorization ? ROUTE.SESSION : ROUTE.WELCOME, replace: true },
+          { path: '*', redirect: routeFallback, replace: true },
         ]}
         subscribers={false}
       />
     ),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [authorization],
+    [authorization, onboarded],
   );
 };
 
