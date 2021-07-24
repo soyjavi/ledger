@@ -116,6 +116,8 @@ const StoreProvider = ({ children }) => {
     return true;
   };
 
+  // console.log('<Store>', state.blockchain && state.store ? '🟢' : '🔴', state);
+
   return (
     <StoreContext.Provider
       value={{
@@ -129,7 +131,7 @@ const StoreProvider = ({ children }) => {
         updateRates: (value) => updateStore('rates', { ...state.rates, ...value }),
       }}
     >
-      {state.blockchain && state.store && children}
+      {state.blockchain && state.store ? children : undefined}
     </StoreContext.Provider>
   );
 };

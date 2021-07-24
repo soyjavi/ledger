@@ -71,8 +71,6 @@ const QR = () => {
     }
   };
 
-  console.log('>>>>>>', { hasCamera, camera, qr });
-
   return (
     <View style={style.container}>
       <Heading value={L10N.TRANSFER_TXS}>

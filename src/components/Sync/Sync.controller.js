@@ -72,12 +72,21 @@ const getSyncStatus = async ({ store }) => {
 const syncNode = async ({ store }) => {
   const { blockchain, settings } = store;
 
-  const txs = blockchain.get('txs').blocks.slice(1);
+  const txs = blockchain
+    .get('txs')
+    .blocks.slice(1)
+    .filter(({ data: { value } }) => value !== undefined);
+
   const vaults = blockchain.get('vaults').blocks.slice(1);
 
   const { txs: nodeTxs = {}, vaults: nodeVaults = {} } = (await ServiceNode.status({ settings })) || {};
 
-  const rebase = !existsHash(vaults, nodeVaults.latestHash) || !existsHash(txs, nodeTxs.latestHash);
+  const rebase =
+    !existsHash(vaults, nodeVaults.latestHash) ||
+    !existsHash(txs, nodeTxs.latestHash) ||
+    txs.length !== nodeTxs.length ||
+    vaults.length !== nodeVaults.length;
+
   if (rebase) {
     await ServiceNode.sync({ settings, blockchain: { vaults: parseVaults(vaults), txs: parseTxs(txs) } });
   } else {
