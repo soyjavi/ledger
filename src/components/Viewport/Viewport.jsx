@@ -15,18 +15,30 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { useWindowDimensions } from 'react-native';
 
+import { ROUTE } from '@common';
+
 import { style } from './Viewport.style';
+
+const getRootPath = (path = '') => `/${path.split('/')[1]}`;
 
 export const Viewport = ({ children, path, stackMode = true }) => {
   const { route = {}, history = [] } = useRouter();
   const { busy: busyPortal } = usePortal();
   const { width } = useWindowDimensions();
 
-  const rootPath = `/${path.split('/')[1]}`;
+  const rootPath = getRootPath(path);
 
-  const visible = stackMode ? route.path.includes(rootPath) : path.includes(route.params.tab);
+  let visible = stackMode ? route.path.includes(rootPath) : path.includes(route.params.tab);
   const behind = !visible && history.find((route) => route.path.includes(rootPath)) !== undefined;
   const backward = behind && history[history.length - 2] && !history[history.length - 2].path.includes(rootPath);
+
+  // * This is a workaround ----------------------------------------------------
+  if (behind && !backward && !stackMode) {
+    const [{ path: lastPath } = {}] = history.slice(-1);
+    const lastRootPath = getRootPath(lastPath);
+    if (lastRootPath === ROUTE.VAULT) visible = true;
+  }
+  // * -------------------------------------------------------------------------
 
   console.log(visible ? '🟢' : backward ? '🔴' : behind ? '🟠' : '⚫️', path);
 
