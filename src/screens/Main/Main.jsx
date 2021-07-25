@@ -12,14 +12,23 @@ import { Stats } from '../Stats';
 import { Vaults } from '../Vaults';
 import { style } from './Main.style';
 
+const TITLE = {
+  [ROUTE.TAB_DASHBOARD]: L10N.DASHBOARD,
+  [ROUTE.TAB_STATS]: L10N.ACTIVITY,
+  [ROUTE.TAB_ACCOUNTS]: L10N.VAULTS,
+  [ROUTE.TAB_SETTINGS]: L10N.SETTINGS,
+};
+
 const Container = (inherit) => {
   const scrollview = useRef(null);
   const { basePath, go, route: { params: { tab } } = {} } = useRouter();
 
+  const value = `/${tab}`;
+
   const [scroll, setScroll] = useState(false);
 
   const handleChange = (next) => {
-    const isDifferent = next !== `/${tab}`;
+    const isDifferent = next !== value;
 
     if (isDifferent) go({ path: `${basePath}${next}` });
     scrollview.current.scrollTo({ y: 0, animated: !isDifferent });
@@ -27,13 +36,13 @@ const Container = (inherit) => {
 
   return (
     <Viewport path={ROUTE.MAIN_TAB}>
-      <Header title={scroll ? tab : undefined} />
+      <Header title={scroll || value !== ROUTE.TAB_DASHBOARD ? TITLE[value] : undefined} />
 
       <ScrollView onScroll={setScroll} ref={scrollview}>
         {inherit.children}
       </ScrollView>
 
-      <Footer style={style.footer} value={`/${tab}`} onChange={handleChange}>
+      <Footer style={style.footer} value={value} onChange={handleChange}>
         <FooterItem icon="home" text={L10N.DASHBOARD} value={ROUTE.TAB_DASHBOARD} />
         <FooterItem icon="bar-chart" text={L10N.ACTIVITY} value={ROUTE.TAB_STATS} />
         <FooterItem icon="stack" text={L10N.VAULTS} value={ROUTE.TAB_ACCOUNTS} />
