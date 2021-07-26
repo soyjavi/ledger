@@ -1,4 +1,4 @@
-import { colorOpacity } from '@common';
+import { colorOpacity } from '../common/colorOpacity';
 
 const FONT_XXL = 36;
 const FONT_XL = 32;
@@ -9,10 +9,15 @@ const FONT_XS = 12;
 const FONT_XXS = 10;
 const LINE_HEIGHT = 1.2;
 
-const COLOR_BASE = '#000000';
-
 export const ShieldTheme = {
   $theme: 'shield',
+
+  /* APPEARANCE */
+  $colorAppearance_1: '#FFC491',
+  $colorAppearance_2: '#CBFD50',
+  $colorAppearance_3: '#ff8056',
+  $colorAppearance_4: '#5BC7BD',
+  $colorAppearance_5: '#8469F6',
 
   /* BORDER */
   $borderRadius: 4,
@@ -20,19 +25,17 @@ export const ShieldTheme = {
   $borderStyle: 'solid',
 
   /* COLOR */
-  $colorBase: COLOR_BASE,
+  $colorBase: '#000000',
   $colorContent: '#ffffff',
-  // $colorAccent: '#ffd9c7',
-  $colorPrimary: '#FFC491',
-  // $colorPrimary: '#E9983D',
+  $colorAccent: '$colorAppearance_1',
+  $colorPrimary: '$colorAppearance_1',
   $colorAlert: '#ff8056',
-  // $colorInfo: '#181818',
   $colorInfo: '#1C1C1D',
   $colorGrayscaleXL: '#282828',
   $colorGrayscaleL: '#999999',
   // $colorGrayscaleM: '#cfcfcf',
   // $colorGrayscaleS: '#e7e7e7',
-  $colorOverlay: colorOpacity(COLOR_BASE, 0.8),
+  $colorOverlay: colorOpacity('#000000', 0.85),
   // $colorTouchable: 'rgba(255, 255, 255, 0.15)',
 
   /* ELEVATION */
@@ -58,7 +61,7 @@ export const ShieldTheme = {
 
   $fontBrand: 'Brand',
   $fontBrandStyle1: 'normal',
-  $fontBrandVariant1: ['normal'],
+  $fontBarance1: ['normal'],
   $fontBrandWeight1: '500',
   $fontBrandSize1: FONT_XXL,
   $fontBrandHeight1: FONT_XXL * LINE_HEIGHT,
@@ -206,8 +209,8 @@ export const ShieldTheme = {
   $fontInputStyle: 'normal',
   $fontInputVariant: ['normal'],
   $fontInputWeight: '800',
-  $fontInputSize: FONT_M,
-  $fontInputHeight: FONT_M * LINE_HEIGHT,
+  $fontInputSize: FONT_L,
+  $fontInputHeight: FONT_L * LINE_HEIGHT,
   $fontInputPaddingTop: 0,
   $fontInputPaddingRight: 16,
   $fontInputPaddingBottom: 0,
