@@ -6,6 +6,7 @@ const { height, width } = Dimensions.get('window');
 const { spaceM } = Theme.get();
 
 const MAP_HEIGHT = Math.floor(height / 3);
+const MAP_SMALL_HEIGHT = MAP_HEIGHT / 2;
 const MAP_WIDTH = Math.floor(width - spaceM * 2);
 
 const style = StyleSheet.create({
@@ -37,8 +38,8 @@ const style = StyleSheet.create({
   },
 
   small: {
-    height: MAP_HEIGHT / 3,
+    height: MAP_SMALL_HEIGHT,
   },
 });
 
-export { MAP_HEIGHT, MAP_WIDTH, style };
+export { MAP_HEIGHT, MAP_SMALL_HEIGHT, MAP_WIDTH, style };

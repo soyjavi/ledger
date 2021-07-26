@@ -13,9 +13,9 @@ import React from 'react';
 import { useConnection } from '@context';
 import { ServiceLocation } from '@services';
 
-import { style, MAP_HEIGHT, MAP_WIDTH } from './HeatMap.style';
+import { style, MAP_HEIGHT, MAP_SMALL_HEIGHT, MAP_WIDTH } from './HeatMap.style';
 
-const HeatMap = ({ caption, color, darkMode = true, points, precission = 0.001, small, ...others }) => {
+const HeatMap = ({ caption, color, darkMode = true, points, precission = 0.001, small }) => {
   const { online } = useConnection();
 
   return (
@@ -27,7 +27,7 @@ const HeatMap = ({ caption, color, darkMode = true, points, precission = 0.001, 
             ? ServiceLocation.uriMap({
                 color: color || Theme.get('colorPrimary'),
                 darkMode,
-                height: MAP_HEIGHT,
+                height: small ? MAP_SMALL_HEIGHT : MAP_HEIGHT,
                 points,
                 precission,
                 small,
