@@ -10,7 +10,7 @@ import {
   View,
 } from '@lookiero/aurora';
 import { useRouter } from '@lookiero/router';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Image } from 'react-native';
 
 import { LOGO } from '@assets';
@@ -52,28 +52,31 @@ export const Session = () => {
     go({ path: vaults.length === 0 ? ROUTE.FIRST_VAULT : `${ROUTE.MAIN}${ROUTE.TAB_DASHBOARD}` });
   };
 
-  return (
-    <Viewport path={ROUTE.SESSION}>
-      <SafeAreaView flex={SIZE.XS}>
-        <View alignItems={ALIGN.CENTER} style={style.content} justifyContent={ALIGN.END} padding={SIZE.M}>
-          <Image resizeMode="cover" source={LOGO} style={style.image} />
-          <Text color={COLOR.GRAYSCALE_L} detail level={1} marginTop={SIZE.XXL}>
-            {is.signup ? L10N.PIN_CHOOSE : L10N.PIN}
-          </Text>
-          <View flexDirection={FLEX_DIRECTION.ROW} marginVertical={SIZE.L}>
-            {['•', '•', '•', '•'].map((letter, index) => (
-              <View
-                key={index}
-                backgroundColor={pin.length > index ? COLOR.CONTENT : COLOR.GRAYSCALE_XL}
-                style={style.bullet}
-              />
-            ))}
-          </View>
+  return useMemo(
+    () => (
+      <Viewport path={ROUTE.SESSION}>
+        <SafeAreaView flex={SIZE.XS}>
+          <View alignItems={ALIGN.CENTER} style={style.content} justifyContent={ALIGN.END} padding={SIZE.M}>
+            <Image resizeMode="cover" source={LOGO} style={style.image} />
+            <Text color={COLOR.GRAYSCALE_L} detail level={1} marginTop={SIZE.XXL}>
+              {is.signup ? L10N.PIN_CHOOSE : L10N.PIN}
+            </Text>
+            <View flexDirection={FLEX_DIRECTION.ROW} marginVertical={SIZE.L}>
+              {['•', '•', '•', '•'].map((letter, index) => (
+                <View
+                  key={index}
+                  backgroundColor={pin.length > index ? COLOR.CONTENT : COLOR.GRAYSCALE_XL}
+                  style={style.bullet}
+                />
+              ))}
+            </View>
 
-          <NumKeyboard marginVertical={SIZE.M} onPress={(number) => setPin(`${pin}${number}`)} />
-          <Text color={COLOR.GRAYSCALE_L} detail>{`v${VERSION}`}</Text>
-        </View>
-      </SafeAreaView>
-    </Viewport>
+            <NumKeyboard marginVertical={SIZE.M} onPress={(number) => setPin(`${pin}${number}`)} />
+            <Text color={COLOR.GRAYSCALE_L} detail>{`v${VERSION}`}</Text>
+          </View>
+        </SafeAreaView>
+      </Viewport>
+    ),
+    [pin],
   );
 };

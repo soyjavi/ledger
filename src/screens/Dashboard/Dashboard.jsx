@@ -21,7 +21,7 @@ import { queryLastTxs, querySearchTxs, queryVaults } from './helpers';
 const Dashboard = () => {
   const { publish } = useEvent();
   const { go } = useRouter();
-  const { settings: { baseCurrency } = {}, overall, txs = [], vaults = [] } = useStore();
+  const { settings: { baseCurrency, appearance } = {}, overall, txs = [], vaults = [] } = useStore();
 
   const [lastTxs, setLastTxs] = useState([]);
   const [query, setQuery] = useState();
@@ -78,7 +78,7 @@ const Dashboard = () => {
         )}
       </Viewport>
     ),
-    [lastTxs, query],
+    [appearance, lastTxs, query],
   );
 };
 
