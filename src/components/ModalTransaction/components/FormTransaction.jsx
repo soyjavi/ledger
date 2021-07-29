@@ -57,7 +57,6 @@ const FormTransaction = ({ form = {}, onChange, type, vault = {} }) => {
       <InputCurrency
         currency={vault.currency}
         marginBottom={SIZE.M}
-        type={type}
         onChange={(value) => handleField('value', value)}
         value={form.value}
         vault={vault}

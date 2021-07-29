@@ -52,12 +52,19 @@ const ModalTransaction = () => {
         setDataSource({ type, vault });
         setState(INITIAL_STATE);
         setLocation(INITIAL_STATE_LOCATION);
-        getLocation({ online, setLocation });
+
+        if (type !== TRANSFER) getLocation({ online, setLocation });
 
         return true;
       });
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    setState({ ...state, ...location });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location]);
 
   useEffect(() => {
     onHardwareBackPress(visible, handleClose);

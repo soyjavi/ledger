@@ -71,12 +71,7 @@ const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
 
   return (
     <>
-      <InputCurrency
-        type={EXPENSE}
-        value={form.value}
-        vault={vault}
-        onChange={(value) => handleField('value', value)}
-      />
+      <InputCurrency value={form.value} vault={vault} onChange={(value) => handleField('value', value)} />
 
       {selectVault ? (
         <ScrollView horizontal snapInterval={OPTION_SIZE} style={style.slider}>
@@ -105,7 +100,6 @@ const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
           label={L10N.GET}
           marginBottom={SIZE.M}
           style={style.inputDestination}
-          type={INCOME}
           value={form.to ? form.exchange : undefined}
           vault={getVault(form.destination, vaults)}
           onChange={(value) => handleField('exchange', value)}
