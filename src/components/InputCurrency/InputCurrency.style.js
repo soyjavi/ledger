@@ -31,8 +31,12 @@ export const style = StyleSheet.create({
   },
 
   input: {
+    fontFamily: '$fontInput',
+    fontSize: '$fontInputSize',
     height: '$optionSize',
     opacity: 0,
+    paddingLeft: '$fontInputPaddingLeft',
+    paddingRight: '$fontInputPaddingRight + $spaceM',
     position: 'absolute',
     right: 0,
     textAlign: 'right',

@@ -5,7 +5,6 @@ import {
   SIZE,
   // components
   Motion,
-  View,
   // hooks
   usePortal,
 } from '@lookiero/aurora';

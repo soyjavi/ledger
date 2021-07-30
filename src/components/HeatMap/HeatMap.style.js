@@ -18,6 +18,10 @@ const style = StyleSheet.create({
     width: '100%',
   },
 
+  text: {
+    flex: 1,
+  },
+
   colorCaption: {
     color: '$colorGrayscaleL',
   },
@@ -32,7 +36,7 @@ const style = StyleSheet.create({
   },
 
   caption: {
-    alignItems: 'center',
+    alignContent: 'center',
     flexDirection: 'row',
     marginTop: '$spaceXS',
   },

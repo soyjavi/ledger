@@ -9,6 +9,7 @@ import {
   Button,
   Modal,
   Text,
+  Touchable,
   View,
 } from '@lookiero/aurora';
 import { useEvent } from '@lookiero/event';
@@ -43,6 +44,7 @@ const ModalTransaction = () => {
   const [busy, setBusy] = useState(false);
   const [dataSource, setDataSource] = useState({});
   const [location, setLocation] = useState(INITIAL_STATE_LOCATION);
+
   const [state, setState] = useState(INITIAL_STATE);
   const [visible, setVisible] = useState(false);
 
@@ -90,7 +92,6 @@ const ModalTransaction = () => {
 
   const { type } = dataSource;
   const { valid } = state;
-  const { coords, place } = location;
 
   const Form = type === TRANSFER ? FormTransfer : FormTransaction;
 
@@ -104,12 +105,18 @@ const ModalTransaction = () => {
 
       {type !== undefined && <Form {...dataSource} {...state} onChange={(value) => setState({ ...state, ...value })} />}
 
-      {online && type !== TRANSFER && (
+      {online && type !== TRANSFER && location && (
         <HeatMap
-          caption={place || L10N.LOADING_PLACE}
-          points={coords ? [[coords.longitude, coords.latitude]] : undefined}
+          caption={location.place || L10N.LOADING_PLACE}
+          points={location.coords ? [[location.coords.longitude, location.coords.latitude]] : undefined}
           small
-        />
+        >
+          <Touchable onPress={() => setLocation(undefined)}>
+            <Text action color={COLOR.PRIMARY}>
+              {L10N.REMOVE_LOCATION}
+            </Text>
+          </Touchable>
+        </HeatMap>
       )}
 
       <View flexDirection={FLEX_DIRECTION.ROW} marginTop={SIZE.XL}>

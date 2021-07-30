@@ -13,7 +13,7 @@ import React from 'react';
 import { useStore } from '@context';
 
 import { Option, OPTION_SIZE } from '../Option';
-import { queryCurrencies } from './modules';
+import { queryCurrencies } from './helpers';
 import { style } from './SliderCurrencies.style';
 
 const SliderCurrencies = ({ modal, selected, onChange, ...others }) => {

@@ -12,19 +12,13 @@ import {
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 
-import { C, currencyDecimals, L10N } from '@common';
+import { currencyDecimals, L10N } from '@common';
 import { useStore } from '@context';
 
 import { InputCurrency } from '../../InputCurrency';
 import { Option, OPTION_SIZE } from '../../Option';
 import { getVault, queryAvailableVaults } from '../helpers';
 import { style } from './FormTransfer.style';
-
-const {
-  TX: {
-    TYPE: { EXPENSE, INCOME },
-  },
-} = C;
 
 const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
   const {

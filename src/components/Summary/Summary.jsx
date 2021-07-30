@@ -14,7 +14,7 @@ import { C, exchange, L10N } from '@common';
 import { useStore } from '@context';
 
 import { PriceFriendly } from '../PriceFriendly';
-import { verboseMonth } from './modules';
+import { verboseMonth } from './helpers';
 import { SummaryBox } from './Summary.Box';
 import { style } from './Summary.style';
 

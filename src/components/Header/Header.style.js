@@ -19,7 +19,6 @@ export const style = StyleSheet.create({
     left: '$layoutL',
     position: 'absolute',
     right: '$layoutL',
-    textAlign: 'center',
   },
 
   offline: {

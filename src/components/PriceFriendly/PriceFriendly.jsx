@@ -12,7 +12,7 @@ import React from 'react';
 import { C, colorOpacity, currencyDecimals } from '@common';
 import { useStore } from '@context';
 
-import { format } from './modules';
+import { format } from './helpers';
 import { style } from './PriceFriendly.style';
 
 const { SYMBOL } = C;
@@ -23,7 +23,7 @@ const PriceFriendly = ({ currency, fixed, highlight, label, maskAmount, operator
   const { settings = {} } = useStore();
 
   const maskedAmount = maskAmount !== undefined ? maskAmount : settings.maskAmount;
-  const operatorEnhanced = operator && value !== 0 ? (value > 0 ? '+' : '-') : '';
+  const operatorEnhanced = (operator && parseInt(value, 10) !== 0) || value < 0 ? (value > 0 ? '+' : '-') : undefined;
   const symbol = SYMBOL[currency] || currency;
   let { color } = others;
 
@@ -61,9 +61,11 @@ const PriceFriendly = ({ currency, fixed, highlight, label, maskAmount, operator
         </Text>
       ) : (
         <>
-          <Text {...others} color={color}>
-            {operatorEnhanced}
-          </Text>
+          {operatorEnhanced && (
+            <Text {...others} color={color}>
+              {operatorEnhanced}
+            </Text>
+          )}
           {LEFT_SYMBOLS.includes(symbol) && <Text {...symbolProps} />}
           <Text {...others} style={[style.value, others.customStyle]} color={color}>
             {formatedValue}

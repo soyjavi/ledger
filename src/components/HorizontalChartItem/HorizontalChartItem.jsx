@@ -16,7 +16,7 @@ import { style } from './HorizontalChartItem.style';
 
 const screen = Dimensions.get('window');
 
-const HorizontalChartItem = ({ color = COLOR.CONTENT, currency, small, title, value, width = 100, ...others }) => (
+const HorizontalChartItem = ({ color = COLOR.CONTENT, currency, small, title, value, width = 100 }) => (
   <>
     <View style={style.row}>
       <Text detail level={small ? 2 : 1}>

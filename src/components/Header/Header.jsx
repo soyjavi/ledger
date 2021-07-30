@@ -1,5 +1,14 @@
-import { COLOR, Theme, Header as AuroraHeader, Text, View } from '@lookiero/aurora';
-import { BlurView } from 'expo-blur';
+import {
+  // helpers
+  ALIGN,
+  COLOR,
+  Theme,
+  // components
+  Header as AuroraHeader,
+  Motion,
+  Text,
+  View,
+} from '@lookiero/aurora';
 import { StatusBar } from 'expo-status-bar';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
@@ -32,11 +41,12 @@ const Header = ({ isVisible = true, onBack, title = ' ' }) => {
         style={style.header}
         onBack={onBack}
       >
-        {isVisible && (
-          <Text heading level={2} style={style.title}>
+        <Motion style={style.title} value={{ opacity: isVisible ? 1 : 0 }}>
+          <Text align={ALIGN.CENTER} heading level={2}>
             {title}
           </Text>
-        )}
+        </Motion>
+
         {!connected && (
           <View style={[style.offline, { backgroundColor: colorOpacity(Theme.get('colorAlert'), 0.2) }]}>
             <Text action color={COLOR.ALERT}>

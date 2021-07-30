@@ -1,5 +1,6 @@
 import {
   // helpers
+  SIZE,
   Theme,
   // components
   Icon,
@@ -15,7 +16,7 @@ import { ServiceLocation } from '@services';
 
 import { style, MAP_HEIGHT, MAP_SMALL_HEIGHT, MAP_WIDTH } from './HeatMap.style';
 
-const HeatMap = ({ caption, color, darkMode = true, points, precission = 0.001, small }) => {
+const HeatMap = ({ caption, children, color, darkMode = true, points, precission = 0.001, small }) => {
   const { online } = useConnection();
 
   return (
@@ -40,9 +41,10 @@ const HeatMap = ({ caption, color, darkMode = true, points, precission = 0.001, 
       {caption && (
         <View style={style.caption}>
           <Icon name="map-pin" style={[style.icon, style.colorCaption]} />
-          <Text detail level={2} style={style.colorCaption}>
+          <Text detail flex={SIZE.XS} level={2} style={style.colorCaption}>
             {caption}
           </Text>
+          {children}
         </View>
       )}
     </>
@@ -51,6 +53,7 @@ const HeatMap = ({ caption, color, darkMode = true, points, precission = 0.001, 
 
 HeatMap.propTypes = {
   caption: PropTypes.string,
+  children: PropTypes.node,
   color: PropTypes.string,
   darkMode: PropTypes.bool,
   points: PropTypes.arrayOf(PropTypes.array),

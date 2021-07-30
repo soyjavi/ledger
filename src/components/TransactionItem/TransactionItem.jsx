@@ -18,7 +18,7 @@ import { useStore } from '@context';
 
 import { Box } from '../Box';
 import { PriceFriendly } from '../PriceFriendly';
-import { formatCaption } from './modules';
+import { formatCaption } from './helpers';
 import { style } from './TransactionItem.style';
 
 const {

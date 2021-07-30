@@ -11,7 +11,6 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Keyboard, TextInput } from 'react-native';
 
-import { C } from '@common';
 import { useStore } from '@context';
 
 import { CurrencyLogo } from '../CurrencyLogo';
@@ -19,16 +18,9 @@ import { PriceFriendly } from '../PriceFriendly';
 import { getLastRates } from './helpers';
 import { style } from './InputCurrency.style';
 
-const {
-  TX: {
-    TYPE: { EXPENSE, INCOME },
-  },
-} = C;
-
 const InputCurrency = ({
   backgroundColor = COLOR.GRAYSCALE_XL,
   label = '',
-  type = EXPENSE,
   onChange,
   vault: { currency, currentBalance, title } = {},
   ...others
@@ -37,7 +29,6 @@ const InputCurrency = ({
 
   const [exchange, setExchange] = useState();
   const [focus, setFocus] = useState(false);
-  const [value, setValue] = useState();
 
   useEffect(() => {
     if (currency && currency !== baseCurrency) {
@@ -46,22 +37,12 @@ const InputCurrency = ({
     } else setExchange(undefined);
   }, [baseCurrency, currency, rates]);
 
-  useEffect(() => {
-    setValue(others.value);
-  }, [others.value]);
-
   const handleChange = (value = '') => {
-    let nextValue = value && value.toString().length > 0 ? value : undefined;
-
-    if (currency && type === EXPENSE) {
-      nextValue = parseFloat(nextValue, 10) > currentBalance ? currentBalance.toString() : nextValue;
-      setValue(nextValue);
-    }
-
-    onChange && onChange(nextValue);
+    if (isNaN(value) || value.length === 0) return onChange(undefined);
+    onChange(value);
   };
 
-  const active = focus || parseFloat(value, 10) > 0;
+  const active = focus || parseFloat(others.value, 10) > 0;
 
   return (
     <View
@@ -100,7 +81,7 @@ const InputCurrency = ({
           currency={currency}
           level={2}
           maskAmount={false}
-          value={value ? parseFloat(value, 10) : undefined}
+          value={others.value ? parseFloat(others.value, 10) : undefined}
         />
         {exchange && (
           <PriceFriendly
@@ -116,8 +97,8 @@ const InputCurrency = ({
 
       <TextInput
         autoCapitalize="none"
+        autoComplete="off"
         autoCorrect={false}
-        defaultValue={others.defaultValue}
         blurOnSubmit
         editable
         keyboardType="numeric"
@@ -126,7 +107,7 @@ const InputCurrency = ({
         onFocus={() => setFocus(true)}
         onSubmitEditing={Keyboard.dismiss}
         style={style.input}
-        value={others.value || '0'}
+        value={others.value ? others.value.toString() : ''}
       />
     </View>
   );
@@ -135,9 +116,8 @@ const InputCurrency = ({
 InputCurrency.propTypes = {
   backgroundColor: PropTypes.string,
   label: PropTypes.string,
-  type: PropTypes.oneOf([EXPENSE, INCOME]),
   vault: PropTypes.shape({}),
-  onChange: PropTypes.func,
+  onChange: PropTypes.func.isRequired,
 };
 
 export { InputCurrency };

@@ -9,10 +9,11 @@ export default async ({ online, setLocation }) => {
   if (status === 'granted') {
     let { coords } = (await Location.getCurrentPositionAsync({ enableHighAccuracy: true })) || {};
 
-    if (coords) {
-      let location = { coords };
-      if (online) location.place = await ServiceLocation.getPlace(coords);
-      setLocation(location);
-    }
+    console.log('>>>>', { coords });
+    if (coords)
+      setLocation({
+        coords,
+        place: online ? await ServiceLocation.getPlace(coords) : undefined,
+      });
   }
 };

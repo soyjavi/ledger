@@ -1,6 +1,7 @@
 import { L10N } from '@common';
-import { Notification } from '@components';
 import { ServiceNode, ServiceRates } from '@services';
+
+import { Notification } from '../Notification';
 
 const findHashIndex = (blockchain = [], latestHash) => blockchain.findIndex(({ hash }) => hash === latestHash);
 
