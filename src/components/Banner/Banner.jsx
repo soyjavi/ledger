@@ -4,7 +4,6 @@ import {
   COLOR,
   SIZE as SPACE,
   // components
-  Image,
   Text,
   View,
   // hooks
@@ -12,6 +11,7 @@ import {
 } from '@lookiero/aurora';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Image } from 'react-native';
 
 import { BANNERS } from '@assets';
 
@@ -26,7 +26,7 @@ const Banner = ({ align, caption, children, image = BANNERS.NOT_FOUND, title, ..
 
   return (
     <View {...others} alignItems={align} alignContent={align} justifyContent={align}>
-      <Image align={align} resizeMode="contain" src={image} style={[style.content, { height: width * 0.6 }]} />
+      <Image resizeMode="contain" source={image} style={[style.content, { height: width * 0.6 }]} />
       {title && (
         <Text align={textAlign} heading level={1} marginTop={SPACE.L} style={style.content}>
           {title}
@@ -43,10 +43,10 @@ const Banner = ({ align, caption, children, image = BANNERS.NOT_FOUND, title, ..
 };
 
 Banner.propTypes = {
-  align: PropTypes.oneOf([ALIGN.LEFT, ALIGN.CENTER, ALIGN.RIGHT]),
+  align: PropTypes.oneOf([ALIGN.LEFT, ALIGN.CENTER, ALIGN.END]),
   caption: PropTypes.string,
   children: PropTypes.node,
-  image: PropTypes.string,
+  image: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   title: PropTypes.string,
 };
 
