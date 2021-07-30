@@ -137,6 +137,8 @@ export const L10N = {
 
   QR_READER: 'OPEN CAMERA',
 
+  REMOVE_LOCATION: 'DELETE PLACE',
+
   SAVE: 'SAVE',
   SEARCH: 'Search',
   SEE_ALL: 'See All',

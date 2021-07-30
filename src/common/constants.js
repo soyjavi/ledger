@@ -2,6 +2,7 @@ import { Platform } from 'react-native';
 
 import PKG from '../../package.json';
 
+// eslint-disable-next-line no-undef
 const IS_DEV = __DEV__;
 const MS_IN_DAY = 1000 * 24 * 60 * 60;
 const MS_IN_WEEK = MS_IN_DAY * 7;
