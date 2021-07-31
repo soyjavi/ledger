@@ -94,7 +94,7 @@ Chart.propTypes = {
   currency: PropTypes.string,
   highlight: PropTypes.number,
   inverted: PropTypes.bool,
-  style: PropTypes.oneOfType([PropTypes.array, PropTypes.number]),
+  style: PropTypes.any,
   title: PropTypes.string,
   values: PropTypes.arrayOf(PropTypes.number),
 };
