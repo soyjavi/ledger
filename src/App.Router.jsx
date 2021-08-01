@@ -1,10 +1,14 @@
+import { Aurora } from '@lookiero/aurora';
 import { useRouter, Router } from '@lookiero/router';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
+import { useWindowDimensions } from 'react-native';
 
-import { C, ROUTE } from '@common';
+import { C, changeAppearance, ROUTE } from '@common';
 import { ModalClone, ModalTransaction, ModalVault, Sync } from '@components';
 import { useStore } from '@context';
+import { ShieldTheme } from '@theming';
 
+import { style } from './App.style';
 import { Welcome, Session, FirstVault, Completed, Main, Vault } from './screens';
 
 const { IS_DEV } = C;
@@ -34,30 +38,33 @@ const Container = (inherit) => {
 };
 
 const AppRouter = () => {
-  const { settings: { authorization, onboarded = false } = {} } = useStore();
+  const { settings: { authorization, appearance, onboarded = false } = {} } = useStore();
+  const { height, width } = useWindowDimensions();
 
-  const routeFallback = authorization ? (IS_DEV ? '/main/dashboard' : ROUTE.SESSION) : ROUTE.WELCOME;
+  useEffect(() => {
+    if (appearance) changeAppearance({ color: appearance });
+  }, [appearance]);
 
   return useMemo(
     () => (
-      <Router
-        container={Container}
-        entryRoute={{ path: authorization ? (IS_DEV ? '/main/dashboard' : ROUTE.SESSION) : ROUTE.WELCOME }}
-        memoize
-        routes={[
-          { path: ROUTE.SESSION, component: Session, preload: true },
-          //
-          { path: ROUTE.WELCOME, component: Welcome, preload: !onboarded },
-          { path: ROUTE.FIRST_VAULT, component: FirstVault, preload: !onboarded },
-          { path: ROUTE.COMPLETED, component: Completed, preload: !onboarded },
-          //
-          { path: ROUTE.MAIN_TAB, component: Main, preload: authorization },
-          { path: ROUTE.VAULT_HASH, component: Vault, preload: authorization },
-          //
-          { path: '*', redirect: routeFallback, replace: true },
-        ]}
-        subscribers={false}
-      />
+      <Aurora theme={ShieldTheme} style={[style.container, { height, width }]}>
+        <Router
+          container={Container}
+          entryRoute={{ path: authorization ? (IS_DEV ? '/main/dashboard' : ROUTE.SESSION) : ROUTE.WELCOME }}
+          memoize
+          routes={[
+            { path: ROUTE.SESSION, component: Session, preload: true },
+            //
+            { path: ROUTE.WELCOME, component: Welcome, preload: !onboarded },
+            { path: ROUTE.FIRST_VAULT, component: FirstVault, preload: !onboarded },
+            { path: ROUTE.COMPLETED, component: Completed, preload: !onboarded },
+            //
+            { path: ROUTE.MAIN_TAB, component: Main, preload: authorization },
+            { path: ROUTE.VAULT_HASH, component: Vault, preload: authorization },
+          ]}
+          subscribers={false}
+        />
+      </Aurora>
     ),
     [authorization, onboarded],
   );
