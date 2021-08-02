@@ -67,7 +67,7 @@ const Vault = () => {
 
   return (
     <Viewport path="/vault">
-      <Header title={scroll ? title : undefined} onBack={back} />
+      <Header isVisible={scroll} title={title} onBack={back} />
 
       {useMemo(
         () => (
