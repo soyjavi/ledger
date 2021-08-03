@@ -32,9 +32,9 @@ const INITIAL_STATE = {
   busy: false,
   form: {},
   valid: false,
+  coords: undefined,
+  place: undefined,
 };
-
-const INITIAL_STATE_LOCATION = { coords: undefined, place: undefined };
 
 const ModalTransaction = () => {
   const { subscribe } = useEvent();
@@ -43,19 +43,18 @@ const ModalTransaction = () => {
 
   const [busy, setBusy] = useState(false);
   const [dataSource, setDataSource] = useState({});
-  const [location, setLocation] = useState(INITIAL_STATE_LOCATION);
 
   const [state, setState] = useState(INITIAL_STATE);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     subscribe({ event: EVENTS.NEW_TRANSACTION }, ({ type, vault }) => {
-      setVisible(() => {
+      setVisible(async () => {
         setDataSource({ type, vault });
-        setState(INITIAL_STATE);
-        setLocation(INITIAL_STATE_LOCATION);
-
-        if (type !== TRANSFER) getLocation({ online, setLocation });
+        setState({
+          ...INITIAL_STATE,
+          ...(type !== TRANSFER ? await getLocation(online) : {}),
+        });
 
         return true;
       });
@@ -63,10 +62,10 @@ const ModalTransaction = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    setState({ ...state, ...location });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location]);
+  // useEffect(() => {
+  //   setState({ ...state, ...location });
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [location]);
 
   useEffect(() => {
     onHardwareBackPress(visible, handleClose);
@@ -77,6 +76,10 @@ const ModalTransaction = () => {
 
   const handleClose = () => {
     setVisible(false);
+  };
+
+  const handleRemoveLocation = () => {
+    setState({ ...state, coords: undefined, place: undefined, hideLocation: true });
   };
 
   const handleSubmit = async () => {
@@ -94,6 +97,7 @@ const ModalTransaction = () => {
   const { valid } = state;
 
   const Form = type === TRANSFER ? FormTransfer : FormTransaction;
+  const { hideLocation, place, coords } = state;
 
   return (
     <Modal color={COLOR.INFO} isVisible={visible} swipeable onClose={handleClose}>
@@ -105,13 +109,13 @@ const ModalTransaction = () => {
 
       {type !== undefined && <Form {...dataSource} {...state} onChange={(value) => setState({ ...state, ...value })} />}
 
-      {online && type !== TRANSFER && location && (
+      {online && type !== TRANSFER && !hideLocation && (
         <HeatMap
-          caption={location.place || L10N.LOADING_PLACE}
-          points={location.coords ? [[location.coords.longitude, location.coords.latitude]] : undefined}
+          caption={place || L10N.LOADING_PLACE}
+          points={coords ? [[coords.longitude, coords.latitude]] : undefined}
           small
         >
-          <Touchable onPress={() => setLocation(undefined)}>
+          <Touchable onPress={handleRemoveLocation}>
             <Text action color={COLOR.PRIMARY}>
               {L10N.REMOVE_LOCATION}
             </Text>
