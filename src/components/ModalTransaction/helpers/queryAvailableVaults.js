@@ -1,4 +1,4 @@
-export default (vaults = [], vault = {}) => {
+export const queryAvailableVaults = (vaults = [], vault = {}) => {
   const availableVaults = [];
   const currencies = vault.currency ? [vault.currency] : [];
   const sortedVaults = vaults

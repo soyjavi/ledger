@@ -2,7 +2,7 @@ import { FORM } from '@common';
 
 const { TRANSFER } = FORM;
 
-export default ({ destination, vault }, vaults = []) => {
+export const hydrate = ({ destination, vault }, vaults = []) => {
   const { currency } = vaults.find(({ hash }) => hash === vault);
   const { currency: destinationCurrency = currency } = vaults.find(({ hash }) => hash === destination) || {};
 

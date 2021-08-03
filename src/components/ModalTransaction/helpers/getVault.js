@@ -1,1 +1,1 @@
-export default (vaultHash, vaults = []) => vaults.find(({ hash }) => hash === vaultHash);
+export const getVault = (vaultHash, vaults = []) => vaults.find(({ hash }) => hash === vaultHash);

@@ -3,7 +3,7 @@ import * as Permissions from 'expo-permissions';
 
 import { ServiceLocation } from '@services';
 
-export default async (online) => {
+export const getLocation = async (online) => {
   let value = {};
   const { status } = await Permissions.askAsync(Permissions.LOCATION);
 
