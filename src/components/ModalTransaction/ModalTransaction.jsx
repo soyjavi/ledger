@@ -4,7 +4,6 @@ import {
   COLOR,
   FLEX_DIRECTION,
   SIZE,
-  Theme,
   // components
   Button,
   Modal,
@@ -23,6 +22,7 @@ import { FormTransaction, FormTransfer } from './components';
 import { createTransaction, createTransfer, getLocation } from './helpers';
 
 const {
+  TIMEOUT,
   TX: {
     TYPE: { TRANSFER },
   },
@@ -51,10 +51,7 @@ const ModalTransaction = () => {
     subscribe({ event: EVENTS.NEW_TRANSACTION }, ({ type, vault }) => {
       setVisible(async () => {
         setDataSource({ type, vault });
-        setState({
-          ...INITIAL_STATE,
-          ...(type !== TRANSFER ? await getLocation(online) : {}),
-        });
+        setState(INITIAL_STATE);
 
         return true;
       });
@@ -62,12 +59,8 @@ const ModalTransaction = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // useEffect(() => {
-  //   setState({ ...state, ...location });
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [location]);
-
   useEffect(() => {
+    if (visible && type !== TRANSFER) (async () => setState({ ...state, ...(await getLocation(online)) }))();
     onHardwareBackPress(visible, handleClose);
 
     return () => onHardwareBackPress(false);
@@ -90,7 +83,7 @@ const ModalTransaction = () => {
       const value = await method({ props: dataSource, state, store });
       if (value) handleClose();
       setBusy(false);
-    }, Theme.get('motionExpand'));
+    }, TIMEOUT.BUSY);
   };
 
   const { type } = dataSource;
@@ -115,7 +108,7 @@ const ModalTransaction = () => {
           points={coords ? [[coords.longitude, coords.latitude]] : undefined}
           small
         >
-          <Touchable onPress={handleRemoveLocation}>
+          <Touchable marginLeft={SIZE.M} marginTop={SIZE.XXS} onPress={handleRemoveLocation}>
             <Text action color={COLOR.PRIMARY}>
               {L10N.REMOVE_LOCATION}
             </Text>

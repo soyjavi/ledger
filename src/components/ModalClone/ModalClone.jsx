@@ -3,7 +3,6 @@ import {
   COLOR,
   FLEX_DIRECTION,
   SIZE as SPACE,
-  Theme,
   // components
   Button,
   Portal,
@@ -23,6 +22,7 @@ import { PriceFriendly } from '../PriceFriendly';
 import { cloneTx } from './helpers';
 
 const {
+  TIMEOUT,
   TX: {
     TYPE: { EXPENSE, INCOME },
   },
@@ -68,7 +68,7 @@ const ModalClone = () => {
       await cloneTx({ dataSource, store, wipe });
       setBusy(false);
       handleClose();
-    }, Theme.get('motionExpand'));
+    }, TIMEOUT.BUSY);
   };
 
   const { category, currency, vault, value, location, title = '', timestamp, type = EXPENSE } = dataSource;

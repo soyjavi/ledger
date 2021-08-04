@@ -90,6 +90,7 @@ export const C = {
   },
 
   TIMEOUT: {
+    BUSY: 40,
     GET: 10000,
     POST: 60000,
     CONNECTION: 10000,
