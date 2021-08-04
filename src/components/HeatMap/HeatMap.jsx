@@ -41,7 +41,7 @@ const HeatMap = ({ caption, children, color, darkMode = true, points, precission
       {caption && (
         <View style={style.caption}>
           <Icon name="map-pin" style={[style.icon, style.colorCaption]} />
-          <Text detail flex={SIZE.XS} level={2} style={style.colorCaption}>
+          <Text numberOfLines={1} detail flex={SIZE.XS} level={2} style={style.colorCaption}>
             {caption}
           </Text>
           {children}
