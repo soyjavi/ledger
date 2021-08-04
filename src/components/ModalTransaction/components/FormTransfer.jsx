@@ -15,6 +15,7 @@ import React, { useEffect, useState } from 'react';
 import { currencyDecimals, L10N } from '@common';
 import { useStore } from '@context';
 
+import { Heading } from '../../Heading';
 import { InputCurrency } from '../../InputCurrency';
 import { Option, OPTION_SIZE } from '../../Option';
 import { getVault, queryAvailableVaults } from '../helpers';
@@ -67,6 +68,18 @@ const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
     <>
       <InputCurrency value={form.value} vault={vault} onChange={(value) => handleField('value', value)} />
 
+      <Heading style={style.heading} value={L10N.DESTINATION}>
+        <Touchable
+          alignItems={ALIGN.CENTER}
+          paddingVertical={SIZE.S}
+          wide
+          onPress={!selectVault ? () => setSelectVault(true) : undefined}
+        >
+          <Text action color={COLOR.PRIMARY}>
+            {selectVault ? ' ' : L10N.CHANGE}
+          </Text>
+        </Touchable>
+      </Heading>
       {selectVault ? (
         <ScrollView horizontal snapInterval={OPTION_SIZE} style={style.slider}>
           {availableVaults.map(({ currency, hash, title }, index) => (
@@ -99,17 +112,6 @@ const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
           onChange={(value) => handleField('exchange', value)}
         />
       )}
-
-      <Touchable
-        alignItems={ALIGN.CENTER}
-        paddingVertical={SIZE.S}
-        wide
-        onPress={!selectVault ? () => setSelectVault(true) : undefined}
-      >
-        <Text color={COLOR.GRAYSCALE_L} detail level={2}>
-          {selectVault ? L10N.CHOOSE : L10N.CHANGE_ACCOUNT_DESTINATION}
-        </Text>
-      </Touchable>
     </>
   );
 };

@@ -9,6 +9,10 @@ export const style = StyleSheet.create({
     marginLeft: '$spaceXL',
   },
 
+  heading: {
+    marginHorizontal: 0,
+  },
+
   lastCard: {
     marginRight: '$spaceXL',
   },

@@ -40,8 +40,7 @@ export const L10N = {
     },
   ],
   CATEGORY: 'Category',
-  CHANGE_ACCOUNT_DESTINATION: 'Change account destination',
-  CHOOSE: 'Choose one...',
+  CHANGE: 'CHANGE',
   CHOOSE_TRANSACTION_TYPE: 'Choose type of transaction',
   CHOOSE_CURRENCY: 'Your base currency',
   CITIES: 'Cities',
@@ -79,6 +78,7 @@ export const L10N = {
   DASHBOARD: 'Dashboard',
   DAY: 'day',
   DAY_NAMES: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+  DESTINATION: 'Destination account',
 
   ENTER_PIN: 'Enter your pin',
   ENTER_PIN_OR_FINGERPRINT: 'Enter your pin or fingerprint',
@@ -90,7 +90,6 @@ export const L10N = {
   FIRST_VAULT_CAPTION:
     'Choose the currency you use the most. Later you can create more accounts with different currencies.',
   FORKED_CORRECTLY: 'All transactions have been successfully transferred to this device.',
-  FROM: 'from',
 
   GET: 'Get',
   GET_STARTED: 'GET STARTED',
@@ -156,7 +155,6 @@ export const L10N = {
   SWAP: 'Swap',
 
   TAP_TO_UPDATE: 'Tap to update',
-  TO: 'to',
   TODAY: 'Today',
   TRANSACTION: ['Expense', 'Income', 'Swap'],
   TRANSACTIONS: 'Transactions',
@@ -172,7 +170,6 @@ export const L10N = {
   TYPE: 'Type',
 
   VAULT: 'Account',
-  VAULT_DESTINATION: 'Destination account',
   VAULTS: 'Accounts',
   VAULT_CAPTION:
     'You can create as many accounts as you want. You can continue using your base currency or choose any other.',
