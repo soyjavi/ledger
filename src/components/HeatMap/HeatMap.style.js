@@ -1,25 +1,49 @@
-import { StyleSheet } from 'react-native';
-import { LAYOUT, THEME } from 'reactor/common';
+import { Theme } from '@lookiero/aurora';
+import { Dimensions } from 'react-native';
+import StyleSheet from 'react-native-extended-stylesheet';
 
-const {
-  VIEWPORT: { H, W },
-} = LAYOUT;
-const { BORDER_RADIUS, COLOR, SPACE } = THEME;
-const MAP_HEIGHT = Math.floor(H / 4);
-const MAP_WIDTH = Math.floor(W - SPACE.L * 2);
+const { height, width } = Dimensions.get('window');
+const { spaceM } = Theme.get();
 
-export { MAP_HEIGHT, MAP_WIDTH };
+const MAP_HEIGHT = Math.floor(height / 3);
+const MAP_SMALL_HEIGHT = MAP_HEIGHT / 2;
+const MAP_WIDTH = Math.floor(width - spaceM * 2);
 
-export default StyleSheet.create({
-  container: {
-    backgroundColor: COLOR.BASE,
-    borderRadius: BORDER_RADIUS,
+const style = StyleSheet.create({
+  image: {
+    backgroundColor: '$colorGrayscaleXL',
+    borderRadius: '$borderRadius',
     height: MAP_HEIGHT,
     overflow: 'hidden',
-    width: MAP_WIDTH,
+    width: '100%',
+  },
+
+  text: {
+    flex: 1,
+  },
+
+  colorCaption: {
+    color: '$colorGrayscaleL',
+  },
+
+  icon: {
+    marginRight: '$spaceXS',
+    fontSize: '$spaceM',
+    height: '$spaceM',
+    width: '$spaceM',
+    minHeight: '$spaceM',
+    minWidth: '$spaceM',
+  },
+
+  caption: {
+    alignContent: 'center',
+    flexDirection: 'row',
+    marginTop: '$spaceXS',
   },
 
   small: {
-    height: MAP_HEIGHT / 2,
+    height: MAP_SMALL_HEIGHT,
   },
 });
+
+export { MAP_HEIGHT, MAP_SMALL_HEIGHT, MAP_WIDTH, style };

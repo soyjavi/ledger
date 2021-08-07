@@ -1,43 +1,47 @@
-import { StyleSheet } from 'react-native';
-import { THEME } from 'reactor/common';
+import StyleSheet from 'react-native-extended-stylesheet';
 
-const { BORDER_RADIUS, COLOR, FONT, SPACE } = THEME;
+export const style = StyleSheet.create({
+  $optionSize: '$layoutXL - $spaceXS',
+  $iconHeight: '$spaceS + $spaceXS',
 
-const CONTAINER_HEIGHT = SPACE.XXL + SPACE.L;
+  amounts: {
+    alignItems: 'flex-end',
+    flex: 1,
+  },
 
-export default StyleSheet.create({
   container: {
-    backgroundColor: COLOR.BASE,
-    borderColor: COLOR.TRANSPARENT,
-    borderRadius: BORDER_RADIUS,
-    borderWidth: 1,
-    height: CONTAINER_HEIGHT,
-    padding: SPACE.M,
-    width: '100%',
+    alignItems: 'center',
+    borderStyle: '$borderStyle',
+    borderRadius: '$borderRadius',
+    borderWidth: '$borderSize',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    height: '$optionSize',
+    marginBottom: '$spaceM',
+    paddingBottom: '$fontInputPaddingBottom',
+    paddingLeft: '$fontInputPaddingLeft',
+    paddingRight: '$fontInputPaddingRight',
+    paddingTop: '$fontInputPaddingTop',
   },
 
-  active: {
-    borderColor: COLOR.TEXT,
-  },
-
-  fulfilled: {
-    backgroundColor: COLOR.TRANSPARENT,
+  icon: {
+    lineHeight: '$iconHeight',
+    maxHeight: '$iconHeight',
+    minHeight: '$iconHeight',
   },
 
   input: {
-    ...FONT.BOLD,
-    ...FONT.INPUT,
-  },
-
-  textInput: {
-    height: CONTAINER_HEIGHT,
-    margin: 0,
+    fontFamily: '$fontInput',
+    fontSize: '$fontInputSize',
+    height: '$optionSize',
     opacity: 0,
-    padding: 0,
+    paddingLeft: '$fontInputPaddingLeft',
+    paddingRight: '$fontInputPaddingRight + $spaceM',
     position: 'absolute',
-    right: -SPACE.M,
-    textAlign: 'left',
-    top: -SPACE.M,
+    right: 0,
+    textAlign: 'right',
+    top: 0,
     width: '100%',
+    zIndex: 1,
   },
 });

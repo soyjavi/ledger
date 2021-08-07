@@ -1,19 +1,22 @@
+import {
+  // helpers
+  COLOR,
+  // components
+  Text,
+  View,
+} from '@lookiero/aurora';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { THEME } from 'reactor/common';
-import { Col, Row, Text } from 'reactor/components';
 
-const { COLOR } = THEME;
+import { style } from './Heading.style';
 
-const Heading = ({ children, color = COLOR.LIGHTEN, value = '', ...others }) => (
-  <Row marginBottom="XS" {...others}>
-    <Col>
-      <Text bold color={color}>
-        {value.toUpperCase()}
-      </Text>
-    </Col>
-    <Col width="auto">{children}</Col>
-  </Row>
+const Heading = ({ children, color = COLOR.GRAYSCALE_L, value = '', ...others }) => (
+  <View {...others} style={[style.row, others.style]}>
+    <Text color={color} heading>
+      {value}
+    </Text>
+    {children && <View style={style.children}>{children}</View>}
+  </View>
 );
 
 Heading.propTypes = {

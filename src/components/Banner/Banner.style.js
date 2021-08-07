@@ -1,38 +1,11 @@
-import { StyleSheet } from 'react-native';
-import { LAYOUT } from 'reactor/common';
+import { Dimensions } from 'react-native';
+import StyleSheet from 'react-native-extended-stylesheet';
 
-const { VIEWPORT } = LAYOUT;
-const IMAGE_HEIGHT = VIEWPORT.H / 3 > 512 ? 512 : VIEWPORT.H / 3;
+const { width } = Dimensions.get('window');
 
-export default StyleSheet.create({
-  container: {
-    alignItems: 'center',
-  },
-
-  image: {
-    height: IMAGE_HEIGHT,
-    width: '95%',
-  },
-
-  left: {
-    alignItems: 'flex-start',
-    maxWidth: '95%',
-  },
-
-  right: {
-    alignItems: 'flex-end',
-    maxWidth: '95%',
-  },
-
-  text: {
-    textAlign: 'center',
-  },
-
-  textleft: {
-    textAlign: 'left',
-  },
-
-  textright: {
-    textAlign: 'right',
+export const style = StyleSheet.create({
+  content: {
+    maxWidth: width * 0.8,
+    width: width * 0.8,
   },
 });

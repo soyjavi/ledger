@@ -1,14 +1,18 @@
+import {
+  // helpers
+  COLOR,
+  Theme,
+  // components
+  Text,
+  View,
+} from '@lookiero/aurora';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { Keyboard, TextInput } from 'react-native';
-import { THEME } from 'reactor/common';
-import { Col, Text } from 'reactor/components';
 
-import styles from './Input.style';
+import { style } from './Input.style';
 
-const { COLOR } = THEME;
-
-const Input = ({ color, keyboard = 'default', label, maxLength, onChange, secure, value = '', ...others }) => {
+const Input = ({ backgroundColor = COLOR.GRAYSCALE_XL, keyboard = 'default', label, value = '', onChange }) => {
   const [focus, setFocus] = useState(false);
 
   const handleChange = (next = '') => {
@@ -18,48 +22,39 @@ const Input = ({ color, keyboard = 'default', label, maxLength, onChange, secure
   const active = focus || value.length > 0;
 
   return (
-    <Col
-      {...others}
-      style={[
-        styles.container,
-        active && styles.active,
-        active && styles.fulfilled,
-        active && color && { borderColor: color },
-        others.style,
-      ]}
+    <View
+      backgroundColor={backgroundColor}
+      borderColor={focus ? COLOR.CONTENT : backgroundColor}
+      style={style.container}
+      wide
     >
-      <Text bold caption color={!active ? COLOR.LIGHTEN : undefined} pointerEvents="none" style={styles.label}>
+      <Text color={!active ? COLOR.GRAYSCALE_L : undefined} style={style.label} detail level={2} pointerEvents="none">
         {label.toUpperCase()}
       </Text>
       <TextInput
         autoCapitalize="none"
         autoCorrect
-        disabled={others.disabled}
         blurOnSubmit
         editable
         keyboardType={keyboard}
-        maxLength={maxLength}
+        placeholder={!focus ? 'Type something...' : undefined}
+        placeholderTextColor={Theme.get('colorGrayscaleL')}
+        style={style.input}
+        underlineColorAndroid="transparent"
+        value={value}
         onBlur={() => setFocus(false)}
         onChangeText={handleChange}
         onFocus={() => setFocus(true)}
         onSubmitEditing={Keyboard.dismiss}
-        placeholder={!focus ? 'Type something...' : undefined}
-        placeholderTextColor={COLOR.LIGHTEN}
-        secureTextEntry={secure}
-        style={styles.input}
-        underlineColorAndroid="transparent"
-        value={value}
       />
-    </Col>
+    </View>
   );
 };
 
 Input.propTypes = {
-  color: PropTypes.string,
+  backgroundColor: PropTypes.string,
   keyboard: PropTypes.string,
   label: PropTypes.string.isRequired,
-  maxLength: PropTypes.number,
-  secure: PropTypes.bool,
   value: PropTypes.string,
   onChange: PropTypes.func,
 };

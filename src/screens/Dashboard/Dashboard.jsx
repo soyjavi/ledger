@@ -1,76 +1,57 @@
-import PropTypes from 'prop-types';
-import React, { useEffect, useRef, useState } from 'react';
-import { THEME } from 'reactor/common';
-import { Button, Slider } from 'reactor/components';
-
-import { C } from '@common';
 import {
-  Card,
-  CARD_SIZE,
-  DialogClone,
-  GroupTransactions,
-  Header,
-  Heading,
-  ScrollView,
-  Search,
-  Summary,
-} from '@components';
-import { useL10N, useNavigation, useStore } from '@context';
+  // helpers
+  COLOR,
+  // components
+  Text,
+  Touchable,
+  Slider,
+} from '@lookiero/aurora';
+import { useEvent } from '@lookiero/event';
+import { useRouter } from '@lookiero/router';
+import React, { useEffect, useMemo, useState } from 'react';
 
-import { DialogVault } from './components';
-import { queryLastTxs, querySearchTxs, queryVaults } from './Dashboard.controller';
-import styles from './Dashboard.style';
+import { EVENTS, L10N, ROUTE } from '@common';
+import { Card, CARD_SIZE, GroupTransactions, Heading, Summary, Viewport } from '@components';
+import { useStore } from '@context';
 
-const { SCREEN } = C;
-const { COLOR, SPACE } = THEME;
+import { Search } from './components';
+import { style } from './Dashboard.style';
+import { queryLastTxs, querySearchTxs, queryVaults } from './helpers';
 
-const Dashboard = ({ timestamp }) => {
-  const l10n = useL10N();
-  const navigation = useNavigation();
-  const scrollview = useRef(null);
-  const { settings: { baseCurrency } = {}, overall, txs = [], vaults = [] } = useStore();
+const Dashboard = () => {
+  const { publish } = useEvent();
+  const { go } = useRouter();
+  const { settings: { baseCurrency, appearance } = {}, overall, txs = [], vaults = [] } = useStore();
 
-  const [dialogVault, setDialogVault] = useState(undefined);
-  const [tx, setTx] = useState(undefined);
   const [lastTxs, setLastTxs] = useState([]);
-  const [scroll, setScroll] = useState(false);
   const [query, setQuery] = useState();
 
   useEffect(() => {
-    if (timestamp) scrollview.current.scrollTo({ y: 0, animated: true });
-  }, [timestamp]);
-
-  useEffect(() => {
-    setLastTxs(queryLastTxs({ txs, vaults }));
+    const nextTxs = queryLastTxs({ txs, vaults });
+    if (JSON.stringify(nextTxs) !== JSON.stringify(lastTxs)) setLastTxs(nextTxs);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txs]);
 
-  console.log('  <Dashboard>', { txs });
-
   const visibleVaults = queryVaults({ query, vaults });
 
-  return (
-    <>
-      <Header visible={scroll} title={scroll ? l10n.DASHBOARD : undefined} />
-
-      <ScrollView onScroll={setScroll} ref={scrollview}>
-        <Summary {...overall} currency={baseCurrency} title={l10n.OVERALL_BALANCE}>
+  return useMemo(
+    () => (
+      <Viewport path={ROUTE.TAB_DASHBOARD} stackMode={false}>
+        <Summary {...overall} currency={baseCurrency} title={L10N.OVERALL_BALANCE}>
           <Search onChange={setQuery} />
         </Summary>
 
         {visibleVaults.length > 0 && (
           <>
-            <Heading paddingLeft="M" value={l10n.VAULTS}>
-              <Button
-                color={COLOR.BACKGROUND}
-                colorText={COLOR.BRAND}
-                size="S"
-                text={`${l10n.NEW} ${l10n.VAULT}`.toUpperCase()}
-                onPress={() => setDialogVault(true)}
-              />
+            <Heading value={L10N.VAULTS}>
+              <Touchable onPress={() => publish({ event: EVENTS.NEW_VAULT })}>
+                <Text action color={COLOR.PRIMARY}>
+                  {`${L10N.NEW} ${L10N.VAULT}`.toUpperCase()}
+                </Text>
+              </Touchable>
             </Heading>
 
-            <Slider itemWidth={CARD_SIZE} itemMargin={SPACE.S} marginBottom="L" style={styles.vaults}>
+            <Slider horizontal snapInterval={CARD_SIZE} style={style.slider}>
               {visibleVaults.map((vault, index) => (
                 <Card
                   {...vault.others}
@@ -78,10 +59,9 @@ const Dashboard = ({ timestamp }) => {
                   balance={vault.currentBalance}
                   currency={vault.currency}
                   operator
+                  style={index === 0 ? style.firstCard : style.card}
                   title={vault.title}
-                  marginLeft={index === 0 ? 'M' : undefined}
-                  marginRight="S"
-                  onPress={() => navigation.go(SCREEN.VAULT, vault)}
+                  onPress={() => go({ path: `${ROUTE.VAULT}/${vault.hash}`, props: vault })}
                 />
               ))}
             </Slider>
@@ -90,23 +70,18 @@ const Dashboard = ({ timestamp }) => {
 
         {lastTxs.length > 0 && (
           <>
-            <Heading paddingLeft="M" paddingRight="S" value={l10n.LAST_TRANSACTIONS} />
-            {(querySearchTxs({ l10n, query, txs, vaults }) || lastTxs).map((item) => (
-              <GroupTransactions {...item} key={`${item.timestamp}`} currency={baseCurrency} onPress={setTx} />
+            <Heading value={L10N.LAST_TRANSACTIONS} />
+            {(querySearchTxs({ L10N, query, txs, vaults }) || lastTxs).map((item) => (
+              <GroupTransactions {...item} key={`${item.timestamp}`} currency={baseCurrency} />
             ))}
           </>
         )}
-      </ScrollView>
-
-      <DialogClone dataSource={tx} onClose={() => setTx(undefined)} visible={tx !== undefined} />
-      {dialogVault !== undefined && <DialogVault onClose={() => setDialogVault(false)} visible={dialogVault} />}
-    </>
+      </Viewport>
+    ),
+    [appearance, lastTxs, query],
   );
 };
 
-Dashboard.propTypes = {
-  timestamp: PropTypes.number,
-  visible: PropTypes.boolean,
-};
+Dashboard.displayName = 'Dashboard';
 
 export { Dashboard };

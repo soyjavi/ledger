@@ -1,1 +1,1 @@
-export * from './DialogVault';
+export * from './Search';

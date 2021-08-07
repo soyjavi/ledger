@@ -1,37 +1,52 @@
+import {
+  // helpers
+  ALIGN,
+  COLOR,
+  SIZE as SPACE,
+  // components
+  Text,
+  View,
+  // hooks
+  useDevice,
+} from '@lookiero/aurora';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Image } from 'react-native';
-import { Text, View } from 'reactor/components';
 
 import { BANNERS } from '@assets';
 
-import styles from './Banner.style';
+import { style } from './Banner.style';
 
-const Banner = ({ align, caption, children, image = BANNERS.NOT_FOUND, small, title, ...others }) => (
-  <View {...others} style={[styles.container, styles[align], others.style]}>
-    <Image resizeMode="contain" source={image} style={[styles.image, small && styles.imageSmall]} />
-    <View marginTop="L" style={styles[align]}>
+const Banner = ({ align, caption, children, image = BANNERS.NOT_FOUND, title, ...others }) => {
+  const {
+    screen: { width },
+  } = useDevice();
+
+  const textAlign = align === ALIGN.END ? ALIGN.RIGHT : align;
+
+  return (
+    <View {...others} alignItems={align} alignContent={align} justifyContent={align}>
+      <Image resizeMode="contain" source={image} style={[style.content, { height: width * 0.6 }]} />
       {title && (
-        <Text bold headline={!small} subtitle={small} style={[styles.text, styles[`text${align}`]]}>
+        <Text align={textAlign} heading level={1} marginTop={SPACE.L} style={style.content}>
           {title}
         </Text>
       )}
       {caption && (
-        <Text marginTop="S" style={[styles.text, styles[`text${align}`]]}>
+        <Text align={textAlign} color={COLOR.GRAYSCALE_L} marginTop={SPACE.S} style={style.content}>
           {caption}
         </Text>
       )}
+      {children}
     </View>
-    {children}
-  </View>
-);
+  );
+};
 
 Banner.propTypes = {
-  align: PropTypes.string,
+  align: PropTypes.oneOf([ALIGN.LEFT, ALIGN.CENTER, ALIGN.END]),
   caption: PropTypes.string,
   children: PropTypes.node,
-  image: PropTypes.any,
-  small: PropTypes.bool,
+  image: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   title: PropTypes.string,
 };
 

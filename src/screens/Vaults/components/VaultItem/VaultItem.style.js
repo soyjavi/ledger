@@ -1,20 +1,15 @@
-import { StyleSheet } from 'react-native';
-import { THEME } from 'reactor/common';
+import StyleSheet from 'react-native-extended-stylesheet';
 
-const { SPACE } = THEME;
-
-export default StyleSheet.create({
-  boxContent: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
+export const style = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'row',
+    paddingHorizontal: '$spaceM',
+    paddingVertical: '$spaceS',
+    width: '100%',
   },
 
-  flag: {
-    height: SPACE.M,
-    width: SPACE.M,
+  box: {
+    marginRight: '$spaceS',
   },
 });

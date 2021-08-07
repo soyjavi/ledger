@@ -2,6 +2,7 @@ import { Platform } from 'react-native';
 
 import PKG from '../../package.json';
 
+// eslint-disable-next-line no-undef
 const IS_DEV = __DEV__;
 const MS_IN_DAY = 1000 * 24 * 60 * 60;
 const MS_IN_WEEK = MS_IN_DAY * 7;
@@ -9,35 +10,6 @@ const MS_IN_WEEK = MS_IN_DAY * 7;
 export const C = {
   BUSY_PRESS_MS: 2500,
 
-  CATEGORY_ICON: [
-    {
-      // Expenses
-      0: 'trash',
-      1: 'cup',
-      3: 'plane',
-      4: 'badge',
-      5: 'speedometer',
-      6: 'puzzle',
-      7: 'bag',
-      8: 'energy',
-      9: 'heart',
-      10: 'user',
-      11: 'earphones-alt',
-      12: 'doc',
-      13: 'question',
-      99: 'shuffle',
-    },
-    {
-      // Incomes
-      0: 'trash',
-      1: 'briefcase',
-      2: 'speedometer',
-      3: 'calendar',
-      4: 'doc',
-      5: 'question',
-      99: 'shuffle',
-    },
-  ],
   CURRENCY: 'EUR',
 
   DELAY_PRESS_MS: 500,
@@ -73,16 +45,8 @@ export const C = {
   MS_IN_WEEK,
 
   // NAME: PKG.name,
-  NAME: 'ledger',
+  NAME: 'shield',
 
-  SCREEN: {
-    DASHBOARD: 'dashboard',
-    SESSION: 'session',
-    SETTINGS: 'settings',
-    STATS: 'stats',
-    VAULT: 'vault',
-    VAULTS: 'vaults',
-  },
   STATS_MONTHS_LIMIT: 18,
   SYMBOL: {
     AUD: 'AU$',
@@ -126,6 +90,7 @@ export const C = {
   },
 
   TIMEOUT: {
+    BUSY: 40,
     GET: 10000,
     POST: 60000,
     CONNECTION: 10000,

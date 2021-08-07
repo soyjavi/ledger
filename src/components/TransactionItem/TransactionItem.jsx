@@ -1,79 +1,92 @@
+import {
+  // helpers
+  COLOR,
+  Theme,
+  styles,
+  // components
+  Icon,
+  Text,
+  Touchable,
+  View,
+} from '@lookiero/aurora';
+import { useEvent } from '@lookiero/event';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { THEME } from 'reactor/common';
-import { Col, Icon, Row, Text, Touchable } from 'reactor/components';
 
-import { C, exchange } from '@common';
+import { C, colorOpacity, EVENTS, exchange, getIcon } from '@common';
 import { useStore } from '@context';
 
 import { Box } from '../Box';
 import { PriceFriendly } from '../PriceFriendly';
-import { formatCaption } from './modules';
+import { formatCaption } from './helpers';
+import { style } from './TransactionItem.style';
 
 const {
-  CATEGORY_ICON,
   TX: {
     TYPE: { EXPENSE, INCOME },
   },
 } = C;
-const { COLOR, ICON, SPACE } = THEME;
 
 const TransactionItem = (props) => {
+  const { publish } = useEvent();
   const {
     settings: { baseCurrency },
     rates,
   } = useStore();
-  const { category = 99, currency, location, timestamp, title, type = EXPENSE, value, onPress } = props;
+
+  const { category = 99, currency, location, timestamp, title, type = EXPENSE, value = 0 } = props;
   const operator = type === EXPENSE ? -1 : 1;
 
-  return (
-    <Touchable
-      containerBorderRadius={0}
-      rippleColor={COLOR.LIGHTEN}
-      onPress={onPress ? () => onPress(props) : undefined}
-    >
-      <Row align="center" paddingHorizontal="M" paddingVertical="S">
-        <Col marginRight="S" width="auto">
-          <Box color={COLOR.BASE}>
-            <Icon family={ICON.FAMILY} size={SPACE.M} value={CATEGORY_ICON[type][category]} />
-          </Box>
-        </Col>
+  const handlePress = () => {
+    publish({ event: EVENTS.SHOW_TRANSACTION }, props);
+  };
 
-        <Col>
-          <Row>
-            <Col>
-              <Text numberOfLines={1}>{title}</Text>
-            </Col>
-            <Col width="auto">
+  const is = {
+    income: type === INCOME,
+    expense: type === EXPENSE,
+  };
+
+  return (
+    <Touchable style={[style.offset, style.touchable]} onPress={handlePress}>
+      <View style={style.row}>
+        <Box
+          rounded
+          style={styles(style.icon, is.income && { backgroundColor: colorOpacity(Theme.get('colorPrimary'), 0.2) })}
+        >
+          <Icon color={is.income ? COLOR.PRIMARY : undefined} name={getIcon({ category, type, title })} />
+        </Box>
+
+        <View style={style.content}>
+          <View style={style.row}>
+            <Text numberOfLines={1} style={style.text}>
+              {title}
+            </Text>
+            <PriceFriendly
+              color={is.income ? COLOR.PRIMARY : undefined}
+              currency={currency}
+              highlight={is.income}
+              operator={is.expense}
+              value={value * operator}
+            />
+          </View>
+
+          <View style={style.row}>
+            <Text color={COLOR.GRAYSCALE_L} detail level={2} style={style.text}>
+              {formatCaption(new Date(timestamp), location)}
+            </Text>
+            {baseCurrency !== currency && (
               <PriceFriendly
-                color={type === INCOME ? COLOR.BRAND : undefined}
-                currency={currency}
-                highlight={type === INCOME}
-                operator={type === EXPENSE}
-                value={value * operator}
+                color={COLOR.GRAYSCALE_L}
+                currency={baseCurrency}
+                detail
+                level={2}
+                operator={is.expense}
+                value={exchange(value, currency, baseCurrency, rates, timestamp) * operator}
               />
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Text caption color={COLOR.LIGHTEN}>
-                {formatCaption(new Date(timestamp), location)}
-              </Text>
-            </Col>
-            <Col width="auto">
-              {baseCurrency !== currency && (
-                <PriceFriendly
-                  caption
-                  color={COLOR.LIGHTEN}
-                  currency={baseCurrency}
-                  operator={type === EXPENSE}
-                  value={exchange(value, currency, baseCurrency, rates, timestamp) * operator}
-                />
-              )}
-            </Col>
-          </Row>
-        </Col>
-      </Row>
+            )}
+          </View>
+        </View>
+      </View>
     </Touchable>
   );
 };
@@ -85,8 +98,7 @@ TransactionItem.propTypes = {
   timestamp: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   title: PropTypes.string,
   type: PropTypes.number,
-  value: PropTypes.number.isRequired,
-  onPress: PropTypes.func,
+  value: PropTypes.number,
 };
 
 export { TransactionItem };

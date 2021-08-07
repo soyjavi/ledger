@@ -1,10 +1,9 @@
-import { StyleSheet } from 'react-native';
-import { THEME } from 'reactor/common';
+import StyleSheet from 'react-native-extended-stylesheet';
 
-const { COLOR } = THEME;
-
-export default StyleSheet.create({
+export const style = StyleSheet.create({
   container: {
-    backgroundColor: COLOR.BACKGROUND,
+    height: '100%',
+    overflow: 'hidden',
+    width: '100%',
   },
 });

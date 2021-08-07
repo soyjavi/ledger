@@ -1,66 +1,57 @@
+import {
+  // helpers
+  ALIGN,
+  COLOR,
+  SIZE,
+  // components
+  Icon,
+  Text,
+  Touchable,
+} from '@lookiero/aurora';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { THEME } from 'reactor/common';
-import { Icon, Text, Touchable } from 'reactor/components';
 
 import { Box } from '../Box';
 import { CurrencyLogo } from '../CurrencyLogo';
-import styles, { OPTION_SIZE } from './Option.style';
-
-const { BORDER_RADIUS, COLOR, ICON, SPACE } = THEME;
+import { style } from './Option.style';
 
 const Option = ({
   caption,
   children,
-  color = COLOR.BASE,
-  colorSelected = COLOR.CTA,
+  color = COLOR.INFO,
+  colorSelected = COLOR.CONTENT,
   currency,
   icon,
-  image,
   legend,
   selected,
   onPress,
-  ...inherit
+  ...others
 }) => {
-  const colorContent = selected ? COLOR.BACKGROUND : COLOR.TEXT;
+  const colorContent = selected ? COLOR.BASE : COLOR.GRAYSCALE_M;
+
+  const textProps = {
+    align: ALIGN.CENTER,
+    color: colorContent,
+    detail: true,
+    marginTop: icon ? SIZE.XS : undefined,
+    numberOfLines: 1,
+  };
 
   return (
-    <Box
-      {...inherit}
-      borderRadius={BORDER_RADIUS}
-      color={selected ? colorSelected : color}
-      small
-      style={[styles.container, inherit.style]}
-    >
-      <Touchable rippleColor={!selected ? COLOR.LIGHTEN : undefined} style={styles.content} onPress={onPress}>
-        {currency && <CurrencyLogo color={!selected ? COLOR.LIGHTEN : COLOR.BRAND} currency={currency} />}
-        {icon && <Icon value={icon} color={colorContent} family={ICON.FAMILY} size={SPACE.L} />}
+    <Touchable onPress={onPress} style={others.style}>
+      <Box color={selected ? colorSelected : color} style={style.container}>
+        {currency && <CurrencyLogo color={selected ? COLOR.PRIMARY : COLOR.CONTENT} currency={currency} />}
+        {icon && <Icon color={colorContent} name={icon} />}
 
         {caption && (
-          <Text
-            align="center"
-            caption
-            color={colorContent}
-            marginTop={icon || image ? 'XS' : undefined}
-            numberOfLines={1}
-          >
+          <Text {...textProps} level={2} marginTop={SIZE.XS}>
             {caption}
           </Text>
         )}
-        {legend && (
-          <Text
-            align="center"
-            color={colorContent}
-            marginTop={icon || image ? 'XS' : undefined}
-            numberOfLines={1}
-            style={styles.legend}
-          >
-            {legend}
-          </Text>
-        )}
+        {legend && <Text {...textProps}>{legend}</Text>}
         {children}
-      </Touchable>
-    </Box>
+      </Box>
+    </Touchable>
   );
 };
 
@@ -70,11 +61,10 @@ Option.propTypes = {
   color: PropTypes.string,
   colorSelected: PropTypes.string,
   currency: PropTypes.string,
-  icon: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  image: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  icon: PropTypes.string,
   legend: PropTypes.string,
   selected: PropTypes.bool,
   onPress: PropTypes.func,
 };
 
-export { Option, OPTION_SIZE };
+export { Option };

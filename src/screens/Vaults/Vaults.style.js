@@ -1,11 +1,15 @@
-import { StyleSheet } from 'react-native';
-import { THEME } from 'reactor/common';
+import StyleSheet from 'react-native-extended-stylesheet';
 
-const { SPACE } = THEME;
-
-export default StyleSheet.create({
+export const style = StyleSheet.create({
   slider: {
-    alignItems: 'center',
-    marginBottom: SPACE.L,
+    marginBottom: '$spaceL',
+  },
+
+  card: {
+    marginLeft: '$spaceS',
+  },
+
+  firstCard: {
+    marginLeft: '$spaceM',
   },
 });

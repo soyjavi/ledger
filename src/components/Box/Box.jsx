@@ -1,38 +1,24 @@
+import {
+  // helpers
+  COLOR,
+  styles,
+  // components
+  View,
+} from '@lookiero/aurora';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { THEME } from 'reactor/common';
-import { Col } from 'reactor/components';
 
-import styles from './Box.style';
+import { style } from './Box.style';
 
-const { BORDER_RADIUS, COLOR } = THEME;
-
-const Box = ({ borderRadius = BORDER_RADIUS, children, color = COLOR.BASE, outlined, rounded, ...others }) => (
-  <Col
-    {...others}
-    align="center"
-    style={[
-      styles.container,
-      rounded && styles.rounded,
-      {
-        borderRadius,
-        borderWidth: 1,
-        borderColor: outlined ? color : COLOR.TRANSPARENT,
-        backgroundColor: !outlined ? color : COLOR.TRANSPARENT,
-      },
-      others.style,
-    ]}
-  >
+const Box = ({ children, color = COLOR.INFO, rounded, ...others }) => (
+  <View {...others} backgroundColor={color} style={styles(style.container, rounded && style.rounded, others.style)}>
     {children}
-  </Col>
+  </View>
 );
 
 Box.propTypes = {
-  borderRadius: PropTypes.number,
   children: PropTypes.node,
-  color: PropTypes.oneOfType([PropTypes.string, PropTypes.shape({})]),
-  opacity: PropTypes.number,
-  outlined: PropTypes.bool,
+  color: PropTypes.oneOf(Object.values(COLOR)),
   rounded: PropTypes.bool,
 };
 

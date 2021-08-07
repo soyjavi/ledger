@@ -1,31 +1,29 @@
+import { EventProvider } from '@lookiero/event';
+import { useFonts } from 'expo-font';
 import React from 'react';
-import { LayoutView } from 'reactor/components';
 
-import { C, L10N } from '@common';
-import { L10NProvider, ConnectionProvider, NavigationProvider, StoreProvider, SnackBarProvider } from '@context';
+import { ConnectionProvider, StoreProvider } from '@context';
 
-import { Router } from './App.router';
-import styles from './App.style';
-
-const { LANGUAGE } = C;
+import { Router } from './App.Router';
 
 const App = () => {
-  console.log('<App>');
+  const [ready] = useFonts({
+    'font-default': require('../assets/fonts/Circular-SP-Book.ttf'),
+    'font-bold': require('../assets/fonts/Circular-SP-Bold.ttf'),
+    'font-currency': require('../assets/fonts/IBMPlexSans-Bold.ttf'),
+    'shield-icons': require('../assets/fonts/Shield-Icons.ttf'),
+  });
 
-  return (
-    <L10NProvider dictionary={L10N} language={LANGUAGE}>
+  return ready ? (
+    <EventProvider>
       <ConnectionProvider>
         <StoreProvider>
-          <SnackBarProvider>
-            <LayoutView style={styles.container}>
-              <NavigationProvider>
-                <Router />
-              </NavigationProvider>
-            </LayoutView>
-          </SnackBarProvider>
+          <Router />
         </StoreProvider>
       </ConnectionProvider>
-    </L10NProvider>
+    </EventProvider>
+  ) : (
+    <></>
   );
 };
 

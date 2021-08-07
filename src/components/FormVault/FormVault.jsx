@@ -1,14 +1,21 @@
+import {
+  // helpers
+  COLOR,
+  styles,
+  // components
+  View,
+} from '@lookiero/aurora';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { Input } from '@components/Input';
-import { InputCurrency } from '@components/InputCurrency';
-import { SliderCurrencies } from '@components/SliderCurrencies';
-import { useL10N } from '@context';
+import { L10N } from '@common';
 
-const FormVault = ({ form = {}, onChange }) => {
-  const l10n = useL10N();
+import { Input } from '../Input';
+import { InputCurrency } from '../InputCurrency';
+import { SliderCurrencies } from '../SliderCurrencies';
+import { style } from './FormVault.style';
 
+const FormVault = ({ form = {}, modal = false, onChange, ...others }) => {
   const handleChange = (field, value) => {
     const next = { ...form, [field]: value };
 
@@ -18,30 +25,38 @@ const FormVault = ({ form = {}, onChange }) => {
     });
   };
 
+  const backgroundColorInput = modal ? COLOR.GRAYSCALE_XL : COLOR.INFO;
+
   return (
-    <>
+    <View {...others}>
       <SliderCurrencies
-        marginBottom="L"
-        onChange={(currency) => handleChange('currency', currency)}
+        modal={modal}
         selected={form.currency}
+        style={styles(style.slider, modal ? style.sliderModal : style.sliderFullScreen)}
+        onChange={(currency) => handleChange('currency', currency)}
       />
 
       <InputCurrency
-        label={l10n.INITIAL_BALANCE}
-        marginBottom="L"
+        backgroundColor={backgroundColorInput}
+        label={L10N.INITIAL_BALANCE}
         value={form.balance}
         vault={{ currency: form.currency }}
         onChange={(value) => handleChange('balance', value)}
       />
 
-      <Input label={l10n.NAME} value={form.title} onChange={(value) => handleChange('title', value)} />
-    </>
+      <Input
+        backgroundColor={backgroundColorInput}
+        label={L10N.NAME}
+        value={form.title}
+        onChange={(value) => handleChange('title', value)}
+      />
+    </View>
   );
 };
 
 FormVault.propTypes = {
   form: PropTypes.shape({}),
-  showExchange: PropTypes.bool,
+  modal: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
 };
 

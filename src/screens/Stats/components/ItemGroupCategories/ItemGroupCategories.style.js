@@ -1,18 +1,13 @@
-import { StyleSheet } from 'react-native';
-import { THEME } from 'reactor/common';
+import StyleSheet from 'react-native-extended-stylesheet';
 
-const { SPACE } = THEME;
-
-export default StyleSheet.create({
+export const style = StyleSheet.create({
   container: {
-    marginBottom: SPACE.L + SPACE.XS,
+    marginHorizontal: '$spaceM',
+    marginTop: '$spaceXS',
+    marginBottom: '$spaceM',
   },
 
-  content: {
-    paddingHorizontal: SPACE.M,
-  },
-
-  expand: {
-    marginBottom: SPACE.XS,
+  touchable: {
+    width: '100%',
   },
 });

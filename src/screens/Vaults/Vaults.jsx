@@ -1,82 +1,58 @@
-import PropTypes from 'prop-types';
-import React, { useEffect, useRef, useState } from 'react';
-import { THEME } from 'reactor/common';
-import { Slider } from 'reactor/components';
+import { Slider } from '@lookiero/aurora';
+import { useRouter } from '@lookiero/router';
+import React, { useMemo, useState } from 'react';
 
-import { C } from '@common';
-import { Card, CARD_SIZE, Header, Heading, ScrollView } from '@components';
-import { useL10N, useNavigation, useStore } from '@context';
+import { L10N, ROUTE } from '@common';
+import { Card, CARD_SIZE, Heading, Viewport } from '@components';
+import { useStore } from '@context';
 
 import { VaultItem } from './components';
 import { filter, query } from './modules';
-import styles from './Vaults.style';
+import { style } from './Vaults.style';
 
-const { SCREEN } = C;
-const { SPACE } = THEME;
-
-const Vaults = ({ timestamp }) => {
-  const navigation = useNavigation();
-  const l10n = useL10N();
-  const scrollview = useRef(null);
+const Vaults = () => {
+  const { go } = useRouter();
   const { overall, vaults } = useStore();
 
-  const [currencies, setCurrencies] = useState([]);
-  const [scroll, setScroll] = useState(false);
   const [selected, setSelected] = useState();
 
-  useEffect(() => {
-    setCurrencies(query(vaults));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const currencies = query(vaults);
 
-  useEffect(() => {
-    if (timestamp) scrollview.current.scrollTo({ y: 0, animated: true });
-  }, [timestamp]);
+  return useMemo(
+    () => (
+      <Viewport path={ROUTE.TAB_ACCOUNTS} stackMode={false}>
+        <Heading value={L10N.CURRENCIES} />
 
-  const hasCurrencies = currencies.length > 0;
-
-  return (
-    <>
-      <Header visible={scroll} title={l10n.VAULTS} />
-
-      <ScrollView onScroll={setScroll} ref={scrollview}>
-        {hasCurrencies && (
-          <>
-            <Heading marginTop="S" paddingLeft="M" value={l10n.CURRENCIES} />
-
-            <Slider itemWidth={CARD_SIZE} itemMargin={SPACE.S} style={styles.slider}>
-              {currencies.map(({ base, currency, ...item }, index) => (
-                <Card
-                  {...item}
-                  key={currency}
-                  currency={currency}
-                  highlight={currency === selected}
-                  marginLeft={index === 0 ? 'M' : undefined}
-                  marginRight="S"
-                  operator={false}
-                  percentage={(base * 100) / overall.currentBalance}
-                  title={l10n.CURRENCY_NAME[currency] || currency}
-                  onPress={() => setSelected(currency !== selected ? currency : undefined)}
-                />
-              ))}
-            </Slider>
-          </>
-        )}
-
-        {hasCurrencies && <Heading paddingHorizontal="M" value={l10n.VAULTS} />}
-        <>
-          {filter(vaults, selected).map((vault) => (
-            <VaultItem key={vault.hash} dataSource={vault} onPress={() => navigation.go(SCREEN.VAULT, vault)} />
+        <Slider horizontal snapInterval={CARD_SIZE} style={style.slider}>
+          {currencies.map(({ base, currency, ...item }, index) => (
+            <Card
+              {...item}
+              key={currency}
+              currency={currency}
+              highlight={currency === selected}
+              operator={false}
+              percentage={(base * 100) / overall.currentBalance}
+              title={L10N.CURRENCY_NAME[currency] || currency}
+              style={index === 0 ? style.firstCard : style.card}
+              onPress={() => setSelected(currency !== selected ? currency : undefined)}
+            />
           ))}
-        </>
-      </ScrollView>
-    </>
+        </Slider>
+
+        <Heading value={L10N.VAULTS} />
+        {filter(vaults, selected).map((vault) => (
+          <VaultItem
+            key={vault.hash}
+            dataSource={vault}
+            onPress={() => go({ path: `${ROUTE.VAULT}/${vault.hash}`, props: vault })}
+          />
+        ))}
+      </Viewport>
+    ),
+    [overall, selected, vaults],
   );
 };
 
-Vaults.propTypes = {
-  timestamp: PropTypes.number,
-  visible: PropTypes.boolean,
-};
+Vaults.displayName = 'Vaults';
 
 export { Vaults };

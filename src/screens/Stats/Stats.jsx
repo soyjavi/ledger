@@ -1,14 +1,13 @@
-import PropTypes from 'prop-types';
-import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { THEME } from 'reactor/common';
+import { COLOR, View } from '@lookiero/aurora';
+import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 
-import { C } from '@common';
-import { Chart, Header, ScrollView } from '@components';
-import { useL10N, useStore } from '@context';
+import { C, L10N, ROUTE } from '@common';
+import { Viewport } from '@components';
+import { useStore } from '@context';
 
-import { ItemGroupCategories, Locations, SliderMonths } from './components';
+import { Chart, ItemGroupCategories, Locations, SliderMonths } from './components';
 import { calcScales, orderCaptions, queryMonth, queryChart } from './modules';
-import styles from './Stats.style';
+import { style } from './Stats.style';
 
 const {
   STATS_MONTHS_LIMIT,
@@ -16,17 +15,13 @@ const {
     TYPE: { EXPENSE, INCOME },
   },
 } = C;
-const { COLOR } = THEME;
 
-const Stats = ({ timestamp }) => {
-  const scrollview = useRef(null);
-  const l10n = useL10N();
+const Stats = () => {
   const store = useStore();
 
   const [chart, setChart] = useState({});
   const [slider, setSlider] = useState({});
   const [month, setMonth] = useState(undefined);
-  const [scroll, setScroll] = useState(false);
 
   const {
     settings: { baseCurrency },
@@ -39,10 +34,6 @@ const Stats = ({ timestamp }) => {
     setSlider({ month: today.getMonth(), year: today.getFullYear(), index: STATS_MONTHS_LIMIT - 1 });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    if (timestamp) scrollview.current.scrollTo({ y: 0, animated: true });
-  }, [timestamp]);
 
   useEffect(() => {
     setMonth(queryMonth(store, slider));
@@ -60,67 +51,57 @@ const Stats = ({ timestamp }) => {
 
   const chartProps = { currency: baseCurrency, highlight: slider.index };
 
-  console.log('  <Stats>');
-
   return (
-    <>
-      <Header visible={scroll} title={scroll ? `${l10n.MONTHS[slider.month]} ${slider.year}` : l10n.ACTIVITY} />
+    <Viewport path={ROUTE.TAB_STATS} stackMode={false}>
+      <SliderMonths {...slider} onChange={handleSliderChange} />
 
-      <ScrollView onScroll={setScroll} ref={scrollview}>
-        <SliderMonths {...slider} onChange={handleSliderChange} marginTop="M" marginBottom="L" />
+      <Chart
+        {...useMemo(() => calcScales(chart.balance), [chart.balance])}
+        {...chartProps}
+        captions={orderCaptions(L10N)}
+        color={COLOR.PRIMARY}
+        style={style.chartMargin}
+        title={L10N.OVERALL_BALANCE}
+        values={chart.balance}
+      />
 
-        <Chart
-          {...useMemo(() => calcScales(chart.balance), [chart.balance])}
-          {...chartProps}
-          captions={orderCaptions(l10n)}
-          color={COLOR.BRAND}
-          styleContainer={[styles.chart, styles.chartMargin]}
-          style={styles.chartBalance}
-          title={l10n.OVERALL_BALANCE}
-          values={chart.balance}
-        />
+      <Chart
+        {...useMemo(() => calcScales(chart.incomes), [chart.incomes])}
+        {...chartProps}
+        color={COLOR.PRIMARY}
+        title={`${L10N.INCOMES} & ${L10N.EXPENSES}`}
+        values={chart.incomes}
+      />
+      <Chart
+        {...useMemo(() => calcScales(chart.expenses), [chart.expenses])}
+        {...chartProps}
+        captions={orderCaptions(L10N)}
+        inverted
+        style={style.chartMargin}
+        values={chart.expenses}
+      />
 
-        <Chart
-          {...useMemo(() => calcScales(chart.incomes), [chart.incomes])}
-          {...chartProps}
-          color={COLOR.BRAND}
-          styleContainer={[styles.chart]}
-          title={`${l10n.INCOMES} & ${l10n.EXPENSES}`}
-          values={chart.incomes}
-        />
-        <Chart
-          {...useMemo(() => calcScales(chart.expenses), [chart.expenses])}
-          {...chartProps}
-          captions={orderCaptions(l10n)}
-          inverted
-          styleContainer={[styles.chart, styles.chartMargin]}
-          values={chart.expenses}
-        />
+      {(hasExpenses || hasIncomes || hasPoints) && (
+        <>
+          {hasIncomes && <ItemGroupCategories color={COLOR.PRIMARY} type={INCOME} dataSource={incomes} />}
+          {hasExpenses && <ItemGroupCategories type={EXPENSE} dataSource={expenses} />}
+          {hasPoints && <Locations {...locations} />}
+        </>
+      )}
 
-        {(hasExpenses || hasIncomes || hasPoints) && (
-          <>
-            {hasIncomes && <ItemGroupCategories color={COLOR.BRAND} type={INCOME} dataSource={incomes} />}
-            {hasExpenses && <ItemGroupCategories type={EXPENSE} dataSource={expenses} />}
-            {hasPoints && <Locations {...locations} />}
-          </>
-        )}
+      <View style={style.chartMargin} />
 
-        <Chart
-          {...useMemo(() => calcScales(chart.transfers), [chart.transfers])}
-          {...chartProps}
-          captions={orderCaptions(l10n)}
-          styleContainer={[styles.chart, styles.chartMargin]}
-          title={l10n.TRANSFERS}
-          values={chart.transfers}
-        />
-      </ScrollView>
-    </>
+      <Chart
+        {...useMemo(() => calcScales(chart.transfers), [chart.transfers])}
+        {...chartProps}
+        captions={orderCaptions(L10N)}
+        title={L10N.TRANSFERS}
+        values={chart.transfers}
+      />
+    </Viewport>
   );
 };
 
-Stats.propTypes = {
-  timestamp: PropTypes.number,
-  visible: PropTypes.boolean,
-};
+Stats.displayName = 'Stats';
 
 export { Stats };

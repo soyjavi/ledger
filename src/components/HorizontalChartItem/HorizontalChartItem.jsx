@@ -1,26 +1,36 @@
+import {
+  // helpers
+  COLOR,
+  Theme,
+  // components
+  Text,
+  Motion,
+  View,
+} from '@lookiero/aurora';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { THEME } from 'reactor/common';
-import { Row, Text, View } from 'reactor/components';
+import { Dimensions } from 'react-native';
 
 import { PriceFriendly } from '../PriceFriendly';
-import styles from './HorizontalChartItem.style';
+import { style } from './HorizontalChartItem.style';
 
-const { COLOR } = THEME;
+const screen = Dimensions.get('window');
 
-const HorizontalChartItem = ({ color = COLOR.TEXT, currency, small, title, value, width = 100, ...others }) => (
-  <View {...others}>
-    <Row align="end">
-      <Text caption style={styles.text}>
+const HorizontalChartItem = ({ color = COLOR.CONTENT, currency, small, title, value, width = 100 }) => (
+  <>
+    <View style={style.row}>
+      <Text detail level={small ? 2 : 1}>
         {title}
       </Text>
-      <PriceFriendly caption currency={currency} value={value} />
-    </Row>
-
-    <View style={[styles.bar, styles.barContainer, small && styles.barSmall]}>
-      <View style={[styles.bar, small && styles.barSmall, { backgroundColor: color, width: `${width}%` }]} />
+      <PriceFriendly detail level={small ? 2 : 1} currency={currency} value={value} />
     </View>
-  </View>
+
+    <Motion
+      backgroundColor={color}
+      style={[style.bar, small && style.barSmall]}
+      value={{ width: ((screen.width - Theme.get('spaceM') * 2) * width) / 100 }}
+    />
+  </>
 );
 
 HorizontalChartItem.propTypes = {

@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React, { createContext, useContext, useLayoutEffect, useState } from 'react';
-import { useFingerprint } from 'reactor/hooks';
 import { AsyncBlockchain } from 'vanilla-blockchain';
 import { AsyncStorage } from 'vanilla-storage';
 
@@ -9,7 +8,7 @@ import { ServiceNode } from '@services';
 
 import { AsyncStorageAdapter } from './adapters';
 import { useConnection } from './connection';
-import { consolidate } from './modules';
+import { consolidate, getFingerprint } from './modules';
 
 const { CURRENCY, NAME } = C;
 const FILENAME = `${C.NAME}:store`;
@@ -31,21 +30,17 @@ const StoreProvider = ({ children }) => {
   });
 
   useLayoutEffect(() => {
-    const fetchStorage = async () => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      const { uuid: secret, device_id: fingerprint } = await useFingerprint();
-
+    (async () => {
       const store = await new AsyncStorage({
         adapter: AsyncStorageAdapter,
         defaults: {
           settings: {
+            ...getFingerprint(),
             authorization: undefined,
             baseCurrency: CURRENCY,
-            fingerprint,
             maskAmount: false,
             onboarded: false,
             pin: undefined,
-            secret,
           },
           rates: {},
         },
@@ -67,9 +62,7 @@ const StoreProvider = ({ children }) => {
         vaults: await blockchain.get('vaults').blocks,
         txs: await blockchain.get('txs').blocks,
       });
-    };
-
-    if (!state.store) fetchStorage();
+    })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -123,6 +116,8 @@ const StoreProvider = ({ children }) => {
     return true;
   };
 
+  // console.log('<Store>', state.blockchain && state.store ? '🟢' : '🔴', state);
+
   return (
     <StoreContext.Provider
       value={{
@@ -136,7 +131,7 @@ const StoreProvider = ({ children }) => {
         updateRates: (value) => updateStore('rates', { ...state.rates, ...value }),
       }}
     >
-      {children}
+      {state.blockchain && state.store ? children : undefined}
     </StoreContext.Provider>
   );
 };

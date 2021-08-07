@@ -1,26 +1,24 @@
-import { StyleSheet } from 'react-native';
-import { THEME } from 'reactor/common';
+import StyleSheet from 'react-native-extended-stylesheet';
 
-const { BAR_SIZE, COLOR, SPACE } = THEME;
-
-export default StyleSheet.create({
+export const style = StyleSheet.create({
+  $barRadius: '$borderRadius',
+  $barSize: 8,
   bar: {
-    backgroundColor: COLOR.BASE,
-    borderRadius: BAR_SIZE / 2,
-    height: BAR_SIZE,
-    minWidth: BAR_SIZE,
-  },
-
-  barContainer: {
-    marginVertical: SPACE.XS,
+    borderRadius: '$barRadius',
+    height: '$barSize',
+    marginTop: '$spaceXS',
+    marginBottom: '$spaceS',
+    minWidth: '$barSize',
   },
 
   barSmall: {
-    height: BAR_SIZE / 2,
-    minWidth: BAR_SIZE / 2,
+    height: '$barSize / 2',
+    minWidth: '$barSize / 2',
   },
 
-  text: {
-    flex: 1,
+  row: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });

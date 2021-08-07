@@ -2,5 +2,4 @@ babel.config.js
 .eslintrc.js
 
 **/*.test.js
-src/reactor/**
 web-build/**

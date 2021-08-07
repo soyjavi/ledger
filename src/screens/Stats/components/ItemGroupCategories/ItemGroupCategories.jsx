@@ -1,25 +1,23 @@
+import { Touchable } from '@lookiero/aurora';
+import { COLOR } from '@lookiero/aurora';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { THEME } from 'reactor/common';
-import { Touchable } from 'reactor/components';
 
-import { C } from '@common';
+import { C, L10N } from '@common';
 import { Heading, HorizontalChartItem, PriceFriendly } from '@components';
-import { useL10N, useStore } from '@context';
+import { useStore } from '@context';
 
 import { orderByAmount } from '../../modules';
-import styles from './ItemGroupCategories.style';
+import { style } from './ItemGroupCategories.style';
 
 const {
   TX: {
     TYPE: { EXPENSE },
   },
 } = C;
-const { OPACITY } = THEME;
 
 const ItemGroupCategories = ({ color, dataSource, type }) => {
-  const l10n = useL10N();
   const {
     settings: { baseCurrency },
   } = useStore();
@@ -35,28 +33,28 @@ const ItemGroupCategories = ({ color, dataSource, type }) => {
   });
 
   return (
-    <View style={styles.container}>
-      <Heading paddingHorizontal="M" value={type === EXPENSE ? l10n.EXPENSES : l10n.INCOMES}>
-        <PriceFriendly currency={baseCurrency} value={total} />
+    <>
+      <Heading value={type === EXPENSE ? L10N.EXPENSES : L10N.INCOMES}>
+        <PriceFriendly color={COLOR.GRAYSCALE_L} currency={baseCurrency} value={total} />
       </Heading>
-      <View>
+      <View style={style.container}>
         {orderByAmount(totals).map(({ key, amount }) => (
           <Touchable
             key={key}
             onPress={() => setExpand(expand !== key ? key : undefined)}
-            style={[styles.content, expand && expand !== key && { opacity: OPACITY.S }]}
+            style={[style.touchable, expand && expand !== key && { opacity: 0.25 }]}
           >
             <HorizontalChartItem
               color={color}
               currency={baseCurrency}
-              title={l10n.CATEGORIES[type][key]}
+              title={L10N.CATEGORIES[type][key]}
               value={amount}
               width={Math.floor((amount / total) * 100)}
               marginBottom="XS"
             />
 
             {expand === key && (
-              <View style={styles.expand}>
+              <>
                 {orderByAmount(dataSource[key]).map((item) => (
                   <HorizontalChartItem
                     key={`${key}-${item.key}`}
@@ -68,12 +66,12 @@ const ItemGroupCategories = ({ color, dataSource, type }) => {
                     width={Math.floor((item.amount / amount) * 100)}
                   />
                 ))}
-              </View>
+              </>
             )}
           </Touchable>
         ))}
       </View>
-    </View>
+    </>
   );
 };
 

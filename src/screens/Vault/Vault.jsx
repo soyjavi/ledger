@@ -1,17 +1,22 @@
-import PropTypes from 'prop-types';
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { THEME } from 'reactor/common';
-import { Button, Viewport } from 'reactor/components';
+import {
+  // helpers
+  ALIGN,
+  // components
+  View,
+} from '@lookiero/aurora';
+import { useEvent } from '@lookiero/event';
+import { useRouter } from '@lookiero/router';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useWindowDimensions } from 'react-native';
 
 import { BANNERS } from '@assets';
-import { C } from '@common';
-import { Banner, DialogClone, GroupTransactions, Header, Heading, ScrollView, Summary } from '@components';
-import { useL10N, useNavigation, useStore } from '@context';
+import { C, EVENTS, L10N } from '@common';
+import { Banner, GroupTransactions, Header, Heading, ScrollView, Summary, Viewport } from '@components';
+import { useStore } from '@context';
 
-import { DialogTransaction } from './components';
-import { onScroll, query } from './Vault.controller';
-
-const { COLOR, ICON } = THEME;
+import { ButtonSummary } from './components';
+import { query } from './helpers';
+import { style } from './Vault.style';
 
 const {
   TX: {
@@ -19,109 +24,80 @@ const {
   },
 } = C;
 
-const button = { color: COLOR.BRAND, iconFamily: ICON.FAMILY, outlined: true };
-
-const Vault = ({ visible }) => {
-  const l10n = useL10N();
-  const { params, ...navigation } = useNavigation();
-  const { baseCurrency, vaults } = useStore();
+const Vault = () => {
+  const { publish } = useEvent();
   const scrollview = useRef(null);
+  const { back, route: { params: { hash } = {} } = {} } = useRouter();
+  const { baseCurrency, vaults } = useStore();
+  const { height } = useWindowDimensions();
 
   const [dataSource, setDataSource] = useState({});
-  const [dialog, setDialog] = useState();
   const [scroll, setScroll] = useState(false);
   const [scrollQuery, setScrollQuery] = useState(false);
   const [txs, setTxs] = useState([]);
-  const [tx, setTx] = useState(undefined);
 
-  useLayoutEffect(() => {
-    if (!visible) {
+  useEffect(() => {
+    if (hash) {
       scrollview.current.scrollTo({ y: 0, animated: false });
-      setDialog(undefined);
-    }
-  }, [visible]);
-
-  useEffect(() => {
-    if (params.vault) refreshDatasource(vaults.find((vault) => vault.hash === params.vault.hash));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params]);
-
-  useEffect(() => {
-    const { currentBalance, txs: currentTxs, hash } = dataSource;
-    if (visible && params.vault.hash === hash) {
-      const vault = vaults.find((vault) => vault.hash === hash);
-      if (vault.currentBalance !== currentBalance || vault.txs.length !== currentTxs.length) refreshDatasource(vault);
+      refreshDatasource();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [vaults, visible]);
+  }, [hash, vaults]);
 
-  const handleScroll = onScroll.bind(undefined, {
-    dataSource,
-    scrollQuery,
-    setScroll,
-    setScrollQuery,
-    setTxs,
-  });
-
-  const refreshDatasource = (vault) => {
+  const refreshDatasource = () => {
+    const vault = vaults.find((vault) => vault.hash === hash);
     setDataSource(vault);
     setTxs(query(vault.txs));
     setScrollQuery(false);
   };
 
+  const handleTransaction = (type) => {
+    publish({ event: EVENTS.NEW_TRANSACTION }, { type, vault: dataSource });
+  };
+
+  const handleScroll = (nextScroll, y) => {
+    setScroll(nextScroll);
+    if (!scrollQuery && y > height / 2) {
+      setScrollQuery(true);
+      setTxs(query(dataSource.txs, true));
+    }
+  };
+
   const { currency = baseCurrency, title, ...rest } = dataSource;
 
-  console.log('  <Vault>', { visible, dialog });
-
   return (
-    <Viewport scroll={false} visible={visible}>
-      <Header visible={scroll} title={scroll ? title : undefined} onBack={navigation.back} />
+    <Viewport path="/vault">
+      <Header isVisible={scroll} title={title} onBack={back} />
 
-      <ScrollView onScroll={handleScroll} ref={scrollview}>
-        <Summary {...rest} title={title} currency={currency}>
-          <Button {...button} icon="arrow-up" onPress={() => setDialog(INCOME)} text={l10n.INCOME.toUpperCase()} />
-          <Button {...button} icon="arrow-down" onPress={() => setDialog(EXPENSE)} text={l10n.EXPENSE.toUpperCase()} />
-          {vaults.length > 1 && (
-            <Button {...button} icon="shuffle" onPress={() => setDialog(TRANSFER)} text={l10n.SWAP.toUpperCase()} />
-          )}
-        </Summary>
+      {useMemo(
+        () => (
+          <ScrollView onScroll={handleScroll} ref={scrollview}>
+            <Summary {...rest} title={title} currency={currency}>
+              <View style={style.buttons}>
+                <ButtonSummary icon="arrow-right-up" text={L10N.INCOME} onPress={() => handleTransaction(INCOME)} />
+                <ButtonSummary icon="arrow-left-down" text={L10N.EXPENSE} onPress={() => handleTransaction(EXPENSE)} />
+                {vaults.length > 1 && (
+                  <ButtonSummary icon="arrow-left-right" text={L10N.SWAP} onPress={() => handleTransaction(TRANSFER)} />
+                )}
+              </View>
+            </Summary>
 
-        {txs.length > 0 ? (
-          <>
-            <Heading paddingHorizontal="M" value={l10n.TRANSACTIONS} />
-            {txs.map((item) => (
-              <GroupTransactions key={item.timestamp} {...item} currency={currency} onPress={setTx} />
-            ))}
-          </>
-        ) : (
-          <Banner
-            image={BANNERS.NOT_FOUND}
-            paddingHorizontal="M"
-            paddingVertical="M"
-            small
-            title={l10n.NO_TRANSACTIONS}
-          />
-        )}
-      </ScrollView>
-
-      {visible && (
-        <>
-          <DialogTransaction
-            currency={currency}
-            onClose={() => setDialog(undefined)}
-            type={dialog}
-            vault={dataSource}
-            visible={visible && dialog !== undefined}
-          />
-          <DialogClone dataSource={tx} onClose={() => setTx(undefined)} visible={tx !== undefined} />
-        </>
+            {txs.length > 0 ? (
+              <>
+                <Heading value={L10N.TRANSACTIONS} />
+                {txs.map((item) => (
+                  <GroupTransactions key={item.timestamp} {...item} currency={currency} />
+                ))}
+              </>
+            ) : (
+              <Banner align={ALIGN.CENTER} image={BANNERS.NOT_FOUND} title={L10N.NO_TRANSACTIONS} />
+            )}
+          </ScrollView>
+        ),
+        [rest, txs],
       )}
     </Viewport>
   );
-};
-
-Vault.propTypes = {
-  visible: PropTypes.bool,
 };
 
 export { Vault };

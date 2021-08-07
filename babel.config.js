@@ -10,14 +10,18 @@ module.exports = (api) => {
         'module-resolver',
         {
           alias: {
-            '^reactor/(.+)': './src/reactor/\\1',
+            // -- packages
+            '@lookiero/aurora': '@lookiero/aurora-next',
+            '@lookiero/event': '@lookiero/event-next',
 
+            // -- sources
             '@assets': './src/assets',
             '@common': './src/common',
             '@components': './src/components',
             '@context': './src/context',
             '@screens': './src/screens',
             '@services': './src/services',
+            '@theming': './src/theming',
 
             crypto: ['expo-crypto'],
           },

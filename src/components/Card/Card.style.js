@@ -1,26 +1,23 @@
-import { StyleSheet } from 'react-native';
-import { LAYOUT, THEME } from 'reactor/common';
+import { Theme } from '@lookiero/aurora';
+import StyleSheet from 'react-native-extended-stylesheet';
 
-const { SPACE } = THEME;
+const { spaceM } = Theme.get();
 
-let CARD_SIZE = LAYOUT.VIEWPORT.W / 2 - SPACE.XL * 2;
-if (CARD_SIZE > 144) CARD_SIZE = 144;
+const CARD_SIZE = spaceM * 10;
 
-export { CARD_SIZE };
-
-export default StyleSheet.create({
+const style = StyleSheet.create({
   box: {
+    alignContent: 'flex-start',
     alignItems: 'flex-start',
-  },
-
-  container: {
-    height: CARD_SIZE,
-    width: CARD_SIZE * 1.3,
+    height: CARD_SIZE * 0.75,
+    justifyContent: 'flex-start',
+    overflow: 'hidden',
+    padding: '$spaceM',
+    width: CARD_SIZE,
   },
 
   content: {
     flex: 1,
-    padding: SPACE.M,
     alignItems: 'flex-start',
   },
 
@@ -28,3 +25,5 @@ export default StyleSheet.create({
     flex: 1,
   },
 });
+
+export { CARD_SIZE, style };

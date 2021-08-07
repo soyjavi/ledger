@@ -1,18 +1,7 @@
-import { StyleSheet } from 'react-native';
-import { THEME } from 'reactor/common';
+import StyleSheet from 'react-native-extended-stylesheet';
 
-const { COLOR, SPACE } = THEME;
-
-export default StyleSheet.create({
-  chart: {
-    marginHorizontal: SPACE.M,
-  },
-
-  charts: {
-    backgroundColor: COLOR.CONTRAST,
-  },
-
+export const style = StyleSheet.create({
   chartMargin: {
-    marginBottom: SPACE.XL + SPACE.M,
+    marginBottom: '$spaceL',
   },
 });

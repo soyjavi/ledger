@@ -1,19 +1,20 @@
-import { StyleSheet } from 'react-native';
-import { THEME } from 'reactor/common';
+import StyleSheet from 'react-native-extended-stylesheet';
 
-const { SPACE } = THEME;
-
-export default StyleSheet.create({
+export const style = StyleSheet.create({
   container: {
-    minHeight: SPACE.XL + SPACE.S,
-    minWidth: SPACE.XL + SPACE.S,
+    alignContent: 'center',
+    alignItems: 'center',
+    borderRadius: '$borderRadius',
     justifyContent: 'center',
-    zIndex: 1,
+    minHeight: '$spaceXXL + $spaceXS',
+    minWidth: '$spaceXXL + $spaceXS',
+  },
+
+  rounded: {
+    borderRadius: '$spaceXXXL / 2',
   },
 
   date: {
     alignSelf: 'flex-start',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });

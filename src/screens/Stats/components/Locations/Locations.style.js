@@ -1,20 +1,15 @@
-import { StyleSheet } from 'react-native';
-import { THEME } from 'reactor/common';
+import StyleSheet from 'react-native-extended-stylesheet';
 
-const { SPACE } = THEME;
-
-export default StyleSheet.create({
-  container: {
-    marginHorizontal: SPACE.M,
+export const style = StyleSheet.create({
+  offset: {
+    marginHorizontal: '$spaceM',
   },
 
   content: {
-    marginBottom: SPACE.L,
+    marginBottom: '$spaceL',
   },
 
-  heatMap: {
-    width: '100%',
-    marginBottom: SPACE.S,
-    marginTop: SPACE.XS,
+  heading: {
+    marginTop: '$spaceL',
   },
 });
