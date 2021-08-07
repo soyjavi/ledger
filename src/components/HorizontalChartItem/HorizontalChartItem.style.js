@@ -4,8 +4,7 @@ export const style = StyleSheet.create({
   $barRadius: '$borderRadius',
   $barSize: 8,
   bar: {
-    borderBottomRightRadius: '$barRadius',
-    borderTopRightRadius: '$barRadius',
+    borderRadius: '$barRadius',
     height: '$barSize',
     marginTop: '$spaceXS',
     marginBottom: '$spaceS',

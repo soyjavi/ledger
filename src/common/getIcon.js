@@ -1,7 +1,3 @@
-// import ICON_GLYPHS from '../../assets/fonts/Shield-Icons.json';
-
-// const glyphs = Object.keys(ICON_GLYPHS);
-
 const CATEGORY_ICON = [
   {
     // Expenses
