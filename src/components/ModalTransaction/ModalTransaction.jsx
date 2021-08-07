@@ -32,8 +32,12 @@ const INITIAL_STATE = {
   busy: false,
   form: {},
   valid: false,
+};
+
+const INITIAL_LOCATION = {
   coords: undefined,
   place: undefined,
+  hideLocation: false,
 };
 
 const ModalTransaction = () => {
@@ -45,6 +49,7 @@ const ModalTransaction = () => {
   const [dataSource, setDataSource] = useState({});
 
   const [state, setState] = useState(INITIAL_STATE);
+  const [location, setLocation] = useState(INITIAL_LOCATION);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -60,7 +65,7 @@ const ModalTransaction = () => {
   }, []);
 
   useEffect(() => {
-    if (visible && type !== TRANSFER) (async () => setState({ ...state, ...(await getLocation(online)) }))();
+    if (visible && type !== TRANSFER) (async () => setLocation(await getLocation(online)))();
     onHardwareBackPress(visible, handleClose);
 
     return () => onHardwareBackPress(false);
@@ -72,7 +77,7 @@ const ModalTransaction = () => {
   };
 
   const handleRemoveLocation = () => {
-    setState({ ...state, coords: undefined, place: undefined, hideLocation: true });
+    setLocation({ ...INITIAL_LOCATION, hideLocation: true });
   };
 
   const handleSubmit = async () => {
@@ -80,7 +85,7 @@ const ModalTransaction = () => {
     // ! @TODO: Research why we need this
     setTimeout(async () => {
       const method = type === TRANSFER ? createTransfer : createTransaction;
-      const value = await method({ props: dataSource, state, store });
+      const value = await method({ props: dataSource, state: { ...state, ...location }, store });
       if (value) handleClose();
       setBusy(false);
     }, TIMEOUT.BUSY);
@@ -88,9 +93,9 @@ const ModalTransaction = () => {
 
   const { type } = dataSource;
   const { valid } = state;
+  const { hideLocation, place, coords } = location;
 
   const Form = type === TRANSFER ? FormTransfer : FormTransaction;
-  const { hideLocation, place, coords } = state;
 
   return (
     <Modal color={COLOR.INFO} isVisible={visible} swipeable onClose={handleClose}>
