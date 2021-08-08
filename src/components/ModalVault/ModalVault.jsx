@@ -25,10 +25,7 @@ const INITIAL_STATE = { balance: 0, currency: undefined, title: undefined };
 const ModalVault = () => {
   const { subscribe } = useEvent();
   const { go } = useRouter();
-  const {
-    addVault,
-    settings: { baseCurrency },
-  } = useStore();
+  const { addVault } = useStore();
 
   const [busy, setBusy] = useState(false);
   const [form, setForm] = useState(INITIAL_STATE);
@@ -39,7 +36,7 @@ const ModalVault = () => {
   }, []);
 
   useEffect(() => {
-    if (visible) setForm({ ...INITIAL_STATE, currency: baseCurrency });
+    if (visible) setForm({ ...INITIAL_STATE });
     onHardwareBackPress(visible, handleClose);
 
     return () => onHardwareBackPress(false);
@@ -75,7 +72,7 @@ const ModalVault = () => {
           <Button disabled={busy} marginRight={SIZE.M} outlined onPress={handleClose}>
             {L10N.CLOSE.toUpperCase()}
           </Button>
-          <Button color={COLOR.CONTENT} disabled={busy || form.title === undefined} onPress={handleSubmit}>
+          <Button color={COLOR.CONTENT} disabled={busy || !form.currency || !form.title} onPress={handleSubmit}>
             {L10N.SAVE.toUpperCase()}
           </Button>
         </View>

@@ -26,11 +26,14 @@ const FormVault = ({ form = {}, modal = false, onChange, ...others }) => {
   };
 
   const backgroundColorInput = modal ? COLOR.GRAYSCALE_XL : COLOR.INFO;
+  const isEmpty = !form.currency;
 
   return (
     <View {...others}>
       <SliderCurrencies
+        animated={!isEmpty}
         modal={modal}
+        scrollTo={isEmpty ? 0 : undefined}
         selected={form.currency}
         style={styles(style.slider, modal ? style.sliderModal : style.sliderFullScreen)}
         onChange={(currency) => handleChange('currency', currency)}
