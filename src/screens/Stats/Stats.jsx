@@ -1,4 +1,11 @@
-import { COLOR, View } from '@lookiero/aurora';
+import {
+  // helpers
+  COLOR,
+  Theme,
+  // components
+  View,
+} from '@lookiero/aurora';
+import { useRouter } from '@lookiero/router';
 import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 
 import { C, L10N, ROUTE } from '@common';
@@ -17,6 +24,9 @@ const {
 } = C;
 
 const Stats = () => {
+  const {
+    route: { params: { tab } = {} },
+  } = useRouter();
   const store = useStore();
 
   const [chart, setChart] = useState({});
@@ -25,23 +35,31 @@ const Stats = () => {
 
   const {
     settings: { baseCurrency },
+    txs,
   } = store;
 
   useLayoutEffect(() => {
     const today = new Date();
 
     setChart(queryChart(store));
-    setSlider({ month: today.getMonth(), year: today.getFullYear(), index: STATS_MONTHS_LIMIT - 1 });
+    setMonth(queryMonth(store, { month: today.getMonth(), year: today.getFullYear() }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    setMonth(queryMonth(store, slider));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [slider]);
+    if (ROUTE.TAB_STATS.includes(tab) && !slider.index) {
+      setTimeout(() => {
+        const today = new Date();
+        setSlider({ month: today.getMonth(), year: today.getFullYear(), index: STATS_MONTHS_LIMIT - 1 });
+      }, Theme.get('motionExpand'));
+    }
+  }, [tab]);
 
   const handleSliderChange = (next) => {
-    if (next.index !== slider.index) setSlider(next);
+    if (next.index !== slider.index) {
+      setSlider(next);
+      setMonth(queryMonth(store, next));
+    }
   };
 
   const { expenses = {}, incomes = {}, locations = {} } = month || {};
