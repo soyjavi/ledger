@@ -1939,9 +1939,9 @@
   integrity sha512-S+hlRqIvoqmt9LJfFzMISnvFiXC0KjD1vZICRDOHYdJQO/8rGQeVohfCU0ivYIvrRpLneAtREayhufnurWUBJg==
 
 "@lookiero/aurora-next@^3.0":
-  version "3.0.70"
-  resolved "https://registry.yarnpkg.com/@lookiero/aurora-next/-/aurora-next-3.0.70.tgz#3da87c1190e05790ecd1adf6c25988c7254ca0ad"
-  integrity sha512-q1Hf/jISdydOoCCkl3ZSxqMSuW5vyqhQsnB/N58nJW6z5dpzCDVG8pW1tOhkBegZX8y6SZJRgl2UZCOzlgmw/g==
+  version "3.0.73"
+  resolved "https://registry.yarnpkg.com/@lookiero/aurora-next/-/aurora-next-3.0.73.tgz#57c495d196084bad79eb5e53c17ac60dccb4f2ac"
+  integrity sha512-t5JbTVASSPtV26vdtIy+beFi4YXy/07zbkQjqsjY9JS5vPhMFqkpUYG4TL8Jh9iGTG23Rx4wunAy/34OY3NuSg==
   dependencies:
     "@lookiero/aurora-fonts" "^1.0"
     "@lookiero/aurora-iconfont" "^2.0"

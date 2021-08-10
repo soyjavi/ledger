@@ -20,6 +20,7 @@ import { BoxDate } from '../Box';
 import { HeatMap } from '../HeatMap';
 import { PriceFriendly } from '../PriceFriendly';
 import { cloneTx } from './helpers';
+import { style } from './ModalClone.style';
 
 const {
   TIMEOUT,
@@ -77,7 +78,7 @@ const ModalClone = () => {
 
   return (
     <Portal id="modal-clone">
-      <Modal color={COLOR.INFO} isVisible={visible} swipeable onClose={handleClose}>
+      <Modal color={COLOR.INFO} contentStyle={style.modalContent} isVisible={visible} swipeable onClose={handleClose}>
         <View alignItems={ALIGN.CENTER} marginBottom={SPACE.L}>
           <Text color={COLOR.GRAYSCALE_L} heading level={2}>
             {L10N.TRANSACTION[type]}

@@ -19,6 +19,7 @@ import { EVENTS, L10N, ROUTE, onHardwareBackPress } from '@common';
 import { useStore } from '@context';
 
 import { FormVault } from '../FormVault';
+import { style } from './ModalVault.style';
 
 const INITIAL_STATE = { balance: 0, currency: undefined, title: undefined };
 
@@ -59,7 +60,7 @@ const ModalVault = () => {
 
   return (
     <Portal id="modal-vault">
-      <Modal color={COLOR.INFO} isVisible={visible} swipeable onClose={handleClose}>
+      <Modal contentStyle={style.modalContent} color={COLOR.INFO} isVisible={visible} swipeable onClose={handleClose}>
         <View alignItems={ALIGN.CENTER} marginBottom={SIZE.L}>
           <Text heading level={2}>
             {`${L10N.NEW} ${L10N.VAULT}`}

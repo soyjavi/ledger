@@ -11,7 +11,7 @@ export const style = StyleSheet.create({
   },
 
   sliderModal: {
-    marginLeft: '$spaceXL * -1',
-    marginRight: '$spaceXL * -1',
+    marginLeft: '$spaceM * -1',
+    marginRight: '$spaceM * -1',
   },
 });
