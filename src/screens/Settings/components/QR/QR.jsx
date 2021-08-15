@@ -15,7 +15,7 @@ import React, { useEffect, useState } from 'react';
 
 import { L10N } from '@common';
 import { Dialog, Heading, Notification } from '@components';
-import { useStore } from '@context';
+import { useConnection, useStore } from '@context';
 import { ServiceQR } from '@services';
 
 import { askCamera, getBlockchain } from './helpers';
@@ -23,6 +23,7 @@ import { CAMERA_PROPS } from './QR.definition';
 import { style } from './QR.style';
 
 const QR = () => {
+  const { connected } = useConnection();
   const store = useStore();
   const {
     settings: { authorization, secret },
@@ -74,7 +75,7 @@ const QR = () => {
   return (
     <View style={style.container}>
       <Heading value={L10N.TRANSFER_TXS}>
-        {hasCamera && (
+        {connected && hasCamera && (
           <Touchable onPress={() => setCamera(!camera)}>
             <Text action color={COLOR.PRIMARY}>
               {(camera ? L10N.CLOSE : L10N.QR_READER).toUpperCase()}

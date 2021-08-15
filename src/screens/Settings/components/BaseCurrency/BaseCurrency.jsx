@@ -18,7 +18,7 @@ import { style } from './BaseCurrency.style';
 import { changeBaseCurrency, getLatestRates } from './helpers';
 
 const BaseCurrency = () => {
-  const { online } = useConnection();
+  const { connected } = useConnection();
   const Stack = useStack();
   const store = useStore();
 
@@ -40,7 +40,7 @@ const BaseCurrency = () => {
   return (
     <View style={style.container}>
       <Heading value={L10N.CHOOSE_CURRENCY}>
-        {online && (
+        {connected && (
           <Touchable onPress={handleUpdateRates}>
             <Text action color={COLOR.PRIMARY}>
               {L10N.SYNC_RATES_CTA.toUpperCase()}
