@@ -66,13 +66,19 @@ const StoreProvider = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const updateStore = async (key, value) => {
-    await state.store.get(key).save(value);
-    setState({
-      ...state,
-      settings: await state.store.get('settings').value,
-      rates: await state.store.get('rates').value,
-    });
+  const updateRates = async (nextRates, baseCurrency = state.settings.baseCurrency) => {
+    const nextSettings = { ...state.settings, baseCurrency, lastRatesUpdate: new Date() };
+    await state.store.get('rates').save(nextRates);
+    await state.store.get('settings').save(nextSettings);
+
+    setState({ ...state, rates: nextRates, settings: nextSettings });
+  };
+
+  const updateSettings = async (value) => {
+    const nextSettings = { ...state.settings, ...value };
+    await state.store.get('settings').save(nextSettings);
+
+    setState({ ...state, settings: nextSettings });
   };
 
   const addBlock = async (key, data = {}) => {
@@ -116,8 +122,6 @@ const StoreProvider = ({ children }) => {
     return true;
   };
 
-  // console.log('<Store>', state.blockchain && state.store ? '🟢' : '🔴', state);
-
   return (
     <StoreContext.Provider
       value={{
@@ -127,8 +131,8 @@ const StoreProvider = ({ children }) => {
           addBlock('vaults', { balance: parseFloat(balance, 10), currency, title }),
         addTx: (data = {}) => addBlock('txs', { ...data, value: parseFloat(data.value, 10) }),
         fork,
-        updateSettings: (value) => updateStore('settings', { ...state.settings, ...value }),
-        updateRates: (value) => updateStore('rates', { ...state.rates, ...value }),
+        updateRates,
+        updateSettings,
       }}
     >
       {state.blockchain && state.store ? children : undefined}

@@ -12,5 +12,6 @@ export const getLatestRates = async ({
   const rates = await ServiceRates.get({ baseCurrency, latest: true }).catch(() =>
     Stack.alert('rates', Notification, { text: L10N.ERROR_SERVICE_RATES, timeoutClose: 10000 }),
   );
+
   if (rates) await updateRates(rates);
 };
