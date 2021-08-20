@@ -45,7 +45,7 @@ const QR = () => {
     if (!camera) {
       setBlockchain(undefined);
       setQr(undefined);
-      // setQr('1CC0A669-249E-428F-88FF-4EAF27ABED4B|backup');
+      // setQr('C8647639-4826-4AC7-9655-6BDC2C15D9D2|backup');
     }
   }, [camera]);
 

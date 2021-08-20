@@ -8,7 +8,7 @@ import { ServiceNode } from '@services';
 
 import { AsyncStorageAdapter } from './adapters';
 import { useConnection } from './connection';
-import { consolidate, getFingerprint } from './modules';
+import { consolidate, getFingerprint, genesis } from './modules';
 
 const { CURRENCY, NAME } = C;
 const FILENAME = `${C.NAME}:store`;
@@ -103,9 +103,14 @@ const StoreProvider = ({ children }) => {
     const storage = await new AsyncStorageAdapter({ filename: FILENAME_BLOCKCHAIN });
     await storage.wipe();
 
+    const txs = blockchain.txs.map(({ data: { balance, value, ...data }, ...others }) => ({
+      ...others,
+      data: { ...data, value: balance || value },
+    }));
+
     const fork = await new AsyncBlockchain({
       adapter: AsyncStorageAdapter,
-      defaults: blockchain,
+      defaults: { vaults: genesis(blockchain.vaults), txs: genesis(txs) },
       filename: FILENAME_BLOCKCHAIN,
       key: 'vaults',
     });

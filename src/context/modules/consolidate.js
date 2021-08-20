@@ -6,14 +6,14 @@ import { calcVault } from './calcVault';
 export const consolidate = ({
   rates = {},
   settings: { baseCurrency } = {},
-  txs: [, ...baseTxs] = [],
-  vaults: [, ...baseVaults] = [],
+  txs: baseTxs = [],
+  vaults: baseVaults = [],
 } = {}) => {
   let txs = baseTxs.map(({ data = {}, hash, timestamp }) => ({ timestamp, ...data, hash }));
   let vaults = [];
 
-  if (baseVaults.length > 0) {
-    const { timestamp: blockTimestamp, data: { timestamp } = {} } = baseVaults[0];
+  if (baseVaults.length > 1) {
+    const { timestamp: blockTimestamp, data: { timestamp } = {} } = baseVaults[1];
     const genesisDate = new Date(timestamp || blockTimestamp);
     const months = getMonthDiff(genesisDate, new Date());
 

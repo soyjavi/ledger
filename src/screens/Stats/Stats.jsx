@@ -35,7 +35,6 @@ const Stats = () => {
 
   const {
     settings: { baseCurrency },
-    txs,
   } = store;
 
   useLayoutEffect(() => {
