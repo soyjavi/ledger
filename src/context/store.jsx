@@ -66,8 +66,10 @@ const StoreProvider = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const updateRates = async (nextRates, baseCurrency = state.settings.baseCurrency) => {
+  const updateRates = async (rates, baseCurrency = state.settings.baseCurrency) => {
+    const nextRates = { ...state.rates, ...rates };
     const nextSettings = { ...state.settings, baseCurrency, lastRatesUpdate: new Date() };
+
     await state.store.get('rates').save(nextRates);
     await state.store.get('settings').save(nextSettings);
 
