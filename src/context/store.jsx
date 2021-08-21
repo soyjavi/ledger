@@ -8,7 +8,7 @@ import { ServiceNode } from '@services';
 
 import { AsyncStorageAdapter } from './adapters';
 import { useConnection } from './connection';
-import { consolidate, getFingerprint } from './modules';
+import { consolidate, getFingerprint, genesis } from './modules';
 
 const { CURRENCY, NAME } = C;
 const FILENAME = `${C.NAME}:store`;
@@ -66,13 +66,21 @@ const StoreProvider = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const updateStore = async (key, value) => {
-    await state.store.get(key).save(value);
-    setState({
-      ...state,
-      settings: await state.store.get('settings').value,
-      rates: await state.store.get('rates').value,
-    });
+  const updateRates = async (rates, baseCurrency = state.settings.baseCurrency) => {
+    const nextRates = { ...state.rates, ...rates };
+    const nextSettings = { ...state.settings, baseCurrency, lastRatesUpdate: new Date() };
+
+    await state.store.get('rates').save(nextRates);
+    await state.store.get('settings').save(nextSettings);
+
+    setState({ ...state, rates: nextRates, settings: nextSettings });
+  };
+
+  const updateSettings = async (value) => {
+    const nextSettings = { ...state.settings, ...value };
+    await state.store.get('settings').save(nextSettings);
+
+    setState({ ...state, settings: nextSettings });
   };
 
   const addBlock = async (key, data = {}) => {
@@ -97,9 +105,14 @@ const StoreProvider = ({ children }) => {
     const storage = await new AsyncStorageAdapter({ filename: FILENAME_BLOCKCHAIN });
     await storage.wipe();
 
+    const txs = blockchain.txs.map(({ data: { balance, value, ...data }, ...others }) => ({
+      ...others,
+      data: { ...data, value: balance || value },
+    }));
+
     const fork = await new AsyncBlockchain({
       adapter: AsyncStorageAdapter,
-      defaults: blockchain,
+      defaults: { vaults: genesis(blockchain.vaults), txs: genesis(txs) },
       filename: FILENAME_BLOCKCHAIN,
       key: 'vaults',
     });
@@ -116,8 +129,6 @@ const StoreProvider = ({ children }) => {
     return true;
   };
 
-  // console.log('<Store>', state.blockchain && state.store ? '🟢' : '🔴', state);
-
   return (
     <StoreContext.Provider
       value={{
@@ -127,8 +138,8 @@ const StoreProvider = ({ children }) => {
           addBlock('vaults', { balance: parseFloat(balance, 10), currency, title }),
         addTx: (data = {}) => addBlock('txs', { ...data, value: parseFloat(data.value, 10) }),
         fork,
-        updateSettings: (value) => updateStore('settings', { ...state.settings, ...value }),
-        updateRates: (value) => updateStore('rates', { ...state.rates, ...value }),
+        updateRates,
+        updateSettings,
       }}
     >
       {state.blockchain && state.store ? children : undefined}

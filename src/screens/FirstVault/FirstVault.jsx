@@ -28,7 +28,7 @@ const INITIAL_STATE = { balance: 0, currency: CURRENCY, title: undefined };
 const IS_NATIVE = ['ios', 'android'].includes(Platform.OS);
 
 export const FirstVault = () => {
-  const { addVault, blockchain, settings, updateRates, updateSettings, ...others } = useStore();
+  const { addVault, blockchain, settings, updateRates, updateSettings, ...store } = useStore();
   const { go } = useRouter();
   const Stack = useStack();
 
@@ -46,7 +46,7 @@ export const FirstVault = () => {
 
   const handleSubmit = async () => {
     setBusy(true);
-    const settings = { ...others.settings, baseCurrency: form.currency };
+    const settings = { ...store.settings, baseCurrency: form.currency };
 
     await updateSettings(settings);
     await ServiceNode.sync({ key: 'vaults', blocks: blockchain.vaults, settings });

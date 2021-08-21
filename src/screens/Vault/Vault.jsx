@@ -10,7 +10,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useWindowDimensions } from 'react-native';
 
 import { BANNERS } from '@assets';
-import { C, EVENTS, L10N } from '@common';
+import { C, EVENTS, L10N, ROUTE } from '@common';
 import { Banner, GroupTransactions, Header, Heading, ScrollView, Summary, Viewport } from '@components';
 import { useStore } from '@context';
 
@@ -27,7 +27,7 @@ const {
 const Vault = () => {
   const { publish } = useEvent();
   const scrollview = useRef(null);
-  const { back, route: { params: { hash } = {} } = {} } = useRouter();
+  const { back, route: { params: { hash } = {}, path } = {} } = useRouter();
   const { baseCurrency, vaults } = useStore();
   const { height } = useWindowDimensions();
 
@@ -37,23 +37,17 @@ const Vault = () => {
   const [txs, setTxs] = useState([]);
 
   useEffect(() => {
-    if (hash) {
+    if (hash && path === ROUTE.VAULT_HASH) {
       scrollview.current.scrollTo({ y: 0, animated: false });
-      refreshDatasource();
+
+      const vault = vaults.find((vault) => vault.hash === hash);
+
+      setDataSource(vault);
+      setTxs(query(vault.txs));
+      setScrollQuery(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hash, vaults]);
-
-  const refreshDatasource = () => {
-    const vault = vaults.find((vault) => vault.hash === hash);
-    setDataSource(vault);
-    setTxs(query(vault.txs));
-    setScrollQuery(false);
-  };
-
-  const handleTransaction = (type) => {
-    publish({ event: EVENTS.NEW_TRANSACTION }, { type, vault: dataSource });
-  };
 
   const handleScroll = (nextScroll, y) => {
     setScroll(nextScroll);
@@ -63,10 +57,14 @@ const Vault = () => {
     }
   };
 
+  const handleTransaction = (type) => {
+    publish({ event: EVENTS.NEW_TRANSACTION }, { type, vault: dataSource });
+  };
+
   const { currency = baseCurrency, title, ...rest } = dataSource;
 
   return (
-    <Viewport path="/vault">
+    <Viewport path={ROUTE.VAULT}>
       <Header isVisible={scroll} title={title} onBack={back} />
 
       {useMemo(

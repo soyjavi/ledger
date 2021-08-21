@@ -25,7 +25,11 @@ import { style } from './Session.style';
 const { VERSION } = C;
 
 export const Session = () => {
-  const { settings, updateSettings, vaults = [] } = useStore();
+  const {
+    settings,
+    updateSettings,
+    vaults: [, ...vaults],
+  } = useStore();
   const { go, route } = useRouter();
 
   const [pin, setPin] = useState('');

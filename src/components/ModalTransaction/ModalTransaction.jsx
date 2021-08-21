@@ -20,6 +20,7 @@ import { useConnection, useStore } from '@context';
 import { HeatMap } from '../HeatMap';
 import { FormTransaction, FormTransfer } from './components';
 import { createTransaction, createTransfer, getLocation } from './helpers';
+import { style } from './ModalTransaction.style';
 
 const {
   TIMEOUT,
@@ -98,7 +99,7 @@ const ModalTransaction = () => {
   const Form = type === TRANSFER ? FormTransfer : FormTransaction;
 
   return (
-    <Modal color={COLOR.INFO} isVisible={visible} swipeable onClose={handleClose}>
+    <Modal color={COLOR.INFO} contentStyle={style.modalContent} isVisible={visible} swipeable onClose={handleClose}>
       <View alignItems={ALIGN.CENTER} marginBottom={SIZE.L}>
         <Text heading level={2}>
           {L10N.TRANSACTION[type]}

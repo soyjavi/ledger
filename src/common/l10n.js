@@ -8,6 +8,7 @@ export const L10N = {
   AUTHENTICATE: 'Authenticate',
 
   BALANCE: 'Balance',
+  BLOCKCHAIN_STATE: 'Blockchain state',
 
   CANCEL: 'CANCEL',
   CATEGORIES: [
@@ -144,10 +145,12 @@ export const L10N = {
   SETTINGS: 'Settings',
   SETTING_1_TITLE: 'Hide amounts',
   SETTING_1_CAPTION: 'Switch visibility just touching it',
-  SYNC_RATES_SENTENCE: 'Last update on',
-  SYNC_RATES_CTA: 'Update Rates',
   STATS: 'Stats',
   STATS_CAPTION: 'In this summary you can see a breakdown of your operations in the selected category.',
+  SYNC: 'SYNC',
+  SYNCING: 'SYNCING...',
+  SYNC_RATES_SENTENCE: 'Last update on',
+  SYNC_RATES_CTA: 'Update Rates',
   SYNC_CAPTION: 'It seems like you were offline for a while, you can sync your blockchain now.',
   SYNC_NOW: 'SYNC NOW',
   SYNC_BUSY: 'Please wait a bit meanwhile all your transactions get sync.',

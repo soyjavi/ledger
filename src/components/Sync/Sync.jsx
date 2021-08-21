@@ -1,12 +1,12 @@
 import { useStack } from '@lookiero/aurora';
 import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 
-import { C, L10N } from '@common';
+import { C, L10N, getSyncStatus, syncNode } from '@common';
 import { useConnection, useStore } from '@context';
 
 import { Dialog } from '../Dialog';
 import { Notification } from '../Notification';
-import { getRates, getSyncStatus, syncNode } from './Sync.controller';
+import { getRates } from './Sync.controller';
 
 const { TIMEOUT } = C;
 
@@ -52,7 +52,7 @@ const Sync = () => {
 
   const handleState = useCallback(async () => {
     setState(STATE.FETCHING);
-    const synced = await getSyncStatus({ store });
+    const { synced } = await getSyncStatus(store);
 
     if (synced === undefined && state !== STATE.UNKNOWN) setState(STATE.UNKNOWN);
     else setState(synced ? STATE.SYNCED : STATE.UNSYNCED);
@@ -62,7 +62,7 @@ const Sync = () => {
   const handleSync = async () => {
     setState(STATE.SYNCING);
 
-    const synced = await syncNode({ store });
+    const { synced } = await syncNode(store);
     setState(synced ? STATE.SYNCED : STATE.UNSYNCED);
 
     if (synced) Stack.success('synced', Notification, { text: L10N.SYNC_DONE, timeoutClose: 10000 });

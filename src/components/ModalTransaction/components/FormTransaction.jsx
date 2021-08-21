@@ -34,9 +34,18 @@ const FormTransaction = ({ form = {}, onChange, type, vault = {} }) => {
   };
 
   const categories = queryCategories({ type });
+  const isEmpty = Object.keys(form).length === 0;
+
   return (
     <>
-      <ScrollView horizontal snapInterval={OPTION_SIZE} style={style.slider} width={width}>
+      <ScrollView
+        animated={!isEmpty}
+        horizontal
+        scrollTo={isEmpty ? 0 : undefined}
+        snapInterval={OPTION_SIZE}
+        style={style.slider}
+        width={width}
+      >
         {categories.map((item, index) => (
           <Option
             color={COLOR.GRAYSCALE_XL}

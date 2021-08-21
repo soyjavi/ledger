@@ -19,16 +19,14 @@ import { EVENTS, L10N, ROUTE, onHardwareBackPress } from '@common';
 import { useStore } from '@context';
 
 import { FormVault } from '../FormVault';
+import { style } from './ModalVault.style';
 
 const INITIAL_STATE = { balance: 0, currency: undefined, title: undefined };
 
 const ModalVault = () => {
   const { subscribe } = useEvent();
   const { go } = useRouter();
-  const {
-    addVault,
-    settings: { baseCurrency },
-  } = useStore();
+  const { addVault } = useStore();
 
   const [busy, setBusy] = useState(false);
   const [form, setForm] = useState(INITIAL_STATE);
@@ -39,7 +37,7 @@ const ModalVault = () => {
   }, []);
 
   useEffect(() => {
-    if (visible) setForm({ ...INITIAL_STATE, currency: baseCurrency });
+    if (visible) setForm({ ...INITIAL_STATE });
     onHardwareBackPress(visible, handleClose);
 
     return () => onHardwareBackPress(false);
@@ -62,7 +60,7 @@ const ModalVault = () => {
 
   return (
     <Portal id="modal-vault">
-      <Modal color={COLOR.INFO} isVisible={visible} swipeable onClose={handleClose}>
+      <Modal contentStyle={style.modalContent} color={COLOR.INFO} isVisible={visible} swipeable onClose={handleClose}>
         <View alignItems={ALIGN.CENTER} marginBottom={SIZE.L}>
           <Text heading level={2}>
             {`${L10N.NEW} ${L10N.VAULT}`}
@@ -75,7 +73,7 @@ const ModalVault = () => {
           <Button disabled={busy} marginRight={SIZE.M} outlined onPress={handleClose}>
             {L10N.CLOSE.toUpperCase()}
           </Button>
-          <Button color={COLOR.CONTENT} disabled={busy || form.title === undefined} onPress={handleSubmit}>
+          <Button color={COLOR.CONTENT} disabled={busy || !form.currency || !form.title} onPress={handleSubmit}>
             {L10N.SAVE.toUpperCase()}
           </Button>
         </View>

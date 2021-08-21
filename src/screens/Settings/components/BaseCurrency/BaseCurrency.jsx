@@ -18,18 +18,20 @@ import { style } from './BaseCurrency.style';
 import { changeBaseCurrency, getLatestRates } from './helpers';
 
 const BaseCurrency = () => {
-  const { online } = useConnection();
+  const { connected } = useConnection();
   const Stack = useStack();
   const store = useStore();
 
   const {
-    settings: { baseCurrency },
+    settings: { baseCurrency, lastRatesUpdate = '' },
   } = store;
 
   const [busy, setBusy] = useState(false);
 
-  const handleChangeCurrency = (currency) => {
-    changeBaseCurrency({ currency, L10N, Stack, store });
+  const handleChangeCurrency = async (currency) => {
+    setBusy(true);
+    await changeBaseCurrency({ currency, L10N, Stack, store });
+    setBusy(false);
   };
 
   const handleUpdateRates = async () => {
@@ -40,7 +42,7 @@ const BaseCurrency = () => {
   return (
     <View style={style.container}>
       <Heading value={L10N.CHOOSE_CURRENCY}>
-        {online && (
+        {connected && (
           <Touchable onPress={handleUpdateRates}>
             <Text action color={COLOR.PRIMARY}>
               {L10N.SYNC_RATES_CTA.toUpperCase()}
@@ -52,7 +54,9 @@ const BaseCurrency = () => {
       <SliderCurrencies style={style.slider} selected={baseCurrency} onChange={handleChangeCurrency} />
 
       <Text color={COLOR.GRAYSCALE_L} detail level={2} style={[style.hint, style.offset]}>
-        {!busy ? `${L10N.SYNC_RATES_SENTENCE} ${new Date().toString().split(' ').slice(0, 5).join(' ')}.` : L10N.WAIT}
+        {!busy
+          ? `${L10N.SYNC_RATES_SENTENCE} ${lastRatesUpdate.toString().split(' ').slice(0, 5).join(' ')}`
+          : L10N.WAIT}
       </Text>
     </View>
   );
