@@ -1,7 +1,17 @@
 import { ServiceNode } from '@services';
 
-export const getSyncStatus = async ({ latestHash = {}, settings, txs, vaults }) => {
-  const node = await ServiceNode.status({ settings }).catch(() => {});
+export const getSyncStatus = async ({ latestHash = {}, settings, txs, updateSettings, vaults }) => {
+  const node = await ServiceNode.status({ settings }).catch(async (error) => {
+    if (error.code === 403) {
+      const { fingerprint } = settings;
+
+      const authorization = await ServiceNode.signup({ fingerprint }).catch(() => {});
+      if (authorization) {
+        settings.authorization = authorization;
+        await updateSettings({ authorization });
+      }
+    }
+  });
 
   const synced = node
     ? node.txs.length === txs.length &&

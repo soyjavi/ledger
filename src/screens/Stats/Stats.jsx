@@ -5,8 +5,7 @@ import {
   // components
   View,
 } from '@lookiero/aurora';
-import { useRouter } from '@lookiero/router';
-import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
+import React, { useLayoutEffect, useMemo, useState } from 'react';
 
 import { C, L10N, ROUTE } from '@common';
 import { Viewport } from '@components';
@@ -24,9 +23,6 @@ const {
 } = C;
 
 const Stats = () => {
-  const {
-    route: { params: { tab } = {} },
-  } = useRouter();
   const store = useStore();
 
   const [chart, setChart] = useState({});
@@ -35,24 +31,19 @@ const Stats = () => {
 
   const {
     settings: { baseCurrency },
+    txs,
   } = store;
 
   useLayoutEffect(() => {
     const today = new Date();
+    const { month = today.getMonth(), year = today.getFullYear(), index = STATS_MONTHS_LIMIT - 1 } = slider;
 
     setChart(queryChart(store));
-    setMonth(queryMonth(store, { month: today.getMonth(), year: today.getFullYear() }));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    setMonth(queryMonth(store, { month, year }));
+    if (!slider.index) setTimeout(() => setSlider({ month, year, index }), Theme.get('motionExpand'));
 
-  useEffect(() => {
-    if (ROUTE.TAB_STATS.includes(tab) && !slider.index) {
-      setTimeout(() => {
-        const today = new Date();
-        setSlider({ month: today.getMonth(), year: today.getFullYear(), index: STATS_MONTHS_LIMIT - 1 });
-      }, Theme.get('motionExpand'));
-    }
-  }, [tab]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [txs]);
 
   const handleSliderChange = (next) => {
     if (next.index !== slider.index) {

@@ -1,4 +1,4 @@
-import { Slider } from '@lookiero/aurora';
+import { Slider, View } from '@lookiero/aurora';
 import { useRouter } from '@lookiero/router';
 import React, { useMemo, useState } from 'react';
 
@@ -43,13 +43,15 @@ const Vaults = () => {
         </Slider>
 
         <Heading value={L10N.VAULTS} />
-        {filter(vaults, selected).map((vault) => (
-          <VaultItem
-            key={vault.hash}
-            dataSource={vault}
-            onPress={() => go({ path: `${ROUTE.VAULT}/${vault.hash}`, props: vault })}
-          />
-        ))}
+        <View>
+          {filter(vaults, selected).map((vault) => (
+            <VaultItem
+              key={vault.hash}
+              dataSource={vault}
+              onPress={() => go({ path: `${ROUTE.VAULT}/${vault.hash}`, props: vault })}
+            />
+          ))}
+        </View>
       </Viewport>
     ),
     [overall, selected, vaults],
