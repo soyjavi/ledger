@@ -35,7 +35,7 @@ export const ShieldTheme = {
   $colorGrayscaleL: '#999999',
   // $colorGrayscaleM: '#cfcfcf',
   // $colorGrayscaleS: '#e7e7e7',
-  $colorOverlay: colorOpacity('#000000', 0.85),
+  $colorOverlay: colorOpacity('#000000', 0.9),
   // $colorTouchable: 'rgba(255, 255, 255, 0.15)',
 
   /* ELEVATION */
