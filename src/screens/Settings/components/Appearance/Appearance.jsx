@@ -3,38 +3,47 @@ import {
   styles,
   Theme,
   // components
-  Touchable,
+  ScrollView,
   View,
+  // hooks
+  useDevice,
 } from '@lookiero/aurora';
 import React from 'react';
 
 import { changeAppearance, L10N } from '@common';
-import { Heading } from '@components';
+import { Heading, Option, OPTION_SIZE } from '@components';
 import { useStore } from '@context';
 
 import { style } from './Appearance.style';
 import { getColors } from './helpers';
 
 const Appearance = () => {
+  const {
+    screen: { width },
+  } = useDevice();
   const { updateSettings } = useStore();
 
   const appearance = Theme.get('colorPrimary');
+
+  const colors = getColors();
 
   return (
     <View style={style.container}>
       <Heading value={L10N.APPEARANCE} />
 
-      <View style={[style.offset, style.colors]}>
-        {getColors().map(({ color }) => (
-          <Touchable
+      <ScrollView horizontal snapInterval={OPTION_SIZE} width={width}>
+        {colors.map(({ color }, index) => (
+          <Option
+            //
             key={color}
-            style={styles(style.color, color === appearance && style.active, { backgroundColor: color })}
+            selected={color === appearance}
+            style={styles(style.card, index === 0 && style.firstCard, index === colors.length - 1 && style.lastCard)}
             onPress={() => changeAppearance({ color, updateSettings })}
           >
-            <View />
-          </Touchable>
+            <View style={styles(style.color, { backgroundColor: color })} />
+          </Option>
         ))}
-      </View>
+      </ScrollView>
     </View>
   );
 };
