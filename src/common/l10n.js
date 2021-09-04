@@ -43,7 +43,7 @@ export const L10N = {
   CATEGORY: 'Category',
   CHANGE: 'CHANGE',
   CHOOSE_TRANSACTION_TYPE: 'Choose type of transaction',
-  CHOOSE_CURRENCY: 'Your currency',
+  CHOOSE_CURRENCY: 'Your base currency',
   CITIES: 'Cities',
   CLEAR: 'Clear',
   CLONE: 'CLONE',
