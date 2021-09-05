@@ -5,6 +5,7 @@ import {
   Theme,
   // components
   Header as AuroraHeader,
+  Icon,
   Motion,
   Text,
   View,
@@ -49,6 +50,8 @@ const Header = ({ isVisible = true, onBack, title = ' ' }) => {
 
         {!connected && (
           <View style={[style.offline, { backgroundColor: colorOpacity(Theme.get('colorAlert'), 0.2) }]}>
+            <Icon color={COLOR.ALERT} name="error" style={style.icon} />
+
             <Text action color={COLOR.ALERT}>
               {L10N.OFFLINE}
             </Text>
