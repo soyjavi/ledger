@@ -15,6 +15,17 @@ export const style = StyleSheet.create({
     zIndex: 1,
   },
 
+  $iconSizeOffline: '$iconSize * 0.75',
+
+  icon: {
+    fontSize: '$iconSizeOffline',
+    height: '$iconSizeOffline',
+    marginRight: '$spaceS',
+    minHeight: '$iconSizeOffline',
+    minWidth: '$iconSizeOffline',
+    width: '$iconSizeOffline',
+  },
+
   title: {
     left: '$layoutL',
     position: 'absolute',
@@ -22,7 +33,9 @@ export const style = StyleSheet.create({
   },
 
   offline: {
+    alignItems: 'center',
     borderRadius: '$spaceXS',
+    flexDirection: 'row',
     paddingHorizontal: '$spaceS',
     paddingVertical: '$spaceXS',
     position: 'absolute',
