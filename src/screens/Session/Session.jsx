@@ -81,6 +81,7 @@ export const Session = () => {
         </SafeAreaView>
       </Viewport>
     ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [pin],
   );
 };

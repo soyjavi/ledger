@@ -54,6 +54,7 @@ const Vaults = () => {
         </View>
       </Viewport>
     ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [overall, selected, vaults],
   );
 };

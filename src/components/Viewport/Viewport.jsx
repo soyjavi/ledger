@@ -39,6 +39,7 @@ export const Viewport = ({ children, path, stackMode = true }) => {
   }
   // * -------------------------------------------------------------------------
 
+  // eslint-disable-next-line no-console
   console.log(visible ? '🟢' : backward ? '🔴' : behind ? '🟠' : '⚫️', path);
 
   return stackMode ? (

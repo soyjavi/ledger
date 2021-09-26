@@ -34,6 +34,7 @@ const ModalVault = () => {
 
   useEffect(() => {
     subscribe({ event: EVENTS.NEW_VAULT }, () => setVisible(true));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

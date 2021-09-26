@@ -84,6 +84,7 @@ const Dashboard = () => {
         )}
       </Viewport>
     ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [appearance, baseCurrency, lastTxs, rates, query],
   );
 };
