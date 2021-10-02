@@ -106,7 +106,9 @@ const ModalTransaction = () => {
         </Text>
       </View>
 
-      {type !== undefined && <Form {...dataSource} {...state} onChange={(value) => setState({ ...state, ...value })} />}
+      {type !== undefined && (
+        <Form {...dataSource} {...state} debounce={200} onChange={(value) => setState({ ...state, ...value })} />
+      )}
 
       {online && type !== TRANSFER && !hideLocation && (
         <HeatMap

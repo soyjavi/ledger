@@ -5,7 +5,6 @@ import {
   SIZE as SPACE,
   // components
   Button,
-  Portal,
   Text,
   Modal,
   View,
@@ -78,63 +77,61 @@ const ModalClone = () => {
   const vaultInfo = vaults.find(({ hash }) => hash === vault);
 
   return (
-    <Portal id="modal-clone">
-      <Modal color={COLOR.INFO} contentStyle={style.modalContent} isVisible={visible} swipeable onClose={handleClose}>
-        <View alignItems={ALIGN.CENTER} marginBottom={SPACE.L}>
-          <Text color={COLOR.GRAYSCALE_L} heading level={2}>
-            {L10N.TRANSACTION[type]}
-          </Text>
-          <Text heading level={1}>
-            {title}
+    <Modal color={COLOR.INFO} contentStyle={style.modalContent} isVisible={visible} swipeable onClose={handleClose}>
+      <View alignItems={ALIGN.CENTER} marginBottom={SPACE.L}>
+        <Text color={COLOR.GRAYSCALE_L} heading level={2}>
+          {L10N.TRANSACTION[type]}
+        </Text>
+        <Text heading level={1}>
+          {title}
+        </Text>
+      </View>
+      <View alignItems={ALIGN.CENTER} flexDirection={FLEX_DIRECTION.ROW} wide>
+        <BoxDate timestamp={timestamp} marginRight={SPACE.S} highlight />
+        <View flex={SPACE.XL}>
+          <Text numberOfLines={1}>{vaultInfo ? vaultInfo.title : undefined}</Text>
+          <Text color={COLOR.GRAYSCALE_L} detail level={2} numberOfLines={1}>
+            {`${verboseTime(new Date(timestamp))} - ${L10N.CATEGORIES[type][category]}`}
           </Text>
         </View>
-        <View alignItems={ALIGN.CENTER} flexDirection={FLEX_DIRECTION.ROW} wide>
-          <BoxDate timestamp={timestamp} marginRight={SPACE.S} highlight />
-          <View flex={SPACE.XL}>
-            <Text numberOfLines={1}>{vaultInfo ? vaultInfo.title : undefined}</Text>
-            <Text color={COLOR.GRAYSCALE_L} detail level={2} numberOfLines={1}>
-              {`${verboseTime(new Date(timestamp))} - ${L10N.CATEGORIES[type][category]}`}
-            </Text>
-          </View>
-          <View alignItems={ALIGN.END}>
+        <View alignItems={ALIGN.END}>
+          <PriceFriendly
+            color={type === INCOME ? COLOR.PRIMARY : undefined}
+            currency={currency}
+            highlight={type === INCOME}
+            maskAmount={false}
+            operator={type === EXPENSE}
+            value={value * operator}
+          />
+          {currency !== baseCurrency && (
             <PriceFriendly
-              color={type === INCOME ? COLOR.PRIMARY : undefined}
-              currency={currency}
-              highlight={type === INCOME}
+              color={COLOR.GRAYSCALE_L}
+              currency={baseCurrency}
+              detail
+              level={2}
               maskAmount={false}
               operator={type === EXPENSE}
-              value={value * operator}
+              value={exchange(value * operator, currency, baseCurrency, rates)}
             />
-            {currency !== baseCurrency && (
-              <PriceFriendly
-                color={COLOR.GRAYSCALE_L}
-                currency={baseCurrency}
-                detail
-                level={2}
-                maskAmount={false}
-                operator={type === EXPENSE}
-                value={exchange(value * operator, currency, baseCurrency, rates)}
-              />
-            )}
-          </View>
+          )}
         </View>
+      </View>
 
-        {location && (
-          <View marginTop={SPACE.S}>
-            <HeatMap caption={location.place} points={[[location.longitude, location.latitude]]} small />
-          </View>
-        )}
-
-        <View flexDirection={FLEX_DIRECTION.ROW} marginTop={SPACE.XL}>
-          <Button disabled={busy} marginRight={SPACE.M} outlined onPress={() => handleSubmit({ wipe: true })}>
-            {L10N.WIPE.toUpperCase()}
-          </Button>
-          <Button color={COLOR.CONTENT} disabled={busy} onPress={() => handleSubmit()}>
-            {L10N.CLONE.toUpperCase()}
-          </Button>
+      {location && (
+        <View marginTop={SPACE.S}>
+          <HeatMap caption={location.place} points={[[location.longitude, location.latitude]]} small />
         </View>
-      </Modal>
-    </Portal>
+      )}
+
+      <View flexDirection={FLEX_DIRECTION.ROW} marginTop={SPACE.XL}>
+        <Button disabled={busy} marginRight={SPACE.M} outlined onPress={() => handleSubmit({ wipe: true })}>
+          {L10N.WIPE.toUpperCase()}
+        </Button>
+        <Button color={COLOR.CONTENT} disabled={busy} onPress={() => handleSubmit()}>
+          {L10N.CLONE.toUpperCase()}
+        </Button>
+      </View>
+    </Modal>
   );
 };
 
