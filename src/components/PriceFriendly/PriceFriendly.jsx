@@ -31,7 +31,7 @@ const PriceFriendly = ({ currency, fixed, highlight, label, maskAmount, operator
     ...others,
     children: symbol,
     color,
-    customStyle: [style.symbol],
+    style: style.symbol,
   };
 
   const formatedValue = format({
@@ -67,7 +67,7 @@ const PriceFriendly = ({ currency, fixed, highlight, label, maskAmount, operator
             </Text>
           )}
           {LEFT_SYMBOLS.includes(symbol) && <Text {...symbolProps} />}
-          <Text {...others} style={[style.value, others.customStyle]} color={color}>
+          <Text {...others} style={[style.value, others.style]} color={color}>
             {formatedValue}
           </Text>
           {!LEFT_SYMBOLS.includes(symbol) && <Text {...symbolProps} />}
