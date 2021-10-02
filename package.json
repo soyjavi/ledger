@@ -20,7 +20,7 @@
     "release-it": "yarn version --patch && git push --follow-tags"
   },
   "dependencies": {
-    "@lookiero/aurora-next": "^3.0",
+    "@lookiero/aurora-next": "3.0.119",
     "@lookiero/event-next": "^0.3",
     "@lookiero/router": "^0.3",
     "@react-native-async-storage/async-storage": "^1.15.5",
@@ -69,6 +69,9 @@
     "prettier": "^2.2.1",
     "react-test-renderer": "^16.13.1",
     "typescript": "^4.0.0"
+  },
+  "resolutions": {
+    "react-native": "https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz"
   },
   "jest": {
     "preset": "jest-expo",
