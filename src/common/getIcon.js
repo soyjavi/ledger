@@ -50,6 +50,8 @@ export const getIcon = ({ type, category, title } = {}) => {
     if (contains(['phone', 'smartphone', 'iphone'])) return 'smartphone';
     if (contains(['villa', 'house', 'condo'])) return 'home';
     if (contains(['wifi'])) return 'home-wifi';
+    // Services
+    if (contains(['netflix'])) return 'netflix';
     // ??
     if (contains(['car'])) return 'car';
     // Brands
