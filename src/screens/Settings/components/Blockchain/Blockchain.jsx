@@ -5,8 +5,6 @@ import {
   Text,
   Touchable,
   View,
-  // hooks
-  useStack,
 } from '@lookiero/aurora';
 import React, { useLayoutEffect, useState } from 'react';
 
@@ -19,7 +17,6 @@ import { style } from './Blockchain.style';
 const Blockchain = () => {
   const { connected } = useConnection();
   const store = useStore();
-  const Stack = useStack();
 
   const [busy, setBusy] = useState(false);
   const [status, setStatus] = useState({});

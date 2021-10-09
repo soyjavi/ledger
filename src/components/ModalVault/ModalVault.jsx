@@ -7,7 +7,6 @@ import {
   // components
   Button,
   Modal,
-  Portal,
   Text,
   View,
 } from '@lookiero/aurora';
@@ -34,6 +33,7 @@ const ModalVault = () => {
 
   useEffect(() => {
     subscribe({ event: EVENTS.NEW_VAULT }, () => setVisible(true));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -59,26 +59,24 @@ const ModalVault = () => {
   };
 
   return (
-    <Portal id="modal-vault">
-      <Modal contentStyle={style.modalContent} color={COLOR.INFO} isVisible={visible} swipeable onClose={handleClose}>
-        <View alignItems={ALIGN.CENTER} marginBottom={SIZE.L}>
-          <Text heading level={2}>
-            {`${L10N.NEW} ${L10N.VAULT}`}
-          </Text>
-        </View>
+    <Modal contentStyle={style.modalContent} color={COLOR.INFO} isVisible={visible} swipeable onClose={handleClose}>
+      <View alignItems={ALIGN.CENTER} marginBottom={SIZE.L}>
+        <Text heading level={2}>
+          {`${L10N.NEW} ${L10N.VAULT}`}
+        </Text>
+      </View>
 
-        <FormVault form={form} modal onChange={setForm} />
+      <FormVault form={form} modal onChange={setForm} />
 
-        <View flexDirection={FLEX_DIRECTION.ROW} marginTop={SIZE.M}>
-          <Button disabled={busy} marginRight={SIZE.M} outlined onPress={handleClose}>
-            {L10N.CLOSE.toUpperCase()}
-          </Button>
-          <Button color={COLOR.CONTENT} disabled={busy || !form.currency || !form.title} onPress={handleSubmit}>
-            {L10N.SAVE.toUpperCase()}
-          </Button>
-        </View>
-      </Modal>
-    </Portal>
+      <View flexDirection={FLEX_DIRECTION.ROW} marginTop={SIZE.M}>
+        <Button disabled={busy} marginRight={SIZE.M} outlined onPress={handleClose}>
+          {L10N.CLOSE.toUpperCase()}
+        </Button>
+        <Button color={COLOR.CONTENT} disabled={busy || !form.currency || !form.title} onPress={handleSubmit}>
+          {L10N.SAVE.toUpperCase()}
+        </Button>
+      </View>
+    </Modal>
   );
 };
 

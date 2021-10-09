@@ -1,7 +1,7 @@
 {
   "name": "ledger",
   "description": "Your private finance ledger running on your own blockchain",
-  "version": "0.27.29",
+  "version": "0.28.2",
   "license": "LGPL-3.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
@@ -20,7 +20,7 @@
     "release-it": "yarn version --patch && git push --follow-tags"
   },
   "dependencies": {
-    "@lookiero/aurora-next": "^3.0",
+    "@lookiero/aurora-next": "3.0.119",
     "@lookiero/event-next": "^0.3",
     "@lookiero/router": "^0.3",
     "@react-native-async-storage/async-storage": "^1.15.5",
@@ -69,6 +69,9 @@
     "prettier": "^2.2.1",
     "react-test-renderer": "^16.13.1",
     "typescript": "^4.0.0"
+  },
+  "resolutions": {
+    "react-native": "https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz"
   },
   "jest": {
     "preset": "jest-expo",

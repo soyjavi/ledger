@@ -92,6 +92,7 @@ const Vault = () => {
             )}
           </ScrollView>
         ),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [rest, txs],
       )}
     </Viewport>

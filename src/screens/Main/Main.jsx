@@ -1,4 +1,4 @@
-import { Footer, FooterItem } from '@lookiero/aurora';
+import { COLOR, Footer, FooterItem } from '@lookiero/aurora';
 import { Router } from '@lookiero/router';
 import { useRouter } from '@lookiero/router';
 import React, { useRef, useState } from 'react';
@@ -17,6 +17,10 @@ const TITLE = {
   [ROUTE.TAB_STATS]: L10N.ACTIVITY,
   [ROUTE.TAB_ACCOUNTS]: L10N.VAULTS,
   [ROUTE.TAB_SETTINGS]: L10N.SETTINGS,
+};
+
+const ITEM = {
+  color: COLOR.GRAYSCALE_L,
 };
 
 const Container = (inherit) => {
@@ -43,10 +47,10 @@ const Container = (inherit) => {
       </ScrollView>
 
       <Footer style={style.footer} value={value} onChange={handleChange}>
-        <FooterItem icon="home" text={L10N.DASHBOARD} value={ROUTE.TAB_DASHBOARD} />
-        <FooterItem icon="bar-chart" text={L10N.ACTIVITY} value={ROUTE.TAB_STATS} />
-        <FooterItem icon="stack" text={L10N.VAULTS} value={ROUTE.TAB_ACCOUNTS} />
-        <FooterItem icon="settings" text={L10N.SETTINGS} value={ROUTE.TAB_SETTINGS} />
+        <FooterItem {...ITEM} icon="home" text={L10N.DASHBOARD} value={ROUTE.TAB_DASHBOARD} />
+        <FooterItem {...ITEM} icon="bar-chart" text={L10N.ACTIVITY} value={ROUTE.TAB_STATS} />
+        <FooterItem {...ITEM} icon="stack" text={L10N.VAULTS} value={ROUTE.TAB_ACCOUNTS} />
+        <FooterItem {...ITEM} icon="settings" text={L10N.SETTINGS} value={ROUTE.TAB_SETTINGS} />
       </Footer>
     </Viewport>
   );

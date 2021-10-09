@@ -42,6 +42,7 @@ export const FirstVault = () => {
       );
       if (rates) updateRates(rates);
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSubmit = async () => {
