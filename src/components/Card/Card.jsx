@@ -38,8 +38,8 @@ const Card = ({ balance = 0, currency, highlight, onPress, title = '', ...others
               color={highlight ? COLOR.BASE : !hasBalance ? COLOR.GRAYSCALE_L : undefined}
               currency={currency}
             />
-            <Text color={textColor} detail level={2} marginLeft={SPACE.S} numberOfLines={1}>
-              {title.toUpperCase()}
+            <Text color={textColor} detail level={2} marginLeft={SPACE.S} numberOfLines={1} upperCase>
+              {title}
             </Text>
           </View>
 

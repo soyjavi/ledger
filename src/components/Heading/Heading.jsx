@@ -1,6 +1,4 @@
 import {
-  // helpers
-  COLOR,
   // components
   Text,
   View,
@@ -10,9 +8,9 @@ import React from 'react';
 
 import { style } from './Heading.style';
 
-const Heading = ({ children, color = COLOR.GRAYSCALE_L, value = '', ...others }) => (
+const Heading = ({ children, color, value = '', ...others }) => (
   <View {...others} style={[style.row, others.style]}>
-    <Text color={color} heading>
+    <Text color={color} action level={1} upperCase>
       {value}
     </Text>
     {children && <View style={style.children}>{children}</View>}

@@ -77,8 +77,8 @@ const QR = () => {
       <Heading value={L10N.TRANSFER_TXS}>
         {connected && hasCamera && (
           <Touchable onPress={() => setCamera(!camera)}>
-            <Text action color={COLOR.PRIMARY}>
-              {(camera ? L10N.CLOSE : L10N.QR_READER).toUpperCase()}
+            <Text action color={COLOR.PRIMARY} upperCase>
+              {camera ? L10N.CLOSE : L10N.QR_READER}
             </Text>
           </Touchable>
         )}

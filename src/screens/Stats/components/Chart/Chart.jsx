@@ -77,8 +77,9 @@ const Chart = ({ captions, highlight, inverted, values = [], style: styleContain
                     detail: true,
                     color: COLOR.GRAYSCALE_L,
                   })}
+              upperCase
             >
-              {caption.substring(0, 3).toUpperCase()}
+              {caption.substring(0, 3)}
             </Text>
           ))}
         </View>
