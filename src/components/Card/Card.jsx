@@ -38,7 +38,16 @@ const Card = ({ balance = 0, currency, highlight, onPress, title = '', ...others
               color={highlight ? COLOR.BASE : !hasBalance ? COLOR.GRAYSCALE_L : undefined}
               currency={currency}
             />
-            <Text color={textColor} detail level={2} marginLeft={SPACE.S} numberOfLines={1} upperCase>
+            <Text
+              color={textColor}
+              action
+              ellipsizeMode
+              level={title.length > 14 ? 3 : 2}
+              marginLeft={SPACE.S}
+              numberOfLines={1}
+              upperCase
+              style={{ maxWidth: CARD_SIZE * 0.65 }}
+            >
               {title}
             </Text>
           </View>
@@ -51,7 +60,7 @@ const Card = ({ balance = 0, currency, highlight, onPress, title = '', ...others
 
               {currency !== baseCurrency ? (
                 <PriceFriendly
-                  color={textColor}
+                  color={COLOR.GRAYSCALE_L}
                   currency={baseCurrency}
                   detail
                   level={2}
