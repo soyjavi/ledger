@@ -124,10 +124,10 @@ const ModalClone = () => {
       )}
 
       <View flexDirection={FLEX_DIRECTION.ROW} marginTop={SPACE.XL}>
-        <Button disabled={busy} marginRight={SPACE.M} outlined onPress={() => handleSubmit({ wipe: true })}>
+        <Button disabled={busy} marginRight={SPACE.M} outlined rounded onPress={() => handleSubmit({ wipe: true })}>
           {L10N.WIPE.toUpperCase()}
         </Button>
-        <Button color={COLOR.CONTENT} disabled={busy} onPress={() => handleSubmit()}>
+        <Button color={COLOR.CONTENT} disabled={busy} rounded onPress={() => handleSubmit()}>
           {L10N.CLONE.toUpperCase()}
         </Button>
       </View>
