@@ -16,6 +16,13 @@ const style = StyleSheet.create({
     width: CARD_SIZE,
   },
 
+  outlined: {
+    borderColor: '$colorGrayscaleXL',
+    borderStyle: '$borderStyle',
+    borderRadius: '$borderRadius',
+    borderWidth: '$borderSize',
+  },
+
   content: {
     flex: 1,
     alignItems: 'flex-start',
