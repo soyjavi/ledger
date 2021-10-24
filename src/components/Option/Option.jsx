@@ -32,7 +32,6 @@ const Option = ({
   const textProps = {
     align: ALIGN.CENTER,
     color: colorContent,
-    detail: true,
     marginTop: icon ? SIZE.XS : undefined,
     numberOfLines: 1,
   };
@@ -44,11 +43,15 @@ const Option = ({
         {icon && <Icon color={colorContent} name={icon} />}
 
         {caption && (
-          <Text {...textProps} level={2} marginTop={SIZE.XS}>
+          <Text {...textProps} action level={2} marginTop={SIZE.XS}>
             {caption}
           </Text>
         )}
-        {legend && <Text {...textProps}>{legend}</Text>}
+        {legend && (
+          <Text {...textProps} detail>
+            {legend}
+          </Text>
+        )}
         {children}
       </Box>
     </Touchable>
