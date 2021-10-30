@@ -6,9 +6,10 @@ import {
   Touchable,
   View,
 } from '@lookiero/aurora';
+import { useRouter } from '@lookiero/router';
 import React, { useLayoutEffect, useState } from 'react';
 
-import { getSyncStatus, L10N, syncNode } from '@common';
+import { getSyncStatus, L10N, ROUTE, syncNode } from '@common';
 import { Heading } from '@components';
 import { useConnection, useStore } from '@context';
 
@@ -16,20 +17,21 @@ import { style } from './Blockchain.style';
 
 const Blockchain = () => {
   const { connected } = useConnection();
+  const { route: { params = {} } = {} } = useRouter();
   const store = useStore();
 
   const [busy, setBusy] = useState(false);
   const [status, setStatus] = useState({});
 
+  const isVisible = ROUTE.TAB_SETTINGS.includes(params.tab);
+
   useLayoutEffect(() => {
-    if (connected) (async () => setStatus(await getSyncStatus(store)))();
-  }, [connected, store]);
+    if (connected && isVisible) (async () => setStatus(await getSyncStatus(store)))();
+  }, [connected, isVisible, store]);
 
   const handleSync = async () => {
     setBusy(true);
-    const nextStatus = await syncNode(store);
-    // if (synced)
-    setStatus(nextStatus);
+    setStatus(await syncNode(store));
     setBusy(false);
   };
 
