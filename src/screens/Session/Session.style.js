@@ -14,7 +14,7 @@ export const style = StyleSheet.create({
   },
 
   image: {
-    width: '$layoutXXL * 2',
+    width: '$layoutXL * 2',
     height: '$layoutXXL / 2',
   },
 });
