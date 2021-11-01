@@ -35,7 +35,7 @@ const PriceFriendly = ({ currency, fixed, highlight, label, maskAmount, operator
   };
 
   const formatedValue = format({
-    fixed: fixed || currencyDecimals(value, currency),
+    fixed: fixed !== undefined ? fixed : currencyDecimals(value, currency),
     mask: maskedAmount,
     numberOfLines: 1,
     value: Math.abs(value),

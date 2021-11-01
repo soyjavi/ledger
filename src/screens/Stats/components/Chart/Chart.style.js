@@ -5,7 +5,7 @@ import { colorOpacity } from '@common';
 
 export const style = StyleSheet.create({
   $barRadius: '$borderRadius',
-  $barSize: 8,
+  $barSize: '$borderRadius * 2',
   bars: {
     flexDirection: 'row',
     alignItems: 'flex-end',

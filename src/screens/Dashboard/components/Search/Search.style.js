@@ -15,6 +15,7 @@ export const style = StyleSheet.create({
     alignItems: 'center',
     alignContent: 'center',
     backgroundColor: '$colorInfo',
+    borderColor: '$colorBase',
     borderRadius: '$borderRadius',
     borderWidth: '$borderSize',
     flexDirection: 'row',
@@ -27,7 +28,6 @@ export const style = StyleSheet.create({
   input: {
     fontFamily: '$fontInput',
     fontSize: '$fontBodySize3',
-    borderColor: '$colorBase',
     color: '$colorContent',
     height: '$inputSize * 0.9',
     flex: 1,
