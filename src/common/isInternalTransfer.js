@@ -1,5 +1,5 @@
 import { C } from './constants';
 
-const { VAULT_TRANSFER } = C;
+const { INTERNAL_TRANSFER } = C;
 
-export const isInternalTransfer = (tx = {}) => tx.category === VAULT_TRANSFER;
+export const isInternalTransfer = (tx = {}) => tx.category === INTERNAL_TRANSFER;
