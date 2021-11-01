@@ -16,6 +16,8 @@ export const C = {
 
   ENDPOINT: IS_DEV ? 'http://localhost:8080' : 'https://ledgernode.soyjavi.com',
 
+  EXPENSE_AS_INVESTMENT: 5,
+
   FIXED: {
     BTC: 8,
     ETH: 4,
@@ -27,6 +29,7 @@ export const C = {
     XAG: 0,
   },
 
+  INTERNAL_TRANSFER: 99,
   IS_DEV,
 
   LANGUAGE: 'en-EN',
@@ -106,7 +109,6 @@ export const C = {
     },
   },
 
-  VAULT_TRANSFER: 99,
   VERSION: PKG.version,
 
   WIPE: 0,

@@ -1,8 +1,7 @@
-import { C, exchange, getMonthDiff } from '@common';
+import { C, exchange, getMonthDiff, isInternalTransfer, isNonAccountingTx } from '@common';
 
 const {
   TX: { TYPE },
-  VAULT_TRANSFER,
 } = C;
 
 export const calcVault = ({ baseCurrency, genesisDate, months = 0, rates = {}, txs = [], vault }) => {
@@ -32,7 +31,7 @@ export const calcVault = ({ baseCurrency, genesisDate, months = 0, rates = {}, t
 
     // @TODO: Should revisit this algo
     if (monthIndex === months) {
-      if (category !== VAULT_TRANSFER) {
+      if (!isInternalTransfer({ category }) && !isNonAccountingTx({ category, type })) {
         currentMonthTxs += 1;
         if (isExpense) expenses += value;
         else incomes += value;

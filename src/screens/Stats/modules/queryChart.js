@@ -1,4 +1,4 @@
-import { C, exchange, getMonthDiff } from '@common';
+import { C, exchange, getMonthDiff, isInternalTransfer, isNonAccountingTx } from '@common';
 
 import { filterTxs } from './filterTxs';
 import { parseDate } from './parseDate';
@@ -8,7 +8,6 @@ const {
   TX: {
     TYPE: { EXPENSE },
   },
-  VAULT_TRANSFER,
 } = C;
 
 export default ({
@@ -30,19 +29,21 @@ export default ({
   const vaultsCurrency = {};
   vaults.forEach(({ currency, hash }) => (vaultsCurrency[hash] = currency));
 
-  filterTxs(txs).forEach((tx) => {
-    const { category, timestamp, type, value } = tx;
-    const currency = vaultsCurrency[tx.vault];
+  filterTxs(txs)
+    .filter((tx) => !isNonAccountingTx(tx))
+    .forEach((tx) => {
+      const { timestamp, type, value } = tx;
+      const currency = vaultsCurrency[tx.vault];
 
-    const valueExchange = exchange(value, currency, baseCurrency, rates, timestamp);
-    const monthIndex = getMonthDiff(originDate, parseDate(timestamp)) - 1;
+      const valueExchange = exchange(value, currency, baseCurrency, rates, timestamp);
+      const monthIndex = getMonthDiff(originDate, parseDate(timestamp)) - 1;
 
-    if (category !== VAULT_TRANSFER) {
-      chart[type === EXPENSE ? 'expenses' : 'incomes'][monthIndex] += valueExchange;
-    } else if (type === EXPENSE) {
-      chart.transfers[monthIndex] += valueExchange;
-    }
-  });
+      if (!isInternalTransfer(tx)) {
+        chart[type === EXPENSE ? 'expenses' : 'incomes'][monthIndex] += valueExchange;
+      } else if (type === EXPENSE) {
+        chart.transfers[monthIndex] += valueExchange;
+      }
+    });
 
   return chart;
 };
