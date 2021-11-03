@@ -47,10 +47,10 @@ const Container = (inherit) => {
       </ScrollView>
 
       <Footer style={style.footer} value={value} onChange={handleChange}>
-        <FooterItem {...ITEM} icon="home" text={L10N.DASHBOARD} value={ROUTE.TAB_DASHBOARD} />
-        <FooterItem {...ITEM} icon="bar-chart" text={L10N.ACTIVITY} value={ROUTE.TAB_STATS} />
-        <FooterItem {...ITEM} icon="stack" text={L10N.VAULTS} value={ROUTE.TAB_ACCOUNTS} />
-        <FooterItem {...ITEM} icon="settings" text={L10N.SETTINGS} value={ROUTE.TAB_SETTINGS} />
+        <FooterItem {...ITEM} icon="home" value={ROUTE.TAB_DASHBOARD} />
+        <FooterItem {...ITEM} icon="bar-chart" value={ROUTE.TAB_STATS} />
+        <FooterItem {...ITEM} icon="stack" value={ROUTE.TAB_ACCOUNTS} />
+        <FooterItem {...ITEM} icon="settings" value={ROUTE.TAB_SETTINGS} />
       </Footer>
     </Viewport>
   );

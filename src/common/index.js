@@ -8,6 +8,8 @@ export * from './getIcon';
 export * from './getMonthDiff';
 export * from './getSyncStatus';
 export * from './groupTxsByDate';
+export * from './isInternalTransfer';
+export * from './isNonAccountingTx';
 export * from './l10n';
 export * from './onHardwareBackPress';
 export * from './syncNode';

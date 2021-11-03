@@ -59,8 +59,8 @@ const InputCurrency = ({
         />
       )}
       <View>
-        <Text color={!active ? COLOR.GRAYSCALE_L : undefined} detail level={2}>
-          {(title || label).toUpperCase()}
+        <Text color={!active ? COLOR.GRAYSCALE_L : undefined} detail level={2} upperCase>
+          {title || label}
         </Text>
         {title && (
           <PriceFriendly

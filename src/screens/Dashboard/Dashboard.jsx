@@ -51,8 +51,8 @@ const Dashboard = () => {
           <>
             <Heading value={L10N.VAULTS}>
               <Touchable onPress={() => publish({ event: EVENTS.NEW_VAULT })}>
-                <Text action color={COLOR.PRIMARY}>
-                  {`${L10N.NEW} ${L10N.VAULT}`.toUpperCase()}
+                <Text action color={COLOR.PRIMARY} upperCase>
+                  {`${L10N.NEW} ${L10N.VAULT}`}
                 </Text>
               </Touchable>
             </Heading>

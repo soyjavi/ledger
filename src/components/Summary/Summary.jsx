@@ -33,7 +33,7 @@ const Summary = ({ children, currency = CURRENCY, currentBalance, currentMonth =
 
   return (
     <View style={style.container}>
-      <Text heading level={2} color={COLOR.GRAYSCALE_L}>
+      <Text action level={2} upperCase>
         {title}
       </Text>
 

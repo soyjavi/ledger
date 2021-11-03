@@ -1,7 +1,7 @@
 export const L10N = {
   ACCEPT: 'Accept',
   ACTIVE: 'Active',
-  ACTIVITY: 'Activity',
+  ACTIVITY: 'Analytics',
   ADD: 'Add',
   AMOUNT: 'Amount',
   APPEARANCE: 'Appearance',

@@ -31,15 +31,27 @@ const Card = ({ balance = 0, currency, highlight, onPress, title = '', ...others
 
   return (
     <Touchable {...others} onPress={onPress}>
-      <Box color={highlight ? COLOR.PRIMARY : COLOR.INFO} style={style.box}>
+      <Box
+        color={highlight ? COLOR.PRIMARY : hasBalance ? COLOR.INFO : COLOR.BASE}
+        style={[style.box, !hasBalance && style.outlined]}
+      >
         <View style={style.content}>
           <View alignItems={ALIGN.CENTER} flexDirection={FLEX_DIRECTION.ROW}>
             <CurrencyLogo
               color={highlight ? COLOR.BASE : !hasBalance ? COLOR.GRAYSCALE_L : undefined}
               currency={currency}
             />
-            <Text color={textColor} detail level={2} marginLeft={SPACE.S} numberOfLines={1}>
-              {title.toUpperCase()}
+            <Text
+              color={textColor}
+              action
+              ellipsizeMode
+              level={title.length > 14 ? 3 : 2}
+              marginLeft={SPACE.S}
+              numberOfLines={1}
+              upperCase
+              style={{ maxWidth: CARD_SIZE * 0.65 }}
+            >
+              {title}
             </Text>
           </View>
 
@@ -51,7 +63,7 @@ const Card = ({ balance = 0, currency, highlight, onPress, title = '', ...others
 
               {currency !== baseCurrency ? (
                 <PriceFriendly
-                  color={textColor}
+                  color={highlight ? COLOR.BASE : COLOR.GRAYSCALE_L}
                   currency={baseCurrency}
                   detail
                   level={2}

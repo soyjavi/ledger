@@ -19,23 +19,18 @@ const Sync = () => {
   const Stack = useStack();
   const store = useStore();
 
-  const [state, setState] = useState(undefined);
+  const [state, setState] = useState(STATE.UNKNOWN);
 
   useLayoutEffect(() => {
     (async () => {
       if (connected) {
         await getRates({ L10N, Stack, store });
-        setState(STATE.UNKNOWN);
+        if (state === STATE.UNKNOWN) handleState();
       }
     })();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [connected]);
-
-  useLayoutEffect(() => {
-    if (connected && state === STATE.UNKNOWN) handleState();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [connected, state]);
 
   useEffect(() => {
     if (!connected || [STATE.UNKNOWN, STATE.FETCHING, STATE.SYNCING].includes(state)) clearTimeout(syncTimeout);

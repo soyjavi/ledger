@@ -1,7 +1,7 @@
 import { C } from '@common';
 
 const {
-  VAULT_TRANSFER,
+  INTERNAL_TRANSFER,
   TX: {
     TYPE: { EXPENSE, INCOME },
   },
@@ -15,7 +15,7 @@ export const createTransfer = async ({
   store: { addTx },
 }) => {
   let block = await addTx({
-    category: VAULT_TRANSFER,
+    category: INTERNAL_TRANSFER,
     title: to.title,
     type: EXPENSE,
     value: parseFloat(value, 10),
@@ -24,7 +24,7 @@ export const createTransfer = async ({
 
   if (block) {
     block = await addTx({
-      category: VAULT_TRANSFER,
+      category: INTERNAL_TRANSFER,
       title: from.title,
       type: INCOME,
       value: parseFloat(exchange, 10),

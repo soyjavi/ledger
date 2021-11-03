@@ -4,6 +4,7 @@ import StyleSheet from 'react-native-extended-stylesheet';
 export const style = StyleSheet.create({
   button: {
     alignSelf: 'center',
+    marginRight: '$spaceS',
   },
 
   container: {
@@ -14,20 +15,21 @@ export const style = StyleSheet.create({
     alignItems: 'center',
     alignContent: 'center',
     backgroundColor: '$colorInfo',
+    borderColor: '$colorBase',
     borderRadius: '$borderRadius',
     borderWidth: '$borderSize',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: '$spaceM',
+    paddingLeft: '$spaceM',
+    paddingRight: '$spaceS',
     width: '100%',
   },
 
   input: {
     fontFamily: '$fontInput',
-    fontSize: '$fontInputSize',
-    borderColor: '$colorBase',
+    fontSize: '$fontBodySize3',
     color: '$colorContent',
-    height: '$inputSize',
+    height: '$inputSize * 0.9',
     flex: 1,
     marginRight: '$spaceM',
     ...Platform.select({

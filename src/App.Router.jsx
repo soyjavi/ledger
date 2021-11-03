@@ -50,7 +50,9 @@ const AppRouter = () => {
       <Aurora theme={ShieldTheme} style={[style.container, { height, width }]}>
         <Router
           container={Container}
-          entryRoute={{ path: authorization ? (IS_DEV ? '/main/dashboard' : ROUTE.SESSION) : ROUTE.WELCOME }}
+          entryRoute={{
+            path: authorization ? (IS_DEV ? `${ROUTE.MAIN}${ROUTE.TAB_DASHBOARD}` : ROUTE.SESSION) : ROUTE.WELCOME,
+          }}
           memoize
           routes={[
             { path: ROUTE.SESSION, component: Session, preload: true },

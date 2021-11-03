@@ -13,8 +13,8 @@ import { style } from './Summary.style';
 
 const SummaryBox = ({ caption, value, ...inherit }) => (
   <View style={style.summaryBox}>
-    <Text color={COLOR.GRAYSCALE_L} detail level={2} numberOfLines={1}>
-      {caption.toUpperCase()}
+    <Text action color={COLOR.GRAYSCALE_L} level={2} numberOfLines={1} upperCase>
+      {caption}
     </Text>
     <PriceFriendly {...inherit} detail level={2} fixed={value >= 1000 ? 0 : undefined} value={value} />
   </View>

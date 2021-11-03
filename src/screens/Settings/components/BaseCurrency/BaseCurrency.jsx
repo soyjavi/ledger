@@ -44,8 +44,8 @@ const BaseCurrency = () => {
       <Heading value={L10N.CHOOSE_CURRENCY}>
         {connected && (
           <Touchable onPress={handleUpdateRates}>
-            <Text action color={COLOR.PRIMARY}>
-              {L10N.SYNC_RATES_CTA.toUpperCase()}
+            <Text action color={COLOR.PRIMARY} upperCase>
+              {L10N.SYNC_RATES_CTA}
             </Text>
           </Touchable>
         )}

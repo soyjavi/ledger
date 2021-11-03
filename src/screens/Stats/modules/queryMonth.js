@@ -8,7 +8,7 @@ const {
   TX: {
     TYPE: { EXPENSE },
   },
-  VAULT_TRANSFER,
+  INTERNAL_TRANSFER,
 } = C;
 
 const RANGE_MONTHS = 12;
@@ -42,7 +42,7 @@ export default (
 
     const valueExchange = exchange(value, currency, baseCurrency, rates, timestamp);
 
-    const isTransfer = category === VAULT_TRANSFER;
+    const isTransfer = category === INTERNAL_TRANSFER;
 
     if (isTransfer && type === EXPENSE) chart.transfers[index] += valueExchange;
     else if (!isTransfer && type === EXPENSE) chart.expenses[index] += valueExchange;

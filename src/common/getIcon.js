@@ -19,7 +19,7 @@ const CATEGORY_ICON = [
   {
     // Incomes
     0: 'trash',
-    1: 'building',
+    1: 'government',
     2: 'percent',
     3: 'calendar',
     4: 'arrow-right-up',
@@ -48,16 +48,17 @@ export const getIcon = ({ type, category, title } = {}) => {
     // Utilities
     if (contains(['gasoline', 'gas station'])) return 'gas-station';
     if (contains(['phone', 'smartphone', 'iphone'])) return 'smartphone';
-    if (contains(['villa', 'house', 'condo'])) return 'home';
-    if (contains(['wifi'])) return 'home-wifi';
+    if (contains(['villa', 'condo'])) return 'home';
+    if (contains(['internet', 'wifi'])) return 'home-wifi';
     // Services
     if (contains(['netflix'])) return 'netflix';
     // ??
     if (contains(['car'])) return 'car';
+    if (contains(['house'])) return 'building';
     // Brands
-    else if (contains(['apple', 'iphone', 'icloud'])) return 'apple';
-    else if (contains(['spotify'])) return 'spotify';
-    else if (contains(['paypal'])) return 'paypal';
+    if (contains(['apple', 'iphone', 'icloud'])) return 'apple';
+    if (contains(['spotify'])) return 'spotify';
+    if (contains(['paypal'])) return 'paypal';
   }
 
   return CATEGORY_ICON[type][category] || 'question';

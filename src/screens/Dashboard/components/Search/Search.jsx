@@ -54,6 +54,7 @@ const Search = ({ onChange }) => {
         <ButtonIcon
           color={hasValue ? COLOR.CONTENT : COLOR.GRAYSCALE_L}
           name={hasValue ? 'close' : 'search'}
+          small
           style={style.button}
           onPress={hasValue ? handleReset : undefined}
         />

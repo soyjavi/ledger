@@ -61,7 +61,7 @@ export const Session = () => {
       <Viewport path={ROUTE.SESSION}>
         <SafeAreaView flex={SIZE.XS}>
           <View alignItems={ALIGN.CENTER} style={style.content} justifyContent={ALIGN.END} padding={SIZE.M}>
-            <Image resizeMode="cover" source={LOGO} style={style.image} />
+            <Image resizeMode="contain" source={LOGO} style={style.image} />
             <Text color={COLOR.GRAYSCALE_L} detail level={1} marginTop={SIZE.XXL}>
               {is.signup ? L10N.PIN_CHOOSE : L10N.PIN}
             </Text>
