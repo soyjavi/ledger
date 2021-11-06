@@ -99,6 +99,7 @@ export const L10N = {
   INCOME: 'Income',
   INCOMES: 'Incomes',
   INITIAL_BALANCE: 'Initial balance',
+  INVESTMENTS: 'Investments',
 
   LAST_TRANSACTIONS: 'Recent activity',
   LATER: 'LATER',

@@ -21,6 +21,7 @@ export default ({
     balance: chartBalance.slice(chartBalance.length - STATS_MONTHS_LIMIT),
     expenses: new Array(STATS_MONTHS_LIMIT).fill(0),
     incomes: new Array(STATS_MONTHS_LIMIT).fill(0),
+    investments: new Array(STATS_MONTHS_LIMIT).fill(0),
     transfers: new Array(STATS_MONTHS_LIMIT).fill(0),
   };
   const now = parseDate();
@@ -30,7 +31,7 @@ export default ({
   vaults.forEach(({ currency, hash }) => (vaultsCurrency[hash] = currency));
 
   filterTxs(txs)
-    .filter((tx) => !isNonAccountingTx(tx))
+    // .filter((tx) => !isNonAccountingTx(tx))
     .forEach((tx) => {
       const { timestamp, type, value } = tx;
       const currency = vaultsCurrency[tx.vault];
@@ -38,10 +39,10 @@ export default ({
       const valueExchange = exchange(value, currency, baseCurrency, rates, timestamp);
       const monthIndex = getMonthDiff(originDate, parseDate(timestamp)) - 1;
 
-      if (!isInternalTransfer(tx)) {
+      if (!isInternalTransfer(tx) && !isNonAccountingTx(tx)) {
         chart[type === EXPENSE ? 'expenses' : 'incomes'][monthIndex] += valueExchange;
       } else if (type === EXPENSE) {
-        chart.transfers[monthIndex] += valueExchange;
+        chart[isInternalTransfer(tx) ? 'transfers' : 'investments'][monthIndex] += valueExchange;
       }
     });
 
