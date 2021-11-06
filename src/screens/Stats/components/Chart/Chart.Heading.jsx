@@ -7,8 +7,8 @@ import { style } from './Chart.style';
 
 const ChartHeading = ({ color, currency, inverted, max, min, title }) => (
   <Heading style={inverted && style.headingInverted} value={title}>
-    {min > 0 && <PriceFriendly color={color} currency={currency} detail label="min " value={min} />}
-    {max > 0 && <PriceFriendly color={color} currency={currency} detail label="  max " value={max} />}
+    {min > 0 && <PriceFriendly color={color} currency={currency} detail fixed={0} label="min " value={min} />}
+    {max > 0 && <PriceFriendly color={color} currency={currency} detail fixed={0} label="  max " value={max} />}
   </Heading>
 );
 

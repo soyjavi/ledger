@@ -35,7 +35,7 @@ const ItemGroupCategories = ({ color, dataSource, type }) => {
   return (
     <>
       <Heading value={type === EXPENSE ? L10N.EXPENSES : L10N.INCOMES}>
-        <PriceFriendly color={COLOR.GRAYSCALE_L} currency={baseCurrency} detail level={1} value={total} />
+        <PriceFriendly color={COLOR.GRAYSCALE_L} currency={baseCurrency} detail fixed={0} level={1} value={total} />
       </Heading>
       <View style={style.container}>
         {orderByAmount(totals).map(({ key, amount }) => (

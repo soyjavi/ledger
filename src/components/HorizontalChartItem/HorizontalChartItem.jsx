@@ -22,7 +22,7 @@ const HorizontalChartItem = ({ color = COLOR.CONTENT, currency, small, title, va
       <Text detail level={small ? 2 : 1}>
         {title}
       </Text>
-      <PriceFriendly detail level={small ? 2 : 1} currency={currency} value={value} />
+      <PriceFriendly detail currency={currency} fixed={0} level={small ? 2 : 1} value={value} />
     </View>
 
     <Motion
