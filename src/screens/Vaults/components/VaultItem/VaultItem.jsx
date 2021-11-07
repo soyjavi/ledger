@@ -1,6 +1,7 @@
 import {
   //helpers
   COLOR,
+  POINTER,
   // components
   Touchable,
   View,
@@ -24,7 +25,7 @@ const VaultItem = ({ onPress, dataSource: { currency, currentBalance = 0, title 
 
   return (
     <Touchable style={style.container} onPress={onPress}>
-      <Box rounded style={style.box}>
+      <Box pointerEvents={POINTER.NONE} rounded style={style.box}>
         <CurrencyLogo
           color={currency !== baseCurrency || !hasBalance ? COLOR.GRAYSCALE_L : undefined}
           currency={currency}

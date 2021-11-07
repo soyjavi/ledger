@@ -2,6 +2,7 @@ import {
   // helpers
   ALIGN,
   COLOR,
+  POINTER,
   SIZE,
   // components
   Icon,
@@ -38,7 +39,7 @@ const Option = ({
 
   return (
     <Touchable onPress={onPress} style={others.style}>
-      <Box color={selected ? colorSelected : color} style={style.container}>
+      <Box color={selected ? colorSelected : color} pointerEvents={POINTER.NONE} style={style.container}>
         {currency && <CurrencyLogo color={selected ? COLOR.PRIMARY : COLOR.CONTENT} currency={currency} />}
         {icon && <Icon color={colorContent} name={icon} />}
 

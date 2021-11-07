@@ -3,6 +3,7 @@ import {
   ALIGN,
   COLOR,
   FLEX_DIRECTION,
+  POINTER,
   SIZE as SPACE,
   // components
   Text,
@@ -33,6 +34,7 @@ const Card = ({ balance = 0, currency, highlight, onPress, title = '', ...others
     <Touchable {...others} onPress={onPress}>
       <Box
         color={highlight ? COLOR.PRIMARY : hasBalance ? COLOR.INFO : COLOR.BASE}
+        pointerEvents={POINTER.NONE}
         style={[style.box, !hasBalance && style.outlined]}
       >
         <View style={style.content}>

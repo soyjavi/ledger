@@ -1,6 +1,7 @@
 import {
   // helpers
   COLOR,
+  POINTER,
   Theme,
   // components
   Text,
@@ -32,7 +33,7 @@ const Input = ({ backgroundColor = COLOR.GRAYSCALE_XL, keyboard = 'default', lab
         color={!active ? COLOR.GRAYSCALE_L : undefined}
         detail
         level={2}
-        pointerEvents="none"
+        pointerEvents={POINTER.NONE}
         style={style.label}
         upperCase
       >
