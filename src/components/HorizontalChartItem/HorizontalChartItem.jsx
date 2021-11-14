@@ -1,6 +1,7 @@
 import {
   // helpers
   COLOR,
+  POINTER,
   Theme,
   // components
   Text,
@@ -18,11 +19,11 @@ const screen = Dimensions.get('window');
 
 const HorizontalChartItem = ({ color = COLOR.CONTENT, currency, small, title, value, width = 100 }) => (
   <>
-    <View style={style.row}>
+    <View pointerEvents={POINTER.NONE} style={style.row}>
       <Text detail level={small ? 2 : 1}>
         {title}
       </Text>
-      <PriceFriendly detail level={small ? 2 : 1} currency={currency} value={value} />
+      <PriceFriendly detail currency={currency} fixed={0} level={small ? 2 : 1} value={value} />
     </View>
 
     <Motion

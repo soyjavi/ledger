@@ -1,6 +1,7 @@
 import {
   // helpers
   COLOR,
+  POINTER,
   Theme,
   styles,
   // components
@@ -48,7 +49,7 @@ const TransactionItem = (props) => {
 
   return (
     <Touchable style={[style.offset, style.touchable]} onPress={handlePress}>
-      <View style={style.row}>
+      <View pointerEvents={POINTER.NONE} style={style.row}>
         <Box
           rounded
           style={styles(style.icon, is.income && { backgroundColor: colorOpacity(Theme.get('colorPrimary'), 0.2) })}

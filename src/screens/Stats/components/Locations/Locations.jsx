@@ -12,6 +12,8 @@ const Locations = ({ cities = {}, countries = {}, points = [], precission = 0.00
   const citiesTxs = Object.values(cities).length > 0 ? Object.values(cities).reduce((a, b) => a + b) : 1;
   const countriesTxs = Object.values(countries).length > 1 ? Object.values(countries).reduce((a, b) => a + b) : 1;
 
+  const totalCities = Object.keys(cities).length;
+
   return (
     <>
       <Heading value={L10N.LOCATIONS} />
@@ -19,7 +21,7 @@ const Locations = ({ cities = {}, countries = {}, points = [], precission = 0.00
         <HeatMap points={points} precission={precission} />
       </View>
 
-      {Object.keys(cities).length > 0 && (
+      {totalCities > 1 && Object.keys(cities).length > 0 && (
         <>
           <Heading value={L10N.CITIES} style={style.heading} />
           <View style={style.offset}>
@@ -36,7 +38,7 @@ const Locations = ({ cities = {}, countries = {}, points = [], precission = 0.00
         </>
       )}
 
-      {Object.keys(countries).length > 1 && (
+      {totalCities > 1 && Object.keys(countries).length > 1 && (
         <>
           <Heading value={L10N.COUNTRIES} style={style.heading} />
           <View style={style.offset}>

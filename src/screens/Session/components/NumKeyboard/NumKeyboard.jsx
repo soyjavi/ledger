@@ -2,6 +2,7 @@ import {
   // helpers
   ALIGN,
   COLOR,
+  POINTER,
   SIZE,
   // components
   Text,
@@ -34,7 +35,7 @@ const NumKeyboard = ({ onPress, ...others }) => (
         paddingVertical={SIZE.S}
         onPress={typeof key === 'number' ? () => onPress(key) : undefined}
       >
-        <View alignItems={ALIGN.CENTER}>
+        <View alignItems={ALIGN.CENTER} pointerEvents={POINTER.NONE}>
           {typeof key === 'number' && (
             <>
               <Text heading level={2}>

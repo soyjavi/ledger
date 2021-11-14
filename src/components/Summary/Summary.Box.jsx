@@ -16,7 +16,7 @@ const SummaryBox = ({ caption, value, ...inherit }) => (
     <Text action color={COLOR.GRAYSCALE_L} level={2} numberOfLines={1} upperCase>
       {caption}
     </Text>
-    <PriceFriendly {...inherit} detail level={2} fixed={value >= 1000 ? 0 : undefined} value={value} />
+    <PriceFriendly {...inherit} detail level={2} fixed={value >= 100 ? 0 : undefined} value={value} />
   </View>
 );
 

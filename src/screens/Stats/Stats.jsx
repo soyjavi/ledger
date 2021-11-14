@@ -22,6 +22,8 @@ const {
   },
 } = C;
 
+const captions = orderCaptions(L10N);
+
 const Stats = () => {
   const store = useStore();
 
@@ -66,7 +68,7 @@ const Stats = () => {
       <Chart
         {...useMemo(() => calcScales(chart.balance), [chart.balance])}
         {...chartProps}
-        captions={orderCaptions(L10N)}
+        captions={captions}
         color={COLOR.PRIMARY}
         style={style.chartMargin}
         title={L10N.OVERALL_BALANCE}
@@ -83,7 +85,7 @@ const Stats = () => {
       <Chart
         {...useMemo(() => calcScales(chart.expenses), [chart.expenses])}
         {...chartProps}
-        captions={orderCaptions(L10N)}
+        captions={captions}
         inverted
         style={style.chartMargin}
         values={chart.expenses}
@@ -100,9 +102,18 @@ const Stats = () => {
       <View style={style.chartMargin} />
 
       <Chart
+        {...useMemo(() => calcScales(chart.investments), [chart.investments])}
+        {...chartProps}
+        captions={captions}
+        style={style.chartMargin}
+        title={L10N.INVESTMENTS}
+        values={chart.investments}
+      />
+
+      <Chart
         {...useMemo(() => calcScales(chart.transfers), [chart.transfers])}
         {...chartProps}
-        captions={orderCaptions(L10N)}
+        captions={captions}
         title={L10N.TRANSFERS}
         values={chart.transfers}
       />
