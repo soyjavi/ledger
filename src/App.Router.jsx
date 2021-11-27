@@ -51,7 +51,8 @@ const AppRouter = () => {
         <Router
           container={Container}
           entryRoute={{
-            path: authorization ? (IS_DEV ? `${ROUTE.MAIN}${ROUTE.TAB_DASHBOARD}` : ROUTE.SESSION) : ROUTE.WELCOME,
+            // path: authorization ? (IS_DEV ? `${ROUTE.MAIN}${ROUTE.TAB_DASHBOARD}` : ROUTE.SESSION) : ROUTE.WELCOME,
+            path: authorization ? (IS_DEV ? `${ROUTE.MAIN}${ROUTE.TAB_SETTINGS}` : ROUTE.SESSION) : ROUTE.WELCOME,
           }}
           memoize
           routes={[
