@@ -42,7 +42,7 @@
     "react-native-fs": "^2.16.6",
     "react-native-web": "~0.13.12",
     "vanilla-blockchain": "^0.2.9",
-    "vanilla-storage": "^0.3.13"
+    "vanilla-storage": "^0.3.15"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
@@ -71,7 +71,8 @@
     "typescript": "^4.0.0"
   },
   "resolutions": {
-    "react-native": "https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz"
+    "react-native": "https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz",
+    "vanilla-storage": "0.3.15"
   },
   "jest": {
     "preset": "jest-expo",
