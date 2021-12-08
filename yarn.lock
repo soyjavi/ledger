@@ -2411,33 +2411,22 @@
     dequal "^1.0.0"
     isoworker "^0.1.1"
 
-"@lookiero/aurora-fonts@^1.0":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@lookiero/aurora-fonts/-/aurora-fonts-1.0.6.tgz#a98a473e0f495548062e01f63287bd3c16904bfa"
-  integrity sha512-NykCIU4DAzU25InO8UBrgEXWF3f2OE1guONrwj2n4OaE/3QtBJ6cV5YWQ92YFyxAgL6S4sImm6qm1oKEzZKaDQ==
-
 "@lookiero/aurora-iconfont@^2.0":
   version "2.0.24"
   resolved "https://registry.yarnpkg.com/@lookiero/aurora-iconfont/-/aurora-iconfont-2.0.24.tgz#53290ae85eb75fe2919305eff7738b3e4d325cc1"
   integrity sha512-I3u/xJWEpxhHcLjr/jbxXhgSADnXuzHOZRHn0Uq150Sfw83TxMOP7pnWn8OPFFZsDh2ZtWwBPsIU0bRur5o8tQ==
 
-"@lookiero/aurora-next@3.0.119":
-  version "3.0.119"
-  resolved "https://registry.yarnpkg.com/@lookiero/aurora-next/-/aurora-next-3.0.119.tgz#e3a9c17f7b5f80d3c1043224539dee3a6ee8ea67"
-  integrity sha512-n9jPgOUF62CN4nTB6OWfjC+ieVlQ1zI3Er1PzDQm3ZJ4bUIKpDQPPSav9uEDXmTnqFvGy/ECivFSgxHE0TeLsQ==
+"@lookiero/aurora-next@3.0.147":
+  version "3.0.147"
+  resolved "https://registry.yarnpkg.com/@lookiero/aurora-next/-/aurora-next-3.0.147.tgz#eaee7b310d17c7a8e65f915cb7aa351992e4e434"
+  integrity sha512-g8/cseF+d+o2DTUCUGVSvXYaWX6JIDTkYizwHH5kCtyB/Bja+Myq9faS62HBVA4i/S1wSb/5asrkBYZKv44XfQ==
   dependencies:
-    "@lookiero/aurora-fonts" "^1.0"
     "@lookiero/aurora-iconfont" "^2.0"
     "@react-native-picker/picker" "1.9.11"
     expo-document-picker "9.1.2"
-    expo-font "9.1.0"
     expo-image-picker "10.1.4"
     expo-linear-gradient "9.1.0"
-    react "16.13.1"
-    react-dom "16.13.1"
-    react-native "0.63.4"
     react-native-extended-stylesheet "0.12.0"
-    react-native-web "~0.13.12"
 
 "@lookiero/data-sources@^0.3":
   version "0.3.13"
@@ -4865,7 +4854,7 @@ expo-file-system@~11.0.2:
     "@expo/config-plugins" "^1.0.18"
     uuid "^3.4.0"
 
-expo-font@9.1.0, expo-font@~9.1.0:
+expo-font@~9.1.0:
   version "9.1.0"
   resolved "https://registry.yarnpkg.com/expo-font/-/expo-font-9.1.0.tgz#4ada35c2aebfd549a8b58c4c33a23702eba24faf"
   integrity sha512-owzbbfrQet7mawTGKMXpVCIA9k56MGhtriO41AW4Zo65dd2Ikm4LoymuHKp2ZlHuIFjRnjECKWz7RXgy/C1yAg==
@@ -8276,7 +8265,7 @@ react-native-web@~0.13.12:
     prop-types "^15.6.0"
     react-timer-mixin "^0.13.4"
 
-react-native@0.63.4, "react-native@https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz":
+"react-native@https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz":
   version "0.63.2"
   resolved "https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz#a3d42e4135c891cf15a335cf69922e96507d6b8d"
   dependencies:

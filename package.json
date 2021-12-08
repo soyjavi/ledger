@@ -20,7 +20,7 @@
     "release-it": "yarn version --patch && git push --follow-tags"
   },
   "dependencies": {
-    "@lookiero/aurora-next": "3.0.119",
+    "@lookiero/aurora-next": "3.0.147",
     "@lookiero/event-next": "^0.3",
     "@lookiero/router": "^0.3",
     "@react-native-async-storage/async-storage": "^1.15.5",
