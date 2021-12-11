@@ -25,19 +25,27 @@ const INITIAL_STATE = { balance: 0, currency: undefined, title: undefined };
 const ModalVault = () => {
   const { subscribe } = useEvent();
   const { go } = useRouter();
-  const { addVault } = useStore();
+  const { addVault, updateVault } = useStore();
 
   const [busy, setBusy] = useState(false);
   const [form, setForm] = useState(INITIAL_STATE);
   const [visible, setVisible] = useState(false);
 
+  const editMode = form.hash !== undefined;
+
   useEffect(() => {
     subscribe({ event: EVENTS.NEW_VAULT }, () => setVisible(true));
+    subscribe({ event: EVENTS.SETTINGS_VAULT }, ({ dataSource: { hash, balance, currency, title } }) => {
+      setForm(() => {
+        setVisible(true);
+        return { hash, balance, currency, title, valid: true };
+      });
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    if (visible) setForm({ ...INITIAL_STATE });
+    if (!visible) setForm({ ...INITIAL_STATE });
     onHardwareBackPress(visible, handleClose);
 
     return () => onHardwareBackPress(false);
@@ -50,10 +58,12 @@ const ModalVault = () => {
 
   const handleSubmit = async () => {
     setBusy(true);
-    const vault = await addVault(form);
+    const method = editMode ? updateVault : addVault;
+
+    const vault = await method(form);
     if (vault) {
       handleClose();
-      go({ path: `${ROUTE.VAULT}/${vault.hash}`, props: vault });
+      if (!editMode) go({ path: `${ROUTE.VAULT}/${vault.hash}`, props: vault });
     }
     setBusy(false);
   };
@@ -62,7 +72,7 @@ const ModalVault = () => {
     <Modal contentStyle={style.modalContent} color={COLOR.INFO} isVisible={visible} swipeable onClose={handleClose}>
       <View alignItems={ALIGN.CENTER} marginBottom={SIZE.L}>
         <Text heading level={2}>
-          {`${L10N.NEW} ${L10N.VAULT}`}
+          {editMode ? L10N.SETTINGS : `${L10N.NEW} ${L10N.VAULT}`}
         </Text>
       </View>
 
