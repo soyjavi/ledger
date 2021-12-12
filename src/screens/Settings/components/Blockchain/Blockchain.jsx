@@ -1,7 +1,9 @@
 import {
   // helpers,
   COLOR,
+  SIZE,
   // components
+  Button,
   Text,
   Touchable,
   View,
@@ -33,6 +35,10 @@ const Blockchain = () => {
     setBusy(true);
     setStatus(await syncNode(store));
     setBusy(false);
+  };
+
+  const handlePort = async () => {
+    store.port();
   };
 
   const { txs, vaults } = store;
@@ -67,6 +73,12 @@ const Blockchain = () => {
             {txs.length}
           </Text>
         </View>
+      </View>
+
+      <View style={style.offset}>
+        <Button marginVertical={SIZE.M} small onPress={handlePort}>
+          Port Blockchain
+        </Button>
       </View>
     </View>
   );
