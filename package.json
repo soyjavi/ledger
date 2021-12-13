@@ -26,6 +26,7 @@
     "@react-native-async-storage/async-storage": "^1.15.5",
     "@react-native-community/netinfo": "5.9.7",
     "color": "^3.1.2",
+    "crypto-js": "4.0.0",
     "expo-barcode-scanner": "~9.1.0",
     "expo-blur": "~8.2.2",
     "expo-camera": "~9.1.0",
