@@ -80,6 +80,7 @@ export const L10N = {
   DAY: 'day',
   DAY_NAMES: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
   DESTINATION: 'Destination account',
+  DEVELOPER_SETTINGS: 'Developer settings',
 
   ENTER_PIN: 'Enter your pin',
   ENTER_PIN_OR_FINGERPRINT: 'Enter your pin or fingerprint',

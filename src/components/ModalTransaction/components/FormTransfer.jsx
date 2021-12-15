@@ -24,7 +24,7 @@ import { style } from './FormTransfer.style';
 const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
   const {
     settings: { baseCurrency },
-    vaults: [, ...vaults],
+    vaults,
     rates,
   } = useStore();
 
