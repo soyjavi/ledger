@@ -2411,33 +2411,22 @@
     dequal "^1.0.0"
     isoworker "^0.1.1"
 
-"@lookiero/aurora-fonts@^1.0":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@lookiero/aurora-fonts/-/aurora-fonts-1.0.6.tgz#a98a473e0f495548062e01f63287bd3c16904bfa"
-  integrity sha512-NykCIU4DAzU25InO8UBrgEXWF3f2OE1guONrwj2n4OaE/3QtBJ6cV5YWQ92YFyxAgL6S4sImm6qm1oKEzZKaDQ==
-
 "@lookiero/aurora-iconfont@^2.0":
   version "2.0.24"
   resolved "https://registry.yarnpkg.com/@lookiero/aurora-iconfont/-/aurora-iconfont-2.0.24.tgz#53290ae85eb75fe2919305eff7738b3e4d325cc1"
   integrity sha512-I3u/xJWEpxhHcLjr/jbxXhgSADnXuzHOZRHn0Uq150Sfw83TxMOP7pnWn8OPFFZsDh2ZtWwBPsIU0bRur5o8tQ==
 
-"@lookiero/aurora-next@3.0.119":
-  version "3.0.119"
-  resolved "https://registry.yarnpkg.com/@lookiero/aurora-next/-/aurora-next-3.0.119.tgz#e3a9c17f7b5f80d3c1043224539dee3a6ee8ea67"
-  integrity sha512-n9jPgOUF62CN4nTB6OWfjC+ieVlQ1zI3Er1PzDQm3ZJ4bUIKpDQPPSav9uEDXmTnqFvGy/ECivFSgxHE0TeLsQ==
+"@lookiero/aurora-next@3.0.147":
+  version "3.0.147"
+  resolved "https://registry.yarnpkg.com/@lookiero/aurora-next/-/aurora-next-3.0.147.tgz#eaee7b310d17c7a8e65f915cb7aa351992e4e434"
+  integrity sha512-g8/cseF+d+o2DTUCUGVSvXYaWX6JIDTkYizwHH5kCtyB/Bja+Myq9faS62HBVA4i/S1wSb/5asrkBYZKv44XfQ==
   dependencies:
-    "@lookiero/aurora-fonts" "^1.0"
     "@lookiero/aurora-iconfont" "^2.0"
     "@react-native-picker/picker" "1.9.11"
     expo-document-picker "9.1.2"
-    expo-font "9.1.0"
     expo-image-picker "10.1.4"
     expo-linear-gradient "9.1.0"
-    react "16.13.1"
-    react-dom "16.13.1"
-    react-native "0.63.4"
     react-native-extended-stylesheet "0.12.0"
-    react-native-web "~0.13.12"
 
 "@lookiero/data-sources@^0.3":
   version "0.3.13"
@@ -4865,7 +4854,7 @@ expo-file-system@~11.0.2:
     "@expo/config-plugins" "^1.0.18"
     uuid "^3.4.0"
 
-expo-font@9.1.0, expo-font@~9.1.0:
+expo-font@~9.1.0:
   version "9.1.0"
   resolved "https://registry.yarnpkg.com/expo-font/-/expo-font-9.1.0.tgz#4ada35c2aebfd549a8b58c4c33a23702eba24faf"
   integrity sha512-owzbbfrQet7mawTGKMXpVCIA9k56MGhtriO41AW4Zo65dd2Ikm4LoymuHKp2ZlHuIFjRnjECKWz7RXgy/C1yAg==
@@ -4892,6 +4881,13 @@ expo-linear-gradient@9.1.0:
   resolved "https://registry.yarnpkg.com/expo-linear-gradient/-/expo-linear-gradient-9.1.0.tgz#7adfe8284268874134954b8249207938c455a5b3"
   integrity sha512-9W4TxaDrZUzmLzd18+Eo2Ef7ONnuLrHKX0PRyHEGY2/rJCtGiPJtJuR6AS5dkX7WB/Pxlx0zK/p/qDHHw09Uxg==
 
+expo-linear-gradient@^10.0.3:
+  version "10.0.3"
+  resolved "https://registry.yarnpkg.com/expo-linear-gradient/-/expo-linear-gradient-10.0.3.tgz#06ad72e164f5bf36c4afcfc8ccd31138a3a78d6e"
+  integrity sha512-zKkBhHvTvDywpb0y5BJDHTbxX5/2C60qW/M8uyZXKIZcTUwY7j/9Kcx0YzoNNglq7p6aQ/DWO7sM8LHr93985Q==
+  dependencies:
+    expo-modules-core "~0.4.4"
+
 expo-local-authentication@^11.1.1:
   version "11.1.1"
   resolved "https://registry.yarnpkg.com/expo-local-authentication/-/expo-local-authentication-11.1.1.tgz#ef9de3f74e504c14ab4459d6c0c825f87d3c0c18"
@@ -4904,6 +4900,14 @@ expo-location@~10.0.0:
   version "10.0.0"
   resolved "https://registry.yarnpkg.com/expo-location/-/expo-location-10.0.0.tgz#2923411649434f2f079343b163b13c5c9eee8b2d"
   integrity sha512-QLEb0iaBv4/blLxxfKRj2/HPisY+1t+g6MgegqZ1j1U/0qih4dvzUQrxie9ZOZyQB9gnXFCRnZv3QzHEb52dcA==
+
+expo-modules-core@~0.4.4:
+  version "0.4.9"
+  resolved "https://registry.yarnpkg.com/expo-modules-core/-/expo-modules-core-0.4.9.tgz#e808ca8a70c4ac0da2cfc7040e48a4c67aeee5b3"
+  integrity sha512-yuwYoEQMZNSysufsYgJVmncpeGopNi8Q3y5Q7MM05PT90Sc5CGqbYwJMYomF7MprTZAxCvayoRBCKgOlzutWog==
+  dependencies:
+    compare-versions "^3.4.0"
+    invariant "^2.2.4"
 
 expo-permissions@~10.0.0:
   version "10.0.0"
@@ -8276,7 +8280,7 @@ react-native-web@~0.13.12:
     prop-types "^15.6.0"
     react-timer-mixin "^0.13.4"
 
-react-native@0.63.4, "react-native@https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz":
+"react-native@https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz":
   version "0.63.2"
   resolved "https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz#a3d42e4135c891cf15a335cf69922e96507d6b8d"
   dependencies:
@@ -9751,18 +9755,18 @@ validate-npm-package-license@^3.0.1:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
 
-vanilla-blockchain@^0.2.9:
-  version "0.2.9"
-  resolved "https://registry.yarnpkg.com/vanilla-blockchain/-/vanilla-blockchain-0.2.9.tgz#5658105e74e519c63a1f28e8d8c5c2fe61832d0d"
-  integrity sha512-B4388ddRFDWXZ1uttUml7Lv3SzVClaH0A4RtHKxUMcD86NPhsLcXbAtd/3xCzp/3b2U9q2JmheUSlWjzGq8R1Q==
+vanilla-blockchain@^0.2.10:
+  version "0.2.10"
+  resolved "https://registry.yarnpkg.com/vanilla-blockchain/-/vanilla-blockchain-0.2.10.tgz#ed0932b8b93644428c9c654cd58cebc437509bca"
+  integrity sha512-X+dv/wc8yfr9xeF2gR6EuwbUYZO6e4ibl5QmMIy/46wc4rWFBTEUNHygnigV/6Sbxkk7rr+jGse9PL8RrNNP4w==
   dependencies:
     crypto-js "4.0.0"
-    vanilla-storage "0.3.13"
+    vanilla-storage "^0.3"
 
-vanilla-storage@0.3.13, vanilla-storage@^0.3.13:
-  version "0.3.13"
-  resolved "https://registry.yarnpkg.com/vanilla-storage/-/vanilla-storage-0.3.13.tgz#26dc870c471054c663aaa026f5e8179f85fb5c65"
-  integrity sha512-Qg4ul2ox5X71lupdFFgTnMRP/qHbAsNgMmZWv188+FS2nNznIUBH3uNMMHtj8oYp8w9a5uD25YXUmfueHRkRSA==
+vanilla-storage@^0.3, vanilla-storage@^0.3.16:
+  version "0.3.16"
+  resolved "https://registry.yarnpkg.com/vanilla-storage/-/vanilla-storage-0.3.16.tgz#da2d650bdbad83eee53a665c25fb768ed4739dbf"
+  integrity sha512-Z7GxjqvZ8p6HdJYFbGrLuv1F5eJTsoeG6TQD3ReikjVhiAA8PGeZ3CBKT2weWGfMCzU7yl3hltTxRw4Mb/gYGg==
   dependencies:
     crypto-js "4.0.0"
 

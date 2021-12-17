@@ -24,7 +24,7 @@ import { style } from './FormTransfer.style';
 const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
   const {
     settings: { baseCurrency },
-    vaults: [, ...vaults],
+    vaults,
     rates,
   } = useStore();
 
@@ -69,12 +69,7 @@ const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
       <InputCurrency value={form.value} vault={vault} onChange={(value) => handleField('value', value)} />
 
       <Heading style={style.heading} value={L10N.DESTINATION}>
-        <Touchable
-          alignItems={ALIGN.CENTER}
-          paddingVertical={SIZE.S}
-          wide
-          onPress={!selectVault ? () => setSelectVault(true) : undefined}
-        >
+        <Touchable onPress={!selectVault ? () => setSelectVault(true) : undefined}>
           <Text action color={COLOR.PRIMARY}>
             {selectVault ? ' ' : L10N.CHANGE}
           </Text>

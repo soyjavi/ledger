@@ -13,12 +13,12 @@ export const style = StyleSheet.create({
     marginHorizontal: '$spaceXS',
   },
 
+  offset: {
+    marginHorizontal: '$spaceM',
+  },
+
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-  },
-
-  offset: {
-    marginHorizontal: '$spaceM',
   },
 });

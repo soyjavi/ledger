@@ -2,6 +2,7 @@ import {
   // helpers
   ALIGN,
   // components
+  Button,
   View,
 } from '@lookiero/aurora';
 import { useEvent } from '@lookiero/event';
@@ -49,6 +50,10 @@ const Vault = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hash, vaults]);
 
+  const handleEdit = () => {
+    publish({ event: EVENTS.SETTINGS_VAULT }, { dataSource });
+  };
+
   const handleScroll = (nextScroll, y) => {
     setScroll(nextScroll);
     if (!scrollQuery && y > height / 2) {
@@ -77,6 +82,7 @@ const Vault = () => {
                 {vaults.length > 1 && (
                   <ButtonSummary icon="arrow-left-right" text={L10N.SWAP} onPress={() => handleTransaction(TRANSFER)} />
                 )}
+                <ButtonSummary icon="settings" text={L10N.SETTINGS} onPress={handleEdit} />
               </View>
             </Summary>
 

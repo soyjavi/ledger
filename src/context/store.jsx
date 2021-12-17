@@ -43,6 +43,8 @@ const StoreProvider = ({ children }) => {
             pin: undefined,
           },
           rates: {},
+          txs: [],
+          vaults: [],
         },
         filename: FILENAME,
       });
@@ -59,8 +61,10 @@ const StoreProvider = ({ children }) => {
         blockchain,
         settings: await store.get('settings').value,
         rates: await store.get('rates').value,
-        vaults: await blockchain.get('vaults').blocks,
-        txs: await blockchain.get('txs').blocks,
+        vaults: await store.get('vaults').value,
+        txs: await store.get('txs').value,
+        // vaults: await blockchain.get('vaults').blocks,
+        // txs: await blockchain.get('txs').blocks,
       });
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -81,6 +85,17 @@ const StoreProvider = ({ children }) => {
     await state.store.get('settings').save(nextSettings);
 
     setState({ ...state, settings: nextSettings });
+  };
+
+  const updateTx = async ({ hash, ...data } = {}) => {};
+
+  const updateVault = async ({ hash, balance = 0, currency, title } = {}) => {
+    const { store } = state;
+
+    await store.get('vaults').update({ hash }, { balance: parseFloat(balance), currency, title });
+    setState({ ...state });
+
+    return await store.get('vaults').findOne({ hash });
   };
 
   const addBlock = async (key, data = {}) => {
@@ -129,6 +144,54 @@ const StoreProvider = ({ children }) => {
     return true;
   };
 
+  const port = async () => {
+    const { store, blockchain } = state;
+
+    await store.wipe('txs');
+    await store.wipe('vaults');
+
+    await store.get('txs').push(
+      blockchain
+        .get('txs')
+        .blocks.filter(({ data }) => typeof data === 'object')
+        .map(
+          ({
+            hash,
+            timestamp: blockTimestamp,
+            data: { vault, type, category, value, title, location, timestamp } = {},
+          }) => ({
+            hash,
+            timestamp: new Date(timestamp || blockTimestamp).getTime(),
+            vault,
+            type,
+            category,
+            value,
+            title,
+            location,
+          }),
+        ),
+    );
+    await store.get('vaults').push(
+      blockchain
+        .get('vaults')
+        .blocks.filter(({ data }) => typeof data === 'object')
+        .map(
+          ({
+            //
+            hash,
+            timestamp: blockTimestamp,
+            data: { balance, currency, title, timestamp },
+          }) => ({
+            hash,
+            timestamp: new Date(timestamp || blockTimestamp).getTime(),
+            title,
+            currency,
+            balance,
+          }),
+        ),
+    );
+  };
+
   return (
     <StoreContext.Provider
       value={{
@@ -138,11 +201,15 @@ const StoreProvider = ({ children }) => {
           addBlock('vaults', { balance: parseFloat(balance, 10), currency, title }),
         addTx: (data = {}) => addBlock('txs', { ...data, value: parseFloat(data.value, 10) }),
         fork,
+        port,
         updateRates,
         updateSettings,
+        updateTx,
+        updateVault,
       }}
     >
-      {state.blockchain && state.store ? children : undefined}
+      {/* {state.blockchain && state.store ? children : undefined} */}
+      {state.store ? children : undefined}
     </StoreContext.Provider>
   );
 };

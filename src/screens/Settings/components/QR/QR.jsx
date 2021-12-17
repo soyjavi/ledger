@@ -24,12 +24,12 @@ import { style } from './QR.style';
 
 const QR = () => {
   const { connected } = useConnection();
+  const Stack = useStack();
   const store = useStore();
   const {
     settings: { authorization, secret },
     fork,
   } = store;
-  const Stack = useStack();
 
   const [blockchain, setBlockchain] = useState();
   const [camera, setCamera] = useState(false);
@@ -45,7 +45,6 @@ const QR = () => {
     if (!camera) {
       setBlockchain(undefined);
       setQr(undefined);
-      // setQr('C8647639-4826-4AC7-9655-6BDC2C15D9D2|backup');
     }
   }, [camera]);
 

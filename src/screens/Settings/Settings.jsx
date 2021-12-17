@@ -1,12 +1,15 @@
 import React from 'react';
 
-import { ROUTE } from '@common';
+import { C, ROUTE } from '@common';
 import { Viewport } from '@components';
 
-import { Appearance, BaseCurrency, Blockchain, QR } from './components';
+import { Appearance, BaseCurrency, Blockchain, Developer, QR } from './components';
+
+const { IS_DEV } = C;
 
 const Settings = () => (
   <Viewport path={ROUTE.TAB_SETTINGS} stackMode={false}>
+    {IS_DEV && <Developer />}
     <Blockchain />
     <QR />
     <BaseCurrency />
