@@ -8,7 +8,7 @@ import { ServiceNode } from '@services';
 
 import { AsyncStorageAdapter } from './adapters';
 import { useConnection } from './connection';
-import { consolidate, getFingerprint, genesis } from './modules';
+import { calcHash, consolidate, getFingerprint, genesis, parseTx, parseVault } from './modules';
 
 const { CURRENCY, NAME } = C;
 const FILENAME = `${C.NAME}:store`;
@@ -63,17 +63,34 @@ const StoreProvider = ({ children }) => {
         rates: await store.get('rates').value,
         vaults: await store.get('vaults').value,
         txs: await store.get('txs').value,
-        // vaults: await blockchain.get('vaults').blocks,
-        // txs: await blockchain.get('txs').blocks,
       });
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const addTx = async (data = {}) => {
+    const { store } = state;
+
+    store.get('txs');
+    const tx = await store.push(parseTx({ ...data, timestamp: new Date().getTime(), hash: calcHash(data) }));
+    if (tx) setState({ ...state, txs: await store.get('txs').value });
+
+    return tx;
+  };
+
+  const addVault = async (data = {}) => {
+    const { store } = state;
+
+    store.get('vaults');
+    const vault = await store.push(parseVault({ ...data, timestamp: new Date().getTime(), hash: calcHash(data) }));
+    if (vault) setState({ ...state, vaults: await store.get('vaults').value });
+
+    return vault;
+  };
+
   const updateRates = async (rates, baseCurrency = state.settings.baseCurrency) => {
     const nextRates = { ...state.rates, ...rates };
     const nextSettings = { ...state.settings, baseCurrency, lastRatesUpdate: new Date() };
-
     await state.store.get('rates').save(nextRates);
     await state.store.get('settings').save(nextSettings);
 
@@ -87,31 +104,36 @@ const StoreProvider = ({ children }) => {
     setState({ ...state, settings: nextSettings });
   };
 
-  const updateTx = async ({ hash, ...data } = {}) => {};
-
-  const updateVault = async ({ hash, balance = 0, currency, title } = {}) => {
+  const updateTx = async ({ hash, ...data } = {}) => {
     const { store } = state;
 
-    await store.get('vaults').update({ hash }, { balance: parseFloat(balance), currency, title });
-    setState({ ...state });
+    store.get('txs');
+    const tx = await store.findOne({ hash });
+    if (!tx) return undefined;
 
-    return await store.get('vaults').findOne({ hash });
+    await store.update({ hash }, parseVault({ ...tx, ...data }));
+    // ! @TODO: Sync properly
+    // if (connected) ServiceNode.sync({ key, block, settings });
+
+    setState({ ...state, txs: await store.value });
+
+    return await store.findOne({ hash });
   };
 
-  const addBlock = async (key, data = {}) => {
-    const { settings } = state;
-    const { hash: previousHash } = state.blockchain.get(key).latestBlock;
+  const updateVault = async ({ hash, ...data } = {}) => {
+    const { store } = state;
 
-    const block = await state.blockchain.addBlock(data, previousHash);
-    if (connected) ServiceNode.sync({ key, block, settings });
+    store.get('vaults');
+    const vault = await store.findOne({ hash });
+    if (!vault) return undefined;
 
-    setState({
-      ...state,
-      vaults: await state.blockchain.get('vaults').blocks,
-      txs: await state.blockchain.get('txs').blocks,
-    });
+    await store.update({ hash }, parseVault({ ...vault, ...data }));
+    // ! @TODO: Sync properly
+    // if (connected) ServiceNode.sync({ key, block, settings });
 
-    return block;
+    setState({ ...state, vaults: await store.value });
+
+    return await store.findOne({ hash });
   };
 
   const fork = async (blockchain) => {
@@ -171,6 +193,7 @@ const StoreProvider = ({ children }) => {
           }),
         ),
     );
+
     await store.get('vaults').push(
       blockchain
         .get('vaults')
@@ -190,16 +213,16 @@ const StoreProvider = ({ children }) => {
           }),
         ),
     );
+
+    setState({ ...state });
   };
 
   return (
     <StoreContext.Provider
       value={{
-        ...state,
         ...consolidate(state),
-        addVault: ({ balance = 0, currency, title } = {}) =>
-          addBlock('vaults', { balance: parseFloat(balance, 10), currency, title }),
-        addTx: (data = {}) => addBlock('txs', { ...data, value: parseFloat(data.value, 10) }),
+        addTx,
+        addVault,
         fork,
         port,
         updateRates,
@@ -208,7 +231,6 @@ const StoreProvider = ({ children }) => {
         updateVault,
       }}
     >
-      {/* {state.blockchain && state.store ? children : undefined} */}
       {state.store ? children : undefined}
     </StoreContext.Provider>
   );
