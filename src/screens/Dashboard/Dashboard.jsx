@@ -21,13 +21,7 @@ import { queryLastTxs, querySearchTxs, queryVaults } from './helpers';
 const Dashboard = () => {
   const { publish } = useEvent();
   const { go } = useRouter();
-  const {
-    rates,
-    settings: { baseCurrency, appearance } = {},
-    overall,
-    txs: [, ...txs],
-    vaults: [, ...vaults],
-  } = useStore();
+  const { rates, settings: { baseCurrency, appearance } = {}, overall = {}, txs = [], vaults = [] } = useStore();
 
   const [lastTxs, setLastTxs] = useState([]);
   const [query, setQuery] = useState();
@@ -38,7 +32,7 @@ const Dashboard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txs]);
 
-  const visibleVaults = queryVaults({ query, vaults });
+  const sortedVaults = queryVaults({ query, vaults });
 
   return useMemo(
     () => (
@@ -47,7 +41,7 @@ const Dashboard = () => {
           <Search onChange={setQuery} />
         </Summary>
 
-        {visibleVaults.length > 0 && (
+        {sortedVaults.length > 0 && (
           <>
             <Heading value={L10N.VAULTS}>
               <Touchable onPress={() => publish({ event: EVENTS.NEW_VAULT })}>
@@ -58,7 +52,7 @@ const Dashboard = () => {
             </Heading>
 
             <Slider horizontal snapInterval={CARD_SIZE} style={style.slider}>
-              {visibleVaults.map((vault, index) => (
+              {sortedVaults.map((vault, index) => (
                 <Card
                   {...vault.others}
                   key={vault.hash}
@@ -85,7 +79,7 @@ const Dashboard = () => {
       </Viewport>
     ),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [appearance, baseCurrency, lastTxs, rates, query],
+    [appearance, baseCurrency, lastTxs, rates, query, sortedVaults],
   );
 };
 
