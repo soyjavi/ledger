@@ -11,7 +11,7 @@ const {
 } = C;
 
 export default (
-  { overall, rates, settings: { baseCurrency }, txs: [, ...txs], vaults: [, ...vaults] },
+  { overall = {}, rates = {}, settings: { baseCurrency } = {}, txs = [], vaults = [] },
   { month, year },
 ) => {
   const cities = {};
