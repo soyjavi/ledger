@@ -5,7 +5,7 @@
     "slug": "soyjavi-shield",
     "privacy": "public",
     "platforms": ["ios", "android", "web"],
-    "version": "0.27.0",
+    "version": "0.29.0",
     "orientation": "portrait",
     "userInterfaceStyle": "dark",
     "backgroundColor": "#000000",
