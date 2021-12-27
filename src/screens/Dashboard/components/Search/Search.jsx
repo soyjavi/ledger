@@ -16,7 +16,7 @@ import { style } from './Search.style';
 
 const DELAY_EVENT_SEARCH = 250;
 
-const Search = ({ onChange }) => {
+const Search = ({ onChange, onClose }) => {
   const [focus, setFocus] = useState(false);
   const [value, setValue] = useState();
 
@@ -30,7 +30,10 @@ const Search = ({ onChange }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
-  const handleReset = () => setValue('');
+  const handleReset = () => {
+    onClose();
+    setValue('');
+  };
 
   const hasValue = value && value.trim().length > 0;
 
@@ -66,6 +69,7 @@ const Search = ({ onChange }) => {
 Search.propTypes = {
   text: PropTypes.string,
   onChange: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export { Search };
