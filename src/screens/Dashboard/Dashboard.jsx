@@ -24,6 +24,7 @@ const Dashboard = () => {
   const { rates, settings: { baseCurrency, appearance } = {}, overall = {}, txs = [], vaults = [] } = useStore();
 
   const [lastTxs, setLastTxs] = useState([]);
+  const [search, setSearch] = useState(false);
   const [query, setQuery] = useState();
 
   useEffect(() => {
@@ -32,14 +33,12 @@ const Dashboard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txs]);
 
-  const sortedVaults = queryVaults({ query, vaults });
+  const sortedVaults = queryVaults({ query: undefined, vaults });
 
   return useMemo(
     () => (
       <Viewport path={ROUTE.TAB_DASHBOARD} stackMode={false}>
-        <Summary {...overall} currency={baseCurrency} title={L10N.OVERALL_BALANCE}>
-          <Search onChange={setQuery} />
-        </Summary>
+        <Summary {...overall} currency={baseCurrency} title={L10N.OVERALL_BALANCE} />
 
         {sortedVaults.length > 0 && (
           <>
@@ -70,7 +69,17 @@ const Dashboard = () => {
 
         {lastTxs.length > 0 && (
           <>
-            <Heading value={L10N.LAST_TRANSACTIONS} />
+            <Heading value={L10N.LAST_TRANSACTIONS}>
+              {!search && (
+                <Touchable onPress={() => setSearch(true)}>
+                  <Text action color={COLOR.PRIMARY} upperCase>
+                    {L10N.SEARCH}
+                  </Text>
+                </Touchable>
+              )}
+            </Heading>
+            {search && <Search onChange={setQuery} onClose={() => setSearch(false)} />}
+
             {(querySearchTxs({ L10N, query, txs, vaults }) || lastTxs).map((item) => (
               <GroupTransactions {...item} key={`${item.timestamp}`} currency={baseCurrency} />
             ))}
