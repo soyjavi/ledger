@@ -20,22 +20,26 @@ export const ShieldTheme = {
   $colorAppearance_5: '#8469F6',
 
   /* BORDER */
-  $borderRadius: 4,
+  $borderRadius: 8,
   $borderSize: 1,
   $borderStyle: 'solid',
 
   /* COLOR */
   $colorBase: '#000000',
+  // $colorBase: '#16161a',
   $colorContent: '#ffffff',
   $colorAccent: '$colorAppearance_1',
   $colorPrimary: '$colorAppearance_1',
-  $colorAlert: '#ff8056',
-  $colorInfo: '#1C1C1D',
-  $colorGrayscaleXL: '#282828',
+  $colorAlert: '#ff5c5c',
+  // $colorInfo: '#1C1C1D',
+  $colorInfo: '#1d1d21',
+  // $colorGrayscaleXL: '#282828',
+  $colorGrayscaleXL: '#2d2d32',
   $colorGrayscaleL: '#999999',
   // $colorGrayscaleM: '#cfcfcf',
   // $colorGrayscaleS: '#e7e7e7',
   $colorOverlay: colorOpacity('#000000', 0.9),
+  // $colorOverlay: colorOpacity('#16161a', 0.9),
   // $colorTouchable: 'rgba(255, 255, 255, 0.15)',
 
   /* ELEVATION */
@@ -202,7 +206,7 @@ export const ShieldTheme = {
   /* ICON */
   $iconFamily: 'shield-icons',
   $iconGlyphs: require('../../assets/fonts/Shield-Icons.json'),
-  $iconSize: 24,
+  $iconSize: 22,
 
   /* INPUT */
   $fontInput: 'font-bold',

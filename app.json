@@ -24,10 +24,10 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.soyjavi.ledger"
+      "bundleIdentifier": "com.soyjavi.money"
     },
     "android": {
-      "package": "com.soyjavi.ledger"
+      "package": "com.soyjavi.money"
     },
     "androidStatusBar": {
       "backgroundColor": "#000000",
