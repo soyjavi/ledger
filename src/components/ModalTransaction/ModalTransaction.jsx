@@ -125,10 +125,10 @@ const ModalTransaction = () => {
       )}
 
       <View flexDirection={FLEX_DIRECTION.ROW} marginTop={SIZE.XL}>
-        <Button disabled={busy} marginRight={SIZE.M} outlined rounded onPress={handleClose}>
+        <Button disabled={busy} marginRight={SIZE.M} outlined onPress={handleClose}>
           {L10N.CLOSE.toUpperCase()}
         </Button>
-        <Button color={COLOR.CONTENT} disabled={busy || !valid} rounded onPress={handleSubmit}>
+        <Button color={COLOR.CONTENT} disabled={busy || !valid} onPress={handleSubmit}>
           {L10N.SAVE.toUpperCase()}
         </Button>
       </View>

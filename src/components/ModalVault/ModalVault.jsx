@@ -79,10 +79,10 @@ const ModalVault = () => {
       <FormVault form={form} modal onChange={setForm} />
 
       <View flexDirection={FLEX_DIRECTION.ROW} marginTop={SIZE.M}>
-        <Button disabled={busy} marginRight={SIZE.M} outlined rounded onPress={handleClose}>
+        <Button disabled={busy} marginRight={SIZE.M} outlined onPress={handleClose}>
           {L10N.CLOSE.toUpperCase()}
         </Button>
-        <Button color={COLOR.CONTENT} disabled={busy || !form.currency || !form.title} rounded onPress={handleSubmit}>
+        <Button color={COLOR.CONTENT} disabled={busy || !form.currency || !form.title} onPress={handleSubmit}>
           {L10N.SAVE.toUpperCase()}
         </Button>
       </View>
