@@ -20,7 +20,7 @@ export const ShieldTheme = {
   $colorAppearance_5: '#8469F6',
 
   /* BORDER */
-  $borderRadius: 8,
+  $borderRadius: 4,
   $borderSize: 1,
   $borderStyle: 'solid',
 
