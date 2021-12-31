@@ -26,20 +26,16 @@ export const ShieldTheme = {
 
   /* COLOR */
   $colorBase: '#000000',
-  // $colorBase: '#16161a',
   $colorContent: '#ffffff',
   $colorAccent: '$colorAppearance_1',
   $colorPrimary: '$colorAppearance_1',
   $colorAlert: '#ff5c5c',
-  // $colorInfo: '#1C1C1D',
   $colorInfo: '#1d1d21',
-  // $colorGrayscaleXL: '#282828',
   $colorGrayscaleXL: '#2d2d32',
   $colorGrayscaleL: '#999999',
   // $colorGrayscaleM: '#cfcfcf',
   // $colorGrayscaleS: '#e7e7e7',
   $colorOverlay: colorOpacity('#000000', 0.9),
-  // $colorOverlay: colorOpacity('#16161a', 0.9),
   // $colorTouchable: 'rgba(255, 255, 255, 0.15)',
 
   /* ELEVATION */
