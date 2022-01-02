@@ -33,6 +33,13 @@ const Dashboard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txs]);
 
+  const handleSearch = () => {
+    setSearch(() => {
+      setQuery(undefined);
+      return !search;
+    });
+  };
+
   const sortedVaults = queryVaults({ query: undefined, vaults });
 
   return useMemo(
@@ -71,14 +78,14 @@ const Dashboard = () => {
           <>
             <Heading value={L10N.LAST_TRANSACTIONS}>
               {!search && (
-                <Touchable onPress={() => setSearch(true)}>
+                <Touchable onPress={handleSearch}>
                   <Text action color={COLOR.PRIMARY} upperCase>
                     {L10N.SEARCH}
                   </Text>
                 </Touchable>
               )}
             </Heading>
-            {search && <Search onChange={setQuery} onClose={() => setSearch(false)} />}
+            {search && <Search onChange={setQuery} onClose={handleSearch} />}
 
             {(querySearchTxs({ L10N, query, txs, vaults }) || lastTxs).map((item) => (
               <GroupTransactions {...item} key={`${item.timestamp}`} currency={baseCurrency} />
