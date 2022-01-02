@@ -52,7 +52,7 @@ const Chart = ({ captions, highlight, inverted, values = [], style: styleContain
                   inverted && style.barInverted,
                   value !== 0 && {
                     height: `${calcHeight(value, { min, max })}%`,
-                    opacity: highlight !== index ? 0.2 : 1,
+                    opacity: highlight !== index ? 0.1 : 1,
                   },
                 ]}
               />
