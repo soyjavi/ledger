@@ -31,9 +31,14 @@ export const ShieldTheme = {
   $colorAccent: '$colorAppearance_1',
   $colorPrimary: '$colorAppearance_1',
   $colorAlert: '#ff5c5c',
+  //
   $colorInfo: '#222222',
   $colorGrayscaleXL: '#282828',
-  $colorGrayscaleL: '#999999',
+  //
+  // $colorInfo: '#282828',
+  // $colorGrayscaleXL: '#222222',
+  //
+  $colorGrayscaleL: '#888888',
   // $colorGrayscaleM: '#cfcfcf',
   // $colorGrayscaleS: '#e7e7e7',
   $colorOverlay: colorOpacity('#191919', 0.9),

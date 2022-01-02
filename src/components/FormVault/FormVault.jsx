@@ -25,7 +25,6 @@ const FormVault = ({ form = {}, modal = false, onChange, ...others }) => {
     });
   };
 
-  const backgroundColorInput = modal ? COLOR.GRAYSCALE_XL : COLOR.INFO;
   const isEmpty = !form.currency;
 
   return (
@@ -40,7 +39,7 @@ const FormVault = ({ form = {}, modal = false, onChange, ...others }) => {
       />
 
       <InputCurrency
-        backgroundColor={backgroundColorInput}
+        backgroundColor={COLOR.INFO}
         label={L10N.INITIAL_BALANCE}
         value={form.balance}
         vault={{ currency: form.currency }}
@@ -48,7 +47,7 @@ const FormVault = ({ form = {}, modal = false, onChange, ...others }) => {
       />
 
       <Input
-        backgroundColor={backgroundColorInput}
+        backgroundColor={COLOR.INFO}
         label={L10N.NAME}
         value={form.title}
         onChange={(value) => handleChange('title', value)}

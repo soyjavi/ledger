@@ -99,7 +99,13 @@ const ModalTransaction = () => {
   const Form = type === TRANSFER ? FormTransfer : FormTransaction;
 
   return (
-    <Modal color={COLOR.INFO} contentStyle={style.modalContent} isVisible={visible} swipeable onClose={handleClose}>
+    <Modal
+      color={COLOR.GRAYSCALE_XL}
+      contentStyle={style.modalContent}
+      isVisible={visible}
+      swipeable
+      onClose={handleClose}
+    >
       <View alignItems={ALIGN.CENTER} marginBottom={SIZE.L}>
         <Text heading level={2}>
           {L10N.TRANSACTION[type]}

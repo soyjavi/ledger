@@ -22,7 +22,6 @@ const SliderCurrencies = ({ modal, selected, onChange, ...others }) => {
   } = useDevice();
   const store = useStore();
 
-  const color = modal ? COLOR.GRAYSCALE_XL : COLOR.INFO;
   const currencies = queryCurrencies(store);
 
   return (
@@ -30,7 +29,7 @@ const SliderCurrencies = ({ modal, selected, onChange, ...others }) => {
       {currencies.map((currency, index) => (
         <Option
           caption={currency}
-          color={color}
+          color={COLOR.INFO}
           currency={currency}
           key={index}
           style={styles(

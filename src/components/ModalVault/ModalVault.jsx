@@ -69,7 +69,13 @@ const ModalVault = () => {
   };
 
   return (
-    <Modal contentStyle={style.modalContent} color={COLOR.INFO} isVisible={visible} swipeable onClose={handleClose}>
+    <Modal
+      color={COLOR.GRAYSCALE_XL}
+      contentStyle={style.modalContent}
+      isVisible={visible}
+      swipeable
+      onClose={handleClose}
+    >
       <View alignItems={ALIGN.CENTER} marginBottom={SIZE.L}>
         <Text heading level={2}>
           {editMode ? L10N.SETTINGS : `${L10N.NEW} ${L10N.VAULT}`}
