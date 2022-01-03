@@ -8,4 +8,10 @@ export const style = StyleSheet.create({
     maxWidth: width * 0.8,
     width: width * 0.8,
   },
+  image: {
+    height: 304,
+    minHeight: 304,
+    width: 176,
+    minWidth: 176,
+  },
 });

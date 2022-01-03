@@ -126,8 +126,8 @@ export const L10N = {
   NEW: 'New',
   NO_TRANSACTIONS: "You don't have any transaction.",
 
-  ONBOARDING_COMPLETED_TITLE: 'Everything is ready to go!',
-  ONBOARDING_COMPLETED_CAPTION: 'Your blockchain has been created successfully & is ready for use.',
+  ONBOARDING_COMPLETED_TITLE: 'Ready to go!',
+  ONBOARDING_COMPLETED_CAPTION: 'Your device has been initialized successfully & is ready for use.',
 
   OFFLINE: 'OFFLINE',
   OTHERS: 'Others',
@@ -183,7 +183,7 @@ export const L10N = {
   WAIT: 'Syncing...',
   WARNING: 'Warning',
   WELCOME_TITLE: 'Take back control of your money.',
-  WELCOME_CAPTION: 'Your private finance accounting running on your own blockchain.',
+  WELCOME_CAPTION: 'Your private finance accounting running on your own device.',
 
   WIPE: 'WIPE',
   WITHOUT_TXS: 'No transactions',
