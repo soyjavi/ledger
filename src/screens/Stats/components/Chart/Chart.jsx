@@ -34,9 +34,9 @@ const Chart = ({ captions, highlight, inverted, values = [], style: styleContain
                 },
               ]}
             >
-              <View backgroundColor={color} style={[style.scaleLine, style.scaleBorder]} />
+              <View backgroundColor={color} style={style.scaleLine} />
               <View backgroundColor={color} style={[style.tag, style.scaleBorder]}>
-                <PriceFriendly detail level={2} color={COLOR.BASE} currency={currency} fixed={0} value={avg} />
+                <PriceFriendly detail color={COLOR.BASE} currency={currency} fixed={0} value={avg} />
               </View>
             </View>
           </View>
@@ -52,6 +52,8 @@ const Chart = ({ captions, highlight, inverted, values = [], style: styleContain
                   inverted && style.barInverted,
                   value !== 0 && {
                     height: `${calcHeight(value, { min, max })}%`,
+                  },
+                  {
                     opacity: highlight !== index ? 0.1 : 1,
                   },
                 ]}

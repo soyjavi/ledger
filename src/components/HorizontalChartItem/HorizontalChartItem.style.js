@@ -2,7 +2,7 @@ import StyleSheet from 'react-native-extended-stylesheet';
 
 export const style = StyleSheet.create({
   $barRadius: '$borderRadius',
-  $barSize: '$borderRadius * 2',
+  $barSize: '$borderRadius * 1.75',
   bar: {
     borderRadius: '$barRadius',
     height: '$barSize',
