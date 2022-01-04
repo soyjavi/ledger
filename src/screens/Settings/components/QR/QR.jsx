@@ -5,7 +5,6 @@ import {
   Image,
   Portal,
   Text,
-  Touchable,
   View,
   // hooks
   useStack,
@@ -14,7 +13,7 @@ import { Camera } from 'expo-camera';
 import React, { useEffect, useState } from 'react';
 
 import { L10N } from '@common';
-import { Dialog, Heading, Notification } from '@components';
+import { Action, Dialog, Heading, Notification } from '@components';
 import { useConnection, useStore } from '@context';
 import { ServiceQR } from '@services';
 
@@ -75,11 +74,7 @@ const QR = () => {
     <View style={style.container}>
       <Heading value={L10N.TRANSFER_TXS}>
         {connected && hasCamera && (
-          <Touchable onPress={() => setCamera(!camera)}>
-            <Text action color={COLOR.PRIMARY} upperCase>
-              {camera ? L10N.CLOSE : L10N.QR_READER}
-            </Text>
-          </Touchable>
+          <Action onPress={() => setCamera(!camera)}>{camera ? L10N.CLOSE : L10N.QR_READER}</Action>
         )}
       </Heading>
 

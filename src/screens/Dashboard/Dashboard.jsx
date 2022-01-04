@@ -1,9 +1,5 @@
 import {
-  // helpers
-  COLOR,
   // components
-  Text,
-  Touchable,
   Slider,
 } from '@lookiero/aurora';
 import { useEvent } from '@lookiero/event';
@@ -11,7 +7,7 @@ import { useRouter } from '@lookiero/router';
 import React, { useEffect, useMemo, useState } from 'react';
 
 import { EVENTS, L10N, ROUTE } from '@common';
-import { Card, CARD_SIZE, GroupTransactions, Heading, Summary, Viewport } from '@components';
+import { Action, Card, CARD_SIZE, GroupTransactions, Heading, Summary, Viewport } from '@components';
 import { useStore } from '@context';
 
 import { Search } from './components';
@@ -50,11 +46,7 @@ const Dashboard = () => {
         {sortedVaults.length > 0 && (
           <>
             <Heading value={L10N.VAULTS}>
-              <Touchable onPress={() => publish({ event: EVENTS.NEW_VAULT })}>
-                <Text action color={COLOR.PRIMARY} upperCase>
-                  {`${L10N.NEW} ${L10N.VAULT}`}
-                </Text>
-              </Touchable>
+              <Action onPress={() => publish({ event: EVENTS.NEW_VAULT })}>{`${L10N.NEW} ${L10N.VAULT}`}</Action>
             </Heading>
 
             <Slider horizontal snapInterval={CARD_SIZE} style={style.slider}>
@@ -77,13 +69,7 @@ const Dashboard = () => {
         {lastTxs.length > 0 && (
           <>
             <Heading value={L10N.LAST_TRANSACTIONS}>
-              {!search && (
-                <Touchable onPress={handleSearch}>
-                  <Text action color={COLOR.PRIMARY} upperCase>
-                    {L10N.SEARCH}
-                  </Text>
-                </Touchable>
-              )}
+              {!search && <Action onPress={handleSearch}>{L10N.SEARCH}</Action>}
             </Heading>
             {search && <Search onChange={setQuery} onClose={handleSearch} />}
 

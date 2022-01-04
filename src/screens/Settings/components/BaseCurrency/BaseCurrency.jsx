@@ -3,7 +3,6 @@ import {
   COLOR,
   // components
   Text,
-  Touchable,
   View,
   // hooks
   useStack,
@@ -11,7 +10,7 @@ import {
 import React, { useState } from 'react';
 
 import { L10N } from '@common';
-import { Heading, SliderCurrencies } from '@components';
+import { Action, Heading, SliderCurrencies } from '@components';
 import { useConnection, useStore } from '@context';
 
 import { style } from './BaseCurrency.style';
@@ -43,11 +42,9 @@ const BaseCurrency = () => {
     <View style={style.container}>
       <Heading value={L10N.CHOOSE_CURRENCY}>
         {connected && (
-          <Touchable onPress={handleUpdateRates}>
-            <Text action color={COLOR.PRIMARY} upperCase>
-              {L10N.SYNC_RATES_CTA}
-            </Text>
-          </Touchable>
+          <Action disabled={busy} onPress={handleUpdateRates}>
+            {L10N.SYNC_RATES_CTA}
+          </Action>
         )}
       </Heading>
 
