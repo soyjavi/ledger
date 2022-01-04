@@ -39,7 +39,7 @@ const FormVault = ({ form = {}, modal = false, onChange, ...others }) => {
       />
 
       <InputCurrency
-        backgroundColor={COLOR.INFO}
+        backgroundColor={COLOR.GRAYSCALE_XL}
         label={L10N.INITIAL_BALANCE}
         value={form.balance}
         vault={{ currency: form.currency }}
@@ -47,7 +47,7 @@ const FormVault = ({ form = {}, modal = false, onChange, ...others }) => {
       />
 
       <Input
-        backgroundColor={COLOR.INFO}
+        backgroundColor={COLOR.GRAYSCALE_XL}
         label={L10N.NAME}
         value={form.title}
         onChange={(value) => handleChange('title', value)}

@@ -8,13 +8,13 @@ import {
   Button,
   Modal,
   Text,
-  Touchable,
   View,
 } from '@lookiero/aurora';
 import { useEvent } from '@lookiero/event';
 import React, { useEffect, useState } from 'react';
 
 import { C, EVENTS, L10N, onHardwareBackPress } from '@common';
+import { Action } from '@components';
 import { useConnection, useStore } from '@context';
 
 import { HeatMap } from '../HeatMap';
@@ -99,13 +99,7 @@ const ModalTransaction = () => {
   const Form = type === TRANSFER ? FormTransfer : FormTransaction;
 
   return (
-    <Modal
-      color={COLOR.GRAYSCALE_XL}
-      contentStyle={style.modalContent}
-      isVisible={visible}
-      swipeable
-      onClose={handleClose}
-    >
+    <Modal color={COLOR.INFO} contentStyle={style.modalContent} isVisible={visible} swipeable onClose={handleClose}>
       <View alignItems={ALIGN.CENTER} marginBottom={SIZE.L}>
         <Text heading level={2}>
           {L10N.TRANSACTION[type]}
@@ -122,11 +116,9 @@ const ModalTransaction = () => {
           points={coords ? [[coords.longitude, coords.latitude]] : undefined}
           small
         >
-          <Touchable marginLeft={SIZE.M} marginTop={SIZE.XXS} onPress={handleRemoveLocation}>
-            <Text action color={COLOR.PRIMARY}>
-              {L10N.REMOVE_LOCATION}
-            </Text>
-          </Touchable>
+          <Action marginLeft={SIZE.M} marginTop={SIZE.XXS} onPress={handleRemoveLocation}>
+            {L10N.REMOVE_LOCATION}
+          </Action>
         </HeatMap>
       )}
 

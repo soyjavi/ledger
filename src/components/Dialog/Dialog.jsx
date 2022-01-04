@@ -13,7 +13,7 @@ import React from 'react';
 import { style } from './Dialog.style';
 
 const Dialog = ({ accept, cancel, text, onAccept, onCancel, title, ...others }) => (
-  <Modal {...others} color={COLOR.GRAYSCALE_XL} swipeable onClose={onCancel}>
+  <Modal {...others} color={COLOR.INFO} swipeable onClose={onCancel}>
     <View>
       <Text heading level={2} style={style.title}>
         {title}

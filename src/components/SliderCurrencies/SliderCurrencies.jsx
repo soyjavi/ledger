@@ -29,7 +29,7 @@ const SliderCurrencies = ({ modal, selected, onChange, ...others }) => {
       {currencies.map((currency, index) => (
         <Option
           caption={currency}
-          color={COLOR.INFO}
+          color={COLOR.GRAYSCALE_XL}
           currency={currency}
           key={index}
           style={styles(
