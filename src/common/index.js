@@ -4,6 +4,8 @@ export * from './constants';
 export * from './currencyDecimals';
 export * from './events';
 export * from './exchange';
+export * from './getCurrencySymbol';
+export * from './getProgressionPercentage';
 export * from './getIcon';
 export * from './getMonthDiff';
 export * from './getSyncStatus';
