@@ -6,7 +6,7 @@ import { useEvent } from '@lookiero/event';
 import { useRouter } from '@lookiero/router';
 import React, { useEffect, useMemo, useState } from 'react';
 
-import { EVENTS, L10N, ROUTE } from '@common';
+import { EVENTS, getProgressionPercentage, L10N, ROUTE } from '@common';
 import { Action, Card, CARD_SIZE, GroupTransactions, Heading, Summary, Viewport } from '@components';
 import { useStore } from '@context';
 
@@ -50,18 +50,29 @@ const Dashboard = () => {
             </Heading>
 
             <Slider horizontal snapInterval={CARD_SIZE} style={style.slider}>
-              {sortedVaults.map((vault, index) => (
-                <Card
-                  {...vault.others}
-                  key={vault.hash}
-                  balance={vault.currentBalance}
-                  currency={vault.currency}
-                  operator
-                  style={index === 0 ? style.firstCard : style.card}
-                  title={vault.title}
-                  onPress={() => go({ path: `${ROUTE.VAULT}/${vault.hash}`, props: vault })}
-                />
-              ))}
+              {sortedVaults.map((vault, index) => {
+                const {
+                  currentBalance,
+                  currency,
+                  currentMonth: { progression },
+                  hash,
+                  title,
+                } = vault;
+
+                return (
+                  <Card
+                    {...vault.others}
+                    key={hash}
+                    balance={currentBalance}
+                    currency={currency}
+                    operator
+                    percentage={getProgressionPercentage(currentBalance, progression)}
+                    style={index === 0 ? style.firstCard : style.card}
+                    title={title}
+                    onPress={() => go({ path: `${ROUTE.VAULT}/${hash}`, props: vault })}
+                  />
+                );
+              })}
             </Slider>
           </>
         )}
