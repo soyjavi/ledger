@@ -9,16 +9,12 @@ import {
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { C } from '@common';
+import { getCurrencySymbol } from '@common';
 
 import { style } from './CurrencyLogo.style';
 
-const { SYMBOL } = C;
-
-const WITHOUT_SYMBOL = ['XAG', 'XAU'];
-
 const CurrencyLogo = ({ color = COLOR.PRIMARY, currency, ...others }) => {
-  const symbol = WITHOUT_SYMBOL.includes(currency) ? undefined : currency && SYMBOL[currency];
+  const symbol = getCurrencySymbol(currency);
 
   return (
     <View
@@ -30,7 +26,7 @@ const CurrencyLogo = ({ color = COLOR.PRIMARY, currency, ...others }) => {
     >
       {symbol && (
         <Text
-          color={color !== COLOR.BASE ? COLOR.BASE : undefined}
+          color={color !== COLOR.BASE && color !== COLOR.GRAYSCALE_XL ? COLOR.BASE : undefined}
           detail
           level={symbol.length === 1 ? 2 : undefined}
           style={style.currency}
