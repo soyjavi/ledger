@@ -13,15 +13,14 @@ import {
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { exchange } from '@common';
+import { getCurrencySymbol, exchange } from '@common';
 import { useStore } from '@context';
 
 import { Box } from '../Box';
-import { CurrencyLogo } from '../CurrencyLogo';
 import { PriceFriendly } from '../PriceFriendly';
 import { CARD_SIZE, style } from './Card.style';
 
-const Card = ({ balance = 0, currency, highlight, onPress, title = '', ...others }) => {
+const Card = ({ balance = 0, currency, highlight, percentage = 0, title = '', onPress, ...others }) => {
   const {
     settings: { baseCurrency },
     rates,
@@ -37,33 +36,16 @@ const Card = ({ balance = 0, currency, highlight, onPress, title = '', ...others
         pointerEvents={POINTER.NONE}
         style={[style.box, !hasBalance && style.outlined]}
       >
-        <View style={style.content}>
-          <View alignItems={ALIGN.CENTER} flexDirection={FLEX_DIRECTION.ROW}>
-            <CurrencyLogo
-              color={highlight ? COLOR.BASE : !hasBalance ? COLOR.GRAYSCALE_L : undefined}
-              currency={currency}
-            />
-            <Text
-              color={textColor}
-              action
-              ellipsizeMode
-              level={title.length > 14 ? 3 : 2}
-              marginLeft={SPACE.S}
-              numberOfLines={1}
-              upperCase
-              style={{ maxWidth: CARD_SIZE * 0.65 }}
-            >
-              {title}
-            </Text>
-          </View>
-
-          <View style={style.breakline} />
-
+        <View style={style.content} wide>
           {currency && (
             <>
-              <PriceFriendly color={textColor} currency={currency} level={2} value={balance} />
+              <Text action color={COLOR.GRAYSCALE_L} ellipsizeMode level={2} numberOfLines={1} upperCase>
+                {title}
+              </Text>
 
-              {currency !== baseCurrency ? (
+              <PriceFriendly color={textColor} currency={currency} level={2} value={Math.abs(balance)} />
+
+              {currency !== baseCurrency && (
                 <PriceFriendly
                   color={highlight ? COLOR.BASE : COLOR.GRAYSCALE_L}
                   currency={baseCurrency}
@@ -72,13 +54,26 @@ const Card = ({ balance = 0, currency, highlight, onPress, title = '', ...others
                   marginTop={SPACE.XXS}
                   value={exchange(Math.abs(balance), currency, baseCurrency, rates)}
                 />
-              ) : (
-                <Text color={textColor} detail level={2} marginTop={SPACE.XXS}>
-                  {' '}
-                </Text>
               )}
             </>
           )}
+
+          <View style={style.spacer} />
+
+          <View alignItems={ALIGN.CENTER} flexDirection={FLEX_DIRECTION.ROW} wide>
+            <Box
+              color={highlight ? COLOR.CONTENT : hasBalance ? COLOR.GRAYSCALE_XL : COLOR.BASE}
+              style={!hasBalance && !highlight && style.outlined}
+            >
+              <Text color={highlight ? COLOR.BASE : COLOR.GRAYSCALE_L} style={style.currency}>
+                {getCurrencySymbol(currency)}
+              </Text>
+            </Box>
+            <View style={style.spacer} />
+            {!!percentage && (
+              <PriceFriendly color={textColor} currency="%" operator detail level={2} fixed={2} value={percentage} />
+            )}
+          </View>
         </View>
       </Box>
     </Touchable>

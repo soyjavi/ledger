@@ -1,15 +1,15 @@
 import { Theme } from '@lookiero/aurora';
 import StyleSheet from 'react-native-extended-stylesheet';
 
-const { spaceM } = Theme.get();
+const { spaceM, spaceS } = Theme.get();
 
-const CARD_SIZE = spaceM * 10;
+const CARD_SIZE = spaceM * 10 + spaceS;
 
 const style = StyleSheet.create({
   box: {
     alignContent: 'flex-start',
     alignItems: 'flex-start',
-    height: CARD_SIZE * 0.75,
+    height: CARD_SIZE * 1.2,
     justifyContent: 'flex-start',
     overflow: 'hidden',
     padding: '$spaceM',
@@ -24,11 +24,15 @@ const style = StyleSheet.create({
   },
 
   content: {
-    flex: 1,
     alignItems: 'flex-start',
+    flex: 1,
   },
 
-  breakline: {
+  currency: {
+    fontFamily: 'font-currency',
+  },
+
+  spacer: {
     flex: 1,
   },
 });
