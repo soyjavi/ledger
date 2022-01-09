@@ -1,7 +1,7 @@
 import {
   //helpers
   COLOR,
-  POINTER,
+  Theme,
   // components
   Touchable,
   View,
@@ -10,7 +10,8 @@ import {
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { Box, CurrencyLogo, PriceFriendly } from '@components';
+import { colorOpacity, getCurrencySymbol } from '@common';
+import { Box, PriceFriendly } from '@components';
 import { useStore } from '@context';
 
 import { style } from './VaultItem.style';
@@ -23,13 +24,24 @@ const VaultItem = ({ onPress, dataSource: { currency, currentBalance = 0, title 
   const hasBalance =
     currentBalance !== undefined && currentBalance !== null && parseFloat(currentBalance.toFixed(2)) > 0;
 
+  const isBaseCurrency = currency === baseCurrency;
+
   return (
     <Touchable style={style.container} onPress={onPress}>
-      <Box pointerEvents={POINTER.NONE} style={style.box}>
-        <CurrencyLogo
-          color={currency !== baseCurrency || !hasBalance ? COLOR.GRAYSCALE_L : undefined}
-          currency={currency}
-        />
+      <Box
+        color={!hasBalance ? COLOR.BASE : isBaseCurrency ? COLOR.PRIMARY : undefined}
+        style={[
+          style.box,
+          hasBalance && isBaseCurrency && { backgroundColor: colorOpacity(Theme.get('colorPrimary'), 0.2) },
+          !hasBalance && style.outlined,
+        ]}
+      >
+        <Text
+          color={hasBalance ? (isBaseCurrency ? COLOR.PRIMARY : COLOR.CONTENT) : COLOR.GRAYSCALE_L}
+          style={style.currency}
+        >
+          {getCurrencySymbol(currency)}
+        </Text>
       </Box>
       <View>
         <Text color={!hasBalance ? COLOR.GRAYSCALE_L : undefined} numberOfLines={1}>
