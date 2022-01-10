@@ -39,7 +39,14 @@ const Card = ({ balance = 0, currency, highlight, percentage = 0, title = '', on
         <View style={style.content} wide>
           {currency && (
             <>
-              <Text action color={COLOR.GRAYSCALE_L} ellipsizeMode level={2} numberOfLines={1} upperCase>
+              <Text
+                action
+                color={highlight ? COLOR.CONTENT : COLOR.GRAYSCALE_L}
+                ellipsizeMode
+                level={2}
+                numberOfLines={1}
+                upperCase
+              >
                 {title}
               </Text>
 
@@ -71,7 +78,7 @@ const Card = ({ balance = 0, currency, highlight, percentage = 0, title = '', on
             </Box>
             <View style={style.spacer} />
             {!!percentage && (
-              <PriceFriendly color={textColor} currency="%" operator detail level={2} fixed={2} value={percentage} />
+              <PriceFriendly color={textColor} currency="%" detail fixed={2} level={2} operator value={percentage} />
             )}
           </View>
         </View>
