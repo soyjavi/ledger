@@ -1,6 +1,7 @@
 export * from './Action';
 export * from './Banner';
 export * from './Box';
+export * from './Button';
 export * from './Card';
 export * from './CurrencyLogo';
 export * from './Dialog';

@@ -4,13 +4,26 @@ export const style = StyleSheet.create({
   $borderRadius: '$inputSize /2',
 
   container: {
-    backgroundColor: 'red',
+    backgroundColor: '$colorPrimary',
     borderRadius: '$borderRadius',
     height: '$inputSize',
-    flex: 1,
+    flex: 2,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
     overflow: 'hidden',
+  },
+
+  secondary: {
+    flex: 1,
+    backgroundColor: 'transparent',
+    borderColor: '$colorContent',
+    borderStyle: '$borderStyle',
+    borderWidth: '$borderSize',
+  },
+
+  disabled: {
+    backgroundColor: '$colorGrayscaleXL',
+    borderWidth: 0,
   },
 });
