@@ -5,7 +5,6 @@ import {
   FLEX_DIRECTION,
   SIZE,
   // components
-  Button,
   Modal,
   Text,
   View,
@@ -14,7 +13,7 @@ import { useEvent } from '@lookiero/event';
 import React, { useEffect, useState } from 'react';
 
 import { C, EVENTS, L10N, onHardwareBackPress } from '@common';
-import { Action } from '@components';
+import { Action, Button } from '@components';
 import { useConnection, useStore } from '@context';
 
 import { HeatMap } from '../HeatMap';
@@ -123,10 +122,10 @@ const ModalTransaction = () => {
       )}
 
       <View flexDirection={FLEX_DIRECTION.ROW} marginTop={SIZE.XL}>
-        <Button disabled={busy} marginRight={SIZE.M} outlined onPress={handleClose}>
+        <Button disabled={busy} marginRight={SIZE.M} secondary onPress={handleClose}>
           {L10N.CLOSE.toUpperCase()}
         </Button>
-        <Button color={COLOR.CONTENT} disabled={busy || !valid} onPress={handleSubmit}>
+        <Button disabled={busy || !valid} onPress={handleSubmit}>
           {L10N.SAVE.toUpperCase()}
         </Button>
       </View>

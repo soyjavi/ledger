@@ -5,7 +5,6 @@ import {
   FLEX_DIRECTION,
   SIZE,
   // components
-  Button,
   Modal,
   Text,
   View,
@@ -15,6 +14,7 @@ import { useRouter } from '@lookiero/router';
 import React, { useEffect, useState } from 'react';
 
 import { EVENTS, L10N, ROUTE, onHardwareBackPress } from '@common';
+import { Button } from '@components';
 import { useStore } from '@context';
 
 import { FormVault } from '../FormVault';
@@ -79,10 +79,10 @@ const ModalVault = () => {
       <FormVault form={form} modal onChange={setForm} />
 
       <View flexDirection={FLEX_DIRECTION.ROW} marginTop={SIZE.M}>
-        <Button disabled={busy} marginRight={SIZE.M} outlined onPress={handleClose}>
+        <Button disabled={busy} marginRight={SIZE.M} secondary onPress={handleClose}>
           {L10N.CLOSE.toUpperCase()}
         </Button>
-        <Button color={COLOR.CONTENT} disabled={busy || !form.currency || !form.title} onPress={handleSubmit}>
+        <Button disabled={busy || !form.currency || !form.title} onPress={handleSubmit}>
           {L10N.SAVE.toUpperCase()}
         </Button>
       </View>

@@ -4,7 +4,6 @@ import {
   FLEX_DIRECTION,
   SIZE as SPACE,
   // components
-  Button,
   Text,
   Modal,
   View,
@@ -13,6 +12,7 @@ import { useEvent } from '@lookiero/event';
 import React, { useEffect, useState } from 'react';
 
 import { C, EVENTS, exchange, L10N, onHardwareBackPress, verboseTime } from '@common';
+import { Button } from '@components';
 import { useStore } from '@context';
 
 import { BoxDate } from '../Box';
@@ -124,10 +124,10 @@ const ModalClone = () => {
       )}
 
       <View flexDirection={FLEX_DIRECTION.ROW} marginTop={SPACE.XL}>
-        <Button disabled={busy} marginRight={SPACE.M} outlined onPress={() => handleSubmit({ wipe: true })}>
+        <Button disabled={busy} marginRight={SPACE.M} secondary onPress={() => handleSubmit({ wipe: true })}>
           {L10N.WIPE.toUpperCase()}
         </Button>
-        <Button color={COLOR.CONTENT} disabled={busy} onPress={() => handleSubmit()}>
+        <Button disabled={busy} onPress={() => handleSubmit()}>
           {L10N.CLONE.toUpperCase()}
         </Button>
       </View>
