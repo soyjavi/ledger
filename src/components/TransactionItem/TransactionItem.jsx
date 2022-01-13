@@ -50,10 +50,7 @@ const TransactionItem = (props) => {
   return (
     <Touchable style={[style.offset, style.touchable]} onPress={handlePress}>
       <View pointerEvents={POINTER.NONE} style={style.row}>
-        <Box
-          rounded
-          style={styles(style.icon, is.income && { backgroundColor: colorOpacity(Theme.get('colorPrimary'), 0.2) })}
-        >
+        <Box style={styles(style.icon, is.income && { backgroundColor: colorOpacity(Theme.get('colorPrimary'), 0.2) })}>
           <Icon color={is.income ? COLOR.PRIMARY : undefined} name={getIcon({ category, type, title })} />
         </Box>
 

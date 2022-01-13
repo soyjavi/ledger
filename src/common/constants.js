@@ -47,8 +47,7 @@ export const C = {
   MS_IN_DAY,
   MS_IN_WEEK,
 
-  // NAME: PKG.name,
-  NAME: 'shield',
+  NAME: 'com.soyjavi.money',
 
   STATS_MONTHS_LIMIT: 18,
   SYMBOL: {

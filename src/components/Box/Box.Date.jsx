@@ -8,11 +8,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import { Box } from './Box';
-import { style } from './Box.style';
 import { verboseMonth } from './helpers';
 
 const BoxDate = ({ timestamp, ...inherit }) => (
-  <Box {...inherit} color={COLOR.CONTENT} style={style.date}>
+  <Box {...inherit} color={COLOR.CONTENT}>
     <Text color={COLOR.BASE} action level={2}>
       {new Date(timestamp || null).getDate()}
     </Text>

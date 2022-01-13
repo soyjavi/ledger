@@ -4,6 +4,7 @@ export const style = StyleSheet.create({
   container: {
     alignContent: 'center',
     alignItems: 'center',
+    alignSelf: 'flex-start',
     borderRadius: '$borderRadius',
     justifyContent: 'center',
     minHeight: '$spaceXXL + $spaceXS',
@@ -12,9 +13,5 @@ export const style = StyleSheet.create({
 
   rounded: {
     borderRadius: '$spaceXXXL / 2',
-  },
-
-  date: {
-    alignSelf: 'flex-start',
   },
 });

@@ -6,8 +6,6 @@ import {
   // components
   Text,
   View,
-  // hooks
-  useDevice,
 } from '@lookiero/aurora';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -18,15 +16,16 @@ import { BANNERS } from '@assets';
 import { style } from './Banner.style';
 
 const Banner = ({ align, caption, children, image = BANNERS.NOT_FOUND, title, ...others }) => {
-  const {
-    screen: { width },
-  } = useDevice();
-
   const textAlign = align === ALIGN.END ? ALIGN.RIGHT : align;
 
   return (
     <View {...others} alignItems={align} alignContent={align} justifyContent={align}>
-      <Image resizeMode="contain" source={image} style={[style.content, { height: width * 0.6 }]} />
+      <Image
+        resizeMode="contain"
+        source={image}
+        style={style.image}
+        // style={{ backgroundColor: 'red', height: height / 2.5, width: width / 2 }}
+      />
       {title && (
         <Text align={textAlign} heading level={1} marginTop={SPACE.L} style={style.content}>
           {title}

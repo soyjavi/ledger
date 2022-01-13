@@ -2,7 +2,6 @@ import {
   // helpers
   ALIGN,
   // components
-  Button,
   View,
 } from '@lookiero/aurora';
 import { useEvent } from '@lookiero/event';

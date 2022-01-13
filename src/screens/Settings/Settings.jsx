@@ -3,7 +3,7 @@ import React from 'react';
 import { C, ROUTE } from '@common';
 import { Viewport } from '@components';
 
-import { Appearance, BaseCurrency, Blockchain, Developer, QR } from './components';
+import { BaseCurrency, Blockchain, Developer, QR } from './components';
 
 const { IS_DEV } = C;
 
@@ -13,7 +13,6 @@ const Settings = () => (
     <Blockchain />
     <QR />
     <BaseCurrency />
-    <Appearance />
   </Viewport>
 );
 

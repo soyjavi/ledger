@@ -3,14 +3,13 @@ import {
   COLOR,
   // components
   Text,
-  Touchable,
   View,
 } from '@lookiero/aurora';
 import { useRouter } from '@lookiero/router';
 import React, { useLayoutEffect, useState } from 'react';
 
 import { getSyncStatus, L10N, ROUTE, syncNode } from '@common';
-import { Heading } from '@components';
+import { Action, Heading } from '@components';
 import { useConnection, useStore } from '@context';
 
 import { style } from './Blockchain.style';
@@ -42,11 +41,9 @@ const Blockchain = () => {
     <View style={style.container}>
       <Heading value={L10N.BLOCKCHAIN_STATE}>
         {connected && synced === false && (
-          <Touchable onPress={handleSync}>
-            <Text action color={!busy ? COLOR.PRIMARY : undefined}>
-              {!busy ? L10N.SYNC : L10N.SYNCING}
-            </Text>
-          </Touchable>
+          <Action color={!busy ? COLOR.PRIMARY : undefined} onPress={handleSync}>
+            {!busy ? L10N.SYNC : L10N.SYNCING}
+          </Action>
         )}
       </Heading>
       <View style={[style.offset, style.row]}>

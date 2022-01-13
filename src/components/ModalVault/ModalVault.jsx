@@ -5,7 +5,6 @@ import {
   FLEX_DIRECTION,
   SIZE,
   // components
-  Button,
   Modal,
   Text,
   View,
@@ -15,6 +14,7 @@ import { useRouter } from '@lookiero/router';
 import React, { useEffect, useState } from 'react';
 
 import { EVENTS, L10N, ROUTE, onHardwareBackPress } from '@common';
+import { Button } from '@components';
 import { useStore } from '@context';
 
 import { FormVault } from '../FormVault';
@@ -69,7 +69,7 @@ const ModalVault = () => {
   };
 
   return (
-    <Modal contentStyle={style.modalContent} color={COLOR.INFO} isVisible={visible} swipeable onClose={handleClose}>
+    <Modal color={COLOR.INFO} contentStyle={style.modalContent} isVisible={visible} swipeable onClose={handleClose}>
       <View alignItems={ALIGN.CENTER} marginBottom={SIZE.L}>
         <Text heading level={2}>
           {editMode ? L10N.SETTINGS : `${L10N.NEW} ${L10N.VAULT}`}
@@ -79,10 +79,10 @@ const ModalVault = () => {
       <FormVault form={form} modal onChange={setForm} />
 
       <View flexDirection={FLEX_DIRECTION.ROW} marginTop={SIZE.M}>
-        <Button disabled={busy} marginRight={SIZE.M} outlined rounded onPress={handleClose}>
+        <Button disabled={busy} marginRight={SIZE.M} secondary onPress={handleClose}>
           {L10N.CLOSE.toUpperCase()}
         </Button>
-        <Button color={COLOR.CONTENT} disabled={busy || !form.currency || !form.title} rounded onPress={handleSubmit}>
+        <Button disabled={busy || !form.currency || !form.title} onPress={handleSubmit}>
           {L10N.SAVE.toUpperCase()}
         </Button>
       </View>

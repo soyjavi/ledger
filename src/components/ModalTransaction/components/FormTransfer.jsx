@@ -1,18 +1,16 @@
 import {
   // helpers
-  ALIGN,
   COLOR,
   SIZE,
   styles,
   // components
   ScrollView,
-  Text,
-  Touchable,
 } from '@lookiero/aurora';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 
 import { currencyDecimals, L10N } from '@common';
+import { Action } from '@components';
 import { useStore } from '@context';
 
 import { Heading } from '../../Heading';
@@ -69,11 +67,9 @@ const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
       <InputCurrency value={form.value} vault={vault} onChange={(value) => handleField('value', value)} />
 
       <Heading style={style.heading} value={L10N.DESTINATION}>
-        <Touchable onPress={!selectVault ? () => setSelectVault(true) : undefined}>
-          <Text action color={COLOR.PRIMARY}>
-            {selectVault ? ' ' : L10N.CHANGE}
-          </Text>
-        </Touchable>
+        <Action onPress={!selectVault ? () => setSelectVault(true) : undefined}>
+          {selectVault ? ' ' : L10N.CHANGE}
+        </Action>
       </Heading>
       {selectVault ? (
         <ScrollView horizontal snapInterval={OPTION_SIZE} style={style.slider}>

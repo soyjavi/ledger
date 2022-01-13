@@ -11,11 +11,11 @@ const {
 } = C;
 
 export default ({
-  overall: { chartBalance = [] },
-  rates,
-  settings: { baseCurrency },
-  txs: [, ...txs],
-  vaults: [, ...vaults],
+  overall: { chartBalance = [] } = {},
+  rates = {},
+  settings: { baseCurrency } = {},
+  txs = [],
+  vaults = [],
 }) => {
   const chart = {
     balance: chartBalance.slice(chartBalance.length - STATS_MONTHS_LIMIT),

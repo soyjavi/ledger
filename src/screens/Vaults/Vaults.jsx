@@ -12,10 +12,7 @@ import { style } from './Vaults.style';
 
 const Vaults = () => {
   const { go } = useRouter();
-  const {
-    overall,
-    vaults: [, ...vaults],
-  } = useStore();
+  const { overall = {}, vaults = [] } = useStore();
 
   const [selected, setSelected] = useState();
 

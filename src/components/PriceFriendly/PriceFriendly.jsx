@@ -23,7 +23,7 @@ const PriceFriendly = ({ currency, fixed, highlight, label, maskAmount, operator
   const { settings = {} } = useStore();
 
   const maskedAmount = maskAmount !== undefined ? maskAmount : settings.maskAmount;
-  const operatorEnhanced = (operator && parseInt(value, 10) !== 0) || value < 0 ? (value > 0 ? '+' : '-') : undefined;
+  const operatorEnhanced = (operator && parseFloat(value, 10) !== 0) || value < 0 ? (value > 0 ? '+' : '-') : undefined;
   const symbol = SYMBOL[currency] || currency;
   let { color } = others;
 

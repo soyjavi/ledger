@@ -5,7 +5,7 @@ import { colorOpacity } from '@common';
 
 export const style = StyleSheet.create({
   $barRadius: '$borderRadius',
-  $barSize: '$borderRadius * 2',
+  $barSize: '$borderRadius * 1.75',
   bars: {
     flexDirection: 'row',
     alignItems: 'flex-end',
@@ -17,7 +17,7 @@ export const style = StyleSheet.create({
     borderTopLeftRadius: '$barRadius',
     borderTopRightRadius: '$barRadius',
     maxHeight: '100%',
-    minHeight: '$barSize',
+    minHeight: '$barSize / 1.75',
     width: '$barSize',
     zIndex: 2,
   },
@@ -85,9 +85,10 @@ export const style = StyleSheet.create({
   },
 
   scaleLine: {
-    height: 3,
+    height: 1,
     width: '100%',
     top: '50%',
+    opacity: 0.3,
   },
 
   tag: {

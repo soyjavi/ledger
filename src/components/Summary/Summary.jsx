@@ -10,7 +10,7 @@ import {
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { C, exchange, L10N } from '@common';
+import { C, exchange, getProgressionPercentage, L10N } from '@common';
 import { useStore } from '@context';
 
 import { PriceFriendly } from '../PriceFriendly';
@@ -28,12 +28,11 @@ const Summary = ({ children, currency = CURRENCY, currentBalance, currentMonth =
   } = useStore();
 
   const { expenses = 0, incomes = 0, progression = 0, today = 0 } = currentMonth;
-  const progressionPercentage =
-    currentBalance - progression > 0 ? (progression * 100) / (currentBalance - progression) : progression;
+  const progressionPercentage = getProgressionPercentage(currentBalance, progression);
 
   return (
     <View style={style.container}>
-      <Text action level={2} upperCase>
+      <Text action color={COLOR.GRAYSCALE_L} level={2} upperCase>
         {title}
       </Text>
 
