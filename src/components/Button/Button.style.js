@@ -7,6 +7,8 @@ export const style = StyleSheet.create({
     backgroundColor: '$colorPrimary',
     borderRadius: '$borderRadius',
     height: '$inputSize',
+    maxHeight: '$inputSize',
+    minHeight: '$inputSize',
     flex: 2,
     justifyContent: 'center',
     alignItems: 'center',

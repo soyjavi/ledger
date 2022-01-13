@@ -18,7 +18,7 @@ const Button = ({ children, disabled, secondary = false, onPress, ...others }) =
     style={styles(style.container, secondary && style.secondary, disabled && style.disabled, others.style)}
     onPress={onPress}
   >
-    <Text action color={disabled ? COLOR.GRAYSCALE_L : secondary ? COLOR.CONTENT : COLOR.BASE}>
+    <Text action color={disabled ? COLOR.GRAYSCALE_L : secondary ? COLOR.CONTENT : COLOR.BASE} level={2}>
       {children}
     </Text>
   </Touchable>
