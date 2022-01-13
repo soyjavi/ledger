@@ -14,6 +14,10 @@ const style = StyleSheet.create({
     padding: '$spaceXS',
     width: '$optionSize',
   },
+
+  currency: {
+    fontFamily: 'font-currency',
+  },
 });
 
 export { OPTION_SIZE, style };

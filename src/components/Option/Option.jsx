@@ -13,7 +13,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import { Box } from '../Box';
-import { CurrencyLogo } from '../CurrencyLogo';
 import { style } from './Option.style';
 
 const Option = ({
@@ -33,18 +32,23 @@ const Option = ({
   const textProps = {
     align: ALIGN.CENTER,
     color: colorContent,
-    marginTop: icon ? SIZE.XS : undefined,
+    marginTop: currency || icon ? SIZE.XS : undefined,
     numberOfLines: 1,
   };
 
   return (
     <Touchable onPress={onPress} style={others.style}>
       <Box color={selected ? colorSelected : color} pointerEvents={POINTER.NONE} style={style.container}>
-        {currency && <CurrencyLogo color={selected ? COLOR.PRIMARY : COLOR.CONTENT} currency={currency} />}
         {icon && <Icon color={colorContent} name={icon} />}
 
         {caption && (
-          <Text {...textProps} action level={2} marginTop={SIZE.XS}>
+          <Text
+            {...textProps}
+            action={!currency}
+            level={!currency ? 2 : undefined}
+            marginTop={!currency ? SIZE.XS : undefined}
+            style={currency && style.currency}
+          >
             {caption}
           </Text>
         )}
@@ -64,7 +68,7 @@ Option.propTypes = {
   children: PropTypes.node,
   color: PropTypes.string,
   colorSelected: PropTypes.string,
-  currency: PropTypes.string,
+  currency: PropTypes.bool,
   icon: PropTypes.string,
   legend: PropTypes.string,
   selected: PropTypes.bool,
