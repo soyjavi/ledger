@@ -10,6 +10,7 @@ import {
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import { getCurrencySymbol } from '@common';
 import { useStore } from '@context';
 
 import { Option, OPTION_SIZE } from '../Option';
@@ -23,15 +24,17 @@ const SliderCurrencies = ({ modal, selected, onChange, ...others }) => {
   const store = useStore();
 
   const currencies = queryCurrencies(store);
+  const index = currencies.findIndex((item) => item === selected);
 
   return (
-    <ScrollView {...others} horizontal snapInterval={OPTION_SIZE} width={width}>
+    <ScrollView {...others} horizontal scrollTo={(index - 1) * OPTION_SIZE} snapInterval={OPTION_SIZE} width={width}>
       {currencies.map((currency, index) => (
         <Option
-          caption={currency}
+          caption={getCurrencySymbol(currency)}
           color={COLOR.GRAYSCALE_XL}
-          currency={currency}
+          currency
           key={index}
+          legend={currency}
           style={styles(
             style.card,
             index === 0 && (modal ? style.firstCardModal : style.firstCard),
