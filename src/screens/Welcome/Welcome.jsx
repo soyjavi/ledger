@@ -4,7 +4,6 @@ import {
   SIZE as SPACE,
   LAYOUT,
   // components
-  Button,
   SafeAreaView,
   View,
 } from '@lookiero/aurora';
@@ -13,7 +12,7 @@ import React from 'react';
 
 import { BANNERS } from '@assets';
 import { L10N, ROUTE } from '@common';
-import { Banner, Viewport } from '@components';
+import { Banner, Button, Viewport } from '@components';
 
 import { style } from './Welcome.style';
 
