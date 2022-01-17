@@ -60,6 +60,7 @@ export const calcVault = ({ baseCurrency, genesisDate, months = 0, rates = {}, t
       expenses: exchange(expenses, ...exchangeProps),
       incomes: exchange(incomes, ...exchangeProps),
       progression: exchange(progression, ...exchangeProps),
+      progressionCurrency: progression,
       today: exchange(today, ...exchangeProps),
       txs: currentMonthTxs,
     },

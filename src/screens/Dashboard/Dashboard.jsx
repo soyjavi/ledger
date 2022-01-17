@@ -54,7 +54,7 @@ const Dashboard = () => {
                 const {
                   currentBalance,
                   currency,
-                  currentMonth: { progression },
+                  currentMonth: { progressionCurrency },
                   hash,
                   title,
                 } = vault;
@@ -66,7 +66,7 @@ const Dashboard = () => {
                     balance={currentBalance}
                     currency={currency}
                     operator
-                    percentage={getProgressionPercentage(currentBalance, progression)}
+                    percentage={getProgressionPercentage(currentBalance, progressionCurrency)}
                     style={index === 0 ? style.firstCard : style.card}
                     title={title}
                     onPress={() => go({ path: `${ROUTE.VAULT}/${hash}`, props: vault })}
