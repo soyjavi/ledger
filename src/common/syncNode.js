@@ -14,7 +14,7 @@ const parseBlocks = (values = [], field) =>
       typeof data === 'string' ? data : { ...data, [field]: data[field] === null || !data[field] ? 0 : data[field] },
   }));
 
-// ! TODO: use new system
+// ! @TODO: use new system
 export const syncNode = async (store) => {
   const { blockchain, settings } = store;
   const txs = blockchain.get('txs').blocks;

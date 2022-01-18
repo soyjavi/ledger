@@ -33,7 +33,6 @@ export const ServiceLocation = {
         };
       });
 
-      // @TODO: Should offer options and user will choose one of them
       const [{ city = '', region = '', country = '' }] = POIs;
 
       return `${city}, ${region}, ${country}`;
