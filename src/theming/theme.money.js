@@ -13,12 +13,9 @@ export const ShieldTheme = {
   $theme: 'shield',
 
   /* APPEARANCE */
-  $colorAppearance_1: '#FFC491',
-  $colorAppearance_2: '#FFFD00',
-  $colorAppearance_3: '#CBFD50',
-  $colorAppearance_4: '#ff8056',
-  $colorAppearance_5: '#5BC7BD',
-  $colorAppearance_6: '#8469F6',
+  // $colorTheme: '#FFC491',
+  $colorTheme: '#F7CE64',
+  // $colorTheme: '#F9FD86',
 
   /* BORDER */
   $borderRadius: 4,
@@ -28,16 +25,11 @@ export const ShieldTheme = {
   /* COLOR */
   $colorBase: '#191919',
   $colorContent: '#ffffff',
-  $colorAccent: '$colorAppearance_1',
-  $colorPrimary: '$colorAppearance_1',
+  $colorAccent: '$colorTheme',
+  $colorPrimary: '$colorTheme',
   $colorAlert: '#ff5c5c',
-  //
   $colorInfo: '#222222',
-  $colorGrayscaleXL: '#282828',
-  //
-  // $colorInfo: '#282828',
-  // $colorGrayscaleXL: '#222222',
-  //
+  $colorGrayscaleXL: '#2B2B2B',
   $colorGrayscaleL: '#888888',
   // $colorGrayscaleM: '#cfcfcf',
   // $colorGrayscaleS: '#e7e7e7',

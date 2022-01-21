@@ -4,7 +4,6 @@ import {
   COLOR,
   SIZE,
   // components
-  Button,
   SafeAreaView,
   Text,
   View,
@@ -16,7 +15,7 @@ import React, { useLayoutEffect, useState } from 'react';
 import { Platform, KeyboardAvoidingView } from 'react-native';
 
 import { C, L10N, ROUTE } from '@common';
-import { FormVault, Notification, Viewport } from '@components';
+import { Button, FormVault, Notification, Viewport } from '@components';
 import { useStore } from '@context';
 import { ServiceNode, ServiceRates } from '@services';
 
@@ -74,7 +73,7 @@ export const FirstVault = () => {
 
             <FormVault marginTop={SIZE.XL} form={form} onChange={setForm} />
 
-            <Button disabled={busy || !form.valid} marginTop={SIZE.M} onPress={handleSubmit}>
+            <Button disabled={busy || !form.valid} marginTop={SIZE.M} onPress={handleSubmit} wide>
               {L10N.CREATE.toUpperCase()}
             </Button>
           </View>

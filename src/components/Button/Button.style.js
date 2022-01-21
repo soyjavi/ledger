@@ -4,16 +4,17 @@ export const style = StyleSheet.create({
   $borderRadius: '$inputSize /2',
 
   container: {
+    alignItems: 'center',
     backgroundColor: '$colorPrimary',
     borderRadius: '$borderRadius',
+    flex: 2,
     height: '$inputSize',
+    justifyContent: 'center',
     maxHeight: '$inputSize',
     minHeight: '$inputSize',
-    flex: 2,
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'relative',
     overflow: 'hidden',
+    paddingHorizontal: '$borderRadius',
+    position: 'relative',
   },
 
   secondary: {

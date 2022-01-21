@@ -29,7 +29,7 @@ export const calcVault = ({ baseCurrency, genesisDate, months = 0, rates = {}, t
     currentBalance += isExpense ? -value : value;
     chartBalance[monthIndex] += isExpense ? -value : value;
 
-    // @TODO: Should revisit this algo
+    // ! @TODO: Should revisit this algo
     if (monthIndex === months) {
       if (!isInternalTransfer({ category }) && !isNonAccountingTx({ category, type })) {
         currentMonthTxs += 1;
@@ -60,6 +60,7 @@ export const calcVault = ({ baseCurrency, genesisDate, months = 0, rates = {}, t
       expenses: exchange(expenses, ...exchangeProps),
       incomes: exchange(incomes, ...exchangeProps),
       progression: exchange(progression, ...exchangeProps),
+      progressionCurrency: progression,
       today: exchange(today, ...exchangeProps),
       txs: currentMonthTxs,
     },

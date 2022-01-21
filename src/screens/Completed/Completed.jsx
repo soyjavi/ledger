@@ -4,7 +4,6 @@ import {
   SIZE,
   LAYOUT,
   // components
-  Button,
   SafeAreaView,
   View,
 } from '@lookiero/aurora';
@@ -13,7 +12,7 @@ import React from 'react';
 
 import { BANNERS } from '@assets';
 import { L10N, ROUTE } from '@common';
-import { Banner, Viewport } from '@components';
+import { Banner, Button, Viewport } from '@components';
 import { useStore } from '@context';
 
 import { style } from './Completed.style';
@@ -40,9 +39,7 @@ export const Completed = () => {
             caption={L10N.ONBOARDING_COMPLETED_CAPTION}
           />
           <View alignSelf={ALIGN.END}>
-            <Button wide={false} onPress={handlePress}>
-              {L10N.CONTINUE}
-            </Button>
+            <Button onPress={handlePress}>{L10N.CONTINUE}</Button>
           </View>
         </View>
       </SafeAreaView>

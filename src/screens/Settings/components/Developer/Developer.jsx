@@ -3,14 +3,13 @@ import {
   // helpers,
   SIZE,
   // components
-  Button,
   View,
   useStack,
 } from '@lookiero/aurora';
 import React, { useState } from 'react';
 
 import { L10N } from '@common';
-import { Heading, Notification } from '@components';
+import { Button, Heading, Notification } from '@components';
 import { useStore } from '@context';
 
 import { getBlockchain } from '../QR/helpers';

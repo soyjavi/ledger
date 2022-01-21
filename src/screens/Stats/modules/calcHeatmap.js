@@ -16,7 +16,7 @@ export default (txs = [], cities = [], countries = []) => {
       const point = calcPoint(latitude, longitude, fixed);
       points[point] = points[point] ? points[point] + 1 : 1;
 
-      // @TODO: Fix http error 413 w/ mapbox
+      // ! @TODO: Fix http error 413 w/ mapbox
       // points = { ...points, ...calcMatrix(latitude, longitude, fixed, precission, points) };
     }
   });
