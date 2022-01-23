@@ -41,7 +41,7 @@ const Option = ({
       <Box color={selected ? colorSelected : color} pointerEvents={POINTER.NONE} style={style.container}>
         {icon && <Icon color={colorContent} name={icon} />}
 
-        {caption && (
+        {!!caption && (
           <Text
             {...textProps}
             action={!currency}
