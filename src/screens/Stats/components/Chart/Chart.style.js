@@ -85,7 +85,10 @@ export const style = StyleSheet.create({
   },
 
   scaleLine: {
-    height: 1,
+    borderStyle: 'dotted',
+    borderWidth: 1,
+    borderRadius: 1,
+    height: 0,
     width: '100%',
     top: '50%',
     opacity: 0.3,
