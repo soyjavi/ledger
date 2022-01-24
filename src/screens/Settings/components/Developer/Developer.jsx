@@ -38,10 +38,10 @@ const Developer = () => {
     <View marginHorizontal={SIZE.M} marginBottom={SIZE.L}>
       <Heading value={L10N.DEVELOPER_SETTINGS} />
 
-      <Button busy={busy} marginTop={SIZE.S} onPress={handleImport}>
+      <Button busy={busy} marginTop={SIZE.S} wide onPress={handleImport}>
         Import from device
       </Button>
-      <Button busy={busy} marginTop={SIZE.M} onPress={handlePort}>
+      <Button busy={busy} marginTop={SIZE.M} wide onPress={handlePort}>
         Port Blockchain
       </Button>
     </View>
