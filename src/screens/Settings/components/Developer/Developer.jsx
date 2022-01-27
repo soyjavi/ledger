@@ -39,7 +39,7 @@ const Developer = () => {
       <Heading value={L10N.DEVELOPER_SETTINGS} />
 
       <Button busy={busy} marginTop={SIZE.S} wide onPress={handleImport}>
-        Import from device
+        Import from another device
       </Button>
       <Button busy={busy} marginTop={SIZE.M} wide onPress={handlePort}>
         Port Blockchain
