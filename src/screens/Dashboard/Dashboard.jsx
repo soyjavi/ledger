@@ -80,7 +80,7 @@ const Dashboard = () => {
         {lastTxs.length > 0 && (
           <>
             <Heading value={L10N.LAST_TRANSACTIONS}>
-              {!search && <Action onPress={handleSearch}>{L10N.SEARCH}</Action>}
+              {<Action onPress={handleSearch}>{!search ? L10N.SEARCH : L10N.CLOSE}</Action>}
             </Heading>
             {search && <Search onChange={setQuery} onClose={handleSearch} />}
 
