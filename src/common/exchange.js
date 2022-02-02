@@ -1,4 +1,6 @@
-export const exchange = (value = 0, currency = 'USD', baseCurrency = 'EUR', rates = {}, timestamp) => {
+import { CURRENCY } from './constants';
+
+export const exchange = (value = 0, currency = 'EUR', baseCurrency = CURRENCY, rates = {}, timestamp) => {
   if (currency === baseCurrency || value === 0) return value;
 
   const keys = Object.keys(rates);

@@ -10,7 +10,7 @@ const MS_IN_WEEK = MS_IN_DAY * 7;
 export const C = {
   BUSY_PRESS_MS: 2500,
 
-  CURRENCY: 'EUR',
+  CURRENCY: 'USD',
 
   DELAY_PRESS_MS: 500,
 
