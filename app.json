@@ -2,19 +2,19 @@
   "expo": {
     "name": "m[]ney",
     "description": "Your private finance ledger running on your own blockchain",
-    "slug": "soyjavi-shield",
+    "slug": "soyjavi-money",
     "privacy": "public",
     "platforms": ["ios", "android", "web"],
-    "version": "0.29.0",
+    "version": "0.1.0",
     "orientation": "portrait",
     "userInterfaceStyle": "dark",
-    "backgroundColor": "#000000",
-    "primaryColor": "#D29776",
+    "backgroundColor": "#191919",
+    "primaryColor": "#F7CE64",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#000000"
+      "backgroundColor": "#191919"
     },
     "updates": {
       "enabled": true,
@@ -30,13 +30,13 @@
       "package": "com.soyjavi.money"
     },
     "androidStatusBar": {
-      "backgroundColor": "#000000",
+      "backgroundColor": "#191919",
       "barStyle": "light-content",
       "translucent": false
     },
     "androidNavigationBar": {
       "barStyle": "light-content",
-      "backgroundColor": "#000000"
+      "backgroundColor": "#191919"
     },
     "githubUrl": "https://github.com/soyjavi/voltvault-app"
   }
