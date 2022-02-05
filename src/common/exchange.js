@@ -1,4 +1,6 @@
-import { CURRENCY } from './constants';
+import { C } from './constants';
+
+const { CURRENCY } = C;
 
 export const exchange = (value = 0, currency = 'EUR', baseCurrency = CURRENCY, rates = {}, timestamp) => {
   if (currency === baseCurrency || value === 0) return value;
