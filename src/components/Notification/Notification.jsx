@@ -6,8 +6,8 @@ import { style } from './Notification.style';
 
 const Notification = ({ text, ...others }) => {
   return (
-    <AuroraNotification {...others}>
-      <View style={style.container}>
+    <AuroraNotification {...others} style={style.container}>
+      <View style={style.content}>
         <Icon name="info" style={style.icon} />
         <Text detail level={1}>
           {text}
