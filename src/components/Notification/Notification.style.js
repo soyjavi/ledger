@@ -3,7 +3,8 @@ import StyleSheet from 'react-native-extended-stylesheet';
 export const style = StyleSheet.create({
   container: {
     borderRadius: '$borderRadius',
-    margin: '$spaceS',
+    marginHorizontal: '$spaceS',
+    marginBottom: '$spaceS',
   },
 
   content: {
