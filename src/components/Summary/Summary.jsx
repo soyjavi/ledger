@@ -51,7 +51,13 @@ const Summary = ({ children, currency = CURRENCY, currentBalance, currentMonth =
       )}
 
       <View style={style.summary}>
-        <SummaryBox caption={verboseMonth(new Date(), L10N)} currency="%" operator value={progressionPercentage} />
+        <SummaryBox
+          caption={verboseMonth(new Date(), L10N)}
+          currency="%"
+          highlight={progressionPercentage > 0}
+          operator
+          value={progressionPercentage}
+        />
         <SummaryBox caption={L10N.INCOMES} currency={baseCurrency} value={incomes} />
         <SummaryBox caption={L10N.EXPENSES} currency={baseCurrency} value={expenses} />
         <SummaryBox caption={L10N.TODAY} currency={baseCurrency} operator value={today} />

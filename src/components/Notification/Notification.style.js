@@ -1,13 +1,22 @@
 import StyleSheet from 'react-native-extended-stylesheet';
 
 export const style = StyleSheet.create({
-  notification: {
-    width: 'auto',
+  container: {
+    borderRadius: '$borderRadius',
+    marginHorizontal: '$spaceS',
+    marginBottom: '$spaceS',
   },
 
-  button: {
-    marginLeft: '$spaceS',
-    marginTop: '$spaceS * -1',
-    marginRight: '$spaceS * -1',
+  content: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+
+  icon: {
+    fontSize: '$spaceXL',
+    height: '$spaceXL',
+    marginRight: '$spaceS',
+    minWidth: '$spaceXL',
+    width: '$spaceXL',
   },
 });
