@@ -1,3 +1,3 @@
-const LookieroLinter = require('@lookiero/eslint');
+const Linter = require('@soyjavi/eslint');
 
-module.exports = LookieroLinter;
+module.exports = Linter;

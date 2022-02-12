@@ -2437,11 +2437,6 @@
     crypto-js "^4.1.1"
     js-cookie "^2.2.1"
 
-"@lookiero/eslint@^0.1":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@lookiero/eslint/-/eslint-0.1.4.tgz#c667ce29e689f414d0b8165662eec7c12213dfa4"
-  integrity sha512-mUUOucIzKzZob9W0maXfRU5GbPVcVmZbV/qhwuoGSJv3Su1JPqZR00dOD5p1D1UOgyJ1J7VhyURCd5v1nF5Tng==
-
 "@lookiero/event-next@^0.3":
   version "0.3.4"
   resolved "https://registry.yarnpkg.com/@lookiero/event-next/-/event-next-0.3.4.tgz#99214926b2f4dedbb42ba921eb435396b196a835"
@@ -2627,6 +2622,11 @@
   integrity sha512-xkNcLAn/wZaX14RPlwizcKicDk9G3F8m2nU3L7Ukm5zBgTwiT0wsoFAHx9Jq56fJA1z/7uKGtCRu16sOUCLIHQ==
   dependencies:
     type-detect "4.0.8"
+
+"@soyjavi/eslint@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@soyjavi/eslint/-/eslint-0.1.0.tgz#f5f6340783f79287979686a1cf16ee66ccfce4ea"
+  integrity sha512-zd1FCLmlxddibvSqTbLWc9OD8T6UaKcEvS25rnj+KH4p1nK0CUzat6mGscd0r2K0iX8/SU01DruJRwG/vbB9aA==
 
 "@testing-library/react-hooks@^5.1.1":
   version "5.1.3"
