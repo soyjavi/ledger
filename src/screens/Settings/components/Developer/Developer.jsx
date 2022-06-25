@@ -22,15 +22,12 @@ const Developer = () => {
 
   const handleImport = async () => {
     setBusy(true);
-    const blockchain = await getBlockchain({ qr: 'C8647639-4826-4AC7-9655-6BDC2C15D9D2|backup', store });
+    const qr = '9C9C1EF6-9F69-4EC0-8B62-A5CB05CD6167|00aa0c49884d4e674ead7d1e530dff8c3a82b72c5d6652a34dc50b3ce12aa30f';
+
+    const blockchain = await getBlockchain({ qr, store });
+
     const success = await store.fork(blockchain);
     if (success) Stack.success('forked', Notification, { text: L10N.FORKED_CORRECTLY });
-    setBusy(false);
-  };
-
-  const handlePort = async () => {
-    setBusy(true);
-    await store.port();
     setBusy(false);
   };
 
@@ -40,9 +37,6 @@ const Developer = () => {
 
       <Button busy={busy} marginTop={SIZE.S} wide onPress={handleImport}>
         Import from another device
-      </Button>
-      <Button busy={busy} marginTop={SIZE.M} wide onPress={handlePort}>
-        Port Blockchain
       </Button>
     </View>
   );
