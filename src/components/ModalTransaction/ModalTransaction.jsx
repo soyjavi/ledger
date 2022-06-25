@@ -54,7 +54,7 @@ const ModalTransaction = () => {
 
   useEffect(() => {
     subscribe({ event: EVENTS.NEW_TRANSACTION }, ({ type, vault }) => {
-      setVisible(async () => {
+      setVisible(() => {
         setDataSource({ type, vault });
         setState(INITIAL_STATE);
 
