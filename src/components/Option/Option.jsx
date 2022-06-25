@@ -13,6 +13,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import { Box } from '../Box';
+import { CurrencyLogo } from '../CurrencyLogo';
 import { style } from './Option.style';
 
 const Option = ({
@@ -41,14 +42,9 @@ const Option = ({
       <Box color={selected ? colorSelected : color} pointerEvents={POINTER.NONE} style={style.container}>
         {icon && <Icon color={colorContent} name={icon} />}
 
+        {currency && <CurrencyLogo color={COLOR.GRAYSCALE_L} currency={currency} />}
         {!!caption && (
-          <Text
-            {...textProps}
-            action={!currency}
-            level={!currency ? 2 : undefined}
-            marginTop={!currency ? SIZE.XS : undefined}
-            style={currency && style.currency}
-          >
+          <Text {...textProps} action level={2} marginTop={SIZE.XS}>
             {caption}
           </Text>
         )}
@@ -68,7 +64,7 @@ Option.propTypes = {
   children: PropTypes.node,
   color: PropTypes.string,
   colorSelected: PropTypes.string,
-  currency: PropTypes.bool,
+  currency: PropTypes.string,
   icon: PropTypes.string,
   legend: PropTypes.string,
   selected: PropTypes.bool,
