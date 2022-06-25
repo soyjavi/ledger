@@ -8,7 +8,7 @@ const {
 } = C;
 
 export const cloneTx = async ({
-  dataSource: { category, hash, location, value, vault, title, type },
+  dataSource: { category, hash, value, vault, title, type },
   store: { addTx },
   wipe = false,
 }) =>
@@ -18,5 +18,5 @@ export const cloneTx = async ({
     type,
     value,
     vault: vault,
-    ...(wipe ? { category: WIPE, tx: hash, type: type === EXPENSE ? INCOME : EXPENSE } : { location }),
+    ...(wipe ? { category: WIPE, tx: hash, type: type === EXPENSE ? INCOME : EXPENSE } : {}),
   });

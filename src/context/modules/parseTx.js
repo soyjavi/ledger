@@ -1,7 +1,6 @@
-export const parseTx = ({ hash, category, location, timestamp, title = '', type, value = 0, vault } = {}) => ({
+export const parseTx = ({ hash, category, timestamp, title = '', type, value = 0, vault } = {}) => ({
   hash,
   category,
-  location,
   timestamp,
   title,
   type,

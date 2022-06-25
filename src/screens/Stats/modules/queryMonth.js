@@ -1,6 +1,5 @@
 import { C, exchange, isInternalTransfer, isNonAccountingTx } from '@common';
 
-import calcHeatmap from './calcHeatmap';
 import { filterTxs } from './filterTxs';
 import { parseDate } from './parseDate';
 
@@ -14,8 +13,6 @@ export default (
   { overall = {}, rates = {}, settings: { baseCurrency } = {}, txs = [], vaults = [] },
   { month, year },
 ) => {
-  const cities = {};
-  const countries = {};
   const values = { expenses: {}, incomes: {} };
   const rangeTxs = [];
   const currencies = {};
@@ -23,7 +20,7 @@ export default (
   filterTxs(txs)
     .filter((tx) => !isNonAccountingTx(tx) && !isInternalTransfer(tx))
     .forEach((tx) => {
-      const { category, location: { place } = {}, timestamp, type, value, title } = tx;
+      const { category, timestamp, type, value, title } = tx;
 
       const date = parseDate(timestamp);
       const dMonth = date.getMonth();
@@ -35,15 +32,6 @@ export default (
         const valueExchange = exchange(value, currency, baseCurrency, rates, timestamp);
 
         const categoryKey = title ? title.toLowerCase().trim() : 'Unknown';
-
-        if (place) {
-          const parts = place.split(',');
-          const city = parts[0].trim();
-          const country = parts[2].trim();
-
-          cities[city] = cities[city] ? cities[city] + 1 : 1;
-          countries[country] = countries[country] ? countries[country] + 1 : 1;
-        }
 
         const keyType = type === EXPENSE ? 'expenses' : 'incomes';
 
@@ -62,12 +50,5 @@ export default (
     currencies[currency] = item;
   });
 
-  return {
-    ...values,
-    locations: {
-      cities,
-      countries,
-      ...calcHeatmap(rangeTxs, cities, countries),
-    },
-  };
+  return values;
 };

@@ -34,16 +34,6 @@ export const C = {
 
   LANGUAGE: 'en-EN',
 
-  MAPBOX: {
-    ACCESS_TOKEN: 'pk.eyJ1Ijoic295amF2aSIsImEiOiJjanBvc2lwMzcwM3A1NDJvNmJjNWxibTFuIn0.p81CI-8_bPN5eAROb3-EjQ',
-    API: 'https://api.mapbox.com',
-    SERVICE: {
-      PLACES: 'geocoding/v5/mapbox.places',
-      STATIC_MAP: 'styles/v1/mapbox/light-v9/static',
-      STATIC_MAP_DARK: 'styles/v1/mapbox/dark-v9/static',
-    },
-    URL: 'https://api.mapbox.com/geocoding/v5/mapbox.places',
-  },
   MS_IN_DAY,
   MS_IN_WEEK,
 

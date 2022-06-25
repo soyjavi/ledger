@@ -13,12 +13,11 @@ import { useEvent } from '@lookiero/event';
 import React, { useEffect, useState } from 'react';
 
 import { C, EVENTS, L10N, onHardwareBackPress } from '@common';
-import { Action, Button } from '@components';
-import { useConnection, useStore } from '@context';
+import { Button } from '@components';
+import { useStore } from '@context';
 
-import { HeatMap } from '../HeatMap';
 import { FormTransaction, FormTransfer } from './components';
-import { createTransaction, createTransfer, getLocation } from './helpers';
+import { createTransaction, createTransfer } from './helpers';
 import { style } from './ModalTransaction.style';
 
 const {
@@ -34,22 +33,14 @@ const INITIAL_STATE = {
   valid: false,
 };
 
-const INITIAL_LOCATION = {
-  coords: undefined,
-  place: undefined,
-  hideLocation: false,
-};
-
 const ModalTransaction = () => {
   const { subscribe } = useEvent();
-  const { online } = useConnection();
   const store = useStore();
 
   const [busy, setBusy] = useState(false);
   const [dataSource, setDataSource] = useState({});
 
   const [state, setState] = useState(INITIAL_STATE);
-  const [location, setLocation] = useState(INITIAL_LOCATION);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -65,7 +56,6 @@ const ModalTransaction = () => {
   }, []);
 
   useEffect(() => {
-    if (visible && type !== TRANSFER) (async () => setLocation(await getLocation(online)))();
     onHardwareBackPress(visible, handleClose);
 
     return () => onHardwareBackPress(false);
@@ -76,16 +66,12 @@ const ModalTransaction = () => {
     setVisible(false);
   };
 
-  const handleRemoveLocation = () => {
-    setLocation({ ...INITIAL_LOCATION, hideLocation: true });
-  };
-
   const handleSubmit = async () => {
     setBusy(true);
     // ! @TODO: Research why we need this
     setTimeout(async () => {
       const method = type === TRANSFER ? createTransfer : createTransaction;
-      const value = await method({ props: dataSource, state: { ...state, ...location }, store });
+      const value = await method({ props: dataSource, state, store });
       if (value) handleClose();
       setBusy(false);
     }, TIMEOUT.BUSY);
@@ -93,7 +79,6 @@ const ModalTransaction = () => {
 
   const { type } = dataSource;
   const { valid } = state;
-  const { hideLocation, place, coords } = location;
 
   const Form = type === TRANSFER ? FormTransfer : FormTransaction;
 
@@ -107,18 +92,6 @@ const ModalTransaction = () => {
 
       {type !== undefined && (
         <Form {...dataSource} {...state} debounce={200} onChange={(value) => setState({ ...state, ...value })} />
-      )}
-
-      {online && type !== TRANSFER && !hideLocation && (
-        <HeatMap
-          caption={place || L10N.LOADING_PLACE}
-          points={coords ? [[coords.longitude, coords.latitude]] : undefined}
-          small
-        >
-          <Action marginLeft={SIZE.M} marginTop={SIZE.XXS} onPress={handleRemoveLocation}>
-            {L10N.REMOVE_LOCATION}
-          </Action>
-        </HeatMap>
       )}
 
       <View flexDirection={FLEX_DIRECTION.ROW} marginTop={SIZE.XL}>

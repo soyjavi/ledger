@@ -44,14 +44,12 @@ export const L10N = {
   CHANGE: 'CHANGE',
   CHOOSE_TRANSACTION_TYPE: 'Choose type of transaction',
   CHOOSE_CURRENCY: 'Your base currency',
-  CITIES: 'Cities',
   CLEAR: 'Clear',
   CLONE: 'CLONE',
   CLONE_CAPTION: 'To make your life easier you can clone this transaction with a simple touch of the button.',
   CLOSE: 'CLOSE',
   CONCEPT: 'Concept',
   CONTINUE: 'CONTINUE',
-  COUNTRIES: 'Countries',
   CREATE: 'CREATE',
   CURRENCY: 'Currency',
   CURRENCY_NAME: {
@@ -104,8 +102,6 @@ export const L10N = {
 
   LAST_TRANSACTIONS: 'Recent activity',
   LATER: 'LATER',
-  LOADING_PLACE: 'Wait a moment, loading place.',
-  LOCATIONS: 'Locations',
 
   MONTHS: [
     'January',
@@ -138,8 +134,6 @@ export const L10N = {
   PROGRESSION: 'Progression',
 
   QR_READER: 'OPEN CAMERA',
-
-  REMOVE_LOCATION: 'DELETE PLACE',
 
   SAVE: 'SAVE',
   SEARCH: 'Search',

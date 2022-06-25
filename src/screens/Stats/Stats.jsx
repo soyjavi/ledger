@@ -11,7 +11,7 @@ import { C, L10N, ROUTE } from '@common';
 import { Viewport } from '@components';
 import { useStore } from '@context';
 
-import { Chart, ItemGroupCategories, Locations, SliderMonths } from './components';
+import { Chart, ItemGroupCategories, SliderMonths } from './components';
 import { calcScales, orderCaptions, queryMonth, queryChart } from './modules';
 import { style } from './Stats.style';
 
@@ -54,10 +54,9 @@ const Stats = () => {
     }
   };
 
-  const { expenses = {}, incomes = {}, locations = {} } = month || {};
+  const { expenses = {}, incomes = {} } = month || {};
   const hasExpenses = Object.keys(expenses).length > 0;
   const hasIncomes = Object.keys(incomes).length > 0;
-  const hasPoints = locations.points && locations.points.length > 0;
 
   const chartProps = { currency: baseCurrency, highlight: slider.index };
 
@@ -91,15 +90,12 @@ const Stats = () => {
         values={chart.expenses}
       />
 
-      {(hasExpenses || hasIncomes || hasPoints) && (
+      {(hasExpenses || hasIncomes) && (
         <>
           {hasIncomes && <ItemGroupCategories color={COLOR.PRIMARY} type={INCOME} dataSource={incomes} />}
           {hasExpenses && <ItemGroupCategories type={EXPENSE} dataSource={expenses} />}
-          {hasPoints && <Locations {...locations} />}
         </>
       )}
-
-      <View style={style.chartMargin} />
 
       <Chart
         {...useMemo(() => calcScales(chart.investments), [chart.investments])}

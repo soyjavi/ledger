@@ -9,7 +9,6 @@ export * from './FormVault';
 export * from './GroupTransactions';
 export * from './Header';
 export * from './Heading';
-export * from './HeatMap';
 export * from './HorizontalChartItem';
 export * from './Input';
 export * from './InputCurrency';

@@ -35,7 +35,7 @@ const TransactionItem = (props) => {
     rates,
   } = useStore();
 
-  const { category = 99, currency, location, timestamp, title, type = EXPENSE, value = 0 } = props;
+  const { category = 99, currency, timestamp, title, type = EXPENSE, value = 0 } = props;
   const operator = type === EXPENSE ? -1 : 1;
 
   const handlePress = () => {
@@ -70,7 +70,7 @@ const TransactionItem = (props) => {
 
           <View style={style.row}>
             <Text color={COLOR.GRAYSCALE_L} detail level={2} style={style.text}>
-              {formatCaption(new Date(timestamp), location)}
+              {formatCaption(new Date(timestamp))}
             </Text>
             {baseCurrency !== currency && (
               <PriceFriendly
@@ -92,7 +92,6 @@ const TransactionItem = (props) => {
 TransactionItem.propTypes = {
   category: PropTypes.number,
   currency: PropTypes.string.isRequired,
-  location: PropTypes.shape({}),
   timestamp: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   title: PropTypes.string,
   type: PropTypes.number,

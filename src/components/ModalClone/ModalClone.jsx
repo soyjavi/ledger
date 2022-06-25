@@ -16,7 +16,6 @@ import { Button } from '@components';
 import { useStore } from '@context';
 
 import { BoxDate } from '../Box';
-import { HeatMap } from '../HeatMap';
 import { PriceFriendly } from '../PriceFriendly';
 import { cloneTx } from './helpers';
 import { style } from './ModalClone.style';
@@ -72,7 +71,7 @@ const ModalClone = () => {
     }, TIMEOUT.BUSY);
   };
 
-  const { category, currency, vault, value, location, title = '', timestamp, type = EXPENSE } = dataSource;
+  const { category, currency, vault, value, title = '', timestamp, type = EXPENSE } = dataSource;
   const operator = type === EXPENSE ? -1 : 1;
   const vaultInfo = vaults.find(({ hash }) => hash === vault);
 
@@ -116,12 +115,6 @@ const ModalClone = () => {
           )}
         </View>
       </View>
-
-      {location && (
-        <View marginTop={SPACE.S}>
-          <HeatMap caption={location.place} points={[[location.longitude, location.latitude]]} small />
-        </View>
-      )}
 
       <View flexDirection={FLEX_DIRECTION.ROW} marginTop={SPACE.XL}>
         <Button disabled={busy} marginRight={SPACE.M} secondary onPress={() => handleSubmit({ wipe: true })}>

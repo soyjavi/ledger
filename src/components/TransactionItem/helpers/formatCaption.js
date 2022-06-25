@@ -1,9 +1,7 @@
 import { verboseTime } from '@common';
 
-export const formatCaption = (time, { place } = {}) => {
+export const formatCaption = (time) => {
   let value = verboseTime(time);
-
-  if (place) value += ` - ${place.split(',')[0]}`;
 
   return value;
 };
