@@ -92,17 +92,15 @@ const QR = () => {
         </Text>
       </View>
 
-      <Portal id="dialog-fork">
-        <Dialog
-          accept={L10N.IMPORT}
-          cancel={L10N.CANCEL}
-          text={L10N.TRANSFER_TXS_IMPORT}
-          title={L10N.WARNING}
-          isVisible={blockchain !== undefined}
-          onAccept={handleFork}
-          onCancel={handleCancel}
-        />
-      </Portal>
+      <Dialog
+        accept={L10N.IMPORT}
+        cancel={L10N.CANCEL}
+        text={L10N.TRANSFER_TXS_IMPORT}
+        title={L10N.WARNING}
+        isVisible={blockchain !== undefined}
+        onAccept={handleFork}
+        onCancel={handleCancel}
+      />
     </View>
   );
 };
