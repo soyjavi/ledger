@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React, { createContext, useContext, useLayoutEffect, useState } from 'react';
-import { AsyncBlockchain } from 'vanilla-blockchain';
 import { AsyncStorage } from 'vanilla-storage';
 
 import { C } from '@common';
@@ -8,11 +7,10 @@ import { ServiceNode } from '@services';
 
 import { AsyncStorageAdapter } from './adapters';
 import { useConnection } from './connection';
-import { calcHash, consolidate, getFingerprint, genesis, parseTx, parseVault } from './modules';
+import { calcHash, consolidate, getFingerprint, parseTx, parseVault } from './modules';
 
 const { CURRENCY, NAME } = C;
 const FILENAME = `${C.NAME}:store`;
-const FILENAME_BLOCKCHAIN = `${C.NAME}:store:blockchain`;
 const StoreContext = createContext(`${NAME}:context:store`);
 
 const StoreProvider = ({ children }) => {
@@ -49,16 +47,8 @@ const StoreProvider = ({ children }) => {
         filename: FILENAME,
       });
 
-      const blockchain = await new AsyncBlockchain({
-        adapter: AsyncStorageAdapter,
-        defaults: { vaults: [], txs: [] },
-        filename: FILENAME_BLOCKCHAIN,
-        key: 'vaults',
-      });
-
       setState({
         store,
-        blockchain,
         settings: await store.get('settings').value,
         rates: await store.get('rates').value,
         vaults: await store.get('vaults').value,
@@ -136,85 +126,37 @@ const StoreProvider = ({ children }) => {
     return await store.findOne({ hash });
   };
 
-  const fork = async (blockchain) => {
-    const { settings } = state;
+  const fork = async ({ txs = [], vaults = [] } = {}) => {
+    const { settings, store } = state;
 
-    const storage = await new AsyncStorageAdapter({ filename: FILENAME_BLOCKCHAIN });
-    await storage.wipe();
+    await store.wipe('vaults');
+    await store.wipe('txs');
 
-    const txs = blockchain.txs.map(({ data: { balance, value, ...data }, ...others }) => ({
-      ...others,
-      data: { ...data, value: balance || value },
-    }));
+    await store.get('vaults');
+    await store.save(vaults);
 
-    const fork = await new AsyncBlockchain({
-      adapter: AsyncStorageAdapter,
-      defaults: { vaults: genesis(blockchain.vaults), txs: genesis(txs) },
-      filename: FILENAME_BLOCKCHAIN,
-      key: 'vaults',
-    });
+    await store.get('txs');
+    await store.save(
+      txs.map(
+        ({
+          balance,
+          // eslint-disable-next-line no-unused-vars
+          location,
+          value,
+          ...others
+        }) => ({ ...others, value: balance || value }),
+      ),
+    );
 
     if (connected) await ServiceNode.sync({ settings, blockchain: { vaults: [], txs: [] } });
 
     setState({
       ...state,
-      blockchain: fork,
-      vaults: await fork.get('vaults').blocks,
-      txs: await fork.get('txs').blocks,
+      vaults: await store.get('vaults').value,
+      txs: await store.get('txs').value,
     });
 
     return true;
-  };
-
-  const port = async () => {
-    const { store, blockchain } = state;
-
-    await store.wipe('txs');
-    await store.wipe('vaults');
-
-    await store.get('txs').push(
-      blockchain
-        .get('txs')
-        .blocks.filter(({ data }) => typeof data === 'object')
-        .map(
-          ({
-            hash,
-            timestamp: blockTimestamp,
-            data: { vault, type, category, value, title, location, timestamp } = {},
-          }) => ({
-            hash,
-            timestamp: new Date(timestamp || blockTimestamp).getTime(),
-            vault,
-            type,
-            category,
-            value,
-            title,
-            location,
-          }),
-        ),
-    );
-
-    await store.get('vaults').push(
-      blockchain
-        .get('vaults')
-        .blocks.filter(({ data }) => typeof data === 'object')
-        .map(
-          ({
-            //
-            hash,
-            timestamp: blockTimestamp,
-            data: { balance, currency, title, timestamp },
-          }) => ({
-            hash,
-            timestamp: new Date(timestamp || blockTimestamp).getTime(),
-            title,
-            currency,
-            balance,
-          }),
-        ),
-    );
-
-    setState({ ...state });
   };
 
   return (
@@ -224,7 +166,6 @@ const StoreProvider = ({ children }) => {
         addTx,
         addVault,
         fork,
-        port,
         updateRates,
         updateSettings,
         updateTx,
