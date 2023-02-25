@@ -4,12 +4,8 @@
     "description": "Your private finance ledger running on your own blockchain",
     "slug": "soyjavi-money",
     "privacy": "public",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
-    "version": "0.1.0",
+    "platforms": ["ios", "android", "web"],
+    "version": "0.1.1",
     "orientation": "portrait",
     "userInterfaceStyle": "dark",
     "backgroundColor": "#191919",
@@ -26,9 +22,7 @@
       "fallbackToCacheTimeout": 0,
       "url": "https://u.expo.dev/ee58e4b4-c62c-4e7f-a084-eb6af92f8f85"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.soyjavi.money"
