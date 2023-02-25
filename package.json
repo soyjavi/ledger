@@ -6,7 +6,8 @@
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "setup": "rm -rf node_modules && rm -rf yarn.lock && yarn install --force",
-    "start": "expo start --web",
+    "ios": "expo start --ios",
+    "start:web": "expo start --web",
     "start:prod": "expo start --no-dev --minify --web",
     "build:android": "NODE_ENV=production expo build:android",
     "build:ios": "NODE_ENV=production expo build:ios",
@@ -20,11 +21,16 @@
     "release-it": "yarn version --patch && git push --follow-tags"
   },
   "dependencies": {
+    "@expo/webpack-config": "^18.0.1",
     "@lookiero/aurora-next": "3.0.147",
     "@lookiero/event-next": "^0.3",
     "@lookiero/router": "^0.3",
     "@react-native-async-storage/async-storage": "^1.15.5",
     "@react-native-community/netinfo": "5.9.7",
+    "@types/react": "~18.0.0",
+    "@types/react-native": "~0.69.1",
+    "@unimodules/core": "^7.1.2",
+    "@unimodules/react-native-adapter": "^6.3.9",
     "color": "^3.1.2",
     "crypto-js": "4.0.0",
     "expo-barcode-scanner": "~9.1.0",
@@ -34,54 +40,26 @@
     "expo-location": "~10.0.0",
     "expo-permissions": "~10.0.0",
     "expo-status-bar": "~1.0.3",
+    "expo-updates": "~0.14.7",
     "global": "^4.4.0",
     "prop-types": "^15.7.2",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-native": "0.71.3",
     "react-native-fs": "^2.16.6",
-    "react-native-web": "~0.13.12",
+    "react-native-web": "~0.18.10",
     "vanilla-blockchain": "^0.2.10",
     "vanilla-storage": "^0.3.16"
   },
   "devDependencies": {
-    "@babel/core": "~7.9.0",
-    "@lookiero/eslint": "^0.1",
-    "@testing-library/react-hooks": "^5.1.1",
-    "@testing-library/react-native": "^7.2.0",
-    "@types/react": "~16.9.35",
-    "@types/react-dom": "~16.9.8",
-    "@types/react-native": "~0.63.2",
-    "@typescript-eslint/eslint-plugin": "3.5.0",
-    "@typescript-eslint/parser": "^4.22.0",
-    "babel-plugin-module-resolver": "^4.0.0",
+    "@babel/core": "^7.20.0",
     "core-js": "^3.15.2",
-    "eslint": "7.3.1",
-    "eslint-config-prettier": "6.11.0",
-    "eslint-plugin-babel": "^5.3.1",
-    "eslint-plugin-import": "2.22.0",
-    "eslint-plugin-jsx-a11y": "6.3.1",
-    "eslint-plugin-prettier": "3.1.4",
-    "eslint-plugin-react": "7.20.3",
-    "eslint-plugin-react-hooks": "4.0.5",
-    "expo": "^41.0.1",
-    "jest-expo": "^41.0.0",
+    "expo": "^46.0.1",
     "prettier": "^2.2.1",
-    "react-test-renderer": "^16.13.1",
     "typescript": "^4.0.0"
   },
   "resolutions": {
-    "react-native": "https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-46.0.0.tar.gz",
     "vanilla-storage": "^0.3.16"
-  },
-  "jest": {
-    "preset": "jest-expo",
-    "testPathIgnorePatterns": [
-      "node_modules/"
-    ],
-    "transform": {
-      "^.+\\.(js|jsx)?$": "babel-jest"
-    },
-    "verbose": false
   }
 }
