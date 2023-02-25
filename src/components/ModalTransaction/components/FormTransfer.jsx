@@ -64,6 +64,7 @@ const FormTransaction = ({ form = {}, onChange, vault = {} }) => {
 
   return (
     <>
+      <Heading style={style.heading} value={L10N.FROM} />
       <InputCurrency value={form.value} vault={vault} onChange={(value) => handleField('value', value)} />
 
       <Heading style={style.heading} value={L10N.DESTINATION}>

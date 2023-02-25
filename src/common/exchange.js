@@ -6,7 +6,7 @@ export const exchange = (value = 0, currency = 'EUR', baseCurrency = CURRENCY, r
   if (currency === baseCurrency || value === 0) return value;
 
   const keys = Object.keys(rates);
-  if (!rates.length) return 0;
+  if (!keys.length) return 0;
 
   const lastKey = keys[keys.length - 1];
   let key;

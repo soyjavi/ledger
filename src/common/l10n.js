@@ -77,7 +77,7 @@ export const L10N = {
   DASHBOARD: 'Dashboard',
   DAY: 'day',
   DAY_NAMES: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-  DESTINATION: 'Destination account',
+  DESTINATION: 'To',
   DEVELOPER_SETTINGS: 'Developer settings',
 
   ENTER_PIN: 'Enter your pin',
@@ -90,6 +90,7 @@ export const L10N = {
   FIRST_VAULT_CAPTION:
     'Choose the currency you use the most. Later you can create more accounts with different currencies.',
   FORKED_CORRECTLY: 'All transactions have been successfully transferred to this device.',
+  FROM: 'From',
 
   GET: 'Get',
   GET_STARTED: 'GET STARTED',

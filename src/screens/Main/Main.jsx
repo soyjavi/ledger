@@ -40,7 +40,7 @@ const Container = (inherit) => {
 
   return (
     <Viewport path={ROUTE.MAIN_TAB}>
-      <Header isVisible={scroll || value !== ROUTE.TAB_DASHBOARD} title={TITLE[value]} />
+      <Header isVisible={scroll !== false || value !== ROUTE.TAB_DASHBOARD} title={TITLE[value]} />
 
       <ScrollView onScroll={setScroll} ref={scrollview}>
         {inherit.children}

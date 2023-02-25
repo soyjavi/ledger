@@ -29,7 +29,7 @@ const SummaryBox = ({ caption, value, ...inherit }) => (
 
 SummaryBox.propTypes = {
   caption: PropTypes.string.isRequired,
-  value: PropTypes.number.isRequired,
+  value: PropTypes.number,
 };
 
 export { SummaryBox };

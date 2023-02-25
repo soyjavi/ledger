@@ -42,7 +42,7 @@ const Option = ({
       <Box color={selected ? colorSelected : color} pointerEvents={POINTER.NONE} style={style.container}>
         {icon && <Icon color={colorContent} name={icon} />}
 
-        {currency && <CurrencyLogo color={COLOR.GRAYSCALE_L} currency={currency} />}
+        {currency && <CurrencyLogo color={colorContent} currency={currency} />}
         {!!caption && (
           <Text {...textProps} action level={2} marginTop={SIZE.XS}>
             {caption}

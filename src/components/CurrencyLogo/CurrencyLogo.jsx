@@ -24,16 +24,16 @@ const CurrencyLogo = ({ color = COLOR.PRIMARY, currency, ...others }) => {
       justifyContent={ALIGN.CENTER}
       style={[style.container, others.style]}
     >
-      {symbol && (
+      {symbol ? (
         <Text
           color={color !== COLOR.BASE && color !== COLOR.GRAYSCALE_XL ? COLOR.BASE : undefined}
           detail
-          level={symbol.length === 1 ? 2 : undefined}
+          level={symbol.length === 1 ? 1 : symbol.length === 2 ? 2 : 3}
           style={style.currency}
         >
           {symbol}
         </Text>
-      )}
+      ) : undefined}
     </View>
   );
 };

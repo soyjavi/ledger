@@ -14,18 +14,18 @@ import { useEvent } from '@lookiero/event';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { C, colorOpacity, EVENTS, exchange, getIcon } from '@common';
+import { C, colorOpacity, EVENTS, exchange, getIcon, L10N, verboseTime } from '@common';
 import { useStore } from '@context';
 
 import { Box } from '../Box';
 import { PriceFriendly } from '../PriceFriendly';
-import { formatCaption } from './helpers';
 import { style } from './TransactionItem.style';
 
 const {
   TX: {
     TYPE: { EXPENSE, INCOME },
   },
+  INTERNAL_TRANSFER,
 } = C;
 
 const TransactionItem = (props) => {
@@ -35,7 +35,7 @@ const TransactionItem = (props) => {
     rates,
   } = useStore();
 
-  const { category = 99, currency, timestamp, title, type = EXPENSE, value = 0 } = props;
+  const { category = INTERNAL_TRANSFER, currency, timestamp, title, type = EXPENSE, value = 0, swap } = props;
   const operator = type === EXPENSE ? -1 : 1;
 
   const handlePress = () => {
@@ -45,7 +45,10 @@ const TransactionItem = (props) => {
   const is = {
     income: type === INCOME,
     expense: type === EXPENSE,
+    swap: type === INCOME && category === INTERNAL_TRANSFER,
   };
+
+  console.log(type, category, currency, value, is.swap, swap);
 
   return (
     <Touchable style={[style.offset, style.touchable]} onPress={handlePress}>
@@ -70,7 +73,7 @@ const TransactionItem = (props) => {
 
           <View style={style.row}>
             <Text color={COLOR.GRAYSCALE_L} detail level={2} style={style.text}>
-              {formatCaption(new Date(timestamp))}
+              {`${verboseTime(new Date(timestamp))} - ${L10N.CATEGORIES[type][category]}`}
             </Text>
             {baseCurrency !== currency && (
               <PriceFriendly

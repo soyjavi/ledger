@@ -10,8 +10,8 @@ import React from 'react';
 
 import { style } from './Box.style';
 
-const Box = ({ children, color = COLOR.INFO, rounded, ...others }) => (
-  <View {...others} backgroundColor={color} style={styles(style.container, rounded && style.rounded, others.style)}>
+const Box = ({ children, color = COLOR.INFO, ...others }) => (
+  <View {...others} backgroundColor={color} style={styles(style.container, others.style)}>
     {children}
   </View>
 );
@@ -19,7 +19,6 @@ const Box = ({ children, color = COLOR.INFO, rounded, ...others }) => (
 Box.propTypes = {
   children: PropTypes.node,
   color: PropTypes.oneOf(Object.values(COLOR)),
-  rounded: PropTypes.bool,
 };
 
 export { Box };

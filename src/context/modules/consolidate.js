@@ -10,7 +10,7 @@ export const consolidate = ({ rates = {}, settings = {}, txs: storeTxs = [], vau
     hash,
     timestamp,
     ...others,
-    ...data,
+    // ...data,
   }));
 
   let vaults = [];

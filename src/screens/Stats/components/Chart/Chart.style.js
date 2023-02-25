@@ -64,12 +64,6 @@ export const style = StyleSheet.create({
     justifyContent: 'flex-start',
   },
 
-  headingInverted: {
-    bottom: '$spaceM',
-    position: 'absolute',
-    right: 0,
-  },
-
   scales: {
     position: 'absolute',
     left: 0,

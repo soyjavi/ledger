@@ -10,8 +10,4 @@ export const style = StyleSheet.create({
     minHeight: '$spaceXXL + $spaceXS',
     minWidth: '$spaceXXL + $spaceXS',
   },
-
-  rounded: {
-    borderRadius: '$spaceXXXL / 2',
-  },
 });

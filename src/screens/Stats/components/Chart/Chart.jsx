@@ -63,7 +63,7 @@ const Chart = ({ captions, highlight, inverted, values = [], style: styleContain
         </View>
       </View>
 
-      {inverted && <ChartHeading {...others} inverted />}
+      {inverted && <ChartHeading {...others} />}
 
       {captions && (
         <View style={[style.offset, style.captions]}>

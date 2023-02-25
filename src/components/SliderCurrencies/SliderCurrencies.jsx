@@ -30,9 +30,8 @@ const SliderCurrencies = ({ modal, selected, onChange, ...others }) => {
     <ScrollView {...others} horizontal scrollTo={(index - 1) * OPTION_SIZE} snapInterval={OPTION_SIZE} width={width}>
       {currencies.map((currency, index) => (
         <Option
-          caption={getCurrencySymbol(currency)}
           color={COLOR.GRAYSCALE_XL}
-          currency
+          currency={currency}
           key={index}
           legend={currency}
           style={styles(

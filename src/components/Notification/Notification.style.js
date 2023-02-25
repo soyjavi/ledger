@@ -4,7 +4,7 @@ export const style = StyleSheet.create({
   container: {
     borderRadius: '$borderRadius',
     marginHorizontal: '$spaceS',
-    marginBottom: '$spaceS',
+    marginTop: '$spaceS',
   },
 
   content: {
